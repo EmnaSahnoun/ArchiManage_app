@@ -1,0 +1,50 @@
+{
+    "sourceFile": "src/models/Company.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1741088441328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741091523371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,4 +8,14 @@\n   createdAt: { type: Date, default: Date.now }\r\n });\r\n \r\n module.exports = mongoose.model(\"Company\", companySchema);\r\n+\r\n+\r\n+const mongoose = require('mongoose');\r\n+\r\n+const CompanySchema = new mongoose.Schema({\r\n+    name: { type: String, required: true, unique: true },\r\n+    createdAt: { type: Date, default: Date.now }\r\n+});\r\n+\r\n+module.exports = mongoose.model('Company', CompanySchema);\r\n"
+                },
+                {
+                    "date": 1741091537959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,4 @@\n \r\n module.exports = mongoose.model(\"Company\", companySchema);\r\n \r\n \r\n-const mongoose = require('mongoose');\r\n-\r\n-const CompanySchema = new mongoose.Schema({\r\n-    name: { type: String, required: true, unique: true },\r\n-    createdAt: { type: Date, default: Date.now }\r\n-});\r\n-\r\n-module.exports = mongoose.model('Company', CompanySchema);\r\n"
+                },
+                {
+                    "date": 1741091676062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,9 @@\n   name: { type: String, required: true },\r\n   address: { type: String, required: true },\r\n   email: { type: String, required: true, unique: true },\r\n   phone: { type: String, required: true },\r\n+  users: [{ type: String }], // Stocke les ID Keycloak des utilisateurs liés\r\n   createdAt: { type: Date, default: Date.now }\r\n });\r\n \r\n module.exports = mongoose.model(\"Company\", companySchema);\r\n-\r\n-\r\n"
+                },
+                {
+                    "date": 1741091683681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n   name: { type: String, required: true },\r\n   address: { type: String, required: true },\r\n   email: { type: String, required: true, unique: true },\r\n   phone: { type: String, required: true },\r\n-  users: [{ type: String }], // Stocke les ID Keycloak des utilisateurs liés\r\n   createdAt: { type: Date, default: Date.now }\r\n });\r\n \r\n module.exports = mongoose.model(\"Company\", companySchema);\r\n+\r\n+\r\n"
+                },
+                {
+                    "date": 1741094074928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,14 @@\n-const mongoose = require(\"mongoose\");\r\n+const mongoose = require('mongoose');\r\n \r\n const companySchema = new mongoose.Schema({\r\n   name: { type: String, required: true },\r\n   address: { type: String, required: true },\r\n   email: { type: String, required: true, unique: true },\r\n   phone: { type: String, required: true },\r\n-  createdAt: { type: Date, default: Date.now }\r\n+  createdAt: { type: Date, default: Date.now },\r\n+  password: { type: String, required: true },\r\n });\r\n \r\n-module.exports = mongoose.model(\"Company\", companySchema);\r\n+const Company = mongoose.model('Company', companySchema);\r\n \r\n-\r\n+module.exports = Company;\r\n"
+                },
+                {
+                    "date": 1741094309788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,31 @@\n const mongoose = require('mongoose');\r\n \r\n-const companySchema = new mongoose.Schema({\r\n-  name: { type: String, required: true },\r\n-  address: { type: String, required: true },\r\n-  email: { type: String, required: true, unique: true },\r\n-  phone: { type: String, required: true },\r\n-  createdAt: { type: Date, default: Date.now },\r\n-  password: { type: String, required: true },\r\n+const CompanySchema = new mongoose.Schema({\r\n+  name: {\r\n+    type: String,\r\n+    required: true,\r\n+  },\r\n+  address: {\r\n+    type: String,\r\n+    required: true,\r\n+  },\r\n+  email: {\r\n+    type: String,\r\n+    required: true,\r\n+    unique: true,\r\n+  },\r\n+  phone: {\r\n+    type: String,\r\n+    required: true,\r\n+  },\r\n+  createdAt: {\r\n+    type: Date,\r\n+    default: Date.now,\r\n+  },\r\n+  password: {\r\n+    type: String,\r\n+    required: true,\r\n+  }\r\n });\r\n \r\n-const Company = mongoose.model('Company', companySchema);\r\n-\r\n-module.exports = Company;\r\n+module.exports = mongoose.model('Company', CompanySchema);\r\n"
+                },
+                {
+                    "date": 1741094317201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     type: Date,\r\n     default: Date.now,\r\n   },\r\n   password: {\r\n-    type: String,    required: true,\r\n+    type: String,   required: true,\r\n   }\r\n });\r\n \r\n module.exports = mongoose.model('Company', CompanySchema);\r\n"
+                },
+                {
+                    "date": 1741094405516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const mongoose = require('mongoose');\r\n \r\n const CompanySchema = new mongoose.Schema({\r\n   name: {type: String,required: true },\r\n-  address:{type: String,required: true },\r\n+  address: {type: String,required: true },\r\n   email: {type: String,required: true,unique: true },\r\n   phone: {\r\n     type: String,\r\n     required: true,\r\n"
+                }
+            ],
+            "date": 1741088441328,
+            "name": "Commit-0",
+            "content": "const mongoose = require(\"mongoose\");\r\n\r\nconst companySchema = new mongoose.Schema({\r\n  name: { type: String, required: true },\r\n  address: { type: String, required: true },\r\n  email: { type: String, required: true, unique: true },\r\n  phone: { type: String, required: true },\r\n  createdAt: { type: Date, default: Date.now }\r\n});\r\n\r\nmodule.exports = mongoose.model(\"Company\", companySchema);\r\n"
+        }
+    ]
+}

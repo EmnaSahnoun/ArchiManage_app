@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/config/db.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1741171601512,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1741171601512,
+            "name": "Commit-0",
+            "content": "const mongoose = require(\"mongoose\");\r\nrequire(\"dotenv\").config();\r\n\r\nconst connectDB = async () => {\r\n    try {\r\n        await mongoose.connect(process.env.MONGO_URI, {\r\n            useNewUrlParser: true,\r\n            useUnifiedTopology: true,\r\n        });\r\n        console.log(\"MongoDB Connected...\");\r\n    } catch (err) {\r\n        console.error(err.message);\r\n        process.exit(1);\r\n    }\r\n};\r\n\r\nmodule.exports = connectDB;\r\n"
+        }
+    ]
+}

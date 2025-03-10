@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/models/Project.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1741171206498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741171794549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const mongoose = require(\"mongoose\");\r\n \r\n const projectSchema = new mongoose.Schema({\r\n   name: { type: String, required: true },\r\n-  description: String,\r\n+  description: { type: String\r\n   phases: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Phase\" }],\r\n });\r\n \r\n module.exports = mongoose.model(\"Project\", projectSchema);\r\n"
+                },
+                {
+                    "date": 1741171821322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const mongoose = require(\"mongoose\");\r\n \r\n const projectSchema = new mongoose.Schema({\r\n   name: { type: String, required: true },\r\n-  description: { type: String\r\n+  description: String,\r\n   phases: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Phase\" }],\r\n });\r\n \r\n module.exports = mongoose.model(\"Project\", projectSchema);\r\n"
+                },
+                {
+                    "date": 1741171868401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const mongoose = require(\"mongoose\");\r\n \r\n const projectSchema = new mongoose.Schema({\r\n   name: { type: String, required: true },\r\n-  description: String,\r\n+  description: { type: String\r\n   phases: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Phase\" }],\r\n });\r\n \r\n module.exports = mongoose.model(\"Project\", projectSchema);\r\n"
+                }
+            ],
+            "date": 1741171206498,
+            "name": "Commit-0",
+            "content": "const mongoose = require(\"mongoose\");\r\n\r\nconst projectSchema = new mongoose.Schema({\r\n  name: { type: String, required: true },\r\n  description: String,\r\n  phases: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Phase\" }],\r\n});\r\n\r\nmodule.exports = mongoose.model(\"Project\", projectSchema);\r\n"
+        }
+    ]
+}

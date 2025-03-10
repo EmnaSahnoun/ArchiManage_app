@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/models/userCompany.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1741091711716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741094453728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +0,0 @@\n-const mongoose = require('mongoose');\r\n-\r\n-const UserCompanySchema = new mongoose.Schema({\r\n-    userId: { type: String, required: true },\r\n-    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true }\r\n-});\r\n-\r\n-module.exports = mongoose.model('UserCompany', UserCompanySchema);\r\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1741091711716,
+            "name": "Commit-0",
+            "content": "const mongoose = require('mongoose');\r\n\r\nconst UserCompanySchema = new mongoose.Schema({\r\n    userId: { type: String, required: true },\r\n    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true }\r\n});\r\n\r\nmodule.exports = mongoose.model('UserCompany', UserCompanySchema);\r\n"
+        }
+    ]
+}

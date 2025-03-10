@@ -1,0 +1,78 @@
+{
+    "sourceFile": "server.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 15,
+            "patches": [
+                {
+                    "date": 1741092008049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741094240393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,24 @@\n-const app = require('./src/app');\r\n-const PORT = process.env.PORT || 5000;\r\n+const express = require('express');\r\n+const mongoose = require('mongoose');\r\n+const bodyParser = require('body-parser');\r\n+const dotenv = require('dotenv');\r\n+const companyRoutes = require('./routes/companyRoutes');\r\n \r\n-app.listen(PORT, () => {\r\n-    console.log(`Company service running on port ${PORT}`);\r\n-});\r\n+dotenv.config();\r\n+\r\n+const app = express();\r\n+\r\n+// Middleware\r\n+app.use(bodyParser.json());\r\n+\r\n+// Connexion à MongoDB\r\n+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })\r\n+  .then(() => console.log(\"MongoDB connected\"))\r\n+  .catch((err) => console.log(err));\r\n+\r\n+// Routes\r\n+app.use('/api/company', companyRoutes);\r\n+\r\n+// Démarrer le serveur\r\n+const port = process.env.PORT || 5000;\r\n+app.listen(port, () => console.log(`Server running on port ${port}`));\r\n"
+                },
+                {
+                    "date": 1741094255658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require('express');\r\n const mongoose = require('mongoose');\r\n const bodyParser = require('body-parser');\r\n const dotenv = require('dotenv');\r\n-const companyRoutes = require('./routes/companyRoutes');\r\n+const companyRoutes = require('./routes/c');\r\n \r\n dotenv.config();\r\n \r\n const app = express();\r\n"
+                },
+                {
+                    "date": 1741094262884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require('express');\r\n const mongoose = require('mongoose');\r\n const bodyParser = require('body-parser');\r\n const dotenv = require('dotenv');\r\n-const companyRoutes = require('./routes/c');\r\n+const companyRoutes = require('./routes/companyRoutes');\r\n \r\n dotenv.config();\r\n \r\n const app = express();\r\n"
+                },
+                {
+                    "date": 1741095315294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,24 +1,17 @@\n const express = require('express');\r\n-const mongoose = require('mongoose');\r\n-const bodyParser = require('body-parser');\r\n const dotenv = require('dotenv');\r\n+const connectDB = require('./config/db');\r\n const companyRoutes = require('./routes/companyRoutes');\r\n \r\n dotenv.config();\r\n+connectDB();\r\n \r\n const app = express();\r\n+app.use(express.json());\r\n \r\n-// Middleware\r\n-app.use(bodyParser.json());\r\n-\r\n-// Connexion à MongoDB\r\n-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })\r\n-  .then(() => console.log(\"MongoDB connected\"))\r\n-  .catch((err) => console.log(err));\r\n-\r\n // Routes\r\n-app.use('/api/company', companyRoutes);\r\n+app.use('/api/companies', companyRoutes);\r\n \r\n // Démarrer le serveur\r\n-const port = process.env.PORT || 5000;\r\n-app.listen(port, () => console.log(`Server running on port ${port}`));\r\n+const PORT = process.env.PORT || 5000;\r\n+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n"
+                },
+                {
+                    "date": 1741095344456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n const app = express();\r\n app.use(express.json());\r\n \r\n // Routes\r\n-app.use('/api/companies', companyRoutes);\r\n+app.use('/api/companie', companyRoutes);\r\n \r\n // Démarrer le serveur\r\n const PORT = process.env.PORT || 5000;\r\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n"
+                },
+                {
+                    "date": 1741095351493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const express = require('express');\r\n const dotenv = require('dotenv');\r\n const connectDB = require('./config/db');\r\n-const companyRoutes = require('./routes/companyRoutes');\r\n+const companyRoutes = require('./routes/');\r\n \r\n dotenv.config();\r\n connectDB();\r\n \r\n"
+                },
+                {
+                    "date": 1741095358099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const express = require('express');\r\n const dotenv = require('dotenv');\r\n-const connectDB = require('./config/db');\r\n-const companyRoutes = require('./routes/');\r\n+const connectDB = require('./config/');\r\n+const companyRoutes = require('./routes/companyRoutes');\r\n \r\n dotenv.config();\r\n connectDB();\r\n \r\n"
+                },
+                {
+                    "date": 1741096031679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,1 @@\n-const express = require('express');\r\n-const dotenv = require('dotenv');\r\n-const connectDB = require('./config/');\r\n-const companyRoutes = require('./routes/companyRoutes');\r\n-\r\n-dotenv.config();\r\n-connectDB();\r\n-\r\n-const app = express();\r\n-app.use(express.json());\r\n-\r\n-// Routes\r\n-app.use('/api/companie', companyRoutes);\r\n-\r\n-// Démarrer le serveur\r\n-const PORT = process.env.PORT || 5000;\r\n-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n+tr\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741096421255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,17 @@\n+const express = require('express');\r\n+const dotenv = require('dotenv');\r\n+const connectDB = require('./src/config/db');\r\n+const companyRoutes = require('./src/routes/companyRoutes');\r\n+\r\n+dotenv.config();\r\n+connectDB();\r\n+\r\n+const app = express();\r\n+app.use(express.json());\r\n+\r\n+// Routes\r\n+app.use('/api/companie', companyRoutes);\r\n+\r\n+// Démarrer le serveur\r\n+const PORT = process.env.PORT || 5000;\r\n+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n"
+                },
+                {
+                    "date": 1741165171355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,6 @@\n \r\n // Routes\r\n app.use('/api/companie', companyRoutes);\r\n \r\n-// Démarrer le serveur\r\n const PORT = process.env.PORT || 5000;\r\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n-tr\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741165176881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,18 @@\n \r\n const app = express();\r\n app.use(express.json());\r\n \r\n-// Routes\r\n app.use('/api/companie', companyRoutes);\r\n \r\n const PORT = process.env.PORT || 5000;\r\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n+\r\n+require(\"dotenv\").config();\r\n+const connectDB = require(\"./src/config/db\");\r\n+const app = require(\"./src/app\");\r\n+\r\n+const PORT = process.env.PORT || 5000;\r\n+\r\n+connectDB();\r\n+\r\n+app.listen(PORT, () => console.log(`Company Service en écoute sur le port ${PORT}`));\r\n"
+                },
+                {
+                    "date": 1741165183896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,10 @@\n \r\n const PORT = process.env.PORT || 5000;\r\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n \r\n+\r\n+\r\n require(\"dotenv\").config();\r\n const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n"
+                },
+                {
+                    "date": 1741165190001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n \r\n \r\n \r\n-require(\"dotenv\").config();\r\n const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n"
+                },
+                {
+                    "date": 1741165195436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n \r\n \r\n \r\n-const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
+                },
+                {
+                    "date": 1741165215270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,22 +1,6 @@\n-const express = require('express');\r\n-const dotenv = require('dotenv');\r\n-const connectDB = require('./src/config/db');\r\n-const companyRoutes = require('./src/routes/companyRoutes');\r\n-\r\n-dotenv.config();\r\n-connectDB();\r\n-\r\n-const app = express();\r\n-app.use(express.json());\r\n-\r\n-app.use('/api/companie', companyRoutes);\r\n-\r\n-const PORT = process.env.PORT || 5000;\r\n-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n-\r\n-\r\n-\r\n+require(\"dotenv\").config();\r\n+const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
+                }
+            ],
+            "date": 1741092008049,
+            "name": "Commit-0",
+            "content": "const app = require('./src/app');\r\nconst PORT = process.env.PORT || 5000;\r\n\r\napp.listen(PORT, () => {\r\n    console.log(`Company service running on port ${PORT}`);\r\n});\r\n"
+        }
+    ]
+}

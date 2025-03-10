@@ -1,0 +1,162 @@
+{
+    "sourceFile": "src/controllers/taskController.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 36,
+            "patches": [
+                {
+                    "date": 1741172941582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741173524062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,9 @@\n     const phase = await Phase.findById(phaseId);\r\n     if (!phase) {\r\n       return res.status(404).json({ message: \"Phase not found\" });\r\n     }\r\n-\r\n-    // Créer la tâche\r\n+ \r\n     const task = new Task({\r\n       name,\r\n       description,\r\n       startDate,\r\n"
+                },
+                {
+                    "date": 1741179842516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n exports.createTask = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n \r\n-    // Vérifier si la phase existe\r\n     const phase = await Phase.findById(phaseId);\r\n     if (!phase) {\r\n       return res.status(404).json({ message: \"Phase not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741179870222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n       priority,\r\n       phase: phaseId,\r\n     });\r\n \r\n-    // Enregistrer la tâche\r\n     await task.save();\r\n \r\n     // Ajouter la tâche à la phase\r\n     phase.tasks.push(task._id);\r\n"
+                },
+                {
+                    "date": 1741179878232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     });\r\n \r\n     await task.save();\r\n \r\n-    // Ajouter la tâche à la phase\r\n     phase.tasks.push(task._id);\r\n     await phase.save();\r\n \r\n     res.status(201).json(task);\r\n@@ -32,9 +31,8 @@\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n-// Récupérer toutes les tâches d'une phase\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741179904544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n const Task = require('../models/Task'); // Le modèle Task\r\n const Phase = require('../models/Phase'); // Le modèle Phase\r\n \r\n-// Créer une nouvelle tâche\r\n exports.createTask = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n \r\n@@ -35,9 +34,8 @@\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n-    // Vérifier si la phase existe\r\n     const phase = await Phase.findById(phaseId).populate('tasks');\r\n     if (!phase) {\r\n       return res.status(404).json({ message: \"Phase not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741179909903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n-const Task = require('../models/Task'); // Le modèle Task\r\n-const Phase = require('../models/Phase'); // Le modèle Phase\r\n+const Task = require('../models/Task'); // Le modèle Phase\r\n \r\n exports.createTask = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n"
+                },
+                {
+                    "date": 1741179917433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n-const Task = require('../models/Task'); // Le modèle Phase\r\n-\r\n+const Task = require('../models/Task'); \r\n+const Phase = require('../models/Phase'); \r\n exports.createTask = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n \r\n"
+                },
+                {
+                    "date": 1741179958838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n const Task = require('../models/Task'); \r\n const Phase = require('../models/Phase'); \r\n+\r\n exports.createTask = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n \r\n@@ -44,9 +45,8 @@\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n-// Mettre à jour une tâche\r\n exports.updateTask = async (req, res) => {\r\n   try {\r\n     const { taskId } = req.params;\r\n     const { name, description, startDate, endDate, status, priority } = req.body;\r\n"
+                },
+                {
+                    "date": 1741180000376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,8 @@\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n-// Supprimer une tâche\r\n exports.deleteTask = async (req, res) => {\r\n   try {\r\n     const { taskId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741182444023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,37 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n-\r\n+exports.createTask = async (req, res) => {\r\n+    try {\r\n+      const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n+  \r\n+      const phase = await Phase.findById(phaseId);\r\n+      if (!phase) {\r\n+        return res.status(404).json({ message: \"Phase not found\" });\r\n+      }\r\n+   \r\n+      const task = new Task({\r\n+        name,\r\n+        description,\r\n+        startDate,\r\n+        endDate,\r\n+        status,\r\n+        priority,\r\n+        phase: phaseId,\r\n+      });\r\n+  \r\n+      await task.save();\r\n+  \r\n+      phase.tasks.push(task._id);\r\n+      await phase.save();\r\n+  \r\n+      res.status(201).json(task);\r\n+    } catch (error) {\r\n+      res.status(500).json({ message: error.message });\r\n+    }\r\n+  };\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n@@ -78,9 +106,8 @@\n     if (!task) {\r\n       return res.status(404).json({ message: \"Task not found\" });\r\n     }\r\n \r\n-    // Supprimer la tâche de la phase\r\n     await Phase.updateOne({ _id: task.phase }, { $pull: { tasks: taskId } });\r\n \r\n     res.status(200).json({ message: \"Task deleted\" });\r\n   } catch (error) {\r\n"
+                },
+                {
+                    "date": 1741182469211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n-exports.createTask = async (req, res) => {\r\n+exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n   \r\n       const phase = await Phase.findById(phaseId);\r\n"
+                },
+                {
+                    "date": 1741182476339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n   }\r\n };\r\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n-      const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n+      const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n       const phase = await Phase.findById(phaseId);\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n"
+                },
+                {
+                    "date": 1741182489732,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n-      const phase = await Phase.findById(phaseId);\r\n+      const phase = await Phase.findById(taskId);\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n    \r\n"
+                },
+                {
+                    "date": 1741182496134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n-      const phase = await Phase.findById(taskId);\r\n+      const phase = await Task.findById(taskId);\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n    \r\n"
+                },
+                {
+                    "date": 1741182502763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,10 +33,10 @@\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n-      const phase = await Task.findById(taskId);\r\n-      if (!phase) {\r\n+      const task = await Task.findById(taskId);\r\n+      if (!task) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n    \r\n       const task = new Task({\r\n"
+                },
+                {
+                    "date": 1741182526562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n-      const task = await Task.findById(taskId);\r\n+      const t = await Task.findById(taskId);\r\n       if (!task) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n    \r\n"
+                },
+                {
+                    "date": 1741182535622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,10 +34,10 @@\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n       const t = await Task.findById(taskId);\r\n-      if (!task) {\r\n-        return res.status(404).json({ message: \"Phase not found\" });\r\n+      if (!t) {\r\n+        return res.status(404).json({ message: \"Task not found\" });\r\n       }\r\n    \r\n       const task = new Task({\r\n         name,\r\n"
+                },
+                {
+                    "date": 1741182558077,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,37 +29,9 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n-exports.createsubTask = async (req, res) => {\r\n-    try {\r\n-      const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n-  \r\n-      const t = await Task.findById(taskId);\r\n-      if (!t) {\r\n-        return res.status(404).json({ message: \"Task not found\" });\r\n-      }\r\n-   \r\n-      const task = new Task({\r\n-        name,\r\n-        description,\r\n-        startDate,\r\n-        endDate,\r\n-        status,\r\n-        priority,\r\n-        phase: phaseId,\r\n-      });\r\n-  \r\n-      await task.save();\r\n-  \r\n-      phase.tasks.push(task._id);\r\n-      await phase.save();\r\n-  \r\n-      res.status(201).json(task);\r\n-    } catch (error) {\r\n-      res.status(500).json({ message: error.message });\r\n-    }\r\n-  };\r\n+\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741182686822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,37 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n-\r\n+exports.createsubTask = async (req, res) => {\r\n+    try {\r\n+      const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n+  \r\n+      const t = await Task.findById(taskId);\r\n+      if (!task) {\r\n+        return res.status(404).json({ message: \"Task not found\" });\r\n+      }\r\n+   \r\n+      const task = new Task({\r\n+        name,\r\n+        description,\r\n+        startDate,\r\n+        endDate,\r\n+        status,\r\n+        priority,\r\n+        phase: phaseId,\r\n+      });\r\n+  \r\n+      await task.save();\r\n+  \r\n+      phase.tasks.push(task._id);\r\n+      await phase.save();\r\n+  \r\n+      res.status(201).json(task);\r\n+    } catch (error) {\r\n+      res.status(500).json({ message: error.message });\r\n+    }\r\n+  };\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741182696967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,14 +33,14 @@\n exports.createsubTask = async (req, res) => {\r\n     try {\r\n       const { name, description, startDate, endDate, status, priority, taskId } = req.body;\r\n   \r\n-      const t = await Task.findById(taskId);\r\n+      const task = await Task.findById(taskId);\r\n       if (!task) {\r\n         return res.status(404).json({ message: \"Task not found\" });\r\n       }\r\n    \r\n-      const task = new Task({\r\n+      const subtask = new Task({\r\n         name,\r\n         description,\r\n         startDate,\r\n         endDate,\r\n"
+                },
+                {
+                    "date": 1741182707658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n         startDate,\r\n         endDate,\r\n         status,\r\n         priority,\r\n-        phase: phaseId,\r\n+        phase: task.phaseId,\r\n       });\r\n   \r\n       await task.save();\r\n   \r\n"
+                },
+                {
+                    "date": 1741182718252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,12 +45,12 @@\n         startDate,\r\n         endDate,\r\n         status,\r\n         priority,\r\n-        phase: task.phaseId,\r\n+        phase: task.phase,\r\n       });\r\n   \r\n-      await task.save();\r\n+      await subtask.save();\r\n   \r\n       phase.tasks.push(task._id);\r\n       await phase.save();\r\n   \r\n"
+                },
+                {
+                    "date": 1741182750920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,10 +50,10 @@\n       });\r\n   \r\n       await subtask.save();\r\n   \r\n-      phase.tasks.push(task._id);\r\n-      await phase.save();\r\n+      task.subTasks.push(subtask._id);\r\n+    await task.save();\r\n   \r\n       res.status(201).json(task);\r\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n"
+                },
+                {
+                    "date": 1741182758185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n   \r\n       await subtask.save();\r\n   \r\n       task.subTasks.push(subtask._id);\r\n-    await task.save();\r\n+      await task.save();\r\n   \r\n       res.status(201).json(task);\r\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n"
+                },
+                {
+                    "date": 1741182767093,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   \r\n       task.subTasks.push(subtask._id);\r\n       await task.save();\r\n   \r\n-      res.status(201).json(task);\r\n+      res.status(201).json(subtask);\r\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n"
+                },
+                {
+                    "date": 1741183366624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n+\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741183371856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,22 @@\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n-\r\n+  exports.getTasks = async (req, res) => {\r\n+    try {\r\n+      const { phaseId } = req.params;\r\n+  \r\n+      const phase = await Phase.findById(phaseId).populate('tasks');\r\n+      if (!phase) {\r\n+        return res.status(404).json({ message: \"Phase not found\" });\r\n+      }\r\n+  \r\n+      res.status(200).json(phase.tasks);\r\n+    } catch (error) {\r\n+      res.status(500).json({ message: error.message });\r\n+    }\r\n+  };\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741183379770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n-  exports.getTasks = async (req, res) => {\r\n+  exports.getTaskById = async (req, res) => {\r\n     try {\r\n       const { phaseId } = req.params;\r\n   \r\n       const phase = await Phase.findById(phaseId).populate('tasks');\r\n@@ -72,8 +72,9 @@\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n+\r\n exports.getTasks = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741183389328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n     }\r\n   };\r\n   exports.getTaskById = async (req, res) => {\r\n     try {\r\n-      const { phaseId } = req.params;\r\n+      const { tasId } = req.params;\r\n   \r\n       const phase = await Phase.findById(phaseId).populate('tasks');\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n"
+                },
+                {
+                    "date": 1741183395032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,11 +60,11 @@\n     }\r\n   };\r\n   exports.getTaskById = async (req, res) => {\r\n     try {\r\n-      const { tasId } = req.params;\r\n+      const { taskId } = req.params;\r\n   \r\n-      const phase = await Phase.findById(phaseId).populate('tasks');\r\n+      const task = await Phase.findById(phaseId).populate('tasks');\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n   \r\n"
+                },
+                {
+                    "date": 1741183400278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n   exports.getTaskById = async (req, res) => {\r\n     try {\r\n       const { taskId } = req.params;\r\n   \r\n-      const task = await Phase.findById(phaseId).populate('tasks');\r\n+      const task = await Task.findById(phaseId).populate('tasks');\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n   \r\n"
+                },
+                {
+                    "date": 1741183408001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n   exports.getTaskById = async (req, res) => {\r\n     try {\r\n       const { taskId } = req.params;\r\n   \r\n-      const task = await Task.findById(phaseId).populate('tasks');\r\n+      const task = await Task.findById(taskId).populate('tasks');\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n   \r\n"
+                },
+                {
+                    "date": 1741183416126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n   exports.getTaskById = async (req, res) => {\r\n     try {\r\n       const { taskId } = req.params;\r\n   \r\n-      const task = await Task.findById(taskId).populate('tasks');\r\n+      const task = await Task.findById(taskId)\r\n       if (!phase) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n   \r\n"
+                },
+                {
+                    "date": 1741183422305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     try {\r\n       const { taskId } = req.params;\r\n   \r\n       const task = await Task.findById(taskId)\r\n-      if (!phase) {\r\n+      if (!task) {\r\n         return res.status(404).json({ message: \"Phase not found\" });\r\n       }\r\n   \r\n       res.status(200).json(phase.tasks);\r\n"
+                },
+                {
+                    "date": 1741183445362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,12 +64,12 @@\n       const { taskId } = req.params;\r\n   \r\n       const task = await Task.findById(taskId)\r\n       if (!task) {\r\n-        return res.status(404).json({ message: \"Phase not found\" });\r\n+        return res.status(404).json({ message: \"task not found\" });\r\n       }\r\n   \r\n-      res.status(200).json(phase.tasks);\r\n+      res.status(200).json.tasks);\r\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n"
+                },
+                {
+                    "date": 1741183458679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,18 +58,18 @@\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n-  exports.getTaskById = async (req, res) => {\r\n+exports.getTaskById = async (req, res) => {\r\n     try {\r\n       const { taskId } = req.params;\r\n   \r\n       const task = await Task.findById(taskId)\r\n       if (!task) {\r\n         return res.status(404).json({ message: \"task not found\" });\r\n       }\r\n   \r\n-      res.status(200).json.tasks);\r\n+      res.status(200).json(task);\r\n     } catch (error) {\r\n       res.status(500).json({ message: error.message });\r\n     }\r\n   };\r\n"
+                }
+            ],
+            "date": 1741172941582,
+            "name": "Commit-0",
+            "content": "const Task = require('../models/Task'); // Le modèle Task\r\nconst Phase = require('../models/Phase'); // Le modèle Phase\r\n\r\n// Créer une nouvelle tâche\r\nexports.createTask = async (req, res) => {\r\n  try {\r\n    const { name, description, startDate, endDate, status, priority, phaseId } = req.body;\r\n\r\n    // Vérifier si la phase existe\r\n    const phase = await Phase.findById(phaseId);\r\n    if (!phase) {\r\n      return res.status(404).json({ message: \"Phase not found\" });\r\n    }\r\n\r\n    // Créer la tâche\r\n    const task = new Task({\r\n      name,\r\n      description,\r\n      startDate,\r\n      endDate,\r\n      status,\r\n      priority,\r\n      phase: phaseId,\r\n    });\r\n\r\n    // Enregistrer la tâche\r\n    await task.save();\r\n\r\n    // Ajouter la tâche à la phase\r\n    phase.tasks.push(task._id);\r\n    await phase.save();\r\n\r\n    res.status(201).json(task);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Récupérer toutes les tâches d'une phase\r\nexports.getTasks = async (req, res) => {\r\n  try {\r\n    const { phaseId } = req.params;\r\n\r\n    // Vérifier si la phase existe\r\n    const phase = await Phase.findById(phaseId).populate('tasks');\r\n    if (!phase) {\r\n      return res.status(404).json({ message: \"Phase not found\" });\r\n    }\r\n\r\n    res.status(200).json(phase.tasks);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Mettre à jour une tâche\r\nexports.updateTask = async (req, res) => {\r\n  try {\r\n    const { taskId } = req.params;\r\n    const { name, description, startDate, endDate, status, priority } = req.body;\r\n\r\n    const task = await Task.findByIdAndUpdate(taskId, {\r\n      name,\r\n      description,\r\n      startDate,\r\n      endDate,\r\n      status,\r\n      priority,\r\n    }, { new: true });\r\n\r\n    if (!task) {\r\n      return res.status(404).json({ message: \"Task not found\" });\r\n    }\r\n\r\n    res.status(200).json(task);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Supprimer une tâche\r\nexports.deleteTask = async (req, res) => {\r\n  try {\r\n    const { taskId } = req.params;\r\n\r\n    const task = await Task.findByIdAndDelete(taskId);\r\n    if (!task) {\r\n      return res.status(404).json({ message: \"Task not found\" });\r\n    }\r\n\r\n    // Supprimer la tâche de la phase\r\n    await Phase.updateOne({ _id: task.phase }, { $pull: { tasks: taskId } });\r\n\r\n    res.status(200).json({ message: \"Task deleted\" });\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n"
+        }
+    ]
+}

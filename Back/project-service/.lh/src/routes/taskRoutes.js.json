@@ -1,0 +1,130 @@
+{
+    "sourceFile": "src/routes/taskRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 28,
+            "patches": [
+                {
+                    "date": 1741173032413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741173048978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,10 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n-router.post('/phases', phaseController.createPhase);\r\n-router.get('/phases/:projectId', phaseController.getPhases);\r\n-router.put('/phases/:phaseId', phaseController.updatePhase);\r\n-router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n+router.post('/tasks', taskController.createTask);\r\n+router.get('/tasks/:phaseId', taskController.getTasks);\r\n+router.put('/tasks/:taskId', taskController.updateTask);\r\n+router.delete('/tasks/:taskId', taskController.deleteTask);\r\n \r\n-\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741173055158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n+const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/tasks', taskController.createTask);\r\n router.get('/tasks/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180101098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n-router.post('/tasks', taskController.createTask);\r\n+router.post('/create', taskController.createTask);\r\n router.get('/tasks/:phaseId', taskController.getTasks);\r\n router.put('/tasks/:taskId', taskController.updateTask);\r\n router.delete('/tasks/:taskId', taskController.deleteTask);\r\n \r\n"
+                },
+                {
+                    "date": 1741180121839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n-router.post('/create', taskController.createTask);\r\n-router.get('/tasks/:phaseId', taskController.getTasks);\r\n+router.post('/', taskController.createTask);\r\n+router.get('/:phaseId', taskController.getTasks);\r\n router.put('/tasks/:taskId', taskController.updateTask);\r\n router.delete('/tasks/:taskId', taskController.deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180129349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,8 @@\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n-router.put('/tasks/:taskId', taskController.updateTask);\r\n-router.delete('/tasks/:taskId', taskController.deleteTask);\r\n+router.put('/:taskId', taskController.updateTask);\r\n+router.delete('/:taskId', taskController.deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180362318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n+const { createProject, getProjects } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180372571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"./controllers/taskController\");\r\n+const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180379577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/taskController\");\r\n+const { createProject, getProjects } = require(\"..taskController/controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180387067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"..taskController/controllers/taskController\");\r\n+const { createProject, getProjects } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180433601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"./controllers/taskController\");\r\n+const { createTask, getProjects } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', taskController.createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180451050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require(\"express\");\r\n const { createTask, getProjects } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n-router.post('/', taskController.createTask);\r\n+router.post('/', createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n router.put('/:taskId', taskController.updateTask);\r\n router.delete('/:taskId', taskController.deleteTask);\r\n \r\n"
+                },
+                {
+                    "date": 1741180477169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createTask, getProjects } = require(\"./controllers/taskController\");\r\n+const { createTask, getTasks } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180485969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks } = require(\"./controllers/taskController\");\r\n+const { createTask, getTasks , updateTask } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n"
+                },
+                {
+                    "date": 1741180498592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks , updateTask } = require(\"./controllers/taskController\");\r\n+const { createTask, getTasks , updateTask, deleteTask } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.get('/:phaseId', taskController.getTasks);\r\n-router.put('/:taskId', taskController.updateTask);\r\n+router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', taskController.deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180507843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const { createTask, getTasks , updateTask, deleteTask } = require(\"./controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n-router.get('/:phaseId', taskController.getTasks);\r\n+router.get('/:phaseId', getTasks);\r\n router.put('/:taskId', updateTask);\r\n-router.delete('/:taskId', taskController.deleteTask);\r\n+router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180527791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks , updateTask, deleteTask } = require(\"./controllers/taskController\");\r\n+const { createTask, getTasks , updateTask, deleteTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.get('/:phaseId', getTasks);\r\n"
+                },
+                {
+                    "date": 1741182794703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks , updateTask, deleteTask } = require(\"../controllers/taskController\");\r\n+const { createTask, getTasks , updateTask, deleteTask,  } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.get('/:phaseId', getTasks);\r\n"
+                },
+                {
+                    "date": 1741182813668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks , updateTask, deleteTask,  } = require(\"../controllers/taskController\");\r\n+const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n+\r\n router.get('/:phaseId', getTasks);\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n"
+                },
+                {
+                    "date": 1741182829925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n+router.post('/:taskId', createTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n"
+                },
+                {
+                    "date": 1741182838265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n-router.post('/:taskId', createTask);\r\n+router.post('/:taskId', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n"
+                },
+                {
+                    "date": 1741182893771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n-router.post('/:taskId', createsubTask);\r\n+router.post('/sub', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n"
+                },
+                {
+                    "date": 1741183470827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,12 @@\n const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n-router.post('/sub', createsubTask);\r\n+router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n+\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183477649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-\r\n+router.get\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183485979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-router.get\r\n+router.get(\"/getbyid\")\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183492910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-router.get(\"/getbyid\")\r\n+router.get(\"/getbyid/\")\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183505159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-router.get(\"/getbyid/\")\r\n+router.get(\"/getbyid/:taskd\")\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183515196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-router.get(\"/getbyid/:taskd\")\r\n+router.get(\"/getbyid/:taskId\")\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741183530735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n const express = require(\"express\");\r\n-const { createTask, getTasks , updateTask, deleteTask, createsubTask } = require(\"../controllers/taskController\");\r\n+const { createTask, getTasks , updateTask, deleteTask, createsubTask, getTaskById } = require(\"../controllers/taskController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createTask);\r\n router.post('/subtask', createsubTask);\r\n \r\n router.get('/:phaseId', getTasks);\r\n-router.get(\"/getbyid/:taskId\")\r\n+router.get(\"/getbyid/:taskId\",)\r\n router.put('/:taskId', updateTask);\r\n router.delete('/:taskId', deleteTask);\r\n \r\n module.exports = router;\r\n"
+                }
+            ],
+            "date": 1741173032413,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst { createProject, getProjects } = require(\"../controllers/phaseController\");\r\nconst router = express.Router();\r\n\r\nrouter.post('/phases', phaseController.createPhase);\r\nrouter.get('/phases/:projectId', phaseController.getPhases);\r\nrouter.put('/phases/:phaseId', phaseController.updatePhase);\r\nrouter.delete('/phases/:phaseId', phaseController.deletePhase);\r\n\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}

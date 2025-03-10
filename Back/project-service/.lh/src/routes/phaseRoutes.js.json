@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/routes/phaseRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1741172988299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741173003433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,16 @@\n const express = require(\"express\");\r\n+const { createProject, getProjects } = require(\"../controllers/phconst express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/projectController\");\r\n const router = express.Router();\r\n \r\n router.post(\"/create\", createProject);\r\n router.get(\"/all\", getProjects);\r\n \r\n module.exports = router;\r\n+\");\r\n+const router = express.Router();\r\n+\r\n+router.post(\"/create\", createProject);\r\n+router.get(\"/all\", getProjects);\r\n+\r\n+module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741173021499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,11 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/phconst express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/projectController\");\r\n+const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n-router.post(\"/create\", createProject);\r\n-router.get(\"/all\", getProjects);\r\n+router.post('/phases', phaseController.createPhase);\r\n+router.get('/phases/:projectId', phaseController.getPhases);\r\n+router.put('/phases/:phaseId', phaseController.updatePhase);\r\n+router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n \r\n-module.exports = router;\r\n-\");\r\n-const router = express.Router();\r\n \r\n-router.post(\"/create\", createProject);\r\n-router.get(\"/all\", getProjects);\r\n-\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180050879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n-router.post('/phases', phaseController.createPhase);\r\n+router.post('/create', phaseController.createPhase);\r\n router.get('/phases/:projectId', phaseController.getPhases);\r\n router.put('/phases/:phaseId', phaseController.updatePhase);\r\n router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n \r\n"
+                },
+                {
+                    "date": 1741180072584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n router.post('/create', phaseController.createPhase);\r\n-router.get('/phases/:projectId', phaseController.getPhases);\r\n+router.get('/:projectId', phaseController.getPhases);\r\n router.put('/phases/:phaseId', phaseController.updatePhase);\r\n router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1741180079783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n const router = express.Router();\r\n \r\n router.post('/create', phaseController.createPhase);\r\n router.get('/:projectId', phaseController.getPhases);\r\n-router.put('/phases/:phaseId', phaseController.updatePhase);\r\n+router.put('/:phaseId', phaseController.updatePhase);\r\n router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180114307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n-router.post('/create', phaseController.createPhase);\r\n+router.post('/', phaseController.createPhase);\r\n router.get('/:projectId', phaseController.getPhases);\r\n router.put('/:phaseId', phaseController.updatePhase);\r\n-router.delete('/phases/:phaseId', phaseController.deletePhase);\r\n+router.delete('/:phaseId', phaseController.deletePhase);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180543464,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/phaseController\");\r\n+const { phaseController } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n router.post('/', phaseController.createPhase);\r\n router.get('/:projectId', phaseController.getPhases);\r\n"
+                },
+                {
+                    "date": 1741180561791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { phaseController } = require(\"../controllers/phaseController\");\r\n+const { createPhase } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n router.post('/', phaseController.createPhase);\r\n router.get('/:projectId', phaseController.getPhases);\r\n"
+                },
+                {
+                    "date": 1741180573556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require(\"express\");\r\n-const { createPhase } = require(\"../controllers/phaseController\");\r\n+const { createPhase, getPhases } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n-router.post('/', phaseController.createPhase);\r\n+router.post('/', createPhase);\r\n router.get('/:projectId', phaseController.getPhases);\r\n router.put('/:phaseId', phaseController.updatePhase);\r\n router.delete('/:phaseId', phaseController.deletePhase);\r\n \r\n"
+                },
+                {
+                    "date": 1741180591065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,10 @@\n const { createPhase, getPhases } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createPhase);\r\n-router.get('/:projectId', phaseController.getPhases);\r\n-router.put('/:phaseId', phaseController.updatePhase);\r\n+router.get('/:projectId', getPhases);\r\n+router.put('/:phaseId', updatePhase);\r\n router.delete('/:phaseId', phaseController.deletePhase);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741180596321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const express = require(\"express\");\r\n-const { createPhase, getPhases } = require(\"../controllers/phaseController\");\r\n+const { createPhase, getPhases , updatePhase } = require(\"../controllers/phaseController\");\r\n const router = express.Router();\r\n \r\n router.post('/', createPhase);\r\n router.get('/:projectId', getPhases);\r\n"
+                },
+                {
+                    "date": 1741180606506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n \r\n router.post('/', createPhase);\r\n router.get('/:projectId', getPhases);\r\n router.put('/:phaseId', updatePhase);\r\n-router.delete('/:phaseId', phaseController.deletePhase);\r\n+router.delete('/:phaseId', deletePhase);\r\n \r\n \r\n module.exports = router;\r\n"
+                }
+            ],
+            "date": 1741172988299,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst { createProject, getProjects } = require(\"../controllers/projectController\");\r\nconst router = express.Router();\r\n\r\nrouter.post(\"/create\", createProject);\r\nrouter.get(\"/all\", getProjects);\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}

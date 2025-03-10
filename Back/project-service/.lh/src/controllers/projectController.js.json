@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/controllers/projectController.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1741171966760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1741171966760,
+            "name": "Commit-0",
+            "content": "const Project = require(\"../models/Project\");\r\n\r\nexports.createProject = async (req, res) => {\r\n    try {\r\n        const project = new Project(req.body);\r\n        await project.save();\r\n        res.status(201).json(project);\r\n    } catch (error) {\r\n        res.status(500).json({ message: error.message });\r\n    }\r\n};\r\n\r\nexports.getProjects = async (req, res) => {\r\n    try {\r\n        const projects = await Project.find().populate(\"phases\");\r\n        res.status(200).json(projects);\r\n    } catch (error) {\r\n        res.status(500).json({ message: error.message });\r\n    }\r\n};\r\n"
+        }
+    ]
+}

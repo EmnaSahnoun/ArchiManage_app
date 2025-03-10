@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/models/Phase.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1741171232746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741171850159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n const mongoose = require(\"mongoose\");\r\n \r\n const phaseSchema = new mongoose.Schema({\r\n-  name: { type: String, required: true },\r\n-  description: String,\r\n-  startDate: Date,\r\n-  endDate: Date,\r\n-  project: { type: mongoose.Schema.Types.ObjectId, ref: \"Project\" },\r\n-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Task\" }],\r\n+    name: { type: String, required: true },\r\n+    description: { type: String },\r\n+    startDate: { type: Date, required: true },\r\n+    endDate: { type: Date },\r\n+    project: { type: mongoose.Schema.Types.ObjectId, ref: \"Project\", required: true },\r\n+    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Task\" }],\r\n });\r\n \r\n module.exports = mongoose.model(\"Phase\", phaseSchema);\r\n"
+                }
+            ],
+            "date": 1741171232746,
+            "name": "Commit-0",
+            "content": "const mongoose = require(\"mongoose\");\r\n\r\nconst phaseSchema = new mongoose.Schema({\r\n  name: { type: String, required: true },\r\n  description: String,\r\n  startDate: Date,\r\n  endDate: Date,\r\n  project: { type: mongoose.Schema.Types.ObjectId, ref: \"Project\" },\r\n  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: \"Task\" }],\r\n});\r\n\r\nmodule.exports = mongoose.model(\"Phase\", phaseSchema);\r\n"
+        }
+    ]
+}

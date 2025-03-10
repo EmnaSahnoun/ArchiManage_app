@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1741172060941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741180189290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n const bodyParser = require(\"body-parser\");\r\n const connectDB = require(\"./config/db\");\r\n \r\n const projectRoutes = require(\"./routes/projectRoutes\");\r\n+c\r\n \r\n-\r\n const app = express();\r\n connectDB();\r\n \r\n app.use(cors());\r\n"
+                },
+                {
+                    "date": 1741180235273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,7 @@\n app.use(cors());\r\n app.use(bodyParser.json());\r\n \r\n app.use(\"/api/project\", projectRoutes);\r\n+app.use\r\n \r\n module.exports = app;\r\n"
+                }
+            ],
+            "date": 1741172060941,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst cors = require(\"cors\");\r\nconst bodyParser = require(\"body-parser\");\r\nconst connectDB = require(\"./config/db\");\r\n\r\nconst projectRoutes = require(\"./routes/projectRoutes\");\r\n\r\nconst app = express();\r\nconnectDB();\r\n\r\napp.use(cors());\r\napp.use(bodyParser.json());\r\n\r\napp.use(\"/api/projects\", projectRoutes);\r\n\r\nmodule.exports = app;\r\n"
+        }
+    ]
+}

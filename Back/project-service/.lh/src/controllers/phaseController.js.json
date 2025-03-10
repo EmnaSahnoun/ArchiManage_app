@@ -1,0 +1,106 @@
+{
+    "sourceFile": "src/controllers/phaseController.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 22,
+            "patches": [
+                {
+                    "date": 1741172922610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741173196716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n const Phase = require('../models/Phase'); // Le modèle Phase\r\n const Project = require('../models/Project'); // Le modèle Project\r\n \r\n-// Créer une nouvelle phase\r\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n"
+                },
+                {
+                    "date": 1741173209660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    // Vérifier si le projet existe\r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741173222147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const Phase = require('../models/Phase'); // Le modèle Phase\r\n-const Project = require('../models/Project'); // Le modèle Project\r\n+const Project = require('../models/Project'); \r\n \r\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n"
+                },
+                {
+                    "date": 1741173231620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const Phase = require('../models/Phase'); // Le modèle Phase\r\n+const Phase = require('../models/Phase'); \r\n const Project = require('../models/Project'); \r\n \r\n exports.createPhase = async (req, res) => {\r\n   try {\r\n@@ -9,9 +9,8 @@\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n-    // Créer la phase\r\n     const phase = new Phase({\r\n       name,\r\n       description,\r\n       startDate,\r\n"
+                },
+                {
+                    "date": 1741173237679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,10 +16,8 @@\n       startDate,\r\n       endDate,\r\n       project: projectId,\r\n     });\r\n-\r\n-    // Enregistrer la phase\r\n     await phase.save();\r\n \r\n     // Ajouter la phase au projet\r\n     project.phases.push(phase._id);\r\n"
+                },
+                {
+                    "date": 1741173244427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,8 @@\n       project: projectId,\r\n     });\r\n     await phase.save();\r\n \r\n-    // Ajouter la phase au projet\r\n     project.phases.push(phase._id);\r\n     await project.save();\r\n \r\n     res.status(201).json(phase);\r\n"
+                },
+                {
+                    "date": 1741173254112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,8 @@\n       endDate,\r\n       project: projectId,\r\n     });\r\n     await phase.save();\r\n-\r\n     project.phases.push(phase._id);\r\n     await project.save();\r\n \r\n     res.status(201).json(phase);\r\n@@ -27,9 +26,8 @@\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n-// Récupérer toutes les phases d'un projet\r\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741173260043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,8 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    // Vérifier si le projet existe\r\n     const project = await Project.findById(projectId).populate('phases');\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741173357513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,8 @@\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n-// Mettre à jour une phase\r\n exports.updatePhase = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n     const { name, description, startDate, endDate } = req.body;\r\n"
+                },
+                {
+                    "date": 1741173425998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,10 +62,9 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n-\r\n-// Supprimer une phase\r\n+ \r\n exports.deletePhase = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n"
+                },
+                {
+                    "date": 1741173448543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n- \r\n+\r\n exports.deletePhase = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n \r\n@@ -72,9 +72,8 @@\n     if (!phase) {\r\n       return res.status(404).json({ message: \"Phase not found\" });\r\n     }\r\n \r\n-    // Supprimer la phase du projet\r\n     await Project.updateOne({ _id: phase.project }, { $pull: { phases: phaseId } });\r\n \r\n     res.status(200).json({ message: \"Phase deleted\" });\r\n   } catch (error) {\r\n"
+                },
+                {
+                    "date": 1741181089225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n const Phase = require('../models/Phase'); \r\n const Project = require('../models/Project'); \r\n+const mongoose = require('mongoose');\r\n \r\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n"
+                },
+                {
+                    "date": 1741181097091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    const project = await Project.findById(projectId);\r\n+    const project = await Project.findById(mongoose.Types.ObjectId(projectId));\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1741181170618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    const project = await Project.findById(mongoose.Types.ObjectId(projectId));\r\n+    const project = await Project.findById(projectId);\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1741181195093,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n-      return res.status(404).json({ message: \"Project not found\" });\r\n+      return res.status(404).json({ message: \"{{Project not found\" });\r\n     }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n"
+                },
+                {
+                    "date": 1741181200542,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n-      return res.status(404).json({ message: \"{{Project not found\" });\r\n+      return res.status(404).json({ message: \"${Project not found\" });\r\n     }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n"
+                },
+                {
+                    "date": 1741181211578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n-      return res.status(404).json({ message: \"${Project not found\" });\r\n+      return res.status(404).json({ message: \"Project not found+\" });\r\n     }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n"
+                },
+                {
+                    "date": 1741181218818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n-      return res.status(404).json({ message: \"Project not found+\" });\r\n+      return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n"
+                },
+                {
+                    "date": 1741181345943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,11 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    const project = await Project.findById(projectId);\r\n-    if (!project) {\r\n-      return res.status(404).json({ message: \"Project not found\" });\r\n-    }\r\n+    if (!mongoose.Types.ObjectId.isValid(projectId)) {\r\n+        return res.status(400).json({ message: \"Invalid project ID\" });\r\n+      }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n       description,\r\n"
+                },
+                {
+                    "date": 1741181364424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,11 +5,12 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    if (!mongoose.Types.ObjectId.isValid(projectId)) {\r\n-        return res.status(400).json({ message: \"Invalid project ID\" });\r\n-      }\r\n+    const project = await Project.findById(projectId);\r\n+    if (!project) {\r\n+      return res.status(404).json({ message: \"Project not found\" });\r\n+    }\r\n \r\n     const phase = new Phase({\r\n       name,\r\n       description,\r\n"
+                },
+                {
+                    "date": 1741181400126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,12 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n+    if (!mongoose.Types.ObjectId.isValid(projectId)) {\r\n+        return res.status(400).json({ message: \"Invalid project ID\" });\r\n+      }\r\n+      \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741181413738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,9 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    if (!mongoose.Types.ObjectId.isValid(projectId)) {\r\n-        return res.status(400).json({ message: \"Invalid project ID\" });\r\n-      }\r\n-      \r\n+    \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n"
+                }
+            ],
+            "date": 1741172922610,
+            "name": "Commit-0",
+            "content": "const Phase = require('../models/Phase'); // Le modèle Phase\r\nconst Project = require('../models/Project'); // Le modèle Project\r\n\r\n// Créer une nouvelle phase\r\nexports.createPhase = async (req, res) => {\r\n  try {\r\n    const { name, description, startDate, endDate, projectId } = req.body;\r\n\r\n    // Vérifier si le projet existe\r\n    const project = await Project.findById(projectId);\r\n    if (!project) {\r\n      return res.status(404).json({ message: \"Project not found\" });\r\n    }\r\n\r\n    // Créer la phase\r\n    const phase = new Phase({\r\n      name,\r\n      description,\r\n      startDate,\r\n      endDate,\r\n      project: projectId,\r\n    });\r\n\r\n    // Enregistrer la phase\r\n    await phase.save();\r\n\r\n    // Ajouter la phase au projet\r\n    project.phases.push(phase._id);\r\n    await project.save();\r\n\r\n    res.status(201).json(phase);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Récupérer toutes les phases d'un projet\r\nexports.getPhases = async (req, res) => {\r\n  try {\r\n    const { projectId } = req.params;\r\n\r\n    // Vérifier si le projet existe\r\n    const project = await Project.findById(projectId).populate('phases');\r\n    if (!project) {\r\n      return res.status(404).json({ message: \"Project not found\" });\r\n    }\r\n\r\n    res.status(200).json(project.phases);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Mettre à jour une phase\r\nexports.updatePhase = async (req, res) => {\r\n  try {\r\n    const { phaseId } = req.params;\r\n    const { name, description, startDate, endDate } = req.body;\r\n\r\n    const phase = await Phase.findByIdAndUpdate(phaseId, {\r\n      name,\r\n      description,\r\n      startDate,\r\n      endDate,\r\n    }, { new: true });\r\n\r\n    if (!phase) {\r\n      return res.status(404).json({ message: \"Phase not found\" });\r\n    }\r\n\r\n    res.status(200).json(phase);\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n\r\n// Supprimer une phase\r\nexports.deletePhase = async (req, res) => {\r\n  try {\r\n    const { phaseId } = req.params;\r\n\r\n    const phase = await Phase.findByIdAndDelete(phaseId);\r\n    if (!phase) {\r\n      return res.status(404).json({ message: \"Phase not found\" });\r\n    }\r\n\r\n    // Supprimer la phase du projet\r\n    await Project.updateOne({ _id: phase.project }, { $pull: { phases: phaseId } });\r\n\r\n    res.status(200).json({ message: \"Phase deleted\" });\r\n  } catch (error) {\r\n    res.status(500).json({ message: error.message });\r\n  }\r\n};\r\n"
+        }
+    ]
+}

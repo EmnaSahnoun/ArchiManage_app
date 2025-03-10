@@ -1,0 +1,34 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1741091388829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741091396352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,12 @@\n   \"version\": \"1.0.0\",\n   \"description\": \"\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n-    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n-    \n+    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n+     \"start\": \"node server.js\",\n+    \"dev\": \"nodemon server.js\"\n+\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n"
+                },
+                {
+                    "date": 1741094187275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,18 +4,18 @@\n   \"description\": \"\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n     \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n-     \"start\": \"node server.js\",\n+    \"start\": \"nodemon server.js\",\n     \"dev\": \"nodemon server.js\"\n-\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"dependencies\": {\n     \"axios\": \"^1.8.1\",\n     \"bcryptjs\": \"^3.0.2\",\n+    \"body-parser\": \"^1.20.3\",\n     \"cors\": \"^2.8.5\",\n     \"dotenv\": \"^16.4.7\",\n     \"express\": \"^4.21.2\",\n     \"helmet\": \"^8.0.0\",\n"
+                },
+                {
+                    "date": 1741094192929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,10 @@\n   \"description\": \"\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n     \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n-    \"start\": \"nodemon server.js\",\n-    \"dev\": \"nodemon server.js\"\n-  },\n+    \"start\": \"nodemon server.js\"\n+    },\n   \"keywords\": [],\n   \"author\": \"\",\n   \"license\": \"ISC\",\n   \"dependencies\": {\n"
+                },
+                {
+                    "date": 1741096315781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n {\n   \"name\": \"company-service\",\n   \"version\": \"1.0.0\",\n   \"description\": \"\",\n-  \"main\": \"index.js\",\n+  \"main\": \"server.js\",\n   \"scripts\": {\n     \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n     \"start\": \"nodemon server.js\"\n     },\n"
+                }
+            ],
+            "date": 1741091388829,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"company-service\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n    \n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"axios\": \"^1.8.1\",\n    \"bcryptjs\": \"^3.0.2\",\n    \"cors\": \"^2.8.5\",\n    \"dotenv\": \"^16.4.7\",\n    \"express\": \"^4.21.2\",\n    \"helmet\": \"^8.0.0\",\n    \"jsonwebtoken\": \"^9.0.2\",\n    \"keycloak-connect\": \"^26.1.1\",\n    \"mongoose\": \"^8.12.0\"\n  },\n  \"devDependencies\": {\n    \"nodemon\": \"^3.1.9\"\n  }\n}\n"
+        }
+    ]
+}

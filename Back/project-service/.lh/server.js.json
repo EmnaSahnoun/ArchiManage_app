@@ -1,0 +1,46 @@
+{
+    "sourceFile": "server.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1741171323432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741172079127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,25 +1,6 @@\n-require(\"dotenv\").config();\r\n-const express = require(\"express\");\r\n-const mongoose = require(\"mongoose\");\r\n-const cors = require(\"cors\");\r\n-const bodyParser = require(\"body-parser\");\r\n+const app = require(\"./app\");\r\n+const PORT = process.env.PORT || 5000;\r\n \r\n-const projectRoutes = require(\"./routes/projectRoutes\");\r\n-const phaseRoutes = require(\"./routes/phaseRoutes\");\r\n-const taskRoutes = require(\"./routes/taskRoutes\");\r\n-\r\n-const app = express();\r\n-app.use(cors());\r\n-app.use(bodyParser.json());\r\n-\r\n-mongoose\r\n-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })\r\n-  .then(() => console.log(\"MongoDB connected\"))\r\n-  .catch((err) => console.log(err));\r\n-\r\n-app.use(\"/api/projects\", projectRoutes);\r\n-app.use(\"/api/phases\", phaseRoutes);\r\n-app.use(\"/api/tasks\", taskRoutes);\r\n-\r\n-const PORT = process.env.PORT || 5000;\r\n-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n+app.listen(PORT, () => {\r\n+    console.log(`Server running on port ${PORT}`);\r\n+});\r\n"
+                },
+                {
+                    "date": 1741172122534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"./app\");\r\n+const app = require(\"/app\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                },
+                {
+                    "date": 1741172132950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"/app\");\r\n+const app = require(\"../app\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                },
+                {
+                    "date": 1741172141930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"../app\");\r\n+const app = require(\"\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                },
+                {
+                    "date": 1741172147574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"\");\r\n+const app = require(\"app\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                },
+                {
+                    "date": 1741172157861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"app\");\r\n+const app = require(\"\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                },
+                {
+                    "date": 1741172163570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const app = require(\"\");\r\n+const app = require(\"./src/app\");\r\n const PORT = process.env.PORT || 5000;\r\n \r\n app.listen(PORT, () => {\r\n     console.log(`Server running on port ${PORT}`);\r\n"
+                }
+            ],
+            "date": 1741171323432,
+            "name": "Commit-0",
+            "content": "require(\"dotenv\").config();\r\nconst express = require(\"express\");\r\nconst mongoose = require(\"mongoose\");\r\nconst cors = require(\"cors\");\r\nconst bodyParser = require(\"body-parser\");\r\n\r\nconst projectRoutes = require(\"./routes/projectRoutes\");\r\nconst phaseRoutes = require(\"./routes/phaseRoutes\");\r\nconst taskRoutes = require(\"./routes/taskRoutes\");\r\n\r\nconst app = express();\r\napp.use(cors());\r\napp.use(bodyParser.json());\r\n\r\nmongoose\r\n  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })\r\n  .then(() => console.log(\"MongoDB connected\"))\r\n  .catch((err) => console.log(err));\r\n\r\napp.use(\"/api/projects\", projectRoutes);\r\napp.use(\"/api/phases\", phaseRoutes);\r\napp.use(\"/api/tasks\", taskRoutes);\r\n\r\nconst PORT = process.env.PORT || 5000;\r\napp.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n"
+        }
+    ]
+}

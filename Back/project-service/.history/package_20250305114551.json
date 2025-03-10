@@ -1,0 +1,25 @@
+{
+  "name": "project-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "dnpm": "^0.1.13",
+    "express": "^4.21.2",
+    "install": "^0.13.0",
+    "mongoose": "^8.12.1",
+    "nodemon": "^3.1.9"
+  }
+}
