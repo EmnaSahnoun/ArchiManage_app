@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1741171357501,
@@ -28,6 +28,34 @@
                 {
                     "date": 1741180110561,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const express = require(\"express\");\r\n const { createProject, getProjects } = require(\"../controllers/projectController\");\r\n const router = express.Router();\r\n \r\n-router.post(\"/create\", createProject);\r\n+router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692187186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n+rou\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692194665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-rou\r\n+router.get()\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692203823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-router.get()\r\n+router.get(\"/\")\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692212115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-router.get(\"/\")\r\n+router.get(\"/:id\"),getProjectById\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692219747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-router.get(\"/:id\"),getProjectById\r\n+router.get(\"/:id\"), getProjectById);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741692224916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,7 @@\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-router.get(\"/:id\"), getProjectById);\r\n+router.get(\"/:id\", getProjectById);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1741693250683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const express = require(\"express\");\r\n-const { createProject, getProjects } = require(\"../controllers/projectController\");\r\n+const { createProject, getProjects , getProjectById} = require(\"../controllers/projectController\");\r\n const router = express.Router();\r\n \r\n router.post(\"/\", createProject);\r\n router.get(\"/all\", getProjects);\r\n-router.get(\"/:id\", getProjectById);\r\n+router.get(\"/:projectId \", getProjectById);\r\n \r\n module.exports = router;\r\n"
                 }
             ],
             "date": 1741171357501,

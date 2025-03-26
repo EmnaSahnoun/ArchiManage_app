@@ -1,0 +1,314 @@
+{
+    "sourceFile": "src/app/sidebar/sidebar.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 74,
+            "patches": [
+                {
+                    "date": 1741609891837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741610214896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,47 +1,29 @@\n-.sidebar {\r\n+.sidenav-container {\r\n+    height: 100vh;\r\n+  }\r\n+  \r\n+  .sidenav {\r\n     width: 250px;\r\n-    background-color: #2c3e50;\r\n-    height: 100vh;\r\n+    background: #2F3C48;\r\n+    color: white;\r\n     padding: 20px;\r\n-    color: white;\r\n-    position: fixed;\r\n   }\r\n   \r\n-  .logo {\r\n+  .profile {\r\n     text-align: center;\r\n-    margin-bottom: 20px;\r\n   }\r\n   \r\n-  .logo img {\r\n-    width: 100px;\r\n-    height: auto;\r\n+  .profile img {\r\n+    width: 80px;\r\n+    border-radius: 50%;\r\n   }\r\n   \r\n-  .menu {\r\n-    list-style: none;\r\n-    padding: 0;\r\n-  }\r\n-  \r\n-  .menu li {\r\n-    margin: 15px 0;\r\n-  }\r\n-  \r\n-  .menu li a {\r\n+  mat-nav-list a {\r\n     color: white;\r\n     text-decoration: none;\r\n-    font-size: 18px;\r\n-    display: block;\r\n-    padding: 10px;\r\n-    border-radius: 5px;\r\n-    transition: background-color 0.3s ease;\r\n   }\r\n   \r\n-  .menu li a:hover,\r\n-  .menu li a.active {\r\n-    background-color: #3498db;\r\n+  mat-nav-list a:hover {\r\n+    background: #3E4B57;\r\n   }\r\n-  \r\n-  .menu li a.active {\r\n-    font-weight: bold;\r\n-  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741610445555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   }\r\n   \r\n   .sidenav {\r\n     width: 250px;\r\n-    background: #2F3C48;\r\n+    background: ##3d5653;\r\n     color: white;\r\n     padding: 20px;\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741610470276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   }\r\n   \r\n   .sidenav {\r\n     width: 250px;\r\n-    background: ##3d5653;\r\n+    background: #3d5653;\r\n     color: white;\r\n     padding: 20px;\r\n   }\r\n   \r\n@@ -23,7 +23,7 @@\n     text-decoration: none;\r\n   }\r\n   \r\n   mat-nav-list a:hover {\r\n-    background: #3E4B57;\r\n+    background: ##3d5653;\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741611531222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,56 @@\n     text-decoration: none;\r\n   }\r\n   \r\n   mat-nav-list a:hover {\r\n-    background: ##3d5653;\r\n+    background: #3d5653;\r\n   }\r\n+  \r\n+\r\n+\r\n+  .sidebar {\r\n+    width: 250px;\r\n+    background-color: #2c3e50;\r\n+    height: 100vh;\r\n+    padding: 20px;\r\n+    color: white;\r\n+    position: fixed;\r\n+  }\r\n+  \r\n+  .logo {\r\n+    text-align: center;\r\n+    margin-bottom: 20px;\r\n+  }\r\n+  \r\n+  .logo img {\r\n+    width: 100px;\r\n+    height: auto;\r\n+  }\r\n+  \r\n+  .menu {\r\n+    list-style: none;\r\n+    padding: 0;\r\n+  }\r\n+  \r\n+  .menu li {\r\n+    margin: 15px 0;\r\n+  }\r\n+  \r\n+  .menu li a {\r\n+    color: white;\r\n+    text-decoration: none;\r\n+    font-size: 18px;\r\n+    display: block;\r\n+    padding: 10px;\r\n+    border-radius: 5px;\r\n+    transition: background-color 0.3s ease;\r\n+  }\r\n+  \r\n+  .menu li a:hover,\r\n+  .menu li a.active {\r\n+    background-color: #3498db;\r\n+  }\r\n+  \r\n+  .menu li a.active {\r\n+    font-weight: bold;\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741611540761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,51 +28,5 @@\n   }\r\n   \r\n \r\n \r\n-  .sidebar {\r\n-    width: 250px;\r\n-    background-color: #2c3e50;\r\n-    height: 100vh;\r\n-    padding: 20px;\r\n-    color: white;\r\n-    position: fixed;\r\n-  }\r\n-  \r\n-  .logo {\r\n-    text-align: center;\r\n-    margin-bottom: 20px;\r\n-  }\r\n-  \r\n-  .logo img {\r\n-    width: 100px;\r\n-    height: auto;\r\n-  }\r\n-  \r\n-  .menu {\r\n-    list-style: none;\r\n-    padding: 0;\r\n-  }\r\n-  \r\n-  .menu li {\r\n-    margin: 15px 0;\r\n-  }\r\n-  \r\n-  .menu li a {\r\n-    color: white;\r\n-    text-decoration: none;\r\n-    font-size: 18px;\r\n-    display: block;\r\n-    padding: 10px;\r\n-    border-radius: 5px;\r\n-    transition: background-color 0.3s ease;\r\n-  }\r\n-  \r\n-  .menu li a:hover,\r\n-  .menu li a.active {\r\n-    background-color: #3498db;\r\n-  }\r\n-  \r\n-  .menu li a.active {\r\n-    font-weight: bold;\r\n-  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741616381701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,32 +1,48 @@\n .sidenav-container {\r\n-    height: 100vh;\r\n-  }\r\n-  \r\n-  .sidenav {\r\n-    width: 250px;\r\n-    background: #3d5653;\r\n-    color: white;\r\n-    padding: 20px;\r\n-  }\r\n-  \r\n-  .profile {\r\n-    text-align: center;\r\n-  }\r\n-  \r\n-  .profile img {\r\n-    width: 80px;\r\n-    border-radius: 50%;\r\n-  }\r\n-  \r\n-  mat-nav-list a {\r\n-    color: white;\r\n-    text-decoration: none;\r\n-  }\r\n-  \r\n-  mat-nav-list a:hover {\r\n-    background: #3d5653;\r\n-  }\r\n-  \r\n+  height: 100vh;\r\n+}\r\n \r\n\\ No newline at end of file\n+.sidenav {\r\n+  width: 250px;\r\n+  background: #3d5653;\r\n+  color: white;\r\n+  padding: 20px;\r\n+}\r\n \r\n-  \n+.profile {\r\n+  text-align: center;\r\n+}\r\n+\r\n+.profile img {\r\n+  width: 80px;\r\n+  border-radius: 50%;\r\n+}\r\n+\r\n+ul {\r\n+  padding-left: 0;\r\n+}\r\n+\r\n+ul li {\r\n+  margin-bottom: 20px; /* Espace entre les éléments */\r\n+  cursor: pointer; /* Changer le curseur en main */\r\n+  list-style: none; /* Supprimer les puces */\r\n+}\r\n+\r\n+ul li i {\r\n+  margin-right: 10px; /* Espace entre l'icône et l'élément */\r\n+}\r\n+\r\n+ul li:hover {\r\n+  background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n+}\r\n+\r\n+ul li a {\r\n+  color: white;\r\n+  text-decoration: none;\r\n+  display: flex;\r\n+  align-items: center;\r\n+}\r\n+\r\n+ul li a:hover {\r\n+  background: transparent;\r\n+}\r\n"
+                },
+                {
+                    "date": 1741616402463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 20px; /* Espace entre les éléments */\r\n+  margin-bottom: 2r; /* Espace entre les éléments */\r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n }\r\n \r\n@@ -44,5 +44,5 @@\n }\r\n \r\n ul li a:hover {\r\n   background: transparent;\r\n-}\n\\ No newline at end of file\n+}\r\n"
+                },
+                {
+                    "date": 1741616407843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 2r; /* Espace entre les éléments */\r\n+  margin-bottom: 2rem; \r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741616414864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,10 @@\n }\r\n \r\n ul li {\r\n   margin-bottom: 2rem; \r\n-  cursor: pointer; /* Changer le curseur en main */\r\n-  list-style: none; /* Supprimer les puces */\r\n+  cursor: pointer; \r\n+  list-style: none; \r\n }\r\n \r\n ul li i {\r\n   margin-right: 10px; /* Espace entre l'icône et l'élément */\r\n"
+                },
+                {
+                    "date": 1741616427474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   list-style: none; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 10px; /* Espace entre l'icône et l'élément */\r\n+  margin-right: 10px; \r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n"
+                },
+                {
+                    "date": 1741616432634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   list-style: none; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 10px; \r\n+  margin-right: 1rem; \r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n"
+                },
+                {
+                    "date": 1741616466001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n }\r\n \r\n ul {\r\n   padding-left: 0;\r\n+  \r\n }\r\n \r\n ul li {\r\n   margin-bottom: 2rem; \r\n"
+                },
+                {
+                    "date": 1741616472608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n }\r\n \r\n ul {\r\n   padding-left: 0;\r\n-  \r\n+  padd\r\n }\r\n \r\n ul li {\r\n   margin-bottom: 2rem; \r\n"
+                },
+                {
+                    "date": 1741616478727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n }\r\n \r\n ul {\r\n   padding-left: 0;\r\n-  padd\r\n+  padding-top: ;\r\n }\r\n \r\n ul li {\r\n   margin-bottom: 2rem; \r\n"
+                },
+                {
+                    "date": 1741616496882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n }\r\n \r\n ul {\r\n   padding-left: 0;\r\n-  padding-top: ;\r\n+  padding-top: 2rem;\r\n }\r\n \r\n ul li {\r\n   margin-bottom: 2rem; \r\n@@ -34,8 +34,9 @@\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n+  bo\r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741616504621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n-  bo\r\n+  border-radius: 2rem;\r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741616513698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,9 @@\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n   border-radius: 2rem;\r\n+  he\r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741616525967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n   border-radius: 2rem;\r\n-  he\r\n+  height: max-content;\r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741616537836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \r\n ul li:hover {\r\n   background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n   border-radius: 2rem;\r\n-  height: max-content;\r\n+  \r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741616688856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,25 +19,28 @@\n }\r\n \r\n ul {\r\n   padding-left: 0;\r\n-  padding-top: 2rem;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 2rem; \r\n-  cursor: pointer; \r\n-  list-style: none; \r\n+  margin-bottom: 20px; /* Espace entre les éléments */\r\n+  cursor: pointer; /* Changer le curseur en main */\r\n+  list-style: none; /* Supprimer les puces */\r\n+  display: flex;\r\n+  align-items: center;\r\n+  padding: 12px 20px; /* Augmente la taille de chaque élément */\r\n+  min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n+  border-radius: 2rem; /* Coins arrondis */\r\n+  transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n \r\n ul li i {\r\n-  margin-right: 1rem; \r\n+  margin-right: 15px; /* Espace entre l'icône et l'élément */\r\n }\r\n \r\n ul li:hover {\r\n-  background: #4d716e; /* Optionnel : vous pouvez changer la couleur de fond au survol */\r\n-  border-radius: 2rem;\r\n-  \r\n+  background: #4d716e; /* Changer la couleur de fond au survol */\r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n@@ -48,4 +51,27 @@\n \r\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n+\r\n+/* Responsive design */\r\n+@media (max-width: 768px) {\r\n+  .sidenav {\r\n+    width: 200px; /* Réduit la largeur sur les petits écrans */\r\n+  }\r\n+\r\n+  ul li {\r\n+    padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n+    min-height: 45px; /* Ajuste la hauteur minimale sur les petits écrans */\r\n+  }\r\n+}\r\n+\r\n+@media (max-width: 480px) {\r\n+  .sidenav {\r\n+    width: 100%; /* Pleine largeur sur les très petits écrans */\r\n+  }\r\n+\r\n+  ul li {\r\n+    padding: 8px 10px; /* Réduit encore plus le padding */\r\n+    min-height: 40px; /* Ajuste la hauteur minimale */\r\n+  }\r\n+}\r\n"
+                },
+                {
+                    "date": 1741616772663,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   color: white;\r\n   padding: 20px;\r\n }\r\n \r\n-.profile {\r\n+.logo {\r\n   text-align: center;\r\n }\r\n \r\n .profile img {\r\n"
+                },
+                {
+                    "date": 1741616781882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,15 +12,15 @@\n .logo {\r\n   text-align: center;\r\n }\r\n \r\n-.profile img {\r\n+.logo img {\r\n   width: 80px;\r\n   border-radius: 50%;\r\n }\r\n \r\n ul {\r\n-  padding-left: 0;\r\n+  padding-left: 3;\r\n }\r\n \r\n ul li {\r\n   margin-bottom: 20px; /* Espace entre les éléments */\r\n"
+                },
+                {
+                    "date": 1741616794950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,13 +18,13 @@\n   border-radius: 50%;\r\n }\r\n \r\n ul {\r\n-  padding-left: 3;\r\n+  padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 20px; /* Espace entre les éléments */\r\n+  margin-bottom: 20px;\r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n   display: flex;\r\n   align-items: center;\r\n"
+                },
+                {
+                    "date": 1741616806635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 20px;\r\n+  margin-bottom: 1rem;\r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n   display: flex;\r\n   align-items: center;\r\n"
+                },
+                {
+                    "date": 1741616812844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 1rem;\r\n+  margin-bottom: 0.05rem;\r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n   display: flex;\r\n   align-items: center;\r\n"
+                },
+                {
+                    "date": 1741616820889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n-  margin-bottom: 0.05rem;\r\n+ \r\n   cursor: pointer; /* Changer le curseur en main */\r\n   list-style: none; /* Supprimer les puces */\r\n   display: flex;\r\n   align-items: center;\r\n"
+                },
+                {
+                    "date": 1741616827794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,9 @@\n   padding-left: 0;\r\n }\r\n \r\n ul li {\r\n- \r\n-  cursor: pointer; /* Changer le curseur en main */\r\n+  cursor: pointer; \r\n   list-style: none; /* Supprimer les puces */\r\n   display: flex;\r\n   align-items: center;\r\n   padding: 12px 20px; /* Augmente la taille de chaque élément */\r\n"
+                },
+                {
+                    "date": 1741616833720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n }\r\n \r\n ul li {\r\n   cursor: pointer; \r\n-  list-style: none; /* Supprimer les puces */\r\n+  \r\n   display: flex;\r\n   align-items: center;\r\n   padding: 12px 20px; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n"
+                },
+                {
+                    "date": 1741616850897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,11 @@\n }\r\n \r\n ul li {\r\n   cursor: pointer; \r\n-  \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 12px 20px; /* Augmente la taille de chaque élément */\r\n+  padding: 1rem 20px; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741616860584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 1rem 20px; /* Augmente la taille de chaque élément */\r\n+  padding: 1rem 1rem; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741616874980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,8 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 1rem 1rem; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741616890080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n+  bor\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616904563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n-  bor\r\n+  border-radius:  2rem;\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616917100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n-  border-radius:  2rem;\r\n+  border-radius: 0 2rem ;\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616922194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n-  border-radius: 0 2rem ;\r\n+  border-radius: 0 2rem 2rem 0;\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616940654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n+  min-height: 2rem; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741616953616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  min-height: 2rem; /* Taille minimale pour un meilleur aspect responsive */\r\n+  min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741616960651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n-  border-radius: 0 2rem 2rem 0;\r\n+  border-radius: 0 2rem 2rem ;\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616969711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,8 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n-  border-radius: 0 2rem 2rem ;\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n"
+                },
+                {
+                    "date": 1741616986706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n+  padding: 1rem 1rem; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741616995979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 1rem 1rem; /* Augmente la taille de chaque élément */\r\n+  padding: 1rem 0.5rem; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741617013200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,10 @@\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n   padding: 20px;\r\n+  border-radius: 0 2rem 2rem 0;\r\n+\r\n }\r\n \r\n .logo {\r\n   text-align: center;\r\n@@ -25,9 +27,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 1rem 0.5rem; /* Augmente la taille de chaque élément */\r\n+  padding: 0.5rem 0.5rem; /* Augmente la taille de chaque élément */\r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741617025754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n .sidenav {\r\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n-  padding: 20px;\r\n+  padding: 1rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n \r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741617031510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n .sidenav {\r\n   width: 250px;\r\n   background: #3d5653;\r\n   color: white;\r\n-  padding: 1rem;\r\n+  padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n \r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741617040149,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 0.5rem 0.5rem; /* Augmente la taille de chaque élément */\r\n+  padding: 0.5rem 0.5rem; \r\n   min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n"
+                },
+                {
+                    "date": 1741617051154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n   padding: 0.5rem 0.5rem; \r\n-  min-height: 50px; /* Taille minimale pour un meilleur aspect responsive */\r\n+  min-height: 3rem; \r\n   border-radius: 2rem; /* Coins arrondis */\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741617065781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n   display: flex;\r\n   align-items: center;\r\n   padding: 0.5rem 0.5rem; \r\n   min-height: 3rem; \r\n-  border-radius: 2rem; /* Coins arrondis */\r\n+  border-radius: 2rem;\r\n   transition: background 0.3s ease; /* Transition fluide */\r\n }\r\n \r\n ul li i {\r\n"
+                },
+                {
+                    "date": 1741617080263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,13 +30,13 @@\n   align-items: center;\r\n   padding: 0.5rem 0.5rem; \r\n   min-height: 3rem; \r\n   border-radius: 2rem;\r\n-  transition: background 0.3s ease; /* Transition fluide */\r\n+  transition: background 0.3s ease; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 15px; /* Espace entre l'icône et l'élément */\r\n+  margin-right: 1rem; /* Espace entre l'icône et l'élément */\r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Changer la couleur de fond au survol */\r\n"
+                },
+                {
+                    "date": 1741617089088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   transition: background 0.3s ease; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 1rem; /* Espace entre l'icône et l'élément */\r\n+  margin-right: 1rem; \r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; /* Changer la couleur de fond au survol */\r\n"
+                },
+                {
+                    "date": 1741617100881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n   margin-right: 1rem; \r\n }\r\n \r\n ul li:hover {\r\n-  background: #4d716e; /* Changer la couleur de fond au survol */\r\n+  background: #4d716e; \r\n }\r\n \r\n ul li a {\r\n   color: white;\r\n"
+                },
+                {
+                    "date": 1741617106016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,8 @@\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n \r\n-/* Responsive design */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n     width: 200px; /* Réduit la largeur sur les petits écrans */\r\n   }\r\n"
+                },
+                {
+                    "date": 1741617116685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 200px; /* Réduit la largeur sur les petits écrans */\r\n+    width: 200px; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n"
+                },
+                {
+                    "date": 1741617122626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 200px; \r\n+    width: 100%; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n"
+                },
+                {
+                    "date": 1741617153033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 100%; \r\n+    width: 200px; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n"
+                },
+                {
+                    "date": 1741617174628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 200px; \r\n+    width: 5rem; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n"
+                },
+                {
+                    "date": 1741617185910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 5rem; \r\n+    width: 12rem; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n"
+                },
+                {
+                    "date": 1741617208757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n }\r\n \r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 12rem; \r\n+    width: 14rem; \r\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n@@ -65,9 +65,9 @@\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 100%; /* Pleine largeur sur les très petits écrans */\r\n+    width: 100%; \r\n   }\r\n \r\n   ul li {\r\n     padding: 8px 10px; /* Réduit encore plus le padding */\r\n"
+                },
+                {
+                    "date": 1741617214157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n     width: 14rem; \r\n   }\r\n \r\n   ul li {\r\n-    padding: 10px 15px; /* Réduit le padding sur les petits écrans */\r\n+    padding: 10px 15px; s */\r\n     min-height: 45px; /* Ajuste la hauteur minimale sur les petits écrans */\r\n   }\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741617224051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n     width: 14rem; \r\n   }\r\n \r\n   ul li {\r\n-    padding: 10px 15px; s */\r\n+    padding: 10px 15px; \r\n     min-height: 45px; /* Ajuste la hauteur minimale sur les petits écrans */\r\n   }\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741617229574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n   }\r\n \r\n   ul li {\r\n     padding: 10px 15px; \r\n-    min-height: 45px; /* Ajuste la hauteur minimale sur les petits écrans */\r\n+    min-height: 45px; \r\n   }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n"
+                },
+                {
+                    "date": 1741617235902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,8 @@\n     width: 100%; \r\n   }\r\n \r\n   ul li {\r\n-    padding: 8px 10px; /* Réduit encore plus le padding */\r\n+    padding: 8px 10px; \r\n     min-height: 40px; /* Ajuste la hauteur minimale */\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345294432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,32 @@\n+/* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n-  height: 100vh;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+  display: flex;\r\n }\r\n \r\n+/* Sidebar toujours visible */\r\n .sidenav {\r\n-  width: 250px;\r\n-  background: #3d5653;\r\n+  width: 250px; /* Largeur de la sidebar */\r\n+  background: #3d5653; \r\n   color: white;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+}\r\n \r\n+/* Assurer que le contenu ne chevauche pas la sidebar */\r\n+mat-sidenav-content {\r\n+  flex: 1;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh;\r\n+  overflow-y: auto;\r\n }\r\n \r\n+/* Logo centré */\r\n .logo {\r\n   text-align: center;\r\n }\r\n \r\n@@ -19,24 +34,26 @@\n   width: 80px;\r\n   border-radius: 50%;\r\n }\r\n \r\n+/* Liste de navigation */\r\n ul {\r\n   padding-left: 0;\r\n+  margin-top: 20px;\r\n+  list-style-type: none;\r\n }\r\n \r\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 0.5rem 0.5rem; \r\n-  min-height: 3rem; \r\n+  padding: 0.8rem;\r\n   border-radius: 2rem;\r\n   transition: background 0.3s ease; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 1rem; \r\n+  margin-right: 1rem;\r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; \r\n@@ -46,31 +63,23 @@\n   color: white;\r\n   text-decoration: none;\r\n   display: flex;\r\n   align-items: center;\r\n+  width: 100%;\r\n }\r\n \r\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n \r\n+/* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 14rem; \r\n+    width: 220px;\r\n   }\r\n-\r\n-  ul li {\r\n-    padding: 10px 15px; \r\n-    min-height: 45px; \r\n-  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 100%; \r\n+    width: 200px;\r\n   }\r\n-\r\n-  ul li {\r\n-    padding: 8px 10px; \r\n-    min-height: 40px; /* Ajuste la hauteur minimale */\r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345309703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,32 +1,17 @@\n-/* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n-  display: flex;\r\n+  height: 100vh;\r\n }\r\n \r\n-/* Sidebar toujours visible */\r\n .sidenav {\r\n-  width: 250px; /* Largeur de la sidebar */\r\n-  background: #3d5653; \r\n+  width: 250px;\r\n+  background: #3d5653;\r\n   color: white;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n-}\r\n \r\n-/* Assurer que le contenu ne chevauche pas la sidebar */\r\n-mat-sidenav-content {\r\n-  flex: 1;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n-  height: 100vh;\r\n-  overflow-y: auto;\r\n }\r\n \r\n-/* Logo centré */\r\n .logo {\r\n   text-align: center;\r\n }\r\n \r\n@@ -34,26 +19,24 @@\n   width: 80px;\r\n   border-radius: 50%;\r\n }\r\n \r\n-/* Liste de navigation */\r\n ul {\r\n   padding-left: 0;\r\n-  margin-top: 20px;\r\n-  list-style-type: none;\r\n }\r\n \r\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 0.8rem;\r\n+  padding: 0.5rem 0.5rem; \r\n+  min-height: 3rem; \r\n   border-radius: 2rem;\r\n   transition: background 0.3s ease; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 1rem;\r\n+  margin-right: 1rem; \r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; \r\n@@ -63,23 +46,31 @@\n   color: white;\r\n   text-decoration: none;\r\n   display: flex;\r\n   align-items: center;\r\n-  width: 100%;\r\n }\r\n \r\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n \r\n-/* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 220px;\r\n+    width: 14rem; \r\n   }\r\n+\r\n+  ul li {\r\n+    padding: 10px 15px; \r\n+    min-height: 45px; \r\n+  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 200px;\r\n+    width: 100%; \r\n   }\r\n+\r\n+  ul li {\r\n+    padding: 8px 10px; \r\n+    min-height: 40px; \r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345321751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,32 @@\n+/* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n-  height: 100vh;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+  display: flex;\r\n }\r\n \r\n+/* Sidebar toujours visible */\r\n .sidenav {\r\n-  width: 250px;\r\n-  background: #3d5653;\r\n+  width: 250px; /* Largeur de la sidebar */\r\n+  background: #3d5653; \r\n   color: white;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+}\r\n \r\n+/* Assurer que le contenu ne chevauche pas la sidebar */\r\n+mat-sidenav-content {\r\n+  flex: 1;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh;\r\n+  overflow-y: auto;\r\n }\r\n \r\n+/* Logo centré */\r\n .logo {\r\n   text-align: center;\r\n }\r\n \r\n@@ -19,24 +34,26 @@\n   width: 80px;\r\n   border-radius: 50%;\r\n }\r\n \r\n+/* Liste de navigation */\r\n ul {\r\n   padding-left: 0;\r\n+  margin-top: 20px;\r\n+  list-style-type: none;\r\n }\r\n \r\n ul li {\r\n   cursor: pointer; \r\n   display: flex;\r\n   align-items: center;\r\n-  padding: 0.5rem 0.5rem; \r\n-  min-height: 3rem; \r\n+  padding: 0.8rem;\r\n   border-radius: 2rem;\r\n   transition: background 0.3s ease; \r\n }\r\n \r\n ul li i {\r\n-  margin-right: 1rem; \r\n+  margin-right: 1rem;\r\n }\r\n \r\n ul li:hover {\r\n   background: #4d716e; \r\n@@ -46,31 +63,23 @@\n   color: white;\r\n   text-decoration: none;\r\n   display: flex;\r\n   align-items: center;\r\n+  width: 100%;\r\n }\r\n \r\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n \r\n+/* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 14rem; \r\n+    width: 220px;\r\n   }\r\n-\r\n-  ul li {\r\n-    padding: 10px 15px; \r\n-    min-height: 45px; \r\n-  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 100%; \r\n+    width: 200px;\r\n   }\r\n-\r\n-  ul li {\r\n-    padding: 8px 10px; \r\n-    min-height: 40px; \r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345383392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n /* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+  height: 100%; /* Prend toute la hauteur de l'écran */\r\n   display: flex;\r\n }\r\n \r\n /* Sidebar toujours visible */\r\n"
+                },
+                {
+                    "date": 1742345405541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n /* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n-  height: 100%; /* Prend toute la hauteur de l'écran */\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n   display: flex;\r\n }\r\n \r\n /* Sidebar toujours visible */\r\n"
+                },
+                {
+                    "date": 1742345780031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,85 +1,55 @@\n-/* MatSidenavContainer prend toute la hauteur */\r\n+/* Container global */\r\n .sidenav-container {\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n   display: flex;\r\n+  height: 100vh; /* Prend toute la hauteur */\r\n+  overflow: hidden; /* Empêche le scroll sur toute la page */\r\n }\r\n \r\n-/* Sidebar toujours visible */\r\n+/* Sidebar fixe */\r\n .sidenav {\r\n-  width: 250px; /* Largeur de la sidebar */\r\n-  background: #3d5653; \r\n+  width: 250px;\r\n+  background: #3d5653;\r\n   color: white;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+  height: 100vh;\r\n+  position: fixed;\r\n+  left: 0;\r\n+  top: 0;\r\n+  bottom: 0;\r\n }\r\n \r\n-/* Assurer que le contenu ne chevauche pas la sidebar */\r\n-mat-sidenav-content {\r\n+/* Assurer que le contenu reste en dehors de la sidebar */\r\n+.content-container {\r\n   flex: 1;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n+  margin-left: 250px; /* Décale le contenu pour ne pas chevaucher la sidebar */\r\n   height: 100vh;\r\n-  overflow-y: auto;\r\n+  overflow-y: auto; /* Active le scroll si nécessaire */\r\n+  padding: 20px;\r\n+  background: #F1F1F1;\r\n }\r\n \r\n-/* Logo centré */\r\n-.logo {\r\n-  text-align: center;\r\n+/* Pour empêcher le scroll de la sidebar */\r\n+.sidenav ul {\r\n+  overflow-y: auto;\r\n+  max-height: calc(100vh - 150px);\r\n }\r\n \r\n-.logo img {\r\n-  width: 80px;\r\n-  border-radius: 50%;\r\n-}\r\n-\r\n-/* Liste de navigation */\r\n-ul {\r\n-  padding-left: 0;\r\n-  margin-top: 20px;\r\n-  list-style-type: none;\r\n-}\r\n-\r\n-ul li {\r\n-  cursor: pointer; \r\n-  display: flex;\r\n-  align-items: center;\r\n-  padding: 0.8rem;\r\n-  border-radius: 2rem;\r\n-  transition: background 0.3s ease; \r\n-}\r\n-\r\n-ul li i {\r\n-  margin-right: 1rem;\r\n-}\r\n-\r\n-ul li:hover {\r\n-  background: #4d716e; \r\n-}\r\n-\r\n-ul li a {\r\n-  color: white;\r\n-  text-decoration: none;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  width: 100%;\r\n-}\r\n-\r\n-ul li a:hover {\r\n-  background: transparent;\r\n-}\r\n-\r\n-/* Responsive */\r\n+/* Style responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 220px;\r\n+    width: 200px;\r\n   }\r\n+  .content-container {\r\n+    margin-left: 200px;\r\n+  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 200px;\r\n+    width: 180px;\r\n   }\r\n+  .content-container {\r\n+    margin-left: 180px;\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345793206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,55 +1,85 @@\n-/* Container global */\r\n+/* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n   display: flex;\r\n-  height: 100vh; /* Prend toute la hauteur */\r\n-  overflow: hidden; /* Empêche le scroll sur toute la page */\r\n }\r\n \r\n-/* Sidebar fixe */\r\n+/* Sidebar toujours visible */\r\n .sidenav {\r\n-  width: 250px;\r\n-  background: #3d5653;\r\n+  width: 250px; /* Largeur de la sidebar */\r\n+  background: #3d5653; \r\n   color: white;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n-  height: 100vh;\r\n-  position: fixed;\r\n-  left: 0;\r\n-  top: 0;\r\n-  bottom: 0;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n }\r\n \r\n-/* Assurer que le contenu reste en dehors de la sidebar */\r\n-.content-container {\r\n+/* Assurer que le contenu ne chevauche pas la sidebar */\r\n+mat-sidenav-content {\r\n   flex: 1;\r\n-  margin-left: 250px; /* Décale le contenu pour ne pas chevaucher la sidebar */\r\n+  display: flex;\r\n+  flex-direction: column;\r\n   height: 100vh;\r\n-  overflow-y: auto; /* Active le scroll si nécessaire */\r\n-  padding: 20px;\r\n-  background: #F1F1F1;\r\n+  overflow-y: auto;\r\n }\r\n \r\n-/* Pour empêcher le scroll de la sidebar */\r\n-.sidenav ul {\r\n-  overflow-y: auto;\r\n-  max-height: calc(100vh - 150px);\r\n+/* Logo centré */\r\n+.logo {\r\n+  text-align: center;\r\n }\r\n \r\n-/* Style responsive */\r\n+.logo img {\r\n+  width: 80px;\r\n+  border-radius: 50%;\r\n+}\r\n+\r\n+/* Liste de navigation */\r\n+ul {\r\n+  padding-left: 0;\r\n+  margin-top: 20px;\r\n+  list-style-type: none;\r\n+}\r\n+\r\n+ul li {\r\n+  cursor: pointer; \r\n+  display: flex;\r\n+  align-items: center;\r\n+  padding: 0.8rem;\r\n+  border-radius: 2rem;\r\n+  transition: background 0.3s ease; \r\n+}\r\n+\r\n+ul li i {\r\n+  margin-right: 1rem;\r\n+}\r\n+\r\n+ul li:hover {\r\n+  background: #4d716e; \r\n+}\r\n+\r\n+ul li a {\r\n+  color: white;\r\n+  text-decoration: none;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  width: 100%;\r\n+}\r\n+\r\n+ul li a:hover {\r\n+  background: transparent;\r\n+}\r\n+\r\n+/* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 200px;\r\n+    width: 220px;\r\n   }\r\n-  .content-container {\r\n-    margin-left: 200px;\r\n-  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 180px;\r\n+    width: 200px;\r\n   }\r\n-  .content-container {\r\n-    margin-left: 180px;\r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742345810191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n /* MatSidenavContainer prend toute la hauteur */\r\n .sidenav-container {\r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n   display: flex;\r\n+  overflow: hidden;\r\n }\r\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n"
+                },
+                {
+                    "date": 1742345832294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #3d5653; \r\n   color: white;\r\n+  posi\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   display: flex;\r\n   flex-direction: column;\r\n"
+                },
+                {
+                    "date": 1742345848047,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,13 +9,12 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #3d5653; \r\n   color: white;\r\n-  posi\r\n+  position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n+  \r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n }\r\n \r\n /* Assurer que le contenu ne chevauche pas la sidebar */\r\n"
+                },
+                {
+                    "date": 1742345860979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,10 @@\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n-  \r\n+  left: 0;\r\n+  top: 0;\r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n }\r\n \r\n /* Assurer que le contenu ne chevauche pas la sidebar */\r\n"
+                },
+                {
+                    "date": 1742345913796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n \r\n /* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n-    width: 220px;\r\n+    width: 200px;\r\n   }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n"
+                },
+                {
+                    "date": 1742345919412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,7 +81,7 @@\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 200px;\r\n+    width: 180px;\r\n   }\r\n }\r\n"
+                }
+            ],
+            "date": 1741609891837,
+            "name": "Commit-0",
+            "content": ".sidebar {\r\n    width: 250px;\r\n    background-color: #2c3e50;\r\n    height: 100vh;\r\n    padding: 20px;\r\n    color: white;\r\n    position: fixed;\r\n  }\r\n  \r\n  .logo {\r\n    text-align: center;\r\n    margin-bottom: 20px;\r\n  }\r\n  \r\n  .logo img {\r\n    width: 100px;\r\n    height: auto;\r\n  }\r\n  \r\n  .menu {\r\n    list-style: none;\r\n    padding: 0;\r\n  }\r\n  \r\n  .menu li {\r\n    margin: 15px 0;\r\n  }\r\n  \r\n  .menu li a {\r\n    color: white;\r\n    text-decoration: none;\r\n    font-size: 18px;\r\n    display: block;\r\n    padding: 10px;\r\n    border-radius: 5px;\r\n    transition: background-color 0.3s ease;\r\n  }\r\n  \r\n  .menu li a:hover,\r\n  .menu li a.active {\r\n    background-color: #3498db;\r\n  }\r\n  \r\n  .menu li a.active {\r\n    font-weight: bold;\r\n  }\r\n  "
+        }
+    ]
+}

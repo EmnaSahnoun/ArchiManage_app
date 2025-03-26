@@ -1,0 +1,78 @@
+{
+    "sourceFile": "src/app/projects/projects.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 15,
+            "patches": [
+                {
+                    "date": 1741685485126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741685662806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,14 @@\n import { Component } from '@angular/core';\r\n+import { Project } from '../models/project.model';\r\n \r\n @Component({\r\n   selector: 'app-projects',\r\n   templateUrl: './projects.component.html',\r\n   styleUrl: './projects.component.scss'\r\n })\r\n export class ProjectsComponent {\r\n+  selectedProject: any;\r\n   projects: Project[] = [\r\n     {\r\n       id: 1,\r\n       name: 'Innovate Ltd. Corporate Website Design',\r\n"
+                },
+                {
+                    "date": 1741685755668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,13 @@\n import { Component } from '@angular/core';\r\n-import { Project } from '../models/project.model';\r\n \r\n @Component({\r\n   selector: 'app-projects',\r\n   templateUrl: './projects.component.html',\r\n   styleUrl: './projects.component.scss'\r\n })\r\n export class ProjectsComponent {\r\n-  selectedProject: any;\r\n-  projects: Project[] = [\r\n+projects: Project[] = [\r\n     {\r\n       id: 1,\r\n       name: 'Innovate Ltd. Corporate Website Design',\r\n       client: 'Innovate Ltd.',\r\n"
+                },
+                {
+                    "date": 1741688997047,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,31 +5,68 @@\n   templateUrl: './projects.component.html',\r\n   styleUrl: './projects.component.scss'\r\n })\r\n export class ProjectsComponent {\r\n-projects: Project[] = [\r\n-    {\r\n-      id: 1,\r\n-      name: 'Innovate Ltd. Corporate Website Design',\r\n-      client: 'Innovate Ltd.',\r\n-      startDate: '2024-06-01',\r\n-      endDate: '2024-09-30',\r\n-      status: 'In Progress',\r\n-      priority: 'High',\r\n-      progress: 85,\r\n-      team: ['Alice', 'Bob', 'Charlie'],\r\n-      tasks: [\r\n-        { name: 'Develop Initial Wireframes', status: 'Completed' },\r\n-        { name: 'Homepage UI', status: 'Completed' },\r\n-        { name: 'Inner Pages UI', status: 'In Progress' }\r\n-      ],\r\n-      attachments: [\r\n-        { name: 'InnovateLtd_Homepage_UI.fig', url: '#' },\r\n-        { name: 'InnovateLtd_InnerPages.pdf', url: '#' }\r\n-      ],\r\n-      activity: [\r\n-        { user: 'Alice', comment: 'Initial wireframes completed.', date: '2024-06-02' },\r\n-        { user: 'Bob', comment: 'Homepage UI ready for review.', date: '2024-06-05' }\r\n-      ]\r\n+  currentDate: string;\r\n+  searchQuery: string = '';\r\n+  viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n+  projects: any[] = [];\r\n+  filteredProjects: any[] = [];\r\n+\r\n+  constructor() { \r\n+    // Set current date\r\n+    this.currentDate = new Date().toLocaleDateString();\r\n+    \r\n+    // Simulating projects data\r\n+    this.projects = [\r\n+      {\r\n+        name: 'Projet 1',\r\n+        startDate: '01/01/2025',\r\n+        endDate: '31/12/2025',\r\n+        progress: 50,\r\n+        status: 'En cours',\r\n+        members: [\r\n+          { name: 'John Doe', image: 'assets/member1.jpg' },\r\n+          { name: 'Jane Smith', image: 'assets/member2.jpg' }\r\n+        ],\r\n+        phases: ['Phase 1', 'Phase 2']\r\n+      },\r\n+      {\r\n+        name: 'Projet 2',\r\n+        startDate: '01/02/2025',\r\n+        endDate: '30/06/2025',\r\n+        progress: 30,\r\n+        status: 'A venir',\r\n+        members: [\r\n+          { name: 'Alice Johnson', image: 'assets/member3.jpg' },\r\n+          { name: 'Bob Brown', image: 'assets/member4.jpg' }\r\n+        ],\r\n+        phases: ['Phase 1']\r\n+      },\r\n+      // Add more project objects here...\r\n+    ];\r\n+  }\r\n+\r\n+  ngOnInit(): void {\r\n+    this.filteredProjects = this.projects; // Initially display all projects\r\n+  }\r\n+\r\n+  // Toggle view mode\r\n+  toggleViewMode(mode: 'list' | 'card'): void {\r\n+    this.viewMode = mode;\r\n+  }\r\n+\r\n+  // Filter projects based on search query\r\n+  get filteredProjects(): any[] {\r\n+    if (!this.searchQuery) {\r\n+      return this.projects;\r\n     }\r\n-  ];\r\n+    return this.projects.filter(project =>\r\n+      project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n+    );\r\n+  }\r\n+\r\n+  // Add project action\r\n+  addProject(): void {\r\n+    alert('Ajouter un nouveau projet');\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1741689016526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   selector: 'app-projects',\r\n   templateUrl: './projects.component.html',\r\n   styleUrl: './projects.component.scss'\r\n })\r\n-export class ProjectsComponent {\r\n+export class ProjectsComponent implements OnInit{\r\n   currentDate: string;\r\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n"
+                },
+                {
+                    "date": 1741689046088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-projects',\r\n   templateUrl: './projects.component.html',\r\n@@ -55,9 +55,9 @@\n     this.viewMode = mode;\r\n   }\r\n \r\n   // Filter projects based on search query\r\n-  get filteredProjects(): any[] {\r\n+  get ilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n     }\r\n     return this.projects.filter(project =>\r\n"
+                },
+                {
+                    "date": 1741770801822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     // Simulating projects data\r\n     this.projects = [\r\n       {\r\n         name: 'Projet 1',\r\n+        \r\n         startDate: '01/01/2025',\r\n         endDate: '31/12/2025',\r\n         progress: 50,\r\n         status: 'En cours',\r\n@@ -55,9 +56,9 @@\n     this.viewMode = mode;\r\n   }\r\n \r\n   // Filter projects based on search query\r\n-  get ilteredProjects(): any[] {\r\n+  getfilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n     }\r\n     return this.projects.filter(project =>\r\n"
+                },
+                {
+                    "date": 1741770807957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     // Simulating projects data\r\n     this.projects = [\r\n       {\r\n         name: 'Projet 1',\r\n-        \r\n+        createdAt:''\r\n         startDate: '01/01/2025',\r\n         endDate: '31/12/2025',\r\n         progress: 50,\r\n         status: 'En cours',\r\n"
+                },
+                {
+                    "date": 1741770824825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     // Simulating projects data\r\n     this.projects = [\r\n       {\r\n         name: 'Projet 1',\r\n-        createdAt:''\r\n+        createdAt:'',\r\n         startDate: '01/01/2025',\r\n         endDate: '31/12/2025',\r\n         progress: 50,\r\n         status: 'En cours',\r\n@@ -32,8 +32,9 @@\n         phases: ['Phase 1', 'Phase 2']\r\n       },\r\n       {\r\n         name: 'Projet 2',\r\n+        createdAt\r\n         startDate: '01/02/2025',\r\n         endDate: '30/06/2025',\r\n         progress: 30,\r\n         status: 'A venir',\r\n"
+                },
+                {
+                    "date": 1741770832685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     // Simulating projects data\r\n     this.projects = [\r\n       {\r\n         name: 'Projet 1',\r\n-        createdAt:'',\r\n+        createdAt:'01/01/2025',\r\n         startDate: '01/01/2025',\r\n         endDate: '31/12/2025',\r\n         progress: 50,\r\n         status: 'En cours',\r\n"
+                },
+                {
+                    "date": 1741775772991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n   filteredProjects: any[] = [];\r\n-\r\n+  selectedProject: any = null;\r\n   constructor() { \r\n     // Set current date\r\n     this.currentDate = new Date().toLocaleDateString();\r\n     \r\n@@ -32,9 +32,9 @@\n         phases: ['Phase 1', 'Phase 2']\r\n       },\r\n       {\r\n         name: 'Projet 2',\r\n-        createdAt\r\n+        createdAt:'01/01/2025',\r\n         startDate: '01/02/2025',\r\n         endDate: '30/06/2025',\r\n         progress: 30,\r\n         status: 'A venir',\r\n"
+                },
+                {
+                    "date": 1741775846603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n   filteredProjects: any[] = [];\r\n-  selectedProject: any = null;\r\n+  \r\n   constructor() { \r\n     // Set current date\r\n     this.currentDate = new Date().toLocaleDateString();\r\n     \r\n"
+                },
+                {
+                    "date": 1741776262147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n   filteredProjects: any[] = [];\r\n-  \r\n+  viewMode: 'list' | 'card' = 'list';\r\n   constructor() { \r\n     // Set current date\r\n     this.currentDate = new Date().toLocaleDateString();\r\n     \r\n"
+                },
+                {
+                    "date": 1741776271580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n   filteredProjects: any[] = [];\r\n-  viewMode: 'list' | 'card' = 'list';\r\n+  viewMode!: 'list' | 'card' = 'list';\r\n   constructor() { \r\n     // Set current date\r\n     this.currentDate = new Date().toLocaleDateString();\r\n     \r\n"
+                },
+                {
+                    "date": 1741776282793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   searchQuery: string = '';\r\n   viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n   projects: any[] = [];\r\n   filteredProjects: any[] = [];\r\n-  viewMode!: 'list' | 'card' = 'list';\r\n+ \r\n   constructor() { \r\n     // Set current date\r\n     this.currentDate = new Date().toLocaleDateString();\r\n     \r\n"
+                },
+                {
+                    "date": 1741776521637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,11 @@\n     return this.projects.filter(project =>\r\n       project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n     );\r\n   }\r\n-  \r\n+  goToProjectDetails(project: any): void {\r\n+    this.router.navigate(['/project', project._id]);\r\n+  }\r\n   // Add project action\r\n   addProject(): void {\r\n     alert('Ajouter un nouveau projet');\r\n   }\r\n"
+                }
+            ],
+            "date": 1741685485126,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-projects',\r\n  templateUrl: './projects.component.html',\r\n  styleUrl: './projects.component.scss'\r\n})\r\nexport class ProjectsComponent {\r\n  projects: Project[] = [\r\n    {\r\n      id: 1,\r\n      name: 'Innovate Ltd. Corporate Website Design',\r\n      client: 'Innovate Ltd.',\r\n      startDate: '2024-06-01',\r\n      endDate: '2024-09-30',\r\n      status: 'In Progress',\r\n      priority: 'High',\r\n      progress: 85,\r\n      team: ['Alice', 'Bob', 'Charlie'],\r\n      tasks: [\r\n        { name: 'Develop Initial Wireframes', status: 'Completed' },\r\n        { name: 'Homepage UI', status: 'Completed' },\r\n        { name: 'Inner Pages UI', status: 'In Progress' }\r\n      ],\r\n      attachments: [\r\n        { name: 'InnovateLtd_Homepage_UI.fig', url: '#' },\r\n        { name: 'InnovateLtd_InnerPages.pdf', url: '#' }\r\n      ],\r\n      activity: [\r\n        { user: 'Alice', comment: 'Initial wireframes completed.', date: '2024-06-02' },\r\n        { user: 'Bob', comment: 'Homepage UI ready for review.', date: '2024-06-05' }\r\n      ]\r\n    }\r\n  ];\r\n}\r\n"
+        }
+    ]
+}

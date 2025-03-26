@@ -1,0 +1,86 @@
+{
+    "sourceFile": "src/app/app.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 17,
+            "patches": [
+                {
+                    "date": 1741609977833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741609994779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,10 @@\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n+\r\n+\r\n import { SidebarComponent } from './sidebar/sidebar.component';\r\n import { HeaderComponent } from './header/header.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SettingsComponent } from './settings/settings.component';\r\n"
+                },
+                {
+                    "date": 1741685625181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,15 @@\n \r\n import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n \r\n-\r\n+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n+import { MatSidenavModule } from '@angular/material/sidenav';\r\n+import { MatToolbarModule } from '@angular/material/toolbar';\r\n+import { MatIconModule } from '@angular/material/icon';\r\n+import { MatListModule } from '@angular/material/list';\r\n+import { MatCardModule } from '@angular/material/card';\r\n+import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n import { SidebarComponent } from './sidebar/sidebar.component';\r\n import { HeaderComponent } from './header/header.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SettingsComponent } from './settings/settings.component';\r\n"
+                },
+                {
+                    "date": 1741685637437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,10 @@\n     MatToolbarModule,\r\n     MatSidenavModule,\r\n     MatListModule,\r\n     MatIconModule,\r\n-    MatCardModule\r\n+    MatCardModule,\r\n+    MatProgressBarModule,\r\n   ],\r\n   providers: [],\r\n   bootstrap: [AppComponent]\r\n })\r\n"
+                },
+                {
+                    "date": 1741689142365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n-\r\n+import { FormsModule } from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatIconModule } from '@angular/material/icon';\r\n"
+                },
+                {
+                    "date": 1741789975147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n import { ClientsComponent } from './clients/clients.component';\r\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n+import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n+import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -29,9 +31,11 @@\n     SettingsComponent,\r\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n-    ProjectsComponent\r\n+    ProjectsComponent,\r\n+    ProjectDetailsComponent,\r\n+    AddMemberDialogComponent\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n@@ -41,8 +45,10 @@\n     MatListModule,\r\n     MatIconModule,\r\n     MatCardModule,\r\n     MatProgressBarModule,\r\n+    FormsModule,\r\n+    MatDialogModule\r\n   ],\r\n   providers: [],\r\n   bootstrap: [AppComponent]\r\n })\r\n"
+                },
+                {
+                    "date": 1741789982313,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';\r\n-\r\n+import { MatDialogModule } from '@angular/material/dialog';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1741789996362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n-    ProjectDetailsComponent,\r\n+    ProjectDetailsComponen,\r\n     AddMemberDialogComponent\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1741790004847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n-    ProjectDetailsComponen,\r\n+    ProjectDetailsComponent,\r\n     AddMemberDialogComponent\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1741861324332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n-import { AddMemberDialogComponent } from './add-member-dialog/add-member-dialog.component';\r\n+import { AddMemberDialogComponent } from './add-member/add-member-dialog.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
+                },
+                {
+                    "date": 1741861363085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n-import { AddMemberDialogComponent } from './add-member/add-member-dialog.component';\r\n+import { AddMemberDialogComponent } from './add-member/add-member.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
+                },
+                {
+                    "date": 1741861495673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n-import { AddMemberDialogComponent } from './add-member/add-member.component';\r\n+import { AddMemberDialogComponent } from './add-member-dialog/add-member.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
+                },
+                {
+                    "date": 1741862572254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n import { AddMemberDialogComponent } from './add-member-dialog/add-member.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n+\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1741862583616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n import { AddMemberDialogComponent } from './add-member-dialog/add-member.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n \r\n+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -47,9 +48,10 @@\n     MatIconModule,\r\n     MatCardModule,\r\n     MatProgressBarModule,\r\n     FormsModule,\r\n-    MatDialogModule\r\n+    MatDialogModule,\r\n+    NgbModalModule\r\n   ],\r\n   providers: [],\r\n   bootstrap: [AppComponent]\r\n })\r\n"
+                },
+                {
+                    "date": 1741862957508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,12 +19,12 @@\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n-import { AddMemberDialogComponent } from './add-member-dialog/add-member.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n \r\n import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';\r\n+import { AddMemberComponent } from './add-member/add-member.component';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -35,9 +35,10 @@\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n-    AddMemberDialogComponent\r\n+    AddMemberDialogComponent,\r\n+    AddMemberComponent\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1741863407814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n import { ProfileComponent } from './profile/profile.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n+import { BidiModule } from '@angular/cdk/bidi';\r\n \r\n import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n @NgModule({\r\n@@ -35,9 +36,8 @@\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n-    AddMemberDialogComponent,\r\n     AddMemberComponent\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1741863480220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,10 @@\n     MatCardModule,\r\n     MatProgressBarModule,\r\n     FormsModule,\r\n     MatDialogModule,\r\n-    NgbModalModule\r\n+    NgbModalModule,\r\n+    BidiModule\r\n   ],\r\n   providers: [],\r\n   bootstrap: [AppComponent]\r\n })\r\n"
+                },
+                {
+                    "date": 1742203648186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,11 @@\n import { BidiModule } from '@angular/cdk/bidi';\r\n \r\n import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n+import { LoginComponent } from './login/login.component';\r\n+import { SignupComponent } from './signup/signup.component';\r\n+import { AuthGuardComponent } from './guard/auth.guard/auth.guard.component';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -36,9 +39,12 @@\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n-    AddMemberComponent\r\n+    AddMemberComponent,\r\n+    LoginComponent,\r\n+    SignupComponent,\r\n+\r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                }
+            ],
+            "date": 1741609977833,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\r\nimport { BrowserModule } from '@angular/platform-browser';\r\n\r\nimport { AppRoutingModule } from './app-routing.module';\r\nimport { AppComponent } from './app.component';\r\nimport { SidebarComponent } from './sidebar/sidebar.component';\r\nimport { HeaderComponent } from './header/header.component';\r\nimport { DashboardComponent } from './dashboard/dashboard.component';\r\nimport { SettingsComponent } from './settings/settings.component';\r\nimport { ClientsComponent } from './clients/clients.component';\r\nimport { MessagesComponent } from './messages/messages.component';\r\nimport { ProfileComponent } from './profile/profile.component';\r\nimport { ProjectsComponent } from './projects/projects.component';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent,\r\n    SidebarComponent,\r\n    HeaderComponent,\r\n    DashboardComponent,\r\n    SettingsComponent,\r\n    ClientsComponent,\r\n    MessagesComponent,\r\n    ProfileComponent,\r\n    ProjectsComponent\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    AppRoutingModule,\r\n    BrowserAnimationsModule,\r\n    MatToolbarModule,\r\n    MatSidenavModule,\r\n    MatListModule,\r\n    MatIconModule,\r\n    MatCardModule\r\n  ],\r\n  providers: [],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule { }\r\n"
+        }
+    ]
+}

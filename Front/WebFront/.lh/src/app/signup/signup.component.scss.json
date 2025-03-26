@@ -1,0 +1,62 @@
+{
+    "sourceFile": "src/app/signup/signup.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1742128936365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742130207498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,8 @@\n   display: flex;\r\n   justify-content: center;\r\n   align-items: center;\r\n   height: 100vh;\r\n-  background: radial-gradient(circle at top left, $secondary-color, $bg-color);\r\n }\r\n \r\n .register-card {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1742130212954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n   display: flex;\r\n   justify-content: center;\r\n   align-items: center;\r\n   height: 100vh;\r\n+  background: radial-gradient(circle at top left, $secondary-color, $bg-color);\r\n }\r\n \r\n .register-card {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1742130240179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   display: flex;\r\n   justify-content: center;\r\n   align-items: center;\r\n   height: 100vh;\r\n-  background: radial-gradient(circle at top left, $secondary-color, $bg-color);\r\n+  background: F1F1F1\r\n }\r\n \r\n .register-card {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1742131206974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   display: flex;\r\n   justify-content: center;\r\n   align-items: center;\r\n   height: 100vh;\r\n-  background: F1F1F1\r\n+  background: wh;\r\n }\r\n \r\n .register-card {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1742132027241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   display: flex;\r\n   justify-content: center;\r\n   align-items: center;\r\n   height: 100vh;\r\n-  background: wh;\r\n+  background: #F1F1F1;\r\n }\r\n \r\n .register-card {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1742132044804,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-$primary-color: #3D5653; // Vert foncé\r\n+$primary-color: white; // Vert foncé\r\n $secondary-color: #E27D60; // Rose saumoné\r\n $text-color: #F4F4F4; // Texte clair\r\n $bg-color: #2C3E50; // Fond d’accentuation\r\n $hover-color: #C75C50; // Hover bouton\r\n"
+                },
+                {
+                    "date": 1742132924502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n-$primary-color: white; // Vert foncé\r\n+$primary-color: white; \r\n $secondary-color: #E27D60; // Rose saumoné\r\n-$text-color: #F4F4F4; // Texte clair\r\n+$text-color: #3D5653; // Texte clair\r\n $bg-color: #2C3E50; // Fond d’accentuation\r\n $hover-color: #C75C50; // Hover bouton\r\n \r\n .register-container {\r\n"
+                },
+                {
+                    "date": 1742132950244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n         }\r\n       }\r\n \r\n       input {\r\n-        width: 100%;\r\n+        width: 95%;\r\n         padding: 10px;\r\n         margin-bottom: 10px;\r\n         border: none;\r\n         border-radius: 5px;\r\n"
+                },
+                {
+                    "date": 1742132958183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,9 @@\n         background: $secondary-color;\r\n         color: $text-color;\r\n         padding: 10px;\r\n         border: none;\r\n-        border-radius: 5px;\r\n+        border-radius: 35px;\r\n         cursor: pointer;\r\n         font-weight: bold;\r\n         transition: background 0.3s;\r\n \r\n"
+                },
+                {
+                    "date": 1742132963656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n         width: 95%;\r\n         padding: 10px;\r\n         margin-bottom: 10px;\r\n         border: none;\r\n-        border-radius: 5px;\r\n+        border-radius: 35px;\r\n         background: #F4F4F4;\r\n         color: #333;\r\n       }\r\n \r\n"
+                },
+                {
+                    "date": 1742133014286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       }\r\n \r\n       .btn-register {\r\n         background: $secondary-color;\r\n-        color: $text-color;\r\n+        color: wh;\r\n         padding: 10px;\r\n         border: none;\r\n         border-radius: 35px;\r\n         cursor: pointer;\r\n"
+                }
+            ],
+            "date": 1742128936365,
+            "name": "Commit-0",
+            "content": "$primary-color: #3D5653; // Vert foncé\r\n$secondary-color: #E27D60; // Rose saumoné\r\n$text-color: #F4F4F4; // Texte clair\r\n$bg-color: #2C3E50; // Fond d’accentuation\r\n$hover-color: #C75C50; // Hover bouton\r\n\r\n.register-container {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  height: 100vh;\r\n  background: radial-gradient(circle at top left, $secondary-color, $bg-color);\r\n}\r\n\r\n.register-card {\r\n  display: flex;\r\n  background: $primary-color;\r\n  border-radius: 15px;\r\n  padding: 20px;\r\n  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);\r\n  max-width: 800px;\r\n  width: 90%;\r\n  color: $text-color;\r\n\r\n  .illustration {\r\n    flex: 1;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n\r\n    img {\r\n      max-width: 100%;\r\n      height: auto;\r\n    }\r\n  }\r\n\r\n  .register-form {\r\n    flex: 1;\r\n    padding: 20px;\r\n\r\n    h2 {\r\n      text-align: center;\r\n      margin-bottom: 15px;\r\n    }\r\n\r\n    form {\r\n      display: flex;\r\n      flex-direction: column;\r\n      \r\n      .input-group {\r\n        display: flex;\r\n        gap: 10px;\r\n        margin-bottom: 10px;\r\n\r\n        input {\r\n          flex: 1;\r\n        }\r\n      }\r\n\r\n      input {\r\n        width: 100%;\r\n        padding: 10px;\r\n        margin-bottom: 10px;\r\n        border: none;\r\n        border-radius: 5px;\r\n        background: #F4F4F4;\r\n        color: #333;\r\n      }\r\n\r\n      .btn-register {\r\n        background: $secondary-color;\r\n        color: $text-color;\r\n        padding: 10px;\r\n        border: none;\r\n        border-radius: 5px;\r\n        cursor: pointer;\r\n        font-weight: bold;\r\n        transition: background 0.3s;\r\n\r\n        &:hover {\r\n          background: $hover-color;\r\n        }\r\n      }\r\n    }\r\n\r\n    p {\r\n      text-align: center;\r\n      margin-top: 10px;\r\n\r\n      a {\r\n        color: $secondary-color;\r\n        text-decoration: none;\r\n\r\n        &:hover {\r\n          text-decoration: underline;\r\n        }\r\n      }\r\n    }\r\n  }\r\n}\r\n"
+        }
+    ]
+}

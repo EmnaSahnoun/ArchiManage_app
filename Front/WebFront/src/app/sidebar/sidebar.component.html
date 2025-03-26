@@ -1,0 +1,35 @@
+<mat-sidenav-container class="sidenav-container" >
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="logo">
+      <img src="assets/user.jpg" alt="logo">
+      <h3>ArchiManage</h3>
+    </div>
+    
+    <ul>
+      <li routerLink="/dashboard" routerLinkActive="active"><a (click)="changeTitle('Tableau de bord')">
+        <i class="bi bi-clipboard2-data"></i> Dashboard</a>
+      </li>
+      <li mat-list-item routerLink="/projects" routerLinkActive="active"><a (click)="changeTitle('Projets')">
+        <i class="bi bi-briefcase"></i> Projects</a>
+      </li>
+      <li mat-list-item routerLink="/clients" routerLinkActive="active"><a (click)="changeTitle('Clients')">
+        <i class="bi bi-person-lines-fill"></i> Clients</a>
+      </li>
+      <li mat-list-item routerLink="/messages" routerLinkActive="active" >
+        <i class="bi bi-chat-dots"></i> Messages
+      </li>
+      <li mat-list-item routerLink="/profile" routerLinkActive="active">
+        <i class="bi bi-person-circle"></i> Profile
+      </li>
+      <li mat-list-item routerLink="/settings" routerLinkActive="active">
+        <i class="bi bi-gear"></i> Settings
+      </li>
+      <li mat-list-item routerLink="/signout" routerLinkActive="active">
+        <i class="bi bi-box-arrow-right"></i> Sign out
+      </li>
+      
+    </ul>
+  </mat-sidenav>
+  
+  
+</mat-sidenav-container>

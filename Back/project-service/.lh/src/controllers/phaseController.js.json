@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 22,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1741172922610,
@@ -96,6 +96,38 @@
                 {
                     "date": 1741181413738,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,9 @@\n exports.createPhase = async (req, res) => {\r\n   try {\r\n     const { name, description, startDate, endDate, projectId } = req.body;\r\n \r\n-    if (!mongoose.Types.ObjectId.isValid(projectId)) {\r\n-        return res.status(400).json({ message: \"Invalid project ID\" });\r\n-      }\r\n-      \r\n+    \r\n     const project = await Project.findById(projectId);\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n"
+                },
+                {
+                    "date": 1741696980268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    const project = await Project.findById(projectId).populate('phases');\r\n+    const project = await Project.findById(projectId).populate('phases').;\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1741696986825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    const project = await Project.findById(projectId).populate('phases').;\r\n+    const project = await Project.findById(projectId).populate('phases').populate();\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1741696998426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    const project = await Project.findById(projectId).populate('phases').populate();\r\n+    const project = await Project.findById(projectId).populate('phases').populate('tasks');\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1741697178289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,19 +32,26 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    const project = await Project.findById(projectId).populate('phases').populate('tasks');\r\n+    // On récupère le projet avec ses phases et les tâches de chaque phase\r\n+    const project = await Project.findById(projectId)\r\n+      .populate({\r\n+        path: 'phases', // Populate les phases\r\n+        populate: { path: 'tasks' } // Populate les tâches associées à chaque phase\r\n+      });\r\n+\r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n-    res.status(200).json(project.phases);\r\n+    res.status(200).json(project.phases); // Renvoie les phases avec leurs tâches\r\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n+\r\n exports.updatePhase = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n     const { name, description, startDate, endDate } = req.body;\r\n"
+                },
+                {
+                    "date": 1741697183889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,8 @@\n exports.getPhases = async (req, res) => {\r\n   try {\r\n     const { projectId } = req.params;\r\n \r\n-    // On récupère le projet avec ses phases et les tâches de chaque phase\r\n     const project = await Project.findById(projectId)\r\n       .populate({\r\n         path: 'phases', // Populate les phases\r\n         populate: { path: 'tasks' } // Populate les tâches associées à chaque phase\r\n"
+                },
+                {
+                    "date": 1741698043458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,17 +34,17 @@\n     const { projectId } = req.params;\r\n \r\n     const project = await Project.findById(projectId)\r\n       .populate({\r\n-        path: 'phases', // Populate les phases\r\n-        populate: { path: 'tasks' } // Populate les tâches associées à chaque phase\r\n+        path: 'phases', \r\n+        populate: { path: 'tasks' } \r\n       });\r\n \r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n-    res.status(200).json(project.phases); // Renvoie les phases avec leurs tâches\r\n+    res.status(200).json(project.phases); \r\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n"
+                },
+                {
+                    "date": 1741698637365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,23 +34,29 @@\n     const { projectId } = req.params;\r\n \r\n     const project = await Project.findById(projectId)\r\n       .populate({\r\n-        path: 'phases', \r\n-        populate: { path: 'tasks' } \r\n+        path: 'phases',\r\n+        populate: {\r\n+          path: 'tasks',\r\n+          populate: {\r\n+            path: 'subTasks', // Peupler les sous-tâches dans chaque tâche\r\n+          },\r\n+        },\r\n       });\r\n \r\n     if (!project) {\r\n       return res.status(404).json({ message: \"Project not found\" });\r\n     }\r\n \r\n-    res.status(200).json(project.phases); \r\n+    res.status(200).json(project.phases); // Retourner les phases avec les tâches et sous-tâches peuplées\r\n   } catch (error) {\r\n     res.status(500).json({ message: error.message });\r\n   }\r\n };\r\n \r\n \r\n+\r\n exports.updatePhase = async (req, res) => {\r\n   try {\r\n     const { phaseId } = req.params;\r\n     const { name, description, startDate, endDate } = req.body;\r\n"
+                },
+                {
+                    "date": 1741698830236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n         path: 'phases',\r\n         populate: {\r\n           path: 'tasks',\r\n           populate: {\r\n-            path: 'subTasks', // Peupler les sous-tâches dans chaque tâche\r\n+            path: 'subTasks', // Peupler les sous-tâches des tâches\r\n           },\r\n         },\r\n       });\r\n \r\n"
                 }
             ],
             "date": 1741172922610,

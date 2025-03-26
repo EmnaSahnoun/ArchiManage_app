@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/app/guard/auth.guard.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1742203702573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742203723857,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n import { Injectable } from '@angular/core';\r\n import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\n import { Observable } from 'rxjs';\r\n-import { TokenStorageService } from './services/token-storage.service';\r\n+/* import { TokenStorageService } from './services/token-storage.service';\r\n+ */\r\n \r\n-\r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class AuthGuard implements CanActivate {\r\n"
+                },
+                {
+                    "date": 1742203729337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   providedIn: 'root'\r\n })\r\n export class AuthGuard implements CanActivate {\r\n \r\n-  constructor(private tokenStorage: TokenStorageService, private router: Router) { }\r\n+  constructor(/* private tokenStorage: TokenStorageService, */ private router: Router) { }\r\n \r\n   canActivate(\r\n     next: ActivatedRouteSnapshot,\r\n     state: RouterStateSnapshot): boolean {\r\n"
+                },
+                {
+                    "date": 1742203758266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\n-import { Observable } from 'rxjs';\r\n+import \r\n /* import { TokenStorageService } from './services/token-storage.service';\r\n  */\r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1742203764172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\n-import \r\n+import {Key}\r\n /* import { TokenStorageService } from './services/token-storage.service';\r\n  */\r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1742203773319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\n-import {Key}\r\n+import {KeycloakAuth}\r\n /* import { TokenStorageService } from './services/token-storage.service';\r\n  */\r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1742203779001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\n-import {KeycloakAuthGuard,}\r\n+import {KeycloakAuthGuard,K}\r\n /* import { TokenStorageService } from './services/token-storage.service';\r\n  */\r\n \r\n @Injectable({\r\n"
+                }
+            ],
+            "date": 1742203702573,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';\r\nimport { Observable } from 'rxjs';\r\nimport { TokenStorageService } from './services/token-storage.service';\r\n\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class AuthGuard implements CanActivate {\r\n\r\n  constructor(private tokenStorage: TokenStorageService, private router: Router) { }\r\n\r\n  canActivate(\r\n    next: ActivatedRouteSnapshot,\r\n    state: RouterStateSnapshot): boolean {\r\n    if (this.tokenStorage.getToken()) {\r\n      return true;\r\n    } else {\r\n      this.router.navigate(['/login']);\r\n      return false;\r\n    }\r\n  }\r\n}\r\n"
+        }
+    ]
+}

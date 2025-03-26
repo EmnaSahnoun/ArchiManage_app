@@ -1,0 +1,430 @@
+{
+    "sourceFile": "src/app/project-details/project-details.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 103,
+            "patches": [
+                {
+                    "date": 1741775394709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741776624146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,62 +1,41 @@\n .project-details-container {\r\n-    width: 80%;\r\n-    margin: auto;\r\n     padding: 20px;\r\n     background: white;\r\n-    border-radius: 12px;\r\n+    border-radius: 10px;\r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n-}\r\n-\r\n-.tabs {\r\n+  }\r\n+  \r\n+  .tabs {\r\n     display: flex;\r\n-    border-bottom: 2px solid #ddd;\r\n-}\r\n-\r\n-.tabs button {\r\n+    margin-bottom: 20px;\r\n+  }\r\n+  \r\n+  .tabs button {\r\n     flex: 1;\r\n     padding: 10px;\r\n-    background: none;\r\n     border: none;\r\n+    background: #ccc;\r\n     cursor: pointer;\r\n     font-size: 16px;\r\n-    font-weight: bold;\r\n-    transition: 0.3s;\r\n-}\r\n-\r\n-.tabs button.active {\r\n-    border-bottom: 3px solid #2787C0;\r\n-    color: #2787C0;\r\n-}\r\n-\r\n-.tab-content {\r\n+  }\r\n+  \r\n+  .tabs button.active {\r\n+    background: #2787C0;\r\n+    color: white;\r\n+  }\r\n+  \r\n+  .tab-content {\r\n+    background: #f9f9f9;\r\n     padding: 20px;\r\n-}\r\n-\r\n-.phase-list {\r\n-    list-style: none;\r\n-    padding: 0;\r\n-}\r\n-\r\n-.phase-list li {\r\n-    padding: 10px;\r\n-    margin: 5px 0;\r\n-    background: #f9f9f9;\r\n     border-radius: 5px;\r\n-    cursor: pointer;\r\n-    transition: 0.3s;\r\n-}\r\n-\r\n-.phase-list li.selected {\r\n-    background: #2787C0;\r\n+  }\r\n+  \r\n+  .add-phase {\r\n+    background: #E27D60;\r\n     color: white;\r\n-}\r\n-\r\n-.btn-add-phase {\r\n-    background: #e4be15;\r\n     border: none;\r\n-    padding: 8px 15px;\r\n-    color: white;\r\n-    font-size: 14px;\r\n+    padding: 10px;\r\n+    border-radius: 5px;\r\n     cursor: pointer;\r\n-    margin-bottom: 10px;\r\n-}\r\n+  }\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741776887671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n .project-details-container {\r\n     padding: 20px;\r\n-    background: white;\r\n+    background: #E27D60;\r\n     border-radius: 10px;\r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741776900330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n .project-details-container {\r\n     padding: 20px;\r\n-    background: #E27D60;\r\n+    background: white;\r\n     border-radius: 10px;\r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n   \r\n@@ -19,9 +19,9 @@\n     font-size: 16px;\r\n   }\r\n   \r\n   .tabs button.active {\r\n-    background: #2787C0;\r\n+    background: ##E27D60;\r\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n"
+                },
+                {
+                    "date": 1741776911843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n     margin-bottom: 20px;\r\n   }\r\n   \r\n   .tabs button {\r\n+    bor\r\n     flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n@@ -19,9 +20,9 @@\n     font-size: 16px;\r\n   }\r\n   \r\n   .tabs button.active {\r\n-    background: ##E27D60;\r\n+    background: #E27D60;\r\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n"
+                },
+                {
+                    "date": 1741776917992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,9 @@\n     margin-bottom: 20px;\r\n   }\r\n   \r\n   .tabs button {\r\n-    bor\r\n-    flex: 1;\r\n+    border-rex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741776948072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n .project-details-container {\r\n+\r\n+    \r\n     padding: 20px;\r\n     background: white;\r\n     border-radius: 10px;\r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n@@ -10,9 +12,9 @@\n     margin-bottom: 20px;\r\n   }\r\n   \r\n   .tabs button {\r\n-    border-rex: 1;\r\n+    flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741776956116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n .project-details-container {\r\n-\r\n-    \r\n     padding: 20px;\r\n+    font-family: 'Poppins', sans-serif;\r\n+    padding: 20px;\r\n+    background: #F1F1F1;\r\n     background: white;\r\n     border-radius: 10px;\r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n"
+                },
+                {
+                    "date": 1741776965909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-    background: white;\r\n-    border-radius: 10px;\r\n+  \r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1741777222899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n   \r\n   .tabs {\r\n     display: flex;\r\n     margin-bottom: 20px;\r\n+    bor\r\n   }\r\n   \r\n   .tabs button {\r\n     flex: 1;\r\n"
+                },
+                {
+                    "date": 1741777235249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,11 @@\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n   \r\n   .tabs {\r\n-    display: flex;\r\n+   \r\n     margin-bottom: 20px;\r\n-    bor\r\n+    border-radius: 20px;\r\n   }\r\n   \r\n   .tabs button {\r\n     flex: 1;\r\n"
+                },
+                {
+                    "date": 1741777247454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,14 +7,14 @@\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n   }\r\n   \r\n   .tabs {\r\n-   \r\n+    display: flex;\r\n     margin-bottom: 20px;\r\n-    border-radius: 20px;\r\n+    \r\n   }\r\n   \r\n-  .tabs button {\r\n+  .tabs button {border-radius: 20px;\r\n     flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n"
+                },
+                {
+                    "date": 1741777285848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,10 @@\n     margin-bottom: 20px;\r\n     \r\n   }\r\n   \r\n-  .tabs button {border-radius: 20px;\r\n+  .tabs button {\r\n+    border-radius: 20px 0 ;\r\n     flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n"
+                },
+                {
+                    "date": 1741777309116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     \r\n   }\r\n   \r\n   .tabs button {\r\n-    border-radius: 20px 0 ;\r\n+    \r\n     flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n"
+                },
+                {
+                    "date": 1741777363998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n   \r\n-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n+    \r\n   }\r\n   \r\n   .tabs {\r\n     display: flex;\r\n@@ -13,9 +13,8 @@\n     \r\n   }\r\n   \r\n   .tabs button {\r\n-    \r\n     flex: 1;\r\n     padding: 10px;\r\n     border: none;\r\n     background: #ccc;\r\n"
+                },
+                {
+                    "date": 1741777375314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: #f9f9f9;\r\n+    background: #F1F1F1;\r\n     padding: 20px;\r\n     border-radius: 5px;\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741777381569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: #F1F1F1;\r\n+    background: #f9f9f9;\r\n     padding: 20px;\r\n     border-radius: 5px;\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741777386731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: #f9f9f9;\r\n+    background: #ffffff;\r\n     padding: 20px;\r\n     border-radius: 5px;\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741777393202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: #ffffff;\r\n+    background: wi;\r\n     padding: 20px;\r\n     border-radius: 5px;\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1741777403002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,11 +27,11 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: wi;\r\n+    background: white;\r\n     padding: 20px;\r\n-    border-radius: 5px;\r\n+    border-radius: 20px;\r\n   }\r\n   \r\n   .add-phase {\r\n     background: #E27D60;\r\n"
+                },
+                {
+                    "date": 1741778443629,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,5 +40,6 @@\n     padding: 10px;\r\n     border-radius: 5px;\r\n     cursor: pointer;\r\n   }\r\n+  \r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741778453386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,5 +41,11 @@\n     border-radius: 5px;\r\n     cursor: pointer;\r\n   }\r\n   \r\n-  \n\\ No newline at end of file\n+  .phases-table {\r\n+    width: 100%;\r\n+    overflow: hidden; \r\n+    border-radius: 12px; \r\n+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n+    background: white; \r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741778475805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,5 +47,27 @@\n     overflow: hidden; \r\n     border-radius: 12px; \r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n     background: white; \r\n+}\r\n+.project-table table {\r\n+    width: 100%;\r\n+    border-radius: 12px; \r\n+    overflow: hidden; \r\n+    border-collapse: collapse;\r\n+}\r\n+\r\n+.project-table th, .project-table td {\r\n+    padding: 15px;\r\n+    text-align: center;\r\n+    border-bottom: 1px solid #ddd;\r\n+}\r\n+tr{\r\n+    cursor: pointer;\r\n+    transition: background-color 0.3s ease-in-out;\r\n+}\r\n+.project-table tr:hover {\r\n+    background-color: #f9f9f9; /* Effet au survol */\r\n+}\r\n+.project-table th {\r\n+    background-color: #f4f4f4;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741778497122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,26 +48,26 @@\n     border-radius: 12px; \r\n     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n     background: white; \r\n }\r\n-.project-table table {\r\n+.phases-table table {\r\n     width: 100%;\r\n     border-radius: 12px; \r\n     overflow: hidden; \r\n     border-collapse: collapse;\r\n }\r\n \r\n-.project-table th, .project-table td {\r\n+.phases-table th, .phases-table td {\r\n     padding: 15px;\r\n     text-align: center;\r\n     border-bottom: 1px solid #ddd;\r\n }\r\n tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n }\r\n-.project-table tr:hover {\r\n+.phases-table tr:hover {\r\n     background-color: #f9f9f9; /* Effet au survol */\r\n }\r\n-.project-table th {\r\n+.phases-table th {\r\n     background-color: #f4f4f4;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741778548812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,14 +33,21 @@\n     border-radius: 20px;\r\n   }\r\n   \r\n   .add-phase {\r\n-    background: #E27D60;\r\n+    cursor: pointer;\r\n+    top: 20px;\r\n+    right: 20px;\r\n+    background: #E27D60  ;\r\n+    border-radius: 40px;\r\n+    font-weight: bold;\r\n+    min-height: 3rem;\r\n+    border: none;\r\n     color: white;\r\n-    border: none;\r\n-    padding: 10px;\r\n-    border-radius: 5px;\r\n-    cursor: pointer;\r\n+    i{\r\n+        font-size: 0.8rem;  /* Augmente la taille de l'icône */\r\n+font-weight: bold;  /* Tentative pour ajouter du poids si l'icône supporte cela */\r\n+    }\r\n   }\r\n   \r\n   .phases-table {\r\n     width: 100%;\r\n"
+                },
+                {
+                    "date": 1741778675970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n   }\r\n-  \r\n+  .header\r\n   .add-phase {\r\n     cursor: pointer;\r\n     top: 20px;\r\n     right: 20px;\r\n"
+                },
+                {
+                    "date": 1741778690302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,12 @@\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n   }\r\n-  .header\r\n+  .header{\r\n+    display: flex;\r\n+    align-items: center;\r\n+  }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     top: 20px;\r\n     right: 20px;\r\n"
+                },
+                {
+                    "date": 1741778700139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n+    gap\r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     top: 20px;\r\n"
+                },
+                {
+                    "date": 1741778705335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n-    gap\r\n+    gap:15rem;\r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     top: 20px;\r\n"
+                },
+                {
+                    "date": 1741778717395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n-    gap:15rem;\r\n+    \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     top: 20px;\r\n"
+                },
+                {
+                    "date": 1741778724364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,9 @@\n     \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n-    top: 20px;\r\n-    right: 20px;\r\n+    \r\n     background: #E27D60  ;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n"
+                },
+                {
+                    "date": 1741778734854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n-    \r\n+    ri\r\n     background: #E27D60  ;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n"
+                },
+                {
+                    "date": 1741778744384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n-    ri\r\n+    right: 0;\r\n     background: #E27D60  ;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n"
+                },
+                {
+                    "date": 1741778759656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n-    \r\n+    gap\r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     right: 0;\r\n"
+                },
+                {
+                    "date": 1741778766567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n-    gap\r\n+    gap: 50rem;\r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     right: 0;\r\n"
+                },
+                {
+                    "date": 1741778789231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   .header{\r\n     display: flex;\r\n     align-items: center;\r\n-    gap: 50rem;\r\n+    \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n     right: 0;\r\n"
+                },
+                {
+                    "date": 1741778798845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n-    right: 0;\r\n+    right: 10;\r\n     background: #E27D60  ;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n"
+                },
+                {
+                    "date": 1741778814066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,10 @@\n     \r\n   }\r\n   .add-phase {\r\n     cursor: pointer;\r\n-    right: 10;\r\n+    left: ;\r\n+    right: 10px;\r\n     background: #E27D60  ;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n"
+                },
+                {
+                    "date": 1741778916369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,29 +31,51 @@\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n   }\r\n-  .header{\r\n+  .header {\r\n     display: flex;\r\n     align-items: center;\r\n-    \r\n+    justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n+    width: 100%;\r\n   }\r\n+  \r\n   .add-phase {\r\n     cursor: pointer;\r\n-    left: ;\r\n-    right: 10px;\r\n-    background: #E27D60  ;\r\n+    background: #E27D60;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n     min-height: 3rem;\r\n+    padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n     border: none;\r\n     color: white;\r\n-    i{\r\n-        font-size: 0.8rem;  /* Augmente la taille de l'icône */\r\n-font-weight: bold;  /* Tentative pour ajouter du poids si l'icône supporte cela */\r\n+    display: flex;\r\n+    align-items: center;\r\n+    justify-content: center;\r\n+  \r\n+    i {\r\n+      font-size: 1rem; /* Taille de l'icône */\r\n+      font-weight: bold; \r\n+      margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n     }\r\n+  \r\n+    /* Positionner le bouton à droite avec auto margin */\r\n+    margin-left: auto;\r\n   }\r\n   \r\n+  @media (max-width: 768px) {\r\n+    .add-phase {\r\n+      font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n+      padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n+    }\r\n+  \r\n+    .header {\r\n+      flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n+      align-items: flex-start; /* Alignement à gauche pour le texte */\r\n+    }\r\n+  }\r\n+  \r\n+  \r\n   .phases-table {\r\n     width: 100%;\r\n     overflow: hidden; \r\n     border-radius: 12px; \r\n"
+                },
+                {
+                    "date": 1741787512495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,13 @@\n .project-details-container {\r\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n-    padding: 20px;\r\n     background: #F1F1F1;\r\n-  \r\n-    \r\n   }\r\n   \r\n   .tabs {\r\n     display: flex;\r\n     margin-bottom: 20px;\r\n-    \r\n   }\r\n   \r\n   .tabs button {\r\n     flex: 1;\r\n@@ -30,77 +26,73 @@\n   .tab-content {\r\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n+    display: flex;\r\n+    gap: 20px;\r\n   }\r\n-  .header {\r\n+  \r\n+  .left-panel {\r\n+    flex: 1;\r\n+  }\r\n+  \r\n+  .right-panel {\r\n+    flex: 1;\r\n     display: flex;\r\n-    align-items: center;\r\n-    justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n-    width: 100%;\r\n+    flex-direction: column;\r\n+    gap: 20px;\r\n   }\r\n   \r\n-  .add-phase {\r\n+  .card {\r\n+    background: white;\r\n+    padding: 20px;\r\n+    border-radius: 10px;\r\n+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n+  }\r\n+  \r\n+  .edit-btn {\r\n     cursor: pointer;\r\n     background: #E27D60;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n-    min-height: 3rem;\r\n-    padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n+    min-height: 2.5rem;\r\n+    padding: 0 1rem;\r\n     border: none;\r\n     color: white;\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n+    margin-top: 10px;\r\n+  }\r\n   \r\n-    i {\r\n-      font-size: 1rem; /* Taille de l'icône */\r\n-      font-weight: bold; \r\n-      margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n-    }\r\n+  .progress-container {\r\n+    position: relative;\r\n+    width: 100px;\r\n+    height: 100px;\r\n+    margin: auto;\r\n+  }\r\n   \r\n-    /* Positionner le bouton à droite avec auto margin */\r\n-    margin-left: auto;\r\n+  .progress-text {\r\n+    position: absolute;\r\n+    top: 50%;\r\n+    left: 50%;\r\n+    transform: translate(-50%, -50%);\r\n+    font-size: 18px;\r\n+    font-weight: bold;\r\n   }\r\n   \r\n   @media (max-width: 768px) {\r\n-    .add-phase {\r\n-      font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n-      padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n+    .tab-content {\r\n+      flex-direction: column;\r\n\\ No newline at end of file\n     }\r\n   \r\n-    .header {\r\n-      flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n-      align-items: flex-start; /* Alignement à gauche pour le texte */\r\n+    .edit-btn {\r\n+      font-size: 0.9rem;\r\n     }\r\n-  }\r\n   \r\n+    .progress-container {\r\n+      width: 80px;\r\n+      height: 80px;\r\n+    }\r\n   \r\n-  .phases-table {\r\n-    width: 100%;\r\n-    overflow: hidden; \r\n-    border-radius: 12px; \r\n-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n-    background: white; \r\n-}\r\n-.phases-table table {\r\n-    width: 100%;\r\n-    border-radius: 12px; \r\n-    overflow: hidden; \r\n-    border-collapse: collapse;\r\n-}\r\n-\r\n-.phases-table th, .phases-table td {\r\n-    padding: 15px;\r\n-    text-align: center;\r\n-    border-bottom: 1px solid #ddd;\r\n-}\r\n-tr{\r\n-    cursor: pointer;\r\n-    transition: background-color 0.3s ease-in-out;\r\n-}\r\n-.phases-table tr:hover {\r\n-    background-color: #f9f9f9; /* Effet au survol */\r\n-}\r\n-.phases-table th {\r\n-    background-color: #f4f4f4;\r\n-}\n+    .progress-text {\r\n+      font-size: 14px;\r\n+    }\r\n+  }\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741787625874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,17 @@\n .project-details-container {\r\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n+    padding: 20px;\r\n     background: #F1F1F1;\r\n+  \r\n+    \r\n   }\r\n   \r\n   .tabs {\r\n     display: flex;\r\n     margin-bottom: 20px;\r\n+    \r\n   }\r\n   \r\n   .tabs button {\r\n     flex: 1;\r\n@@ -26,73 +30,77 @@\n   .tab-content {\r\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n-    display: flex;\r\n-    gap: 20px;\r\n   }\r\n-  \r\n-  .left-panel {\r\n-    flex: 1;\r\n-  }\r\n-  \r\n-  .right-panel {\r\n-    flex: 1;\r\n+  .header {\r\n     display: flex;\r\n-    flex-direction: column;\r\n-    gap: 20px;\r\n+    align-items: center;\r\n+    justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n+    width: 100%;\r\n   }\r\n   \r\n-  .card {\r\n-    background: white;\r\n-    padding: 20px;\r\n-    border-radius: 10px;\r\n-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n-  }\r\n-  \r\n-  .edit-btn {\r\n+  .add-phase {\r\n     cursor: pointer;\r\n     background: #E27D60;\r\n     border-radius: 40px;\r\n     font-weight: bold;\r\n-    min-height: 2.5rem;\r\n-    padding: 0 1rem;\r\n+    min-height: 3rem;\r\n+    padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n     border: none;\r\n     color: white;\r\n-    margin-top: 10px;\r\n-  }\r\n+    display: flex;\r\n+    align-items: center;\r\n+    justify-content: center;\r\n   \r\n-  .progress-container {\r\n-    position: relative;\r\n-    width: 100px;\r\n-    height: 100px;\r\n-    margin: auto;\r\n-  }\r\n+    i {\r\n+      font-size: 1rem; /* Taille de l'icône */\r\n+      font-weight: bold; \r\n+      margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n+    }\r\n   \r\n-  .progress-text {\r\n-    position: absolute;\r\n-    top: 50%;\r\n-    left: 50%;\r\n-    transform: translate(-50%, -50%);\r\n-    font-size: 18px;\r\n-    font-weight: bold;\r\n+    /* Positionner le bouton à droite avec auto margin */\r\n+    margin-left: auto;\r\n   }\r\n   \r\n   @media (max-width: 768px) {\r\n-    .tab-content {\r\n\\ No newline at end of file\n-      flex-direction: column;\r\n+    .add-phase {\r\n+      font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n+      padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n     }\r\n   \r\n-    .edit-btn {\r\n-      font-size: 0.9rem;\r\n+    .header {\r\n+      flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n+      align-items: flex-start; /* Alignement à gauche pour le texte */\r\n     }\r\n+  }\r\n   \r\n-    .progress-container {\r\n-      width: 80px;\r\n-      height: 80px;\r\n-    }\r\n   \r\n-    .progress-text {\r\n-      font-size: 14px;\r\n-    }\r\n-  }\r\n-  \n+  .phases-table {\r\n+    width: 100%;\r\n+    overflow: hidden; \r\n+    border-radius: 12px; \r\n+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n+    background: white; \r\n+}\r\n+.phases-table table {\r\n+    width: 100%;\r\n+    border-radius: 12px; \r\n+    overflow: hidden; \r\n+    border-collapse: collapse;\r\n+}\r\n+\r\n+.phases-table th, .phases-table td {\r\n+    padding: 15px;\r\n+    text-align: center;\r\n+    border-bottom: 1px solid #ddd;\r\n+}\r\n+tr{\r\n+    cursor: pointer;\r\n+    transition: background-color 0.3s ease-in-out;\r\n+}\r\n+.phases-table tr:hover {\r\n+    background-color: #f9f9f9; /* Effet au survol */\r\n+}\r\n+.phases-table th {\r\n+    background-color: #f4f4f4;\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741787718004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,51 +31,54 @@\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n   }\r\n-  .header {\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n-    width: 100%;\r\n+  .left-panel {\r\n+    flex: 1;\r\n   }\r\n-  \r\n+ .header {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n+  width: 100%;\r\n+}\r\n+\r\n+.add-phase {\r\n+  cursor: pointer;\r\n+  background: #E27D60;\r\n+  border-radius: 40px;\r\n+  font-weight: bold;\r\n+  min-height: 3rem;\r\n+  padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n+  border: none;\r\n+  color: white;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+\r\n+  i {\r\n+    font-size: 1rem; /* Taille de l'icône */\r\n+    font-weight: bold; \r\n+    margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n+  }\r\n+\r\n+  /* Positionner le bouton à droite avec auto margin */\r\n+  margin-left: auto;\r\n+}\r\n+\r\n+@media (max-width: 768px) {\r\n   .add-phase {\r\n-    cursor: pointer;\r\n-    background: #E27D60;\r\n-    border-radius: 40px;\r\n-    font-weight: bold;\r\n-    min-height: 3rem;\r\n-    padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n-    border: none;\r\n-    color: white;\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-  \r\n-    i {\r\n-      font-size: 1rem; /* Taille de l'icône */\r\n-      font-weight: bold; \r\n-      margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n-    }\r\n-  \r\n-    /* Positionner le bouton à droite avec auto margin */\r\n-    margin-left: auto;\r\n+    font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n+    padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n   }\r\n-  \r\n-  @media (max-width: 768px) {\r\n-    .add-phase {\r\n-      font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n-      padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n-    }\r\n-  \r\n-    .header {\r\n-      flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n-      align-items: flex-start; /* Alignement à gauche pour le texte */\r\n-    }\r\n+\r\n+  .header {\r\n+    flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n+    align-items: flex-start; /* Alignement à gauche pour le texte */\r\n   }\r\n+}\r\n+\r\n   \r\n-  \r\n   .phases-table {\r\n     width: 100%;\r\n     overflow: hidden; \r\n     border-radius: 12px; \r\n"
+                },
+                {
+                    "date": 1741787734222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,15 @@\n   }\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n+  .right-panel {\r\n+    flex: 1;\r\n+    display: flex;\r\n+    flex-direction: column;\r\n+    gap: 20px;\r\n+  }\r\n+  \r\n  .header {\r\n   display: flex;\r\n   align-items: center;\r\n   justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n"
+                },
+                {
+                    "date": 1741787759305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,43 @@\n     display: flex;\r\n     flex-direction: column;\r\n     gap: 20px;\r\n   }\r\n+  .card {\r\n+    background: white;\r\n+    padding: 20px;\r\n+    border-radius: 10px;\r\n+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n+  }\r\n   \r\n+  .edit-btn {\r\n+    cursor: pointer;\r\n+    background: #E27D60;\r\n+    border-radius: 40px;\r\n+    font-weight: bold;\r\n+    min-height: 2.5rem;\r\n+    padding: 0 1rem;\r\n+    border: none;\r\n+    color: white;\r\n+    margin-top: 10px;\r\n+  }\r\n+  \r\n+  .progress-container {\r\n+    position: relative;\r\n+    width: 100px;\r\n+    height: 100px;\r\n+    margin: auto;\r\n+  }\r\n+  \r\n+  .progress-text {\r\n+    position: absolute;\r\n+    top: 50%;\r\n+    left: 50%;\r\n+    transform: translate(-50%, -50%);\r\n+    font-size: 18px;\r\n+    font-weight: bold;\r\n+  }\r\n+  \r\n  .header {\r\n   display: flex;\r\n   align-items: center;\r\n   justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n"
+                },
+                {
+                    "date": 1741787777744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,26 @@\n     transform: translate(-50%, -50%);\r\n     font-size: 18px;\r\n     font-weight: bold;\r\n   }\r\n+  @media (max-width: 768px) {\r\n+    .tab-content {\r\n+      flex-direction: column;\r\n+    }\r\n   \r\n+    .edit-btn {\r\n+      font-size: 0.9rem;\r\n+    }\r\n+  \r\n+    .progress-container {\r\n+      width: 80px;\r\n+      height: 80px;\r\n+    }\r\n+  \r\n+    .progress-text {\r\n+      font-size: 14px;\r\n+    }\r\n+  }\r\n  .header {\r\n   display: flex;\r\n   align-items: center;\r\n   justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n"
+                },
+                {
+                    "date": 1741787820393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,8 +30,10 @@\n   .tab-content {\r\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n+    display: flex;\r\n+  gap: 20px;\r\n   }\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n"
+                },
+                {
+                    "date": 1741787832101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,9 @@\n   .tab-content {\r\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n-    display: flex;\r\n-  gap: 20px;\r\n+    \r\n   }\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n"
+                },
+                {
+                    "date": 1741787848418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,9 @@\n     padding: 20px;\r\n     border-radius: 20px;\r\n     \r\n   }\r\n+  \r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n   .right-panel {\r\n"
+                },
+                {
+                    "date": 1741787855823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     padding: 20px;\r\n     border-radius: 20px;\r\n     \r\n   }\r\n-  \r\n+  .de\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n   .right-panel {\r\n"
+                },
+                {
+                    "date": 1741787861881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     padding: 20px;\r\n     border-radius: 20px;\r\n     \r\n   }\r\n-  .de\r\n+  .details-con\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n   .right-panel {\r\n"
+                },
+                {
+                    "date": 1741787867921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,11 @@\n     padding: 20px;\r\n     border-radius: 20px;\r\n     \r\n   }\r\n-  .details-con\r\n+  .details-content{\r\n+    \r\n+  }\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n   .right-panel {\r\n"
+                },
+                {
+                    "date": 1741788494859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,10 @@\n     border-radius: 20px;\r\n     \r\n   }\r\n   .details-content{\r\n-    \r\n+    display: flex;\r\n+  gap: 20px;\r\n   }\r\n   .left-panel {\r\n     flex: 1;\r\n   }\r\n@@ -167,5 +168,34 @@\n     background-color: #f9f9f9; /* Effet au survol */\r\n }\r\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n-}\n\\ No newline at end of file\n+}\r\n+.members {\r\n+    display: flex;\r\n+    align-items: center;\r\n+    gap: 8px;\r\n+  }\r\n+  \r\n+  .member-img {\r\n+    width: 32px;\r\n+    height: 32px;\r\n+    border-radius: 50%;\r\n+    object-fit: cover;\r\n+    border: 2px solid #ddd;\r\n+  }\r\n+  \r\n+  button {\r\n+    background: none;\r\n+    border: none;\r\n+    cursor: pointer;\r\n+  }\r\n+  \r\n+  button i {\r\n+    font-size: 18px;\r\n+    color: #2787C0;\r\n+  }\r\n+  \r\n+  button i:hover {\r\n+    color: #e4be15;\r\n+  }\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788512377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,9 +191,9 @@\n   }\r\n   \r\n   button i {\r\n     font-size: 18px;\r\n-    color: #2787C0;\r\n+    color: #000000;\r\n   }\r\n   \r\n   button i:hover {\r\n     color: #e4be15;\r\n"
+                },
+                {
+                    "date": 1741788522841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,7 +195,7 @@\n     color: #000000;\r\n   }\r\n   \r\n   button i:hover {\r\n-    color: #e4be15;\r\n+    color: #E27D60;\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788540171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,7 +195,7 @@\n     color: #000000;\r\n   }\r\n   \r\n   button i:hover {\r\n-    color: #E27D60;\r\n+    color: #e4be15;\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788548904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -194,8 +194,8 @@\n     font-size: 18px;\r\n     color: #000000;\r\n   }\r\n   \r\n-  button i:hover {\r\n-    color: #e4be15;\r\n+  icon:hover {\r\n+    color: #E27D60;\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788566939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,13 +189,13 @@\n     border: none;\r\n     cursor: pointer;\r\n   }\r\n   \r\n-  button i {\r\n+  .icon {\r\n     font-size: 18px;\r\n     color: #000000;\r\n   }\r\n   \r\n-  icon:hover {\r\n+  .icon:hover {\r\n     color: #E27D60;\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788730224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -159,12 +159,12 @@\n     padding: 15px;\r\n     text-align: center;\r\n     border-bottom: 1px solid #ddd;\r\n }\r\n-tr{\r\n+tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n-}\r\n+}}\r\n .phases-table tr:hover {\r\n     background-color: #f9f9f9; /* Effet au survol */\r\n }\r\n .phases-table th {\r\n"
+                },
+                {
+                    "date": 1741788765601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -197,5 +197,5 @@\n   \r\n   .icon:hover {\r\n     color: #E27D60;\r\n   }\r\n-  \n\\ No newline at end of file\n+  .bi-trash\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788772119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -197,5 +197,7 @@\n   \r\n   .icon:hover {\r\n     color: #E27D60;\r\n   }\r\n-  .bi-trash\n\\ No newline at end of file\n+  .bi-trash{\r\n+    color: ;\r\n+  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788787754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -198,6 +198,9 @@\n   .icon:hover {\r\n     color: #E27D60;\r\n   }\r\n   .bi-trash{\r\n-    color: ;\r\n+    color: red;\r\n+  }\r\n+  .bi-trash{\r\n+    color: red;\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788793616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -200,7 +200,7 @@\n   }\r\n   .bi-trash{\r\n     color: red;\r\n   }\r\n-  .bi-trash{\r\n+  .bi-trash:h{\r\n     color: red;\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788805538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -200,7 +200,7 @@\n   }\r\n   .bi-trash{\r\n     color: red;\r\n   }\r\n-  .bi-trash:h{\r\n-    color: red;\r\n+  .bi-trash:hover{\r\n+    color: rgba(255, 0, 0, 0.638);\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788832157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -201,6 +201,7 @@\n   .bi-trash{\r\n     color: red;\r\n   }\r\n   .bi-trash:hover{\r\n+    font-size: 18px;\r\n     color: rgba(255, 0, 0, 0.638);\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788837752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -201,7 +201,7 @@\n   .bi-trash{\r\n     color: red;\r\n   }\r\n   .bi-trash:hover{\r\n-    font-size: 18px;\r\n+    \r\n     color: rgba(255, 0, 0, 0.638);\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788849931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -199,9 +199,10 @@\n     color: #E27D60;\r\n   }\r\n   .bi-trash{\r\n     color: red;\r\n+    font-size: 18px;\r\n   }\r\n   .bi-trash:hover{\r\n     \r\n-    color: rgba(255, 0, 0, 0.638);\r\n+    color: rgba(121, 0, 0, 0.638);\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741788914966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -172,9 +172,9 @@\n }\r\n .members {\r\n     display: flex;\r\n     align-items: center;\r\n-    gap: 8px;\r\n+    \r\n   }\r\n   \r\n   .member-img {\r\n     width: 32px;\r\n"
+                },
+                {
+                    "date": 1741788922148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -172,9 +172,9 @@\n }\r\n .members {\r\n     display: flex;\r\n     align-items: center;\r\n-    \r\n+    gap: 8px;\r\n   }\r\n   \r\n   .member-img {\r\n     width: 32px;\r\n"
+                },
+                {
+                    "date": 1741788928720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -181,8 +181,9 @@\n     height: 32px;\r\n     border-radius: 50%;\r\n     object-fit: cover;\r\n     border: 2px solid #ddd;\r\n+    align-items: center;\r\n   }\r\n   \r\n   button {\r\n     background: none;\r\n"
+                },
+                {
+                    "date": 1741789233010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -172,20 +172,43 @@\n }\r\n .members {\r\n     display: flex;\r\n     align-items: center;\r\n+    justify-content: center;\r\n     gap: 8px;\r\n+    position: relative;\r\n   }\r\n   \r\n   .member-img {\r\n     width: 32px;\r\n     height: 32px;\r\n     border-radius: 50%;\r\n     object-fit: cover;\r\n     border: 2px solid #ddd;\r\n+  }\r\n+  \r\n+  .more-members {\r\n+    width: 32px;\r\n+    height: 32px;\r\n+    border-radius: 50%;\r\n+    background-color: #2787C0;\r\n+    color: white;\r\n+    display: flex;\r\n     align-items: center;\r\n+    justify-content: center;\r\n+    font-size: 14px;\r\n+    font-weight: bold;\r\n   }\r\n   \r\n+  .add-member-btn {\r\n+    background: none;\r\n+    border: none;\r\n+    cursor: pointer;\r\n+    font-size: 20px;\r\n+    color: #2787C0;\r\n+  }\r\n+  \r\n+  \r\n   button {\r\n     background: none;\r\n     border: none;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741855972954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,45 +170,62 @@\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n .members {\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-    gap: 8px;\r\n-    position: relative;\r\n-  }\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px;\r\n+  position: relative;\r\n+}\r\n+\r\n+.member-img {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  object-fit: cover;\r\n+  border: 2px solid #ddd;\r\n+}\r\n+\r\n+.more-members {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  background-color: #2787C0;\r\n+  color: white;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+  font-size: 14px;\r\n+  font-weight: bold;\r\n+}\r\n+\r\n+.add-member-btn {\r\n+  background: none;\r\n+  border: none;\r\n+  cursor: pointer;\r\n+  font-size: 20px;\r\n+  color: #2787C0;\r\n+}\r\n+\r\n+.member-option {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: space-between;\r\n+  width: 100%;\r\n+  gap: 10px;\r\n+  margin: 8px 0;\r\n+}\r\n+\r\n+.member-img {\r\n+  width: 40px;\r\n+  height: 40px;\r\n+  border-radius: 50%;\r\n+  object-fit: cover;\r\n+  border: 2px solid #ddd;\r\n+}\r\n+\r\n   \r\n-  .member-img {\r\n-    width: 32px;\r\n-    height: 32px;\r\n-    border-radius: 50%;\r\n-    object-fit: cover;\r\n-    border: 2px solid #ddd;\r\n-  }\r\n   \r\n-  .more-members {\r\n-    width: 32px;\r\n-    height: 32px;\r\n-    border-radius: 50%;\r\n-    background-color: #2787C0;\r\n-    color: white;\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-    font-size: 14px;\r\n-    font-weight: bold;\r\n-  }\r\n-  \r\n-  .add-member-btn {\r\n-    background: none;\r\n-    border: none;\r\n-    cursor: pointer;\r\n-    font-size: 20px;\r\n-    color: #2787C0;\r\n-  }\r\n-  \r\n-  \r\n   button {\r\n     background: none;\r\n     border: none;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741857334996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,8 +169,14 @@\n }\r\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n+\r\n+.members-container {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px; /* Espacement entre les membres et le bouton */\r\n+}\r\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 8px;\r\n"
+                },
+                {
+                    "date": 1741857672591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,15 +220,8 @@\n   gap: 10px;\r\n   margin: 8px 0;\r\n }\r\n \r\n-.member-img {\r\n-  width: 40px;\r\n-  height: 40px;\r\n-  border-radius: 50%;\r\n-  object-fit: cover;\r\n-  border: 2px solid #ddd;\r\n-}\r\n \r\n   \r\n   \r\n   button {\r\n"
+                },
+                {
+                    "date": 1741857918774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,62 +169,46 @@\n }\r\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n-\r\n-.members-container {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  gap: 8px; /* Espacement entre les membres et le bouton */\r\n-}\r\n .members {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  gap: 8px;\r\n-  position: relative;\r\n-}\r\n-\r\n-.member-img {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  object-fit: cover;\r\n-  border: 2px solid #ddd;\r\n-}\r\n-\r\n-.more-members {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  background-color: #2787C0;\r\n-  color: white;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: center;\r\n-  font-size: 14px;\r\n-  font-weight: bold;\r\n-}\r\n-\r\n-.add-member-btn {\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  font-size: 20px;\r\n-  color: #2787C0;\r\n-}\r\n-\r\n-.member-option {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: space-between;\r\n-  width: 100%;\r\n-  gap: 10px;\r\n-  margin: 8px 0;\r\n-}\r\n-\r\n-\r\n+    display: flex;\r\n+    align-items: center;\r\n+    justify-content: center;\r\n+    gap: 8px;\r\n+    position: relative;\r\n+  }\r\n   \r\n+  .member-img {\r\n+    width: 32px;\r\n+    height: 32px;\r\n+    border-radius: 50%;\r\n+    object-fit: cover;\r\n+    border: 2px solid #ddd;\r\n+  }\r\n   \r\n+  .more-members {\r\n+    width: 32px;\r\n+    height: 32px;\r\n+    border-radius: 50%;\r\n+    background-color: #2787C0;\r\n+    color: white;\r\n+    display: flex;\r\n+    align-items: center;\r\n+    justify-content: center;\r\n+    font-size: 14px;\r\n+    font-weight: bold;\r\n+  }\r\n+  \r\n+  .add-member-btn {\r\n+    background: none;\r\n+    border: none;\r\n+    cursor: pointer;\r\n+    font-size: 20px;\r\n+    color: #2787C0;\r\n+  }\r\n+  \r\n+  \r\n   button {\r\n     background: none;\r\n     border: none;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741858383506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,23 +170,22 @@\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n .members {\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-    gap: 8px;\r\n-    position: relative;\r\n-  }\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px;\r\n+}\r\n+\r\n+.member-img {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  object-fit: cover;\r\n+  border: 2px solid #ddd;\r\n+  align-items: center;\r\n+}\r\n   \r\n-  .member-img {\r\n-    width: 32px;\r\n-    height: 32px;\r\n-    border-radius: 50%;\r\n-    object-fit: cover;\r\n-    border: 2px solid #ddd;\r\n-  }\r\n-  \r\n   .more-members {\r\n     width: 32px;\r\n     height: 32px;\r\n     border-radius: 50%;\r\n"
+                },
+                {
+                    "date": 1741858531828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,9 +170,9 @@\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n .members {\r\n-  display: flex;\r\n+  \r\n   align-items: center;\r\n   gap: 8px;\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1741858538241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,231 @@\n+.project-details-container {\r\n+    padding: 20px;\r\n+    font-family: 'Poppins', sans-serif;\r\n+    padding: 20px;\r\n+    background: #F1F1F1;\r\n+  \r\n+    \r\n+  }\r\n+  \r\n+  .tabs {\r\n+    display: flex;\r\n+    margin-bottom: 20px;\r\n+    \r\n+  }\r\n+  \r\n+  .tabs button {\r\n+    flex: 1;\r\n+    padding: 10px;\r\n+    border: none;\r\n+    background: #ccc;\r\n+    cursor: pointer;\r\n+    font-size: 16px;\r\n+  }\r\n+  \r\n+  .tabs button.active {\r\n+    background: #E27D60;\r\n+    color: white;\r\n+  }\r\n+  \r\n+  .tab-content {\r\n+    background: white;\r\n+    padding: 20px;\r\n+    border-radius: 20px;\r\n+    \r\n+  }\r\n+  .details-content{\r\n+    display: flex;\r\n+  gap: 20px;\r\n+  }\r\n+  .left-panel {\r\n+    flex: 1;\r\n+  }\r\n+  .right-panel {\r\n+    flex: 1;\r\n+    display: flex;\r\n+    flex-direction: column;\r\n+    gap: 20px;\r\n+  }\r\n+  .card {\r\n+    background: white;\r\n+    padding: 20px;\r\n+    border-radius: 10px;\r\n+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n+  }\r\n+  \r\n+  .edit-btn {\r\n+    cursor: pointer;\r\n+    background: #E27D60;\r\n+    border-radius: 40px;\r\n+    font-weight: bold;\r\n+    min-height: 2.5rem;\r\n+    padding: 0 1rem;\r\n+    border: none;\r\n+    color: white;\r\n+    margin-top: 10px;\r\n+  }\r\n+  \r\n+  .progress-container {\r\n+    position: relative;\r\n+    width: 100px;\r\n+    height: 100px;\r\n+    margin: auto;\r\n+  }\r\n+  \r\n+  .progress-text {\r\n+    position: absolute;\r\n+    top: 50%;\r\n+    left: 50%;\r\n+    transform: translate(-50%, -50%);\r\n+    font-size: 18px;\r\n+    font-weight: bold;\r\n+  }\r\n+  @media (max-width: 768px) {\r\n+    .tab-content {\r\n+      flex-direction: column;\r\n+    }\r\n+  \r\n+    .edit-btn {\r\n+      font-size: 0.9rem;\r\n+    }\r\n+  \r\n+    .progress-container {\r\n+      width: 80px;\r\n+      height: 80px;\r\n+    }\r\n+  \r\n+    .progress-text {\r\n+      font-size: 14px;\r\n+    }\r\n+  }\r\n+ .header {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n+  width: 100%;\r\n+}\r\n+\r\n+.add-phase {\r\n+  cursor: pointer;\r\n+  background: #E27D60;\r\n+  border-radius: 40px;\r\n+  font-weight: bold;\r\n+  min-height: 3rem;\r\n+  padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n+  border: none;\r\n+  color: white;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+\r\n+  i {\r\n+    font-size: 1rem; /* Taille de l'icône */\r\n+    font-weight: bold; \r\n+    margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n+  }\r\n+\r\n+  /* Positionner le bouton à droite avec auto margin */\r\n+  margin-left: auto;\r\n+}\r\n+\r\n+@media (max-width: 768px) {\r\n+  .add-phase {\r\n+    font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n+    padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n+  }\r\n+\r\n+  .header {\r\n+    flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n+    align-items: flex-start; /* Alignement à gauche pour le texte */\r\n+  }\r\n+}\r\n+\r\n+  \r\n+  .phases-table {\r\n+    width: 100%;\r\n+    overflow: hidden; \r\n+    border-radius: 12px; \r\n+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n+    background: white; \r\n+}\r\n+.phases-table table {\r\n+    width: 100%;\r\n+    border-radius: 12px; \r\n+    overflow: hidden; \r\n+    border-collapse: collapse;\r\n+}\r\n+\r\n+.phases-table th, .phases-table td {\r\n+    padding: 15px;\r\n+    text-align: center;\r\n+    border-bottom: 1px solid #ddd;\r\n+}\r\n+tbody{tr{\r\n+    cursor: pointer;\r\n+    transition: background-color 0.3s ease-in-out;\r\n+}}\r\n+.phases-table tr:hover {\r\n+    background-color: #f9f9f9; /* Effet au survol */\r\n+}\r\n+.phases-table th {\r\n+    background-color: #f4f4f4;\r\n+}\r\n+.members {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px;\r\n+}\r\n+\r\n+.member-img {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  object-fit: cover;\r\n+  border: 2px solid #ddd;\r\n+  align-items: center;\r\n+}\r\n+  \r\n+  .more-members {\r\n+    width: 32px;\r\n+    height: 32px;\r\n+    border-radius: 50%;\r\n+    background-color: #2787C0;\r\n+    color: white;\r\n+    display: flex;\r\n+    align-items: center;\r\n+    justify-content: center;\r\n+    font-size: 14px;\r\n+    font-weight: bold;\r\n+  }\r\n+  \r\n+  .add-member-btn {\r\n+    background: none;\r\n+    border: none;\r\n+    cursor: pointer;\r\n+    font-size: 20px;\r\n+    color: #2787C0;\r\n+  }\r\n+  \r\n+  \r\n+  button {\r\n+    background: none;\r\n+    border: none;\r\n+    cursor: pointer;\r\n+  }\r\n+  \r\n+  .icon {\r\n+    font-size: 18px;\r\n+    color: #000000;\r\n+  }\r\n+  \r\n+  .icon:hover {\r\n+    color: #E27D60;\r\n+  }\r\n+  .bi-trash{\r\n+    color: red;\r\n+    font-size: 18px;\r\n+  }\r\n+  .bi-trash:hover{\r\n+    \r\n+    color: rgba(121, 0, 0, 0.638);\r\n+  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741858544230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -179,9 +179,8 @@\n .member-img {\r\n   width: 32px;\r\n   height: 32px;\r\n   border-radius: 50%;\r\n-  object-fit: cover;\r\n   border: 2px solid #ddd;\r\n   align-items: center;\r\n }\r\n   \r\n@@ -227,236 +226,5 @@\n   }\r\n   .bi-trash:hover{\r\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n-  }\n-.project-details-container {\r\n-    padding: 20px;\r\n-    font-family: 'Poppins', sans-serif;\r\n-    padding: 20px;\r\n-    background: #F1F1F1;\r\n-  \r\n-    \r\n-  }\r\n-  \r\n-  .tabs {\r\n-    display: flex;\r\n-    margin-bottom: 20px;\r\n-    \r\n-  }\r\n-  \r\n-  .tabs button {\r\n-    flex: 1;\r\n-    padding: 10px;\r\n-    border: none;\r\n-    background: #ccc;\r\n-    cursor: pointer;\r\n-    font-size: 16px;\r\n-  }\r\n-  \r\n-  .tabs button.active {\r\n-    background: #E27D60;\r\n-    color: white;\r\n-  }\r\n-  \r\n-  .tab-content {\r\n-    background: white;\r\n-    padding: 20px;\r\n-    border-radius: 20px;\r\n-    \r\n-  }\r\n-  .details-content{\r\n-    display: flex;\r\n-  gap: 20px;\r\n-  }\r\n-  .left-panel {\r\n-    flex: 1;\r\n-  }\r\n-  .right-panel {\r\n-    flex: 1;\r\n-    display: flex;\r\n-    flex-direction: column;\r\n-    gap: 20px;\r\n-  }\r\n-  .card {\r\n-    background: white;\r\n-    padding: 20px;\r\n-    border-radius: 10px;\r\n-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\r\n-  }\r\n-  \r\n-  .edit-btn {\r\n-    cursor: pointer;\r\n-    background: #E27D60;\r\n-    border-radius: 40px;\r\n-    font-weight: bold;\r\n-    min-height: 2.5rem;\r\n-    padding: 0 1rem;\r\n-    border: none;\r\n-    color: white;\r\n-    margin-top: 10px;\r\n-  }\r\n-  \r\n-  .progress-container {\r\n-    position: relative;\r\n-    width: 100px;\r\n-    height: 100px;\r\n-    margin: auto;\r\n-  }\r\n-  \r\n-  .progress-text {\r\n-    position: absolute;\r\n-    top: 50%;\r\n-    left: 50%;\r\n-    transform: translate(-50%, -50%);\r\n-    font-size: 18px;\r\n-    font-weight: bold;\r\n-  }\r\n-  @media (max-width: 768px) {\r\n-    .tab-content {\r\n-      flex-direction: column;\r\n-    }\r\n-  \r\n-    .edit-btn {\r\n-      font-size: 0.9rem;\r\n-    }\r\n-  \r\n-    .progress-container {\r\n-      width: 80px;\r\n-      height: 80px;\r\n-    }\r\n-  \r\n-    .progress-text {\r\n-      font-size: 14px;\r\n-    }\r\n-  }\r\n- .header {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n-  width: 100%;\r\n-}\r\n-\r\n-.add-phase {\r\n-  cursor: pointer;\r\n-  background: #E27D60;\r\n-  border-radius: 40px;\r\n-  font-weight: bold;\r\n-  min-height: 3rem;\r\n-  padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n-  border: none;\r\n-  color: white;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: center;\r\n-\r\n-  i {\r\n-    font-size: 1rem; /* Taille de l'icône */\r\n-    font-weight: bold; \r\n-    margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n-  }\r\n-\r\n-  /* Positionner le bouton à droite avec auto margin */\r\n-  margin-left: auto;\r\n-}\r\n-\r\n-@media (max-width: 768px) {\r\n-  .add-phase {\r\n-    font-size: 0.9rem; /* Réduction de la taille du texte pour les petits écrans */\r\n-    padding: 0.5rem 1rem; /* Ajuster les paddings pour les petits écrans */\r\n-  }\r\n-\r\n-  .header {\r\n-    flex-direction: column; /* Aligner les éléments en colonne sur les petits écrans */\r\n-    align-items: flex-start; /* Alignement à gauche pour le texte */\r\n-  }\r\n-}\r\n-\r\n-  \r\n-  .phases-table {\r\n-    width: 100%;\r\n-    overflow: hidden; \r\n-    border-radius: 12px; \r\n-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n-    background: white; \r\n-}\r\n-.phases-table table {\r\n-    width: 100%;\r\n-    border-radius: 12px; \r\n-    overflow: hidden; \r\n-    border-collapse: collapse;\r\n-}\r\n-\r\n-.phases-table th, .phases-table td {\r\n-    padding: 15px;\r\n-    text-align: center;\r\n-    border-bottom: 1px solid #ddd;\r\n-}\r\n-tbody{tr{\r\n-    cursor: pointer;\r\n-    transition: background-color 0.3s ease-in-out;\r\n-}}\r\n-.phases-table tr:hover {\r\n-    background-color: #f9f9f9; /* Effet au survol */\r\n-}\r\n-.phases-table th {\r\n-    background-color: #f4f4f4;\r\n-}\r\n-.members {\r\n-  \r\n-  align-items: center;\r\n-  gap: 8px;\r\n-}\r\n-\r\n-.member-img {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  object-fit: cover;\r\n-  border: 2px solid #ddd;\r\n-  align-items: center;\r\n-}\r\n-  \r\n-  .more-members {\r\n-    width: 32px;\r\n-    height: 32px;\r\n-    border-radius: 50%;\r\n-    background-color: #2787C0;\r\n-    color: white;\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-    font-size: 14px;\r\n-    font-weight: bold;\r\n-  }\r\n-  \r\n-  .add-member-btn {\r\n-    background: none;\r\n-    border: none;\r\n-    cursor: pointer;\r\n-    font-size: 20px;\r\n-    color: #2787C0;\r\n-  }\r\n-  \r\n-  \r\n-  button {\r\n-    background: none;\r\n-    border: none;\r\n-    cursor: pointer;\r\n-  }\r\n-  \r\n-  .icon {\r\n-    font-size: 18px;\r\n-    color: #000000;\r\n-  }\r\n-  \r\n-  .icon:hover {\r\n-    color: #E27D60;\r\n-  }\r\n-  .bi-trash{\r\n-    color: red;\r\n-    font-size: 18px;\r\n-  }\r\n-  .bi-trash:hover{\r\n-    \r\n-    color: rgba(121, 0, 0, 0.638);\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741858551527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -179,8 +179,9 @@\n .member-img {\r\n   width: 32px;\r\n   height: 32px;\r\n   border-radius: 50%;\r\n+  object-fit: cover;\r\n   border: 2px solid #ddd;\r\n   align-items: center;\r\n }\r\n   \r\n"
+                },
+                {
+                    "date": 1741858669259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,45 +169,58 @@\n }\r\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n+.members-container {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px; /* Espacement entre les membres et le bouton */\r\n+}\r\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 8px;\r\n+  position: relative;\r\n }\r\n \r\n .member-img {\r\n   width: 32px;\r\n   height: 32px;\r\n   border-radius: 50%;\r\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n+}\r\n+\r\n+.more-members {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  background-color: #2787C0;\r\n+  color: white;\r\n+  display: flex;\r\n   align-items: center;\r\n+  justify-content: center;\r\n+  font-size: 14px;\r\n+  font-weight: bold;\r\n }\r\n+\r\n+.add-member-btn {\r\n+  background: none;\r\n+  border: none;\r\n+  cursor: pointer;\r\n+  font-size: 20px;\r\n+  color: #2787C0;\r\n+}\r\n+\r\n+.member-option {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: space-between;\r\n+  width: 100%;\r\n+  gap: 10px;\r\n+  margin: 8px 0;\r\n+} \r\n   \r\n-  .more-members {\r\n-    width: 32px;\r\n-    height: 32px;\r\n-    border-radius: 50%;\r\n-    background-color: #2787C0;\r\n-    color: white;\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: center;\r\n-    font-size: 14px;\r\n-    font-weight: bold;\r\n-  }\r\n-  \r\n-  .add-member-btn {\r\n-    background: none;\r\n-    border: none;\r\n-    cursor: pointer;\r\n-    font-size: 20px;\r\n-    color: #2787C0;\r\n-  }\r\n-  \r\n-  \r\n   button {\r\n     background: none;\r\n     border: none;\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1741859260864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,57 +169,10 @@\n }\r\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n-.members-container {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  gap: 8px; /* Espacement entre les membres et le bouton */\r\n-}\r\n-.members {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  gap: 8px;\r\n-  position: relative;\r\n-}\r\n \r\n-.member-img {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  object-fit: cover;\r\n-  border: 2px solid #ddd;\r\n-}\r\n \r\n-.more-members {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  background-color: #2787C0;\r\n-  color: white;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: center;\r\n-  font-size: 14px;\r\n-  font-weight: bold;\r\n-}\r\n-\r\n-.add-member-btn {\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  font-size: 20px;\r\n-  color: #2787C0;\r\n-}\r\n-\r\n-.member-option {\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: space-between;\r\n-  width: 100%;\r\n-  gap: 10px;\r\n-  margin: 8px 0;\r\n-} \r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741859400639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,9 +170,52 @@\n .phases-table th {\r\n     background-color: #f4f4f4;\r\n }\r\n \r\n+.members-container {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 10px;\r\n+  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */\r\n+}\r\n \r\n+.members {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 8px;\r\n+  flex-wrap: nowrap; /* Assure que les images restent sur une seule ligne */\r\n+}\r\n+\r\n+.member-img {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  object-fit: cover;\r\n+  border: 2px solid #ddd;\r\n+}\r\n+\r\n+.more-members {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  background-color: #2787C0;\r\n+  color: white;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+  font-size: 14px;\r\n+  font-weight: bold;\r\n+}\r\n+\r\n+.add-member-btn {\r\n+  background: none;\r\n+  border: none;\r\n+  cursor: pointer;\r\n+  font-size: 20px;\r\n+  color: #2787C0;\r\n+}\r\n+\r\n+\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741859572870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,16 +174,14 @@\n .members-container {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 10px;\r\n-  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */\r\n }\r\n \r\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n-  gap: 8px;\r\n-  flex-wrap: nowrap; /* Assure que les images restent sur une seule ligne */\r\n+  gap: 8px; /* Espace entre les images */\r\n }\r\n \r\n .member-img {\r\n   width: 32px;\r\n@@ -192,21 +190,8 @@\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n }\r\n \r\n-.more-members {\r\n-  width: 32px;\r\n-  height: 32px;\r\n-  border-radius: 50%;\r\n-  background-color: #2787C0;\r\n-  color: white;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  justify-content: center;\r\n-  font-size: 14px;\r\n-  font-weight: bold;\r\n-}\r\n-\r\n .add-member-btn {\r\n   background: none;\r\n   border: none;\r\n   cursor: pointer;\r\n@@ -214,8 +199,9 @@\n   color: #2787C0;\r\n }\r\n \r\n \r\n+\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741859580594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,14 +174,16 @@\n .members-container {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 10px;\r\n+  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */\r\n }\r\n \r\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n-  gap: 8px; /* Espace entre les images */\r\n+  gap: 8px;\r\n+  flex-wrap: nowrap; /* Assure que les images restent sur une seule ligne */\r\n }\r\n \r\n .member-img {\r\n   width: 32px;\r\n@@ -190,8 +192,21 @@\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n }\r\n \r\n+.more-members {\r\n+  width: 32px;\r\n+  height: 32px;\r\n+  border-radius: 50%;\r\n+  background-color: #2787C0;\r\n+  color: white;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+  font-size: 14px;\r\n+  font-weight: bold;\r\n+}\r\n+\r\n .add-member-btn {\r\n   background: none;\r\n   border: none;\r\n   cursor: pointer;\r\n@@ -199,9 +214,8 @@\n   color: #2787C0;\r\n }\r\n \r\n \r\n-\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741859685954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,8 +190,9 @@\n   height: 32px;\r\n   border-radius: 50%;\r\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n+  display: inline-block;\r\n }\r\n \r\n .more-members {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860645910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -181,9 +181,9 @@\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 8px;\r\n-  flex-wrap: nowrap; /* Assure que les images restent sur une seule ligne */\r\n+ \r\n }\r\n \r\n .member-img {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860664822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n .members-container {\r\n   display: flex;\r\n   align-items: center;\r\n   gap: 10px;\r\n-  flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */\r\n+  \r\n }\r\n \r\n .members {\r\n   display: flex;\r\n@@ -190,9 +190,9 @@\n   height: 32px;\r\n   border-radius: 50%;\r\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n-  display: inline-block;\r\n+\r\n }\r\n \r\n .more-members {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860676317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,9 @@\n   height: 32px;\r\n   border-radius: 50%;\r\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n-\r\n+  display: inline-block;\r\n }\r\n \r\n .more-members {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860689737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -197,9 +197,9 @@\n .more-members {\r\n   width: 32px;\r\n   height: 32px;\r\n   border-radius: 50%;\r\n-  background-color: #2787C0;\r\n+  background-color: #b5b5b5;\r\n   color: white;\r\n   display: flex;\r\n   align-items: center;\r\n   justify-content: center;\r\n"
+                },
+                {
+                    "date": 1741860702776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,17 +206,11 @@\n   font-size: 14px;\r\n   font-weight: bold;\r\n }\r\n \r\n-.add-member-btn {\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  font-size: 20px;\r\n-  color: #2787C0;\r\n-}\r\n \r\n \r\n+\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741860709540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,11 +206,17 @@\n   font-size: 14px;\r\n   font-weight: bold;\r\n }\r\n \r\n+.add-member-btn {\r\n+  background: none;\r\n+  border: none;\r\n+  cursor: pointer;\r\n+  font-size: 20px;\r\n+  color: #2787C0;\r\n+}\r\n \r\n \r\n-\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741860740126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,17 +206,11 @@\n   font-size: 14px;\r\n   font-weight: bold;\r\n }\r\n \r\n-.add-member-btn {\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  font-size: 20px;\r\n-  color: #2787C0;\r\n-}\r\n \r\n \r\n+\r\n   \r\n   button {\r\n     background: none;\r\n     border: none;\r\n"
+                },
+                {
+                    "date": 1741860922672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -173,9 +173,11 @@\n \r\n .members-container {\r\n   display: flex;\r\n   align-items: center;\r\n+  justify-content: center; /* Centre les éléments horizontalement */\r\n   gap: 10px;\r\n+  width: 100%;\r\n   \r\n }\r\n \r\n .members {\r\n"
+                },
+                {
+                    "date": 1741860934276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,10 +182,14 @@\n \r\n .members {\r\n   display: flex;\r\n   align-items: center;\r\n+  justify-content: center;\r\n   gap: 8px;\r\n- \r\n+  flex-wrap: nowrap; /* Empêche le retour à la ligne */\r\n+  white-space: nowrap; /* Empêche la rupture du texte */\r\n+  max-width: 100%; /* S'assure que tout reste dans la colonne */\r\n+  overflow: hidden; /* Évite que les éléments débordent */\r\n }\r\n \r\n .member-img {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860942428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -196,9 +196,9 @@\n   height: 32px;\r\n   border-radius: 50%;\r\n   object-fit: cover;\r\n   border: 2px solid #ddd;\r\n-  display: inline-block;\r\n+\r\n }\r\n \r\n .more-members {\r\n   width: 32px;\r\n"
+                },
+                {
+                    "date": 1741860959541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,8 +210,9 @@\n   align-items: center;\r\n   justify-content: center;\r\n   font-size: 14px;\r\n   font-weight: bold;\r\n+  \r\n }\r\n \r\n \r\n \r\n"
+                },
+                {
+                    "date": 1741861193700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,9 +210,9 @@\n   align-items: center;\r\n   justify-content: center;\r\n   font-size: 14px;\r\n   font-weight: bold;\r\n-  \r\n+  flex-shrink: 0; /* Empêche l'élément de se réduire */\r\n }\r\n \r\n \r\n \r\n@@ -238,5 +238,7 @@\n   }\r\n   .bi-trash:hover{\r\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n-  }\n\\ No newline at end of file\n+  }\r\n+\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741861836736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,9 +189,16 @@\n   white-space: nowrap; /* Empêche la rupture du texte */\r\n   max-width: 100%; /* S'assure que tout reste dans la colonne */\r\n   overflow: hidden; /* Évite que les éléments débordent */\r\n }\r\n-\r\n+.member-option {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  justify-content: space-between;\r\n+  width: 100%;\r\n+  gap: 10px;\r\n+  margin: 8px 0;\r\n+}\r\n .member-img {\r\n   width: 32px;\r\n   height: 32px;\r\n   border-radius: 50%;\r\n@@ -240,5 +247,27 @@\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n   }\r\n \r\n+  .custom-dialog-container {\r\n+    padding: 20px;\r\n+    border-radius: 8px;\r\n+  }\r\n+  \r\n+  @media (max-width: 768px) {\r\n+    .custom-dialog-container {\r\n+      width: 90% !important;  /* Modifie la largeur pour les petits écrans */\r\n+      max-width: 90% !important;\r\n+      left: 5% !important;  /* Centre le modal sur les petits écrans */\r\n+      top: 10% !important;  /* Ajuste la position verticale pour les petits écrans */\r\n+    }\r\n+  }\r\n+  \r\n+  @media (max-width: 480px) {\r\n+    .custom-dialog-container {\r\n+      width: 95% !important; /* Pour les écrans très petits comme les téléphones */\r\n+      max-width: 95% !important;\r\n+      left: 2.5% !important; /* Centre encore mieux */\r\n+      top: 10% !important;\r\n+    }\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742345539700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  \r\n+  height: ;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1742345568244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: ;\r\n+  height: 95vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1742345575158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: 95vh;\r\n+  height: 93vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1742345588249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: 93vh;\r\n+  height: 92vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1742345593875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: 92vh;\r\n+  height: 93vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                },
+                {
+                    "date": 1742345598958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: 93vh;\r\n+  height: 95vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
+                }
+            ],
+            "date": 1741775394709,
+            "name": "Commit-0",
+            "content": ".project-details-container {\r\n    width: 80%;\r\n    margin: auto;\r\n    padding: 20px;\r\n    background: white;\r\n    border-radius: 12px;\r\n    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.tabs {\r\n    display: flex;\r\n    border-bottom: 2px solid #ddd;\r\n}\r\n\r\n.tabs button {\r\n    flex: 1;\r\n    padding: 10px;\r\n    background: none;\r\n    border: none;\r\n    cursor: pointer;\r\n    font-size: 16px;\r\n    font-weight: bold;\r\n    transition: 0.3s;\r\n}\r\n\r\n.tabs button.active {\r\n    border-bottom: 3px solid #2787C0;\r\n    color: #2787C0;\r\n}\r\n\r\n.tab-content {\r\n    padding: 20px;\r\n}\r\n\r\n.phase-list {\r\n    list-style: none;\r\n    padding: 0;\r\n}\r\n\r\n.phase-list li {\r\n    padding: 10px;\r\n    margin: 5px 0;\r\n    background: #f9f9f9;\r\n    border-radius: 5px;\r\n    cursor: pointer;\r\n    transition: 0.3s;\r\n}\r\n\r\n.phase-list li.selected {\r\n    background: #2787C0;\r\n    color: white;\r\n}\r\n\r\n.btn-add-phase {\r\n    background: #e4be15;\r\n    border: none;\r\n    padding: 8px 15px;\r\n    color: white;\r\n    font-size: 14px;\r\n    cursor: pointer;\r\n    margin-bottom: 10px;\r\n}\r\n"
+        }
+    ]
+}

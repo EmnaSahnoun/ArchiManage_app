@@ -1,0 +1,142 @@
+{
+    "sourceFile": "src/app/add-member/add-member.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 31,
+            "patches": [
+                {
+                    "date": 1741861390056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741861395369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n-  templateUrl: './add-member-dialog.component.html',\r\n-  styleUrl: './add-member-dialog.component.scss'\r\n+  templateUrl: './add-member.component.html',\r\n+  styleUrl: './add-member.component.scss'\r\n })\r\n export class AddMemberDialogComponent {\r\n   availableMembers: any[];\r\n \r\n"
+                },
+                {
+                    "date": 1741861479223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n   styleUrl: './add-member.component.scss'\r\n })\r\n-export class AddMemberDialogComponent {\r\n+export class AddMemberComponent {\r\n   availableMembers: any[];\r\n \r\n   constructor(\r\n     public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n"
+                },
+                {
+                    "date": 1741862735104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,13 @@\n+import { Component } from '@angular/core';\r\n \r\n-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';\r\n-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n-\r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n   styleUrl: './add-member.component.scss'\r\n })\r\n export class AddMemberComponent {\r\n-  availableMembers: any[];\r\n+availableMembers: any[];\r\n \r\n   constructor(\r\n     public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n@@ -23,6 +21,5 @@\n \r\n   closeDialog() {\r\n     this.dialogRef.close();\r\n   }\r\n-  \r\n-}\n\\ No newline at end of file\n+}\r\n"
+                },
+                {
+                    "date": 1741862743782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-import { Component } from '@angular/core';\r\n+import { Component, Inject } from '@angular/core';\r\n+import { MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n"
+                },
+                {
+                    "date": 1741862751532,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n \r\n   constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n"
+                },
+                {
+                    "date": 1741862758962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Component, Inject } from '@angular/core';\r\n-import { MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n@@ -15,12 +15,6 @@\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n \r\n-  addMember(member: any) {\r\n-    this.dialogRef.close(member);\r\n-  }\r\n-\r\n-  closeDialog() {\r\n-    this.dialogRef.close();\r\n-  }\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1741863562350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n import { Component, Inject } from '@angular/core';\r\n-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n"
+                },
+                {
+                    "date": 1741863573596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,20 @@\n+import { Component, Inject } from '@angular/core';\r\n+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n+\r\n+@Component({\r\n+  selector: 'app-add-member',\r\n+  templateUrl: './add-member.component.html',\r\n+  styleUrl: './add-member.component.scss'\r\n+})\r\n+export class AddMemberComponent {\r\n+availableMembers: any[];\r\n+\r\n+  constructor(\r\n+    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n+    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n+  ) {\r\n+    this.availableMembers = data.availableMembers;\r\n+  }\r\n+\r\n+  \r\n+}\r\n"
+                },
+                {
+                    "date": 1741863663220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n-  styleUrl: './add-member.component.scss'\r\n+  styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n \r\n@@ -17,23 +17,4 @@\n   }\r\n \r\n   \r\n }\r\n-import { Component, Inject } from '@angular/core';\r\n-\r\n-@Component({\r\n-  selector: 'app-add-member',\r\n-  templateUrl: './add-member.component.html',\r\n-  styleUrl: './add-member.component.scss'\r\n-})\r\n-export class AddMemberComponent {\r\n-availableMembers: any[];\r\n-\r\n-  constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n-    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n-  ) {\r\n-    this.availableMembers = data.availableMembers;\r\n-  }\r\n-\r\n-  \r\n-}\r\n"
+                },
+                {
+                    "date": 1741863701330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n-\r\n+selectedMember: any;   \r\n   constructor(\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1741863716963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,7 +14,19 @@\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n+// Méthode pour ajouter un membre\r\n+addMember(member: any): void {\r\n+  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  console.log('Membre ajouté:', member);\r\n+  \r\n+  // Optionnel : Fermer le modal\r\n+  this.dialogRef.close(member);\r\n+}\r\n \r\n+// Méthode pour sélectionner un membre\r\n+selectMember(member: any): void {\r\n+  this.selectedMember = member;  // Mémorise le membre sélectionné\r\n+}\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1741863908767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,25 +8,13 @@\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;   \r\n-  constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n-    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n-  ) {\r\n-    this.availableMembers = data.availableMembers;\r\n-  }\r\n-// Méthode pour ajouter un membre\r\n-addMember(member: any): void {\r\n-  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n-  console.log('Membre ajouté:', member);\r\n-  \r\n-  // Optionnel : Fermer le modal\r\n+constructor(\r\n+  public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+  @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n+) {}\r\n+\r\n+addMember(member: any) {\r\n   this.dialogRef.close(member);\r\n }\r\n-\r\n-// Méthode pour sélectionner un membre\r\n-selectMember(member: any): void {\r\n-  this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n-  \r\n-}\r\n"
+                },
+                {
+                    "date": 1741863919021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;   \r\n constructor(\r\n-  public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+  public dialogRef: MatDialogRef<AddMemberComponent>,\r\n   @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n ) {}\r\n \r\n addMember(member: any) {\r\n"
+                },
+                {
+                    "date": 1741863941956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,13 +8,13 @@\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;   \r\n-constructor(\r\n-  public dialogRef: MatDialogRef<AddMemberComponent>,\r\n-  @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n-) {}\r\n-\r\n-addMember(member: any) {\r\n-  this.dialogRef.close(member);\r\n+   constructor(\r\n+    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n+  ) {}\r\n+  \r\n+  addMember(member: any) {\r\n+    this.dialogRef.close(member);\r\n+  }\r\n }\r\n-}\r\n"
+                },
+                {
+                    "date": 1741865309232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,35 @@\n import { Component, Inject } from '@angular/core';\r\n import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n+constructor(private modalService: NgbModal) {}\r\n+\r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n   styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;   \r\n-   constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+  constructor(\r\n+    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n-  ) {}\r\n+  ) {\r\n+    this.availableMembers = data.availableMembers;\r\n+  }\r\n+// Méthode pour ajouter un membre\r\n+addMember(member: any): void {\r\n+  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  console.log('Membre ajouté:', member);\r\n   \r\n-  addMember(member: any) {\r\n-    this.dialogRef.close(member);\r\n-  }\r\n+  // Optionnel : Fermer le modal\r\n+  this.dialogRef.close(member);\r\n }\r\n+\r\n+// Méthode pour sélectionner un membre\r\n+selectMember(member: any): void {\r\n+  this.selectedMember = member;  // Mémorise le membre sélectionné\r\n+}\r\n+  \r\n+}\r\n"
+                },
+                {
+                    "date": 1741865318105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n import { Component, Inject } from '@angular/core';\r\n import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n import { NgbModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n-constructor(private modalService: NgbModal) {}\r\n \r\n+\r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n   styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n-selectedMember: any;   \r\n+selectedMember: any; constructor() {}  \r\n   constructor(\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1741865323740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n   styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n-selectedMember: any; constructor() {}  \r\n-  constructor(\r\n+selectedMember: any;  \r\n+  constructor(private modalService: NgbModal,\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n"
+                },
+                {
+                    "date": 1741865336553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,6 +30,13 @@\n // Méthode pour sélectionner un membre\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n-  \r\n+open(content) {\r\n+  this.modalService.open(content);\r\n }\r\n+\r\n+close() {\r\n+  this.modalService.dismissAll(); // Ferme tous les modals ouverts\r\n+}\r\n+\r\n+}\r\n"
+                },
+                {
+                    "date": 1741865379382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n // Méthode pour sélectionner un membre\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n-open(content) {\r\n+open(content:any) {\r\n   this.modalService.open(content);\r\n }\r\n \r\n close() {\r\n"
+                },
+                {
+                    "date": 1741865430071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,13 +30,6 @@\n // Méthode pour sélectionner un membre\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n-open(content:any) {\r\n-  this.modalService.open(content);\r\n+  \r\n }\r\n-\r\n-close() {\r\n-  this.modalService.dismissAll(); // Ferme tous les modals ouverts\r\n-}\r\n-\r\n-}\r\n"
+                },
+                {
+                    "date": 1741865437025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,16 @@\n import { Component, Inject } from '@angular/core';\r\n import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n-\r\n-\r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n   styleUrls: ['./add-member.component.scss']\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n-selectedMember: any;  \r\n-  constructor(private modalService: NgbModal,\r\n+selectedMember: any;   \r\n+  constructor(\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n"
+                },
+                {
+                    "date": 1741865442398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,19 +14,7 @@\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n-// Méthode pour ajouter un membre\r\n-addMember(member: any): void {\r\n-  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n-  console.log('Membre ajouté:', member);\r\n-  \r\n-  // Optionnel : Fermer le modal\r\n-  this.dialogRef.close(member);\r\n-}\r\n \r\n-// Méthode pour sélectionner un membre\r\n-selectMember(member: any): void {\r\n-  this.selectedMember = member;  // Mémorise le membre sélectionné\r\n-}\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1741865449223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,18 +3,24 @@\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n-  styleUrls: ['./add-member.component.scss']\r\n+  styleUrl: './add-member.component.scss'\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n-selectedMember: any;   \r\n+\r\n   constructor(\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n \r\n-  \r\n+  addMember(member: any) {\r\n+    this.dialogRef.close(member);\r\n+  }\r\n+\r\n+  closeDialog() {\r\n+    this.dialogRef.close();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1741865456667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,42 @@\n+import { Component, Inject } from '@angular/core';\r\n+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';\r\n+\r\n+\r\n+\r\n+@Component({\r\n+  selector: 'app-add-member',\r\n+  templateUrl: './add-member.component.html',\r\n+  styleUrls: ['./add-member.component.scss']\r\n+})\r\n+export class AddMemberComponent {\r\n+availableMembers: any[];\r\n+selectedMember: any;  \r\n+  constructor(private modalService: NgbModal,\r\n+    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n+    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n+  ) {\r\n+    this.availableMembers = data.availableMembers;\r\n+  }\r\n+// Méthode pour ajouter un membre\r\n+addMember(member: any): void {\r\n+  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  console.log('Membre ajouté:', member);\r\n+  \r\n+  // Optionnel : Fermer le modal\r\n+  this.dialogRef.close(member);\r\n+}\r\n+\r\n+// Méthode pour sélectionner un membre\r\n+selectMember(member: any): void {\r\n+  this.selectedMember = member;  // Mémorise le membre sélectionné\r\n+}\r\n+open(content:any) {\r\n+  this.modalService.open(content);\r\n+}\r\n+\r\n+close() {\r\n+  this.modalService.dismissAll(); // Ferme tous les modals ouverts\r\n+}\r\n+\r\n+}\r\n"
+                },
+                {
+                    "date": 1741865483225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,13 @@\n   \r\n   // Optionnel : Fermer le modal\r\n   this.dialogRef.close(member);\r\n }\r\n-\r\n+addMember(member: any) {\r\n+  if (this.selectedPhase) {\r\n+    this.selectedPhase.members.push(member);\r\n+  }\r\n+}\r\n // Méthode pour sélectionner un membre\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n@@ -39,30 +43,4 @@\n   this.modalService.dismissAll(); // Ferme tous les modals ouverts\r\n }\r\n \r\n }\r\n-import { Component, Inject } from '@angular/core';\r\n-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n-\r\n-@Component({\r\n-  selector: 'app-add-member',\r\n-  templateUrl: './add-member.component.html',\r\n-  styleUrl: './add-member.component.scss'\r\n-})\r\n-export class AddMemberComponent {\r\n-availableMembers: any[];\r\n-\r\n-  constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n-    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n-  ) {\r\n-    this.availableMembers = data.availableMembers;\r\n-  }\r\n-\r\n-  addMember(member: any) {\r\n-    this.dialogRef.close(member);\r\n-  }\r\n-\r\n-  closeDialog() {\r\n-    this.dialogRef.close();\r\n-  }\r\n-}\r\n"
+                },
+                {
+                    "date": 1741865491192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,18 +19,18 @@\n     this.availableMembers = data.availableMembers;\r\n   }\r\n // Méthode pour ajouter un membre\r\n addMember(member: any): void {\r\n-  // Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  if (this.selectedPhase) {\r\n+    this.selectedPhase.members.push(member);\r\n+  }// Logique pour ajouter un membre (par exemple, dans une liste)\r\n   console.log('Membre ajouté:', member);\r\n   \r\n   // Optionnel : Fermer le modal\r\n   this.dialogRef.close(member);\r\n }\r\n addMember(member: any) {\r\n-  if (this.selectedPhase) {\r\n-    this.selectedPhase.members.push(member);\r\n-  }\r\n+  \r\n }\r\n // Méthode pour sélectionner un membre\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n"
+                },
+                {
+                    "date": 1741865496927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,12 +27,9 @@\n   \r\n   // Optionnel : Fermer le modal\r\n   this.dialogRef.close(member);\r\n }\r\n-addMember(member: any) {\r\n-  \r\n-}\r\n-// Méthode pour sélectionner un membre\r\n+\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n open(content:any) {\r\n"
+                },
+                {
+                    "date": 1741865591025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,11 @@\n     this.availableMembers = data.availableMembers;\r\n   }\r\n // Méthode pour ajouter un membre\r\n addMember(member: any): void {\r\n-  if (this.selectedPhase) {\r\n+  /* if (this.selectedPhase) {\r\n     this.selectedPhase.members.push(member);\r\n-  }// Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  } */// Logique pour ajouter un membre (par exemple, dans une liste)\r\n   console.log('Membre ajouté:', member);\r\n   \r\n   // Optionnel : Fermer le modal\r\n   this.dialogRef.close(member);\r\n"
+                },
+                {
+                    "date": 1741865693028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,18 +18,23 @@\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n // Méthode pour ajouter un membre\r\n+// AddMemberComponent\r\n+\r\n addMember(member: any): void {\r\n-  /* if (this.selectedPhase) {\r\n+  // Ajouter le membre à la phase sélectionnée\r\n+  if (this.selectedPhase) {\r\n     this.selectedPhase.members.push(member);\r\n-  } */// Logique pour ajouter un membre (par exemple, dans une liste)\r\n+  }\r\n+\r\n   console.log('Membre ajouté:', member);\r\n-  \r\n-  // Optionnel : Fermer le modal\r\n+\r\n+  // Fermer le modal avec le membre ajouté\r\n   this.dialogRef.close(member);\r\n }\r\n \r\n+\r\n selectMember(member: any): void {\r\n   this.selectedMember = member;  // Mémorise le membre sélectionné\r\n }\r\n open(content:any) {\r\n"
+                },
+                {
+                    "date": 1741865756748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;  \r\n+selectedPhase: any;\r\n   constructor(private modalService: NgbModal,\r\n     public dialogRef: MatDialogRef<AddMemberComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1741865768021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,16 +22,15 @@\n // Méthode pour ajouter un membre\r\n // AddMemberComponent\r\n \r\n addMember(member: any): void {\r\n-  // Ajouter le membre à la phase sélectionnée\r\n   if (this.selectedPhase) {\r\n-    this.selectedPhase.members.push(member);\r\n+    this.selectedPhase.members.push(member);  // Ajouter le membre à la phase\r\n   }\r\n \r\n   console.log('Membre ajouté:', member);\r\n \r\n-  // Fermer le modal avec le membre ajouté\r\n+  // Fermer le modal et retourner le membre ajouté\r\n   this.dialogRef.close(member);\r\n }\r\n \r\n \r\n"
+                }
+            ],
+            "date": 1741861390056,
+            "name": "Commit-0",
+            "content": "\r\nimport { Component, EventEmitter, Inject, Input, Output } from '@angular/core';\r\nimport { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n\r\n@Component({\r\n  selector: 'app-add-member',\r\n  templateUrl: './add-member-dialog.component.html',\r\n  styleUrl: './add-member-dialog.component.scss'\r\n})\r\nexport class AddMemberDialogComponent {\r\n  availableMembers: any[];\r\n\r\n  constructor(\r\n    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n  ) {\r\n    this.availableMembers = data.availableMembers;\r\n  }\r\n\r\n  addMember(member: any) {\r\n    this.dialogRef.close(member);\r\n  }\r\n\r\n  closeDialog() {\r\n    this.dialogRef.close();\r\n  }\r\n  \r\n}"
+        }
+    ]
+}

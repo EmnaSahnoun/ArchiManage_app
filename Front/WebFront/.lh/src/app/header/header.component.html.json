@@ -1,0 +1,74 @@
+{
+    "sourceFile": "src/app/header/header.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1741687470154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741687603521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,11 @@\n-<p>header works!</p>\r\n+<!-- header.component.html -->\r\n <div class=\"user-header\">\r\n-    <h1>Tableau de bord</h1>\r\n+    <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n         <img src=\"path/to/user-image.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n-\r\n-    <!-- Title Section -->\r\n\\ No newline at end of file\n-    \r\n-</div>\n+</div>\r\n"
+                },
+                {
+                    "date": 1741731264477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"path/to/user-image.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna sahnoun.jfif\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732255526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna sahnoun.jfif\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"..\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732270826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"..\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna sahnoun.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732306449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna sahnoun.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732386270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732421760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"/assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732430419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"/assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732453903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"..assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732511967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"..assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732616965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732627579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"D:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\assets\\emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"D:/satge pfe/application/ArchiManage/Front/WebFront/src/assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732648160,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"D:/satge pfe/application/ArchiManage/Front/WebFront/src/assets/emna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"emna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1741732696249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n <div class=\"user-header\">\r\n     <h1>{{ title }}</h1>\r\n     <!-- User Info Section -->\r\n     <div class=\"user-info\">\r\n-        <img src=\"asseemna.jpg\" alt=\"User\" class=\"user-image\">\r\n+        <img src=\"assetemna.jpg\" alt=\"User\" class=\"user-image\">\r\n         <span class=\"user-name\">Emna Sahnoun</span>\r\n         <i class=\"bi bi-chat-dots icon\"></i>\r\n         <i class=\"bi bi-bell icon\"></i>\r\n     </div>\r\n"
+                }
+            ],
+            "date": 1741687470154,
+            "name": "Commit-0",
+            "content": "<p>header works!</p>\r\n<div class=\"user-header\">\r\n    <h1>Tableau de bord</h1>\r\n    <!-- User Info Section -->\r\n    <div class=\"user-info\">\r\n        <img src=\"path/to/user-image.jpg\" alt=\"User\" class=\"user-image\">\r\n        <span class=\"user-name\">Emna Sahnoun</span>\r\n        <i class=\"bi bi-chat-dots icon\"></i>\r\n        <i class=\"bi bi-bell icon\"></i>\r\n    </div>\r\n\r\n    <!-- Title Section -->\r\n    \r\n</div>"
+        }
+    ]
+}

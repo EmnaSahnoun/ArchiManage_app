@@ -1,0 +1,233 @@
+.project-container {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+    background: #F1F1F1;
+  height: 100vh;
+  .container{
+    background: white;
+    border-radius: 20px;
+    padding: 0.5rem;
+    
+    align-items: center;
+    justify-content: space-between;
+  }
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; // Permet le passage en colonne sur petits écrans
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+  
+  /* Barre de recherche */
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1; // Prend tout l'espace possible
+  }
+  
+  .input-container input {
+    background: #d6d6d6;
+    padding-left: 30px;
+    border: none;
+    border-radius: 20px;
+    min-height: 40px;
+    width: 100%;
+  }
+  
+  .input-container .icon {
+    position: absolute;
+    left: 10px;
+    font-size: 20px;
+    color: #ccc;
+  }
+  
+  /* Date */
+  .current-date {
+    font-size: 1.2rem;
+    background-color: #ccc;
+    border-radius: 30px;
+    padding: 10px;
+    white-space: nowrap; // Empêche la date de passer à la ligne
+  }
+  
+  /* Conteneur des actions (Filtrer + Vue + Ajouter Projet) */
+  .actions-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Filtrer et Vue */
+  .sort-and-view {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sort-button {
+    border-radius: 20px;
+    background-color: #E27D60;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+  }
+  
+  .sort-button i {
+    margin-right: 5px;
+  }
+  
+  .view-mode {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .view-mode button {
+    border-radius: 50%;
+    background-color: #E27D60;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .view-mode button.active {
+    background-color: #df451a;
+  }
+  
+  /* Bouton Ajouter Projet */
+  .add-project {
+    cursor: pointer;
+    background: #E27D60;
+    border-radius: 40px;
+    font-weight: bold;
+    min-height: 3rem;
+    border: none;
+    color: white;
+    padding: 0 20px; // Ajuste la largeur du bouton
+    display: flex;
+    align-items: center;
+  
+    i {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .project-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+  
+    .actions-container {
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+  
+    .sort-and-view {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .add-project {
+      width: 100%; // Le bouton prend toute la largeur sur petits écrans
+      justify-content: center;
+    }
+  }
+  
+  .project-display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+/* Table View */
+.project-table {
+    width: 100%;
+    overflow: hidden; 
+    border-radius: 12px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    background: white; 
+}
+
+.project-table table {
+    width: 100%;
+    border-radius: 12px; 
+    overflow: hidden; 
+    border-collapse: collapse;
+}
+
+.project-table th, .project-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+tbody{tr{
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}}
+.project-table tr:hover {
+    background-color: #f9f9f9; /* Effet au survol */
+}
+.project-table th {
+    background-color: #f4f4f4;
+}
+
+/* Card View */
+.project-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.card {
+    flex: 1 1 calc(33.33% - 20px); /* 3 cartes par ligne, ajustable */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.card-header {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    height: 5px;
+    background-color: #b6c027;
+    margin-bottom: 10px;
+}
+
+.members img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+}

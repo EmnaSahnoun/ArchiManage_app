@@ -1,0 +1,22 @@
+<div class="register-container">
+    <div class="register-card">
+      <div class="illustration">
+        <img src="assets/signup-illustration.svg" alt="Illustration d'inscription">
+      </div>
+      <div class="register-form">
+        <h2>INSCRIPTION</h2>
+        <form (ngSubmit)="onRegister()">
+          <div class="input-group">
+            <input type="text" placeholder="Nom" [(ngModel)]="user.nom" name="nom" required>
+            <input type="text" placeholder="Prénom" [(ngModel)]="user.prenom" name="prenom" required>
+          </div>
+          <input type="text" placeholder="Identifiant" [(ngModel)]="user.username" name="username" required>
+          <input type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required>
+          <input type="password" placeholder="Mot de passe" [(ngModel)]="user.password" name="password" required>
+          <button type="submit" class="btn-register">S'inscrire</button>
+        </form>
+        <p>Vous avez un compte ? <a routerLink="/login">Connectez-vous !</a></p>
+      </div>
+    </div>
+  </div>
+  

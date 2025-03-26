@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/app/login/login.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1742130408469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742133254491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,7 @@\n \r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n+    this.router.navigate(['/dashbord']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742133260452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n-\r\n+  constructor\r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n     this.router.navigate(['/dashbord']);\r\n"
+                },
+                {
+                    "date": 1742133265648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n-  constructor\r\n+  constructor(private router:)\r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n     this.router.navigate(['/dashbord']);\r\n"
+                },
+                {
+                    "date": 1742133278976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component } from '@angular/core';\r\n+import { Router } from '@angular/router';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   templateUrl: './login.component.html',\r\n@@ -9,9 +10,9 @@\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n-  constructor(private router:)\r\n+  constructor(private router:Router){}\r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n     this.router.navigate(['/dashbord']);\r\n"
+                },
+                {
+                    "date": 1742133533298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,11 +10,14 @@\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n-  constructor(private router:Router){}\r\n+\r\n+  constructor(private router: Router) {}\r\n+\r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n-    this.router.navigate(['/dashbord']);\r\n+    // Redirection vers le dashboard après connexion\r\n+    this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742139502435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n \r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n+\r\n     // Redirection vers le dashboard après connexion\r\n     this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742139948284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,7 @@\n \r\n   onLogin() {\r\n     console.log('Utilisateur connecté:', this.user);\r\n     alert('Connexion réussie !');\r\n-\r\n-    // Redirection vers le dashboard après connexion\r\n     this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                }
+            ],
+            "date": 1742130408469,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-login',\r\n  templateUrl: './login.component.html',\r\n  styleUrl: './login.component.scss'\r\n})\r\nexport class LoginComponent {\r\n  user = {\r\n    email: '',\r\n    password: ''\r\n  };\r\n\r\n  onLogin() {\r\n    console.log('Utilisateur connecté:', this.user);\r\n    alert('Connexion réussie !');\r\n  }\r\n}\r\n"
+        }
+    ]
+}

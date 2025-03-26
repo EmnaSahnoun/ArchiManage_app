@@ -1,0 +1,93 @@
+<div class="project-container">
+  <app-header [title]="'Liste des Projets'"></app-header>
+
+ <div class="container"><!-- Row 1: Search Bar, Current Date, Sort and View Mode -->
+    <div class="project-header">
+        <!-- Search Bar -->
+        <div class="input-container">
+            <i class="bi bi-search icon"></i>
+            <input type="text" placeholder="Rechercher un projet..." [(ngModel)]="searchQuery" />
+        </div>
+    
+        <!-- Date -->
+        <div class="current-date">
+            {{ currentDate | date: 'dd/MM/yyyy' }}
+        </div>
+    
+        <!-- Sort By and View Mode + Bouton Ajouter Projet -->
+        <div class="actions-container">
+            <div class="sort-and-view">
+                <button class="sort-button">
+                    <i class="bi bi-arrow-up"></i> Filtrer
+                </button>
+    
+                <div class="view-mode">
+                    <button (click)="toggleViewMode('list')" [class.active]="viewMode === 'list'">
+                        <i class="bi bi-card-list"></i>
+                    </button>
+                    <button (click)="toggleViewMode('card')" [class.active]="viewMode === 'card'">
+                        <i class="bi bi-grid-3x3-gap"></i>
+                    </button>
+                </div>
+            </div>
+    
+            <button mat-button class="add-project" (click)="addProject()">
+                <i class="bi bi-plus"></i> Nouveau Projet
+            </button>
+        </div>
+    </div>
+    
+
+  <!-- Contenu affiché en fonction du mode sélectionné -->
+  <div class="project-display" [ngClass]="{'center-table': viewMode === 'list', 'center-cards': viewMode === 'card'}">             
+      <!-- Affichage en mode Liste -->
+      <div *ngIf="viewMode === 'list'" class="project-table">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Nom du Projet</th>
+                      <th>Date de Création</th>
+                      <th>Date (Start-End)</th>
+                      <th>Progression</th>
+                      <th>Status</th>
+                      <th>Membres</th>
+                      <th>Phases</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let project of filteredProjects; let i = index" [class.even]="i % 2 === 0" [class.odd]="i % 2 !== 0" (click)="goToProjectDetails(project)">
+                      <td>{{ project.name }}</td>
+                      <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ project.startDate  }} - {{ project.endDate }}</td>
+                      <td>{{ project.progress }}%</td>
+                      <td>{{ project.status }}</td>
+                      <td>
+                          <div class="members">
+                              <img *ngFor="let member of project.members" [src]="member.image" alt="Member" />
+                          </div>
+                      </td>
+                      <td>{{ project.phases.length }}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <!-- Affichage en mode Carte -->
+      <div *ngIf="viewMode === 'card'" class="project-cards">
+          <div class="card" *ngFor="let project of filteredProjects"(click)="goToProjectDetails(project)">
+              <div class="card-header">
+                  <h3>{{ project.name }}</h3>
+                  <div>{{ project.startDate }} - {{ project.endDate }}</div>
+              </div>
+              <div class="card-body">
+                  <div class="progress-bar" [style.width]="project.progress + '%'"></div>
+                  <div>Status: {{ project.status }}</div>
+                  <div class="members">
+                      <img *ngFor="let member of project.members" [src]="member.image" alt="Member" />
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div> 
+</div>

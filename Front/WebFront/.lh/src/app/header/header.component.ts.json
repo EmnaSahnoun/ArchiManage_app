@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/header/header.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1741687617491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741687985405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,11 +5,6 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent {\r\n-  title: string = 'Tableau de bord'; // Titre par défaut\r\n-\r\n-  // Méthode pour changer dynamiquement le titre en fonction de l'interface\r\n-  changeTitle(newTitle: string): void {\r\n-    this.title = newTitle;\r\n-  }\r\n+  @Input() title: string = 'Tableau de bord';\r\n }\r\n"
+                }
+            ],
+            "date": 1741687617491,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-header',\r\n  templateUrl: './header.component.html',\r\n  styleUrl: './header.component.scss'\r\n})\r\nexport class HeaderComponent {\r\n  title: string = 'Tableau de bord'; // Titre par défaut\r\n\r\n  // Méthode pour changer dynamiquement le titre en fonction de l'interface\r\n  changeTitle(newTitle: string): void {\r\n    this.title = newTitle;\r\n  }\r\n}\r\n"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "sourceFile": "angular.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1741611133553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741824433898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n             \"styles\": [\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\"\r\n             ],\r\n-            \"scripts\": []\r\n+            \"scripts\": [\"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js\"]\r\n           },\r\n           \"configurations\": {\r\n             \"production\": {\r\n               \"budgets\": [\r\n@@ -98,9 +98,10 @@\n                 \"input\": \"public\"\r\n               }\r\n             ],\r\n             \"styles\": [\r\n-              \"src/styles.scss\"\r\n+              \"src/styles.scss\",\r\n+              \"node_modules/bootstrap-icons/font/bootstrap-icons.css\"\r\n             ],\r\n             \"scripts\": []\r\n           }\r\n         }\r\n"
+                },
+                {
+                    "date": 1741824440997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,9 +101,11 @@\n             \"styles\": [\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\"\r\n             ],\r\n-            \"scripts\": []\r\n+            \"scripts\": [\r\n+              \"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js\"\r\n+            ]\r\n           }\r\n         }\r\n       }\r\n     }\r\n"
+                },
+                {
+                    "date": 1742134686879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,10 @@\n           \"builder\": \"@angular-devkit/build-angular:karma\",\r\n           \"options\": {\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \"zone.js/testing\"\r\n+              \"zone.js/testing\",\r\n+              \"@angular/localize/init\"\r\n             ],\r\n             \"tsConfig\": \"tsconfig.spec.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
+                },
+                {
+                    "date": 1742134695438,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n-              \"zone.js\"\r\n+              \"zone.js\",\r\n+              \"@angular/localize/init\"\r\n             ],\r\n             \"tsConfig\": \"tsconfig.app.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
+                },
+                {
+                    "date": 1742135035297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \"@angular/localize/init\"\r\n+              \r\n             ],\r\n             \"tsConfig\": \"tsconfig.app.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
+                }
+            ],
+            "date": 1741611133553,
+            "name": "Commit-0",
+            "content": "{\r\n  \"$schema\": \"./node_modules/@angular/cli/lib/config/schema.json\",\r\n  \"version\": 1,\r\n  \"newProjectRoot\": \"projects\",\r\n  \"projects\": {\r\n    \"WebFront\": {\r\n      \"projectType\": \"application\",\r\n      \"schematics\": {\r\n        \"@schematics/angular:component\": {\r\n          \"style\": \"scss\",\r\n          \"standalone\": false\r\n        },\r\n        \"@schematics/angular:directive\": {\r\n          \"standalone\": false\r\n        },\r\n        \"@schematics/angular:pipe\": {\r\n          \"standalone\": false\r\n        }\r\n      },\r\n      \"root\": \"\",\r\n      \"sourceRoot\": \"src\",\r\n      \"prefix\": \"app\",\r\n      \"architect\": {\r\n        \"build\": {\r\n          \"builder\": \"@angular-devkit/build-angular:application\",\r\n          \"options\": {\r\n            \"outputPath\": \"dist/web-front\",\r\n            \"index\": \"src/index.html\",\r\n            \"browser\": \"src/main.ts\",\r\n            \"polyfills\": [\r\n              \"zone.js\"\r\n            ],\r\n            \"tsConfig\": \"tsconfig.app.json\",\r\n            \"inlineStyleLanguage\": \"scss\",\r\n            \"assets\": [\r\n              {\r\n                \"glob\": \"**/*\",\r\n                \"input\": \"public\"\r\n              }\r\n            ],\r\n            \"styles\": [\r\n              \"src/styles.scss\",\r\n              \"node_modules/bootstrap-icons/font/bootstrap-icons.css\"\r\n            ],\r\n            \"scripts\": []\r\n          },\r\n          \"configurations\": {\r\n            \"production\": {\r\n              \"budgets\": [\r\n                {\r\n                  \"type\": \"initial\",\r\n                  \"maximumWarning\": \"500kB\",\r\n                  \"maximumError\": \"1MB\"\r\n                },\r\n                {\r\n                  \"type\": \"anyComponentStyle\",\r\n                  \"maximumWarning\": \"2kB\",\r\n                  \"maximumError\": \"4kB\"\r\n                }\r\n              ],\r\n              \"outputHashing\": \"all\"\r\n            },\r\n            \"development\": {\r\n              \"optimization\": false,\r\n              \"extractLicenses\": false,\r\n              \"sourceMap\": true\r\n            }\r\n          },\r\n          \"defaultConfiguration\": \"production\"\r\n        },\r\n        \"serve\": {\r\n          \"builder\": \"@angular-devkit/build-angular:dev-server\",\r\n          \"configurations\": {\r\n            \"production\": {\r\n              \"buildTarget\": \"WebFront:build:production\"\r\n            },\r\n            \"development\": {\r\n              \"buildTarget\": \"WebFront:build:development\"\r\n            }\r\n          },\r\n          \"defaultConfiguration\": \"development\"\r\n        },\r\n        \"extract-i18n\": {\r\n          \"builder\": \"@angular-devkit/build-angular:extract-i18n\"\r\n        },\r\n        \"test\": {\r\n          \"builder\": \"@angular-devkit/build-angular:karma\",\r\n          \"options\": {\r\n            \"polyfills\": [\r\n              \"zone.js\",\r\n              \"zone.js/testing\"\r\n            ],\r\n            \"tsConfig\": \"tsconfig.spec.json\",\r\n            \"inlineStyleLanguage\": \"scss\",\r\n            \"assets\": [\r\n              {\r\n                \"glob\": \"**/*\",\r\n                \"input\": \"public\"\r\n              }\r\n            ],\r\n            \"styles\": [\r\n              \"src/styles.scss\"\r\n            ],\r\n            \"scripts\": []\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"cli\": {\r\n    \"analytics\": false\r\n  }\r\n}\r\n"
+        }
+    ]
+}

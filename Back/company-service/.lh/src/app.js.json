@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 23,
             "patches": [
                 {
                     "date": 1741091913901,
@@ -40,6 +40,66 @@
                 {
                     "date": 1741165868800,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const cors = require(\"cors\");\r\n const session = require(\"express-session\");\r\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n-const { keycloak } = require(\"../middleware/authMiddleware\");\r\n+const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n \r\n const app = express();\r\n"
+                },
+                {
+                    "date": 1742124597193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,18 +2,18 @@\n const cors = require(\"cors\");\r\n const session = require(\"express-session\");\r\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n-const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n+const { keycloak } = require(\"./middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n \r\n const app = express();\r\n app.use(express.json());\r\n app.use(cors());\r\n \r\n app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n-app.use(keycloak.middleware());\r\n+app.use(keycloak.middleware()); // ✅ Ajout correct de Keycloak\r\n \r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n"
+                },
+                {
+                    "date": 1742141365828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,18 +2,18 @@\n const cors = require(\"cors\");\r\n const session = require(\"express-session\");\r\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n-const { keycloak } = require(\"./middlewares/authMiddleware\");\r\n+const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n \r\n const app = express();\r\n app.use(express.json());\r\n-app.use(cors());\r\n \r\n+\r\n app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n-app.use(keycloak.middleware()); // ✅ Ajout correct de Keycloak\r\n+app.use(keycloak.middleware());\r\n \r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n"
+                },
+                {
+                    "date": 1742141375643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,12 +8,12 @@\n require(\"dotenv\").config();\r\n \r\n const app = express();\r\n app.use(express.json());\r\n+/* app.use(cors());\r\n \r\n-\r\n app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n-app.use(keycloak.middleware());\r\n+app.use(keycloak.middleware()); */\r\n \r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n"
+                },
+                {
+                    "date": 1742154548389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,13 +8,9 @@\n require(\"dotenv\").config();\r\n \r\n const app = express();\r\n app.use(express.json());\r\n-/* app.use(cors());\r\n \r\n-app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n-app.use(keycloak.middleware()); */\r\n-\r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n \r\n"
+                },
+                {
+                    "date": 1742155479156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,16 @@\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n-\r\n+con\r\n const app = express();\r\n app.use(express.json());\r\n+/* app.use(cors());\r\n \r\n+app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n+app.use(keycloak.middleware()); */\r\n+\r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n \r\n"
+                },
+                {
+                    "date": 1742155485644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n-con\r\n+const con\r\n const app = express();\r\n app.use(express.json());\r\n /* app.use(cors());\r\n \r\n"
+                },
+                {
+                    "date": 1742155493880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n-const con\r\n+const connectDB=require()\r\n const app = express();\r\n app.use(express.json());\r\n /* app.use(cors());\r\n \r\n"
+                },
+                {
+                    "date": 1742155501109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n-const connectDB=require()\r\n+const connectDB=require(\"./config\")\r\n const app = express();\r\n app.use(express.json());\r\n /* app.use(cors());\r\n \r\n"
+                },
+                {
+                    "date": 1742155506317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n-const connectDB=require(\"./config\")\r\n+const connectDB=require(\"./config/db\");\r\n const app = express();\r\n app.use(express.json());\r\n /* app.use(cors());\r\n \r\n"
+                },
+                {
+                    "date": 1742155517253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n const cors = require(\"cors\");\r\n const session = require(\"express-session\");\r\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n-const { keycloak } = require(\"../middlewares/authMiddleware\");\r\n \r\n require(\"dotenv\").config();\r\n const connectDB=require(\"./config/db\");\r\n const app = express();\r\n"
+                },
+                {
+                    "date": 1742815427065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,12 +4,11 @@\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n \r\n require(\"dotenv\").config();\r\n-const connectDB=require(\"./config/db\");\r\n const app = express();\r\n app.use(express.json());\r\n-/* app.use(cors());\r\n+ app.use(cors());\r\n \r\n app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n app.use(keycloak.middleware()); */\r\n \r\n"
+                },
+                {
+                    "date": 1742815454691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,13 +6,15 @@\n \r\n require(\"dotenv\").config();\r\n const app = express();\r\n app.use(express.json());\r\n- app.use(cors());\r\n+app.use(cors({\r\n+    origin: process.env.ALLOWED_ORIGINS.split(','),\r\n+    credentials: true\r\n+  }));\r\n+  \r\n+  app.use(helmet());\r\n \r\n-app.use(session({ secret: \"secret\", resave: false, saveUninitialized: true }));\r\n-app.use(keycloak.middleware()); */\r\n-\r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n \r\n"
+                },
+                {
+                    "date": 1742816621614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,12 +6,16 @@\n \r\n require(\"dotenv\").config();\r\n const app = express();\r\n app.use(express.json());\r\n+const allowedOrigins = process.env.ALLOWED_ORIGINS \r\n+  ? process.env.ALLOWED_ORIGINS.split(',') \r\n+  : ['http://localhost:3000']; // Valeur par défaut\r\n+\r\n app.use(cors({\r\n-    origin: process.env.ALLOWED_ORIGINS.split(','),\r\n-    credentials: true\r\n-  }));\r\n+  origin: allowedOrigins,\r\n+  credentials: true\r\n+}));\r\n   \r\n   app.use(helmet());\r\n \r\n connectDB();\r\n"
+                },
+                {
+                    "date": 1742816627601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n const app = express();\r\n app.use(express.json());\r\n const allowedOrigins = process.env.ALLOWED_ORIGINS \r\n   ? process.env.ALLOWED_ORIGINS.split(',') \r\n-  : ['http://localhost:3000']; // Valeur par défaut\r\n+  : ['http://localhost:3000']; \r\n \r\n app.use(cors({\r\n   origin: allowedOrigins,\r\n   credentials: true\r\n"
+                },
+                {
+                    "date": 1742816658242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,25 +1,29 @@\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n+const helmet = require(\"helmet\"); // N'oubliez pas d'installer helmet: npm install helmet\r\n const session = require(\"express-session\");\r\n const connectDB = require(\"./config/db\");\r\n const companyRoutes = require(\"./routes/companyRoutes\");\r\n \r\n require(\"dotenv\").config();\r\n+\r\n const app = express();\r\n-app.use(express.json());\r\n+\r\n+// Configuration CORS avec valeur par défaut\r\n const allowedOrigins = process.env.ALLOWED_ORIGINS \r\n   ? process.env.ALLOWED_ORIGINS.split(',') \r\n-  : ['http://localhost:3000']; \r\n+  : ['http://localhost:3000'];\r\n \r\n app.use(cors({\r\n   origin: allowedOrigins,\r\n   credentials: true\r\n }));\r\n-  \r\n-  app.use(helmet());\r\n \r\n+app.use(helmet());\r\n+app.use(express.json());\r\n+\r\n connectDB();\r\n \r\n app.use(\"/company\", companyRoutes);\r\n \r\n-module.exports = app;\r\n+module.exports = app;\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1741091913901,

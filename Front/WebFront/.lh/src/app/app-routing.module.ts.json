@@ -1,0 +1,90 @@
+{
+    "sourceFile": "src/app/app-routing.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 18,
+            "patches": [
+                {
+                    "date": 1741609914429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741609924853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { RouterModule, Routes } from '@angular/router';\r\n \r\n const routes: Routes = [\r\n \r\n-   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n ];\r\n \r\n"
+                },
+                {
+                    "date": 1741609930687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n import { NgModule } from '@angular/core';\r\n import { RouterModule, Routes } from '@angular/router';\r\n+import { DashboardComponent } from './dashboard/dashboard.component';\r\n+import { ProjectsComponent } from './projects/projects.component';\r\n \r\n const routes: Routes = [\r\n \r\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
+                },
+                {
+                    "date": 1741776417133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n \r\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n+    { path: 'project/:id', component: ProjectDetailsComponent },\r\n ];\r\n \r\n @NgModule({\r\n   imports: [RouterModule.forRoot(routes)],\r\n"
+                },
+                {
+                    "date": 1741776422698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { NgModule } from '@angular/core';\r\n import { RouterModule, Routes } from '@angular/router';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n+import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n \r\n const routes: Routes = [\r\n \r\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
+                },
+                {
+                    "date": 1742129026826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,10 @@\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n+    { path: 'inscription', component: InscriptionComponent },\r\n+  { path: '**', redirectTo: 'inscription' }\r\n ];\r\n \r\n @NgModule({\r\n   imports: [RouterModule.forRoot(routes)],\r\n"
+                },
+                {
+                    "date": 1742129033336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n-    { path: 'inscription', component: InscriptionComponent },\r\n+    { path: 'signup', component: InscriptionComponent },\r\n   { path: '**', redirectTo: 'inscription' }\r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742129040531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,16 +2,17 @@\n import { RouterModule, Routes } from '@angular/router';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n+import { SignupComponent } from './signup/signup.component';\r\n \r\n const routes: Routes = [\r\n \r\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n-    { path: 'signup', component: InscriptionComponent },\r\n+    { path: 'signup', component: SignupComponent },\r\n   { path: '**', redirectTo: 'inscription' }\r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742129226628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n-  { path: '**', redirectTo: 'inscription' }\r\n+  { path: '**', redirectTo: 'signup' }\r\n ];\r\n \r\n @NgModule({\r\n   imports: [RouterModule.forRoot(routes)],\r\n"
+                },
+                {
+                    "date": 1742129410852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n import { SignupComponent } from './signup/signup.component';\r\n \r\n const routes: Routes = [\r\n \r\n-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n+  { path: '', redirectTo: '/signup', pathMatch: 'full' },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n"
+                },
+                {
+                    "date": 1742130457189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,10 @@\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n+    { path: 'login', component: LoginComponent },\r\n+  { path: '', redirectTo: '/login', pathMatch: 'full' }\r\n   { path: '**', redirectTo: 'signup' }\r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742130466700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,12 +3,13 @@\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { ProjectsComponent } from './projects/projects.component';\r\n import { ProjectDetailsComponent } from './project-details/project-details.component';\r\n import { SignupComponent } from './signup/signup.component';\r\n+import { LoginComponent } from './login/login.component';\r\n \r\n const routes: Routes = [\r\n \r\n-  { path: '', redirectTo: '/signup', pathMatch: 'full' },\r\n+  \r\n   { path: 'dashboard', component: DashboardComponent },\r\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n"
+                },
+                {
+                    "date": 1742130474269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n     { path: 'login', component: LoginComponent },\r\n-  { path: '', redirectTo: '/login', pathMatch: 'full' }\r\n-  { path: '**', redirectTo: 'signup' }\r\n+  { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n+\r\n ];\r\n \r\n @NgModule({\r\n   imports: [RouterModule.forRoot(routes)],\r\n"
+                },
+                {
+                    "date": 1742130797928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n     { path: 'login', component: LoginComponent },\r\n-  { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n+  { path: '', redirectTo: '/si', pathMatch: 'full' },\r\n \r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742131591470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     { path: 'projects', component: ProjectsComponent },\r\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n     { path: 'login', component: LoginComponent },\r\n-  { path: '', redirectTo: '/si', pathMatch: 'full' },\r\n+  { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n \r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742131843199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n     { path: 'project/:id', component: ProjectDetailsComponent },\r\n     { path: 'signup', component: SignupComponent },\r\n     { path: 'login', component: LoginComponent },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n+  { path: '**', redirectTo: '/login' }\r\n \r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742132863698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,12 @@\n const routes: Routes = [\r\n \r\n   \r\n   { path: 'dashboard', component: DashboardComponent },\r\n-    { path: 'projects', component: ProjectsComponent },\r\n-    { path: 'project/:id', component: ProjectDetailsComponent },\r\n-    { path: 'signup', component: SignupComponent },\r\n-    { path: 'login', component: LoginComponent },\r\n+  { path: 'projects', component: ProjectsComponent },\r\n+  { path: 'project/:id', component: ProjectDetailsComponent },\r\n+  { path: 'signup', component: SignupComponent },\r\n+  { path: 'login', component: LoginComponent },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' }\r\n \r\n ];\r\n"
+                },
+                {
+                    "date": 1742139524447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,17 +6,15 @@\n import { SignupComponent } from './signup/signup.component';\r\n import { LoginComponent } from './login/login.component';\r\n \r\n const routes: Routes = [\r\n-\r\n-  \r\n+  { path: 'login', component: LoginComponent },\r\n+  { path: 'signup', component: SignupComponent },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { path: 'project/:id', component: ProjectDetailsComponent },\r\n-  { path: 'signup', component: SignupComponent },\r\n-  { path: 'login', component: LoginComponent },\r\n-  { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n-  { path: '**', redirectTo: '/login' }\r\n+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Rediriger vers login au démarrage\r\n+  { path: '**', redirectTo: '/login' } // Rediriger vers login pour les pages inconnues\r\n \r\n ];\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1742139530172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,10 @@\n   { path: 'signup', component: SignupComponent },\r\n   { path: 'dashboard', component: DashboardComponent },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { path: 'project/:id', component: ProjectDetailsComponent },\r\n-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Rediriger vers login au démarrage\r\n-  { path: '**', redirectTo: '/login' } // Rediriger vers login pour les pages inconnues\r\n+  { path: '', redirectTo: '/login', pathMatch: 'full' }, \r\n+  { path: '**', redirectTo: '/login' } \r\n \r\n ];\r\n \r\n @NgModule({\r\n"
+                }
+            ],
+            "date": 1741609914429,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\r\nimport { RouterModule, Routes } from '@angular/router';\r\n\r\nconst routes: Routes = [\r\n\r\n   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n  { path: 'dashboard', component: DashboardComponent },\r\n    { path: 'projects', component: ProjectsComponent },\r\n];\r\n\r\n@NgModule({\r\n  imports: [RouterModule.forRoot(routes)],\r\n  exports: [RouterModule]\r\n})\r\nexport class AppRoutingModule { }\r\n"
+        }
+    ]
+}

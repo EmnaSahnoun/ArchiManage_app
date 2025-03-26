@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/models/task.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1741770516763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1741770516763,
+            "name": "Commit-0",
+            "content": "export enum TaskStatus {\r\n    PENDING = \"PENDING\",\r\n    IN_PROGRESS = \"IN_PROGRESS\",\r\n    COMPLETED = \"COMPLETED\",\r\n    CANCELED = \"CANCELED\"\r\n  }\r\n  \r\n  export enum TaskPriority {\r\n    LOW = \"LOW\",\r\n    MEDIUM = \"MEDIUM\",\r\n    HIGH = \"HIGH\",\r\n    CRITICAL = \"CRITICAL\"\r\n  }\r\n  \r\n  export interface Task {\r\n    _id?: string;\r\n    name: string;\r\n    description?: string;\r\n    startDate: Date;\r\n    endDate?: Date;\r\n    status: TaskStatus;\r\n    priority: TaskPriority;\r\n    phase: string; // ID de la phase\r\n    subTasks?: Task[];\r\n  }\r\n  "
+        }
+    ]
+}

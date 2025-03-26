@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1741092008049,
@@ -68,6 +68,18 @@
                 {
                     "date": 1741165215270,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,22 +1,6 @@\n-const express = require('express');\r\n-const dotenv = require('dotenv');\r\n-const connectDB = require('./src/config/db');\r\n-const companyRoutes = require('./src/routes/companyRoutes');\r\n-\r\n-dotenv.config();\r\n-connectDB();\r\n-\r\n-const app = express();\r\n-app.use(express.json());\r\n-\r\n-app.use('/api/companie', companyRoutes);\r\n-\r\n-const PORT = process.env.PORT || 5000;\r\n-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));\r\n-\r\n-\r\n-\r\n+require(\"dotenv\").config();\r\n+const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
+                },
+                {
+                    "date": 1742124992816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n require(\"dotenv\").config();\r\n-const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
+                },
+                {
+                    "date": 1742125238859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n require(\"dotenv\").config();\r\n+const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
+                },
+                {
+                    "date": 1742125248510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n require(\"dotenv\").config();\r\n-const connectDB = require(\"./src/config/db\");\r\n const app = require(\"./src/app\");\r\n \r\n const PORT = process.env.PORT || 5000;\r\n \r\n"
                 }
             ],
             "date": 1741092008049,

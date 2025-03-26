@@ -1,0 +1,86 @@
+<div class="dashboard-container">
+    <app-header [title]="'Tableau de bord'"></app-header>
+    <!-- Task Summary -->
+    <div class="task-summary">
+      <h2>Résumé des Projets</h2>
+      <p>Ajouter un nouveau projet et les gérer </p>
+      <button mat-button class="add-project">
+        <i class="bi bi-plus"></i>Nouveau Projet
+      </button>
+  
+      <div class="task-cards">
+        <div class="task-card pending">
+        <i class="bi bi-clock-history"></i>
+          <h2>12</h2>
+          <p>Projets en attente</p>
+        </div>
+        <div class="task-card in-progress">
+            <i class="bi bi-tools"></i>
+          <h2>64</h2>
+          <p>Projets en cours</p>
+        </div>
+        <div class="task-card completed">
+        <i class="bi bi-check-circle-fill"></i>
+          <h2>105</h2>
+          <p>Projets terminés</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Task Activity -->
+    <div class="task-activity">
+      <h2>Activité des Tâches</h2>
+      <canvas id="taskChart"></canvas>
+  
+      <div class="task-stats">
+        <div class="stat">
+          <i class="bi bi-calendar-check"></i>
+          <p>Total Tâches</p>
+          <h3>56</h3>
+        </div>
+        <div class="stat">
+            <i class="bi bi-people"></i>
+          <p>Membres</p>
+          <h3>8</h3>
+        </div>
+        <div class="stat">
+        <i class="bi bi-bar-chart"></i>
+          <p>Projets</p>
+          <h3>30</h3>
+        </div>
+      </div>
+    </div>
+
+  
+<div class="project-list">
+    <h2>Liste des Projets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom du Projet</th>
+          <th>Statut</th>
+          <th>Progression</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Projet 1</td>
+          <td><span class="status in-progress">En cours</span></td>
+          <td>
+            <div class="progress-bar"><div class="progress" style="width: 60%;"></div></div>
+          </td>
+          <td><i class="bi bi-eye icon-spacing"></i> <i class="bi bi-pencil"></i></td>
+        </tr>
+        <tr>
+          <td>Projet 2</td>
+          <td><span class="status completed">Terminé</span></td>
+          <td>
+            <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+          </td>
+          <td><i class="bi bi-eye icon-spacing" ></i> <i class="bi bi-pencil"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

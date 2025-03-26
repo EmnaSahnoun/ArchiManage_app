@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/add-member-dialog/add-member.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1741861546418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741861559490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n-  templateUrl: './add-member.component.html',\r\n+  templateUrl: './add-member.component-dialog.html',\r\n   styleUrl: './add-member.component.scss'\r\n })\r\n export class AddMemberDialogComponent {\r\n   availableMembers: any[];\r\n \r\n   constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n+    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n   ) {\r\n     this.availableMembers = data.availableMembers;\r\n   }\r\n"
+                },
+                {
+                    "date": 1741861564584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component-dialog.html',\r\n-  styleUrl: './add-member.component.scss'\r\n+  styleUrl: './add-member.componentdialog.scss'\r\n })\r\n export class AddMemberDialogComponent {\r\n   availableMembers: any[];\r\n \r\n"
+                }
+            ],
+            "date": 1741861546418,
+            "name": "Commit-0",
+            "content": "\r\nimport { Component, EventEmitter, Inject, Input, Output } from '@angular/core';\r\nimport { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n\r\n@Component({\r\n  selector: 'app-add-member',\r\n  templateUrl: './add-member.component.html',\r\n  styleUrl: './add-member.component.scss'\r\n})\r\nexport class AddMemberDialogComponent {\r\n  availableMembers: any[];\r\n\r\n  constructor(\r\n    public dialogRef: MatDialogRef<AddMemberComponent>,\r\n    @Inject(MAT_DIALOG_DATA) public data: { availableMembers: any[] }\r\n  ) {\r\n    this.availableMembers = data.availableMembers;\r\n  }\r\n\r\n  addMember(member: any) {\r\n    this.dialogRef.close(member);\r\n  }\r\n\r\n  closeDialog() {\r\n    this.dialogRef.close();\r\n  }\r\n  \r\n}"
+        }
+    ]
+}

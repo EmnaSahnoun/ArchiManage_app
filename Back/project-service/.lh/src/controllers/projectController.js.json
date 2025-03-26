@@ -3,11 +3,35 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1741171966760,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741692120775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,4 +17,5 @@\n     } catch (error) {\r\n         res.status(500).json({ message: error.message });\r\n     }\r\n };\r\n+exp\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741692127446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n     } catch (error) {\r\n         res.status(500).json({ message: error.message });\r\n     }\r\n };\r\n-exp\n\\ No newline at end of file\n+exports.get\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741692132975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n     } catch (error) {\r\n         res.status(500).json({ message: error.message });\r\n     }\r\n };\r\n-exports.get\n\\ No newline at end of file\n+exports.getProjectBy\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741692139031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n     } catch (error) {\r\n         res.status(500).json({ message: error.message });\r\n     }\r\n };\r\n-exports.getProjectBy\n\\ No newline at end of file\n+exports.getProjectById=\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741692151021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,23 @@\n     } catch (error) {\r\n         res.status(500).json({ message: error.message });\r\n     }\r\n };\r\n-exports.getProjectById=\n\\ No newline at end of file\n+exports.getProjectById = async (req, res) => {\r\n+    try {\r\n+      const { projectId } = req.params;  // Récupérer l'ID du projet depuis les paramètres de la route\r\n+  \r\n+      // Trouver le projet par ID et peupler les phases associées\r\n+      const project = await Project.findById(projectId).populate(\"phases\");\r\n+  \r\n+      // Vérifier si le projet existe\r\n+      if (!project) {\r\n+        return res.status(404).json({ message: \"Project not found\" });\r\n+      }\r\n+  \r\n+      // Retourner le projet avec les phases\r\n+      res.status(200).json(project);\r\n+    } catch (error) {\r\n+      res.status(500).json({ message: error.message });\r\n+    }\r\n+  };\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741692160524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n };\r\n exports.getProjectById = async (req, res) => {\r\n     try {\r\n       const { projectId } = req.params;  \r\n-      // Trouver le projet par ID et peupler les phases associées\r\n       const project = await Project.findById(projectId).populate(\"phases\");\r\n   \r\n       // Vérifier si le projet existe\r\n       if (!project) {\r\n"
                 }
             ],
             "date": 1741171966760,

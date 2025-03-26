@@ -1,0 +1,50 @@
+{
+    "sourceFile": "src/app/add-member-dialog/add-member-dialog.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1741790192716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741790198042,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component } from '@angular/core';\r\n+import { MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member-dialog',\r\n   templateUrl: './add-member-dialog.component.html',\r\n"
+                },
+                {
+                    "date": 1741790203869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, Inject } from '@angular/core';\r\n import { MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member-dialog',\r\n"
+                },
+                {
+                    "date": 1741822255727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,22 +1,29 @@\n import { Component, Inject } from '@angular/core';\r\n-import { MatDialogRef } from '@angular/material/dialog';\r\n+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-add-member-dialog',\r\n   templateUrl: './add-member-dialog.component.html',\r\n   styleUrl: './add-member-dialog.component.scss'\r\n })\r\n export class AddMemberDialogComponent {\r\n-  constructor(\r\n-    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n-    @Inject(MAT_DIALOG_DATA) public data: any\r\n-  ) {}\r\n+  activeTab: string = 'add-member';\r\n \r\n-  addMember(member: any) {\r\n-    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n-  }\r\n+    constructor(public dialogRef: MatDialogRef<YourModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}\r\n \r\n-  closeDialog() {\r\n-    this.dialogRef.close();\r\n-  }\r\n+    setActiveTab(tab: string) {\r\n+        this.activeTab = tab;\r\n+    }\r\n+\r\n+    addMember(member: any) {\r\n+        console.log('Ajout du membre:', member);\r\n+    }\r\n+\r\n+    removeMember(member: any) {\r\n+        console.log('Suppression du membre:', member);\r\n+    }\r\n+\r\n+    closeDialog() {\r\n+        this.dialogRef.close();\r\n+    }\r\n }\r\n"
+                },
+                {
+                    "date": 1741822262884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,24 +6,17 @@\n   templateUrl: './add-member-dialog.component.html',\r\n   styleUrl: './add-member-dialog.component.scss'\r\n })\r\n export class AddMemberDialogComponent {\r\n-  activeTab: string = 'add-member';\r\n+  constructor(\r\n+    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+    @Inject(MAT_DIALOG_DATA) public data: any\r\n+  ) {}\r\n \r\n-    constructor(public dialogRef: MatDialogRef<YourModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}\r\n+  addMember(member: any) {\r\n+    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n+  }\r\n \r\n-    setActiveTab(tab: string) {\r\n-        this.activeTab = tab;\r\n-    }\r\n-\r\n-    addMember(member: any) {\r\n-        console.log('Ajout du membre:', member);\r\n-    }\r\n-\r\n-    removeMember(member: any) {\r\n-        console.log('Suppression du membre:', member);\r\n-    }\r\n-\r\n-    closeDialog() {\r\n-        this.dialogRef.close();\r\n-    }\r\n+  closeDialog() {\r\n+    this.dialogRef.close();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1741822268539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,24 @@\n     public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any\r\n   ) {}\r\n \r\n-  addMember(member: any) {\r\n-    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n-  }\r\n+  activeTab: string = 'add-member';\r\n \r\n-  closeDialog() {\r\n-    this.dialogRef.close();\r\n-  }\r\n+    constructor(public dialogRef: MatDialogRef<YourModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}\r\n+\r\n+    setActiveTab(tab: string) {\r\n+        this.activeTab = tab;\r\n+    }\r\n+\r\n+    addMember(member: any) {\r\n+        console.log('Ajout du membre:', member);\r\n+    }\r\n+\r\n+    removeMember(member: any) {\r\n+        console.log('Suppression du membre:', member);\r\n+    }\r\n+\r\n+    closeDialog() {\r\n+        this.dialogRef.close();\r\n+    }\r\n }\r\n"
+                },
+                {
+                    "date": 1741822285690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,8 @@\n   ) {}\r\n \r\n   activeTab: string = 'add-member';\r\n \r\n-    constructor(public dialogRef: MatDialogRef<YourModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}\r\n \r\n     setActiveTab(tab: string) {\r\n         this.activeTab = tab;\r\n     }\r\n"
+                },
+                {
+                    "date": 1741822435799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,24 +11,12 @@\n     public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any\r\n   ) {}\r\n \r\n-  activeTab: string = 'add-member';\r\n+  addMember(member: any) {\r\n+    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n+  }\r\n \r\n-    constructor(public dialogRef: MatDialogRef<YourModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}\r\n-\r\n-    setActiveTab(tab: string) {\r\n-        this.activeTab = tab;\r\n-    }\r\n-\r\n-    addMember(member: any) {\r\n-        console.log('Ajout du membre:', member);\r\n-    }\r\n-\r\n-    removeMember(member: any) {\r\n-        console.log('Suppression du membre:', member);\r\n-    }\r\n-\r\n-    closeDialog() {\r\n-        this.dialogRef.close();\r\n-    }\r\n+  closeDialog() {\r\n+    this.dialogRef.close();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1741822858392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,22 @@\n+import { Component, Inject, Input } from '@angular/core';\r\n+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';\r\n+\r\n+@Component({\r\n+  selector: 'app-add-member-dialog',\r\n+  templateUrl: './add-member-dialog.component.html',\r\n+  styleUrl: './add-member-dialog.component.scss'\r\n+})\r\n+export class AddMemberDialogComponent {\r\n+  constructor(\r\n+    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n+    @Inject(MAT_DIALOG_DATA) public data: any\r\n+  ) {}\r\n+  @Input() ph\r\n+  addMember(member: any) {\r\n+    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n+  }\r\n+\r\n+  closeDialog() {\r\n+    this.dialogRef.close();\r\n+  }\r\n+}\r\n"
+                }
+            ],
+            "date": 1741790192716,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-add-member-dialog',\r\n  templateUrl: './add-member-dialog.component.html',\r\n  styleUrl: './add-member-dialog.component.scss'\r\n})\r\nexport class AddMemberDialogComponent {\r\n  constructor(\r\n    public dialogRef: MatDialogRef<AddMemberDialogComponent>,\r\n    @Inject(MAT_DIALOG_DATA) public data: any\r\n  ) {}\r\n\r\n  addMember(member: any) {\r\n    this.dialogRef.close(member); // Retourne le membre sélectionné\r\n  }\r\n\r\n  closeDialog() {\r\n    this.dialogRef.close();\r\n  }\r\n}\r\n"
+        }
+    ]
+}

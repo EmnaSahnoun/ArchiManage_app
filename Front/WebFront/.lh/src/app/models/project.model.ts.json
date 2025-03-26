@@ -1,0 +1,58 @@
+{
+    "sourceFile": "src/app/models/project.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1741685247351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741685444295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,21 @@\n-export interface Project {\r\n+export interface Task {\r\n+    name: string;\r\n+    status: string;\r\n+  }\r\n+  \r\n+  export interface Attachment {\r\n+    name: string;\r\n+    url: string;\r\n+  }\r\n+  \r\n+  export interface Activity {\r\n+    user: string;\r\n+    comment: string;\r\n+    date: string;\r\n+  }\r\n+  \r\n+  export interface Project {\r\n     id: number;\r\n     name: string;\r\n     client: string;\r\n     startDate: string;\r\n@@ -7,8 +23,8 @@\n     status: string;\r\n     priority: string;\r\n     progress: number;\r\n     team: string[];\r\n-    tasks: { name: string; status: string }[];\r\n-    attachments: { name: string; url: string }[];\r\n-    activity: { user: string; comment: string; date: string }[];\r\n+    tasks: Task[];\r\n+    attachments: Attachment[];\r\n+    activity: Activity[];\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741769716752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,5 @@\n-export interface Task {\r\n-    name: string;\r\n-    status: string;\r\n-  }\r\n-  \r\n-  export interface Attachment {\r\n-    name: string;\r\n-    url: string;\r\n-  }\r\n-  \r\n-  export interface Activity {\r\n-    user: string;\r\n-    comment: string;\r\n-    date: string;\r\n-  }\r\n-  \r\n+\r\n   export interface Project {\r\n     id: number;\r\n     name: string;\r\n     client: string;\r\n"
+                },
+                {
+                    "date": 1741769726461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-\r\n   export interface Project {\r\n     id: number;\r\n     name: string;\r\n     client: string;\r\n@@ -8,8 +7,6 @@\n     status: string;\r\n     priority: string;\r\n     progress: number;\r\n     team: string[];\r\n-    tasks: Task[];\r\n-    attachments: Attachment[];\r\n-    activity: Activity[];\r\n+    \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741769735187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n   export interface Project {\r\n     id: number;\r\n     name: string;\r\n-    client: string;\r\n+    description: string;\r\n     startDate: string;\r\n     endDate: string;\r\n     status: string;\r\n     priority: string;\r\n"
+                },
+                {
+                    "date": 1741769805810,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n   export interface Project {\r\n     id: number;\r\n     name: string;\r\n     description: string;\r\n+    createdAt \r\n     startDate: string;\r\n     endDate: string;\r\n     status: string;\r\n     priority: string;\r\n"
+                },
+                {
+                    "date": 1741769811371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n   export interface Project {\r\n     id: number;\r\n     name: string;\r\n     description: string;\r\n-    createdAt \r\n+    createdAt:string;\r\n     startDate: string;\r\n     endDate: string;\r\n     status: string;\r\n     priority: string;\r\n"
+                },
+                {
+                    "date": 1741769864412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,9 @@\n     id: number;\r\n     name: string;\r\n     description: string;\r\n     createdAt:string;\r\n-    startDate: string;\r\n-    endDate: string;\r\n+    \r\n     status: string;\r\n     priority: string;\r\n     progress: number;\r\n     team: string[];\r\n"
+                },
+                {
+                    "date": 1741769872357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,8 @@\n     name: string;\r\n     description: string;\r\n     createdAt:string;\r\n     \r\n-    status: string;\r\n-    priority: string;\r\n     progress: number;\r\n     team: string[];\r\n     \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741770553561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,8 @@\n-  export interface Project {\r\n-    id: number;\r\n-    name: string;\r\n-    description: string;\r\n-    createdAt:string;\r\n-    \r\n-    progress: number;\r\n-    team: string[];\r\n-    \r\n-  }\n\\ No newline at end of file\n+import { Phase } from \"./phase.model\";\r\n+\r\n+export interface Project {\r\n+  _id?: string;\r\n+  name: string;\r\n+  description?: string;\r\n+  phases?: Phase[];\r\n+}\r\n"
+                },
+                {
+                    "date": 1741770649380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,7 @@\n export interface Project {\r\n   _id?: string;\r\n   name: string;\r\n   description?: string;\r\n+  createdAt?: Date;\r\n   phases?: Phase[];\r\n }\r\n"
+                }
+            ],
+            "date": 1741685247351,
+            "name": "Commit-0",
+            "content": "export interface Project {\r\n    id: number;\r\n    name: string;\r\n    client: string;\r\n    startDate: string;\r\n    endDate: string;\r\n    status: string;\r\n    priority: string;\r\n    progress: number;\r\n    team: string[];\r\n    tasks: { name: string; status: string }[];\r\n    attachments: { name: string; url: string }[];\r\n    activity: { user: string; comment: string; date: string }[];\r\n  }"
+        }
+    ]
+}

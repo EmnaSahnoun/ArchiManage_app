@@ -1,0 +1,102 @@
+{
+    "sourceFile": "src/app/app.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 21,
+            "patches": [
+                {
+                    "date": 1742129622661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742129630970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component } from '@angular/core';\r\n+import { NavigationEnd, Router } from '@angular/router';\r\n \r\n @Component({\r\n   selector: 'app-root',\r\n   templateUrl: './app.component.html',\r\n"
+                },
+                {
+                    "date": 1742129824570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n \r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n-        // Masquer la sidebar sur la page d'inscription\r\n+        console.log('Route actuelle:', event.url); // Debug : voir l'URL actuelle\r\n         this.showSidebar = event.url !== '/signup';\r\n       }\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1742130145130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n \r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debug : voir l'URL actuelle\r\n-        this.showSidebar = event.url !== '/signup';\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742130511267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n         this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n-      }\r\n+      };\r\n+      \r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742130516902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,11 @@\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n         this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n       };\r\n-      \r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n+      }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742130591538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,8 @@\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n         this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n       };\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n-      }\r\n+      \r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742130856136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,11 @@\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n         this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n       };\r\n-      \r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n+      }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742131905524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,19 +7,8 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n-  showSidebar = true;\r\n-\r\n-  constructor(private router: Router) {\r\n-    this.router.events.subscribe(event => {\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n-      };\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n-      }\r\n-    });\r\n+  isAuthPage(): boolean {\r\n+    return this.router.url === '/login' || this.router.url === '/signup';\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742131914963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,22 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n+  showSidebar = true;\r\n+\r\n+  constructor(private router: Router) {\r\n+    this.router.events.subscribe(event => {\r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n+      };\r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n+      }\r\n+    });\r\n+  }\r\n   isAuthPage(): boolean {\r\n     return this.router.url === '/login' || this.router.url === '/signup';\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742132099578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,19 +10,10 @@\n   title = 'WebFront';\r\n   showSidebar = true;\r\n \r\n   constructor(private router: Router) {\r\n-    this.router.events.subscribe(event => {\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n-      };\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n-      }\r\n-    });\r\n+    \r\n   }\r\n-  isAuthPage(): boolean {\r\n-    return this.router.url === '/login' || this.router.url === '/signup';\r\n+  sAuthPage(): boolean {\r\n+    ireturn this.router.url === '/login' || this.router.url === '/signup';\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1742132132332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,17 @@\n   title = 'WebFront';\r\n   showSidebar = true;\r\n \r\n   constructor(private router: Router) {\r\n-    \r\n+    this.router.events.subscribe(event => {\r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n+      };\r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n+      }\r\n+    });\r\n   }\r\n-  sAuthPage(): boolean {\r\n-    ireturn this.router.url === '/login' || this.router.url === '/signup';\r\n-  }\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1742132820023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,8 @@\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n   showSidebar = true;\r\n-\r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n"
+                },
+                {
+                    "date": 1742133500586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,18 +8,15 @@\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n   showSidebar = true;\r\n+\r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/signup'); // Masquer la sidebar si on est sur /signup\r\n-      };\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !event.url.includes('/login'); // Masquer la sidebar si on est sur /signup\r\n+        // Masquer la sidebar seulement sur login et signup\r\n+        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n       }\r\n     });\r\n   }\r\n-  \r\n }\r\n"
+                },
+                {
+                    "date": 1742133948959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,16 +7,6 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n-  showSidebar = true;\r\n-\r\n-  constructor(private router: Router) {\r\n-    this.router.events.subscribe(event => {\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        // Masquer la sidebar seulement sur login et signup\r\n-        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n-      }\r\n-    });\r\n-  }\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1742133960538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,16 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n-  \r\n+  showSidebar = true;\r\n+\r\n+  constructor(private router: Router) {\r\n+    this.router.events.subscribe(event => {\r\n+      if (event instanceof NavigationEnd) {\r\n+        console.log('Route actuelle:', event.url); // Debugging\r\n+        // Masquer la sidebar seulement sur login et signup\r\n+        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n+      }\r\n+    });\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742134111537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,16 +7,6 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n-  showSidebar = true;\r\n \r\n-  constructor(private router: Router) {\r\n-    this.router.events.subscribe(event => {\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        // Masquer la sidebar seulement sur login et signup\r\n-        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n-      }\r\n-    });\r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742134359341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,12 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n-\r\n+  constructor(private router: Router) {\r\n+    this.router.events.subscribe(event => {\r\n+      if (event instanceof NavigationEnd) {\r\n+        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n+      }\r\n+    });\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1742134369687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n   styleUrl: './app.component.scss'\r\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n+  showSidebar = true;\r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n"
+                },
+                {
+                    "date": 1742134572621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n export class AppComponent {\r\n   title = 'WebFront';\r\n   showSidebar = true;\r\n   constructor(private router: Router) {\r\n+    this.router.navigate(['/login']);\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n       }\r\n"
+                },
+                {
+                    "date": 1742139221263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,12 +8,13 @@\n })\r\n export class AppComponent {\r\n   title = 'WebFront';\r\n   showSidebar = true;\r\n+\r\n   constructor(private router: Router) {\r\n-    this.router.navigate(['/login']);\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n+        // Masquer la sidebar pour les pages login et signup\r\n         this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n       }\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1742139484947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n \r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n-        // Masquer la sidebar pour les pages login et signup\r\n-        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n+        // Masquer la sidebar si on est sur la page login ou signup\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                }
+            ],
+            "date": 1742129622661,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-root',\r\n  templateUrl: './app.component.html',\r\n  styleUrl: './app.component.scss'\r\n})\r\nexport class AppComponent {\r\n  title = 'WebFront';\r\n  showSidebar = true;\r\n\r\n  constructor(private router: Router) {\r\n    this.router.events.subscribe(event => {\r\n      if (event instanceof NavigationEnd) {\r\n        // Masquer la sidebar sur la page d'inscription\r\n        this.showSidebar = event.url !== '/signup';\r\n      }\r\n    });\r\n  }\r\n}\r\n"
+        }
+    ]
+}

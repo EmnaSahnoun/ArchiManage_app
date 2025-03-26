@@ -1,0 +1,86 @@
+{
+    "sourceFile": "src/app/add-member/add-member.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 17,
+            "patches": [
+                {
+                    "date": 1741864182273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741864203636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,46 +1,103 @@\n-.mat-dialog-container {\r\n-    display: flex;\r\n-    flex-direction: column;\r\n-    align-items: center;\r\n-    text-align: center;\r\n-    max-width: 90vw; /* Responsive sur mobiles */\r\n-    max-height: 90vh;\r\n-    padding: 20px;\r\n-    border-radius: 10px;\r\n+/* Modal Container */\r\n+.modal-dialog {\r\n+    max-width: 600px; /* Taille du modal */\r\n+    margin: 30px auto; /* Centrer verticalement et horizontalement */\r\n   }\r\n   \r\n-  .member-option {\r\n-    display: flex;\r\n-    align-items: center;\r\n-    justify-content: space-between;\r\n-    width: 100%;\r\n-    gap: 10px;\r\n-    margin: 8px 0;\r\n+  /* Modal Content */\r\n+  .modal-content {\r\n+    background-color: #fff; /* Couleur de fond du modal */\r\n+    border-radius: 8px; /* Bordures arrondies */\r\n+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */\r\n+    padding: 15px;\r\n   }\r\n   \r\n-  .member-img {\r\n-    width: 40px;\r\n-    height: 40px;\r\n-    border-radius: 50%;\r\n-    object-fit: cover;\r\n-    border: 2px solid #ddd;\r\n+  /* Modal Header */\r\n+  .modal-header {\r\n+    border-bottom: 1px solid #ddd; /* Bordure sous l'en-tête */\r\n+    padding-bottom: 10px;\r\n   }\r\n   \r\n-  .mat-dialog-actions {\r\n-    display: flex;\r\n-    justify-content: center;\r\n-    width: 100%;\r\n+  .modal-title {\r\n+    font-size: 1.25rem;\r\n+    font-weight: 500;\r\n   }\r\n   \r\n-  button {\r\n-    background: none;\r\n+  .close {\r\n+    font-size: 1.5rem;\r\n+    color: #999;\r\n     border: none;\r\n+    background: transparent;\r\n+  }\r\n+  \r\n+  .close:hover,\r\n+  .close:focus {\r\n+    color: #000;\r\n+    text-decoration: none;\r\n     cursor: pointer;\r\n-    font-size: 18px;\r\n-    color: #2787C0;\r\n   }\r\n   \r\n-  .mat-dialog-backdrop {\r\n-    background: rgba(0, 0, 0, 0.5) !important; /* Assombrit légèrement le fond */\r\n+  /* Modal Body */\r\n+  .modal-body {\r\n+    padding-top: 15px;\r\n+    padding-bottom: 15px;\r\n+  \r\n+    ul {\r\n+      list-style-type: none;\r\n+      padding: 0;\r\n+      margin: 0;\r\n+  \r\n+      li {\r\n+        display: flex;\r\n+        align-items: center;\r\n+        padding: 8px 12px;\r\n+        cursor: pointer;\r\n+        border-radius: 5px;\r\n+        transition: background-color 0.3s;\r\n+  \r\n+        &:hover {\r\n+          background-color: #f1f1f1; /* Effet hover */\r\n+        }\r\n+  \r\n+        .member-img {\r\n+          width: 30px;\r\n+          height: 30px;\r\n+          border-radius: 50%;\r\n+          margin-right: 10px;\r\n+        }\r\n+      }\r\n+    }\r\n   }\r\n+  \r\n+  /* Modal Footer */\r\n+  .modal-footer {\r\n+    display: flex;\r\n+    justify-content: flex-end;\r\n+    padding-top: 15px;\r\n+    padding-bottom: 10px;\r\n+  \r\n+    .btn {\r\n+      min-width: 120px;\r\n+    }\r\n+  \r\n+    .btn-secondary {\r\n+      background-color: #6c757d;\r\n+      border-color: #6c757d;\r\n+    }\r\n+  \r\n+    .btn-secondary:hover {\r\n+      background-color: #5a6268;\r\n+      border-color: #545b62;\r\n+    }\r\n+  \r\n+    .btn-primary {\r\n+      background-color: #007bff;\r\n+      border-color: #007bff;\r\n+    }\r\n+  \r\n+    .btn-primary:hover {\r\n+      background-color: #0056b3;\r\n+      border-color: #004085;\r\n+    }\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741864255107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,8 +77,9 @@\n     padding-bottom: 10px;\r\n   \r\n     .btn {\r\n       min-width: 120px;\r\n+      \r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #6c757d;\r\n"
+                },
+                {
+                    "date": 1741864262842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n     padding-bottom: 10px;\r\n   \r\n     .btn {\r\n       min-width: 120px;\r\n-      \r\n+      border-radius: 20px;\r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #6c757d;\r\n"
+                },
+                {
+                    "date": 1741864352994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,9 +91,9 @@\n       border-color: #545b62;\r\n     }\r\n   \r\n     .btn-primary {\r\n-      background-color: #007bff;\r\n+        background: #E27D60;\r\n       border-color: #007bff;\r\n     }\r\n   \r\n     .btn-primary:hover {\r\n"
+                },
+                {
+                    "date": 1741864363615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,8 +78,9 @@\n   \r\n     .btn {\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n+      co\r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #6c757d;\r\n@@ -92,9 +93,9 @@\n     }\r\n   \r\n     .btn-primary {\r\n         background: #E27D60;\r\n-      border-color: #007bff;\r\n+      \r\n     }\r\n   \r\n     .btn-primary:hover {\r\n       background-color: #0056b3;\r\n"
+                },
+                {
+                    "date": 1741864419223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n   \r\n     .btn {\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n-      co\r\n+      color: white;\r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #6c757d;\r\n@@ -97,9 +97,9 @@\n       \r\n     }\r\n   \r\n     .btn-primary:hover {\r\n-      background-color: #0056b3;\r\n+      background-color: #df451a;\r\n       border-color: #004085;\r\n     }\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741864425938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,9 @@\n     }\r\n   \r\n     .btn-secondary:hover {\r\n       background-color: #5a6268;\r\n-      border-color: #545b62;\r\n+      \r\n     }\r\n   \r\n     .btn-primary {\r\n         background: #E27D60;\r\n@@ -98,8 +98,8 @@\n     }\r\n   \r\n     .btn-primary:hover {\r\n       background-color: #df451a;\r\n-      border-color: #004085;\r\n+    \r\n     }\r\n   }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741864516315,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n       color: white;\r\n     }\r\n   \r\n     .btn-secondary {\r\n-      background-color: #6c757d;\r\n+      background-color: #b5b5b5;\r\n       border-color: #6c757d;\r\n     }\r\n   \r\n     .btn-secondary:hover {\r\n"
+                },
+                {
+                    "date": 1741864523096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,9 +83,9 @@\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #b5b5b5;\r\n-      border-color: #6c757d;\r\n+      \r\n     }\r\n   \r\n     .btn-secondary:hover {\r\n       background-color: #5a6268;\r\n"
+                },
+                {
+                    "date": 1741864528670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n       \r\n     }\r\n   \r\n     .btn-secondary:hover {\r\n-      background-color: #5a6268;\r\n+      background-color: #b5b5b5;\r\n       \r\n     }\r\n   \r\n     .btn-primary {\r\n"
+                },
+                {
+                    "date": 1741864534917,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n       \r\n     }\r\n   \r\n     .btn-secondary:hover {\r\n-      background-color: #b5b5b5;\r\n+      background-color: rgb(55, 60, 63);\r\n       \r\n     }\r\n   \r\n     .btn-primary {\r\n"
+                },
+                {
+                    "date": 1741864554529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,8 +79,9 @@\n     .btn {\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n+      bo\r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #b5b5b5;\r\n"
+                },
+                {
+                    "date": 1741864570518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,10 @@\n     .btn {\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n-      bo\r\n+      border: none;\r\n+      \r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #b5b5b5;\r\n"
+                },
+                {
+                    "date": 1741864576984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,9 +80,9 @@\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n       border: none;\r\n-      \r\n+      font-weight: bold;\r\n     }\r\n   \r\n     .btn-secondary {\r\n       background-color: #b5b5b5;\r\n"
+                },
+                {
+                    "date": 1741864583533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,8 +76,9 @@\n     padding-top: 15px;\r\n     padding-bottom: 10px;\r\n   \r\n     .btn {\r\n+        \r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n       border: none;\r\n"
+                },
+                {
+                    "date": 1741864614402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     padding-top: 15px;\r\n     padding-bottom: 10px;\r\n   \r\n     .btn {\r\n-        \r\n+        min\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n       border: none;\r\n"
+                },
+                {
+                    "date": 1741864626956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     padding-top: 15px;\r\n     padding-bottom: 10px;\r\n   \r\n     .btn {\r\n-        min-height: 2;\r\n+        min-height: 2r;\r\n       min-width: 120px;\r\n       border-radius: 20px;\r\n       color: white;\r\n       border: none;\r\n"
+                }
+            ],
+            "date": 1741864182273,
+            "name": "Commit-0",
+            "content": ".mat-dialog-container {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 90vw; /* Responsive sur mobiles */\r\n    max-height: 90vh;\r\n    padding: 20px;\r\n    border-radius: 10px;\r\n  }\r\n  \r\n  .member-option {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    width: 100%;\r\n    gap: 10px;\r\n    margin: 8px 0;\r\n  }\r\n  \r\n  .member-img {\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50%;\r\n    object-fit: cover;\r\n    border: 2px solid #ddd;\r\n  }\r\n  \r\n  .mat-dialog-actions {\r\n    display: flex;\r\n    justify-content: center;\r\n    width: 100%;\r\n  }\r\n  \r\n  button {\r\n    background: none;\r\n    border: none;\r\n    cursor: pointer;\r\n    font-size: 18px;\r\n    color: #2787C0;\r\n  }\r\n  \r\n  .mat-dialog-backdrop {\r\n    background: rgba(0, 0, 0, 0.5) !important; /* Assombrit légèrement le fond */\r\n  }\r\n  "
+        }
+    ]
+}

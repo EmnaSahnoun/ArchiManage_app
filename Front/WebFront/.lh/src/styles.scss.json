@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/styles.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1741790638652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741790713445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,16 @@\n-.custom-modal .mat-dialog-container {\r\n-    background-color: white;\r\n-    border-radius: 12px;\r\n-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);\r\n+::ng-deep .cdk-overlay-container {\r\n+    position: fixed !important;\r\n+    top: 0;\r\n+    left: 0;\r\n+    width: 100vw;\r\n+    height: 100vh;\r\n+    z-index: 1050; /* S'assure qu'il est au-dessus de tout */\r\n   }\r\n+  \r\n+  ::ng-deep .cdk-overlay-pane {\r\n+    display: flex !important;\r\n+    justify-content: center !important;\r\n+    align-items: center !important;\r\n+    height: 100vh !important;\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741790810724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +0,0 @@\n-::ng-deep .cdk-overlay-container {\r\n-    position: fixed !important;\r\n-    top: 0;\r\n-    left: 0;\r\n-    width: 100vw;\r\n-    height: 100vh;\r\n-    z-index: 1050; /* S'assure qu'il est au-dessus de tout */\r\n-  }\r\n-  \r\n-  ::ng-deep .cdk-overlay-pane {\r\n-    display: flex !important;\r\n-    justify-content: center !important;\r\n-    align-items: center !important;\r\n-    height: 100vh !important;\r\n-  }\r\n-  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741821738025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,16 @@\n+::ng-deep .cdk-overlay-container {\r\n+    position: fixed !important;\r\n+    top: 0;\r\n+    left: 0;\r\n+    width: 100vw;\r\n+    height: 100vh;\r\n+    z-index: 1050; /* S'assure que le modal est au-dessus de tout */\r\n+  }\r\n+  \r\n+  ::ng-deep .cdk-overlay-pane {\r\n+    display: flex !important;\r\n+    justify-content: center !important;\r\n+    align-items: center !important;\r\n+    height: 100vh !important;\r\n+  }\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741821880528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,27 @@\n     top: 0;\r\n     left: 0;\r\n     width: 100vw;\r\n     height: 100vh;\r\n-    z-index: 1050; /* S'assure que le modal est au-dessus de tout */\r\n+    z-index: 1050; /* S'assure qu'il est au-dessus de tout */\r\n   }\r\n   \r\n   ::ng-deep .cdk-overlay-pane {\r\n     display: flex !important;\r\n     justify-content: center !important;\r\n     align-items: center !important;\r\n     height: 100vh !important;\r\n   }\r\n+  \r\n+  ::ng-deep .custom-modal .mat-dialog-container {\r\n+    background-color: white;\r\n+    border-radius: 12px;\r\n+    padding: 20px;\r\n+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);\r\n+    text-align: center;\r\n+    max-width: 90vw; // S'adapte aux écrans mobiles\r\n+  }\r\n+  \r\n+  ::ng-deep .cdk-overlay-backdrop {\r\n+    background: rgba(0, 0, 0, 0.5) !important; /* Fond assombri */\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1741790638652,
+            "name": "Commit-0",
+            "content": ".custom-modal .mat-dialog-container {\r\n    background-color: white;\r\n    border-radius: 12px;\r\n    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);\r\n  }\r\n  "
+        }
+    ]
+}

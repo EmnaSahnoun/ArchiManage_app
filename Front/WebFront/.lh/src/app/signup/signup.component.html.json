@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/app/signup/signup.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1742128921814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742133073766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\">S'inscrire</button>\r\n+          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\"S'inscrire</button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1742133081475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\"S'inscrire</button>\r\n+          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\">S'inscrire</a></button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1742133087501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\">S'inscrire</a></button>\r\n+          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\">S'inscrire</button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1742133093395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/login\">S'inscrire</button>\r\n+          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/dash\"></a>S'inscrire</button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1742133937034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,18 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/dash\"></a>S'inscrire</button>\r\n+          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/dashbord\"></a>S'inscrire</button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n   </div>\r\n\\ No newline at end of file\n-  \n+  <mat-sidenav-container class=\"sidenav-container\" *ngIf=\"showSidebar\">\r\n+    <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n+      <app-sidebar></app-sidebar>\r\n+    </mat-sidenav>\r\n+    <mat-sidenav-content class=\"content\">\r\n+      <router-outlet></router-outlet>\r\n+    </mat-sidenav-content>\r\n+  </mat-sidenav-container>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742133955785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,12 +18,5 @@\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n   </div>\r\n-  <mat-sidenav-container class=\"sidenav-container\" *ngIf=\"showSidebar\">\r\n-    <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n-      <app-sidebar></app-sidebar>\r\n-    </mat-sidenav>\r\n-    <mat-sidenav-content class=\"content\">\r\n-      <router-outlet></router-outlet>\r\n-    </mat-sidenav-content>\r\n-  </mat-sidenav-container>\n\\ No newline at end of file\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742139922567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n           </div>\r\n           <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <button type=\"submit\" class=\"btn-register\"><a routerLink=\"/dashbord\"></a>S'inscrire</button>\r\n+          <button type=\"submit\" class=\"btn-register\">S'inscrire</button>\r\n         </form>\r\n         <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n       </div>\r\n     </div>\r\n"
+                }
+            ],
+            "date": 1742128921814,
+            "name": "Commit-0",
+            "content": "<div class=\"register-container\">\r\n    <div class=\"register-card\">\r\n      <div class=\"illustration\">\r\n        <img src=\"assets/signup-illustration.svg\" alt=\"Illustration d'inscription\">\r\n      </div>\r\n      <div class=\"register-form\">\r\n        <h2>INSCRIPTION</h2>\r\n        <form (ngSubmit)=\"onRegister()\">\r\n          <div class=\"input-group\">\r\n            <input type=\"text\" placeholder=\"Nom\" [(ngModel)]=\"user.nom\" name=\"nom\" required>\r\n            <input type=\"text\" placeholder=\"Prénom\" [(ngModel)]=\"user.prenom\" name=\"prenom\" required>\r\n          </div>\r\n          <input type=\"text\" placeholder=\"Identifiant\" [(ngModel)]=\"user.username\" name=\"username\" required>\r\n          <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n          <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n          <button type=\"submit\" class=\"btn-register\">S'inscrire</button>\r\n        </form>\r\n        <p>Vous avez un compte ? <a routerLink=\"/login\">Connectez-vous !</a></p>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  "
+        }
+    ]
+}
