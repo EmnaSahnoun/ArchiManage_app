@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/super-admin/user-form/user-form.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1744030134232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1744030134232,
+            "name": "Commit-0",
+            "content": "<div class=\"user-form-container\">\r\n    <h2>Ajouter un Utilisateur</h2>\r\n    \r\n    <form [formGroup]=\"userForm\" (ngSubmit)=\"onSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label for=\"name\">Nom complet</label>\r\n        <input type=\"text\" id=\"name\" formControlName=\"name\" placeholder=\"Entrez le nom complet\">\r\n        <div *ngIf=\"userForm.get('name')?.invalid && userForm.get('name')?.touched\" class=\"error-message\">\r\n          Le nom est requis\r\n        </div>\r\n      </div>\r\n  \r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Email</label>\r\n        <input type=\"email\" id=\"email\" formControlName=\"email\" placeholder=\"Entrez l'email\">\r\n        <div *ngIf=\"userForm.get('email')?.invalid && userForm.get('email')?.touched\" class=\"error-message\">\r\n          Veuillez entrer un email valide\r\n        </div>\r\n      </div>\r\n  \r\n      <div class=\"form-group\">\r\n        <label for=\"role\">Rôle</label>\r\n        <select id=\"role\" formControlName=\"role\">\r\n          <option value=\"\">Sélectionnez un rôle</option>\r\n          <option *ngFor=\"let role of roles\" [value]=\"role\">{{ role }}</option>\r\n        </select>\r\n        <div *ngIf=\"userForm.get('role')?.invalid && userForm.get('role')?.touched\" class=\"error-message\">\r\n          Le rôle est requis\r\n        </div>\r\n      </div>\r\n  \r\n      <div class=\"form-actions\">\r\n        <button type=\"button\" class=\"cancel-btn\" (click)=\"onCancel()\">Annuler</button>\r\n        <button type=\"submit\" class=\"submit-btn\" [disabled]=\"userForm.invalid\">Enregistrer</button>\r\n      </div>\r\n    </form>\r\n  </div>"
+        }
+    ]
+}

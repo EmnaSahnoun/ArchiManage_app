@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/super-admin/user-form/user-form.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1744030159566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744031841269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n       margin-top: 30px;\r\n   \r\n       button {\r\n         padding: 8px 20px;\r\n-        border-radius: 4px;\r\n+        border-radius: 35px;\r\n         cursor: pointer;\r\n         font-weight: 500;\r\n         transition: all 0.3s;\r\n   \r\n"
+                },
+                {
+                    "date": 1744031883646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n       margin-top: 30px;\r\n   \r\n       button {\r\n         padding: 8px 20px;\r\n-        border-radius: 35px;\r\n+        border-radius: 40px;\r\n         cursor: pointer;\r\n         font-weight: 500;\r\n         transition: all 0.3s;\r\n   \r\n"
+                }
+            ],
+            "date": 1744030159566,
+            "name": "Commit-0",
+            "content": ".user-form-container {\r\n    padding: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n  \r\n    h2 {\r\n      color: #E27D60;\r\n      margin-bottom: 20px;\r\n      text-align: center;\r\n    }\r\n  \r\n    .form-group {\r\n      margin-bottom: 20px;\r\n  \r\n      label {\r\n        display: block;\r\n        margin-bottom: 5px;\r\n        font-weight: 500;\r\n        color: #555;\r\n      }\r\n  \r\n      input, select {\r\n        width: 100%;\r\n        padding: 10px;\r\n        border: 1px solid #ddd;\r\n        border-radius: 4px;\r\n        font-size: 16px;\r\n  \r\n        &:focus {\r\n          outline: none;\r\n          border-color: #E27D60;\r\n        }\r\n      }\r\n  \r\n      .error-message {\r\n        color: #F44336;\r\n        font-size: 12px;\r\n        margin-top: 5px;\r\n      }\r\n    }\r\n  \r\n    .form-actions {\r\n      display: flex;\r\n      justify-content: flex-end;\r\n      gap: 10px;\r\n      margin-top: 30px;\r\n  \r\n      button {\r\n        padding: 8px 20px;\r\n        border-radius: 4px;\r\n        cursor: pointer;\r\n        font-weight: 500;\r\n        transition: all 0.3s;\r\n  \r\n        &.cancel-btn {\r\n          background: #f5f5f5;\r\n          border: 1px solid #ddd;\r\n          color: #333;\r\n  \r\n          &:hover {\r\n            background: #e0e0e0;\r\n          }\r\n        }\r\n  \r\n        &.submit-btn {\r\n          background: #E27D60;\r\n          color: white;\r\n          border: none;\r\n  \r\n          &:hover {\r\n            background: darken(#E27D60, 10%);\r\n          }\r\n  \r\n          &:disabled {\r\n            background: #cccccc;\r\n            cursor: not-allowed;\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }"
+        }
+    ]
+}

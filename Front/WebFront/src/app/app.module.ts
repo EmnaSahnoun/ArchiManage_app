@@ -12,14 +12,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ClientsComponent } from './clients/clients.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { ProjectsComponent } from './shared/projects/projects.component';
+import { ProjectDetailsComponent } from './shared/project-details/project-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BidiModule } from '@angular/cdk/bidi';
 
@@ -27,11 +26,11 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    HeaderComponent,
     DashboardComponent,
     SettingsComponent,
     ClientsComponent,
@@ -57,7 +56,9 @@ import { SignupComponent } from './signup/signup.component';
     FormsModule,
     MatDialogModule,
     NgbModalModule,
-    BidiModule
+    BidiModule,
+    SharedModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

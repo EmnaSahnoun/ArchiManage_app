@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/super-admin/dashboard/dashboard.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1743876470858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743938716625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"dashboard-container\">\r\n-    <app-header [title]=\"'Tableau de bord'\"></app-header>\r\n+    <app-header [000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]=\"'Tableau de bord'\"></app-header>\r\n     <!-- Task Summary -->\r\n     <div class=\"task-summary\">\r\n       <h2>Résumé des Projets</h2>\r\n       <p>Ajouter un nouveau projet et les gérer </p>\r\n"
+                },
+                {
+                    "date": 1743938724331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"dashboard-container\">\r\n-    <app-header [000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]=\"'Tableau de bord'\"></app-header>\r\n+    <app-header [title]=\"'Tableau de bord'\"></app-header>\r\n     <!-- Task Summary -->\r\n     <div class=\"task-summary\">\r\n       <h2>Résumé des Projets</h2>\r\n       <p>Ajouter un nouveau projet et les gérer </p>\r\n"
+                },
+                {
+                    "date": 1743938732546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n         <i class=\"bi bi-clock-history\"></i>\r\n           <h2>12</h2>\r\n           <p>Projets en attente</p>\r\n         </div>\r\n-        <div class=\"task-card in-progress\">\r\n+        <div class=\"task-card in-prog              ress\">\r\n             <i class=\"bi bi-tools\"></i>\r\n           <h2>64</h2>\r\n           <p>Projets en cours</p>\r\n         </div>\r\n"
+                },
+                {
+                    "date": 1743945618008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <div class=\"dashboard-container\">\r\n     <app-header [title]=\"'Tableau de bord'\"></app-header>\r\n     <!-- Task Summary -->\r\n     <div class=\"task-summary\">\r\n-      <h2>Résumé des Projets</h2>\r\n+      <h2> des Projets</h2>\r\n       <p>Ajouter un nouveau projet et les gérer </p>\r\n       <button mat-button class=\"add-project\">\r\n         <i class=\"bi bi-plus\"></i>Nouveau Projet\r\n       </button>\r\n@@ -13,9 +13,9 @@\n         <i class=\"bi bi-clock-history\"></i>\r\n           <h2>12</h2>\r\n           <p>Projets en attente</p>\r\n         </div>\r\n-        <div class=\"task-card in-prog              ress\">\r\n+        <div class=\"task-card in-progress\">\r\n             <i class=\"bi bi-tools\"></i>\r\n           <h2>64</h2>\r\n           <p>Projets en cours</p>\r\n         </div>\r\n"
+                }
+            ],
+            "date": 1743876470858,
+            "name": "Commit-0",
+            "content": "<div class=\"dashboard-container\">\r\n    <app-header [title]=\"'Tableau de bord'\"></app-header>\r\n    <!-- Task Summary -->\r\n    <div class=\"task-summary\">\r\n      <h2>Résumé des Projets</h2>\r\n      <p>Ajouter un nouveau projet et les gérer </p>\r\n      <button mat-button class=\"add-project\">\r\n        <i class=\"bi bi-plus\"></i>Nouveau Projet\r\n      </button>\r\n  \r\n      <div class=\"task-cards\">\r\n        <div class=\"task-card pending\">\r\n        <i class=\"bi bi-clock-history\"></i>\r\n          <h2>12</h2>\r\n          <p>Projets en attente</p>\r\n        </div>\r\n        <div class=\"task-card in-progress\">\r\n            <i class=\"bi bi-tools\"></i>\r\n          <h2>64</h2>\r\n          <p>Projets en cours</p>\r\n        </div>\r\n        <div class=\"task-card completed\">\r\n        <i class=\"bi bi-check-circle-fill\"></i>\r\n          <h2>105</h2>\r\n          <p>Projets terminés</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  \r\n    <!-- Task Activity -->\r\n    <div class=\"task-activity\">\r\n      <h2>Activité des Tâches</h2>\r\n      <canvas id=\"taskChart\"></canvas>\r\n  \r\n      <div class=\"task-stats\">\r\n        <div class=\"stat\">\r\n          <i class=\"bi bi-calendar-check\"></i>\r\n          <p>Total Tâches</p>\r\n          <h3>56</h3>\r\n        </div>\r\n        <div class=\"stat\">\r\n            <i class=\"bi bi-people\"></i>\r\n          <p>Membres</p>\r\n          <h3>8</h3>\r\n        </div>\r\n        <div class=\"stat\">\r\n        <i class=\"bi bi-bar-chart\"></i>\r\n          <p>Projets</p>\r\n          <h3>30</h3>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n  \r\n<div class=\"project-list\">\r\n    <h2>Liste des Projets</h2>\r\n    <table>\r\n      <thead>\r\n        <tr>\r\n          <th>Nom du Projet</th>\r\n          <th>Statut</th>\r\n          <th>Progression</th>\r\n          <th>Actions</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <tr>\r\n          <td>Projet 1</td>\r\n          <td><span class=\"status in-progress\">En cours</span></td>\r\n          <td>\r\n            <div class=\"progress-bar\"><div class=\"progress\" style=\"width: 60%;\"></div></div>\r\n          </td>\r\n          <td><i class=\"bi bi-eye icon-spacing\"></i> <i class=\"bi bi-pencil\"></i></td>\r\n        </tr>\r\n        <tr>\r\n          <td>Projet 2</td>\r\n          <td><span class=\"status completed\">Terminé</span></td>\r\n          <td>\r\n            <div class=\"progress-bar\"><div class=\"progress\" style=\"width: 100%;\"></div></div>\r\n          </td>\r\n          <td><i class=\"bi bi-eye icon-spacing\" ></i> <i class=\"bi bi-pencil\"></i></td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n</div>"
+        }
+    ]
+}

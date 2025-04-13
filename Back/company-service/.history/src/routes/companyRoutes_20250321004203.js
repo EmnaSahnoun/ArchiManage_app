@@ -18,5 +18,5 @@ router.get("/:id", protect, getCompanyById);
 router.put("/:id", protect, updateCompany);
 router.delete("/:id", protect, deleteCompany);
 router.get("/users",protect, getUsers);
-
+router.post("/:companyId/users", protect, addUserToCompany);
 module.exports = router;

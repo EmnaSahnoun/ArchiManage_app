@@ -1,0 +1,64 @@
+<div class="agency-details-container">
+    <div class="agency-info">
+      
+        <div class="header-section">
+            <h2>{{ agency.name }}</h2>
+            <button mat-button class="projects-btn" (click)="viewProjects()">
+              <i class="bi bi-folder"></i> Voir Projets
+            </button>
+          </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Adresse:</span>
+          <span class="value">{{ agency.address }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ agency.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Téléphone:</span>
+          <span class="value">{{ agency.phone }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Date de création:</span>
+          <span class="value">{{ agency.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="users-section">
+      <div class="users-header">
+        <h3>Utilisateurs</h3>
+        <button mat-button class="add-user-btn" (click)="addUser()">
+          <i class="bi bi-plus"></i> Ajouter Utilisateur
+        </button>
+      </div>
+  
+      <div class="users-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td class="actions">
+                <button class="delete-btn" (click)="deleteUser(user)"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+            <tr *ngIf="users.length === 0">
+              <td colspan="4" class="no-users">Aucun utilisateur trouvé</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

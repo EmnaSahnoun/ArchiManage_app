@@ -1,0 +1,90 @@
+{
+    "sourceFile": "src/app/super-admin/super-admin.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 18,
+            "patches": [
+                {
+                    "date": 1743940201249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743940209736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \r\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n+import { SharedModule } from '../shared/shared.module';\r\n \r\n \r\n @NgModule({\r\n   declarations: [\r\n@@ -13,8 +14,8 @@\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n-    \r\n+    SharedModule        \r\n   ]\r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1743940316355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,13 +9,14 @@\n \r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n-    DashboardComponent\r\n+    DashboardComponent,\r\n+    HeaderComponent\r\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n     SharedModule        \r\n-  ]\r\n+  ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1743940815256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,15 @@\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n+import { HeaderComponent } from '../header/header.component';\r\n \r\n \r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n-    DashboardComponent,\r\n-    HeaderComponent\r\n+    DashboardComponent\r\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n"
+                },
+                {
+                    "date": 1743942228859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n-import { HeaderComponent } from '../header/header.component';\r\n \r\n \r\n @NgModule({\r\n   declarations: [\r\n"
+                },
+                {
+                    "date": 1743942404462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,8 @@\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n-    SharedModule        \r\n+            \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1743942411560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,8 @@\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n-            \r\n+    SharedModule,        \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1743943335779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,10 @@\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n+import { SharedModule } from '../shared/shared.module'; // Chemin relatif correct\r\n \r\n-\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     DashboardComponent\r\n"
+                },
+                {
+                    "date": 1743945816622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,12 @@\n import { CommonModule } from '@angular/common';\r\n \r\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n-import { DashboardComponent } from './dashboard/dashboard.component';\r\n+import { DashboardComponent } from './super-admin-dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n-import { SharedModule } from '../shared/shared.module'; // Chemin relatif correct\r\n \r\n+\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     DashboardComponent\r\n"
+                },
+                {
+                    "date": 1743945840354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { CommonModule } from '@angular/common';\r\n \r\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n-import { DashboardComponent } from './super-admin-dashboard/dashboard.component';\r\n+import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n \r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1743946120693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,16 +2,17 @@\n import { CommonModule } from '@angular/common';\r\n \r\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n-import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n+import { SuperAdminDashboardComponent } from './super-admin-dashboard/super-admin-dashboard.component';\r\n \r\n \r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n-    DashboardComponent\r\n+    DashboardComponent,\r\n+    SuperAdminDashboardComponent\r\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n"
+                },
+                {
+                    "date": 1744022750969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,16 @@\n import { SuperAdminRoutingModule } from './super-admin-routing.module';\r\n import { SuperAdminComponent } from './super-admin.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n import { SuperAdminDashboardComponent } from './super-admin-dashboard/super-admin-dashboard.component';\r\n+import { AgencesComponent } from './agences/agences.component';\r\n+import { FormsModule } from '@angular/forms';\r\n \r\n-\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n-    DashboardComponent,\r\n-    SuperAdminDashboardComponent\r\n+    SuperAdminDashboardComponent,\r\n+    AgencesComponent\r\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n"
+                },
+                {
+                    "date": 1744022762351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n-    SharedModule,        \r\n+    SharedModule, \r\n+    FormsModule,       \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1744023592889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,14 @@\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n     SharedModule, \r\n-    FormsModule,       \r\n+    FormsModule, \r\n+    MatDialogModule,\r\n+    MatButtonModule,\r\n+    MatInputModule,\r\n+    MatFormFieldModule,\r\n+    FormsModule,\r\n+    ReactiveFormsModule,      \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1744023599987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     MatDialogModule,\r\n     MatButtonModule,\r\n     MatInputModule,\r\n     MatFormFieldModule,\r\n-    FormsModule,\r\n     ReactiveFormsModule,      \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1744023615920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,13 @@\n import { SharedModule } from '../shared/shared.module';\r\n import { SuperAdminDashboardComponent } from './super-admin-dashboard/super-admin-dashboard.component';\r\n import { AgencesComponent } from './agences/agences.component';\r\n import { FormsModule } from '@angular/forms';\r\n-\r\n+import { MatDialogModule } from '@angular/material/dialog';\r\n+import { MatButtonModule } from '@angular/material/button';\r\n+import { MatInputModule } from '@angular/material/input';\r\n+import { MatFormFieldModule } from '@angular/material/form-field';\r\n+import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                },
+                {
+                    "date": 1744023621355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n import { SuperAdminComponent } from './super-admin.component';\r\n import { SharedModule } from '../shared/shared.module';\r\n import { SuperAdminDashboardComponent } from './super-admin-dashboard/super-admin-dashboard.component';\r\n import { AgencesComponent } from './agences/agences.component';\r\n-import { FormsModule } from '@angular/forms';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n"
+                },
+                {
+                    "date": 1744041071644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,13 +10,22 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n+import { AgenceFormComponent } from './agence-form/agence-form.component';\r\n+import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n+import { UserFormComponent } from './user-form/user-form.component';\r\n+import { ProjectsComponent } from './projects/projects.component';\r\n+import { ProjectsDetailsComponent } from './projects-details/projects-details.component';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n-    AgencesComponent\r\n+    AgencesComponent,\r\n+    AgenceFormComponent,\r\n+    AgencyDetailsComponent,\r\n+    UserFormComponent,\r\n+   \r\n   ],\r\n   imports: [\r\n     CommonModule,\r\n     SuperAdminRoutingModule,\r\n"
+                },
+                {
+                    "date": 1744041077985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,8 @@\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n import { AgenceFormComponent } from './agence-form/agence-form.component';\r\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { UserFormComponent } from './user-form/user-form.component';\r\n-import { ProjectsComponent } from './projects/projects.component';\r\n-import { ProjectsDetailsComponent } from './projects-details/projects-details.component';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                }
+            ],
+            "date": 1743940201249,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport { SuperAdminRoutingModule } from './super-admin-routing.module';\r\nimport { SuperAdminComponent } from './super-admin.component';\r\nimport { DashboardComponent } from './dashboard/dashboard.component';\r\n\r\n\r\n@NgModule({\r\n  declarations: [\r\n    SuperAdminComponent,\r\n    DashboardComponent\r\n  ],\r\n  imports: [\r\n    CommonModule,\r\n    SuperAdminRoutingModule,\r\n    \r\n  ]\r\n})\r\nexport class SuperAdminModule { }\r\n"
+        }
+    ]
+}

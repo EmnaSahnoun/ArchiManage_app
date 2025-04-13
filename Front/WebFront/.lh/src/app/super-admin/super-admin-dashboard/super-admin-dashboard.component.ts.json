@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/super-admin/super-admin-dashboard/super-admin-dashboard.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1743945903485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743945918373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Component } from '@angular/core';\r\n-\r\n+import Chart from 'chart.js/auto';\r\n @Component({\r\n   selector: 'app-super-admin-dashboard',\r\n   templateUrl: './super-admin-dashboard.component.html',\r\n   styleUrl: './super-admin-dashboard.component.scss'\r\n"
+                }
+            ],
+            "date": 1743945903485,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-super-admin-dashboard',\r\n  templateUrl: './super-admin-dashboard.component.html',\r\n  styleUrl: './super-admin-dashboard.component.scss'\r\n})\r\nexport class SuperAdminDashboardComponent {\r\nngAfterViewInit(): void {\r\n    this.createChart();\r\n  }\r\n\r\n  createChart() {\r\n    const ctx = document.getElementById('taskChart') as HTMLCanvasElement;\r\n    if (ctx) {\r\n      new Chart(ctx, {\r\n        type: 'bar',\r\n        data: {\r\n          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],\r\n          datasets: [{\r\n            label: 'Tâches complétées',\r\n            data: [50, 60, 75, 90, 110, 130],\r\n            backgroundColor: '#3498db',\r\n            borderColor: '#2980b9',\r\n            borderWidth: 1\r\n          }]\r\n        },\r\n        options: {\r\n          responsive: true,\r\n          scales: {\r\n            y: { beginAtZero: true }\r\n          }\r\n        }\r\n      });\r\n    }\r\n  }\r\n}\r\n"
+        }
+    ]
+}

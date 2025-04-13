@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1742142301353,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742989032867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n-const Keycloak = require('keycloak-connect');\r\n+/* const Keycloak = require('keycloak-connect');\r\n const session = require('express-session');\r\n \r\n const memoryStore = new session.MemoryStore();\r\n const keycloak = new Keycloak({ store: memoryStore });\r\n \r\n module.exports = keycloak;\r\n+ */\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742989038474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,13 @@\n const memoryStore = new session.MemoryStore();\r\n const keycloak = new Keycloak({ store: memoryStore });\r\n \r\n module.exports = keycloak;\r\n- */\n\\ No newline at end of file\n+ */\r\n+module.exports = {\r\n+    authServerUrl: process.env.KEYCLOAK_URL,\r\n+    realm: process.env.KEYCLOAK_REALM,\r\n+    clientId: process.env.KEYCLOAK_CLIENT_ID,\r\n+    clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,\r\n+    adminUser: process.env.KEYCLOAK_ADMIN_USER,\r\n+    adminPassword: process.env.KEYCLOAK_ADMIN_PASSWORD\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744309255598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,5 @@\n-/* const Keycloak = require('keycloak-connect');\r\n-const session = require('express-session');\r\n \r\n-const memoryStore = new session.MemoryStore();\r\n-const keycloak = new Keycloak({ store: memoryStore });\r\n-\r\n-module.exports = keycloak;\r\n- */\r\n module.exports = {\r\n     authServerUrl: process.env.KEYCLOAK_URL,\r\n     realm: process.env.KEYCLOAK_REALM,\r\n     clientId: process.env.KEYCLOAK_CLIENT_ID,\r\n"
                 }
             ],
             "date": 1742142301353,

@@ -1,0 +1,50 @@
+{
+    "sourceFile": "src/app/shared/shared.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1743940149215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743940333786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n+import { HeaderComponent } from '../header/header.component';\r\n \r\n \r\n \r\n @NgModule({\r\n@@ -8,8 +9,8 @@\n   imports: [\r\n     CommonModule\r\n   ],\r\n   exports: [\r\n-    HeaderComponent // Important : permet d'utiliser le composant ailleurs\r\n+    HeaderComponent \r\n   ]\r\n })\r\n export class SharedModule { }\r\n"
+                },
+                {
+                    "date": 1743940478322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \r\n \r\n \r\n @NgModule({\r\n-  declarations: [],\r\n+  declarations: [HeaderComponent],\r\n   imports: [\r\n     CommonModule\r\n   ],\r\n   exports: [\r\n"
+                },
+                {
+                    "date": 1743943160283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,11 @@\n+// src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n \r\n-\r\n-\r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n-  imports: [\r\n-    CommonModule\r\n-  ],\r\n-  exports: [\r\n-    HeaderComponent \r\n-  ]\r\n+  imports: [CommonModule],\r\n+  exports: [HeaderComponent]\r\n })\r\n-export class SharedModule { }\r\n+export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743943171626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,13 @@\n-// src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n-\r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n-  imports: [CommonModule],\r\n-  exports: [HeaderComponent]\r\n+  imports: [\r\n+    CommonModule\r\n\\ No newline at end of file\n+  ],\r\n+  exports: [\r\n+    HeaderComponent \r\n+  ]\r\n })\r\n-export class SharedModule { }\n+export class SharedModule { }\r\n"
+                },
+                {
+                    "date": 1743943177068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,10 @@\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n-  imports: [\r\n-    CommonModule\r\n-  ],\r\n+  imports: [    CommonModule  ],\r\n   exports: [\r\n     HeaderComponent \r\n   ]\r\n })\r\n\\ No newline at end of file\n-export class SharedModule { }\n+export class SharedModule { }\r\n"
+                },
+                {
+                    "date": 1743943184530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n+// src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n+\r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n-  imports: [    CommonModule  ],\r\n-  exports: [\r\n-    HeaderComponent \r\n-  ]\r\n+  imports: [CommonModule],\r\n+  exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743943407342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n-import { HeaderComponent } from '../header/header.component';\r\n+import { HeaderComponent } from './header/header.component';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n   imports: [CommonModule],\r\n"
+                },
+                {
+                    "date": 1743945671980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n-import { HeaderComponent } from './header/header.component';\r\n+import { HeaderComponent } from '../header/header.component';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n   imports: [CommonModule],\r\n"
+                }
+            ],
+            "date": 1743940149215,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\n\r\n\r\n@NgModule({\r\n  declarations: [],\r\n  imports: [\r\n    CommonModule\r\n  ],\r\n  exports: [\r\n    HeaderComponent // Important : permet d'utiliser le composant ailleurs\r\n  ]\r\n})\r\nexport class SharedModule { }\r\n"
+        }
+    ]
+}

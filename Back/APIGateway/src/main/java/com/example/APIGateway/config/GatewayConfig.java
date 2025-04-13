@@ -5,6 +5,10 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.Jwt;
+import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 @Configuration
 public class GatewayConfig {
@@ -18,10 +22,12 @@ public class GatewayConfig {
                         .path("/company/**")
                         .filters(f -> f
                                 .rewritePath("/company/(?<segment>.*)", "/${segment}")
-                                .removeRequestHeader("Cookie") // Important pour la sécurité
+                                .removeRequestHeader("Cookie") // Sécurité
+                                .removeRequestHeader("Set-Cookie") // Sécurité
                                 .addRequestHeader("X-Forwarded-Proto", "https")
+                                .preserveHostHeader() // Conserve le header Host original
                         )
                         .uri(companyServiceUrl))
                 .build();
     }
-}
+    }

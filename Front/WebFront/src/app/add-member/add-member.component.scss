@@ -4,7 +4,8 @@
     display: flex;
     justify-content: space-between; /* Aligne le titre et l'icône de fermeture */
     align-items: center;
-    padding: 0 15px;
+    padding: 0 10px;
+    height: min-content;
   }
   
   .modal-title {

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1741611133553,
@@ -28,6 +28,14 @@
                 {
                     "date": 1742135035297,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \"@angular/localize/init\"\r\n+              \r\n             ],\r\n             \"tsConfig\": \"tsconfig.app.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
+                },
+                {
+                    "date": 1744026982738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \r\n+               \"@angular/localize/init\"\r\n             ],\r\n             \"tsConfig\": \"tsconfig.app.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n@@ -88,10 +88,9 @@\n           \"builder\": \"@angular-devkit/build-angular:karma\",\r\n           \"options\": {\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \"zone.js/testing\",\r\n-              \"@angular/localize/init\"\r\n+              \"zone.js/testing\"\r\n             ],\r\n             \"tsConfig\": \"tsconfig.spec.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
+                },
+                {
+                    "date": 1744026993445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,10 @@\n           \"builder\": \"@angular-devkit/build-angular:karma\",\r\n           \"options\": {\r\n             \"polyfills\": [\r\n               \"zone.js\",\r\n-              \"zone.js/testing\"\r\n+              \"zone.js/testing\",\r\n+              \r\n             ],\r\n             \"tsConfig\": \"tsconfig.spec.json\",\r\n             \"inlineStyleLanguage\": \"scss\",\r\n             \"assets\": [\r\n"
                 }
             ],
             "date": 1741611133553,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1742129622661,
@@ -92,6 +92,26 @@
                 {
                     "date": 1742139484947,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n \r\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n-        // Masquer la sidebar pour les pages login et signup\r\n-        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n+        // Masquer la sidebar si on est sur la page login ou signup\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1743944327194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         // Masquer la sidebar si on est sur la page login ou signup\r\n-        this.showSidebar = !(event.url === '/login' || event.url === '/signup');\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup' );\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1743944335670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         // Masquer la sidebar si on est sur la page login ou signup\r\n-        this.showSidebar = !(event.url === '/login' || event.url === '/signup' );\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup' event.url === ' ');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1743944361171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         // Masquer la sidebar si on est sur la page login ou signup\r\n-        this.showSidebar = !(event.url === '/login' || event.url === '/signup' event.url === ' ');\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup' || event.url === ' ');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1743944385838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         // Masquer la sidebar si on est sur la page login ou signup\r\n-        this.showSidebar = !(event.url === '/login' || event.url === '/signup' || event.url === ' ');\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup' || event.url === '');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1743944411162,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   constructor(private router: Router) {\r\n     this.router.events.subscribe(event => {\r\n       if (event instanceof NavigationEnd) {\r\n         // Masquer la sidebar si on est sur la page login ou signup\r\n-        this.showSidebar = !(event.url === '/login' || event.url === '/signup' || event.url === '');\r\n+        this.showSidebar = !(event.url === '/login' || event.url === '/signup');\r\n       }\r\n     });\r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1742129622661,

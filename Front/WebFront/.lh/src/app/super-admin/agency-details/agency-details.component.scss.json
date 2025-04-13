@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/super-admin/agency-details/agency-details.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1744030063967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744030280945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,5 +108,13 @@\n           }\r\n         }\r\n       }\r\n     }\r\n+  }\r\n+  // Style pour le dialog des détails d'agence\r\n+.agency-details-dialog {\r\n+    .mat-dialog-container {\r\n+      padding: 0;\r\n+      border-radius: 15px;\r\n+      overflow: hidden;\r\n+    }\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744039828004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,28 @@\n           }\r\n         }\r\n       }\r\n     }\r\n+    .actions-section {\r\n+      margin-bottom: 30px;\r\n+      display: flex;\r\n+      justify-content: flex-end;\r\n   \r\n+      .projects-btn {\r\n+        background: #41B3A3;\r\n+        color: white;\r\n+        border-radius: 20px;\r\n+        padding: 8px 20px;\r\n+        font-weight: 500;\r\n+        display: flex;\r\n+        align-items: center;\r\n+        gap: 8px;\r\n+  \r\n+        &:hover {\r\n+          background: darken(#41B3A3, 10%);\r\n+        }\r\n+      }\r\n+    }\r\n     .users-section {\r\n       .users-header {\r\n         display: flex;\r\n         justify-content: space-between;\r\n"
+                },
+                {
+                    "date": 1744041843297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,21 @@\n       padding: 20px;\r\n       background: #f5f5f5;\r\n       border-radius: 10px;\r\n   \r\n-      h2 {\r\n-        color: #E27D60;\r\n+      .header-section {\r\n+        display: flex;\r\n+        justify-content: space-between;\r\n+        align-items: center;\r\n         margin-bottom: 20px;\r\n+  \r\n+        h2 {\r\n+          color: #E27D60;\r\n+          margin: 0; // Enlève la marge inférieure par défaut\r\n+        }\r\n       }\r\n   \r\n+  \r\n       .info-grid {\r\n         display: grid;\r\n         grid-template-columns: repeat(2, 1fr);\r\n         gap: 15px;\r\n"
+                },
+                {
+                    "date": 1744041879161,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,26 +41,21 @@\n           }\r\n         }\r\n       }\r\n     }\r\n-    .actions-section {\r\n-      margin-bottom: 30px;\r\n+    .projects-btn {\r\n+      background: #41B3A3;\r\n+      color: white;\r\n+      border-radius: 20px;\r\n+      padding: 8px 20px;\r\n+      font-weight: 500;\r\n       display: flex;\r\n-      justify-content: flex-end;\r\n+      align-items: center;\r\n+      gap: 8px;\r\n+      white-space: nowrap; // Empêche le texte de passer à la ligne\r\n   \r\n-      .projects-btn {\r\n-        background: #41B3A3;\r\n-        color: white;\r\n-        border-radius: 20px;\r\n-        padding: 8px 20px;\r\n-        font-weight: 500;\r\n-        display: flex;\r\n-        align-items: center;\r\n-        gap: 8px;\r\n-  \r\n-        &:hover {\r\n-          background: darken(#41B3A3, 10%);\r\n-        }\r\n+      &:hover {\r\n+        background: darken(#41B3A3, 10%);\r\n       }\r\n     }\r\n     .users-section {\r\n       .users-header {\r\n"
+                }
+            ],
+            "date": 1744030063967,
+            "name": "Commit-0",
+            "content": ".agency-details-container {\r\n    padding: 20px;\r\n    font-family: 'Poppins', sans-serif;\r\n  \r\n    .agency-info {\r\n      margin-bottom: 30px;\r\n      padding: 20px;\r\n      background: #f5f5f5;\r\n      border-radius: 10px;\r\n  \r\n      h2 {\r\n        color: #E27D60;\r\n        margin-bottom: 20px;\r\n      }\r\n  \r\n      .info-grid {\r\n        display: grid;\r\n        grid-template-columns: repeat(2, 1fr);\r\n        gap: 15px;\r\n  \r\n        .info-item {\r\n          display: flex;\r\n          flex-direction: column;\r\n  \r\n          .label {\r\n            font-weight: 600;\r\n            color: #555;\r\n            margin-bottom: 5px;\r\n          }\r\n  \r\n          .value {\r\n            color: #333;\r\n          }\r\n        }\r\n      }\r\n    }\r\n  \r\n    .users-section {\r\n      .users-header {\r\n        display: flex;\r\n        justify-content: space-between;\r\n        align-items: center;\r\n        margin-bottom: 15px;\r\n  \r\n        h3 {\r\n          color: #E27D60;\r\n        }\r\n  \r\n        .add-user-btn {\r\n          background: #E27D60;\r\n          color: white;\r\n          border-radius: 20px;\r\n          padding: 5px 15px;\r\n          font-weight: 500;\r\n  \r\n          &:hover {\r\n            background: darken(#E27D60, 10%);\r\n          }\r\n        }\r\n      }\r\n  \r\n      .users-table {\r\n        width: 100%;\r\n        overflow-x: auto;\r\n  \r\n        table {\r\n          width: 100%;\r\n          border-collapse: collapse;\r\n  \r\n          th, td {\r\n            padding: 12px 15px;\r\n            text-align: left;\r\n            border-bottom: 1px solid #ddd;\r\n          }\r\n  \r\n          th {\r\n            background-color: #f4f4f4;\r\n            font-weight: 600;\r\n          }\r\n  \r\n          .no-users {\r\n            text-align: center;\r\n            padding: 20px;\r\n            color: #777;\r\n          }\r\n  \r\n          .actions {\r\n            button {\r\n              border: none;\r\n              background: none;\r\n              cursor: pointer;\r\n              color: #F44336;\r\n              font-size: 1.1rem;\r\n              padding: 5px;\r\n              border-radius: 50%;\r\n              width: 30px;\r\n              height: 30px;\r\n              display: flex;\r\n              align-items: center;\r\n              justify-content: center;\r\n              transition: all 0.2s;\r\n  \r\n              &:hover {\r\n                background-color: rgba(244, 67, 54, 0.1);\r\n                transform: scale(1.1);\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  }"
+        }
+    ]
+}
