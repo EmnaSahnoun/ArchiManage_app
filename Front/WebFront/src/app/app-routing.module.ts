@@ -6,13 +6,22 @@ import { ProjectDetailsComponent } from './shared/project-details/project-detail
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
+import { TasksComponent } from './shared/tasks/tasks.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'projects', component: ProjectsComponent },
-  { path: 'project/:id', component: ProjectDetailsComponent },
+  { 
+    path: 'project/:id', 
+    component: ProjectDetailsComponent,
+    
+  },
+  { 
+    path: 'project/:id/phase/:phaseId', 
+    component: TasksComponent 
+  },
   { 
     path: 'super-admin', 
     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)

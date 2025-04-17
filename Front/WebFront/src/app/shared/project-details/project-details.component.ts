@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import * as bootstrap from 'bootstrap';
 import { AddMemberComponent } from '../../add-member/add-member.component';
@@ -14,52 +14,65 @@ export class ProjectDetailsComponent {
   selectedTab: string = 'details';
   selectedPhase: any = null;
   project = {
+    _id: '67c8306029b4bfa9328a19b4',
     name: 'Projet Exemple',
     description: 'Description du projet',
-    createdAt: '01/01/2025',
-    progress: 60, 
+    createdAt: '2025-01-01T00:00:00.000Z',
+    progress: 60,
     members: [
-      { id: 1, name: "Alice", image: "assets/images/alice.jpg" },
-      { id: 2, name: "Bob", image: "assets/images/bob.jpg" },
-      { id: 3,name: "Charlie", image: "assets/images/charlie.jpg" }
+      { _id: '1', name: "Alice", image: "assets/images/alice.jpg" },
+      { _id: '2', name: "Bob", image: "assets/images/bob.jpg" },
+      { _id: '3', name: "Charlie", image: "assets/images/charlie.jpg" }
     ],
-    
     phases: [
       {
-        name: 'Phase 1',
-        description: 'Description de la phase 1',
-        startDate: '01/01/2025',
-        endDate: '01/03/2025',
-        tasks: ['Tâche 1', 'Tâche 2'],
-        members: [
-          { id: 1,name: "Alice", image: "assets/images/alice.jpg" }
-        ]
+        _id: "67c85299bae88e131703dd8e",
+        name: "Étude de Faisabilité",
+        description: "Analyse des contraintes techniques et réglementaires.",
+        startDate: "2025-01-10T00:00:00.000Z",
+        endDate: "2025-02-10T00:00:00.000Z",
+        tasks: [
+          {
+            _id: "67c8556dbae88e131703dda4",
+            name: "Analyse des contraintes techniques",
+            status: "PENDING"
+          }
+        ],
+        members: [{ _id: '1', name: "Alice", image: "assets/images/alice.jpg" }]
       },
       {
-        name: 'Phase 2',
-        description: 'Description de la phase 2',
-        startDate: '02/03/2025',
-        endDate: '01/06/2025',
-        tasks: ['Tâche 3', 'Tâche 4'],
-        members: [
-          { name: "Bob", image: "assets/images/bob.jpg" }
-        ]
+        _id: "67c852e7bae88e131703dd92",
+        name: "Conception Détaillée",
+        description: "Élaboration des plans détaillés.",
+        startDate: "2025-02-15T00:00:00.000Z",
+        endDate: "2025-03-20T00:00:00.000Z",
+        tasks: [],
+        members: [{ _id: '2', name: "Bob", image: "assets/images/bob.jpg" }]
       }
     ]
   };
   availableMembers: any[] = [];
   progressOffset: string = '';
   selectedMember: any = null;
-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}
 
   ngOnInit(): void {
-    this.projectId = this.route.snapshot.paramMap.get('id');
+    this.projectId = this.route.snapshot.paramMap.get('_id');
     this.calculateProgress();
+    this.formatDates();
   }
-  
-
-  // Fonction pour ajouter un membre à la phase
-  
+  private formatDates() {
+    this.project.phases.forEach(phase => {
+      phase.startDate = this.formatDate(phase.startDate);
+      phase.endDate = this.formatDate(phase.endDate);
+    });
+    this.project.createdAt = this.formatDate(this.project.createdAt);
+  }
+  private formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR');
+  }
+ 
   changeTab(tab: string) {
     this.selectedTab = tab;
   }
@@ -77,14 +90,10 @@ export class ProjectDetailsComponent {
     this.project.phases = this.project.phases.filter(p => p !== phase);
   }
 
-  // ProjectDetailsComponent
-
-// ProjectDetailsComponent
-
 openMemberModal(phase: any): void {
   this.selectedPhase = phase;  // Sélectionner la phase
   this.availableMembers = this.project.members.filter(member => 
-    !phase.members.some((phaseMember:any) => phaseMember.id === member.id)
+    !phase.members.some((phaseMember:any) => phaseMember._id === member._id)
   ); // Filtrer les membres déjà assignés à la phase
 
   // Ouvrir le modal avec les membres disponibles et la phase sélectionnée
@@ -101,6 +110,7 @@ openMemberModal(phase: any): void {
   });
 }
 
- 
-  
+openTasks(phase: any): void {
+  this.router.navigate(['project', this.project._id, 'phase', phase._id]);
+}
 }

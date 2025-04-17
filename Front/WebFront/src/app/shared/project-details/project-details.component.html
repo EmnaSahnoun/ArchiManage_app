@@ -63,11 +63,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let phase of project.phases">
-            <td>{{ phase.name }}</td>
-            <td>{{ phase.description || 'Pas de description' }}</td>
-            <td>{{ phase.startDate }} - {{ phase.endDate }}</td>
-            <td>{{ phase.tasks.length }}</td>
+          <tr *ngFor="let phase of project.phases"(click)="openTasks(phase)" >
+            <td  >{{ phase.name }}</td>
+            <td >{{ phase.description || 'Pas de description' }}</td>
+            <td >{{ phase.startDate }} - {{ phase.endDate }}</td>
+            <td >{{ phase.tasks.length }}</td>
             
             <td>
               <div class="members-container">

@@ -3,11 +3,127 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1744041009526,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744707665525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,8 +99,13 @@\n       this.selectedPhase.members.push(result);\r\n     }\r\n   });\r\n }\r\n-\r\n+navigateToPhaseTasks(phase: any) {\r\n+  this.router.navigate(['phase', phase.name], { \r\n+    relativeTo: this.route,\r\n+    state: { phase }\r\n+  });\r\n+}\r\n  \r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744707672039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,9 +99,9 @@\n       this.selectedPhase.members.push(result);\r\n     }\r\n   });\r\n }\r\n-navigateToPhaseTasks(phase: any) {\r\n+openTasks(phase: any) {\r\n   this.router.navigate(['phase', phase.name], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n   });\r\n"
+                },
+                {
+                    "date": 1744707697794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n   };\r\n   availableMembers: any[] = [];\r\n   progressOffset: string = '';\r\n   selectedMember: any = null;\r\n-  constructor(private route: ActivatedRoute, private dialog: MatDialog) {}\r\n+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router) {}\r\n \r\n   ngOnInit(): void {\r\n     this.projectId = this.route.snapshot.paramMap.get('id');\r\n     this.calculateProgress();\r\n"
+                },
+                {
+                    "date": 1744707705335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Component, Input } from '@angular/core';\r\n import { MatDialog } from '@angular/material/dialog';\r\n-import { ActivatedRoute } from '@angular/router';\r\n+import { ActivatedRoute, Router } from '@angular/router';\r\n \r\n import * as bootstrap from 'bootstrap';\r\n import { AddMemberComponent } from '../../add-member/add-member.component';\r\n @Component({\r\n@@ -49,9 +49,9 @@\n   };\r\n   availableMembers: any[] = [];\r\n   progressOffset: string = '';\r\n   selectedMember: any = null;\r\n-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router) {}\r\n+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}\r\n \r\n   ngOnInit(): void {\r\n     this.projectId = this.route.snapshot.paramMap.get('id');\r\n     this.calculateProgress();\r\n"
+                },
+                {
+                    "date": 1744709085428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,12 +76,8 @@\n   deletePhase(phase: any) {\r\n     this.project.phases = this.project.phases.filter(p => p !== phase);\r\n   }\r\n \r\n-  // ProjectDetailsComponent\r\n-\r\n-// ProjectDetailsComponent\r\n-\r\n openMemberModal(phase: any): void {\r\n   this.selectedPhase = phase;  // Sélectionner la phase\r\n   this.availableMembers = this.project.members.filter(member => \r\n     !phase.members.some((phaseMember:any) => phaseMember.id === member.id)\r\n"
+                },
+                {
+                    "date": 1744709091483,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,8 +99,10 @@\n openTasks(phase: any) {\r\n   this.router.navigate(['phase', phase.name], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n+  }).catch(err => {\r\n+    console.log('Navigation error:', err);\r\n   });\r\n }\r\n  \r\n   \r\n"
+                },
+                {
+                    "date": 1744709840183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,14 +96,21 @@\n     }\r\n   });\r\n }\r\n openTasks(phase: any) {\r\n-  this.router.navigate(['phase', phase.name], { \r\n+  // Utilisez un identifiant unique pour la phase (comme son ID ou son nom encodé)\r\n+  const phaseId = encodeURIComponent(phase.name); // ou phase.id si disponible\r\n+  \r\n+  // Naviguez vers l'URL avec le paramètre phaseId\r\n+  this.router.navigate(['phase', phaseId], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n+  }).then((success) => {\r\n+    if (!success) {\r\n+      console.log('Navigation failed');\r\n+    }\r\n   }).catch(err => {\r\n     console.log('Navigation error:', err);\r\n   });\r\n }\r\n- \r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744710876887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n     ],\r\n     \r\n     phases: [\r\n       {\r\n+        \r\n         name: 'Phase 1',\r\n         description: 'Description de la phase 1',\r\n         startDate: '01/01/2025',\r\n         endDate: '01/03/2025',\r\n"
+                },
+                {
+                    "date": 1744710882437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     ],\r\n     \r\n     phases: [\r\n       {\r\n-        \r\n+        id:1,\r\n         name: 'Phase 1',\r\n         description: 'Description de la phase 1',\r\n         startDate: '01/01/2025',\r\n         endDate: '01/03/2025',\r\n"
+                },
+                {
+                    "date": 1744710889012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,9 @@\n           { id: 1,name: \"Alice\", image: \"assets/images/alice.jpg\" }\r\n         ]\r\n       },\r\n       {\r\n+        id:2\r\n         name: 'Phase 2',\r\n         description: 'Description de la phase 2',\r\n         startDate: '02/03/2025',\r\n         endDate: '01/06/2025',\r\n"
+                },
+                {
+                    "date": 1744711180780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n           { id: 1,name: \"Alice\", image: \"assets/images/alice.jpg\" }\r\n         ]\r\n       },\r\n       {\r\n-        id:2\r\n+        id:2,\r\n         name: 'Phase 2',\r\n         description: 'Description de la phase 2',\r\n         startDate: '02/03/2025',\r\n         endDate: '01/06/2025',\r\n@@ -98,18 +98,21 @@\n     }\r\n   });\r\n }\r\n openTasks(phase: any) {\r\n-  // Utilisez un identifiant unique pour la phase (comme son ID ou son nom encodé)\r\n-  const phaseId = encodeURIComponent(phase.name); // ou phase.id si disponible\r\n-  \r\n-  // Naviguez vers l'URL avec le paramètre phaseId\r\n-  this.router.navigate(['phase', phaseId], { \r\n+  // Utilisez l'ID de la phase plutôt que le nom\r\n+  this.router.navigate(['phase', phase.id], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n   }).then((success) => {\r\n     if (!success) {\r\n       console.log('Navigation failed');\r\n+      // Solution de repli - rechargez le composant\r\n+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {\r\n+        this.router.navigate(['/project', this.projectId, 'phase', phase.id], {\r\n+          state: { phase }\r\n+        });\r\n+      });\r\n     }\r\n   }).catch(err => {\r\n     console.log('Navigation error:', err);\r\n   });\r\n"
+                },
+                {
+                    "date": 1744712248785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,14 +105,8 @@\n     state: { phase }\r\n   }).then((success) => {\r\n     if (!success) {\r\n       console.log('Navigation failed');\r\n-      // Solution de repli - rechargez le composant\r\n-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {\r\n-        this.router.navigate(['/project', this.projectId, 'phase', phase.id], {\r\n-          state: { phase }\r\n-        });\r\n-      });\r\n     }\r\n   }).catch(err => {\r\n     console.log('Navigation error:', err);\r\n   });\r\n"
+                },
+                {
+                    "date": 1744714823016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,44 +12,9 @@\n export class ProjectDetailsComponent {\r\n   projectId: string | null = null;\r\n   selectedTab: string = 'details';\r\n   selectedPhase: any = null;\r\n-  project = {\r\n-    name: 'Projet Exemple',\r\n-    description: 'Description du projet',\r\n-    createdAt: '01/01/2025',\r\n-    progress: 60, \r\n-    members: [\r\n-      { id: 1, name: \"Alice\", image: \"assets/images/alice.jpg\" },\r\n-      { id: 2, name: \"Bob\", image: \"assets/images/bob.jpg\" },\r\n-      { id: 3,name: \"Charlie\", image: \"assets/images/charlie.jpg\" }\r\n-    ],\r\n-    \r\n-    phases: [\r\n-      {\r\n-        id:1,\r\n-        name: 'Phase 1',\r\n-        description: 'Description de la phase 1',\r\n-        startDate: '01/01/2025',\r\n-        endDate: '01/03/2025',\r\n-        tasks: ['Tâche 1', 'Tâche 2'],\r\n-        members: [\r\n-          { id: 1,name: \"Alice\", image: \"assets/images/alice.jpg\" }\r\n-        ]\r\n-      },\r\n-      {\r\n-        id:2,\r\n-        name: 'Phase 2',\r\n-        description: 'Description de la phase 2',\r\n-        startDate: '02/03/2025',\r\n-        endDate: '01/06/2025',\r\n-        tasks: ['Tâche 3', 'Tâche 4'],\r\n-        members: [\r\n-          { name: \"Bob\", image: \"assets/images/bob.jpg\" }\r\n-        ]\r\n-      }\r\n-    ]\r\n-  };\r\n+ \r\n   availableMembers: any[] = [];\r\n   progressOffset: string = '';\r\n   selectedMember: any = null;\r\n   constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}\r\n"
+                },
+                {
+                    "date": 1744714831843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,46 @@\n export class ProjectDetailsComponent {\r\n   projectId: string | null = null;\r\n   selectedTab: string = 'details';\r\n   selectedPhase: any = null;\r\n- \r\n+  project = {\r\n+    _id: '67c8306029b4bfa9328a19b4',\r\n+    name: 'Projet Exemple',\r\n+    description: 'Description du projet',\r\n+    createdAt: '2025-01-01T00:00:00.000Z',\r\n+    progress: 60,\r\n+    members: [\r\n+      { _id: '1', name: \"Alice\", image: \"assets/images/alice.jpg\" },\r\n+      { _id: '2', name: \"Bob\", image: \"assets/images/bob.jpg\" },\r\n+      { _id: '3', name: \"Charlie\", image: \"assets/images/charlie.jpg\" }\r\n+    ],\r\n+    phases: [\r\n+      {\r\n+        _id: \"67c85299bae88e131703dd8e\",\r\n+        name: \"Étude de Faisabilité\",\r\n+        description: \"Analyse des contraintes techniques et réglementaires.\",\r\n+        startDate: \"2025-01-10T00:00:00.000Z\",\r\n+        endDate: \"2025-02-10T00:00:00.000Z\",\r\n+        tasks: [\r\n+          {\r\n+            _id: \"67c8556dbae88e131703dda4\",\r\n+            name: \"Analyse des contraintes techniques\",\r\n+            status: \"PENDING\"\r\n+          }\r\n+        ],\r\n+        members: [{ _id: '1', name: \"Alice\", image: \"assets/images/alice.jpg\" }]\r\n+      },\r\n+      {\r\n+        _id: \"67c852e7bae88e131703dd92\",\r\n+        name: \"Conception Détaillée\",\r\n+        description: \"Élaboration des plans détaillés.\",\r\n+        startDate: \"2025-02-15T00:00:00.000Z\",\r\n+        endDate: \"2025-03-20T00:00:00.000Z\",\r\n+        tasks: [],\r\n+        members: [{ _id: '2', name: \"Bob\", image: \"assets/images/bob.jpg\" }]\r\n+      }\r\n+    ]\r\n+  };\r\n   availableMembers: any[] = [];\r\n   progressOffset: string = '';\r\n   selectedMember: any = null;\r\n   constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}\r\n"
+                },
+                {
+                    "date": 1744714879045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n \r\n   ngOnInit(): void {\r\n     this.projectId = this.route.snapshot.paramMap.get('id');\r\n     this.calculateProgress();\r\n+    this.formatDates();\r\n   }\r\n   \r\n \r\n   // Fonction pour ajouter un membre à la phase\r\n"
+                },
+                {
+                    "date": 1744714908179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,15 @@\n     this.projectId = this.route.snapshot.paramMap.get('id');\r\n     this.calculateProgress();\r\n     this.formatDates();\r\n   }\r\n-  \r\n+  private formatDates() {\r\n+    this.project.phases.forEach(phase => {\r\n+      phase.startDate = this.formatDate(phase.startDate);\r\n+      phase.endDate = this.formatDate(phase.endDate);\r\n+    });\r\n+    this.project.createdAt = this.formatDate(this.project.createdAt);\r\n+  }\r\n \r\n   // Fonction pour ajouter un membre à la phase\r\n   \r\n   changeTab(tab: string) {\r\n"
+                },
+                {
+                    "date": 1744714916391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,12 @@\n       phase.endDate = this.formatDate(phase.endDate);\r\n     });\r\n     this.project.createdAt = this.formatDate(this.project.createdAt);\r\n   }\r\n-\r\n+  private formatDate(dateString: string): string {\r\n+    const date = new Date(dateString);\r\n+    return date.toLocaleDateString('fr-FR');\r\n+  }\r\n   // Fonction pour ajouter un membre à la phase\r\n   \r\n   changeTab(tab: string) {\r\n     this.selectedTab = tab;\r\n"
+                },
+                {
+                    "date": 1744714922619,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,10 +71,9 @@\n   private formatDate(dateString: string): string {\r\n     const date = new Date(dateString);\r\n     return date.toLocaleDateString('fr-FR');\r\n   }\r\n-  // Fonction pour ajouter un membre à la phase\r\n-  \r\n+ \r\n   changeTab(tab: string) {\r\n     this.selectedTab = tab;\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744714939623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -92,9 +92,9 @@\n \r\n openMemberModal(phase: any): void {\r\n   this.selectedPhase = phase;  // Sélectionner la phase\r\n   this.availableMembers = this.project.members.filter(member => \r\n-    !phase.members.some((phaseMember:any) => phaseMember.id === member.id)\r\n+    !phase.members.some((phaseMember:any) => phaseMember.id === member._id)\r\n   ); // Filtrer les membres déjà assignés à la phase\r\n \r\n   // Ouvrir le modal avec les membres disponibles et la phase sélectionnée\r\n   const dialogRef = this.dialog.open(AddMemberComponent, {\r\n"
+                },
+                {
+                    "date": 1744714949717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,9 +110,9 @@\n   });\r\n }\r\n openTasks(phase: any) {\r\n   // Utilisez l'ID de la phase plutôt que le nom\r\n-  this.router.navigate(['phase', phase.id], { \r\n+  this.router.navigate(['phase', phase._id], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n   }).then((success) => {\r\n     if (!success) {\r\n"
+                },
+                {
+                    "date": 1744714967637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n   selectedMember: any = null;\r\n   constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}\r\n \r\n   ngOnInit(): void {\r\n-    this.projectId = this.route.snapshot.paramMap.get('id');\r\n+    this.projectId = this.route.snapshot.paramMap.get('_id');\r\n     this.calculateProgress();\r\n     this.formatDates();\r\n   }\r\n   private formatDates() {\r\n"
+                },
+                {
+                    "date": 1744714976365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -92,9 +92,9 @@\n \r\n openMemberModal(phase: any): void {\r\n   this.selectedPhase = phase;  // Sélectionner la phase\r\n   this.availableMembers = this.project.members.filter(member => \r\n-    !phase.members.some((phaseMember:any) => phaseMember.id === member._id)\r\n+    !phase.members.some((phaseMember:any) => phaseMember._id === member._id)\r\n   ); // Filtrer les membres déjà assignés à la phase\r\n \r\n   // Ouvrir le modal avec les membres disponibles et la phase sélectionnée\r\n   const dialogRef = this.dialog.open(AddMemberComponent, {\r\n"
+                },
+                {
+                    "date": 1744716055530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,9 +110,9 @@\n   });\r\n }\r\n openTasks(phase: any) {\r\n   // Utilisez l'ID de la phase plutôt que le nom\r\n-  this.router.navigate(['phase', phase._id], { \r\n+  this.router.navigate(['/phase', phase._id], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n   }).then((success) => {\r\n     if (!success) {\r\n"
+                },
+                {
+                    "date": 1744716070623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,9 +108,9 @@\n       this.selectedPhase.members.push(result);\r\n     }\r\n   });\r\n }\r\n-openTasks(phase: any) {\r\n+openTasks(phase: any):void {\r\n   // Utilisez l'ID de la phase plutôt que le nom\r\n   this.router.navigate(['/phase', phase._id], { \r\n     relativeTo: this.route,\r\n     state: { phase }\r\n"
+                },
+                {
+                    "date": 1744716090084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,17 +110,8 @@\n   });\r\n }\r\n openTasks(phase: any):void {\r\n   // Utilisez l'ID de la phase plutôt que le nom\r\n-  this.router.navigate(['/phase', phase._id], { \r\n-    relativeTo: this.route,\r\n-    state: { phase }\r\n-  }).then((success) => {\r\n-    if (!success) {\r\n-      console.log('Navigation failed');\r\n-    }\r\n-  }).catch(err => {\r\n-    console.log('Navigation error:', err);\r\n-  });\r\n+  this.router.navigate(['/phase', phase._id]);\r\n }\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744716908781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,10 +108,12 @@\n       this.selectedPhase.members.push(result);\r\n     }\r\n   });\r\n }\r\n-openTasks(phase: any):void {\r\n-  // Utilisez l'ID de la phase plutôt que le nom\r\n-  this.router.navigate(['/phase', phase._id]);\r\n+openTasks(phase: any): void {\r\n+  this.router.navigate(['phase', phase._id], { \r\n+    relativeTo: this.route,\r\n+    state: { phase } // Passer la phase complète via le state\r\n+  });\r\n }\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744717110936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,11 +109,8 @@\n     }\r\n   });\r\n }\r\n openTasks(phase: any): void {\r\n-  this.router.navigate(['phase', phase._id], { \r\n-    relativeTo: this.route,\r\n-    state: { phase } // Passer la phase complète via le state\r\n-  });\r\n+  this.router.navigate(['phase', phase._id])\r\n }\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744717214110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,9 +108,9 @@\n       this.selectedPhase.members.push(result);\r\n     }\r\n   });\r\n }\r\n-openTasks(phaseI: any): void {\r\n+openTasks(phaseId: any): void {\r\n   this.router.navigate(['phase', phase._id]);\r\n }\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744717321429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,9 @@\n     }\r\n   });\r\n }\r\n openTasks(phaseId: any): void {\r\n-  console.log(\"id \")\r\n+  console.log(\"id p\")\r\n   this.router.navigate(['phase', phaseId]);\r\n }\r\n   \r\n }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1744041009526,

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/screens/chat_screen.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1744644787229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744645859784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,15 @@\n import 'package:flutter/material.dart';\r\n-import '../widgets/bottom_nav_bar.dart';\r\n \r\n class ChatScreen extends StatelessWidget {\r\n   const ChatScreen({super.key});\r\n \r\n   @override\r\n   Widget build(BuildContext context) {\r\n-    return Scaffold(\r\n-      appBar: AppBar(\r\n-        title: const Text('Chat'),\r\n+    return const Center(\r\n+      child: Text(\r\n+        'Page de chat',\r\n+        style: TextStyle(fontSize: 24),\r\n       ),\r\n-      body: const Center(\r\n-        child: Text('Page de chat'),\r\n-      ),\r\n-      bottomNavigationBar: const BottomNavBar(selectedIndex: 1),\r\n     );\r\n   }\r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744644787229,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport '../widgets/bottom_nav_bar.dart';\r\n\r\nclass ChatScreen extends StatelessWidget {\r\n  const ChatScreen({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Chat'),\r\n      ),\r\n      body: const Center(\r\n        child: Text('Page de chat'),\r\n      ),\r\n      bottomNavigationBar: const BottomNavBar(selectedIndex: 1),\r\n    );\r\n  }\r\n}"
+        }
+    ]
+}

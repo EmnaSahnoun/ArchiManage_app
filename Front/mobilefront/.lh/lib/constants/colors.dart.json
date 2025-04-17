@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/constants/colors.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1744646298445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1744646298445,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\n\r\nclass AppColors {\r\n  static const primary = Color(0xFFFFFFFF);\r\n  static const secondary = Color(0xFFE27D60);\r\n  static const text = Color(0xFF3D5653);\r\n  static const bg = Color(0xFF2C3E50);\r\n  static const hover = Color(0xFFC75C50);\r\n  static const inputBg = Color(0xFFF4F4F4);\r\n  static const screenBg = Color(0xFFF1F1F1);\r\n}"
+        }
+    ]
+}

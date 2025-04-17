@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/screens/home_screen.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1744644413174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744644775730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,19 @@\n+import 'package:flutter/material.dart';\r\n+import '../widgets/bottom_nav_bar.dart';\r\n+\r\n+class HomeScreen extends StatelessWidget {\r\n+  const HomeScreen({super.key});\r\n+\r\n+  @override\r\n+  Widget build(BuildContext context) {\r\n+    return Scaffold(\r\n+      appBar: AppBar(\r\n+        title: const Text('Home'),\r\n+      ),\r\n+      body: const Center(\r\n+        child: Text('Page d\\'accueil'),\r\n+      ),\r\n+      bottomNavigationBar: const BottomNavBar(selectedIndex: 0),\r\n+    );\r\n+  }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744645852812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,15 @@\n import 'package:flutter/material.dart';\r\n-import '../widgets/bottom_nav_bar.dart';\r\n \r\n class HomeScreen extends StatelessWidget {\r\n   const HomeScreen({super.key});\r\n \r\n   @override\r\n   Widget build(BuildContext context) {\r\n-    return Scaffold(\r\n-      appBar: AppBar(\r\n-        title: const Text('Home'),\r\n+    return const Center(\r\n+      child: Text(\r\n+        'Bienvenue dans mon application!',\r\n+        style: TextStyle(fontSize: 24),\r\n       ),\r\n-      body: const Center(\r\n-        child: Text('Page d\\'accueil'),\r\n-      ),\r\n-      bottomNavigationBar: const BottomNavBar(selectedIndex: 0),\r\n     );\r\n   }\r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744644413174,
+            "name": "Commit-0",
+            "content": ""
+        }
+    ]
+}

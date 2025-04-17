@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/screens/profile_screen.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1744644801365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744645869926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n import 'package:flutter/material.dart';\r\n-import '../widgets/bottom_nav_bar.dart';\r\n \r\n class ProfileScreen extends StatelessWidget {\r\n   const ProfileScreen({super.key});\r\n \r\n@@ -10,10 +9,9 @@\n       appBar: AppBar(\r\n         title: const Text('Profil'),\r\n       ),\r\n       body: const Center(\r\n-        child: Text('Page de profil'),\r\n+        child: Text('Page de profil', style: TextStyle(fontSize: 24)),\r\n       ),\r\n-      bottomNavigationBar: const BottomNavBar(selectedIndex: 0),\r\n     );\r\n   }\r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744644801365,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport '../widgets/bottom_nav_bar.dart';\r\n\r\nclass ProfileScreen extends StatelessWidget {\r\n  const ProfileScreen({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Profil'),\r\n      ),\r\n      body: const Center(\r\n        child: Text('Page de profil'),\r\n      ),\r\n      bottomNavigationBar: const BottomNavBar(selectedIndex: 0),\r\n    );\r\n  }\r\n}"
+        }
+    ]
+}

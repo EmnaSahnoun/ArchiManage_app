@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/widgets/bottom_nav_bar.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1744644760407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744645099016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n import 'package:flutter/material.dart';\r\n-import '../screens/home_screen.dart';\r\n import '../screens/chat_screen.dart';\r\n import '../screens/welcome_screen.dart';\r\n \r\n class BottomNavBar extends StatelessWidget {\r\n"
+                }
+            ],
+            "date": 1744644760407,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport '../screens/home_screen.dart';\r\nimport '../screens/chat_screen.dart';\r\nimport '../screens/welcome_screen.dart';\r\n\r\nclass BottomNavBar extends StatelessWidget {\r\n  final int selectedIndex;\r\n  \r\n  const BottomNavBar({\r\n    super.key,\r\n    required this.selectedIndex,\r\n  });\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return BottomNavigationBar(\r\n      currentIndex: selectedIndex,\r\n      items: const [\r\n        BottomNavigationBarItem(\r\n          icon: Icon(Icons.home),\r\n          label: 'Home',\r\n        ),\r\n        BottomNavigationBarItem(\r\n          icon: Icon(Icons.chat),\r\n          label: 'Chat',\r\n        ),\r\n      ],\r\n      onTap: (index) {\r\n        switch (index) {\r\n          case 0:\r\n            Navigator.pushReplacement(\r\n              context,\r\n              MaterialPageRoute(builder: (context) => const WelcomeScreen()),\r\n            );\r\n            break;\r\n          case 1:\r\n            Navigator.pushReplacement(\r\n              context,\r\n              MaterialPageRoute(builder: (context) => const ChatScreen()),\r\n            );\r\n            break;\r\n        }\r\n      },\r\n    );\r\n  }\r\n}"
+        }
+    ]
+}

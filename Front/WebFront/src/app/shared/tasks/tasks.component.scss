@@ -1,0 +1,229 @@
+// phase-task-board.component.scss
+.task-board-container {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    
+    background: #F1F1F1;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  
+    h2 {
+      margin: 0;
+      color: #333;
+    }
+    .phase-description {
+      margin: 5px 0;
+      color: #666;
+      font-style: italic;
+    }
+    
+    .phase-dates {
+      margin: 5px 0;
+      color: #555;
+    }
+  }
+  .phase-navigation {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
+    h3 {
+      margin-top: 0;
+      color: #444;
+    }
+  }
+  
+  .phase-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    
+    button {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background: #f8f8f8;
+      cursor: pointer;
+      transition: all 0.3s;
+      
+      &:hover {
+        background: #eee;
+      }
+      
+      &.active {
+        background: #E27D60;
+        color: white;
+        border-color: #E27D60;
+      }
+    }
+  }
+
+  .back-btn {
+    cursor: pointer;
+    background: #E27D60;
+    border-radius: 40px;
+    font-weight: bold;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .add-task-btn {
+    cursor: pointer;
+    background: #4CAF50;
+    border-radius: 40px;
+    font-weight: bold;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .board-description {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+    p {
+      margin: 5px 0;
+    }
+  }
+  
+  .task-columns {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .task-column {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+  
+    h3 {
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      color: #555;
+    }
+  }
+  
+  .task-list {
+    flex: 1;
+    min-height: 200px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .task-card {
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 4px solid #E27D60;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    .task-content {
+      flex: 1;
+    }
+  
+    .task-actions {
+      display: flex;
+      gap: 5px;
+  
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #666;
+  
+        &:hover {
+          color: #E27D60;
+        }
+      }
+  
+      .bi-trash:hover {
+        color: red;
+      }
+    }
+  }
+  
+  /* Styles pour le drag and drop */
+  .cdk-drag-placeholder {
+    opacity: 0.5;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .task-list.cdk-drop-list-dragging .task-card:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  /* Styles responsifs */
+  @media (max-width: 768px) {
+    .task-columns {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .add-task-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  /* Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    
+    .phase-header {
+      margin: 10px 0;
+      text-align: center;
+    }
+  }
+  
+  .phase-buttons {
+    justify-content: center;
+  }
+  
+  .task-columns {
+    flex-direction: column;
+  }
+}

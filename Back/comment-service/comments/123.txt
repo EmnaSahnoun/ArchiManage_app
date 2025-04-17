@@ -1,0 +1,5 @@
+id: 405bf394-3a42-4714-b862-f5ce0041729b
+date: 2025-04-15T16:53:47.372Z
+user: John Doe
+text: Ceci est un commentaire 
+

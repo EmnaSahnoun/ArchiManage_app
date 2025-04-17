@@ -27,6 +27,11 @@ import { AddMemberComponent } from './add-member/add-member.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from './shared/shared.module';
+import { TasksComponent } from './shared/tasks/tasks.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DatePipe } from '@angular/common';
+import { TaskDetailsComponent } from './shared/task-details/task-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +46,8 @@ import { SharedModule } from './shared/shared.module';
     AddMemberComponent,
     LoginComponent,
     SignupComponent,
+    TasksComponent,
+    TaskDetailsComponent,
 
   ],
   imports: [
@@ -57,10 +64,11 @@ import { SharedModule } from './shared/shared.module';
     MatDialogModule,
     NgbModalModule,
     BidiModule,
-    SharedModule
+    SharedModule,
+    DragDropModule,
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

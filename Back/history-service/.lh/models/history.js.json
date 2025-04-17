@@ -1,0 +1,26 @@
+{
+    "sourceFile": "models/history.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1744738938173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744738947309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,5 @@\n   timestamp: { type: Date, default: Date.now },\r\n   metadata: { type: mongoose.Schema.Types.Mixed }\r\n });\r\n \r\n-module.exports = mongoose.model('HistoryEvent', historyEventSchema);\n\\ No newline at end of file\n+module.exports = mongoose.model('History', historyEventSchema);\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744738957804,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const mongoose = require('mongoose');\r\n \r\n-const historyEventSchema = new mongoose.Schema({\r\n+const historySchema = new mongoose.Schema({\r\n   taskId: { type: String, required: true },\r\n   eventType: { \r\n     type: String, \r\n     required: true,\r\n@@ -13,5 +13,5 @@\n   timestamp: { type: Date, default: Date.now },\r\n   metadata: { type: mongoose.Schema.Types.Mixed }\r\n });\r\n \r\n-module.exports = mongoose.model('History', historyEventSchema);\n\\ No newline at end of file\n+module.exports = mongoose.model('History', historySchema);\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744738938173,
+            "name": "Commit-0",
+            "content": "const mongoose = require('mongoose');\r\n\r\nconst historyEventSchema = new mongoose.Schema({\r\n  taskId: { type: String, required: true },\r\n  eventType: { \r\n    type: String, \r\n    required: true,\r\n    enum: ['COMMENT_ADD', 'COMMENT_UPDATE', 'COMMENT_DELETE', \r\n           'MEDIA_UPLOAD', 'MEDIA_DELETE',\r\n           'TASK_UPDATE', 'TASK_STATUS_CHANGE']\r\n  },\r\n  userId: { type: String, required: true },\r\n  timestamp: { type: Date, default: Date.now },\r\n  metadata: { type: mongoose.Schema.Types.Mixed }\r\n});\r\n\r\nmodule.exports = mongoose.model('HistoryEvent', historyEventSchema);"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "controllers/historyController.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1744738992410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744739000438,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const HistoryEvent = require('../models/historyEvent.model');\r\n+const HistoryEvent = require('../models/history.model');\r\n \r\n exports.recordEvent = async (taskId, eventType, userId, metadata = {}) => {\r\n   try {\r\n     const event = new HistoryEvent({\r\n"
+                },
+                {
+                    "date": 1744739007079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const HistoryEvent = require('../models/history.model');\r\n+const HistoryEvent = require('../models/history');\r\n \r\n exports.recordEvent = async (taskId, eventType, userId, metadata = {}) => {\r\n   try {\r\n     const event = new HistoryEvent({\r\n"
+                },
+                {
+                    "date": 1744739113685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,5 +26,25 @@\n     res.json(events);\r\n   } catch (error) {\r\n     res.status(500).json({ error: error.message });\r\n   }\r\n-};\n\\ No newline at end of file\n+};\r\n+exports.updateTask = async (req, res) => {\r\n+    try {\r\n+      const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });\r\n+      \r\n+      // Enregistrement de l'événement\r\n+      await recordEvent(\r\n+        task._id,\r\n+        'TASK_UPDATE',\r\n+        req.user.id, // Supposons que l'utilisateur est disponible\r\n+        {\r\n+          changes: req.body,\r\n+          previousState: req.body.previousState // À capturer avant la modification\r\n+        }\r\n+      );\r\n+      \r\n+      res.json(task);\r\n+    } catch (error) {\r\n+      res.status(400).json({ error: error.message });\r\n+    }\r\n+  };\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744738992410,
+            "name": "Commit-0",
+            "content": "const HistoryEvent = require('../models/historyEvent.model');\r\n\r\nexports.recordEvent = async (taskId, eventType, userId, metadata = {}) => {\r\n  try {\r\n    const event = new HistoryEvent({\r\n      taskId,\r\n      eventType,\r\n      userId,\r\n      metadata\r\n    });\r\n    await event.save();\r\n    return event;\r\n  } catch (error) {\r\n    console.error('Error recording history event:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nexports.getTaskHistory = async (req, res) => {\r\n  try {\r\n    const { taskId } = req.params;\r\n    const events = await HistoryEvent.find({ taskId })\r\n      .sort({ timestamp: -1 })\r\n      .limit(50);\r\n      \r\n    res.json(events);\r\n  } catch (error) {\r\n    res.status(500).json({ error: error.message });\r\n  }\r\n};"
+        }
+    ]
+}

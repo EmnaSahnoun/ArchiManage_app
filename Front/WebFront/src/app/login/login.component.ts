@@ -15,8 +15,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onLogin() {
-    console.log('Utilisateur connecté:', this.user);
-    alert('Connexion réussie !');
+    
     this.router.navigate(['/dashboard']);
   }
 }

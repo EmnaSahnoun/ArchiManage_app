@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1742128802713,
@@ -32,6 +32,10 @@
                 {
                     "date": 1742139944052,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,11 @@\n     password: ''\r\n   };\r\n   constructor(private router:Router){}\r\n   onRegister() {\r\n-    console.log('Utilisateur inscrit:', this.user);\r\n-    alert('Inscription réussie !');\r\n-    this.router.navigate(['/dashbord']);\r\n+    console.log('Utilisateur connecté:', this.user);\r\n+    alert('Connexion réussie !');\r\n+\r\n+    // Redirection vers le dashboard après connexion\r\n+    this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744717432503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,7 @@\n     password: ''\r\n   };\r\n   constructor(private router:Router){}\r\n   onRegister() {\r\n-    console.log('Utilisateur connecté:', this.user);\r\n-    alert('Connexion réussie !');\r\n-\r\n-    // Redirection vers le dashboard après connexion\r\n     this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1742128802712,

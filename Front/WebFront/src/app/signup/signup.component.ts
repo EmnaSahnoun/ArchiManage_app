@@ -16,8 +16,6 @@ export class SignupComponent {
   };
   constructor(private router:Router){}
   onRegister() {
-    console.log('Utilisateur connecté:', this.user);
-    alert('Connexion réussie !');
     this.router.navigate(['/dashboard']);
   }
 }

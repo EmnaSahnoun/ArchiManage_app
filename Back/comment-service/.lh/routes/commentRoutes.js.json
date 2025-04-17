@@ -1,0 +1,46 @@
+{
+    "sourceFile": "routes/commentRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1744731514412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744732260604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,22 @@\n const express = require('express');\r\n-const router = express.Router();\r\n-const commentController = require('../controllers/commentController');\r\n+const bodyParser = require('body-parser');\r\n+const commentRoutes = require('./routes/commentRoutes'); // <-- ton routeur\r\n \r\n-router.post('/:taskId', commentController.addComment);\r\n-router.get('/:taskId', commentController.getComments);\r\n+const app = express();\r\n+const PORT = 5000;\r\n \r\n-module.exports = router;\r\n+app.use(bodyParser.json());\r\n+\r\n+app.use('/comments', commentRoutes); // <-- l'URL de base pour les commentaires\r\n+\r\n+app.listen(PORT, () => {\r\n+  console.log(`Comment service running on port ${PORT}`);\r\n+});\r\n+\r\n+// gestionnaire d’erreurs global\r\n+process.on('uncaughtException', function (err) {\r\n+  console.error('Erreur non attrapée :', err);\r\n+});\r\n+process.on('unhandledRejection', (reason, promise) => {\r\n+  console.error('Rejection non gérée :', reason);\r\n+});\r\n"
+                },
+                {
+                    "date": 1744732293306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n const PORT = 5000;\r\n \r\n app.use(bodyParser.json());\r\n \r\n-app.use('/comments', commentRoutes); // <-- l'URL de base pour les commentaires\r\n+app.use('/comments', commentRoutes); \r\n \r\n app.listen(PORT, () => {\r\n   console.log(`Comment service running on port ${PORT}`);\r\n });\r\n"
+                },
+                {
+                    "date": 1744732402294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,22 +1,8 @@\n const express = require('express');\r\n-const bodyParser = require('body-parser');\r\n-const commentRoutes = require('./routes/commentRoutes'); // <-- ton routeur\r\n+const router = express.Router();\r\n+const commentController = require('../controllers/commentController');\r\n \r\n-const app = express();\r\n-const PORT = 5000;\r\n+router.post('/:taskId', commentController.addComment);\r\n+router.get('/:taskId', commentController.getComments);\r\n \r\n-app.use(bodyParser.json());\r\n-\r\n-app.use('/comments', commentRoutes); \r\n-\r\n-app.listen(PORT, () => {\r\n-  console.log(`Comment service running on port ${PORT}`);\r\n-});\r\n-\r\n-// gestionnaire d’erreurs global\r\n-process.on('uncaughtException', function (err) {\r\n-  console.error('Erreur non attrapée :', err);\r\n-});\r\n-process.on('unhandledRejection', (reason, promise) => {\r\n-  console.error('Rejection non gérée :', reason);\r\n-});\r\n+module.exports = router;\r\n"
+                },
+                {
+                    "date": 1744732874086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,11 @@\n const express = require('express');\r\n const router = express.Router();\r\n const commentController = require('../controllers/commentController');\r\n \r\n+// Route POST pour ajouter un commentaire\r\n router.post('/:taskId', commentController.addComment);\r\n+\r\n+// Route GET pour récupérer les commentaires\r\n router.get('/:taskId', commentController.getComments);\r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1744733823751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,17 @@\n const express = require('express');\r\n const router = express.Router();\r\n const commentController = require('../controllers/commentController');\r\n \r\n-// Route POST pour ajouter un commentaire\r\n+// Ajouter un commentaire\r\n router.post('/:taskId', commentController.addComment);\r\n \r\n-// Route GET pour récupérer les commentaires\r\n+// Récupérer les commentaires\r\n router.get('/:taskId', commentController.getComments);\r\n \r\n+// Supprimer un commentaire\r\n+router.delete('/:taskId', commentController.deleteComment);  // Supprimer tout le fichier de commentaires pour une tâche donnée\r\n+\r\n+// Modifier un commentaire\r\n+router.put('/:taskId/:commentId', commentController.updateComment);  // Modifier un commentaire spécifique (par exemple, avec un commentaireId)\r\n+\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1744734018833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,8 @@\n \r\n // Récupérer les commentaires\r\n router.get('/:taskId', commentController.getComments);\r\n \r\n-// Supprimer un commentaire\r\n-router.delete('/:taskId', commentController.deleteComment);  // Supprimer tout le fichier de commentaires pour une tâche donnée\r\n+// Supprimer un commentaire par ID\r\n+router.delete('/:taskId/:idCommentaire', commentController.deleteComment);  // Supprimer un commentaire en fonction de son ID\r\n \r\n-// Modifier un commentaire\r\n-router.put('/:taskId/:commentId', commentController.updateComment);  // Modifier un commentaire spécifique (par exemple, avec un commentaireId)\r\n-\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1744735312688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,17 @@\n const express = require('express');\r\n const router = express.Router();\r\n const commentController = require('../controllers/commentController');\r\n \r\n-// Ajouter un commentaire\r\n+// POST /comments/:taskId - Add a new comment\r\n router.post('/:taskId', commentController.addComment);\r\n \r\n-// Récupérer les commentaires\r\n+// GET /comments/:taskId - Get all comments for a task\r\n router.get('/:taskId', commentController.getComments);\r\n \r\n-// Supprimer un commentaire par ID\r\n-router.delete('/:taskId/:idCommentaire', commentController.deleteComment);  // Supprimer un commentaire en fonction de son ID\r\n+// DELETE /comments/:taskId/:commentId - Delete a specific comment\r\n+router.delete('/:taskId/:commentId', commentController.deleteComment);\r\n \r\n-module.exports = router;\r\n+// PUT /comments/:taskId/:commentId - Update a specific comment\r\n+router.put('/:taskId/:commentId', commentController.updateComment);\r\n+\r\n+module.exports = router;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1744731514412,
+            "name": "Commit-0",
+            "content": "const express = require('express');\r\nconst router = express.Router();\r\nconst commentController = require('../controllers/commentController');\r\n\r\nrouter.post('/:taskId', commentController.addComment);\r\nrouter.get('/:taskId', commentController.getComments);\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}
