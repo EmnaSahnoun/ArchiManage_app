@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1741687942503,
@@ -36,6 +36,26 @@
                 {
                     "date": 1742139258219,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,12 +12,6 @@\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n-  constructor(private router: Router) {\r\n-    this.router.events.subscribe(event => {\r\n-      if (event instanceof NavigationEnd) {\r\n-        console.log('Route actuelle:', event.url); // Debugging\r\n-        this.showSidebar = !(event.url === '/signup' || event.url === '/login');\r\n-      }\r\n-    });}\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1745009371529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,11 @@\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n   @Output() titleChange = new EventEmitter<string>();\r\n-showSidebar = true;\r\n+\r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n-  \r\n+  logou()\r\n }\r\n"
+                },
+                {
+                    "date": 1745009384145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,12 +6,15 @@\n   templateUrl: './sidebar.component.html',\r\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n+  constructor()\r\n   @Output() titleChange = new EventEmitter<string>();\r\n \r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n-  logou()\r\n+  logout(){\r\n+    this.authService.login();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1745009400807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   templateUrl: './sidebar.component.html',\r\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n-  constructor()\r\n+  constructor(private authService:AuthService)\r\n   @Output() titleChange = new EventEmitter<string>();\r\n \r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n"
+                },
+                {
+                    "date": 1745009408748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,21 @@\n import { Component, EventEmitter, Output } from '@angular/core';\r\n import { NavigationEnd, Router } from '@angular/router';\r\n+import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-sidebar',\r\n   templateUrl: './sidebar.component.html',\r\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n-  constructor(private authService:AuthService)\r\n+  constructor(private authService:AuthService){}\r\n   @Output() titleChange = new EventEmitter<string>();\r\n \r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n   logout(){\r\n-    this.authService.login();\r\n+    this.authService.lo();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745009544826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,6 @@\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n-  logout(){\r\n-    this.authService.lo();\r\n-  }\r\n+ \r\n }\r\n"
                 }
             ],
             "date": 1741687942503,

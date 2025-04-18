@@ -5,6 +5,7 @@ import { SuperAdminDashboardComponent } from './super-admin-dashboard/super-admi
 import { AgencesComponent } from './agences/agences.component';
 import { AgencyDetailsComponent } from './agency-details/agency-details.component';
 import { ProjectsComponent } from '../shared/projects/projects.component';
+import { AuthGuard } from '../guard/auth.guard';
 
 const routes: Routes = [
   { 

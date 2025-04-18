@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authConfig } from './config/auth.config';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +15,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Masquer la sidebar si on est sur la page login ou signup
-        this.showSidebar = !(event.url === '/login' || event.url === '/signup');
+        this.showSidebar = !['/login', '/signup'].includes(event.url);
       }
     });
   }

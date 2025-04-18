@@ -1,0 +1,114 @@
+{
+    "sourceFile": "src/app/config/auth.config.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 24,
+            "patches": [
+                {
+                    "date": 1744967725075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744967732466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import { AuthConfig } from 'angular-oauth2-oidc';\r\n \r\n export const authConfig: AuthConfig = {\r\n-  issuer: 'https://esmm.systeo.tn/realms/projectPFE',\r\n+  issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n"
+                },
+                {
+                    "date": 1744967740561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n-  disablePKCE: false, // PKCE activé\r\n+  disablePKCE: false, /\r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/projectPFE/protocol/openid-connect/token',\r\n  // userinfoEndpoint: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/userinfo',\r\n   //logoutUrl: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/logout',\r\n  customQueryParams: {\r\n"
+                },
+                {
+                    "date": 1744967747135,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n-  disablePKCE: false, /\r\n-  tokenEndpoint: 'https://esmm.systeo.tn/realms/projectPFE/protocol/openid-connect/token',\r\n+  disablePKCE: false, \r\n+  tokenEndpoint: 'https://esmm.systeo.tn/realms/systeo/protocol/openid-connect/token',\r\n  // userinfoEndpoint: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/userinfo',\r\n   //logoutUrl: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/logout',\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' // Force l'audience\r\n"
+                },
+                {
+                    "date": 1744967752827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n-  tokenEndpoint: 'https://esmm.systeo.tn/realms/systeo/protocol/openid-connect/token',\r\n+  tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n  // userinfoEndpoint: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/userinfo',\r\n   //logoutUrl: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/logout',\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' // Force l'audience\r\n"
+                },
+                {
+                    "date": 1744967758568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,8 @@\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n- // userinfoEndpoint: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/userinfo',\r\n-  //logoutUrl: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/logout',\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' // Force l'audience\r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744968657646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,15 +2,16 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n+  \r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n  customQueryParams: {\r\n-    audience: 'app-projectPFE' // Force l'audience\r\n+    audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744968672416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  \r\n+  dummyClientSecret:''\r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n"
+                },
+                {
+                    "date": 1744968705818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,16 +2,17 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  dummyClientSecret:''\r\n+  dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX'\r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n+  oidc: false,\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744969106868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,17 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX'\r\n+  dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n-  oidc: false,\r\n+  //oidc: false,\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744969604478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n-  //oidc: false,\r\n+ \r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744969629628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin ,\r\n+  redirectUri: window.location.origin + '/dashboard',,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n- \r\n+\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744969648918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin + '/dashboard',,\r\n+  redirectUri: window.location.origin + '/dashboard',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n-\r\n+  showDebugInformation: true, \r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744971631171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n-  showDebugInformation: true, \r\n+  \r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   }\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744973833575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin + '/dashboard',\r\n+  redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1744974031605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n+  //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n"
+                },
+                {
+                    "date": 1744977890855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin ,\r\n+  redirectUri: window.location.origin  + '/dashboard', ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1744978111910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin  + '/dashboard', ,\r\n+  redirectUri: window.location.origin  + '/dashboard' ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n@@ -13,6 +13,9 @@\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n   \r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n-  }\r\n+  },\r\n+  useSilentRefresh: false,\r\n+  sessionChecksEnabled: true,\r\n+  clearHashAfterLogin: true\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744978894501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin  + '/dashboard' ,\r\n+  redirectUri: window.location.origin  ,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1744978917650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin  ,\r\n   responseType: 'code',\r\n-  strictDiscoveryDocumentValidation: true,\r\n+  strictDiscoveryDocumentValidation: false,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n"
+                },
+                {
+                    "date": 1744978931394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin  ,\r\n   responseType: 'code',\r\n-  strictDiscoveryDocumentValidation: false,\r\n+  strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n"
+                },
+                {
+                    "date": 1744978938084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,6 @@\n   \r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   },\r\n-  useSilentRefresh: false,\r\n-  sessionChecksEnabled: true,\r\n-  clearHashAfterLogin: true\r\n+  \r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744981606605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n   disablePKCE: false, \r\n   tokenEndpoint: 'https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/token',\r\n-  \r\n+  showDebugInformation: true,\r\n  customQueryParams: {\r\n     audience: 'app-projectPFE' \r\n   },\r\n   \r\n"
+                },
+                {
+                    "date": 1744981627713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n   //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n-  redirectUri: window.location.origin  ,\r\n+  redirectUri: window.location.origin  + '/dashboard',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1744984351798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin  + '/dashboard',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n"
+                }
+            ],
+            "date": 1744967725075,
+            "name": "Commit-0",
+            "content": "import { AuthConfig } from 'angular-oauth2-oidc';\r\n\r\nexport const authConfig: AuthConfig = {\r\n  issuer: 'https://esmm.systeo.tn/realms/projectPFE',\r\n  clientId: 'app-pfeFront',\r\n  redirectUri: window.location.origin ,\r\n  responseType: 'code',\r\n  strictDiscoveryDocumentValidation: true,\r\n  scope: 'openid profile roles email',\r\n  requireHttps: true,\r\n  disablePKCE: false, // PKCE activé\r\n  tokenEndpoint: 'https://esmm.systeo.tn/realms/projectPFE/protocol/openid-connect/token',\r\n // userinfoEndpoint: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/userinfo',\r\n  //logoutUrl: 'https://key.systeo.tn/realms/projectPFE/protocol/openid-connect/logout',\r\n customQueryParams: {\r\n    audience: 'app-projectPFE' // Force l'audience\r\n  }\r\n};"
+        }
+    ]
+}

@@ -28,10 +28,13 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from './shared/shared.module';
 import { TasksComponent } from './shared/tasks/tasks.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { DatePipe } from '@angular/common';
 import { TaskDetailsComponent } from './shared/task-details/task-details.component';
-
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +69,11 @@ import { TaskDetailsComponent } from './shared/task-details/task-details.compone
     BidiModule,
     SharedModule,
     DragDropModule,
+    OAuthModule.forRoot(),
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatButtonModule,
     
   ],
   providers: [DatePipe],

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1742130428614,
@@ -76,6 +76,10 @@
                 {
                     "date": 1742132675251,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n       display: flex;\r\n       flex-direction: column;\r\n \r\n       input {\r\n-        width: 85%;\r\n+        width: 95%;\r\n         padding: 10px;\r\n         margin-bottom: 10px;\r\n         border: none;\r\n         border-radius: 35px;\r\n@@ -87,94 +87,4 @@\n       }\r\n     }\r\n   }\r\n }\r\n-$primary-color: white; // Vert foncé\r\n-$secondary-color: #E27D60; // Rose saumoné\r\n-$text-color: #3D5653; // Texte clair\r\n-$bg-color: #2C3E50; // Fond d’accentuation\r\n-$hover-color: #C75C50; // Hover bouton\r\n-\r\n-.login-container {\r\n-  display: flex;\r\n-  justify-content: center;\r\n-  align-items: center;\r\n-  height: 100vh;\r\n-  background: #F1F1F1;\r\n-}\r\n-\r\n-.login-card {\r\n-  display: flex;\r\n-  background: $primary-color;\r\n-  border-radius: 15px;\r\n-  padding: 20px;\r\n-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);\r\n-  max-width: 800px;\r\n-  width: 90%;\r\n-  color: $text-color;\r\n-\r\n-  .illustration {\r\n-    flex: 1;\r\n-    display: flex;\r\n-    justify-content: center;\r\n-    align-items: center;\r\n-\r\n-    img {\r\n-      max-width: 100%;\r\n-      height: auto;\r\n-    }\r\n-  }\r\n-\r\n-  .login-form {\r\n-    flex: 1;\r\n-    padding: 20px;\r\n-\r\n-    h2 {\r\n-      text-align: center;\r\n-      margin-bottom: 15px;\r\n-    }\r\n-\r\n-    form {\r\n-      display: flex;\r\n-      flex-direction: column;\r\n-\r\n-      input {\r\n-        width: 80%;\r\n-        padding: 10px;\r\n-        margin-bottom: 10px;\r\n-        border: none;\r\n-        border-radius: 35px;\r\n-        background: #F4F4F4;\r\n-        color: #333;\r\n-      }\r\n-\r\n-      .btn-login {\r\n-        background: $secondary-color;\r\n-        color: white;\r\n-        padding: 10px;\r\n-        border: none;\r\n-        border-radius: 35px;\r\n-        cursor: pointer;\r\n-        font-weight: bold;\r\n-        transition: background 0.3s;\r\n-\r\n-        &:hover {\r\n-          background: $hover-color;\r\n-        }\r\n-      }\r\n-    }\r\n-\r\n-    p {\r\n-      text-align: center;\r\n-      margin-top: 10px;\r\n-\r\n-      a {\r\n-        color: $secondary-color;\r\n-        text-decoration: none;\r\n-\r\n-        &:hover {\r\n-          text-decoration: underline;\r\n-        }\r\n-      }\r\n-    }\r\n-  }\r\n-}\r\n"
+                },
+                {
+                    "date": 1744968907118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,4 +87,9 @@\n       }\r\n     }\r\n   }\r\n }\r\n+.error-message {\r\n+  color: #f44336;\r\n+  margin: 10px 0;\r\n+  font-size: 14px;\r\n+}\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1742130428614,

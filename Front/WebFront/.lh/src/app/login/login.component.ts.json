@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -40,6 +40,118 @@
                 {
                     "date": 1744715853192,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n \r\n   constructor(private router: Router) {}\r\n \r\n   onLogin() {\r\n-    console.log('Utilisateur connecté:', this.user);\r\n-    alert('Connexion réussie !');\r\n+    \r\n     this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744968798320,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n-\r\n+  errorMessage: string = '';\r\n   constructor(private router: Router) {}\r\n \r\n   onLogin() {\r\n     \r\n"
+                },
+                {
+                    "date": 1744968806415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n-  constructor(private router: Router) {}\r\n+  constructor(private router: Router,) {}\r\n \r\n   onLogin() {\r\n     \r\n     this.router.navigate(['/dashboard']);\r\n"
+                },
+                {
+                    "date": 1744968822754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n+import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   templateUrl: './login.component.html',\r\n@@ -11,11 +12,18 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n-  constructor(private router: Router,) {}\r\n+  constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n-    \r\n-    this.router.navigate(['/dashboard']);\r\n+    this.errorMessage = '';\r\n+    this.authService.login(this.user.email, this.user.password)\r\n+      .then(() => {\r\n+        this.router.navigate(['/dashboard']);\r\n+      })\r\n+      .catch(err => {\r\n+        this.errorMessage = 'Identifiants incorrects';\r\n+        console.error('Login error:', err);\r\n+      });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744969565406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n+  useCustomLogin = false;\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n     this.errorMessage = '';\r\n"
+                },
+                {
+                    "date": 1744969577612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,15 +16,17 @@\n   useCustomLogin = false;\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n-    this.errorMessage = '';\r\n-    this.authService.login(this.user.email, this.user.password)\r\n-      .then(() => {\r\n-        this.router.navigate(['/dashboard']);\r\n-      })\r\n-      .catch(err => {\r\n-        this.errorMessage = 'Identifiants incorrects';\r\n-        console.error('Login error:', err);\r\n-      });\r\n+    if (this.useCustomLogin) {\r\n+      this.authService.customLogin(this.user.email, this.user.password)\r\n+        .then(success => {\r\n+          if (!success) {\r\n+            this.errorMessage = 'Email ou mot de passe incorrect';\r\n+          }\r\n+        });\r\n+    } else {\r\n+      // Redirige vers Keycloak avec PKCE\r\n+      this.authService.loginWithRedirect();\r\n+    }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744970906118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,8 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n-  useCustomLogin = false;\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n     if (this.useCustomLogin) {\r\n"
+                },
+                {
+                    "date": 1744970914850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,17 +15,21 @@\n   errorMessage: string = '';\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n-    if (this.useCustomLogin) {\r\n-      this.authService.customLogin(this.user.email, this.user.password)\r\n-        .then(success => {\r\n-          if (!success) {\r\n-            this.errorMessage = 'Email ou mot de passe incorrect';\r\n-          }\r\n-        });\r\n-    } else {\r\n-      // Redirige vers Keycloak avec PKCE\r\n-      this.authService.loginWithRedirect();\r\n-    }\r\n+    this.errorMessage = '';\r\n+    \r\n+    this.authService.customLogin(this.user.email, this.user.password).subscribe(\r\n+      (success) => {\r\n+        if (success && this.authService.isAuthenticated()) {\r\n+          this.router.navigate(['/dashboard']);\r\n+        } else {\r\n+          this.errorMessage = 'Échec de la connexion. Veuillez vérifier vos identifiants.';\r\n+        }\r\n+      },\r\n+      (error) => {\r\n+        this.errorMessage = 'Une erreur est survenue lors de la connexion.';\r\n+        console.error(error);\r\n+      }\r\n+    );\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744971702565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,24 +12,19 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n+  useCustomLogin = false;\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n     this.errorMessage = '';\r\n-    \r\n-    this.authService.customLogin(this.user.email, this.user.password).subscribe(\r\n-      (success) => {\r\n-        if (success && this.authService.isAuthenticated()) {\r\n-          this.router.navigate(['/dashboard']);\r\n-        } else {\r\n-          this.errorMessage = 'Échec de la connexion. Veuillez vérifier vos identifiants.';\r\n-        }\r\n-      },\r\n-      (error) => {\r\n-        this.errorMessage = 'Une erreur est survenue lors de la connexion.';\r\n-        console.error(error);\r\n-      }\r\n-    );\r\n+    this.authService.login(this.user.email, this.user.password)\r\n+      .then(() => {\r\n+        this.router.navigate(['/dashboard']);\r\n+      })\r\n+      .catch(err => {\r\n+        this.errorMessage = 'Identifiants incorrects';\r\n+        console.error('Login error:', err);\r\n+      });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744971707695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n import { Component } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n-import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   templateUrl: './login.component.html',\r\n@@ -12,19 +11,11 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n-  useCustomLogin = false;\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n-    this.errorMessage = '';\r\n-    this.authService.login(this.user.email, this.user.password)\r\n-      .then(() => {\r\n-        this.router.navigate(['/dashboard']);\r\n-      })\r\n-      .catch(err => {\r\n-        this.errorMessage = 'Identifiants incorrects';\r\n-        console.error('Login error:', err);\r\n-      });\r\n+    \r\n+    this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744971767404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n+import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   templateUrl: './login.component.html',\r\n@@ -14,8 +15,8 @@\n   errorMessage: string = '';\r\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n-    \r\n+    this.authService.login();\r\n     this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744973741649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,7 +16,6 @@\n   constructor(private router: Router, private authService: AuthService) {}\r\n \r\n   onLogin() {\r\n     this.authService.login();\r\n-    this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744974386428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,15 @@\n   selector: 'app-login',\r\n   templateUrl: './login.component.html',\r\n   styleUrl: './login.component.scss'\r\n })\r\n-export class LoginComponent {\r\n+export class LoginComponent implements OnInit {\r\n+  constructor(private authService: AuthService) {}\r\n+\r\n+  ngOnInit() {\r\n+    // Redirection immédiate vers Keycloak\r\n+    this.authService.login();\r\n+  }\r\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n"
+                },
+                {
+                    "date": 1744974402307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   templateUrl: './login.component.html',\r\n   styleUrl: './login.component.scss'\r\n })\r\n export class LoginComponent implements OnInit {\r\n-  constructor(private authService: AuthService) {}\r\n+  constructor(private authService: AuthService,private router: Router) {}\r\n \r\n   ngOnInit() {\r\n     // Redirection immédiate vers Keycloak\r\n     this.authService.login();\r\n"
+                },
+                {
+                    "date": 1744974407953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     email: '',\r\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n-  constructor(private router: Router, private authService: AuthService) {}\r\n+  \r\n \r\n   onLogin() {\r\n     this.authService.login();\r\n   }\r\n"
+                },
+                {
+                    "date": 1744974414467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, OnInit } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n"
+                },
+                {
+                    "date": 1744978020488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  templateUrl: './login.component.html',\r\n+  templateUrl: '<div class=\"loading\">Redirection vers le portail d\\'authentification...</div>',\r\n   styleUrl: './login.component.scss'\r\n })\r\n export class LoginComponent implements OnInit {\r\n   constructor(private authService: AuthService,private router: Router) {}\r\n"
+                },
+                {
+                    "date": 1744978025839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  templateUrl: '<div class=\"loading\">Redirection vers le portail d\\'authentification...</div>',\r\n+  template: '<div class=\"loading\">Redirection vers le portail d\\'authentification...</div>',\r\n   styleUrl: './login.component.scss'\r\n })\r\n export class LoginComponent implements OnInit {\r\n   constructor(private authService: AuthService,private router: Router) {}\r\n"
+                },
+                {
+                    "date": 1744978039133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,15 @@\n \r\n @Component({\r\n   selector: 'app-login',\r\n   template: '<div class=\"loading\">Redirection vers le portail d\\'authentification...</div>',\r\n-  styleUrl: './login.component.scss'\r\n+  styles: [`\r\n+    .loading {\r\n+      padding: 2rem;\r\n+      text-align: center;\r\n+      font-size: 1.2rem;\r\n+    }\r\n+  `]\r\n })\r\n export class LoginComponent implements OnInit {\r\n   constructor(private authService: AuthService,private router: Router) {}\r\n \r\n"
+                },
+                {
+                    "date": 1744978060397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,12 +13,11 @@\n     }\r\n   `]\r\n })\r\n export class LoginComponent implements OnInit {\r\n-  constructor(private authService: AuthService,private router: Router) {}\r\n+  constructor(private authService: AuthService) {}\r\n \r\n-  ngOnInit() {\r\n-    // Redirection immédiate vers Keycloak\r\n+  ngOnInit(): void {\r\n     this.authService.login();\r\n   }\r\n   user = {\r\n     email: '',\r\n"
+                },
+                {
+                    "date": 1744978807512,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  template: '<div class=\"loading\">Redirection vers le portail d\\'authentification...</div>',\r\n+  template: '<div>Redirection en cours vers le portail d\\'authentification...</div>'\r\n   styles: [`\r\n     .loading {\r\n       padding: 2rem;\r\n       text-align: center;\r\n"
+                },
+                {
+                    "date": 1744978815640,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,9 @@\n \r\n @Component({\r\n   selector: 'app-login',\r\n   template: '<div>Redirection en cours vers le portail d\\'authentification...</div>'\r\n-  styles: [`\r\n-    .loading {\r\n-      padding: 2rem;\r\n-      text-align: center;\r\n-      font-size: 1.2rem;\r\n-    }\r\n-  `]\r\n+  \r\n })\r\n export class LoginComponent implements OnInit {\r\n   constructor(private authService: AuthService) {}\r\n \r\n"
+                },
+                {
+                    "date": 1744979215988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,15 +3,16 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  template: '<div>Redirection en cours vers le portail d\\'authentification...</div>'\r\n-  \r\n+  templateUrl: './login.component.html',\r\n+  styleUrl: './login.component.scss'\r\n })\r\n export class LoginComponent implements OnInit {\r\n-  constructor(private authService: AuthService) {}\r\n+  constructor(private authService: AuthService,private router: Router) {}\r\n \r\n-  ngOnInit(): void {\r\n+  ngOnInit() {\r\n+    // Redirection immédiate vers Keycloak\r\n     this.authService.login();\r\n   }\r\n   user = {\r\n     email: '',\r\n"
+                },
+                {
+                    "date": 1744981465369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  templateUrl: './login.component.html',\r\n-  styleUrl: './login.component.scss'\r\n+  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n+\r\n })\r\n export class LoginComponent implements OnInit {\r\n   constructor(private authService: AuthService,private router: Router) {}\r\n \r\n"
+                },
+                {
+                    "date": 1744981474575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   selector: 'app-login',\r\n   template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n \r\n })\r\n-export class LoginComponent implements OnInit {\r\n+export class LoginComponent  {\r\n   constructor(private authService: AuthService,private router: Router) {}\r\n \r\n   ngOnInit() {\r\n     // Redirection immédiate vers Keycloak\r\n"
+                },
+                {
+                    "date": 1744981486123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,12 @@\n   template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService,private router: Router) {}\r\n+  constructor(private authService: AuthService) {\r\n+    // Redirection immédiate\r\n+    this.authService.login();\r\n+  }\r\n \r\n   ngOnInit() {\r\n     // Redirection immédiate vers Keycloak\r\n     this.authService.login();\r\n"
+                },
+                {
+                    "date": 1744981494257,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,12 +12,8 @@\n     // Redirection immédiate\r\n     this.authService.login();\r\n   }\r\n \r\n-  ngOnInit() {\r\n-    // Redirection immédiate vers Keycloak\r\n-    this.authService.login();\r\n-  }\r\n   user = {\r\n     email: '',\r\n     password: ''\r\n   };\r\n"
+                },
+                {
+                    "date": 1744985302594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,40 @@\n+import { Component, OnInit } from '@angular/core';\r\n+import { Router } from '@angular/router';\r\n+import { AuthService } from '../services/auth.service';\r\n+\r\n+@Component({\r\n+  selector: 'app-login',\r\n+  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n+\r\n+})\r\n+export class LoginComponent  {\r\n+  constructor(private authService: AuthService) {\r\n+    // Redirection immédiate\r\n+    this.authService.login();\r\n+  }\r\n+\r\n+  user = {\r\n+    email: '',\r\n+    password: ''\r\n+  };\r\n+  errorMessage: string = '';\r\n+  \r\n+  onLogin() {\r\n+    this.errorMessage = '';\r\n+    \r\n+    if (!this.user.email || !this.user.password) {\r\n+      this.errorMessage = 'Email et mot de passe sont requis';\r\n+      return;\r\n+    }\r\n+\r\n+    this.authService.customLogin(this.user.email, this.user.password).subscribe({\r\n+      error: (err) => {\r\n+        this.errorMessage = 'Identifiants incorrects';\r\n+        console.error(err);\r\n+      }\r\n+    });\r\n+  }\r\n+  onLogin() {\r\n+    this.authService.login();\r\n+  }\r\n+}\r\n"
+                },
+                {
+                    "date": 1744985515375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,49 +18,9 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n-  onLogin() {\r\n-    this.errorMessage = '';\r\n-    \r\n-    if (!this.user.email || !this.user.password) {\r\n-      this.errorMessage = 'Email et mot de passe sont requis';\r\n-      return;\r\n-    }\r\n \r\n-    this.authService.customLogin(this.user.email, this.user.password).subscribe({\r\n-      error: (err) => {\r\n-        this.errorMessage = 'Identifiants incorrects';\r\n-        console.error(err);\r\n-      }\r\n-    });\r\n-  }\r\n   onLogin() {\r\n     this.authService.login();\r\n   }\r\n }\r\n-import { Component, OnInit } from '@angular/core';\r\n-import { Router } from '@angular/router';\r\n-import { AuthService } from '../services/auth.service';\r\n-\r\n-@Component({\r\n-  selector: 'app-login',\r\n-  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n-\r\n-})\r\n-export class LoginComponent  {\r\n-  constructor(private authService: AuthService) {\r\n-    // Redirection immédiate\r\n-    this.authService.login();\r\n-  }\r\n-\r\n-  user = {\r\n-    email: '',\r\n-    password: ''\r\n-  };\r\n-  errorMessage: string = '';\r\n-  \r\n-\r\n-  onLogin() {\r\n-    this.authService.login();\r\n-  }\r\n-}\r\n"
                 }
             ],
             "date": 1742130408469,

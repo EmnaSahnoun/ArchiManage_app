@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1744030117160,
@@ -16,6 +16,82 @@
                 {
                     "date": 1744030617685,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,16 @@\n-import { Component } from '@angular/core';\r\n-import { FormGroup } from '@angular/forms';\r\n+import { Component, Inject, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-user-form',\r\n   templateUrl: './user-form.component.html',\r\n   styleUrl: './user-form.component.scss'\r\n })\r\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n-  roles = ['Admin', 'Agent', 'Manager'];\r\n+  roles = ['Admin', 'User', 'Manager'];\r\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n"
+                },
+                {
+                    "date": 1744990314860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   styleUrl: './user-form.component.scss'\r\n })\r\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n-  roles = ['Admin', 'User', 'Manager'];\r\n+  roles = ['Admin', 'User'];\r\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n@@ -18,8 +18,9 @@\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n+      \r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744990320246,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      \r\n+      password\r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744990326990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      password\r\n+      password:['',]\r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744990334877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      password:['',]\r\n+      password:['',Validators.required]\r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744991364450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,18 +9,19 @@\n })\r\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles = ['Admin', 'User'];\r\n-\r\n+  roles: string[] = [];\r\n+  isLoading = false;\r\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      password:['',Validators.required]\r\n+      password:['',Validators.required],\r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744991371244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n   styleUrl: './user-form.component.scss'\r\n })\r\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n-  roles = ['Admin', 'User'];\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n+  \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any\r\n"
+                },
+                {
+                    "date": 1744991389933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,13 +10,14 @@\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n-  \r\n+\r\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n-    @Inject(MAT_DIALOG_DATA) public data: any\r\n+    @Inject(MAT_DIALOG_DATA) public data: any,\r\n+    private\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1744991399053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n-    private\r\n+    private user\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1744991405631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n-    private user\r\n+    private userService:U\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1744991411546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Component, Inject, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n+import { UserService } from '../../services/UserService';\r\n \r\n @Component({\r\n   selector: 'app-user-form',\r\n   templateUrl: './user-form.component.html',\r\n@@ -15,9 +16,9 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n-    private userService:U\r\n+    private userService:UserService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1744991433601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,11 @@\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n-      name: ['', Validators.required],\r\n+      username: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      password:['',Validators.required],\r\n+      password: ['', [Validators.required, Validators.minLength(8)]],\r\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1744991439559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,11 @@\n       role: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n-  ngOnInit(): void {}\r\n+  ngOnInit(): void {\r\n+    \r\n+  }\r\n \r\n   onSubmit() {\r\n     if (this.userForm.valid) {\r\n       this.dialogRef.close(this.userForm.value);\r\n"
+                },
+                {
+                    "date": 1744991445008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    \r\n+    this.loadRoles();\r\n   }\r\n \r\n   onSubmit() {\r\n     if (this.userForm.valid) {\r\n"
+                },
+                {
+                    "date": 1744991455383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,16 @@\n \r\n   ngOnInit(): void {\r\n     this.loadRoles();\r\n   }\r\n-\r\n+  loadRoles(): void {\r\n+    this.keycloakService.getRoles().subscribe({\r\n+      next: (roles) => {\r\n+        this.roles = roles.map((r: any) => r.name);\r\n+      },\r\n+      error: (err) => console.error('Failed to load roles', err)\r\n+    });\r\n+  }\r\n   onSubmit() {\r\n     if (this.userForm.valid) {\r\n       this.dialogRef.close(this.userForm.value);\r\n     }\r\n"
+                },
+                {
+                    "date": 1744991460633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   ngOnInit(): void {\r\n     this.loadRoles();\r\n   }\r\n   loadRoles(): void {\r\n-    this.keycloakService.getRoles().subscribe({\r\n+    this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n         this.roles = roles.map((r: any) => r.name);\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n"
+                },
+                {
+                    "date": 1744991506522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,14 +37,70 @@\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n-  onSubmit() {\r\n+  onSubmit(): void {\r\n     if (this.userForm.valid) {\r\n-      this.dialogRef.close(this.userForm.value);\r\n+      this.isLoading = true;\r\n+      const formValue = this.userForm.value;\r\n+\r\n+      const userData = {\r\n+        username: formValue.username,\r\n+        email: formValue.email,\r\n+        enabled: true,\r\n+        credentials: [{\r\n+          type: 'password',\r\n+          value: formValue.password,\r\n+          temporary: false\r\n+        }]\r\n+      };\r\n+\r\n+      this.keycloakService.createUser(userData).subscribe({\r\n+        next: (response) => {\r\n+          // Trouver l'ID de l'utilisateur créé (peut nécessiter une requête supplémentaire)\r\n+          this.assignRoleToUser(formValue.username, formValue.role);\r\n+        },\r\n+        error: (err) => {\r\n+          console.error('Failed to create user', err);\r\n+          this.isLoading = false;\r\n+        }\r\n+      });\r\n     }\r\n   }\r\n \r\n-  onCancel() {\r\n+  private assignRoleToUser(username: string, roleName: string): void {\r\n+    // D'abord, trouver l'ID de l'utilisateur\r\n+    this.keycloakService.getUsers().subscribe({\r\n+      next: (users) => {\r\n+        const user = users.find((u: any) => u.username === username);\r\n+        if (user) {\r\n+          // Ensuite, trouver le rôle\r\n+          this.keycloakService.getRoles().subscribe({\r\n+            next: (roles) => {\r\n+              const role = roles.find((r: any) => r.name === roleName);\r\n+              if (role) {\r\n+                this.keycloakService.assignRoleToUser(user.id, role).subscribe({\r\n+                  next: () => {\r\n+                    this.isLoading = false;\r\n+                    this.dialogRef.close({ success: true });\r\n+                  },\r\n+                  error: (err) => {\r\n+                    console.error('Failed to assign role', err);\r\n+                    this.isLoading = false;\r\n+                  }\r\n+                });\r\n+              }\r\n+            }\r\n+          });\r\n+        }\r\n+      },\r\n+      error: (err) => {\r\n+        console.error('Failed to find user', err);\r\n+        this.isLoading = false;\r\n+      }\r\n+    });\r\n+  }\r\n+\r\n+  onCancel(): void {\r\n     this.dialogRef.close();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1744991513437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n   }\r\n \r\n   private assignRoleToUser(username: string, roleName: string): void {\r\n     // D'abord, trouver l'ID de l'utilisateur\r\n-    this.keycloakService.getUsers().subscribe({\r\n+    this.userService.getUsers().subscribe({\r\n       next: (users) => {\r\n         const user = users.find((u: any) => u.username === username);\r\n         if (user) {\r\n           // Ensuite, trouver le rôle\r\n"
+                },
+                {
+                    "date": 1744991523044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,13 +73,13 @@\n       next: (users) => {\r\n         const user = users.find((u: any) => u.username === username);\r\n         if (user) {\r\n           // Ensuite, trouver le rôle\r\n-          this.keycloakService.getRoles().subscribe({\r\n+          this.userService.getRoles().subscribe({\r\n             next: (roles) => {\r\n               const role = roles.find((r: any) => r.name === roleName);\r\n               if (role) {\r\n-                this.keycloakService.assignRoleToUser(user.id, role).subscribe({\r\n+                this.userService.assignRoleToUser(user.id, role).subscribe({\r\n                   next: () => {\r\n                     this.isLoading = false;\r\n                     this.dialogRef.close({ success: true });\r\n                   },\r\n"
+                },
+                {
+                    "date": 1744991535102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n           temporary: false\r\n         }]\r\n       };\r\n \r\n-      this.keycloakService.createUser(userData).subscribe({\r\n+      this.userService.createUser(userData).subscribe({\r\n         next: (response) => {\r\n           // Trouver l'ID de l'utilisateur créé (peut nécessiter une requête supplémentaire)\r\n           this.assignRoleToUser(formValue.username, formValue.role);\r\n         },\r\n"
                 }
             ],
             "date": 1744030117160,

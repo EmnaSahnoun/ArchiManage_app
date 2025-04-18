@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 86,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1741609885165,
@@ -352,6 +352,18 @@
                 {
                     "date": 1742345749437,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,28 +1,22 @@\n-<mat-sidenav-container class=\"sidenav-container\">\r\n+<mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n       <img src=\"assets/user.jpg\" alt=\"logo\">\r\n       <h3>ArchiManage</h3>\r\n     </div>\r\n-\r\n+    \r\n     <ul>\r\n-      <li routerLink=\"/dashboard\" routerLinkActive=\"active\">\r\n-        <a (click)=\"changeTitle('Tableau de bord')\">\r\n-          <i class=\"bi bi-clipboard2-data\"></i> Dashboard\r\n-        </a>\r\n+      <li routerLink=\"/dashboard\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n+        <i class=\"bi bi-clipboard2-data\"></i> Dashboard</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\">\r\n-        <a (click)=\"changeTitle('Projets')\">\r\n-          <i class=\"bi bi-briefcase\"></i> Projects\r\n-        </a>\r\n+      <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Projets')\">\r\n+        <i class=\"bi bi-briefcase\"></i> Projects</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\">\r\n-        <a (click)=\"changeTitle('Clients')\">\r\n-          <i class=\"bi bi-person-lines-fill\"></i> Clients\r\n-        </a>\r\n+      <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Clients')\">\r\n+        <i class=\"bi bi-person-lines-fill\"></i> Clients</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\">\r\n+      <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" >\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n       <li mat-list-item routerLink=\"/profile\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-person-circle\"></i> Profile\r\n@@ -32,12 +26,10 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n+      \r\n     </ul>\r\n   </mat-sidenav>\r\n-\r\n-  <!-- Contenu principal avec scroll -->\r\n-  <div class=\"content-container\">\r\n-    <router-outlet></router-outlet>\r\n-  </div>\r\n+  \r\n+  \r\n </mat-sidenav-container>\r\n"
+                },
+                {
+                    "date": 1745009314358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\">\r\n+      <li mat-list-item click routerLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745009327968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item click routerLinkActive=\"active\">\r\n+      <li mat-list-item (click)=\"log\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745009556958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item (click)=\"log\" routerLinkActive=\"active\">\r\n+      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
                 }
             ],
             "date": 1741609885165,

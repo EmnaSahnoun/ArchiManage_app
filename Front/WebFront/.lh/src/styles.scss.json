@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1741790638652,
@@ -24,6 +24,50 @@
                 {
                     "date": 1741821880528,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,27 @@\n     top: 0;\r\n     left: 0;\r\n     width: 100vw;\r\n     height: 100vh;\r\n-    z-index: 1050; /* S'assure que le modal est au-dessus de tout */\r\n+    z-index: 1050; /* S'assure qu'il est au-dessus de tout */\r\n   }\r\n   \r\n   ::ng-deep .cdk-overlay-pane {\r\n     display: flex !important;\r\n     justify-content: center !important;\r\n     align-items: center !important;\r\n     height: 100vh !important;\r\n   }\r\n+  \r\n+  ::ng-deep .custom-modal .mat-dialog-container {\r\n+    background-color: white;\r\n+    border-radius: 12px;\r\n+    padding: 20px;\r\n+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);\r\n+    text-align: center;\r\n+    max-width: 90vw; // S'adapte aux écrans mobiles\r\n+  }\r\n+  \r\n+  ::ng-deep .cdk-overlay-backdrop {\r\n+    background: rgba(0, 0, 0, 0.5) !important; /* Fond assombri */\r\n+  }\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745010631004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,7 @@\n+\r\n+\r\n+\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745011520621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,25 @@\n+// styles.scss\r\n+@use '@angular/material' as mat;\r\n \r\n+@include mat.core();\r\n \r\n+$my-primary: mat.define-palette(mat.$indigo-palette);\r\n+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n+$my-warn: mat.define-palette(mat.$red-palette);\r\n \r\n+$my-theme: mat.define-light-theme((\r\n+  color: (\r\n+    primary: $my-primary,\r\n+    accent: $my-accent,\r\n+    warn: $my-warn,\r\n+  ),\r\n+  typography: mat.define-typography-config(),\r\n+  density: 0,\r\n+));\r\n+\r\n+@include mat.all-component-themes($my-theme);\r\n+\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745013409487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,8 @@\n @use '@angular/material' as mat;\r\n \r\n @include mat.core();\r\n \r\n-$my-primary: mat.define-palette(mat.$indigo-palette);\r\n-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n-$my-warn: mat.define-palette(mat.$red-palette);\r\n \r\n $my-theme: mat.define-light-theme((\r\n   color: (\r\n     primary: $my-primary,\r\n"
+                },
+                {
+                    "date": 1745013442616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,18 +3,10 @@\n \r\n @include mat.core();\r\n \r\n \r\n-$my-theme: mat.define-light-theme((\r\n-  color: (\r\n-    primary: $my-primary,\r\n-    accent: $my-accent,\r\n-    warn: $my-warn,\r\n-  ),\r\n-  typography: mat.define-typography-config(),\r\n-  density: 0,\r\n-));\r\n \r\n+\r\n @include mat.all-component-themes($my-theme);\r\n \r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n"
+                },
+                {
+                    "date": 1745013449251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n \r\n \r\n \r\n \r\n-@include mat.all-component-themes($my-theme);\r\n \r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n"
+                },
+                {
+                    "date": 1745013483050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,7 @@\n-// styles.scss\r\n-@use '@angular/material' as mat;\r\n \r\n-@include mat.core();\r\n \r\n \r\n-\r\n-\r\n-\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745013491283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,5 @@\n \r\n-\r\n-\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745015022329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,27 @@\n+@use '@angular/material' as mat;\r\n \r\n+// Incluez les styles de base (core) de Material\r\n+@include mat.core();\r\n+\r\n+// Définissez vos palettes de couleurs\r\n+$my-primary: mat.define-palette(mat.$indigo-palette);\r\n+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n+$my-warn: mat.define-palette(mat.$red-palette);\r\n+\r\n+// Créez votre thème\r\n+$my-theme: mat.define-light-theme((\r\n+  color: (\r\n+    primary: $my-primary,\r\n+    accent: $my-accent,\r\n+    warn: $my-warn,\r\n+  ),\r\n+  typography: mat.define-typography-config(),\r\n+  density: 0,\r\n+));\r\n+\r\n+// Appliquez le thème à tous les composants Material\r\n+@include mat.all-component-themes($my-theme);\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745015315000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,28 @@\n @use '@angular/material' as mat;\r\n \r\n-// Incluez les styles de base (core) de Material\r\n+// Include core styles (required)\r\n @include mat.core();\r\n \r\n-// Définissez vos palettes de couleurs\r\n-$my-primary: mat.define-palette(mat.$indigo-palette);\r\n-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n-$my-warn: mat.define-palette(mat.$red-palette);\r\n+// Define your color palettes\r\n+$my-primary-palette: mat.define-palette(mat.$indigo-palette);\r\n+$my-accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n+$my-warn-palette: mat.define-palette(mat.$red-palette);\r\n \r\n-// Créez votre thème\r\n+// Create your theme\r\n $my-theme: mat.define-light-theme((\r\n   color: (\r\n-    primary: $my-primary,\r\n-    accent: $my-accent,\r\n-    warn: $my-warn,\r\n+    primary: $my-primary-palette,\r\n+    accent: $my-accent-palette,\r\n+    warn: $my-warn-palette,\r\n   ),\r\n   typography: mat.define-typography-config(),\r\n   density: 0,\r\n ));\r\n \r\n-// Appliquez le thème à tous les composants Material\r\n+// Apply the theme to Angular Material components\r\n @include mat.all-component-themes($my-theme);\r\n+\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
+                },
+                {
+                    "date": 1745015642624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,32 @@\n+// Import all Angular Material theming functions\r\n @use '@angular/material' as mat;\r\n \r\n-// Include core styles (required)\r\n+// Include core styles - this must come after the @use statement\r\n @include mat.core();\r\n \r\n-// Define your color palettes\r\n-$my-primary-palette: mat.define-palette(mat.$indigo-palette);\r\n-$my-accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n-$my-warn-palette: mat.define-palette(mat.$red-palette);\r\n+// Define a primary palette using indigo\r\n+$primary-palette: mat.define-palette(mat.$indigo-palette);\r\n \r\n-// Create your theme\r\n-$my-theme: mat.define-light-theme((\r\n+// Define an accent palette using pink\r\n+$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n+\r\n+// Define a warn palette using red\r\n+$warn-palette: mat.define-palette(mat.$red-palette);\r\n+\r\n+// Create the theme object\r\n+$theme: mat.define-light-theme((\r\n   color: (\r\n-    primary: $my-primary-palette,\r\n-    accent: $my-accent-palette,\r\n-    warn: $my-warn-palette,\r\n+    primary: $primary-palette,\r\n+    accent: $accent-palette,\r\n+    warn: $warn-palette,\r\n   ),\r\n   typography: mat.define-typography-config(),\r\n   density: 0,\r\n ));\r\n \r\n-// Apply the theme to Angular Material components\r\n-@include mat.all-component-themes($my-theme);\r\n+// Apply the theme to all components\r\n+@include mat.all-component-themes($theme);\r\n \r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n"
+                },
+                {
+                    "date": 1745016400905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,33 +1,5 @@\n-// Import all Angular Material theming functions\r\n-@use '@angular/material' as mat;\r\n \r\n-// Include core styles - this must come after the @use statement\r\n-@include mat.core();\r\n-\r\n-// Define a primary palette using indigo\r\n-$primary-palette: mat.define-palette(mat.$indigo-palette);\r\n-\r\n-// Define an accent palette using pink\r\n-$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);\r\n-\r\n-// Define a warn palette using red\r\n-$warn-palette: mat.define-palette(mat.$red-palette);\r\n-\r\n-// Create the theme object\r\n-$theme: mat.define-light-theme((\r\n-  color: (\r\n-    primary: $primary-palette,\r\n-    accent: $accent-palette,\r\n-    warn: $warn-palette,\r\n-  ),\r\n-  typography: mat.define-typography-config(),\r\n-  density: 0,\r\n-));\r\n-\r\n-// Apply the theme to all components\r\n-@include mat.all-component-themes($theme);\r\n-\r\n ::ng-deep .cdk-overlay-container {\r\n     position: fixed !important;\r\n     top: 0;\r\n     left: 0;\r\n"
                 }
             ],
             "date": 1741790638652,

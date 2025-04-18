@@ -1,17 +1,27 @@
  import { Injectable } from '@angular/core';
-import {  ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-//import {KeycloakAuthGuard,KeyclaokService} from 'keyclaok-angular';
+import {   Router, CanActivate } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard  {
+export class AuthGuard implements CanActivate  {
 
   constructor(
-   protected readonly router: Router,
-   //protected readonly key 
+   private router: Router,
+   private authService: AuthService,
 ) { }
-
- 
+canActivate(): boolean {
+  if (this.authService.isAuthenticated()) {
+    return true;
+  }
+  
+  // Stockez l'URL demandée avant la redirection
+  this.router.navigate(['/login'], {
+    queryParams: { returnUrl: this.router.url }
+  });
+  return false;
 }
+}
+ 

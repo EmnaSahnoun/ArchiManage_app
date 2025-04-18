@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1742130416166,
@@ -12,6 +12,18 @@
                 {
                     "date": 1744715796000,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n           <button type=\"submit\" class=\"btn-login\">Se connecter</button>\r\n         </form>\r\n-        <p>Pas encore de compte ? <a routerLink=\"/signup\">Inscrivez-vous !</a></p>\r\n+        \r\n       </div>\r\n     </div>\r\n   </div>\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744968865188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n         <h2>CONNEXION</h2>\r\n         <form (ngSubmit)=\"onLogin()\">\r\n           <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n           <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n+          <div *ngIf=\"errorMessage\" class=\"error-message\">{{errorMessage}}</div>\r\n           <button type=\"submit\" class=\"btn-login\">Se connecter</button>\r\n         </form>\r\n         \r\n       </div>\r\n"
+                },
+                {
+                    "date": 1744973883580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,9 @@\n         <img src=\"assets/login-illustration.svg\" alt=\"Illustration de connexion\">\r\n       </div>\r\n       <div class=\"login-form\">\r\n         <h2>CONNEXION</h2>\r\n-        <form (ngSubmit)=\"onLogin()\">\r\n-          <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n-          <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n-          <div *ngIf=\"errorMessage\" class=\"error-message\">{{errorMessage}}</div>\r\n-          <button type=\"submit\" class=\"btn-login\">Se connecter</button>\r\n-        </form>\r\n-        \r\n+        <button (click)=\"onLogin()\" class=\"btn-login\">Se connecter avec Keycloak</button>\r\n       </div>\r\n     </div>\r\n   </div>\r\n   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744979256006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,15 @@\n         <img src=\"assets/login-illustration.svg\" alt=\"Illustration de connexion\">\r\n       </div>\r\n       <div class=\"login-form\">\r\n         <h2>CONNEXION</h2>\r\n-        <button (click)=\"onLogin()\" class=\"btn-login\">Se connecter avec Keycloak</button>\r\n+        <form (ngSubmit)=\"onLogin()\">\r\n+          <input type=\"email\" placeholder=\"Email\" [(ngModel)]=\"user.email\" name=\"email\" required>\r\n+          <input type=\"password\" placeholder=\"Mot de passe\" [(ngModel)]=\"user.password\" name=\"password\" required>\r\n+          <div *ngIf=\"errorMessage\" class=\"error-message\">{{errorMessage}}</div>\r\n+          <button type=\"submit\" class=\"btn-login\">Se connecter</button>\r\n+        </form>\r\n+        \r\n       </div>\r\n     </div>\r\n   </div>\r\n   \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1742130416166,

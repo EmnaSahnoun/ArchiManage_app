@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 61,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -252,6 +252,42 @@
                 {
                     "date": 1744723105892,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,13 +15,9 @@\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n-    children: [\r\n-      { path: '', redirectTo: 'details', pathMatch: 'full' },\r\n-      { path: 'details', component: ProjectDetailsComponent },\r\n-      { path: 'phase/:phaseId', component: TasksComponent }\r\n-    ]\r\n+    \r\n   },\r\n   \r\n   { \r\n     path: 'super-admin', \r\n"
+                },
+                {
+                    "date": 1744969764464,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,17 +10,20 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent },\r\n+  { path: 'dashboard', component: DashboardComponent ,canActivate: [AuthGuard]},\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     \r\n   },\r\n-  \r\n   { \r\n+    path: 'project/:id/phase/:phaseId', \r\n+    component: TasksComponent \r\n+  },\r\n+  { \r\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n"
+                },
+                {
+                    "date": 1744974143780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent ,canActivate: [AuthGuard]},\r\n+  { path: 'dashboard', component: DashboardComponent },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1744978194835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent },\r\n+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1744978307586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,8 @@\n   \r\n ];\r\n \r\n @NgModule({\r\n-  imports: [RouterModule.forRoot(routes,{ enableTracing: true })],\r\n+  imports: [RouterModule.forRoot(routes)],\r\n   exports: [RouterModule]\r\n })\r\n export class AppRoutingModule { }\r\n"
+                },
+                {
+                    "date": 1744979316012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },\r\n+  { path: 'dashboard', component: DashboardComponent },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1744979355690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent },\r\n+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n@@ -31,8 +31,8 @@\n   \r\n ];\r\n \r\n @NgModule({\r\n-  imports: [RouterModule.forRoot(routes)],\r\n+  imports: [RouterModule.forRoot(routes,{ enableTracing: true })],\r\n   exports: [RouterModule]\r\n })\r\n export class AppRoutingModule { }\r\n"
+                },
+                {
+                    "date": 1744979364712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },\r\n+  { path: 'dashboard', component: DashboardComponent },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n@@ -31,8 +31,8 @@\n   \r\n ];\r\n \r\n @NgModule({\r\n-  imports: [RouterModule.forRoot(routes,{ enableTracing: true })],\r\n+  imports: [RouterModule.forRoot(routes)],\r\n   exports: [RouterModule]\r\n })\r\n export class AppRoutingModule { }\r\n"
+                },
+                {
+                    "date": 1745010799994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     component: TasksComponent \r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule), canActivate: [AuthGuard]\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745013935985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     component: TasksComponent \r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule), canActivate: [AuthGuard]\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
                 }
             ],
             "date": 1741609914429,

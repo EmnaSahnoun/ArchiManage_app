@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  template: '<div>Redirection vers le portail d\'authentification...</div>'
+
 })
-export class LoginComponent {
+export class LoginComponent  {
+  constructor(private authService: AuthService) {
+    // Redirection immédiate
+    this.authService.login();
+  }
+
   user = {
     email: '',
     password: ''
   };
-
-  constructor(private router: Router) {}
+  errorMessage: string = '';
+  
 
   onLogin() {
-    
-    this.router.navigate(['/dashboard']);
+    this.authService.login();
   }
 }

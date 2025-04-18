@@ -1,37 +1,48 @@
 <div class="user-form-container">
-    <h2>Ajouter un Utilisateur</h2>
+  <h2>Ajouter un Utilisateur</h2>
+  
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur</label>
+      <input type="text" id="username" formControlName="username" placeholder="Entrez le nom d'utilisateur">
+      <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="error-message">
+        Le nom d'utilisateur est requis
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="Entrez l'email">
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-message">
+        Veuillez entrer un email valide
+      </div>
+    </div>
     
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="name">Nom complet</label>
-        <input type="text" id="name" formControlName="name" placeholder="Entrez le nom complet">
-        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="error-message">
-          Le nom est requis
-        </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" formControlName="password" placeholder="Entrez le mot de passe">
+      <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="error-message">
+        Le mot de passe doit contenir au moins 8 caractères
       </div>
-  
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" placeholder="Entrez l'email">
-        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-message">
-          Veuillez entrer un email valide
-        </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="role">Rôle</label>
+      <select id="role" formControlName="role">
+        <option value="">Sélectionnez un rôle</option>
+        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+      </select>
+      <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" class="error-message">
+        Le rôle est requis
       </div>
-  
-      <div class="form-group">
-        <label for="role">Rôle</label>
-        <select id="role" formControlName="role">
-          <option value="">Sélectionnez un rôle</option>
-          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
-        </select>
-        <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" class="error-message">
-          Le rôle est requis
-        </div>
-      </div>
-  
-      <div class="form-actions">
-        <button type="button" class="cancel-btn" (click)="onCancel()">Annuler</button>
-        <button type="submit" class="submit-btn" [disabled]="userForm.invalid">Enregistrer</button>
-      </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="isLoading">Annuler</button>
+      <button type="submit" class="submit-btn" [disabled]="userForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Enregistrer</span>
+        <span *ngIf="isLoading">En cours...</span>
+      </button>
+    </div>
+  </form>
+</div>
