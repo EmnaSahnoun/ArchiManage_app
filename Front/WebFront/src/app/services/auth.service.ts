@@ -17,28 +17,25 @@ export class AuthService {
       ) {
         this.configureAuth();
       }
-    
       private configureAuth(): void {
         this.oauthService.configure(authConfig);
         
-        // Charge le document de découverte puis tente une connexion automatique
-        this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
-          if (this.oauthService.hasValidAccessToken()) {
-            this.storeTokenData();
-            this.router.navigate(['/dashboard']);
-          }
+        // Désactive la tentative de login automatique après le discovery
+        this.oauthService.loadDiscoveryDocument().then(() => {
+          console.log('Discovery document loaded');
+          this.oauthService.tryLoginCodeFlow().then(() => {
+            if (this.oauthService.hasValidAccessToken()) {
+              this.storeTokenData();
+              // NE PAS faire de redirection ici
+            }
+          });
         });
-    
-        // Configure le rafraîchissement automatique du token
+      
+        // active le silent refresh  
         this.oauthService.setupAutomaticSilentRefresh();
-    
-        // Écoute les événements de token
-        this.oauthService.events.subscribe(event => {
-          if (event.type === 'token_received') {
-            this.storeTokenData();
-          }
-        });
       }
+   
+    
     
       private storeTokenData(): void {
         const token = this.oauthService.getAccessToken();
@@ -58,7 +55,7 @@ export class AuthService {
     
       login(): void {
         this.oauthService.initCodeFlow();
-        this.oauthService.getAccessToken();
+        //this.oauthService.getAccessToken();
       }
     
       logout(): void {
@@ -76,24 +73,14 @@ export class AuthService {
       const token =  this.oauthService.getAccessToken();
       if(token){
         localStorage.setItem("token",token);
-        console.log("token",token)
+       
         return token;
       }
       return localStorage.getItem('token');
       } 
     
       isAuthenticated(): boolean {
-        const token = this.getAccessToken();
-        if (!token) return false;
-        
-        // Vérifiez aussi l'expiration si stockée
-        const expiration = localStorage.getItem('expiration');
-        if (expiration && Date.now() > Number(expiration) * 1000) {
-          this.clearTokenData();
-          return false;
-        }
-        
-        return true;
+        return !!this.oauthService.getAccessToken() && this.oauthService.hasValidAccessToken();
       }
     
     

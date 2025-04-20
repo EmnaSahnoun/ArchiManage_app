@@ -1,52 +1,45 @@
-<!-- Modal Bootstrap avec style Material -->
-<div class="modal fade" id="agenceModal" tabindex="-1" aria-labelledby="agenceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header d-flex justify-content-between align-items-center">
-          <h5 class="modal-title" id="agenceModalLabel">{{ isEditMode ? 'Modifier Agence' : 'Nouvelle Agence' }}</h5>
-          <button type="button" class="close" (click)="close()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        
-        <div class="modal-body">
-          <!-- Formulaire Material dans le modal Bootstrap -->
-          <form [formGroup]="agenceForm">
-            <!-- Champ Nom -->
-            <div class="form-group material-style">
-              <label class="mat-form-field-label">Nom</label>
-              <input type="text" class="form-control mat-input" formControlName="name" required>
-              <div *ngIf="agenceForm.get('name')?.hasError('required')" class="mat-error">Champ obligatoire</div>
-            </div>
+<div class="user-form-container">
+  <h2>{{ isEditMode ? 'Modifier Agence' : 'Nouvelle Agence' }}</h2>
   
-            <!-- Champ Adresse -->
-            <div class="form-group material-style">
-              <label class="mat-form-field-label">Adresse</label>
-              <input type="text" class="form-control mat-input" formControlName="address" required>
-            </div>
-  
-            <!-- Champ Email -->
-            <div class="form-group material-style">
-              <label class="mat-form-field-label">Email</label>
-              <input type="email" class="form-control mat-input" formControlName="email" required>
-              <div *ngIf="agenceForm.get('email')?.hasError('email')" class="mat-error">Email invalide</div>
-            </div>
-  
-            <!-- Champ Téléphone -->
-            <div class="form-group material-style">
-              <label class="mat-form-field-label">Téléphone</label>
-              <input type="tel" class="form-control mat-input" formControlName="phone" required>
-            </div>
-          </form>
-        </div>
-  
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-outline-secondary" (click)="close()">Annuler</button>
-          <button type="button" class="btn btn-primary mat-raised-button" 
-                  (click)="onSubmit()" [disabled]="!agenceForm.valid">
-            {{ isEditMode ? 'Modifier' : 'Ajouter' }}
-          </button>
-        </div>
+  <form [formGroup]="agenceForm">
+    <div class="form-group">
+      <label for="name">Nom de l'agence</label>
+      <input type="text" id="name" formControlName="name" placeholder="Entrez le nom de l'agence">
+      <div *ngIf="agenceForm.get('name')?.invalid && agenceForm.get('name')?.touched" class="error-message">
+        Le nom est requis
       </div>
     </div>
-  </div>
+
+    <div class="form-group">
+      <label for="address">Adresse</label>
+      <input type="text" id="address" formControlName="address" placeholder="Entrez l'adresse">
+      <div *ngIf="agenceForm.get('address')?.invalid && agenceForm.get('address')?.touched" class="error-message">
+        L'adresse est requise
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="Entrez l'email">
+      <div *ngIf="agenceForm.get('email')?.invalid && agenceForm.get('email')?.touched" class="error-message">
+        Veuillez entrer un email valide
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Téléphone</label>
+      <input type="tel" id="phone" formControlName="phone" placeholder="Entrez le numéro de téléphone">
+      <div *ngIf="agenceForm.get('phone')?.invalid && agenceForm.get('phone')?.touched" class="error-message">
+        Le téléphone est requis
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" (click)="close()">Annuler</button>
+      <button type="button" class="submit-btn" 
+              (click)="onSubmit()" [disabled]="agenceForm.invalid">
+        {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
+</div>

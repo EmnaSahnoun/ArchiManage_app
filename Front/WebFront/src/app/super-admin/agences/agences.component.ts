@@ -4,6 +4,8 @@ import { AgenceFormComponent } from '../agence-form/agence-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AgencyDetailsComponent } from '../agency-details/agency-details.component';
 import { Router } from '@angular/router';
+import { AgenceService } from '../../services/agenceService';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-agences',
   templateUrl: './agences.component.html',
@@ -12,47 +14,40 @@ import { Router } from '@angular/router';
 export class AgencesComponent implements OnInit{
   currentDate: string;
   searchQuery: string = '';
-  agencies: any[] = [
-    {
-      _id: '1',
-      name: 'Agence Principale',
-      address: '123 Rue Principale, Ville',
-      email: 'contact@agence1.com',
-      phone: '0123456789',
-      createdAt: new Date('2023-01-15')
-    },
-    {
-      _id: '2',
-      name: 'Agence Secondaire',
-      address: '456 Avenue Centrale, Ville',
-      email: 'contact@agence2.com',
-      phone: '0987654321',
-      createdAt: new Date('2023-03-20')
-    },
-    {
-      _id: '3',
-      name: 'Agence Régionale',
-      address: '789 Boulevard Régional, Ville',
-      email: 'contact@agence3.com',
-      phone: '0567891234',
-      createdAt: new Date('2023-05-10')
-    }
-  ];
+  agencies: any[] = [];
   filteredAgencies: any[] = [];
-
+  errorMessage: string | null = null;
+  isLoading!:boolean;
   constructor(
-    public dialog: MatDialog,
+    
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private agenceService:AgenceService,
+    private toastr: ToastrService
   ) { 
     this.currentDate = new Date().toLocaleDateString();
    
   }
 
   ngOnInit(): void {
-    this.filteredAgencies = [...this.agencies];
+    this.loadAgencies();
   }
-
+  loadAgencies(): void {
+    this.isLoading = true;
+    this.agenceService.getAllAgencies().subscribe({
+      next: (agencies) => {
+        this.agencies = agencies;
+        this.filteredAgencies = [...this.agencies];
+        console.log('Agences chargées:', this.agencies);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erreur:', err);
+        // Affichez un message d'erreur à l'utilisateur
+        this.isLoading = false;
+      }
+    });
+  }
   filterAgencies(): void {
     if (!this.searchQuery) {
       this.filteredAgencies = [...this.agencies];
@@ -66,41 +61,40 @@ export class AgencesComponent implements OnInit{
     );
   }
 
-  addAgency() {
-    const dialogRef = this.dialog.open(AgenceFormComponent, {
-      width: '500px',
-      data: { isEditMode: false }
+  addAgency(): void {
+    const modalRef = this.modalService.open(AgenceFormComponent, {
+      size: 'lg',
+      centered: true
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+    modalRef.componentInstance.isEditMode = false;
+
+    modalRef.result.then((result) => {
       if (result) {
-        this.agencies.push({
-          ...result,
-          _id: Date.now().toString(),
-          createdAt: new Date()
-        });
+        this.agencies.unshift(result);
+        this.filterAgencies();
+        this.toastr.success('Nouvelle agence ajoutée');
       }
-    });
+    }).catch(() => {});
   }
-  
-  
-  editAgency(agency: any) {
-    const dialogRef = this.dialog.open(AgenceFormComponent, {
-      width: '500px',
-      data: {
-        isEditMode: true,
-        agencyData: agency
-      }
+
+  editAgency(agency: any): void {
+    const modalRef = this.modalService.open(AgenceFormComponent, {
+      size: 'lg',
+      centered: true
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+    modalRef.componentInstance.isEditMode = true;
+    modalRef.componentInstance.agencyData = agency;
+
+    modalRef.result.then((result) => {
       if (result) {
         const index = this.agencies.findIndex(a => a._id === agency._id);
         if (index !== -1) {
-          this.agencies[index] = { ...this.agencies[index], ...result };
+          this.agencies[index] = result;
+          this.filterAgencies();
+          this.toastr.success('Agence mise à jour');
         }
       }
-    });
+    }).catch(() => {});
   }
   
   
@@ -125,10 +119,11 @@ export class AgencesComponent implements OnInit{
     }
   }
   showAgencyDetails(agency: any) {
-    this.dialog.open(AgencyDetailsComponent, {
-      width: '800px',
-      data: { agency: agency },
-      panelClass: 'agency-details-dialog'
+    const modalRef = this.modalService.open(AgencyDetailsComponent, { 
+      size: 'lg',
+      centered: true,
+      backdrop: 'static'
     });
+    modalRef.componentInstance.agency = agency;
   }
 }

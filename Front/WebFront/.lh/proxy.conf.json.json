@@ -1,0 +1,46 @@
+{
+    "sourceFile": "proxy.conf.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1745069337198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745155744890,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,6 +8,7 @@\n       },\r\n       \"headers\": {\r\n         \"Connection\": \"keep-alive\"\r\n       }\r\n-    }\r\n+    },\r\n+    \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745155759604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,12 @@\n         \"Connection\": \"keep-alive\"\r\n       }\r\n     },\r\n     \r\n+      \"/agence\": {\r\n+        \"target\": \"https://e1.systeo.tn\",\r\n+        \"secure\": true,\r\n+        \"changeOrigin\": true,\r\n+        \"pathRewrite\": {\"^/api\": \"\"}\r\n+      }\r\n+    \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745155767359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,8 @@\n       \"/agence\": {\r\n         \"target\": \"https://e1.systeo.tn\",\r\n         \"secure\": true,\r\n         \"changeOrigin\": true,\r\n-        \"pathRewrite\": {\"^/api\": \"\"}\r\n+        \"pathRewrite\": {\"^/agence\": \"\"}\r\n       }\r\n     \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745155850203,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       }\r\n     },\r\n     \r\n       \"/agence\": {\r\n-        \"target\": \"https://e1.systeo.tn\",\r\n+        \"target\": \"https://e1.systeo.tn/projectcompany\",\r\n         \"secure\": true,\r\n         \"changeOrigin\": true,\r\n         \"pathRewrite\": {\"^/agence\": \"\"}\r\n       }\r\n"
+                },
+                {
+                    "date": 1745186810955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,13 @@\n       }\r\n     },\r\n     \r\n       \"/agence\": {\r\n-        \"target\": \"https://e1.systeo.tn/projectcompany\",\r\n-        \"secure\": true,\r\n-        \"changeOrigin\": true,\r\n-        \"pathRewrite\": {\"^/agence\": \"\"}\r\n-      }\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/agence\": \"/projectcompany\"\r\n+    }\r\n+  }\r\n     \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745187498668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,14 +10,17 @@\n         \"Connection\": \"keep-alive\"\r\n       }\r\n     },\r\n     \r\n+    {\r\n       \"/agence\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n-    \"secure\": false,\r\n-    \"changeOrigin\": true,\r\n-    \"pathRewrite\": {\r\n-      \"^/agence\": \"/projectcompany\"\r\n+        \"target\": \"https://e1.systeo.tn\",\r\n+        \"secure\": false,\r\n+        \"changeOrigin\": true,\r\n+        \"pathRewrite\": {\r\n+          \"^/agence\": \"/projectcompany\"\r\n+        },\r\n+        \"logLevel\": \"debug\"\r\n+      }\r\n     }\r\n-  }\r\n     \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745188144915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,17 +10,20 @@\n         \"Connection\": \"keep-alive\"\r\n       }\r\n     },\r\n     \r\n-    {\r\n-      \"/agence\": {\r\n-        \"target\": \"https://e1.systeo.tn\",\r\n-        \"secure\": false,\r\n-        \"changeOrigin\": true,\r\n-        \"pathRewrite\": {\r\n-          \"^/agence\": \"/projectcompany\"\r\n-        },\r\n-        \"logLevel\": \"debug\"\r\n+    \r\n+    \"/agence\": {\r\n+      \"target\": \"https://e1.systeo.tn\",\r\n+      \"secure\": false,\r\n+      \"changeOrigin\": true,\r\n+      \"pathRewrite\": {\r\n+        \"^/agence\": \"/projectcompany\"\r\n+      },\r\n+      \"logLevel\": \"debug\",\r\n+      \"headers\": {\r\n+        \"Connection\": \"keep-alive\"\r\n       }\r\n     }\r\n     \r\n+    \r\n   }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1745069337198,
+            "name": "Commit-0",
+            "content": "{\r\n    \"/api\": {\r\n      \"target\": \"https://esmm.systeo.tn\",\r\n      \"secure\": false,\r\n      \"changeOrigin\": true,\r\n      \"pathRewrite\": {\r\n        \"^/api\": \"\"\r\n      },\r\n      \"headers\": {\r\n        \"Connection\": \"keep-alive\"\r\n      }\r\n    }\r\n  }"
+        }
+    ]
+}

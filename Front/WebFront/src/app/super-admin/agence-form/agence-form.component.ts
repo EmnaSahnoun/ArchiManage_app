@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AgenceService } from '../../services/agenceService';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-agence-form',
   templateUrl: './agence-form.component.html',
@@ -9,13 +10,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class AgenceFormComponent implements OnInit {
   agenceForm: FormGroup;
-  isEditMode = false;
-  agencyData: any;
+  @Input() isEditMode = false;
+  @Input() agencyData: any;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AgenceFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    public activeModal: NgbActiveModal,
+    private agenceService:AgenceService,
+    private toastr: ToastrService
+   
+
   ) {
     this.agenceForm = this.fb.group({
       name: ['', Validators.required],
@@ -23,30 +28,79 @@ export class AgenceFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required]
     });
-  
-    if (data?.isEditMode && data?.agencyData) {
-      this.isEditMode = true;
-      this.agenceForm.patchValue(data.agencyData);
-    }
   }
+    
 
   ngOnInit(): void {
-    if (this.agencyData) {
-      this.isEditMode = true;
-      this.agenceForm.patchValue(this.agencyData);
+    if (this.isEditMode && this.agencyData) {
+      this.agenceForm.patchValue({
+        name: this.agencyData.name,
+        address: this.agencyData.address,
+        email: this.agencyData.email,
+        phone: this.agencyData.phone
+      });
     }
+  
   }
   
 
 
-onSubmit(): void {
-  if (this.agenceForm.valid) {
-    this.dialogRef.close(this.agenceForm.value);
+  onSubmit(): void {
+    if (this.agenceForm.invalid) {
+      this.markFormGroupTouched(this.agenceForm);
+      return;
+    }
+
+    this.isLoading = true;
+    const agenceData = this.agenceForm.value;
+
+    if (this.isEditMode) {
+      this.updateAgency(agenceData);
+    } else {
+      this.createAgency(agenceData);
+    }
   }
-}
+
+  private createAgency(agenceData: any): void {
+    this.agenceService.createAgence(agenceData).subscribe({
+      next: (response) => {
+        this.toastr.success('Agence créée avec succès');
+        this.activeModal.close(response);
+      },
+      error: (err) => {
+        this.toastr.error('Erreur lors de la création');
+        console.error(err);
+      },
+      complete: () => this.isLoading = false
+    });
+  }
+
+  private updateAgency(agenceData: any): void {
+    this.agenceService.updateAgence(this.agencyData._id, agenceData).subscribe({
+      next: (response) => {
+        this.toastr.success('Agence mise à jour avec succès');
+        this.activeModal.close(response);
+      },
+      error: (err) => {
+        this.toastr.error('Erreur lors de la mise à jour');
+        console.error(err);
+      },
+      complete: () => this.isLoading = false
+    });
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
 
 close(): void {
-  this.dialogRef.close();
+  this.activeModal.dismiss();
 }
 
 

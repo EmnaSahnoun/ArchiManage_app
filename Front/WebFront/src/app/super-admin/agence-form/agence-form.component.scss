@@ -1,128 +1,81 @@
-/* Modal global */
-.modal-dialog {
-    .modal-content {
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      font-family: 'Poppins', sans-serif;
-      border: none;
+/* Utilisez exactement les mêmes styles que user-form */
+.user-form-container {
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+
+  h2 {
+    color: #E27D60;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #555;
     }
-  
-    /* Modal Header */
-    .modal-header {
-      border-bottom: 1px solid #eee;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 1rem 1.5rem;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  
-      .modal-title {
-        font-size: 1.5rem;
-        font-weight: 600;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+
+      &:focus {
+        outline: none;
+        border-color: #E27D60;
+      }
+    }
+
+    .error-message {
+      color: #F44336;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+
+    button {
+      padding: 8px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+
+      &.cancel-btn {
+        background: #f5f5f5;
+        border: 1px solid #ddd;
         color: #333;
+
+        &:hover {
+          background: #e0e0e0;
+        }
       }
-  
-      .close {
-        font-size: 1.5rem;
-        color: #999;
+
+      &.submit-btn {
+        background: #E27D60;
+        color: white;
         border: none;
-        background: transparent;
-  
-        &:hover,
-        &:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
+
+        &:hover {
+          background: darken(#E27D60, 10%);
         }
-      }
-    }
-  
-    /* Modal Body */
-    .modal-body {
-      padding: 1.5rem;
-  
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-  
-        .form-group {
-          display: flex;
-          flex-direction: column;
-  
-          .mat-form-field-label {
-            font-weight: 500;
-            margin-bottom: 0.3rem;
-            color: #555;
-          }
-  
-          .form-control {
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            padding: 0.6rem 1rem;
-            font-size: 1rem;
-            background-color: #f9f9f9;
-            transition: border-color 0.2s;
-  
-            &:focus {
-              outline: none;
-              border-color: #2787C0;
-              background-color: #fff;
-            }
-          }
-  
-          .mat-error {
-            font-size: 0.85rem;
-            color: #F44336;
-            margin-top: 0.25rem;
-          }
-        }
-      }
-    }
-  
-    /* Modal Footer */
-    .modal-footer {
-      border-top: 1px solid #eee;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      background-color: #fafafa;
-  
-      .btn {
-        padding: 0.6rem 1.5rem;
-        border-radius: 30px;
-        font-weight: bold;
-        font-size: 1rem;
-        min-width: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease-in-out;
-  
-        &.btn-outline-secondary {
-          background-color: transparent;
-          color: #555;
-          border: 2px solid #ccc;
-  
-          &:hover {
-            background-color: #f1f1f1;
-          }
-        }
-  
-        &.btn-primary {
-          background-color: #E27D60;
-          color: white;
-          border: none;
-  
-          &:hover {
-            background-color: #d96c50;
-          }
+
+        &:disabled {
+          background: #cccccc;
+          cursor: not-allowed;
         }
       }
     }
   }
-  
+}

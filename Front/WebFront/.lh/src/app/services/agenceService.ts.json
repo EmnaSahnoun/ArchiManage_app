@@ -1,0 +1,86 @@
+{
+    "sourceFile": "src/app/services/agenceService.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 17,
+            "patches": [
+                {
+                    "date": 1745146656143,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745146662929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,9 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class AgencyService {\r\n-  private apiUrl = 'https://e1.systeo.tn/projectcompany'; \n\\ No newline at end of file\n+  private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n+\r\n+\r\n+\r\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745146676289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,12 @@\n })\r\n export class AgencyService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n+  constructor(private http: HttpClient) { }\r\n \r\n+  // Récupérer toutes les agences\r\n\\ No newline at end of file\n+  getAllAgencies(): Observable<any[]> {\r\n+    return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n+  }\r\n \r\n-  \n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745146910113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,14 +4,13 @@\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n-export class AgencyService {\r\n+export class AgenceService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n   constructor(private http: HttpClient) { }\r\n \r\n-  // Récupérer toutes les agences\r\n   getAllAgencies(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1745147416976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n })\r\n export class AgenceService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n-  constructor(private http: HttpClient) { }\r\n+  constructor(private http: HttpClient,private) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745147425072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n })\r\n export class AgenceService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n-  constructor(private http: HttpClient,private) { }\r\n+  constructor(private http: HttpClient,private userS) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745147431355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n })\r\n export class AgenceService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n-  constructor(private http: HttpClient,private userS) { }\r\n+  constructor(private http: HttpClient,private userService:) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745147437909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,16 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient } from '@angular/common/http';\r\n import { Observable } from 'rxjs';\r\n+import { UserService } from './UserService';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class AgenceService {\r\n   private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n-  constructor(private http: HttpClient,private userService:) { }\r\n+  constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745148211432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n+    \r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745148221698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,12 @@\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n-    \r\n+    const headers = this.userServicegetAdminHeaders();\r\n+        return this.http.get<any[]>(url, { headers }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745148260074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n-    const headers = this.userServicegetAdminHeaders();\r\n+    const headers = this.userService.;\r\n         return this.http.get<any[]>(url, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n"
+                },
+                {
+                    "date": 1745148265741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n-    const headers = this.userService.;\r\n+    const headers = this.userService.ge;\r\n         return this.http.get<any[]>(url, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n"
+                },
+                {
+                    "date": 1745148291744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n-    const headers = this.userService.ge;\r\n+    const headers = this.userService.getAdminHeaders();\r\n         return this.http.get<any[]>(url, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n"
+                },
+                {
+                    "date": 1745148301645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class AgenceService {\r\n-  private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n+  private url = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n"
+                },
+                {
+                    "date": 1745148311644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,15 +6,15 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class AgenceService {\r\n-  private url = 'https://e1.systeo.tn/projectcompany'; \r\n+  private apiUrl = 'https://e1.systeo.tn/projectcompany'; \r\n \r\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     const headers = this.userService.getAdminHeaders();\r\n-        return this.http.get<any[]>(url, { headers }).pipe(\r\n+        return this.http.get<any[]>(apiUrl, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745148320976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n   constructor(private http: HttpClient,private userService:UserService) { }\r\n \r\n   getAllAgencies(): Observable<any[]> {\r\n     const headers = this.userService.getAdminHeaders();\r\n-        return this.http.get<any[]>(apiUrl, { headers }).pipe(\r\n+        return this.http.get<any[]>(`${this.apiUrl}/all`, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745148372276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,9 @@\n           catchError(this.handleError)\r\n         );\r\n     return this.http.get<any[]>(`${this.apiUrl}/all`);\r\n   }\r\n-\r\n+ private handleError(error: any): Observable<never> {\r\n+    console.error('An error occurred:', error);\r\n+    return throwError(() => new Error('Something went wrong; please try again later.'));\r\n+  }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745148382886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient } from '@angular/common/http';\r\n-import { Observable, throwError } from 'rxjs';\r\n+import { catchError, Observable, throwError } from 'rxjs';\r\n import { UserService } from './UserService';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n"
+                }
+            ],
+            "date": 1745146656143,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient } from '@angular/common/http';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class AgencyService {\r\n  private apiUrl = 'https://e1.systeo.tn/projectcompany'; "
+        }
+    ]
+}

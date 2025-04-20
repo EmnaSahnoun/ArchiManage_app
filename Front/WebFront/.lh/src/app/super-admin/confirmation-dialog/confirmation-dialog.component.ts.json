@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/app/super-admin/confirmation-dialog/confirmation-dialog.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1745084598559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745084605572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-import { Component } from '@angular/core';\r\n+import { Component, Inject } from '@angular/core';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-confirmation-dialog',\r\n   templateUrl: './confirmation-dialog.component.html',\r\n"
+                },
+                {
+                    "date": 1745084819300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n   templateUrl: './confirmation-dialog.component.html',\r\n   styleUrl: './confirmation-dialog.component.scss'\r\n })\r\n export class ConfirmationDialogComponent {\r\n+  \r\n   constructor(\r\n     public activeModal: NgbActiveModal,\r\n     @Inject('data') public data: any\r\n   ) {}\r\n"
+                },
+                {
+                    "date": 1745085345243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   templateUrl: './confirmation-dialog.component.html',\r\n   styleUrl: './confirmation-dialog.component.scss'\r\n })\r\n export class ConfirmationDialogComponent {\r\n-  \r\n+  username: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal,\r\n     @Inject('data') public data: any\r\n   ) {}\r\n"
+                },
+                {
+                    "date": 1745085350733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   templateUrl: './confirmation-dialog.component.html',\r\n   styleUrl: './confirmation-dialog.component.scss'\r\n })\r\n export class ConfirmationDialogComponent {\r\n-  username: string;\r\n+  @Inpusername: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal,\r\n     @Inject('data') public data: any\r\n   ) {}\r\n"
+                },
+                {
+                    "date": 1745085358827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,14 @@\n-import { Component, Inject } from '@angular/core';\r\n+import { Component, Inject, Input } from '@angular/core';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-confirmation-dialog',\r\n   templateUrl: './confirmation-dialog.component.html',\r\n   styleUrl: './confirmation-dialog.component.scss'\r\n })\r\n export class ConfirmationDialogComponent {\r\n-  @Inpusername: string;\r\n+  @Input()username!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal,\r\n     @Inject('data') public data: any\r\n   ) {}\r\n"
+                }
+            ],
+            "date": 1745084598559,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-confirmation-dialog',\r\n  templateUrl: './confirmation-dialog.component.html',\r\n  styleUrl: './confirmation-dialog.component.scss'\r\n})\r\nexport class ConfirmationDialogComponent {\r\n  constructor(\r\n    public activeModal: NgbActiveModal,\r\n    @Inject('data') public data: any\r\n  ) {}\r\n\r\n  onConfirm(): void {\r\n    this.activeModal.close(true);\r\n  }\r\n\r\n  onDismiss(): void {\r\n    this.activeModal.dismiss(false);\r\n  }\r\n}\r\n"
+        }
+    ]
+}

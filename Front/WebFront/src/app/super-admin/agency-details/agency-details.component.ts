@@ -1,7 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { Router } from '@angular/router';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../../services/UserService';
+import { mergeMap, map, catchError, toArray, timeout } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-agency-details',
@@ -9,37 +14,35 @@ import { Router } from '@angular/router';
   styleUrl: './agency-details.component.scss'
 })
 export class AgencyDetailsComponent implements OnInit {
-  agency: any;
+  @Input() agency: any; 
   users: any[] = [];
-  
+ 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialog: MatDialog,
+    public activeModal: NgbActiveModal, // Injectez NgbActiveModal
+    private modalService: NgbModal, 
     private router: Router,
-    private dialogRef: MatDialogRef<AgencyDetailsComponent>
-  ) {
-    this.agency = data.agency;
-    // Simuler des données utilisateur (en pratique, vous feriez une requête API)
-    this.users = [
-      { id: 1, name: 'User 1', email: 'user1@example.com', role: 'Admin', agencyId: this.agency._id },
-      { id: 2, name: 'User 2', email: 'user2@example.com', role: 'Agent', agencyId: this.agency._id }
-    ];
-  }
+    private userService:UserService
+    
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+  
   viewProjects() {
-    this.dialogRef.close(); // Ferme la modal si vous êtes en mode dialog
+    this.activeModal.close();
     this.router.navigate(['/super-admin/projects'], { 
       queryParams: { agencyId: this.agency._id } 
     });
   }
   addUser() {
-    const dialogRef = this.dialog.open(UserFormComponent, {
-      width: '500px',
-      data: { agencyId: this.agency._id }
+    const modalRef = this.modalService.open(UserFormComponent, {
+      size: 'md',
+      centered: true
     });
+    modalRef.componentInstance.agencyId = this.agency._id;
 
-    dialogRef.afterClosed().subscribe((result:any) => {
+    modalRef.result.then((result) => {
       if (result) {
         this.users.push({
           ...result,
@@ -47,19 +50,73 @@ export class AgencyDetailsComponent implements OnInit {
           agencyId: this.agency._id
         });
       }
+    }, () => {
+      // Gestion de l'annulation
     });
   }
 
-  deleteUser(user: any) {
-    if (confirm(`Voulez-vous vraiment supprimer l'utilisateur ${user.name} ?`)) {
-      this.users = this.users.filter(u => u.id !== user.id);
-    }
+
+  deleteUser(user:any) {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      centered: true,
+      windowClass: 'confirmation-modal'
+    });    
+    // Passez les données à la modal
+    modalRef.componentInstance.username = user.username;
+  
+    modalRef.result.then((result) => {
+      if (result) {
+        // Si l'utilisateur confirme
+        this.userService.deleteUser(user.id).subscribe({
+          next: () => {
+            this.users = this.users.filter(u => u.id !== user.id);
+            console.log('Utilisateur supprimé avec succès');
+          },
+          error: (err) => {
+            console.error('Erreur lors de la suppression', err);
+          }
+        });
+      }
+    }, () => {
+      // Si l'utilisateur annule
+      console.log('Suppression annulée');
+    });
   }
-  showAgencyDetails(agency: any) {
-    this.dialog.open(AgencyDetailsComponent, {
-      width: '800px',
-      data: { agency: agency },
-      panelClass: 'agency-details-dialog'
+  closeModal(): void {
+    this.activeModal.dismiss('Cross click');
+  }
+  loadUsers(): void {
+    const ROLE_HIERARCHY = ['SUPER-ADMIN', 'ADMIN', 'USER'];
+    this.userService.getUsers().pipe(   
+      mergeMap(users => from(users)),
+      mergeMap(user => {
+        return this.userService.getUserRoles(user.id).pipe(
+          map(roles => {
+            // Trouve le rôle le plus élevé selon la hiérarchie
+            const userRoles = roles.map(r => r.name);
+            const highestRole = ROLE_HIERARCHY.find(role => 
+              userRoles.includes(role)
+            ) || 'Aucun rôle';
+  
+            return {
+              ...user,
+              role: highestRole
+            };
+          }),
+          catchError(() => of({
+            ...user,
+            role: 'Erreur chargement rôles'
+          })),
+          timeout(5000)
+        );
+      }, 5), 
+      toArray()
+    ).subscribe({
+      next: (usersWithRoles) => {
+        this.users = usersWithRoles;
+        console.log("Users avec rôles:", this.users);
+      },
+      error: (err) => console.error('Failed to load users with roles', err)
     });
   }
 }

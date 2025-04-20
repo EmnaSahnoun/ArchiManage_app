@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1744021062768,
@@ -40,6 +40,14 @@
                 {
                     "date": 1744033132077,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n                 <tr *ngFor=\"let agency of filteredAgencies; let i = index\" \r\n                 [class.even]=\"i % 2 === 0\" \r\n                 [class.odd]=\"i % 2 !== 0\"\r\n-                [routerLink]=\"['/agences', agency._id]\">\r\n+                (click)=\"showAgencyDetails(agency)\">\r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n                 <td>{{ agency.phone }}</td>\r\n"
+                },
+                {
+                    "date": 1745063808414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n           {{ currentDate | date: 'dd/MM/yyyy' }}\r\n         </div>\r\n   \r\n         <!-- Add Agency Button -->\r\n-        <button mat-button class=\"add-agency\" (click)=\"addAgency()\">\r\n+        <button mat-button class=\"add-agency \" (click)=\"addAgency()\">\r\n           <i class=\"bi bi-plus\"></i> Nouvelle Agence\r\n         </button>\r\n       </div>\r\n   \r\n"
+                },
+                {
+                    "date": 1745063814941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n           {{ currentDate | date: 'dd/MM/yyyy' }}\r\n         </div>\r\n   \r\n         <!-- Add Agency Button -->\r\n-        <button mat-button class=\"add-agency \" (click)=\"addAgency()\">\r\n+        <button class=\"add-agency btn btn-primary\" (click)=\"addAgency()\">\r\n           <i class=\"bi bi-plus\"></i> Nouvelle Agence\r\n         </button>\r\n       </div>\r\n   \r\n"
                 }
             ],
             "date": 1744021062768,

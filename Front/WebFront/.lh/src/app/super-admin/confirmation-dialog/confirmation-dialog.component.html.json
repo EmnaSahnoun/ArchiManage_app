@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/super-admin/confirmation-dialog/confirmation-dialog.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1745084579694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745084830126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     <div class=\"modal-header\">\r\n       <h5 class=\"modal-title\">Confirmation</h5>\r\n     </div>\r\n     <div class=\"modal-body\">\r\n-      <p>Voulez-vous vraiment supprimer l'utilisateur <strong>{{data.username}}</strong> ?</p>\r\n+      <p>Voulez-vous vraiment supprimer l'utilisateur <strong>{{data}}</strong> ?</p>\r\n     </div>\r\n     <div class=\"modal-footer\">\r\n       <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onDismiss()\">Non</button>\r\n       <button type=\"button\" class=\"btn btn-danger\" (click)=\"onConfirm()\">Oui</button>\r\n"
+                },
+                {
+                    "date": 1745085369433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     <div class=\"modal-header\">\r\n       <h5 class=\"modal-title\">Confirmation</h5>\r\n     </div>\r\n     <div class=\"modal-body\">\r\n-      <p>Voulez-vous vraiment supprimer l'utilisateur <strong>{{data}}</strong> ?</p>\r\n+      <p>Voulez-vous vraiment supprimer l'utilisateur <strong>{{username}}</strong> ?</p>\r\n     </div>\r\n     <div class=\"modal-footer\">\r\n       <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onDismiss()\">Non</button>\r\n       <button type=\"button\" class=\"btn btn-danger\" (click)=\"onConfirm()\">Oui</button>\r\n"
+                }
+            ],
+            "date": 1745084579694,
+            "name": "Commit-0",
+            "content": "<div class=\"confirmation-dialog\">\r\n    <div class=\"modal-header\">\r\n      <h5 class=\"modal-title\">Confirmation</h5>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <p>Voulez-vous vraiment supprimer l'utilisateur <strong>{{data.username}}</strong> ?</p>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"onDismiss()\">Non</button>\r\n      <button type=\"button\" class=\"btn btn-danger\" (click)=\"onConfirm()\">Oui</button>\r\n    </div>\r\n  </div>"
+        }
+    ]
+}

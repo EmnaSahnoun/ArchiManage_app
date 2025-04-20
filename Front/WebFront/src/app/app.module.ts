@@ -22,7 +22,7 @@ import { ProjectDetailsComponent } from './shared/project-details/project-detail
 import { MatDialogModule } from '@angular/material/dialog';
 import { BidiModule } from '@angular/cdk/bidi';
 
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -32,9 +32,13 @@ import { TasksComponent } from './shared/tasks/tasks.component';
 import { DatePipe } from '@angular/common';
 import { TaskDetailsComponent } from './shared/task-details/task-details.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';
+
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +55,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SignupComponent,
     TasksComponent,
     TaskDetailsComponent,
+    ConfirmationDialogComponent,
 
   ],
   imports: [
@@ -66,6 +71,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     MatDialogModule,
     NgbModalModule,
+    NgbModule,
     BidiModule,
     SharedModule,
     DragDropModule,
@@ -74,9 +80,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AppRoutingModule,
     HttpClientModule,
     MatButtonModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true
+    })
     
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

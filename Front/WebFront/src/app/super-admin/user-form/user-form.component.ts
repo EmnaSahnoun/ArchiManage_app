@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component,  Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from '../../services/UserService';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-form',
@@ -12,11 +12,10 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   roles: string[] = [];
   isLoading = false;
-
+  @Input() agencyId!: string;
   constructor(
+    public activeModal: NgbActiveModal, // Injectez NgbActiveModal
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<UserFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private userService:UserService
   ) {
     this.userForm = this.fb.group({
@@ -28,12 +27,15 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("voici le token",localStorage.getItem("token"))
     this.loadRoles();
   }
   loadRoles(): void {
     this.userService.getRoles().subscribe({
       next: (roles) => {
+        console.log("les roles avant la récupération",this.roles)
         this.roles = roles.map((r: any) => r.name);
+        console.log("les roles apresssss la récupération",this.roles)
       },
       error: (err) => console.error('Failed to load roles', err)
     });
@@ -81,7 +83,7 @@ export class UserFormComponent implements OnInit {
                 this.userService.assignRoleToUser(user.id, role).subscribe({
                   next: () => {
                     this.isLoading = false;
-                    this.dialogRef.close({ success: true });
+                    this.activeModal.close({ success: true });
                   },
                   error: (err) => {
                     console.error('Failed to assign role', err);
@@ -101,6 +103,6 @@ export class UserFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.activeModal.dismiss();
   }
 }

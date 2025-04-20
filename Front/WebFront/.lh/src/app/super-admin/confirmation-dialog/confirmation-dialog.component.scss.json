@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/super-admin/confirmation-dialog/confirmation-dialog.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1745084624060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1745084624060,
+            "name": "Commit-0",
+            "content": ".confirmation-dialog {\r\n    padding: 20px;\r\n    background: white;\r\n    border-radius: 8px;\r\n    \r\n    .modal-header {\r\n      border-bottom: 1px solid #dee2e6;\r\n      padding-bottom: 15px;\r\n      margin-bottom: 15px;\r\n      \r\n      .modal-title {\r\n        color: #E27D60;\r\n        font-weight: 600;\r\n      }\r\n    }\r\n    \r\n    .modal-body {\r\n      padding: 15px 0;\r\n      margin-bottom: 20px;\r\n    }\r\n    \r\n    .modal-footer {\r\n      display: flex;\r\n      justify-content: flex-end;\r\n      gap: 10px;\r\n      \r\n      .btn {\r\n        padding: 8px 20px;\r\n        border-radius: 20px;\r\n        font-weight: 500;\r\n        \r\n        &.btn-secondary {\r\n          background-color: #f1f1f1;\r\n          color: #333;\r\n          border: none;\r\n        }\r\n        \r\n        &.btn-danger {\r\n          background-color: #F44336;\r\n          color: white;\r\n          border: none;\r\n        }\r\n      }\r\n    }\r\n  }"
+        }
+    ]
+}

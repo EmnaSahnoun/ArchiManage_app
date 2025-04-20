@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 39,
             "patches": [
                 {
                     "date": 1744030117160,
@@ -92,6 +92,78 @@
                 {
                     "date": 1744991535102,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n           temporary: false\r\n         }]\r\n       };\r\n \r\n-      this.keycloakService.createUser(userData).subscribe({\r\n+      this.userService.createUser(userData).subscribe({\r\n         next: (response) => {\r\n           // Trouver l'ID de l'utilisateur créé (peut nécessiter une requête supplémentaire)\r\n           this.assignRoleToUser(formValue.username, formValue.role);\r\n         },\r\n"
+                },
+                {
+                    "date": 1745063309440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,12 @@\n   roles: string[] = [];\r\n   isLoading = false;\r\n \r\n   constructor(\r\n+    public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n+    private userService: UserService\r\n+    private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1745063318664,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,12 +13,10 @@\n   roles: string[] = [];\r\n   isLoading = false;\r\n \r\n   constructor(\r\n-    public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n+    public activeModal: NgbActiveModal,\r\n     private fb: FormBuilder,\r\n-    private userService: UserService\r\n-    private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1745063324821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n   roles: string[] = [];\r\n   isLoading = false;\r\n \r\n   constructor(\r\n-    public activeModal: NgbActiveModal,\r\n+    public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n"
+                },
+                {
+                    "date": 1745063342599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Component, Inject, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n import { UserService } from '../../services/UserService';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-user-form',\r\n   templateUrl: './user-form.component.html',\r\n@@ -101,7 +102,7 @@\n     });\r\n   }\r\n \r\n   onCancel(): void {\r\n-    this.dialogRef.close();\r\n+    this.activeModal.dismiss();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745063416052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n               if (role) {\r\n                 this.userService.assignRoleToUser(user.id, role).subscribe({\r\n                   next: () => {\r\n                     this.isLoading = false;\r\n-                    this.dialogRef.close({ success: true });\r\n+                    this.activeModal.close({ success: true });\r\n                   },\r\n                   error: (err) => {\r\n                     console.error('Failed to assign role', err);\r\n                     this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1745063753864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n-\r\n+  @Input() agencyId: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n"
+                },
+                {
+                    "date": 1745063759065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component, Inject, OnInit } from '@angular/core';\r\n+import { Component, Inject, Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n import { UserService } from '../../services/UserService';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n"
+                },
+                {
+                    "date": 1745063769410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n-  @Input() agencyId: string;\r\n+  @Input() agencyId!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private dialogRef: MatDialogRef<UserFormComponent>,\r\n"
+                },
+                {
+                    "date": 1745065046097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n   @Input() agencyId!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n-    private dialogRef: MatDialogRef<UserFormComponent>,\r\n     @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n"
+                },
+                {
+                    "date": 1745065091288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n import { Component, Inject, Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n import { UserService } from '../../services/UserService';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n@@ -16,9 +15,8 @@\n   @Input() agencyId!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n-    @Inject(MAT_DIALOG_DATA) public data: any,\r\n     private userService:UserService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       username: ['', Validators.required],\r\n"
+                },
+                {
+                    "date": 1745065101472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component, Inject, Input, OnInit } from '@angular/core';\r\n+import { Component,  Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { UserService } from '../../services/UserService';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n"
+                },
+                {
+                    "date": 1745065203499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n+    cons\r\n     this.loadRoles();\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n"
+                },
+                {
+                    "date": 1745065212075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    cons\r\n+    console.log(\"voici le token\")\r\n     this.loadRoles();\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n"
+                },
+                {
+                    "date": 1745065221815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"voici le token\")\r\n+    console.log(\"voici le token\",localStorage.)\r\n     this.loadRoles();\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n"
+                },
+                {
+                    "date": 1745065227606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"voici le token\",localStorage.)\r\n+    console.log(\"voici le token\",localStorage.getItem(\"token\"))\r\n     this.loadRoles();\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n"
+                },
+                {
+                    "date": 1745065493277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,9 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n+        console.log(\"les roles avant la récupératioon\")\r\n         this.roles = roles.map((r: any) => r.name);\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n"
+                },
+                {
+                    "date": 1745065501205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-        console.log(\"les roles avant la récupératioon\")\r\n+        console.log(\"les roles avant la récupération\",this.roels)\r\n         this.roles = roles.map((r: any) => r.name);\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n"
+                },
+                {
+                    "date": 1745065508365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,10 +32,11 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-        console.log(\"les roles avant la récupération\",this.roels)\r\n+        console.log(\"les roles avant la récupération\",this.roles)\r\n         this.roles = roles.map((r: any) => r.name);\r\n+        console.log(\"les roles avant la récupération\",this.roles)\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n"
                 }
             ],
             "date": 1744030117160,

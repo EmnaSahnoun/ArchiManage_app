@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 50,
+            "activePatchIndex": 61,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -208,6 +208,50 @@
                 {
                     "date": 1745016569349,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,16 +27,14 @@\n import { LoginComponent } from './login/login.component';\r\n import { SignupComponent } from './signup/signup.component';\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n-import { DragDropModule } from '@angular/cdk/drag-drop';\r\n+\r\n import { DatePipe } from '@angular/common';\r\n import { TaskDetailsComponent } from './shared/task-details/task-details.component';\r\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n import { HttpClientModule } from '@angular/common/http';\r\n import { MatButtonModule } from '@angular/material/button';\r\n-\r\n-import { DragDropModule } from '@angular/cdk/drag-drop';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1745058598636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,9 @@\n import { TaskDetailsComponent } from './shared/task-details/task-details.component';\r\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n import { HttpClientModule } from '@angular/common/http';\r\n import { MatButtonModule } from '@angular/material/button';\r\n+import { DragDropModule } from '@angular/cdk/drag-drop';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -74,8 +75,9 @@\n     HttpClientModule,\r\n     MatButtonModule,\r\n     \r\n   ],\r\n-  providers: [DatePipe],\r\n+  providers: [\r\n+    DatePipe],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1745058610122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,8 +76,10 @@\n     MatButtonModule,\r\n     \r\n   ],\r\n   providers: [\r\n-    DatePipe],\r\n+    DatePipe,\r\n+  \r\n+  ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1745058615838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n-  \r\n+  provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true \r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1745058621970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n-  provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true \r\n+  {}\r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1745058628521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n \r\n import { DatePipe } from '@angular/common';\r\n import { TaskDetailsComponent } from './shared/task-details/task-details.component';\r\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n-import { HttpClientModule } from '@angular/common/http';\r\n+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n @NgModule({\r\n   declarations: [\r\n@@ -77,9 +77,9 @@\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n-  {}\r\n+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1745058641058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,9 @@\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n+import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1745062748166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,9 @@\n     MatProgressBarModule,\r\n     FormsModule,\r\n     MatDialogModule,\r\n     NgbModalModule,\r\n+    NgbModule\r\n     BidiModule,\r\n     SharedModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n"
+                },
+                {
+                    "date": 1745062754860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { BidiModule } from '@angular/cdk/bidi';\r\n \r\n-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';\r\n+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n import { SignupComponent } from './signup/signup.component';\r\n import { SharedModule } from './shared/shared.module';\r\n@@ -66,9 +66,9 @@\n     MatProgressBarModule,\r\n     FormsModule,\r\n     MatDialogModule,\r\n     NgbModalModule,\r\n-    NgbModule\r\n+    NgbModule,\r\n     BidiModule,\r\n     SharedModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n"
+                },
+                {
+                    "date": 1745084565036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,9 @@\n import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n+import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -51,8 +52,9 @@\n     LoginComponent,\r\n     SignupComponent,\r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n+    ConfirmationDialogComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1745175575425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,10 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n+\r\n+import { ToastrModule } from 'ngx-toastr';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1745175595933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,8 +79,13 @@\n     BrowserModule,\r\n     AppRoutingModule,\r\n     HttpClientModule,\r\n     MatButtonModule,\r\n+    ToastrModule.forRoot({\r\n+      positionClass: 'toast-top-right',\r\n+      preventDuplicates: true,\r\n+      progressBar: true\r\n+    })\r\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n"
                 }
             ],
             "date": 1741609977833,

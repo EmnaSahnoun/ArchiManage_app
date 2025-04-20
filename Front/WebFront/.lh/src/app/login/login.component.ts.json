@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -152,6 +152,42 @@
                 {
                     "date": 1744985515375,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,49 +18,9 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n-  onLogin() {\r\n-    this.errorMessage = '';\r\n-    \r\n-    if (!this.user.email || !this.user.password) {\r\n-      this.errorMessage = 'Email et mot de passe sont requis';\r\n-      return;\r\n-    }\r\n \r\n-    this.authService.customLogin(this.user.email, this.user.password).subscribe({\r\n-      error: (err) => {\r\n-        this.errorMessage = 'Identifiants incorrects';\r\n-        console.error(err);\r\n-      }\r\n-    });\r\n-  }\r\n   onLogin() {\r\n     this.authService.login();\r\n   }\r\n }\r\n-import { Component, OnInit } from '@angular/core';\r\n-import { Router } from '@angular/router';\r\n-import { AuthService } from '../services/auth.service';\r\n-\r\n-@Component({\r\n-  selector: 'app-login',\r\n-  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n-\r\n-})\r\n-export class LoginComponent  {\r\n-  constructor(private authService: AuthService) {\r\n-    // Redirection immédiate\r\n-    this.authService.login();\r\n-  }\r\n-\r\n-  user = {\r\n-    email: '',\r\n-    password: ''\r\n-  };\r\n-  errorMessage: string = '';\r\n-  \r\n-\r\n-  onLogin() {\r\n-    this.authService.login();\r\n-  }\r\n-}\r\n"
+                },
+                {
+                    "date": 1745058319248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,14 @@\n   };\r\n   errorMessage: string = '';\r\n   \r\n \r\n-  onLogin() {\r\n+  login() {\r\n+    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n+    localStorage.setItem('pre_auth_url', this.router.url);\r\n+    \r\n+    // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n+  }  onLogin() {\r\n+    this.authService.login();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745058324711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,14 +19,8 @@\n   };\r\n   errorMessage: string = '';\r\n   \r\n \r\n-  login() {\r\n-    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n-    localStorage.setItem('pre_auth_url', this.router.url);\r\n-    \r\n-    // Déclenche le flux Keycloak\r\n+  onLogin() {\r\n     this.authService.login();\r\n-  }  onLogin() {\r\n-    this.authService.login();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745058342559,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,18 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n-\r\n+  login() {\r\n+    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n+    localStorage.setItem('pre_auth_url', this.router.url);\r\n+    \r\n+    // Déclenche le flux Keycloak\r\n+    this.authService.login();\r\n+  }\r\n   onLogin() {\r\n+    lStorage.setItem('pre_auth_url', this.router.url);\r\n+    \r\n+    // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745058347830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,13 +18,9 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n-  login() {\r\n-    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n-    localStorage.setItem('pre_auth_url', this.router.url);\r\n-    \r\n-    // Déclenche le flux Keycloak\r\n+ lenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n   onLogin() {\r\n     lStorage.setItem('pre_auth_url', this.router.url);\r\n"
+                },
+                {
+                    "date": 1745058355359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,13 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n- lenche le flux Keycloak\r\n+  login() {\r\n+    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n+    localStorage.setItem('pre_auth_url', this.router.url);\r\n+    \r\n+    // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n   onLogin() {\r\n     lStorage.setItem('pre_auth_url', this.router.url);\r\n"
+                },
+                {
+                    "date": 1745058360820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,9 @@\n   errorMessage: string = '';\r\n   \r\n   login() {\r\n     // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n-    localStorage.setItem('pre_auth_url', this.router.url);\r\n     \r\n-    // Déclenche le flux Keycloak\r\n-    this.authService.login();\r\n   }\r\n   onLogin() {\r\n     lStorage.setItem('pre_auth_url', this.router.url);\r\n     \r\n"
+                },
+                {
+                    "date": 1745058367347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,14 +18,11 @@\n     password: ''\r\n   };\r\n   errorMessage: string = '';\r\n   \r\n-  login() {\r\n-    // Sauvegarde l'URL actuelle avant redirection Keycloak\r\n-    \r\n-  }\r\n+\r\n   onLogin() {\r\n-    lStorage.setItem('pre_auth_url', this.router.url);\r\n+    localStorage.setItem('pre_auth_url', this.router.url);\r\n     \r\n     // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n"
+                },
+                {
+                    "date": 1745058373614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService) {\r\n+  constructor(private authService: AuthService , private) {\r\n     // Redirection immédiate\r\n     this.authService.login();\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1745058380667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService , private) {\r\n+  constructor(private authService: AuthService , private router:Router) {\r\n     // Redirection immédiate\r\n     this.authService.login();\r\n   }\r\n \r\n"
                 }
             ],
             "date": 1742130408469,

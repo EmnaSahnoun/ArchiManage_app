@@ -1,4 +1,7 @@
 <div class="agency-details-container">
+  <button class="close-modal-btn" (click)="closeModal()">
+    <i class="bi bi-x"></i>
+  </button>
     <div class="agency-info">
       
         <div class="header-section">
@@ -47,7 +50,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of users">
-              <td>{{ user.name }}</td>
+              <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
               <td class="actions">

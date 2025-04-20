@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1741611133553,
@@ -56,6 +56,18 @@
                 {
                     "date": 1745011584698,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,11 +104,9 @@\n             ],\r\n             \"styles\": [\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\",\r\n-              \"node_modules/bootstrap/dist/css/bootstrap.min.css\",\r\n-              \"node_modules/bootstrap-icons/font/bootstrap-icons.css\",\r\n-              \"src/styles.scss\"\r\n+              \"node_modules/bootstrap/dist/css/bootstrap.min.css\"\r\n             ],\r\n             \"scripts\": [\r\n               \"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js\"\r\n             ]\r\n"
+                },
+                {
+                    "date": 1745069381402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,10 @@\n             \"production\": {\r\n               \"buildTarget\": \"WebFront:build:production\"\r\n             },\r\n             \"development\": {\r\n-              \"buildTarget\": \"WebFront:build:development\"\r\n+              \"buildTarget\": \"WebFront:build:development\",\r\n+              \"proxyConfig\": \"proxy.conf.json\"\r\n             }\r\n           },\r\n           \"defaultConfiguration\": \"development\"\r\n         },\r\n"
+                },
+                {
+                    "date": 1745175720598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -103,8 +103,9 @@\n                 \"input\": \"public\"\r\n               }\r\n             ],\r\n             \"styles\": [\r\n+              \"node_modules/ngx-toastr/toastr.css\",\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\",\r\n               \"node_modules/bootstrap/dist/css/bootstrap.min.css\"\r\n             ],\r\n"
+                },
+                {
+                    "date": 1745175726897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n                 \"input\": \"public\"\r\n               }\r\n             ],\r\n             \"styles\": [\r\n+              \"node_modules/ngx-toastr/toastr.css\",\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\",\r\n               \"node_modules/bootstrap/dist/css/bootstrap.min.css\"\r\n               \r\n"
                 }
             ],
             "date": 1741611133553,

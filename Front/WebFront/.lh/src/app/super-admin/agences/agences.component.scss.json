@@ -3,11 +3,35 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1744021072454,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745060439802,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     background: #F1F1F1;\r\n     height: 100vh;\r\n-  \r\n+    min-height: calc(100vh - 40px);\r\n     .container {\r\n       background: white;\r\n       border-radius: 20px;\r\n       padding: 0.5rem;\r\n"
+                },
+                {
+                    "date": 1745060476953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,11 @@\n       border-radius: 20px;\r\n       padding: 0.5rem;\r\n       align-items: center;\r\n       justify-content: space-between;\r\n+      margin: 0 auto;\r\n+    max-width: 1200px; // Ajoutez une largeur max\r\n+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);\r\n     }\r\n   \r\n     .agence-header {\r\n       display: flex;\r\n"
+                },
+                {
+                    "date": 1745060497808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n     .container {\r\n       background: white;\r\n       border-radius: 20px;\r\n       padding: 0.5rem;\r\n-      align-items: center;\r\n-      justify-content: space-between;\r\n+      \r\n       margin: 0 auto;\r\n     max-width: 1200px; // Ajoutez une largeur max\r\n     box-shadow: 0 2px 10px rgba(0,0,0,0.1);\r\n     }\r\n"
+                },
+                {
+                    "date": 1745060513840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n       justify-content: space-between;\r\n       align-items: center;\r\n       flex-wrap: wrap;\r\n       margin-bottom: 20px;\r\n-      gap: 10px;\r\n+      gap: 5;\r\n     }\r\n   \r\n     /* Search Bar */\r\n     .input-container {\r\n"
+                },
+                {
+                    "date": 1745060529611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,13 @@\n       justify-content: space-between;\r\n       align-items: center;\r\n       flex-wrap: wrap;\r\n       margin-bottom: 20px;\r\n-      gap: 5;\r\n+      gap: 15px;\r\n+      @media (max-width: 768px) {\r\n+        flex-direction: column;\r\n+        align-items: stretch;\r\n+      }\r\n     }\r\n   \r\n     /* Search Bar */\r\n     .input-container {\r\n"
+                },
+                {
+                    "date": 1745060660683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,30 +2,24 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     background: #F1F1F1;\r\n     height: 100vh;\r\n-    min-height: calc(100vh - 40px);\r\n+  \r\n     .container {\r\n       background: white;\r\n       border-radius: 20px;\r\n       padding: 0.5rem;\r\n-      \r\n-      margin: 0 auto;\r\n-    max-width: 1200px; // Ajoutez une largeur max\r\n-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);\r\n+      align-items: center;\r\n+      justify-content: space-between;\r\n     }\r\n   \r\n     .agence-header {\r\n       display: flex;\r\n       justify-content: space-between;\r\n       align-items: center;\r\n       flex-wrap: wrap;\r\n       margin-bottom: 20px;\r\n-      gap: 15px;\r\n-      @media (max-width: 768px) {\r\n-        flex-direction: column;\r\n-        align-items: stretch;\r\n-      }\r\n+      gap: 10px;\r\n     }\r\n   \r\n     /* Search Bar */\r\n     .input-container {\r\n"
                 }
             ],
             "date": 1744021072454,

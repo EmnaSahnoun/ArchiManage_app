@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1744021095038,
@@ -132,6 +132,62 @@
                 {
                     "date": 1744033123181,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -124,7 +124,11 @@\n       // Vous pourriez aussi utiliser un service de notification ici\r\n     }\r\n   }\r\n   showAgencyDetails(agency: any) {\r\n-    this.router.navigate(['/super-admin/agences', agency._id]);\r\n+    this.dialog.open(AgencyDetailsComponent, {\r\n+      width: '800px',\r\n+      data: { agency: agency },\r\n+      panelClass: 'agency-details-dialog'\r\n+    });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745055811003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,8 +49,9 @@\n    \r\n   }\r\n \r\n   ngOnInit(): void {\r\n+    consol\r\n     this.filteredAgencies = [...this.agencies];\r\n   }\r\n \r\n   filterAgencies(): void {\r\n"
+                },
+                {
+                    "date": 1745055818333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n    \r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    consol\r\n+    console.log(\"\")\r\n     this.filteredAgencies = [...this.agencies];\r\n   }\r\n \r\n   filterAgencies(): void {\r\n"
+                },
+                {
+                    "date": 1745055825204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n    \r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"\")\r\n+    console.log(\"agne\")\r\n     this.filteredAgencies = [...this.agencies];\r\n   }\r\n \r\n   filterAgencies(): void {\r\n"
+                },
+                {
+                    "date": 1745060012208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n    \r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"agne\")\r\n+    console.log(\"agences\")\r\n     this.filteredAgencies = [...this.agencies];\r\n   }\r\n \r\n   filterAgencies(): void {\r\n@@ -128,8 +128,9 @@\n   showAgencyDetails(agency: any) {\r\n     this.dialog.open(AgencyDetailsComponent, {\r\n       width: '800px',\r\n       data: { agency: agency },\r\n-      panelClass: 'agency-details-dialog'\r\n+      panelClass: 'agency-details-dialog',\r\n+      position: { top: '50px' } // Ajustez selon besoin\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745061395892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,8 +127,10 @@\n   }\r\n   showAgencyDetails(agency: any) {\r\n     this.dialog.open(AgencyDetailsComponent, {\r\n       width: '800px',\r\n+      maxWidth: '90vw', // Pour le responsive\r\n+    maxHeight: '90vh'\r\n       data: { agency: agency },\r\n       panelClass: 'agency-details-dialog',\r\n       position: { top: '50px' } // Ajustez selon besoin\r\n     });\r\n"
+                },
+                {
+                    "date": 1745061406345,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -128,11 +128,11 @@\n   showAgencyDetails(agency: any) {\r\n     this.dialog.open(AgencyDetailsComponent, {\r\n       width: '800px',\r\n       maxWidth: '90vw', // Pour le responsive\r\n-    maxHeight: '90vh'\r\n+    maxHeight: '90vh',\r\n       data: { agency: agency },\r\n       panelClass: 'agency-details-dialog',\r\n-      position: { top: '50px' } // Ajustez selon besoin\r\n+      autoFocus: false\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745062503321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,8 @@\n    \r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"agences\")\r\n     this.filteredAgencies = [...this.agencies];\r\n   }\r\n \r\n   filterAgencies(): void {\r\n@@ -127,12 +126,9 @@\n   }\r\n   showAgencyDetails(agency: any) {\r\n     this.dialog.open(AgencyDetailsComponent, {\r\n       width: '800px',\r\n-      maxWidth: '90vw', // Pour le responsive\r\n-    maxHeight: '90vh',\r\n       data: { agency: agency },\r\n-      panelClass: 'agency-details-dialog',\r\n-      autoFocus: false\r\n+      panelClass: 'agency-details-dialog'\r\n     });\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745062927043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -124,8 +124,13 @@\n       // Vous pourriez aussi utiliser un service de notification ici\r\n     }\r\n   }\r\n   showAgencyDetails(agency: any) {\r\n+    const modalRef = this.modalService.open(AgencyDetailsComponent, { \r\n+      size: 'lg',\r\n+      centered: true,\r\n+      backdrop: 'static'\r\n+    });\r\n     this.dialog.open(AgencyDetailsComponent, {\r\n       width: '800px',\r\n       data: { agency: agency },\r\n       panelClass: 'agency-details-dialog'\r\n"
+                },
+                {
+                    "date": 1745062958529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -129,11 +129,7 @@\n       size: 'lg',\r\n       centered: true,\r\n       backdrop: 'static'\r\n     });\r\n-    this.dialog.open(AgencyDetailsComponent, {\r\n-      width: '800px',\r\n-      data: { agency: agency },\r\n-      panelClass: 'agency-details-dialog'\r\n-    });\r\n+    modalRef.componentInstance.agency = agency;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745063120333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,21 +66,24 @@\n     );\r\n   }\r\n \r\n   addAgency() {\r\n-    const dialogRef = this.dialog.open(AgenceFormComponent, {\r\n-      width: '500px',\r\n-      data: { isEditMode: false }\r\n+    const modalRef = this.modalService.open(AgenceFormComponent, {\r\n+      size: 'md',\r\n+      centered: true\r\n     });\r\n-  \r\n-    dialogRef.afterClosed().subscribe(result => {\r\n+    modalRef.componentInstance.isEditMode = false;\r\n+    \r\n+    modalRef.result.then((result) => {\r\n       if (result) {\r\n         this.agencies.push({\r\n           ...result,\r\n           _id: Date.now().toString(),\r\n           createdAt: new Date()\r\n         });\r\n       }\r\n+    }, () => {\r\n+      // Gestion de l'annulation\r\n     });\r\n   }\r\n   \r\n   \r\n"
+                },
+                {
+                    "date": 1745063150038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,23 +87,24 @@\n   }\r\n   \r\n   \r\n   editAgency(agency: any) {\r\n-    const dialogRef = this.dialog.open(AgenceFormComponent, {\r\n-      width: '500px',\r\n-      data: {\r\n-        isEditMode: true,\r\n-        agencyData: agency\r\n-      }\r\n+    const modalRef = this.modalService.open(AgenceFormComponent, {\r\n+      size: 'md',\r\n+      centered: true\r\n     });\r\n-  \r\n-    dialogRef.afterClosed().subscribe(result => {\r\n+    modalRef.componentInstance.isEditMode = true;\r\n+    modalRef.componentInstance.agencyData = agency;\r\n+    \r\n+    modalRef.result.then((result) => {\r\n       if (result) {\r\n         const index = this.agencies.findIndex(a => a._id === agency._id);\r\n         if (index !== -1) {\r\n           this.agencies[index] = { ...this.agencies[index], ...result };\r\n         }\r\n       }\r\n+    }, () => {\r\n+      // Gestion de l'annulation\r\n     });\r\n   }\r\n   \r\n   \r\n"
+                },
+                {
+                    "date": 1745064842038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n   ];\r\n   filteredAgencies: any[] = [];\r\n \r\n   constructor(\r\n-    public dialog: MatDialog,\r\n+    \r\n     private modalService: NgbModal,\r\n     private router: Router\r\n   ) { \r\n     this.currentDate = new Date().toLocaleDateString();\r\n"
+                },
+                {
+                    "date": 1745146701251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,10 @@\n \r\n   constructor(\r\n     \r\n     private modalService: NgbModal,\r\n-    private router: Router\r\n+    private router: Router,\r\n+    \r\n   ) { \r\n     this.currentDate = new Date().toLocaleDateString();\r\n    \r\n   }\r\n"
+                },
+                {
+                    "date": 1745146708522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n   constructor(\r\n     \r\n     private modalService: NgbModal,\r\n     private router: Router,\r\n-    private\r\n+    private \r\n   ) { \r\n     this.currentDate = new Date().toLocaleDateString();\r\n    \r\n   }\r\n"
                 }
             ],
             "date": 1744021095038,

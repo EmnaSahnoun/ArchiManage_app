@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 28,
             "patches": [
                 {
                     "date": 1744990690983,
@@ -52,6 +52,74 @@
                 {
                     "date": 1745013324282,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,5 +87,7 @@\n   private handleError(error: any): Observable<never> {\r\n     console.error('An error occurred:', error);\r\n     return throwError(() => new Error('Something went wrong; please try again later.'));\r\n   }\r\n+\r\n+  \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745065388870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n   // Obtenir la liste des rôles\r\n   getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n-\r\n+    console\r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n"
+                },
+                {
+                    "date": 1745065395435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n   // Obtenir la liste des rôles\r\n   getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n-    console\r\n+    console.log()\r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n"
+                },
+                {
+                    "date": 1745065404484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n   // Obtenir la liste des rôles\r\n   getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n-    console.log()\r\n+    console.log(\"headers dasn roles\")\r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n"
+                },
+                {
+                    "date": 1745069259986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,11 +54,14 @@\n   // Obtenir la liste des rôles\r\n   getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n-    console.log(\"headers dasn roles\")\r\n+\r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n-      catchError(this.handleError)\r\n+      catchError((error) => {\r\n+        console.error('Error fetching roles:', error);\r\n+        return throwError(() => new Error('Failed to load roles. Please check your permissions.'));\r\n+      })\r\n     );\r\n   }\r\n \r\n   // Assigner un rôle à un utilisateur\r\n"
+                },
+                {
+                    "date": 1745069287151,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,15 +75,17 @@\n   }\r\n \r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n-    const token = localStorage.getItem(\"token\");\r\n+    const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n       throw new Error('No access token available');\r\n     }\r\n+\r\n     return new HttpHeaders({\r\n-      'Content-Type': 'application/json',\r\n+      'Accept': 'application/json',\r\n       'Authorization': `Bearer ${token}`\r\n+      // Ne pas inclure 'Content-Type' pour les requêtes GET\r\n     });\r\n   }\r\n \r\n   // Gestion des erreurs\r\n"
+                },
+                {
+                    "date": 1745069413188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   providedIn: 'root'\r\n })\r\n export class UserService\r\n  {\r\n-  private keycloakUrl = 'https://esmm.systeo.tn';\r\n+  private keycloakUrl = '\"proxyConfig\": \"proxy.conf.json\"';\r\n   private realm = 'systeodigital';\r\n   \r\n   constructor(private http: HttpClient,private authService: AuthService) {}\r\n \r\n"
+                },
+                {
+                    "date": 1745074501939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   providedIn: 'root'\r\n })\r\n export class UserService\r\n  {\r\n-  private keycloakUrl = '\"proxyConfig\": \"proxy.conf.json\"';\r\n+  private keycloakUrl = '/api';\r\n   private realm = 'systeodigital';\r\n   \r\n   constructor(private http: HttpClient,private authService: AuthService) {}\r\n \r\n@@ -49,9 +49,16 @@\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n-\r\n+  getUserRoles(userId: string): Observable<any[]> {\r\n+    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n+    const headers = this.getAdminHeaders();\r\n+  \r\n+    return this.http.get<any[]>(url, { headers }).pipe(\r\n+      catchError(this.handleError)\r\n+    );\r\n+  }\r\n   // Obtenir la liste des rôles\r\n   getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n"
+                },
+                {
+                    "date": 1745074533286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,9 @@\n \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n+    \r\n   }\r\n   getUserRoles(userId: string): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n     const headers = this.getAdminHeaders();\r\n"
+                },
+                {
+                    "date": 1745074541473,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,11 @@\n \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n-    \r\n   }\r\n+\r\n+  //get \r\n   getUserRoles(userId: string): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n     const headers = this.getAdminHeaders();\r\n   \r\n"
+                },
+                {
+                    "date": 1745074552000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n \r\n-  //get \r\n+  //obteni roles user \r\n   getUserRoles(userId: string): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n     const headers = this.getAdminHeaders();\r\n   \r\n"
+                },
+                {
+                    "date": 1745074558131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n \r\n-  //obteni roles user \r\n+  //obtenir les roles d'un  roles user \r\n   getUserRoles(userId: string): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n     const headers = this.getAdminHeaders();\r\n   \r\n"
+                },
+                {
+                    "date": 1745074566863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,13 +50,12 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n \r\n-  //obtenir les roles d'un  roles user \r\n+  //obtenir les roles d'un user \r\n   getUserRoles(userId: string): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n     const headers = this.getAdminHeaders();\r\n-  \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n"
+                },
+                {
+                    "date": 1745084108487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,7 +100,7 @@\n   private handleError(error: any): Observable<never> {\r\n     console.error('An error occurred:', error);\r\n     return throwError(() => new Error('Something went wrong; please try again later.'));\r\n   }\r\n-\r\n   \r\n+  \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745084121053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,7 +100,16 @@\n   private handleError(error: any): Observable<never> {\r\n     console.error('An error occurred:', error);\r\n     return throwError(() => new Error('Something went wrong; please try again later.'));\r\n   }\r\n+\r\n+  //supprimer user\r\n+  deleteUser(userId: string): Observable<any> {\r\n+    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;\r\n+    const headers = this.getAdminHeaders();\r\n   \r\n+    return this.http.delete(url, { headers }).pipe(\r\n+      catchError(this.handleError)\r\n+    );\r\n+  }\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745084138870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,9 +105,8 @@\n   //supprimer user\r\n   deleteUser(userId: string): Observable<any> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;\r\n     const headers = this.getAdminHeaders();\r\n-  \r\n     return this.http.delete(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n"
+                },
+                {
+                    "date": 1745148284435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n     );\r\n   }\r\n \r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n-  private getAdminHeaders(): HttpHeaders {\r\n+   getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n       throw new Error('No access token available');\r\n     }\r\n"
+                },
+                {
+                    "date": 1745148891171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n     );\r\n   }\r\n \r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n-   getAdminHeaders(): HttpHeaders {\r\n+  private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n       throw new Error('No access token available');\r\n     }\r\n"
                 }
             ],
             "date": 1744990690983,

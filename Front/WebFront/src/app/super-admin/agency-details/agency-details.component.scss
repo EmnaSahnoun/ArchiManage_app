@@ -1,7 +1,29 @@
 .agency-details-container {
     padding: 20px;
     font-family: 'Poppins', sans-serif;
+    .close-modal-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #777;
+      cursor: pointer;
+      z-index: 10;
+      padding: 5px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
   
+      &:hover {
+        background-color: #f1f1f1;
+        color: #333;
+      }
+    }
     .agency-info {
       margin-bottom: 30px;
       padding: 20px;

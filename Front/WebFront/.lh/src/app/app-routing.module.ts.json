@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 70,
+            "activePatchIndex": 73,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -288,6 +288,18 @@
                 {
                     "date": 1745013935985,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     component: TasksComponent \r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule), canActivate: [AuthGuard]\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745057921497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     component: TasksComponent \r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),canActivate: [AuthGuard]\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745057929692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent },\r\n+  { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard] },\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1745057973470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard] },\r\n+  { path: 'dashboard', component: DashboardComponent},\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
                 }
             ],
             "date": 1741609914429,
