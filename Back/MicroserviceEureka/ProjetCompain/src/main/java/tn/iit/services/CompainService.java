@@ -1,49 +1,139 @@
 package tn.iit.services;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
 import tn.iit.repositories.CompainRepository;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class CompainService {
-	private final CompainRepository compainRepository;
+    private final CompainRepository compainRepository;
 
-	
-	
-	public Compain saveOrUpdate(Compain compain) {
-	
-		return compainRepository.save(compain);
-	
-	} 
-	public List<Compain> findAll() {
+   
+    private final KeycloakService keycloakService;
 
-		return compainRepository.findAll();
+// Méthode pour la création
+    public Compain createCompain(Compain compain, String authToken) {
+        // 1. Sauvegarde dans MongoDB
+        Compain savedCompain = compainRepository.save(compain);
+        
+        try {
+            // 2. Création dans Keycloak
+            Map<String, List<String>> attributes = createAttributes(savedCompain);
+            keycloakService.createKeycloakGroup(
+                savedCompain.getName(),
+                attributes,
+                authToken
+            );
+            return savedCompain;
+        } catch (Exception e) {
+            // Rollback MongoDB si Keycloak échoue
+            compainRepository.delete(savedCompain);
+            throw new RuntimeException("Failed to create Keycloak group", e);
+        }
+    }
 
-	}
-	
-	public Compain getById(Long id) throws CompainNotFoundException {
+    // Méthode pour la mise à jour
+public Compain updateCompain(String id, Compain updatedCompain, String authToken)
+        throws CompainNotFoundException {
+    // 1. Récupérer l'entité existante
+    Compain existingCompain = compainRepository.findById(id)
+            .orElseThrow(() -> new CompainNotFoundException("Company not found"));
 
-		return compainRepository.findById(id).orElseThrow(() -> new CompainNotFoundException(id + " compain Not Found"));
+    // 2. Sauvegarder l'ancien état pour rollback
+    String oldName = existingCompain.getName();
+    
 
-	}
-	
-	public void delete(Long id) {
+    // 3. Mettre à jour MongoDB en premier
+    existingCompain.setName(updatedCompain.getName());
+    existingCompain.setAddress(updatedCompain.getAddress());
+    existingCompain.setEmail(updatedCompain.getEmail());
+    existingCompain.setPhone(updatedCompain.getPhone());
+    existingCompain.setCreatedAt(updatedCompain.getCreatedAt());
+    
+    Compain savedCompain = compainRepository.save(existingCompain);
 
-		compainRepository.deleteById(id);
+    try {
+        // 4. Mettre à jour Keycloak avec l'ancien nom et le nouveau nom
+        Map<String, List<String>> attributes = createAttributes(savedCompain);
+        keycloakService.updateKeycloakGroup(
+            oldName,             // Ancien nom pour trouver le groupe
+            savedCompain.getName(), // Nouveau nom à appliquer
+            attributes,
+            authToken
+        );
+        return savedCompain;
+    } catch (Exception e) {
+       
+        throw new RuntimeException("Failed to update Keycloak group. MongoDB changes rolled back.", e);
+    }
+}
 
-	}
-	
-	
-	
-	
+    private Map<String, List<String>> createAttributes(Compain compain) {
+        Map<String, List<String>> attributes = new HashMap<>();
+        attributes.put("address", List.of(compain.getAddress()));
+        attributes.put("phone", List.of(compain.getPhone()));
+        attributes.put("email", List.of(compain.getEmail()));
+        attributes.put("createdAt", List.of(compain.getCreatedAt().toString()));
+        return attributes;
+    }
+
+
+
+    public List<Compain> findAll() {
+        return compainRepository.findAll();
+    }
+
+    public Compain getById(String id) throws CompainNotFoundException {
+        return compainRepository.findById(id)
+                .orElseThrow(() -> new CompainNotFoundException("Company with id " + id + " not found"));
+    }
+
+    public void delete(String id) {
+        compainRepository.deleteById(id);
+    }
+
+    public Compain update(String id, Compain updatedCompain) throws CompainNotFoundException {
+        Compain existingCompain = getById(id);
+        
+        // Mise à jour des champs
+        existingCompain.setName(updatedCompain.getName());
+        existingCompain.setAddress(updatedCompain.getAddress());
+        existingCompain.setEmail(updatedCompain.getEmail());
+        existingCompain.setPhone(updatedCompain.getPhone());
+        // Ajoutez les autres champs nécessaires
+        
+        return compainRepository.save(existingCompain);
+    }
+
+public void deleteCompain(String id, String authToken) throws CompainNotFoundException {
+    Compain compain = compainRepository.findById(id)
+            .orElseThrow(() -> new CompainNotFoundException("Company not found"));
+    
+    // Sauvegarde temporaire pour rollback
+   Compain tempCopy = new Compain();
+    tempCopy.setId(compain.getId());
+    tempCopy.setName(compain.getName());
+    tempCopy.setAddress(compain.getAddress());
+    tempCopy.setEmail(compain.getEmail());
+    tempCopy.setPhone(compain.getPhone());
+    tempCopy.setCreatedAt(compain.getCreatedAt());   
+    try {
+        // 1. Supprimer dans MongoDB en premier
+        compainRepository.deleteById(id);
+        
+        // 2. Supprimer dans Keycloak
+        keycloakService.deleteKeycloakGroup(compain.getName(), authToken);
+        
+    } catch (Exception e) {
+        // Rollback MongoDB si Keycloak échoue
+        compainRepository.save(tempCopy);
+        throw new RuntimeException("Failed to delete Keycloak group. MongoDB changes rolled back.", e);
+    }
+}
+
 
 }

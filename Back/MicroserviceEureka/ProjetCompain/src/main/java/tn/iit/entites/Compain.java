@@ -2,29 +2,20 @@ package tn.iit.entites;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Compain {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String Reference;
-	private String name;
-	private String country;
-	private String town;
-	private String adress;
-	private String pc;
-	private Date createdAt;  
-	private Date UpdatedAt;
-}                                                   
+@Document(collection = "companies") // Spécifie le nom de la collection MongoDB
+@Data // Lombok - génère getters, setters, toString, etc.
+public class Compain{
+    @Id // Identifiant unique MongoDB
+    private String id;
+    
+    private String name;
+    private String address;
+    private String email;
+    private String phone;
+    private Date createdAt = new Date(); // Initialisé avec la date actuelle par défaut
+}
