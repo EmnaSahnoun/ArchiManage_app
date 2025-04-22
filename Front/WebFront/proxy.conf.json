@@ -10,20 +10,14 @@
         "Connection": "keep-alive"
       }
     },
-    
-    
-    "/agence": {
-      "target": "https://e1.systeo.tn",
-      "secure": false,
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/agence": "/projectcompany"
-      },
-      "logLevel": "debug",
-      "headers": {
-        "Connection": "keep-alive"
-      }
+  
+  "/agence": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/agence": "/projectcompany"
     }
-    
-    
   }
+}
+    

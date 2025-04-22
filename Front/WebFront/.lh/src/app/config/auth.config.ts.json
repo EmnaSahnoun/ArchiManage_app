@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 24,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1744967725075,
@@ -104,6 +104,10 @@
                 {
                     "date": 1744984351798,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  //dummyClientSecret:'5FfaiB11tLGbFcuwcgUZYgj0OaeYIaUX',\r\n   redirectUri: window.location.origin  + '/dashboard',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n"
+                },
+                {
+                    "date": 1745246050023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  redirectUri: window.location.origin  + '/dashboard',\r\n+  redirectUri: window.location.origin  + '/super-admin/agences',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
                 }
             ],
             "date": 1744967725075,

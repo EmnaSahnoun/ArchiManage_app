@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1744024184352,
@@ -216,6 +216,30 @@
                 {
                     "date": 1745187683751,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,26 +45,26 @@\n   \r\n \r\n \r\n   onSubmit(): void {\r\n-    if (this.agenceForm.invalid) return;\r\n-  \r\n-    this.isLoading = true;\r\n-    const agenceData = this.agenceForm.value;\r\n-  \r\n-    this.agenceService.createAgence(agenceData).subscribe({\r\n-      next: (response) => {\r\n-        this.toastr.success('Agence créée avec succès');\r\n-        this.activeModal.close(response);\r\n-      },\r\n-      error: (err) => {\r\n-        console.error('Erreur détaillée:', err);\r\n-        this.toastr.error(`Erreur: ${err.error?.message || err.message}`);\r\n-        this.isLoading = false;\r\n-      }\r\n-    });\r\n-  }\r\n+  if (this.agenceForm.invalid) return;\r\n \r\n+  this.isLoading = true;\r\n+  const agenceData = this.agenceForm.value;\r\n+\r\n+  this.agenceService.createAgence(agenceData).subscribe({\r\n+    next: (response) => {\r\n+      this.toastr.success('Agence créée avec succès');\r\n+      this.activeModal.close(response);\r\n+    },\r\n+    error: (err) => {\r\n+      console.error('Erreur détaillée:', err);\r\n+      this.toastr.error(`Erreur: ${err.error?.message || err.message}`);\r\n+      this.isLoading = false;\r\n+    }\r\n+  });\r\n+}\r\n+\r\n   private createAgency(agenceData: any): void {\r\n     this.agenceService.createAgence(agenceData).subscribe({\r\n       next: (response) => {\r\n         this.toastr.success('Agence créée avec succès');\r\n"
+                },
+                {
+                    "date": 1745243792623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,25 +45,25 @@\n   \r\n \r\n \r\n   onSubmit(): void {\r\n-  if (this.agenceForm.invalid) return;\r\n+    if (this.agenceForm.invalid) {\r\n+      this.markFormGroupTouched(this.agenceForm);\r\n+      return;\r\n+    }\r\n \r\n-  this.isLoading = true;\r\n-  const agenceData = this.agenceForm.value;\r\n+    this.isLoading = true;\r\n+    const agenceData = {\r\n+      ...this.agenceForm.value,\r\n+      createdAt: new Date().toISOString() // Ajoute la date actuelle\r\n+    };\r\n \r\n-  this.agenceService.createAgence(agenceData).subscribe({\r\n-    next: (response) => {\r\n-      this.toastr.success('Agence créée avec succès');\r\n-      this.activeModal.close(response);\r\n-    },\r\n-    error: (err) => {\r\n-      console.error('Erreur détaillée:', err);\r\n-      this.toastr.error(`Erreur: ${err.error?.message || err.message}`);\r\n-      this.isLoading = false;\r\n+    if (this.isEditMode) {\r\n+      this.updateAgency(agenceData);\r\n+    } else {\r\n+      this.createAgency(agenceData);\r\n     }\r\n-  });\r\n-}\r\n+  }\r\n \r\n   private createAgency(agenceData: any): void {\r\n     this.agenceService.createAgence(agenceData).subscribe({\r\n       next: (response) => {\r\n"
+                },
+                {
+                    "date": 1745244714207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,10 +51,9 @@\n       return;\r\n     }\r\n \r\n     this.isLoading = true;\r\n-    const agenceData = {\r\n-      ...this.agenceForm.value,\r\n+    const agenceData = this.agenceForm.value,\r\n       createdAt: new Date().toISOString() // Ajoute la date actuelle\r\n     };\r\n \r\n     if (this.isEditMode) {\r\n"
+                },
+                {
+                    "date": 1745244719412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,11 +51,10 @@\n       return;\r\n     }\r\n \r\n     this.isLoading = true;\r\n-    const agenceData = this.agenceForm.value,\r\n-      createdAt: new Date().toISOString() // Ajoute la date actuelle\r\n-    };\r\n+    const agenceData = this.agenceForm.value;\r\n+     \r\n \r\n     if (this.isEditMode) {\r\n       this.updateAgency(agenceData);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1745275821468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,8 @@\n     }\r\n \r\n     this.isLoading = true;\r\n     const agenceData = this.agenceForm.value;\r\n-     \r\n \r\n     if (this.isEditMode) {\r\n       this.updateAgency(agenceData);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1745282066497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,12 @@\n       return;\r\n     }\r\n \r\n     this.isLoading = true;\r\n-    const agenceData = this.agenceForm.value;\r\n+    const agenceData = {\r\n+      ...this.agenceForm.value,\r\n+      id: this.agencyData?.id // On conserve l'ID existant en mode édition\r\n+    };\r\n \r\n     if (this.isEditMode) {\r\n       this.updateAgency(agenceData);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1745282084632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,18 +78,17 @@\n     });\r\n   }\r\n \r\n   private updateAgency(agenceData: any): void {\r\n-    this.agenceService.updateAgence(this.agencyData._id, agenceData).subscribe({\r\n+    this.agenceService.updateAgence(this.agencyData.id, agenceData).subscribe({\r\n       next: (response) => {\r\n         this.toastr.success('Agence mise à jour avec succès');\r\n         this.activeModal.close(response);\r\n       },\r\n       error: (err) => {\r\n-        this.toastr.error('Erreur lors de la mise à jour');\r\n-        console.error(err);\r\n-      },\r\n-      complete: () => this.isLoading = false\r\n+        this.toastr.error('Erreur lors de la mise à jour: ' + err.message);\r\n+        this.isLoading = false;\r\n+      }\r\n     });\r\n   }\r\n \r\n   private markFormGroupTouched(formGroup: FormGroup): void {\r\n"
                 }
             ],
             "date": 1744024184352,

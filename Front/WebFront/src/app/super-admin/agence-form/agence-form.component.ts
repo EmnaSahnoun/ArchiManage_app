@@ -52,7 +52,10 @@ export class AgenceFormComponent implements OnInit {
     }
 
     this.isLoading = true;
-    const agenceData = this.agenceForm.value;
+    const agenceData = {
+      ...this.agenceForm.value,
+      id: this.agencyData?.id // On conserve l'ID existant en mode édition
+    };
 
     if (this.isEditMode) {
       this.updateAgency(agenceData);
@@ -76,16 +79,15 @@ export class AgenceFormComponent implements OnInit {
   }
 
   private updateAgency(agenceData: any): void {
-    this.agenceService.updateAgence(this.agencyData._id, agenceData).subscribe({
+    this.agenceService.updateAgence(this.agencyData.id, agenceData).subscribe({
       next: (response) => {
         this.toastr.success('Agence mise à jour avec succès');
         this.activeModal.close(response);
       },
       error: (err) => {
-        this.toastr.error('Erreur lors de la mise à jour');
-        console.error(err);
-      },
-      complete: () => this.isLoading = false
+        this.toastr.error('Erreur lors de la mise à jour: ' + err.message);
+        this.isLoading = false;
+      }
     });
   }
 
