@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 45,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1744021095038,
@@ -188,6 +188,10 @@
                 {
                     "date": 1745146708522,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n   constructor(\r\n     \r\n     private modalService: NgbModal,\r\n     private router: Router,\r\n-    private\r\n+    private \r\n   ) { \r\n     this.currentDate = new Date().toLocaleDateString();\r\n    \r\n   }\r\n"
+                },
+                {
+                    "date": 1745360285151,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n import { AuthService } from '../../services/auth.service';\r\n @Component({\r\n   selector: 'app-agences',\r\n   templateUrl: './agence.component.html',\r\n-  styleUrls: ['./agence.component.scss']\r\n+  styleUrls: ['./agences.component.scss']\r\n   templateUrl: './agences.component.html',\r\n   styleUrl: './agences.component.scss'\r\n })\r\n export class AgencesComponent implements OnInit{\r\n"
                 }
             ],
             "date": 1744021095038,

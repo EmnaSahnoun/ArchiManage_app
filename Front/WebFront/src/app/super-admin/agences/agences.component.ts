@@ -6,10 +6,14 @@ import { AgencyDetailsComponent } from '../agency-details/agency-details.compone
 import { Router } from '@angular/router';
 import { AgenceService } from '../../services/agenceService';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-agences',
   templateUrl: './agences.component.html',
-  styleUrl: './agences.component.scss'
+  styleUrls: ['./agences.component.scss']
+  
 })
 export class AgencesComponent implements OnInit{
   currentDate: string;
@@ -23,7 +27,10 @@ export class AgencesComponent implements OnInit{
     private modalService: NgbModal,
     private router: Router,
     private agenceService:AgenceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { 
     this.currentDate = new Date().toLocaleDateString();
    
@@ -98,26 +105,49 @@ export class AgencesComponent implements OnInit{
   }
   
   
-  deleteAgency(agency: any, event?: MouseEvent) {
-    // Empêche la propagation de l'événement si le paramètre est présent
-    if (event) {
-      event.stopPropagation();
-    }
+  deleteAgence(id: string, name: string): void {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      centered: true,
+      windowClass: 'confirmation-modal'
+  });
+
+  modalRef.componentInstance.message = `Voulez-vous vraiment supprimer l'agence ${name} ?`;
+  modalRef.componentInstance.username = name;
+  modalRef.result.then((confirm) => {
+      if (confirm) {
+        const token = this.authService.getAccessToken();
+        if(token){
+          this.agenceService.deleteAgence(id, token).subscribe({
+            next: () => {
+              this.showSuccess('Agence supprimée avec succès');
+              this.loadAgencies(); // Rafraîchir la liste
+            },
+            error: (err) => {
+              console.error(err);
+              this.showError('Échec de la suppression de l\'agence');
+            }
+          });}
+      }
+  }).catch(() => {
+      console.log('Suppression annulée');
+  });
   
-    const confirmation = confirm(`Êtes-vous sûr de vouloir supprimer l'agence ${agency.name} ?`);
-    
-    if (confirmation) {
-      // Supprime l'agence du tableau principal
-      this.agencies = this.agencies.filter(a => a._id !== agency._id);
-      
-      // Met à jour la liste filtrée
-      this.filterAgencies();
-      
-      // Optionnel : Afficher un message de succès
-      console.log(`Agence ${agency.name} supprimée avec succès`);
-      // Vous pourriez aussi utiliser un service de notification ici
-    }
   }
+
+  private showSuccess(message: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  private showError(message: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 5000,
+      panelClass: ['error-snackbar']
+    });
+  }
+
   showAgencyDetails(agency: any) {
     const modalRef = this.modalService.open(AgencyDetailsComponent, { 
       size: 'lg',

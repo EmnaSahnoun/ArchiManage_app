@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1741687942503,
@@ -56,6 +56,34 @@
                 {
                     "date": 1745009544826,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,6 @@\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n-  logout(){\r\n-    this.authService.lo();\r\n-  }\r\n+ \r\n }\r\n"
+                },
+                {
+                    "date": 1745326420969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,9 @@\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n- \r\n+  logout(){\r\n+    this.authService.logout();\r\n+    \r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326441267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,7 +16,7 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n-    \r\n+    this.r\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326450789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,16 +7,18 @@\n   templateUrl: './sidebar.component.html',\r\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n-  constructor(private authService:AuthService){}\r\n+  constructor(private authService:AuthService,\r\n+    private \r\n+  ){}\r\n   @Output() titleChange = new EventEmitter<string>();\r\n \r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n-    this.r\r\n+    this.router\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326460677,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   styleUrl: './sidebar.component.scss'\r\n })\r\n export class SidebarComponent {\r\n   constructor(private authService:AuthService,\r\n-    private \r\n+    private router:Router\r\n   ){}\r\n   @Output() titleChange = new EventEmitter<string>();\r\n \r\n   changeTitle(title: string): void {\r\n@@ -18,7 +18,7 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n-    this.router\r\n+    this.router.\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326465791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,7 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n-    this.router.\r\n+    this.router.navigate(['/login']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326843417,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,6 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n-    this.router.navigate(['/login']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745326961618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,6 +18,7 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n+    this.router.navigate(['/login']);\r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1741687942503,

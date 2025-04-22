@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1745146656143,
@@ -76,6 +76,10 @@
                 {
                     "date": 1745148382886,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient } from '@angular/common/http';\r\n-import { Observable, throwError } from 'rxjs';\r\n+import { catchError, Observable, throwError } from 'rxjs';\r\n import { UserService } from './UserService';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n"
+                },
+                {
+                    "date": 1745319021294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,12 +155,12 @@\n       }),\r\n       switchMap(user => {\r\n           console.log('Utilisateur trouvé, ID:', user.id);\r\n           \r\n-          // Créez l'objet rôle correctement\r\n-          const roleObject = { name: roleName }; // <-- Correction ici\r\n-          \r\n-          // Création des observables pour l'assignation du rôle et du groupe\r\n+          this.userService.getRoles().subscribe({\r\n+            next: (roles) => {\r\n+              const role = roles.find((r: any) => r.name === roleName);\r\n+              if (role) {\r\n           const assignRole$ = this.assignRoleToUser(user.id, roleObject).pipe( // <-- Passez l'objet\r\n               tap(() => console.log(`Rôle ${roleName} assigné avec succès`)),\r\n               catchError(err => {\r\n                   console.error('Erreur assignation rôle:', err);\r\n"
                 }
             ],
             "date": 1745146656143,

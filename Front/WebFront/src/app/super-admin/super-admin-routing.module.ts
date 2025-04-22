@@ -10,9 +10,9 @@ import { AuthGuard } from '../guard/auth.guard';
 const routes: Routes = [
   { 
     path: '', 
-    component: SuperAdminComponent,
+    component: SuperAdminComponent, 
     children: [
-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent },
+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},
       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },
       { path: 'agences', component:AgencesComponent },
       { path: 'agences/:id', component: AgencyDetailsComponent},

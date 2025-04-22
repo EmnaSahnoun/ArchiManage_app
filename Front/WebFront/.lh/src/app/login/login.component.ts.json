@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 45,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -188,6 +188,42 @@
                 {
                     "date": 1745058380667,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService , private) {\r\n+  constructor(private authService: AuthService , private router:Router) {\r\n     // Redirection immédiate\r\n     this.authService.login();\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1745327254861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,9 @@\n   errorMessage: string = '';\r\n   \r\n \r\n   onLogin() {\r\n-    localStorage.setItem('pre_auth_url', this.router.url);\r\n-    \r\n+   \r\n     // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327264134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,7 @@\n   \r\n \r\n   onLogin() {\r\n    \r\n-    // Déclenche le flux Keycloak\r\n     this.authService.login();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327276097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n })\r\n export class LoginComponent  {\r\n   constructor(private authService: AuthService , private router:Router) {\r\n-    // Redirection immédiate\r\n+    \r\n     this.authService.login();\r\n   }\r\n \r\n   user = {\r\n"
+                },
+                {
+                    "date": 1745327282292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,6 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n+    \r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327287745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    \r\n+    this.router.navigate(['/dashboard']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327376740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.router.navigate(['/dashboard']);\r\n+    this.router.navigate(['//super-admin/agences']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327421038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.router.navigate(['//super-admin/agences']);\r\n+    this.router.navigate(['/super-admin/agences']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327569330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.router.navigate(['/super-admin/agences']);\r\n+\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745327648718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-\r\n+    this.router.navigate(['/super-admin/agences']);\r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1742130408469,

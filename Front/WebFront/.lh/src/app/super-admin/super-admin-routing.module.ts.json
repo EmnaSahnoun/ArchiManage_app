@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 23,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1743945538168,
@@ -100,6 +100,54 @@
                 {
                     "date": 1745014139484,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,10 @@\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n-    component: SuperAdminComponent\r\n+    component: SuperAdminComponent,\r\n+    canActivate: [AuthGuard],\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent },\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n"
+                },
+                {
+                    "date": 1745310553878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,11 +10,10 @@\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n-    canActivate: [AuthGuard],\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent },\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745310560848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,},\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,[AuthGuard]},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745310567414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,[AuthGuard]},\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,can[AuthGuard]},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745310574676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,can[AuthGuard]},\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,canActivate[AuthGuard]},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745310580798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,canActivate[AuthGuard]},\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,canActivate},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745310695700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent,\r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent ,canActivate},\r\n+      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n"
+                },
+                {
+                    "date": 1745313645067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     component: SuperAdminComponent,\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n-      { path: 'agences', component:AgencesComponent },\r\n+      { path: 'agences', component:AgencesComponent , canActivate:[AuthGuard]},\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745313817715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     component: SuperAdminComponent,\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n-      { path: 'agences', component:AgencesComponent , canActivate:[AuthGuard]},\r\n+      { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745313837553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     component: SuperAdminComponent,\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n-      { path: 'agences', component:AgencesComponent },\r\n+      { path: 'agences', component:AgencesComponent , canActivate:[AuthGuard]},\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745314000717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,13 +9,13 @@\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n-    component: SuperAdminComponent,\r\n+    component: SuperAdminComponent,, canActivate:[AuthGuard]\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n-      { path: 'agences', component:AgencesComponent , canActivate:[AuthGuard]},\r\n+      { path: 'agences', component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745314007425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n-    component: SuperAdminComponent,, canActivate:[AuthGuard]\r\n+    component: SuperAdminComponent, canActivate:[AuthGuard],\r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n"
+                },
+                {
+                    "date": 1745314162993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n-    component: SuperAdminComponent, canActivate:[AuthGuard],\r\n+    component: SuperAdminComponent, \r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n"
                 }
             ],
             "date": 1743945538168,

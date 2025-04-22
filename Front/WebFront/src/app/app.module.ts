@@ -37,7 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
@@ -84,7 +84,8 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar: true
-    })
+    }),
+    MatSnackBarModule
     
   ],
   providers: [

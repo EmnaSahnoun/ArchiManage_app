@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 61,
+            "activePatchIndex": 63,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -252,6 +252,14 @@
                 {
                     "date": 1745175595933,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,8 +79,13 @@\n     BrowserModule,\r\n     AppRoutingModule,\r\n     HttpClientModule,\r\n     MatButtonModule,\r\n+    ToastrModule.forRoot({\r\n+      positionClass: 'toast-top-right',\r\n+      preventDuplicates: true,\r\n+      progressBar: true\r\n+    })\r\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n"
+                },
+                {
+                    "date": 1745359334808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,9 +83,10 @@\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n       progressBar: true\r\n-    })\r\n+    }),\r\n+    MatSnackBarModule\r\n     \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n"
+                },
+                {
+                    "date": 1745359427748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n-\r\n+import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
                 }
             ],
             "date": 1741609977833,

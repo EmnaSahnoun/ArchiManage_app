@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 100,
             "patches": [
                 {
                     "date": 1741609885165,
@@ -364,6 +364,50 @@
                 {
                     "date": 1745009556958,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item (click)=\"log\" routerLinkActive=\"active\">\r\n+      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745319779618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\">\r\n+      <li mat-list-item routerLink=\"/signout\" clrouterLinkActive=\"active\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745319785706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/signout\" clrouterLinkActive=\"active\">\r\n+      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\" cli>\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745319793204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\" cli>\r\n+      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\" (click)=\"logout\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745320009927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/signout\" routerLinkActive=\"active\" (click)=\"logout\">\r\n+      <li mat-list-item routerLink=\"/lo\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326500649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/lo\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326507082,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <li mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326526614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326629258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      < mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326638719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,11 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      < mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <button mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n-      </li>\r\n+      </button>\r\n       \r\n     </ul>\r\n   </mat-sidenav>\r\n   \r\n"
+                },
+                {
+                    "date": 1745326644447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <button mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <button mat-list-item   (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </button>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745326727603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,11 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <button mat-list-item   (click)=\"logout()\">\r\n+      <li mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n-      </button>\r\n+      </li>\r\n       \r\n     </ul>\r\n   </mat-sidenav>\r\n   \r\n"
                 }
             ],
             "date": 1741609885165,

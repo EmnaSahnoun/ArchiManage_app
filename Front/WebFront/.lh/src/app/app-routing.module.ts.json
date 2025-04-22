@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 73,
+            "activePatchIndex": 80,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -300,6 +300,34 @@
                 {
                     "date": 1745057973470,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard] },\r\n+  { path: 'dashboard', component: DashboardComponent},\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1745310704260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent},\r\n+  { path: 'dashboard', component: DashboardComponent ,  ,canActivate:[AuthGuard]},\r\n   { path: 'projects', component: ProjectsComponent },\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n@@ -23,9 +23,9 @@\n     component: TasksComponent \r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),canActivate: [AuthGuard]\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745312894408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   { path: 'signup', component: SignupComponent },\r\n-  { path: 'dashboard', component: DashboardComponent ,  ,canActivate:[AuthGuard]},\r\n-  { path: 'projects', component: ProjectsComponent },\r\n+  { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},\r\n+  { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     \r\n"
+                },
+                {
+                    "date": 1745312903441,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n-    \r\n+    canActivate:[AuthGuard]\r\n   },\r\n   { \r\n     path: 'project/:id/phase/:phaseId', \r\n     component: TasksComponent \r\n"
+                },
+                {
+                    "date": 1745312909040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n   },\r\n   { \r\n     path: 'project/:id/phase/:phaseId', \r\n     component: TasksComponent \r\n+    , canActivate:[AuthGuard]\r\n   },\r\n   { \r\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n"
+                },
+                {
+                    "date": 1745312917406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,10 @@\n     , canActivate:[AuthGuard]\r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n+    \r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745313007169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,10 +24,9 @@\n     , canActivate:[AuthGuard]\r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n-    \r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n   },\r\n   { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n   { path: '**', redirectTo: '/login' } \r\n   \r\n"
+                },
+                {
+                    "date": 1745320046583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n-  { path: 'signup', component: SignupComponent },\r\n+  \r\n   { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n"
                 }
             ],
             "date": 1741609914429,

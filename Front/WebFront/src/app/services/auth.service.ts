@@ -59,12 +59,13 @@ export class AuthService {
       }
     
       logout(): void {
-        this.clearTokenData();
+    
         this.oauthService.logOut();
-        this.router.navigate(['/login']);
+        localStorage.removeItem('token');
+        
       }
       private clearTokenData(): void {
-        localStorage.removeItem('token');
+       
         localStorage.removeItem('expiration');
         localStorage.removeItem('user_profile');
       }

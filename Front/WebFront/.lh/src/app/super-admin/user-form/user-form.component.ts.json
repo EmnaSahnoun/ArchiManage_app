@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 39,
+            "activePatchIndex": 65,
             "patches": [
                 {
                     "date": 1744030117160,
@@ -164,6 +164,110 @@
                 {
                     "date": 1745065508365,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,10 +32,11 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-        console.log(\"les roles avant la récupération\",this.roels)\r\n+        console.log(\"les roles avant la récupération\",this.roles)\r\n         this.roles = roles.map((r: any) => r.name);\r\n+        console.log(\"les roles avant la récupération\",this.roles)\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1745312812693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,41 +34,47 @@\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n         console.log(\"les roles avant la récupération\",this.roles)\r\n         this.roles = roles.map((r: any) => r.name);\r\n-        console.log(\"les roles avant la récupération\",this.roles)\r\n+        console.log(\"les roles apresssss la récupération\",this.roles)\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n     if (this.userForm.valid) {\r\n-      this.isLoading = true;\r\n-      const formValue = this.userForm.value;\r\n+        this.isLoading = true;\r\n+        const formValue = this.userForm.value;\r\n \r\n-      const userData = {\r\n-        username: formValue.username,\r\n-        email: formValue.email,\r\n-        enabled: true,\r\n-        credentials: [{\r\n-          type: 'password',\r\n-          value: formValue.password,\r\n-          temporary: false\r\n-        }]\r\n-      };\r\n+        const userData = {\r\n+            username: formValue.username,\r\n+            email: formValue.email,\r\n+            enabled: true,\r\n+            credentials: [{\r\n+                type: 'password',\r\n+                value: formValue.password,\r\n+                temporary: false\r\n+            }]\r\n+        };\r\n \r\n-      this.userService.createUser(userData).subscribe({\r\n-        next: (response) => {\r\n-          // Trouver l'ID de l'utilisateur créé (peut nécessiter une requête supplémentaire)\r\n-          this.assignRoleToUser(formValue.username, formValue.role);\r\n-        },\r\n-        error: (err) => {\r\n-          console.error('Failed to create user', err);\r\n-          this.isLoading = false;\r\n-        }\r\n-      });\r\n+        // Utilisez la nouvelle méthode du service\r\n+        this.userService.createUserWithRoleAndGroup(\r\n+            userData, \r\n+            formValue.role,\r\n+            this.agencyId // Supposant que agencyId est le nom du groupe\r\n+        ).subscribe({\r\n+            next: () => {\r\n+                this.isLoading = false;\r\n+                this.activeModal.close({ success: true });\r\n+            },\r\n+            error: (err) => {\r\n+                console.error('Erreur lors de la création', err);\r\n+                this.isLoading = false;\r\n+                // Afficher un message d'erreur à l'utilisateur\r\n+            }\r\n+        });\r\n     }\r\n-  }\r\n+}\r\n \r\n   private assignRoleToUser(username: string, roleName: string): void {\r\n     // D'abord, trouver l'ID de l'utilisateur\r\n     this.userService.getUsers().subscribe({\r\n"
+                },
+                {
+                    "date": 1745312820493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n             }]\r\n         };\r\n \r\n         // Utilisez la nouvelle méthode du service\r\n-        this.userService.createUserWithRoleAndGroup(\r\n+        this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n             this.agencyId // Supposant que agencyId est le nom du groupe\r\n         ).subscribe({\r\n"
+                },
+                {
+                    "date": 1745312828987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n   @Input() agencyId!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n-    private userService:UserService\r\n+    private userService:UserService,\r\n+    private agenceService:AgenceService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       username: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1745312865524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Component,  Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { UserService } from '../../services/UserService';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { AgenceService } from '../../services/agenceService';\r\n \r\n @Component({\r\n   selector: 'app-user-form',\r\n   templateUrl: './user-form.component.html',\r\n@@ -86,9 +87,9 @@\n           this.userService.getRoles().subscribe({\r\n             next: (roles) => {\r\n               const role = roles.find((r: any) => r.name === roleName);\r\n               if (role) {\r\n-                this.userService.assignRoleToUser(user.id, role).subscribe({\r\n+                this.ag.assignRoleToUser(user.id, role).subscribe({\r\n                   next: () => {\r\n                     this.isLoading = false;\r\n                     this.activeModal.close({ success: true });\r\n                   },\r\n"
+                },
+                {
+                    "date": 1745313499548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n+    console\r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n@@ -87,9 +88,9 @@\n           this.userService.getRoles().subscribe({\r\n             next: (roles) => {\r\n               const role = roles.find((r: any) => r.name === roleName);\r\n               if (role) {\r\n-                this.ag.assignRoleToUser(user.id, role).subscribe({\r\n+                this.agenceService.assignRoleToUser(user.id, role).subscribe({\r\n                   next: () => {\r\n                     this.isLoading = false;\r\n                     this.activeModal.close({ success: true });\r\n                   },\r\n"
+                },
+                {
+                    "date": 1745313508366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n-    console\r\n+    console.log()\r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n"
+                },
+                {
+                    "date": 1745313519384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n-    console.log()\r\n+    console.log(\"user F\")\r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n"
+                },
+                {
+                    "date": 1745313524961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,10 @@\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n-    console.log(\"user F\")\r\n+    console.log(\"user Form\",this.userForm.value)\r\n+    console.log(\"voici le token\",localStorage.getItem(\"token)\r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n"
+                },
+                {
+                    "date": 1745313530610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n     });\r\n   }\r\n   onSubmit(): void {\r\n     console.log(\"user Form\",this.userForm.value)\r\n-    console.log(\"voici le token\",localStorage.getItem(\"token)\r\n+   \r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n"
+                },
+                {
+                    "date": 1745313535891,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,10 @@\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n-    console.log(\"user Form\",this.userForm.value)\r\n+    console.log(\"user Form\",this.userForm.value);\r\n+    console.\r\n    \r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n"
+                },
+                {
+                    "date": 1745313554009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,8 @@\n     });\r\n   }\r\n   onSubmit(): void {\r\n     console.log(\"user Form\",this.userForm.value);\r\n-    console.\r\n    \r\n     if (this.userForm.valid) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n"
+                },
+                {
+                    "date": 1745313581710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n-  @Input() agencyId!: string;\r\n+  @Input() agenc!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private userService:UserService,\r\n"
+                },
+                {
+                    "date": 1745313587487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n export class UserFormComponent implements OnInit {\r\n   userForm: FormGroup;\r\n   roles: string[] = [];\r\n   isLoading = false;\r\n-  @Input() agenc!: string;\r\n+  @Input() agencyName!: string;\r\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private userService:UserService,\r\n"
+                },
+                {
+                    "date": 1745313597422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n         // Utilisez la nouvelle méthode du service\r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n-            this.agencyId // Supposant que agencyId est le nom du groupe\r\n+            this.agencyName // Supposant que agencyId est le nom du groupe\r\n         ).subscribe({\r\n             next: () => {\r\n                 this.isLoading = false;\r\n                 this.activeModal.close({ success: true });\r\n"
+                },
+                {
+                    "date": 1745314568597,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-        console.log(\"les roles avant la récupération\",this.roles)\r\n+        \r\n         this.roles = roles.map((r: any) => r.name);\r\n         console.log(\"les roles apresssss la récupération\",this.roles)\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n"
+                },
+                {
+                    "date": 1745314575098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,11 +34,9 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-        \r\n-        this.roles = roles.map((r: any) => r.name);\r\n-        console.log(\"les roles apresssss la récupération\",this.roles)\r\n+                this.roles = roles.map((r: any) => r.name);\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1745315044122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,17 +34,18 @@\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n-                this.roles = roles.map((r: any) => r.name);\r\n+        this.roles = roles.map((r: any) => r.name);\r\n       },\r\n       error: (err) => console.error('Failed to load roles', err)\r\n     });\r\n   }\r\n   onSubmit(): void {\r\n-    console.log(\"user Form\",this.userForm.value);\r\n-   \r\n-    if (this.userForm.valid) {\r\n+    console.log(\"Données du formulaire:\", this.userForm.value);\r\n+    console.log(\"Nom du groupe (agencyName):\", this.agencyName);\r\n+\r\n+    if (this.userForm.valid && this.agencyName) {\r\n         this.isLoading = true;\r\n         const formValue = this.userForm.value;\r\n \r\n         const userData = {\r\n@@ -54,27 +55,36 @@\n             credentials: [{\r\n                 type: 'password',\r\n                 value: formValue.password,\r\n                 temporary: false\r\n-            }]\r\n+            }],\r\n+            groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n-        // Utilisez la nouvelle méthode du service\r\n+        console.log('Envoi des données à Keycloak:', userData);\r\n+\r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n-            this.agencyName // Supposant que agencyId est le nom du groupe\r\n+            this.agencyName\r\n         ).subscribe({\r\n             next: () => {\r\n+                console.log('Utilisateur créé avec succès avec rôle et groupe');\r\n                 this.isLoading = false;\r\n                 this.activeModal.close({ success: true });\r\n             },\r\n             error: (err) => {\r\n-                console.error('Erreur lors de la création', err);\r\n+                console.error('Erreur complète:', err);\r\n                 this.isLoading = false;\r\n                 // Afficher un message d'erreur à l'utilisateur\r\n+                alert(`Erreur: ${err.message || 'Échec de la création'}`);\r\n             }\r\n         });\r\n+    } else {\r\n+        console.error('Formulaire invalide ou nom de groupe manquant');\r\n+        if (!this.agencyName) {\r\n+            console.error('agencyName est undefined');\r\n+        }\r\n     }\r\n }\r\n \r\n   private assignRoleToUser(username: string, roleName: string): void {\r\n"
+                },
+                {
+                    "date": 1745316634012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,8 +30,9 @@\n \r\n   ngOnInit(): void {\r\n     console.log(\"voici le token\",localStorage.getItem(\"token\"))\r\n     this.loadRoles();\r\n+    this.agency.name\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n"
+                },
+                {
+                    "date": 1745316641078,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n \r\n   ngOnInit(): void {\r\n     console.log(\"voici le token\",localStorage.getItem(\"token\"))\r\n     this.loadRoles();\r\n-    this.agency.name\r\n+    console.log()\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n"
+                },
+                {
+                    "date": 1745316649276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n \r\n   ngOnInit(): void {\r\n     console.log(\"voici le token\",localStorage.getItem(\"token\"))\r\n     this.loadRoles();\r\n-    console.log()\r\n+    console.log(\"agencyName:\", this.agencyName);\r\n   }\r\n   loadRoles(): void {\r\n     this.userService.getRoles().subscribe({\r\n       next: (roles) => {\r\n"
+                },
+                {
+                    "date": 1745316806919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"voici le token\",localStorage.getItem(\"token\"))\r\n+    console.log(\"voici le token\",localStorage.getItem(\"token\")\r\n     this.loadRoles();\r\n     console.log(\"agencyName:\", this.agencyName);\r\n   }\r\n   loadRoles(): void {\r\n"
+                },
+                {
+                    "date": 1745317972413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    console.log(\"voici le token\",localStorage.getItem(\"token\")\r\n+    \r\n     this.loadRoles();\r\n     console.log(\"agencyName:\", this.agencyName);\r\n   }\r\n   loadRoles(): void {\r\n@@ -61,9 +61,9 @@\n             groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n         console.log('Envoi des données à Keycloak:', userData);\r\n-\r\n+        \r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n             this.agencyName\r\n"
+                },
+                {
+                    "date": 1745317980384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n             groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n         console.log('Envoi des données à Keycloak:', userData);\r\n-        \r\n+        console.log\r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n             this.agencyName\r\n"
+                },
+                {
+                    "date": 1745317986250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n             groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n         console.log('Envoi des données à Keycloak:', userData);\r\n-        console.log\r\n+        console.log('le role choisi')\r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n             this.agencyName\r\n"
+                },
+                {
+                    "date": 1745317994993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n             groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n         console.log('Envoi des données à Keycloak:', userData);\r\n-        console.log('le role choisi')\r\n+        console.log('le role choisi',formValue.role)\r\n         this.agenceService.createUserWithRoleAndGroup(\r\n             userData, \r\n             formValue.role,\r\n             this.agencyName\r\n"
+                },
+                {
+                    "date": 1745361303909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,40 +87,9 @@\n         }\r\n     }\r\n }\r\n \r\n-  private assignRoleToUser(username: string, roleName: string): void {\r\n-    // D'abord, trouver l'ID de l'utilisateur\r\n-    this.userService.getUsers().subscribe({\r\n-      next: (users) => {\r\n-        const user = users.find((u: any) => u.username === username);\r\n-        if (user) {\r\n-          // Ensuite, trouver le rôle\r\n-          this.userService.getRoles().subscribe({\r\n-            next: (roles) => {\r\n-              const role = roles.find((r: any) => r.name === roleName);\r\n-              if (role) {\r\n-                this.agenceService.assignRoleToUser(user.id, role).subscribe({\r\n-                  next: () => {\r\n-                    this.isLoading = false;\r\n-                    this.activeModal.close({ success: true });\r\n-                  },\r\n-                  error: (err) => {\r\n-                    console.error('Failed to assign role', err);\r\n-                    this.isLoading = false;\r\n-                  }\r\n-                });\r\n-              }\r\n-            }\r\n-          });\r\n-        }\r\n-      },\r\n-      error: (err) => {\r\n-        console.error('Failed to find user', err);\r\n-        this.isLoading = false;\r\n-      }\r\n-    });\r\n-  }\r\n+ \r\n \r\n   onCancel(): void {\r\n     this.activeModal.dismiss();\r\n   }\r\n"
                 }
             ],
             "date": 1744030117160,

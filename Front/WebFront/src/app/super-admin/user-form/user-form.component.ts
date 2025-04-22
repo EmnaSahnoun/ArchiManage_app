@@ -2,6 +2,7 @@ import { Component,  Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/UserService';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AgenceService } from '../../services/agenceService';
 
 @Component({
   selector: 'app-user-form',
@@ -12,11 +13,12 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   roles: string[] = [];
   isLoading = false;
-  @Input() agencyId!: string;
+  @Input() agencyName!: string;
   constructor(
     public activeModal: NgbActiveModal, // Injectez NgbActiveModal
     private fb: FormBuilder,
-    private userService:UserService
+    private userService:UserService,
+    private agenceService:AgenceService
   ) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
@@ -27,80 +29,64 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("voici le token",localStorage.getItem("token"))
+    
     this.loadRoles();
+    console.log("agencyName:", this.agencyName);
   }
   loadRoles(): void {
     this.userService.getRoles().subscribe({
       next: (roles) => {
-        console.log("les roles avant la récupération",this.roles)
         this.roles = roles.map((r: any) => r.name);
-        console.log("les roles apresssss la récupération",this.roles)
       },
       error: (err) => console.error('Failed to load roles', err)
     });
   }
   onSubmit(): void {
-    if (this.userForm.valid) {
-      this.isLoading = true;
-      const formValue = this.userForm.value;
+    console.log("Données du formulaire:", this.userForm.value);
+    console.log("Nom du groupe (agencyName):", this.agencyName);
 
-      const userData = {
-        username: formValue.username,
-        email: formValue.email,
-        enabled: true,
-        credentials: [{
-          type: 'password',
-          value: formValue.password,
-          temporary: false
-        }]
-      };
+    if (this.userForm.valid && this.agencyName) {
+        this.isLoading = true;
+        const formValue = this.userForm.value;
 
-      this.userService.createUser(userData).subscribe({
-        next: (response) => {
-          // Trouver l'ID de l'utilisateur créé (peut nécessiter une requête supplémentaire)
-          this.assignRoleToUser(formValue.username, formValue.role);
-        },
-        error: (err) => {
-          console.error('Failed to create user', err);
-          this.isLoading = false;
-        }
-      });
-    }
-  }
+        const userData = {
+            username: formValue.username,
+            email: formValue.email,
+            enabled: true,
+            credentials: [{
+                type: 'password',
+                value: formValue.password,
+                temporary: false
+            }],
+            groups: [this.agencyName] // Ajout direct du groupe dans la création
+        };
 
-  private assignRoleToUser(username: string, roleName: string): void {
-    // D'abord, trouver l'ID de l'utilisateur
-    this.userService.getUsers().subscribe({
-      next: (users) => {
-        const user = users.find((u: any) => u.username === username);
-        if (user) {
-          // Ensuite, trouver le rôle
-          this.userService.getRoles().subscribe({
-            next: (roles) => {
-              const role = roles.find((r: any) => r.name === roleName);
-              if (role) {
-                this.userService.assignRoleToUser(user.id, role).subscribe({
-                  next: () => {
-                    this.isLoading = false;
-                    this.activeModal.close({ success: true });
-                  },
-                  error: (err) => {
-                    console.error('Failed to assign role', err);
-                    this.isLoading = false;
-                  }
-                });
-              }
+        console.log('Envoi des données à Keycloak:', userData);
+        console.log('le role choisi',formValue.role)
+        this.agenceService.createUserWithRoleAndGroup(
+            userData, 
+            formValue.role,
+            this.agencyName
+        ).subscribe({
+            next: () => {
+                console.log('Utilisateur créé avec succès avec rôle et groupe');
+                this.isLoading = false;
+                this.activeModal.close({ success: true });
+            },
+            error: (err) => {
+                console.error('Erreur complète:', err);
+                this.isLoading = false;
+                // Afficher un message d'erreur à l'utilisateur
+                alert(`Erreur: ${err.message || 'Échec de la création'}`);
             }
-          });
+        });
+    } else {
+        console.error('Formulaire invalide ou nom de groupe manquant');
+        if (!this.agencyName) {
+            console.error('agencyName est undefined');
         }
-      },
-      error: (err) => {
-        console.error('Failed to find user', err);
-        this.isLoading = false;
-      }
-    });
-  }
+    }
+}
 
   onCancel(): void {
     this.activeModal.dismiss();

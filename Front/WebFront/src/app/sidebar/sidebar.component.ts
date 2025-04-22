@@ -8,7 +8,9 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService,
+    private router:Router
+  ){}
   @Output() titleChange = new EventEmitter<string>();
 
   changeTitle(title: string): void {
@@ -17,5 +19,6 @@ export class SidebarComponent {
   
   logout(){
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

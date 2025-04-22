@@ -10,17 +10,18 @@ import { TasksComponent } from './shared/tasks/tasks.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'projects', component: ProjectsComponent },
+  
+  { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},
+  { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},
   { 
     path: 'project/:id', 
     component: ProjectDetailsComponent,
-    
+    canActivate:[AuthGuard]
   },
   { 
     path: 'project/:id/phase/:phaseId', 
     component: TasksComponent 
+    , canActivate:[AuthGuard]
   },
   { 
     path: 'super-admin', 

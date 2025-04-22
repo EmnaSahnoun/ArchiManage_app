@@ -49,7 +49,7 @@
                     <button class="edit-btn" (click)="editAgency(agency); $event.stopPropagation()">
                       <i class="bi bi-pencil"></i>
                     </button>
-                    <button class="delete-btn" (click)="deleteAgency(agency, $event); $event.stopPropagation()">
+                    <button class="delete-btn" (click)="deleteAgence(agency.id, agency.name); $event.stopPropagation()">
                       <i class="bi bi-trash"></i>
                     </button>
                   </td>

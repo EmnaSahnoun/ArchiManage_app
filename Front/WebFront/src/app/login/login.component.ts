@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent  {
   constructor(private authService: AuthService , private router:Router) {
-    // Redirection immédiate
+    
     this.authService.login();
   }
 
@@ -21,9 +21,8 @@ export class LoginComponent  {
   
 
   onLogin() {
-    localStorage.setItem('pre_auth_url', this.router.url);
-    
-    // Déclenche le flux Keycloak
+   
     this.authService.login();
+    this.router.navigate(['/super-admin/agences']);
   }
 }

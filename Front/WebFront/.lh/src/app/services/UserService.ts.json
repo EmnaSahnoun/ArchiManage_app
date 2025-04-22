@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1744990690983,
@@ -120,6 +120,22 @@
                 {
                     "date": 1745148891171,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n     );\r\n   }\r\n \r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n-   getAdminHeaders(): HttpHeaders {\r\n+  private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n       throw new Error('No access token available');\r\n     }\r\n"
+                },
+                {
+                    "date": 1745312756354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,18 +71,10 @@\n       })\r\n     );\r\n   }\r\n \r\n-  // Assigner un rôle à un utilisateur\r\n-  assignRoleToUser(userId: string, role: any): Observable<any> {\r\n-    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n-    const headers = this.getAdminHeaders();\r\n+  \r\n \r\n-    return this.http.post(url, [role], { headers }).pipe(\r\n-      catchError(this.handleError)\r\n-    );\r\n-  }\r\n-\r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1745317850439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,10 +71,18 @@\n       })\r\n     );\r\n   }\r\n \r\n-  \r\n+  // Assigner un rôle à un utilisateur\r\n+  assignRoleToUser(userId: string, role: any): Observable<any> {\r\n+    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n+    const headers = this.getAdminHeaders();\r\n \r\n+    return this.http.post(url, [role], { headers }).pipe(\r\n+      catchError(this.handleError)\r\n+    );\r\n+  }\r\n+\r\n   // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1745318525448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n   // Obtenir la liste des rôles\r\n-  getRoles(): Observable<any[]> {\r\n+  /* getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n@@ -69,9 +69,9 @@\n         console.error('Error fetching roles:', error);\r\n         return throwError(() => new Error('Failed to load roles. Please check your permissions.'));\r\n       })\r\n     );\r\n-  }\r\n+  } */\r\n \r\n   // Assigner un rôle à un utilisateur\r\n   assignRoleToUser(userId: string, role: any): Observable<any> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n"
+                },
+                {
+                    "date": 1745318599853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n   // Obtenir la liste des rôles\r\n-  /* getRoles(): Observable<any[]> {\r\n+  getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n@@ -69,9 +69,9 @@\n         console.error('Error fetching roles:', error);\r\n         return throwError(() => new Error('Failed to load roles. Please check your permissions.'));\r\n       })\r\n     );\r\n-  } */\r\n+  }\r\n \r\n   // Assigner un rôle à un utilisateur\r\n   assignRoleToUser(userId: string, role: any): Observable<any> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n"
                 }
             ],
             "date": 1744990690983,
