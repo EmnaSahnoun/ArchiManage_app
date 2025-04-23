@@ -12,7 +12,7 @@ const routes: Routes = [
     path: '', 
     component: SuperAdminComponent, 
     children: [
-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},
+      { path: 'dashboard', component: SuperAdminDashboardComponent},
       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },
       { path: 'agences', component:AgencesComponent },
       { path: 'agences/:id', component: AgencyDetailsComponent},

@@ -38,6 +38,7 @@ export class AgencesComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadAgencies();
+    this.authService.getDecodedToken();
   }
   loadAgencies(): void {
     this.isLoading = true;

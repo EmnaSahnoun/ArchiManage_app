@@ -194,3 +194,197 @@
 .bi{
 cursor: pointer;
 }}}
+/* Styles généraux pour les conteneurs de section */
+.section-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); // Ombre plus subtile
+  margin-bottom: 25px; // Espace entre les sections
+  font-family: 'Poppins', sans-serif; // Assurer la cohérence de la police
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px; // Espace sous l'en-tête de section
+
+  h2 {
+    margin: 0; // Enlever la marge par défaut du h2
+    font-size: 18px; // Taille de titre de section cohérente
+    font-weight: 600;
+    color: #333; // Couleur de titre sombre
+  }
+}
+
+/* Styles spécifiques pour la liste des utilisateurs */
+.user-list {
+  // Hérite des styles de .section-container
+
+  .add-user-button {
+    // Utilise les styles Material par défaut, mais on peut personnaliser
+    // Exemple: changer la couleur si besoin
+    // background-color: #4CAF50; // Vert pour ajout
+    // color: white;
+    min-width: 160px; // Assurer une largeur minimale
+
+    .icon-spacing {
+      margin-right: 8px; // Espace entre l'icône et le texte
+      font-size: 1.1em; // Légèrement plus grande icône
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse; // Bords nets
+    margin-top: 15px; // Espace au-dessus du tableau
+
+    th, td {
+      padding: 12px 15px; // Padding confortable
+      border-bottom: 1px solid #e0e0e0; // Ligne de séparation subtile
+      text-align: left;
+      vertical-align: middle; // Alignement vertical centré
+      font-size: 14px; // Taille de police lisible
+    }
+
+    th {
+      background-color: #f8f9fa; // Fond léger pour l'en-tête
+      font-weight: 600; // Texte d'en-tête en gras
+      color: #555; // Couleur de texte d'en-tête
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1; // Effet de survol léger
+    }
+
+    // Styles pour les badges de rôle et de statut
+    .role, .status {
+      padding: 4px 10px;
+      border-radius: 15px; // Bords arrondis pour les badges
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-block; // Pour que le padding fonctionne bien
+      text-transform: uppercase; // Texte en majuscules
+      letter-spacing: 0.5px; // Léger espacement
+    }
+
+    .role {
+      &.super-admin { background-color: #ffe0b2; color: #e65100; } // Orange clair
+      &.admin { background-color: #c5cae9; color: #303f9f; } // Indigo clair
+      &.user { background-color: #e0e0e0; color: #424242; } // Gris
+    }
+
+    .status {
+      &.active { background-color: #c8e6c9; color: #2e7d32; } // Vert clair
+      &.inactive { background-color: #ffcdd2; color: #c62828; } // Rouge clair
+    }
+
+    // Styles pour la colonne Actions
+    .actions {
+      text-align: right; // Aligner les icônes à droite
+
+      button {
+        margin-left: 5px; // Petit espace entre les boutons d'action
+        // Utilise les couleurs par défaut de mat-icon-button
+        // (primaire pour modifier/voir, warn pour supprimer)
+      }
+       i {
+         font-size: 18px; // Taille des icônes d'action
+       }
+    }
+  }
+}
+
+/* Ajustements pour la liste des projets pour cohérence */
+.project-list {
+  @extend .section-container; // Appliquer les mêmes styles de base
+
+  .section-header { // Assurer que l'en-tête de projet a le même style
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 20px;
+
+     h2 {
+       margin: 0;
+       font-size: 18px;
+       font-weight: 600;
+       color: #333;
+     }
+  }
+
+  table {
+     // Appliquer les mêmes styles de tableau que user-list si désiré
+     width: 100%;
+     border-collapse: collapse;
+     margin-top: 15px;
+
+     th, td {
+       padding: 12px 15px;
+       border-bottom: 1px solid #e0e0e0;
+       text-align: left;
+       vertical-align: middle;
+       font-size: 14px;
+     }
+
+     th {
+       background-color: #f8f9fa;
+       font-weight: 600;
+       color: #555;
+     }
+
+     tbody tr:hover {
+       background-color: #f1f1f1;
+     }
+
+     .status { // Styles pour les badges de statut de projet
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &.in-progress { background-color: #bbdefb; color: #0d47a1; } // Bleu clair
+        &.completed { background-color: #c8e6c9; color: #1b5e20; } // Vert clair
+        &.pending { background-color: #fff9c4; color: #f57f17; } // Jaune clair
+     }
+
+     .actions {
+        text-align: right;
+        i {
+          font-size: 18px;
+          cursor: pointer;
+          margin-left: 10px; // Espace entre les icônes d'action projet
+          color: #555; // Couleur par défaut pour les icônes projet
+          &:hover {
+            color: #000; // Assombrir au survol
+          }
+        }
+     }
+  }
+}
+
+// Assurer que le bouton "Nouveau Projet" a un style cohérent
+.task-summary .add-project {
+  // Styles existants...
+  // Ajuster si nécessaire pour correspondre au bouton "Ajouter Utilisateur"
+  // Exemple: utiliser mat-flat-button color="primary" ?
+  // Ou garder le style actuel si préféré
+  background: #E27D60; // Couleur actuelle
+  color: white;
+  border: none;
+  border-radius: 20px; // Arrondi cohérent ?
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; // Espace icône/texte
+
+  i {
+    font-size: 1.1em;
+  }
+}

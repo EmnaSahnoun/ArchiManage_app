@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectsComponent } from './shared/projects/projects.component';
 import { ProjectDetailsComponent } from './shared/project-details/project-details.component';
-import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { TasksComponent } from './shared/tasks/tasks.component';
@@ -25,10 +24,12 @@ const routes: Routes = [
   },
   { 
     path: 'super-admin', 
-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)
+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),
+    canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' } 
+  
+ // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  //{ path: '**', redirectTo: '/dashboard' } 
   
 ];
 

@@ -83,4 +83,81 @@
       </tbody>
     </table>
   </div>
+    <!-- User List Section -->
+    <div class="user-list section-container">
+      <div class="section-header">
+        <h2>Liste des Utilisateurs</h2>
+        <button mat-flat-button color="primary" class="add-user-button">
+          <i class="bi bi-plus-lg icon-spacing"></i> Ajouter Utilisateur
+        </button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom Complet</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Exemple de ligne utilisateur (à répéter avec *ngFor) -->
+          <tr>
+            <td>Emna Sahnoun</td>
+            <td>sahnounemna03gmail.com</td>
+            <td><span class="role super-admin">SUPER-ADMIN</span></td>
+            <td><span class="status active">Actif</span></td>
+            <td class="actions">
+              <button mat-icon-button aria-label="Modifier l'utilisateur" matTooltip="Modifier">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button mat-icon-button color="warn" aria-label="Supprimer l'utilisateur" matTooltip="Supprimer">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button mat-icon-button aria-label="Voir détails" matTooltip="Détails">
+                 <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>John Doe</td>
+            <td>john.doeexample.com</td>
+            <td><span class="role admin">ADMIN</span></td>
+            <td><span class="status active">Actif</span></td>
+             <td class="actions">
+              <button mat-icon-button aria-label="Modifier l'utilisateur" matTooltip="Modifier">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button mat-icon-button color="warn" aria-label="Supprimer l'utilisateur" matTooltip="Supprimer">
+                <i class="bi bi-trash"></i>
+              </button>
+               <button mat-icon-button aria-label="Voir détails" matTooltip="Détails">
+                 <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+           <tr>
+            <td>Jane Smith</td>
+            <td>jane.smithexample.com</td>
+            <td><span class="role user">USER</span></td>
+            <td><span class="status inactive">Inactif</span></td>
+             <td class="actions">
+              <button mat-icon-button aria-label="Modifier l'utilisateur" matTooltip="Modifier">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button mat-icon-button color="warn" aria-label="Supprimer l'utilisateur" matTooltip="Supprimer">
+                <i class="bi bi-trash"></i>
+              </button>
+               <button mat-icon-button aria-label="Voir détails" matTooltip="Détails">
+                 <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <!-- Fin de l'exemple -->
+        </tbody>
+      </table>
+    </div>
+  
+  
 </div>

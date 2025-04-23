@@ -23,6 +23,6 @@ export class LoginComponent  {
   onLogin() {
    
     this.authService.login();
-    this.router.navigate(['/super-admin/agences']);
+    
   }
 }

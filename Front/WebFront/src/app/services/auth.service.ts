@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { jwtDecode } from "jwt-decode";
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,7 @@ export class AuthService {
           this.oauthService.tryLoginCodeFlow().then(() => {
             if (this.oauthService.hasValidAccessToken()) {
               this.storeTokenData();
-              // NE PAS faire de redirection ici
+              this.redirectBasedOnRole();
             }
           });
         });
@@ -35,7 +37,18 @@ export class AuthService {
         this.oauthService.setupAutomaticSilentRefresh();
       }
    
-    
+      redirectBasedOnRole(): void {      
+        if (this.isSuperAdmin()) {
+          console.log('Redirection vers le dashboard SUPER-ADMIN');
+          this.router.navigate(['/super-admin/dashboard']); 
+        } else if (this.isUser() || this.isAdmin()) {
+          console.log('Redirection vers le dashboard ');
+          this.router.navigate(['/dashboard']); 
+        } else {
+          console.warn('Utilisateur authentifié sans rôle reconnu (SUPER-ADMIN, ADMIN, USER). Redirection vers dashboard par défaut.');
+          this.router.navigate(['/dashboard']); 
+        }
+      }
     
       private storeTokenData(): void {
         const token = this.oauthService.getAccessToken();
@@ -59,13 +72,14 @@ export class AuthService {
       }
     
       logout(): void {
-    
+        
         this.oauthService.logOut();
-        localStorage.removeItem('token');
+        this.clearTokenData();
+        
         
       }
       private clearTokenData(): void {
-       
+       localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('user_profile');
       }
@@ -83,10 +97,59 @@ export class AuthService {
       isAuthenticated(): boolean {
         return !!this.oauthService.getAccessToken() && this.oauthService.hasValidAccessToken();
       }
+      getDecodedToken(): any | null {
+        const token = this.getAccessToken();
+        if (token) {
+          try {
+            console.log("Décodage du token:", jwtDecode(token))
+            return jwtDecode(token);
+          } catch (error) {
+            console.error("Erreur lors du décodage du token:", error);
+            return null;
+          }
+        }
+        return null;
+      }
+      // Méthode pour vérifier si l'utilisateur est SUPER-ADMIN
+      isSuperAdmin(): boolean {
+        const decodedToken = this.getDecodedToken();
     
+        if (decodedToken && decodedToken.realm_access && Array.isArray(decodedToken.realm_access.roles)) {
+          // Vérifie si le tableau 'roles' inclut 'SUPER-ADMIN' (insensible à la casse si nécessaire)
+          return decodedToken.realm_access.roles.some(
+            (role: string) => role.toUpperCase() === 'SUPER-ADMIN'
+          );
+        }
     
-      /* getTokenExpiration(): number | null {
-        const expiration = localStorage.getItem('expiration');
-        return expiration ? Number(expiration) : null;
-      } */
+        return false; 
+            }
+
+      // Méthode pour vérifier si l'utilisateur est ADMIN
+      isAdmin(): boolean {
+        const decodedToken = this.getDecodedToken();
+    
+        if (decodedToken && decodedToken.realm_access && Array.isArray(decodedToken.realm_access.roles)) {
+          // Vérifie si le tableau 'roles' inclut 'ADMIN' (insensible à la casse si nécessaire)
+          return decodedToken.realm_access.roles.some(
+            (role: string) => role.toUpperCase() === 'ADMIN'
+          );
+        }
+    
+        return false;  
+      }
+
+      // Méthode pour vérifier si l'utilisateur est USER
+      isUser(): boolean {
+        const decodedToken = this.getDecodedToken();
+    
+        if (decodedToken && decodedToken.realm_access && Array.isArray(decodedToken.realm_access.roles)) {
+          // Vérifie si le tableau 'roles' inclut 'USER' (insensible à la casse si nécessaire)
+          return decodedToken.realm_access.roles.some(
+            (role: string) => role.toUpperCase() === 'USER'
+          );
+        }
+    
+        return false; 
+      }
+     
 }
