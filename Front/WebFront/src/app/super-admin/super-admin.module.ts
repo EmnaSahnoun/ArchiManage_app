@@ -14,6 +14,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgenceFormComponent } from './agence-form/agence-form.component';
 import { AgencyDetailsComponent } from './agency-details/agency-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     SuperAdminComponent,
@@ -33,7 +42,17 @@ import { UserFormComponent } from './user-form/user-form.component';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule,      
+    ReactiveFormsModule,  
+    MatSnackBarModule,
+        MatTableModule,
+        MatProgressSpinnerModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatTooltipModule,
   ]                                   
 })
 export class SuperAdminModule { }

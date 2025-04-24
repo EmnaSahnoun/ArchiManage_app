@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1743945538168,
@@ -148,6 +148,50 @@
                 {
                     "date": 1745314162993,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n-    component: SuperAdminComponent, canActivate:[AuthGuard],\r\n+    component: SuperAdminComponent, \r\n     children: [\r\n       { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', component:AgencesComponent },\r\n"
+                },
+                {
+                    "date": 1745515363245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,12 @@\n   { \r\n     path: '', \r\n     component: SuperAdminComponent, \r\n     children: [\r\n-      { path: 'SuperAdmindashboard', component: SuperAdminDashboardComponent},\r\n+      { path: 'dashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n-      { path: 'agences', component:AgencesComponent },\r\n+      { path: 'agences', \r\n+        component:AgencesComponent },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745515379944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,16 @@\n     children: [\r\n       { path: 'dashboard', component: SuperAdminDashboardComponent},\r\n       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },\r\n       { path: 'agences', \r\n-        component:AgencesComponent },\r\n+        component:AgencesComponent ,\r\n+        children: [\r\n+              {\r\n+                path: 'users/new',\r\n+                component: UserFormComponent,\r\n+                canActivate: [AuthGuard]\r\n+              }\r\n+      },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n     ]\r\n"
+                },
+                {
+                    "date": 1745515387058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n               {\r\n                 path: 'users/new',\r\n                 component: UserFormComponent,\r\n                 canActivate: [AuthGuard]\r\n-              }\r\n+              }]\r\n       },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n"
+                },
+                {
+                    "date": 1745515396374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n import { AgencesComponent } from './agences/agences.component';\r\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { ProjectsComponent } from '../shared/projects/projects.component';\r\n import { AuthGuard } from '../guard/auth.guard';\r\n+import { UserFormComponent } from './user-form/user-form.component';\r\n \r\n const routes: Routes = [\r\n   { \r\n     path: '', \r\n@@ -20,9 +21,10 @@\n               {\r\n                 path: 'users/new',\r\n                 component: UserFormComponent,\r\n                 canActivate: [AuthGuard]\r\n-              }]\r\n+              }\r\n+            ]\r\n       },\r\n       { path: 'agences/:id', component: AgencyDetailsComponent},\r\n       { path: 'projects', component: ProjectsComponent } ,\r\n \r\n"
+                },
+                {
+                    "date": 1745515423657,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: 'users/new',\r\n+                path: 'usdeers/new',\r\n                 component: UserFormComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n"
+                },
+                {
+                    "date": 1745515441271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: 'usdeers/new',\r\n+                path: 'details:',\r\n                 component: UserFormComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n"
+                },
+                {
+                    "date": 1745515453031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: 'details:',\r\n+                path: 'details',\r\n                 component: UserFormComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n"
+                },
+                {
+                    "date": 1745515462227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n                 path: 'details',\r\n-                component: UserFormComponent,\r\n+                component: Age,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n       },\r\n"
+                },
+                {
+                    "date": 1745516084578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: 'details',\r\n-                component: Age,\r\n+                path: ':/details',\r\n+                component: AgencyDetailsComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n       },\r\n"
+                },
+                {
+                    "date": 1745516561614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: ':/details',\r\n+                path: ':name/details',\r\n                 component: AgencyDetailsComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n"
+                },
+                {
+                    "date": 1745516569413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       { path: 'agences', \r\n         component:AgencesComponent ,\r\n         children: [\r\n               {\r\n-                path: ':name/details',\r\n+                path: ':encodedName/details',\r\n                 component: AgencyDetailsComponent,\r\n                 canActivate: [AuthGuard]\r\n               }\r\n             ]\r\n"
                 }
             ],
             "date": 1743945538168,

@@ -6,6 +6,7 @@ import { AgencesComponent } from './agences/agences.component';
 import { AgencyDetailsComponent } from './agency-details/agency-details.component';
 import { ProjectsComponent } from '../shared/projects/projects.component';
 import { AuthGuard } from '../guard/auth.guard';
+import { UserFormComponent } from './user-form/user-form.component';
 
 const routes: Routes = [
   { 
@@ -14,7 +15,16 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: SuperAdminDashboardComponent},
       { path: '', redirectTo: 'SuperAdmindashboard' , pathMatch: 'full' },
-      { path: 'agences', component:AgencesComponent },
+      { path: 'agences', 
+        component:AgencesComponent ,
+        children: [
+              {
+                path: ':encodedName/details',
+                component: AgencyDetailsComponent,
+                canActivate: [AuthGuard]
+              }
+            ]
+      },
       { path: 'agences/:id', component: AgencyDetailsComponent},
       { path: 'projects', component: ProjectsComponent } ,
 

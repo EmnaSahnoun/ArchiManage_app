@@ -6,11 +6,24 @@ import { ProjectDetailsComponent } from './shared/project-details/project-detail
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guard/auth.guard';
 import { TasksComponent } from './shared/tasks/tasks.component';
+import { UserFormComponent } from './super-admin/user-form/user-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   
-  { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},
+  { path: 'dashboard',
+    component: DashboardComponent , 
+    canActivate:[AuthGuard],
+    children: [
+      {
+        path: 'users/new',
+        component: UserFormComponent,
+        canActivate: [AuthGuard]
+      }
+      // Add other child routes if needed (e.g., 'users/:id/edit')
+    ]
+  
+  },
   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},
   { 
     path: 'project/:id', 

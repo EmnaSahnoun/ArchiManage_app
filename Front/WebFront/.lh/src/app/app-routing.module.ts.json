@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 80,
+            "activePatchIndex": 86,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -328,6 +328,30 @@
                 {
                     "date": 1745320046583,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n-  { path: 'signup', component: SignupComponent },\r\n+  \r\n   { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n"
+                },
+                {
+                    "date": 1745513608352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,17 @@\n import { RouterModule, Routes } from '@angular/router';\r\n import { DashboardComponent } from './dashboard/dashboard.component';\r\n import { ProjectsComponent } from './shared/projects/projects.component';\r\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n-import { SignupComponent } from './signup/signup.component';\r\n import { LoginComponent } from './login/login.component';\r\n import { AuthGuard } from './guard/auth.guard';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n-  { path: 'dashboard', component: DashboardComponent , canActivate:[AuthGuard]},\r\n+  { path: 'dashboard',\r\n+     component: DashboardComponent , canActivate:[AuthGuard]},\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n@@ -24,13 +24,15 @@\n     , canActivate:[AuthGuard]\r\n   },\r\n   { \r\n     path: 'super-admin', \r\n-    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule)\r\n+    loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n+    canActivate: [AuthGuard]\r\n   },\r\n-  { path: '', redirectTo: '/login', pathMatch: 'full' },\r\n-  { path: '**', redirectTo: '/login' } \r\n   \r\n+ // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n+  //{ path: '**', redirectTo: '/dashboard' } \r\n+  \r\n ];\r\n \r\n @NgModule({\r\n   imports: [RouterModule.forRoot(routes)],\r\n"
+                },
+                {
+                    "date": 1745513615350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,12 @@\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n   { path: 'dashboard',\r\n-     component: DashboardComponent , canActivate:[AuthGuard]},\r\n+    component: DashboardComponent , \r\n+    canActivate:[AuthGuard]\r\n+  \r\n+  },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1745513628998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,15 @@\n   { path: 'login', component: LoginComponent },\r\n   \r\n   { path: 'dashboard',\r\n     component: DashboardComponent , \r\n-    canActivate:[AuthGuard]\r\n+    canActivate:[AuthGuard],\r\n+    children: [\r\n+      {\r\n+        path: 'users/new', \r\n+      }\r\n+      // Add other child routes if needed (e.g., 'users/:id/edit')\r\n+    ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n"
+                },
+                {
+                    "date": 1745513635984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,10 @@\n     component: DashboardComponent , \r\n     canActivate:[AuthGuard],\r\n     children: [\r\n       {\r\n-        path: 'users/new', \r\n+        path: 'users/new',\r\n+        co\r\n       }\r\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n"
+                },
+                {
+                    "date": 1745513641784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     canActivate:[AuthGuard],\r\n     children: [\r\n       {\r\n         path: 'users/new',\r\n-        co\r\n+        component:\r\n       }\r\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n"
+                },
+                {
+                    "date": 1745513651671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { LoginComponent } from './login/login.component';\r\n import { AuthGuard } from './guard/auth.guard';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n+import { UserFormComponent } from './super-admin/user-form/user-form.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -15,9 +16,10 @@\n     canActivate:[AuthGuard],\r\n     children: [\r\n       {\r\n         path: 'users/new',\r\n-        component:\r\n+        component: UserFormComponent,\r\n+        canActivate: [AuthGuard]\r\n       }\r\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n"
                 }
             ],
             "date": 1741609914429,

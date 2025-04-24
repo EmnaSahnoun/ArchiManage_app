@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 63,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -260,6 +260,30 @@
                 {
                     "date": 1745359427748,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { DragDropModule } from '@angular/cdk/drag-drop';\r\n import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n-\r\n+import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
+                },
+                {
+                    "date": 1745433911258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n import { LoginComponent } from './login/login.component';\r\n import { SignupComponent } from './signup/signup.component';\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n+import { MatTableModule } from '@angular/material/table';\r\n \r\n import { DatePipe } from '@angular/common';\r\n import { TaskDetailsComponent } from './shared/task-details/task-details.component';\r\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n"
+                },
+                {
+                    "date": 1745433917332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,10 @@\n import { SignupComponent } from './signup/signup.component';\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { MatTableModule } from '@angular/material/table';\r\n-\r\n+import { MatPaginatorModule } from '@angular/material/paginator';\r\n+import { MatSortModule } from '@angular/material/sort'; \r\n import { DatePipe } from '@angular/common';\r\n import { TaskDetailsComponent } from './shared/task-details/task-details.component';\r\n import { OAuthModule } from 'angular-oauth2-oidc';\r\n import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';\r\n"
+                },
+                {
+                    "date": 1745433951808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n import { ProjectsComponent } from './shared/projects/projects.component';\r\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { BidiModule } from '@angular/cdk/bidi';\r\n+import { MatTooltipModule } from '@angular/material/tooltip';\r\n \r\n import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n"
+                },
+                {
+                    "date": 1745433968759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,10 +87,11 @@\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n       progressBar: true\r\n     }),\r\n-    MatSnackBarModule\r\n+    MatSnackBarModule,\r\n     \r\n+    \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1745498098610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,9 @@\n import { AuthInterceptor } from './core/interceptors/auth.interceptor';\r\n import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -88,10 +89,16 @@\n       preventDuplicates: true,\r\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n+    MatTableModule,\r\n+    // Ajoutez les autres modules Material\r\n+    MatCardModule,\r\n+    MatButtonModule,\r\n+    MatIconModule,\r\n+    MatProgressBarModule,\r\n+    MatTooltipModule,\r\n     \r\n-    \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1745498123128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n     MatTableModule,\r\n-    // Ajoutez les autres modules Material\r\n+    MatProgressSpinnerModule\r\n     MatCardModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n"
                 }
             ],
             "date": 1741609977833,

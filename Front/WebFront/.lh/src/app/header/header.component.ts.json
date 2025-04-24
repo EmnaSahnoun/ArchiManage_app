@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1741687617491,
@@ -12,6 +12,122 @@
                 {
                     "date": 1741687985405,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,11 +5,6 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent {\r\n-  title: string = 'Tableau de bord'; // Titre par défaut\r\n-\r\n-  // Méthode pour changer dynamiquement le titre en fonction de l'interface\r\n-  changeTitle(newTitle: string): void {\r\n-    this.title = newTitle;\r\n-  }\r\n+  @Input() title: string = 'Tableau de bord';\r\n }\r\n"
+                },
+                {
+                    "date": 1745512952816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,11 @@\n-import { Component } from '@angular/core';\r\n+import { Component, Input } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent {\r\n   @Input() title: string = 'Tableau de bord';\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1745512966461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  \r\n+  n\r\n }\r\n"
+                },
+                {
+                    "date": 1745512981893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  n\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1745512987429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent {\r\n+export class HeaderComponent implements ng {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1745512994066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,14 @@\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent implements ng {\r\n+export class HeaderComponent implements ngOnInit(): void {\r\n+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.\r\n+  //Add 'implements OnInit' to the class.\r\n+  ngOnInit(): void {\r\n+    throw new Error('Method not implemented.');\r\n+  }\r\n+} {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1745513003041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent implements ngOnInit(): void {\r\n+export class HeaderComponent implements on {\r\n   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.\r\n   //Add 'implements OnInit' to the class.\r\n   ngOnInit(): void {\r\n     throw new Error('Method not implemented.');\r\n"
+                },
+                {
+                    "date": 1745513020762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,15 @@\n-import { Component, Input } from '@angular/core';\r\n+import { Component, Input, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent implements on {\r\n+export class HeaderComponent implements OnInit {\r\n   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.\r\n   //Add 'implements OnInit' to the class.\r\n-  ngOnInit(): void {\r\n-    throw new Error('Method not implemented.');\r\n-  }\r\n+  \r\n } {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1745513031820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,11 @@\n-import { Component, Input, OnInit } from '@angular/core';\r\n+import { Component, Input } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent implements OnInit {\r\n-  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.\r\n-  //Add 'implements OnInit' to the class.\r\n-  \r\n-} {\r\n+export class HeaderComponent implements On {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n }\r\n"
+                },
+                {
+                    "date": 1745513038691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n-import { Component, Input } from '@angular/core';\r\n+import { Component, Input, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss'\r\n })\r\n-export class HeaderComponent implements On {\r\n+export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1745513056796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,8 @@\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   \r\n-  \r\n+  ngOnInit(): void {\r\n+    username\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513062775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  \r\n+  username\r\n   ngOnInit(): void {\r\n-    username\r\n+    username=\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513068361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  username\r\n+  username:string;\r\n   ngOnInit(): void {\r\n     username=\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513077587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  username:string;\r\n+  username!:string;\r\n   ngOnInit(): void {\r\n-    username=\r\n+    username=loc\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513083399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    username=loc\r\n+    username=localStorage.getItem\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513091839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    username=localStorage.getItem\r\n+    this.username=localStorage.getItem(\"\")\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513103411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    this.username=localStorage.getItem(\"\")\r\n+    this.username=localStorage.getItem(\"user_profile\")\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513118740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    this.username=localStorage.getItem(\"user_profile\")\r\n+    this.username=localStorage.getItem(\"user_profile\").preferred_username\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513126183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,8 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    this.username=localStorage.getItem(\"user_profile\").preferred_username\r\n+    this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n+    console.log(this.username);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513142625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n+    if\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n     console.log(this.username);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513147789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    if\r\n+    if(!localStorage.getItem(\"user_profile\")) return;\r\n+    console.log(localStorage.getItem(\"user_profile\"))\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n     console.log(this.username);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513153711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    if(!localStorage.getItem(\"user_profile\")) return;\r\n+    if(localStorage.getItem(\"user_profile\")) return;\r\n     console.log(localStorage.getItem(\"user_profile\"))\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n     console.log(this.username);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745513169050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    if(localStorage.getItem(\"user_profile\")) return;\r\n+    if(localStorage.getItem(\"user_profile\")) {}\r\n     console.log(localStorage.getItem(\"user_profile\"))\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n     console.log(this.username);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745513174286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,11 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username!:string;\r\n   ngOnInit(): void {\r\n-    if(localStorage.getItem(\"user_profile\")) {}\r\n+    if(localStorage.getItem(\"user_profile\")) {\r\n     console.log(localStorage.getItem(\"user_profile\"))\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n     console.log(this.username);\r\n   }\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513254015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   styleUrl: './header.component.scss'\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n-  username!:string;\r\n+  username: string | null = null;\r\n   ngOnInit(): void {\r\n     if(localStorage.getItem(\"user_profile\")) {\r\n     console.log(localStorage.getItem(\"user_profile\"))\r\n     this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n"
+                },
+                {
+                    "date": 1745513264343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,31 @@\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   ngOnInit(): void {\r\n-    if(localStorage.getItem(\"user_profile\")) {\r\n-    console.log(localStorage.getItem(\"user_profile\"))\r\n-    this.username=localStorage.getItem(\"user_profile\").preferred_username;\r\n-    console.log(this.username);\r\n+    const userProfileString = localStorage.getItem(\"user_profile\");\r\n+\r\n+    if (userProfileString) {\r\n+      try {\r\n+        // Parse the JSON string into an object\r\n+        const userProfile = JSON.parse(userProfileString);\r\n+\r\n+        // Safely access the preferred_username property\r\n+        // Use optional chaining (?.) in case userProfile is null/undefined after parsing\r\n+        // Provide a fallback value (null) if preferred_username doesn't exist\r\n+        this.username = userProfile?.preferred_username || null;\r\n+\r\n+        console.log(\"User Profile Object:\", userProfile);\r\n+        console.log(\"Extracted Username:\", this.username);\r\n+\r\n+      } catch (error) {\r\n+        // Handle potential errors during JSON parsing\r\n+        console.error(\"Error parsing user profile from localStorage:\", error);\r\n+        this.username = null; // Ensure username is null on error\r\n+      }\r\n+    } else {\r\n+      // Handle the case where the item is not found in localStorage\r\n+      console.warn(\"User profile not found in localStorage.\");\r\n+      this.username = null; // Ensure username is null if not found\r\n+    }\r\n   }\r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1745513274365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,14 +12,9 @@\n     const userProfileString = localStorage.getItem(\"user_profile\");\r\n \r\n     if (userProfileString) {\r\n       try {\r\n-        // Parse the JSON string into an object\r\n-        const userProfile = JSON.parse(userProfileString);\r\n-\r\n-        // Safely access the preferred_username property\r\n-        // Use optional chaining (?.) in case userProfile is null/undefined after parsing\r\n-        // Provide a fallback value (null) if preferred_username doesn't exist\r\n+        const userProfile = JSON.parse(userProfileString)\r\n         this.username = userProfile?.preferred_username || null;\r\n \r\n         console.log(\"User Profile Object:\", userProfile);\r\n         console.log(\"Extracted Username:\", this.username);\r\n"
+                },
+                {
+                    "date": 1745513284216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,10 @@\n   ngOnInit(): void {\r\n     const userProfileString = localStorage.getItem(\"user_profile\");\r\n \r\n     if (userProfileString) {\r\n-      try {\r\n-        const userProfile = JSON.parse(userProfileString)\r\n+      \r\n+        const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n \r\n         console.log(\"User Profile Object:\", userProfile);\r\n         console.log(\"Extracted Username:\", this.username);\r\n"
+                },
+                {
+                    "date": 1745513290985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,16 +17,9 @@\n         this.username = userProfile?.preferred_username || null;\r\n \r\n         console.log(\"User Profile Object:\", userProfile);\r\n         console.log(\"Extracted Username:\", this.username);\r\n-\r\n-      } catch (error) {\r\n-        // Handle potential errors during JSON parsing\r\n-        console.error(\"Error parsing user profile from localStorage:\", error);\r\n-        this.username = null; // Ensure username is null on error\r\n-      }\r\n     } else {\r\n-      // Handle the case where the item is not found in localStorage\r\n       console.warn(\"User profile not found in localStorage.\");\r\n       this.username = null; // Ensure username is null if not found\r\n     }\r\n   }\r\n"
+                },
+                {
+                    "date": 1745513298196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,13 +14,11 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-\r\n-        console.log(\"User Profile Object:\", userProfile);\r\n-        console.log(\"Extracted Username:\", this.username);\r\n+       \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n-      this.username = null; // Ensure username is null if not found\r\n+      this.username = null; \r\n     }\r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1741687617491,

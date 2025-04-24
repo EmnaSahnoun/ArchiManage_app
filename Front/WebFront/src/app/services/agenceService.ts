@@ -225,9 +225,8 @@ deleteUserCompletely(userId: string, groupName: string): Observable<any> {
   );
 }
 
-/**
-* Retire un utilisateur d'un groupe Keycloak
-*/
+// Retire un utilisateur d'un groupe Keycloak
+
 removeUserFromGroup(userId: string, groupId: string): Observable<any> {
   const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/groups/${groupId}`;
   const headers = this.getApiHeaders();
@@ -321,9 +320,18 @@ deleteAgence(id: string, authToken: string): Observable<void> {
       })
     );
 }
-private getToken(): string {
-  return localStorage.getItem('token') || '';
+
+getAgenceByUser(idUser: string): Observable<any> {
+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${idUser}/groups`;
+  const headers = this.getApiHeaders();
+  
+ 
+    return this.http.get<any[]>(url, { headers })
+        .pipe(
+            catchError(this.handleError)
+        );
 }
+
   private getApiHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();
     return new HttpHeaders({

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1743940201249,
@@ -80,6 +80,34 @@
                 {
                     "date": 1744041077985,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,8 @@\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n import { AgenceFormComponent } from './agence-form/agence-form.component';\r\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { UserFormComponent } from './user-form/user-form.component';\r\n-import { ProjectsComponent } from './projects/projects.component';\r\n-import { ProjectsDetailsComponent } from './projects-details/projects-details.component';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                },
+                {
+                    "date": 1745517268323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n import { AgenceFormComponent } from './agence-form/agence-form.component';\r\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { UserFormComponent } from './user-form/user-form.component';\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                },
+                {
+                    "date": 1745517274755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,9 @@\n     MatDialogModule,\r\n     MatButtonModule,\r\n     MatInputModule,\r\n     MatFormFieldModule,\r\n-    ReactiveFormsModule,      \r\n+    ReactiveFormsModule,  \r\n+        \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1745517308730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,8 @@\n     MatButtonModule,\r\n     MatInputModule,\r\n     MatFormFieldModule,\r\n     ReactiveFormsModule,  \r\n-        \r\n+    \r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1745517316115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n import { AgenceFormComponent } from './agence-form/agence-form.component';\r\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { UserFormComponent } from './user-form/user-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n+import { MatPaginatorModule } from '@angular/material/paginator';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n@@ -34,8 +35,17 @@\n     MatButtonModule,\r\n     MatInputModule,\r\n     MatFormFieldModule,\r\n     ReactiveFormsModule,  \r\n-    \r\n+    MatSnackBarModule,\r\n+        MatTableModule,\r\n+        MatProgressSpinnerModule,\r\n+        MatPaginatorModule,\r\n+        MatSortModule,\r\n+        MatCardModule,\r\n+        MatButtonModule,\r\n+        MatIconModule,\r\n+        MatProgressBarModule,\r\n+        MatTooltipModule,\r\n   ]                                   \r\n })\r\n export class SuperAdminModule { }\r\n"
+                },
+                {
+                    "date": 1745517321833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,10 @@\n import { AgencyDetailsComponent } from './agency-details/agency-details.component';\r\n import { UserFormComponent } from './user-form/user-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n+import { MatSortModule } from '@angular/material/sort';\r\n+import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                },
+                {
+                    "date": 1745517326941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,10 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n import { MatSortModule } from '@angular/material/sort';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n+import { MatTableModule } from '@angular/material/table';\r\n+import { MatCardModule } from '@angular/material/card';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
+                },
+                {
+                    "date": 1745517334720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,11 @@\n import { MatSortModule } from '@angular/material/sort';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatCardModule } from '@angular/material/card';\r\n+import { MatTooltipModule } from '@angular/material/tooltip';\r\n+import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n+import { MatIconModule } from '@angular/material/icon';\r\n @NgModule({\r\n   declarations: [\r\n     SuperAdminComponent,\r\n     SuperAdminDashboardComponent,\r\n"
                 }
             ],
             "date": 1743940201249,

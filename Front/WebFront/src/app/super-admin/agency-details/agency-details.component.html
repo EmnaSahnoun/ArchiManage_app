@@ -43,11 +43,11 @@
       <table>
         <thead>
           <tr>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Rôle</th>
-            <th>Statut</th> <!-- Header reste le même -->
-            <th class="actions-header">Actions</th>
+            <th class="text-center">Nom</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Rôle</th>
+            <th class="text-center">Statut</th> <!-- Header reste le même -->
+            <th class="actions-header text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -57,26 +57,30 @@
           </tr>
 
           <!-- User Rows -->
-          <ng-container *ngIf="!isLoadingUsers">
+          <ng-container *ngIf="users.length > 0">
+            <!-- No Users Found Row -->
+            <tr *ngIf="!isLoadingUsers && users.length === 0">
+              <td colspan="5" class="no-users">Aucun utilisateur trouvé pour cette agence.</td>
+            </tr>
             <tr *ngFor="let user of users" [class.editing-row]="editingUserId === user.id">
 
               <!-- Username Column -->
-              <td>
+              <td class="text-center">
                 <span *ngIf="editingUserId !== user.id">{{ user.username }}</span>
                 <input *ngIf="editingUserId === user.id" type="text" [(ngModel)]="editedUserData.username" class="inline-edit-input" />
               </td>
 
               <!-- Email Column -->
-              <td>
+              <td class="text-center">
                 <span *ngIf="editingUserId !== user.id">{{ user.email }}</span>
                 <input *ngIf="editingUserId === user.id" type="email" [(ngModel)]="editedUserData.email" class="inline-edit-input" />
               </td>
 
               <!-- Role Column (Read-only) -->
-              <td>{{ user.role }}</td>
+              <td class="text-center">{{ user.role }}</td>
 
               <!-- Status Column -->
-              <td class="status-cell">
+              <td class="status-cell text-center">
                 <!-- Display Mode: Badge -->
                 <ng-container *ngIf="editingUserId !== user.id">
                   <span *ngIf="user.enabled" class="status-badge status-enabled">
@@ -97,11 +101,9 @@
                 </div>
               </td>
 
-              <!-- Actions Column -->
-              <!-- ... other parts of the template ... -->
 
               <!-- Actions Column -->
-              <td class="actions">
+              <td class="actions text-center">
                 <!-- View/Edit Mode Buttons -->
                 <ng-container *ngIf="editingUserId !== user.id">
                  <button class="edit-btn" (click)="editUser(user)" title="Modifier" [disabled]="isDeletingUser === user.id">
@@ -131,10 +133,7 @@
 <!-- ... rest of the template ... -->
 
 
-            <!-- No Users Found Row -->
-            <tr *ngIf="!isLoadingUsers && users.length === 0">
-              <td colspan="5" class="no-users">Aucun utilisateur trouvé pour cette agence.</td>
-            </tr>
+            
           </ng-container>
 
         </tbody>

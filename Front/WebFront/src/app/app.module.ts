@@ -21,6 +21,7 @@ import { ProjectsComponent } from './shared/projects/projects.component';
 import { ProjectDetailsComponent } from './shared/project-details/project-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BidiModule } from '@angular/cdk/bidi';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddMemberComponent } from './add-member/add-member.component';
@@ -28,7 +29,9 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SharedModule } from './shared/shared.module';
 import { TasksComponent } from './shared/tasks/tasks.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort'; 
 import { DatePipe } from '@angular/common';
 import { TaskDetailsComponent } from './shared/task-details/task-details.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
@@ -39,6 +42,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,7 +89,16 @@ import { ToastrModule } from 'ngx-toastr';
       preventDuplicates: true,
       progressBar: true
     }),
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatTooltipModule,
     
   ],
   providers: [
