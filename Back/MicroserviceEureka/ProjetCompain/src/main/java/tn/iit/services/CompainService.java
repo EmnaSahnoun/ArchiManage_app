@@ -2,6 +2,8 @@ package tn.iit.services;
 
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import tn.iit.dto.request.CompainRequest;
+import tn.iit.dto.response.CompainResponse;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
 import tn.iit.interfaces.ICompainService;
@@ -142,5 +144,24 @@ public class CompainService implements ICompainService {
     }
 }
 
+    public Compain convertToEntity(CompainRequest request) {
+        Compain compain = new Compain();
+        compain.setName(request.getName());
+        compain.setAddress(request.getAddress());
+        compain.setEmail(request.getEmail());
+        compain.setPhone(request.getPhone());
+        return compain;
+    }
+
+    public CompainResponse convertToResponse(Compain compain) {
+        CompainResponse response = new CompainResponse();
+        response.setId(compain.getId());
+        response.setName(compain.getName());
+        response.setAddress(compain.getAddress());
+        response.setEmail(compain.getEmail());
+        response.setPhone(compain.getPhone());
+        response.setCreatedAt(compain.getCreatedAt());
+        return response;
+    }
 
 }

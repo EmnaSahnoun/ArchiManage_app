@@ -2,6 +2,8 @@ package tn.iit.controller;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import tn.iit.dto.request.CompainRequest;
+import tn.iit.dto.response.CompainResponse;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
 import tn.iit.services.CompainService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"}, 
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
            allowedHeaders = "*",
            allowCredentials = "true")
 @RestController
@@ -32,13 +36,15 @@ public class CompainController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/all")
-    public List<Compain> getAllCompains() {
-        return compainService.findAll();
+    public List<CompainResponse> getAllCompains() {
+        return compainService.findAll().stream()
+                .map(compainService::convertToResponse) // Correction ici
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Compain getCompainById(@PathVariable(name = "id") String id) throws CompainNotFoundException {
-        return compainService.getById(id);
+    public CompainResponse getCompainById(@PathVariable(name = "id") String id) throws CompainNotFoundException {
+        return compainService.convertToResponse(compainService.getById(id));
     }
 
 @ResponseStatus(HttpStatus.OK)
@@ -60,30 +66,28 @@ public ResponseEntity<?> deleteCompain(
 
 
 
-@ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+@ResponseStatus(HttpStatus.CREATED)
 @PostMapping("/create")
-public Compain createCompain(@RequestBody Compain compain,
-                               @RequestHeader("Authorization") String authToken) {
-        return compainService.createCompain(compain, authToken);
+public CompainResponse  createCompain(@RequestBody @Valid CompainRequest request,
+                                      @RequestHeader("Authorization") String authToken) {
+    Compain compain = compainService.convertToEntity(request);
+    return compainService.convertToResponse(compainService.createCompain(compain, authToken));
     }
 
 @PutMapping("/update/{id}")
 @ResponseStatus(HttpStatus.OK)
-public ResponseEntity<Compain> updateCompain(
-        @PathVariable String id,
-        @RequestBody @Valid Compain updatedCompain,
-        @RequestHeader("Authorization") String authToken) 
+public CompainResponse  updateCompain(@PathVariable String id,
+                                             @RequestBody @Valid CompainRequest request,
+                                             @RequestHeader("Authorization") String authToken)
         throws CompainNotFoundException {
-    
-    // Validation supplémentaire
-    if (!id.equals(updatedCompain.getId())) {
-        throw new IllegalArgumentException("ID in path doesn't match ID in body");
-    }
 
-    Compain updated = compainService.updateCompain(id, updatedCompain, authToken);
-    return ResponseEntity.ok(updated);
+    Compain compain = compainService.convertToEntity(request);
+    compain.setId(id); // Assurez-vous que l'ID est bien défini
+    Compain updated = compainService.updateCompain(id, compain, authToken);
+    return compainService.convertToResponse(updated);
 }
+
+
 
 
 
