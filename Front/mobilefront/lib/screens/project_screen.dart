@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'project_details_screen.dart';
+import '../features/project_details/screens/project_details_screen.dart';
 
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});

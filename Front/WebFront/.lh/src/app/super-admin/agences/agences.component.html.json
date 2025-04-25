@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1744021062768,
@@ -140,6 +140,54 @@
                 {
                     "date": 1745517479484,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,14 +35,12 @@\n                 <th>Actions</th>\r\n               </tr>\r\n             </thead>\r\n             <tbody>\r\n-              <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n-              [class.even]=\"i % 2 === 0\"\r\n-              [class.odd]=\"i % 2 !== 0\"\r\n-              (click)=\"triggerShowAgencyDetails(agency)\"\r\n-              class=\"agency-row\"\r\n-              [class.active-row]=\"activeModalRef?.componentInstance?.agency?.name === agency.name\">\r\n+                <tr *ngFor=\"let agency of filteredAgencies; let i = index\" \r\n+                [class.even]=\"i % 2 === 0\" \r\n+                [class.odd]=\"i % 2 !== 0\"\r\n+                (click)=\"showAgencyDetails(agency)\">\r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n                 <td>{{ agency.phone }}</td>\r\n"
+                },
+                {
+                    "date": 1745526703064,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,12 +35,14 @@\n                 <th>Actions</th>\r\n               </tr>\r\n             </thead>\r\n             <tbody>\r\n-                <tr *ngFor=\"let agency of filteredAgencies; let i = index\" \r\n-                [class.even]=\"i % 2 === 0\" \r\n-                [class.odd]=\"i % 2 !== 0\"\r\n-                (click)=\"showAgencyDetails(agency)\">\r\n+              <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n+              [class.even]=\"i % 2 === 0\"\r\n+              [class.odd]=\"i % 2 !== 0\"\r\n+              (click)=\"navigateToDetails(agency)\"  <!-- Appel de la nouvelle méthode -->\r\n+              style=\"cursor: pointer;\"> <!-- Ajout du curseur pour indiquer la cliquabilité -->\r\n+\r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n                 <td>{{ agency.phone }}</td>\r\n"
+                },
+                {
+                    "date": 1745526709092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              (click)=\"navigateToDetails(agency)\"  <!-- Appel de la nouvelle méthode -->\r\n+              (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> <!-- Ajout du curseur pour indiquer la cliquabilité -->\r\n \r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n"
+                },
+                {
+                    "date": 1745526714482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n               (click)=\"navigateToDetails(agency)\"\r\n-              style=\"cursor: pointer;\"> <!-- Ajout du curseur pour indiquer la cliquabilité -->\r\n+              style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n"
+                },
+                {
+                    "date": 1745529232562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,8 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n+              \r\n               (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n"
+                },
+                {
+                    "date": 1745529239595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              \r\n+              [agency]\r\n               (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n"
+                },
+                {
+                    "date": 1745529247305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              [agency]\r\n+              [agency]=\"agency\"\r\n               (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n"
+                },
+                {
+                    "date": 1745529293184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              [agency]=\"agency\"\r\n+              \r\n               (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n"
+                },
+                {
+                    "date": 1745529322920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              \r\n+              aussi\r\n               (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n"
+                },
+                {
+                    "date": 1745530936860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,9 @@\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n               [class.odd]=\"i % 2 !== 0\"\r\n-              aussi\r\n-              (click)=\"navigateToDetails(agency)\"\r\n+                            (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n"
+                },
+                {
+                    "date": 1745530942001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,10 +37,10 @@\n             </thead>\r\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n               [class.even]=\"i % 2 === 0\"\r\n-              [class.odd]=\"i % 2 !== 0\"\r\n-                            (click)=\"navigateToDetails(agency)\"\r\n+              [class.odd]=\"i % 2 !== 0\"              \r\n+              (click)=\"navigateToDetails(agency)\"\r\n               style=\"cursor: pointer;\"> \r\n \r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n"
+                },
+                {
+                    "date": 1745530954249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,12 +36,12 @@\n               </tr>\r\n             </thead>\r\n             <tbody>\r\n               <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n-              [class.even]=\"i % 2 === 0\"\r\n-              [class.odd]=\"i % 2 !== 0\"              \r\n-              (click)=\"navigateToDetails(agency)\"\r\n-              style=\"cursor: pointer;\"> \r\n+    [class.even]=\"i % 2 === 0\"\r\n+    [class.odd]=\"i % 2 !== 0\"\r\n+    (click)=\"navigateToDetails(agency)\" <!-- Appel correct -->\r\n+    style=\"cursor: pointer;\">\r\n \r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n"
+                },
+                {
+                    "date": 1745531894695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,14 +35,12 @@\n                 <th>Actions</th>\r\n               </tr>\r\n             </thead>\r\n             <tbody>\r\n-              <tr *ngFor=\"let agency of filteredAgencies; let i = index\"\r\n-    [class.even]=\"i % 2 === 0\"\r\n-    [class.odd]=\"i % 2 !== 0\"\r\n-    (click)=\"navigateToDetails(agency)\" <!-- Appel correct -->\r\n-    style=\"cursor: pointer;\">\r\n-\r\n+                <tr *ngFor=\"let agency of filteredAgencies; let i = index\" \r\n+                [class.even]=\"i % 2 === 0\" \r\n+                [class.odd]=\"i % 2 !== 0\"\r\n+                (click)=\"showAgencyDetails(agency)\">\r\n                 <td>{{ agency.name }}</td>\r\n                 <td>{{ agency.address }}</td>\r\n                 <td>{{ agency.email }}</td>\r\n                 <td>{{ agency.phone }}</td>\r\n"
                 }
             ],
             "date": 1744021062768,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 54,
+            "activePatchIndex": 55,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -224,6 +224,10 @@
                 {
                     "date": 1745327648718,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-\r\n+    this.router.navigate(['/super-admin/agences']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745532323732,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,17 +12,13 @@\n     \r\n     this.authService.login();\r\n   }\r\n \r\n-  user = {\r\n-    email: '',\r\n-    password: ''\r\n-  };\r\n-  errorMessage: string = '';\r\n   \r\n+  \r\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.router.navigate(['/super-admin/agences']);\r\n+    \r\n   }\r\n }\r\n"
                 }
             ],
             "date": 1742130408469,

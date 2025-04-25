@@ -92,14 +92,11 @@ role(){
  }
 }
   ngAfterViewInit(): void {
-    // Créer le graphique une fois que la vue est initialisée
     this.createChart();
     this.checkUrlAndOpenModal(this.router.url);
   }
   ngOnDestroy(): void {
-    // Clean up subscription to prevent memory leaks
     this.routerSubscription?.unsubscribe();
-    // Ensure modal is closed if component is destroyed
     this.activeModalRef?.dismiss('Component Destroyed');
   }
   // --- Router Subscription Logic ---

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/features/dashbord/screens/dashboard_screen.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1745536627941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1745536627941,
+            "name": "Commit-0",
+            "content": "// lib/features/dashboard/screens/dashboard_screen.dart\r\nimport 'package:flutter/material.dart';\r\nimport 'package:provider/provider.dart';\r\nimport '../../../core/auth/auth_service.dart';\r\n\r\nclass DashboardScreen extends StatelessWidget {\r\n  const DashboardScreen({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    final authService = context.watch<AuthService>(); // Watch for changes if needed\r\n    final claims = authService.userClaims;\r\n\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Dashboard'),\r\n        actions: [\r\n          IconButton(\r\n            icon: const Icon(Icons.logout),\r\n            tooltip: 'Logout',\r\n            onPressed: () async {\r\n              await context.read<AuthService>().logout();\r\n              // AuthWrapper will handle navigation back to LoginScreen\r\n            },\r\n          ),\r\n        ],\r\n      ),\r\n      body: Padding(\r\n        padding: const EdgeInsets.all(16.0),\r\n        child: Column(\r\n          crossAxisAlignment: CrossAxisAlignment.start,\r\n          children: [\r\n            const Text('Welcome!', style: TextStyle(fontSize: 24)),\r\n            const SizedBox(height: 20),\r\n            if (claims != null) ...[\r\n              Text('Name: ${claims['name'] ?? 'N/A'}'),\r\n              Text('Email: ${claims['email'] ?? 'N/A'}'),\r\n              Text('Preferred Username: ${claims['preferred_username'] ?? 'N/A'}'),\r\n              const SizedBox(height: 10),\r\n              const Text('Roles:', style: TextStyle(fontWeight: FontWeight.bold)),\r\n              Text(authService.isSuperAdmin() ? '- SUPER-ADMIN' : ''),\r\n              Text(authService.isAdmin() ? '- ADMIN' : ''),\r\n              Text(authService.isUser() ? '- USER' : ''),\r\n              // Or display all roles: Text(authService.getRoles().join(', ')),\r\n            ] else ...[\r\n              const Text('User details not available.'),\r\n            ],\r\n            const SizedBox(height: 20),\r\n            ElevatedButton(\r\n              onPressed: () {\r\n                // Example: Navigate to projects list\r\n                // Navigator.push(context, MaterialPageRoute(builder: (context) => ProjectListScreen()));\r\n                 ScaffoldMessenger.of(context).showSnackBar(\r\n                   const SnackBar(content: Text('Navigate to Projects (Implement me!)'))\r\n                 );\r\n              },\r\n              child: const Text('View Projects'),\r\n            )\r\n            // Add other dashboard elements here\r\n          ],\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n"
+        }
+    ]
+}

@@ -13,11 +13,7 @@ export class LoginComponent  {
     this.authService.login();
   }
 
-  user = {
-    email: '',
-    password: ''
-  };
-  errorMessage: string = '';
+  
   
 
   onLogin() {

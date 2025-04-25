@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1744646424830,
@@ -24,6 +24,26 @@
                 {
                     "date": 1744646910873,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n   uses-material-design: true\r\n \r\n \r\n   assets:\r\n-    - assets/images/login-illustration.svg\r\n+    - assets/images/my-account-login.png\r\n     - assets\\images\\my-account-login.png\r\n   # assets:\r\n   #   - images/a_dot_burr.jpeg\r\n   #   - images/a_dot_ham.jpeg\r\n"
+                },
+                {
+                    "date": 1745535712329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,9 @@\n   flutter:\r\n     sdk: flutter\r\n \r\n \r\n+\r\n   # The following adds the Cupertino Icons font to your application.\r\n   # Use with the CupertinoIcons class for iOS style icons.\r\n   cupertino_icons: ^1.0.8\r\n \r\n@@ -60,9 +61,8 @@\n \r\n \r\n   assets:\r\n     - assets/images/my-account-login.png\r\n-    - assets\\images\\my-account-login.png\r\n   # assets:\r\n   #   - images/a_dot_burr.jpeg\r\n   #   - images/a_dot_ham.jpeg\r\n \r\n"
+                },
+                {
+                    "date": 1745535721856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,13 @@\n # versions available, run `flutter pub outdated`.\r\n dependencies:\r\n   flutter:\r\n     sdk: flutter\r\n+  flutter_appauth: ^6.0.0 # Check for the latest version\r\n+  flutter_secure_storage: ^9.0.0 # For securely storing tokens\r\n+  http: ^1.0.0 # Often needed for API calls after auth\r\n+  jwt_decoder: ^2.0.1 # To decode JWT tokens for claims/roles\r\n+  provider: ^6.0.0 # Or your preferred state management solution (Riverpod, BLoC, GetX)\r\n \r\n \r\n \r\n   # The following adds the Cupertino Icons font to your application.\r\n"
+                },
+                {
+                    "date": 1745535735874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n   # Use with the CupertinoIcons class for iOS style icons.\r\n   cupertino_icons: ^1.0.8\r\n \r\n dev_dependencies:\r\n+\r\n   flutter_test:\r\n     sdk: flutter\r\n \r\n   # The \"flutter_lints\" package below contains a set of recommended lints to\r\n"
+                },
+                {
+                    "date": 1745535746004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,11 +42,11 @@\n   # Use with the CupertinoIcons class for iOS style icons.\r\n   cupertino_icons: ^1.0.8\r\n \r\n dev_dependencies:\r\n-\r\n   flutter_test:\r\n     sdk: flutter\r\n+  flutter_lints: ^3.0.0\r\n \r\n   # The \"flutter_lints\" package below contains a set of recommended lints to\r\n   # encourage good coding practices. The lint set provided by the package is\r\n   # activated in the `analysis_options.yaml` file located at the root of your\r\n"
+                },
+                {
+                    "date": 1745535767132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n \r\n dev_dependencies:\r\n   flutter_test:\r\n     sdk: flutter\r\n-  flutter_lints: ^3.0.0\r\n+  \r\n \r\n   # The \"flutter_lints\" package below contains a set of recommended lints to\r\n   # encourage good coding practices. The lint set provided by the package is\r\n   # activated in the `analysis_options.yaml` file located at the root of your\r\n"
                 }
             ],
             "date": 1744646424830,

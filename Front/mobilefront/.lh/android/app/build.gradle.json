@@ -1,0 +1,30 @@
+{
+    "sourceFile": "android/app/build.gradle",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1745537925830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745537935540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         targetSdk = flutter.targetSdkVersion\r\n         versionCode = flutter.versionCode\r\n         versionName = flutter.versionName\r\n         manifestPlaceholders += [\r\n-            'appAuthRedirectScheme': 'tn.systeo.pfe.archimanage' // <-- Juste le schéma ici\r\n+            'appAuthRedirectScheme': 'com.example.mobilefront' // <-- Juste le schéma ici\r\n         ]\r\n     }\r\n \r\n     buildTypes {\r\n"
+                },
+                {
+                    "date": 1745579472779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,11 +27,9 @@\n         minSdk = flutter.minSdkVersion\r\n         targetSdk = flutter.targetSdkVersion\r\n         versionCode = flutter.versionCode\r\n         versionName = flutter.versionName\r\n-        manifestPlaceholders += [\r\n-            'appAuthRedirectScheme': 'com.example.mobilefront' // <-- Juste le schéma ici\r\n-        ]\r\n+        \r\n     }\r\n \r\n     buildTypes {\r\n         release {\r\n"
+                },
+                {
+                    "date": 1745579551967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n         minSdk = flutter.minSdkVersion\r\n         targetSdk = flutter.targetSdkVersion\r\n         versionCode = flutter.versionCode\r\n         versionName = flutter.versionName\r\n-        \r\n+        manifestPlaceholders += [\r\n+            'appAuthRedirectScheme': 'com.example.mobilefront' // <-- Juste le schéma ici\r\n+        ]\r\n     }\r\n \r\n     buildTypes {\r\n         release {\r\n"
+                }
+            ],
+            "date": 1745537925830,
+            "name": "Commit-0",
+            "content": "plugins {\r\n    id \"com.android.application\"\r\n    id \"kotlin-android\"\r\n    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.\r\n    id \"dev.flutter.flutter-gradle-plugin\"\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.mobilefront\"\r\n    compileSdk = flutter.compileSdkVersion\r\n    ndkVersion = flutter.ndkVersion\r\n\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_1_8\r\n        targetCompatibility = JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    kotlinOptions {\r\n        jvmTarget = JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    defaultConfig {\r\n        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).\r\n        applicationId = \"com.example.mobilefront\"\r\n        // You can update the following values to match your application needs.\r\n        // For more information, see: https://flutter.dev/to/review-gradle-config.\r\n        minSdk = flutter.minSdkVersion\r\n        targetSdk = flutter.targetSdkVersion\r\n        versionCode = flutter.versionCode\r\n        versionName = flutter.versionName\r\n        manifestPlaceholders += [\r\n            'appAuthRedirectScheme': 'tn.systeo.pfe.archimanage' // <-- Juste le schéma ici\r\n        ]\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            // TODO: Add your own signing config for the release build.\r\n            // Signing with the debug keys for now, so `flutter run --release` works.\r\n            signingConfig = signingConfigs.debug\r\n        }\r\n    }\r\n}\r\n\r\nflutter {\r\n    source = \"../..\"\r\n}\r\n"
+        }
+    ]
+}

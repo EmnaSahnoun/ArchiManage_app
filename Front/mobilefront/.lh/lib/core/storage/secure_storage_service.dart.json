@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/core/storage/secure_storage_service.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1745536401156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745537973067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // lib/core/storage/secure_storage_service.dart\r\n import 'package:flutter_secure_storage/flutter_secure_storage.dart';\r\n \r\n class SecureStorageService {\r\n-  final _storage = const FlutterSecureStorage();\r\n+  final _storage = const flutter_secure_storage();\r\n \r\n   Future<void> write({required String key, required String? value}) async {\r\n     await _storage.write(key: key, value: value);\r\n   }\r\n"
+                },
+                {
+                    "date": 1745537978217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // lib/core/storage/secure_storage_service.dart\r\n import 'package:flutter_secure_storage/flutter_secure_storage.dart';\r\n \r\n class SecureStorageService {\r\n-  final _storage = const flutter_secure_storage();\r\n+  final _storage = const flutter_secure_storage.FlutterSecureStorage();\r\n \r\n   Future<void> write({required String key, required String? value}) async {\r\n     await _storage.write(key: key, value: value);\r\n   }\r\n"
+                }
+            ],
+            "date": 1745536401156,
+            "name": "Commit-0",
+            "content": "// lib/core/storage/secure_storage_service.dart\r\nimport 'package:flutter_secure_storage/flutter_secure_storage.dart';\r\n\r\nclass SecureStorageService {\r\n  final _storage = const FlutterSecureStorage();\r\n\r\n  Future<void> write({required String key, required String? value}) async {\r\n    await _storage.write(key: key, value: value);\r\n  }\r\n\r\n  Future<String?> read({required String key}) async {\r\n    return await _storage.read(key: key);\r\n  }\r\n\r\n  Future<void> delete({required String key}) async {\r\n    await _storage.delete(key: key);\r\n  }\r\n\r\n  Future<void> deleteAll() async {\r\n    await _storage.deleteAll();\r\n  }\r\n}\r\n"
+        }
+    ]
+}

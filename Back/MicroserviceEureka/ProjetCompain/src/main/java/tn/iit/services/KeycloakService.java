@@ -3,10 +3,14 @@ package tn.iit.services;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import tn.iit.interfaces.IKeycloakService;
+import tn.iit.repositories.CompainRepository;
+
 import java.util.*;
 
 @Service
-public class KeycloakService {
+public class KeycloakService implements IKeycloakService {
+
     private final RestTemplate restTemplate;
     private static final String KEYCLOAK_BASE_URL = "https://esmm.systeo.tn/admin/realms/systeodigital";
 
@@ -14,8 +18,9 @@ public class KeycloakService {
         this.restTemplate = restTemplate;
     }
 
-// find groupe by name
-public String findGroupIdByName(String groupName, String authToken) {
+    // find groupe by name
+    @Override
+    public String findGroupIdByName(String groupName, String authToken) {
         String searchUrl = KEYCLOAK_BASE_URL + "/groups?search=" + groupName;
         
         HttpHeaders headers = new HttpHeaders();
@@ -39,14 +44,14 @@ public String findGroupIdByName(String groupName, String authToken) {
     }
 
 
-
+    @Override
     public void createKeycloakGroup(String groupName, Map<String, List<String>> attributes, String authToken) {
         String url = KEYCLOAK_BASE_URL + "/groups";
         executeKeycloakRequest(url, HttpMethod.POST, groupName, null, attributes, authToken);
     }
 
-
-public void deleteKeycloakGroup(String groupName, String authToken) {
+    @Override
+    public void deleteKeycloakGroup(String groupName, String authToken) {
     // 1. Trouver l'ID du groupe
     String groupId = findGroupIdByName(groupName, authToken);
     
@@ -70,7 +75,8 @@ public void deleteKeycloakGroup(String groupName, String authToken) {
 }
 
 
-public void updateKeycloakGroup(String oldGroupName, String newGroupName, 
+    @Override
+    public void updateKeycloakGroup(String oldGroupName, String newGroupName,
                               Map<String, List<String>> attributes, 
                               String authToken) {
     // 1. Trouver l'ID du groupe avec l'ancien nom
@@ -91,7 +97,8 @@ public void updateKeycloakGroup(String oldGroupName, String newGroupName,
     restTemplate.put(url, new HttpEntity<>(body, headers));
 }
 
-    private void executeKeycloakRequest(String url, HttpMethod method, 
+
+private void executeKeycloakRequest(String url, HttpMethod method,
                                       String groupName, String groupId,
                                       Map<String, List<String>> attributes, 
                                       String authToken) {

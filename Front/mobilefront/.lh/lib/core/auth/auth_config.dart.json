@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/core/auth/auth_config.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1745536364749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745537588489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // lib/core/auth/auth_config.dart\r\n class AuthConfig {\r\n   static const String issuer = 'https://esmm.systeo.tn/realms/systeodigital';\r\n   static const String clientId = 'app-pfeFront'; // Same client ID as web? Or create a new one for mobile? Check Keycloak setup.\r\n-  static const String redirectUri = 'com.yourcompany.archimanage://oauthredirect'; // Your custom scheme\r\n+  static const String redirectUri = 'com.example.mobilefront://callback'; // Your custom scheme\r\n   static const List<String> scopes = [\r\n     'openid',\r\n     'profile',\r\n     'roles', // Make sure 'roles' scope provides realm_access.roles\r\n"
+                }
+            ],
+            "date": 1745536364749,
+            "name": "Commit-0",
+            "content": "// lib/core/auth/auth_config.dart\r\nclass AuthConfig {\r\n  static const String issuer = 'https://esmm.systeo.tn/realms/systeodigital';\r\n  static const String clientId = 'app-pfeFront'; // Same client ID as web? Or create a new one for mobile? Check Keycloak setup.\r\n  static const String redirectUri = 'com.yourcompany.archimanage://oauthredirect'; // Your custom scheme\r\n  static const List<String> scopes = [\r\n    'openid',\r\n    'profile',\r\n    'roles', // Make sure 'roles' scope provides realm_access.roles\r\n    'email',\r\n    // Add 'offline_access' if you need refresh tokens for long sessions\r\n  ];\r\n\r\n  // Discovery endpoint is usually issuer + '/.well-known/openid-configuration'\r\n  // AppAuth typically uses this, but you can specify endpoints if needed.\r\n  // static const String discoveryUrl = '$issuer/.well-known/openid-configuration';\r\n\r\n  // Token endpoint (AppAuth usually gets this from discovery)\r\n  // static const String tokenEndpoint = '$issuer/protocol/openid-connect/token';\r\n\r\n  // End session endpoint (Important for logout)\r\n  // AppAuth usually gets this from discovery if available ('end_session_endpoint')\r\n  static const String endSessionEndpoint = '$issuer/protocol/openid-connect/logout';\r\n\r\n  // Add custom parameters if needed (like audience)\r\n  static const Map<String, String> customParameters = {\r\n     // AppAuth might handle audience differently or it might be part of scope/resource parameter\r\n     // Check flutter_appauth documentation for passing audience if required by Keycloak\r\n     // 'audience': 'app-projectPFE', // Example if needed, might go in additionalParameters\r\n  };\r\n}\r\n"
+        }
+    ]
+}

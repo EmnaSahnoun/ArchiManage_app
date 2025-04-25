@@ -4,18 +4,20 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
+import tn.iit.interfaces.ICompainService;
 import tn.iit.repositories.CompainRepository;
 import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-public class CompainService {
+public class CompainService implements ICompainService {
     private final CompainRepository compainRepository;
 
-   
+
     private final KeycloakService keycloakService;
 
-// Méthode pour la création
+    // Méthode pour la création
+    @Override
     public Compain createCompain(Compain compain, String authToken) {
         // 1. Sauvegarde dans MongoDB
         Compain savedCompain = compainRepository.save(compain);
@@ -37,8 +39,8 @@ public class CompainService {
     }
 
     // Méthode pour la mise à jour
-public Compain updateCompain(String id, Compain updatedCompain, String authToken)
-        throws CompainNotFoundException {
+    @Override
+    public Compain updateCompain(String id, Compain updatedCompain, String authToken)throws CompainNotFoundException {
     // 1. Récupérer l'entité existante
     Compain existingCompain = compainRepository.findById(id)
             .orElseThrow(() -> new CompainNotFoundException("Company not found"));
@@ -72,6 +74,7 @@ public Compain updateCompain(String id, Compain updatedCompain, String authToken
     }
 }
 
+
     private Map<String, List<String>> createAttributes(Compain compain) {
         Map<String, List<String>> attributes = new HashMap<>();
         attributes.put("address", List.of(compain.getAddress()));
@@ -82,20 +85,23 @@ public Compain updateCompain(String id, Compain updatedCompain, String authToken
     }
 
 
-
+    @Override
     public List<Compain> findAll() {
         return compainRepository.findAll();
     }
 
+    @Override
     public Compain getById(String id) throws CompainNotFoundException {
         return compainRepository.findById(id)
                 .orElseThrow(() -> new CompainNotFoundException("Company with id " + id + " not found"));
     }
 
+
     public void delete(String id) {
         compainRepository.deleteById(id);
     }
 
+    @Override
     public Compain update(String id, Compain updatedCompain) throws CompainNotFoundException {
         Compain existingCompain = getById(id);
         
@@ -109,7 +115,8 @@ public Compain updateCompain(String id, Compain updatedCompain, String authToken
         return compainRepository.save(existingCompain);
     }
 
-public void deleteCompain(String id, String authToken) throws CompainNotFoundException {
+    @Override
+    public void deleteCompain(String id, String authToken) throws CompainNotFoundException {
     Compain compain = compainRepository.findById(id)
             .orElseThrow(() -> new CompainNotFoundException("Company not found"));
     
