@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/models/agence.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1745615731148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745615798373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export interface Agency {\r\n+export interface Agence {\r\n     _id: string; // Utiliser _id si c'est ce que le backend renvoie\r\n     name: string;\r\n     address: string;\r\n     email: string;\r\n"
+                }
+            ],
+            "date": 1745615731148,
+            "name": "Commit-0",
+            "content": "export interface Agency {\r\n    _id: string; // Utiliser _id si c'est ce que le backend renvoie\r\n    name: string;\r\n    address: string;\r\n    email: string;\r\n    phone: string;\r\n    createdAt: string | Date; // Peut être string ou Date\r\n    // Ajouter d'autres champs si nécessaire\r\n  }"
+        }
+    ]
+}

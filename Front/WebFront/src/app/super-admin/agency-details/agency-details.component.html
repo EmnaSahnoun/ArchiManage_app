@@ -31,9 +31,9 @@
 
   <div class="users-section">
     <div class="users-header">
-      <h3>Utilisateurs</h3>
+      <h3>Membres</h3>
       <button mat-button class="add-user-btn" (click)="addUser(agency)">
-        <i class="bi bi-plus"></i> Ajouter Utilisateur
+        <i class="bi bi-plus"></i> Ajouter Membre
       </button>
     </div>
 
@@ -53,14 +53,14 @@
         <tbody>
           <!-- Loading Indicator -->
           <tr *ngIf="isLoadingUsers">
-            <td colspan="5" class="loading-state">Chargement des utilisateurs...</td>
+            <td colspan="5" class="loading-state">Chargement des membres...</td>
           </tr>
 
           <!-- User Rows -->
           <ng-container *ngIf="users.length > 0">
             <!-- No Users Found Row -->
             <tr *ngIf="!isLoadingUsers && users.length === 0">
-              <td colspan="5" class="no-users">Aucun utilisateur trouvé pour cette agence.</td>
+              <td colspan="5" class="no-users">Aucun membre trouvé pour cette agence.</td>
             </tr>
             <tr *ngFor="let user of users" [class.editing-row]="editingUserId === user.id">
 
@@ -96,7 +96,7 @@
                   <input class="form-check-input" type="checkbox" role="switch"
                          id="userStatusSwitch-{{user.id}}"
                          [(ngModel)]="editedUserData.enabled"
-                         [attr.aria-label]="editedUserData.enabled ? 'Désactiver l\'utilisateur' : 'Activer l\'utilisateur'">
+                         [attr.aria-label]="editedUserData.enabled ? 'Désactiver le membre' : 'Activer le membre'">
                  
                 </div>
               </td>

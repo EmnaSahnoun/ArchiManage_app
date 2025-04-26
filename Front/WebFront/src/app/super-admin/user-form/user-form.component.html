@@ -1,12 +1,12 @@
 <div class="user-form-container">
-  <h2>Ajouter un Utilisateur</h2>
+  <h2>Ajouter un Membre</h2>
   
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="username">Nom d'utilisateur</label>
-      <input type="text" id="username" formControlName="username" placeholder="Entrez le nom d'utilisateur">
+      <label for="username">Nom du membre</label>
+      <input type="text" id="username" formControlName="username" placeholder="Entrez le nom du membre">
       <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="error-message">
-        Le nom d'utilisateur est requis
+        Le nom du membre est requis
       </div>
     </div>
 

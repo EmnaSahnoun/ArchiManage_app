@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1741770532762,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745615722769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n import { Task } from \"./task.model\";\r\n \r\n-export interface Phase {\r\n-  _id?: string;\r\n+export interface Agency {\r\n+  _id: string; // Utiliser _id si c'est ce que le backend renvoie\r\n   name: string;\r\n-  description?: string;\r\n-  startDate: Date;\r\n-  endDate?: Date;\r\n-  project: string; // ID du projet\r\n-  tasks?: Task[];\r\n-}\r\n+  address: string;\r\n+  email: string;\r\n+  phone: string;\r\n+  createdAt: string | Date; // Peut être string ou Date\r\n+  // Ajouter d'autres champs si nécessaire\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745615728073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n import { Task } from \"./task.model\";\r\n \r\n-export interface Agency {\r\n-  _id: string; // Utiliser _id si c'est ce que le backend renvoie\r\n+export interface Phase {\r\n+  _id?: string;\r\n   name: string;\r\n-  address: string;\r\n-  email: string;\r\n-  phone: string;\r\n-  createdAt: string | Date; // Peut être string ou Date\r\n\\ No newline at end of file\n-  // Ajouter d'autres champs si nécessaire\r\n-}\n+  description?: string;\r\n+  startDate: Date;\r\n+  endDate?: Date;\r\n+  project: string; // ID du projet\r\n+  tasks?: Task[];\r\n+}\r\n"
                 }
             ],
             "date": 1741770532762,

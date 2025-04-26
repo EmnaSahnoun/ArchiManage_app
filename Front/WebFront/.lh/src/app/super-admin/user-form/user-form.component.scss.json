@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1744030159566,
@@ -16,6 +16,26 @@
                 {
                     "date": 1744031883646,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n       margin-top: 30px;\r\n   \r\n       button {\r\n         padding: 8px 20px;\r\n-        border-radius: 35px;\r\n+        border-radius: 40px;\r\n         cursor: pointer;\r\n         font-weight: 500;\r\n         transition: all 0.3s;\r\n   \r\n"
+                },
+                {
+                    "date": 1745620722843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,21 @@\n+@use '@angular/material' as mat;\r\n+\r\n+// Définir des variables pour la cohérence (ou s'assurer qu'elles sont globales)\r\n+:host { // Appliquer les variables au composant hôte\r\n+  --primary-color: #4a90e2; // Un bleu moderne\r\n+  --accent-color: #50e3c2; // Un turquoise/vert comme accent\r\n+  --warning-color: #f5a623; // Orange pour utilisateurs/avertissements\r\n+  --text-color-primary: #333;\r\n+  --text-color-secondary: #666;\r\n+  --background-color: #f7f9fc; // Fond très clair, presque blanc\r\n+  --card-background: #ffffff;\r\n+  --border-color: #e0e0e0;\r\n+  --border-radius: 8px;\r\n+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre douce\r\n+  --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);\r\n+}\r\n+\r\n .user-form-container {\r\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n   \r\n"
+                },
+                {
+                    "date": 1745621585930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,8 +81,9 @@\n         &.submit-btn {\r\n           background: #E27D60;\r\n           color: white;\r\n           border: none;\r\n+          \r\n   \r\n           &:hover {\r\n             background: darken(#E27D60, 10%);\r\n           }\r\n"
+                },
+                {
+                    "date": 1745621595171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,22 @@\n         &.submit-btn {\r\n           background: #E27D60;\r\n           color: white;\r\n           border: none;\r\n-          \r\n+\r\n+    cursor: pointer;\r\n+    background: #41B3A3 ; // Utiliser la couleur primaire du dashboard\r\n+    border-radius: 8px; // Utiliser le border-radius standard\r\n+    font-weight: 600;\r\n+    min-height: 40px; // Hauteur alignée sur l'input\r\n+    border: none;\r\n+    color: white;\r\n+    padding: 0 20px;\r\n+    display: flex;\r\n+    align-items: center;\r\n+    transition: background-color 0.2s ease, transform 0.1s ease;\r\n+    font-size: 14px;\r\n+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Ombre légère\r\n   \r\n           &:hover {\r\n             background: darken(#E27D60, 10%);\r\n           }\r\n"
+                },
+                {
+                    "date": 1745621612754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,19 +78,18 @@\n           }\r\n         }\r\n   \r\n         &.submit-btn {\r\n-          background: #E27D60;\r\n+          \r\n           color: white;\r\n           border: none;\r\n \r\n     cursor: pointer;\r\n     background: #41B3A3 ; // Utiliser la couleur primaire du dashboard\r\n     border-radius: 8px; // Utiliser le border-radius standard\r\n     font-weight: 600;\r\n     min-height: 40px; // Hauteur alignée sur l'input\r\n-    border: none;\r\n-    color: white;\r\n+\r\n     padding: 0 20px;\r\n     display: flex;\r\n     align-items: center;\r\n     transition: background-color 0.2s ease, transform 0.1s ease;\r\n"
+                },
+                {
+                    "date": 1745621618516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,12 +84,10 @@\n           border: none;\r\n \r\n     cursor: pointer;\r\n     background: #41B3A3 ; // Utiliser la couleur primaire du dashboard\r\n-    border-radius: 8px; // Utiliser le border-radius standard\r\n     font-weight: 600;\r\n     min-height: 40px; // Hauteur alignée sur l'input\r\n-\r\n     padding: 0 20px;\r\n     display: flex;\r\n     align-items: center;\r\n     transition: background-color 0.2s ease, transform 0.1s ease;\r\n"
                 }
             ],
             "date": 1744030159566,

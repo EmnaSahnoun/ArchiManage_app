@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/_variables.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1745618879226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1745618879226,
+            "name": "Commit-0",
+            "content": "// src/app/styles/_variables.scss ou src/assets/styles/_variables.scss\r\n\r\n// --- Palette de Couleurs Principales ---\r\n$primary-color: #41B3A3;       // Teal/Vert principal (boutons primaires, accents)\r\n$accent-color: #E27D60;        // Coral/Orange (accents secondaires, peut-être certains boutons)\r\n$warn-color: #F44336;          // Rouge (erreurs, suppression) - Renommé depuis $delete-color pour cohérence Material\r\n$success-color: #4CAF50;       // Vert (succès, validation) - Renommé depuis $edit-color pour rôle plus large\r\n\r\n// --- Couleurs de Texte ---\r\n$text-color-primary: #333;     // Texte principal (foncé)\r\n$text-color-secondary: #666;   // Texte secondaire (gris moyen)\r\n$text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n\r\n// --- Couleurs de Fond ---\r\n$background-color: #f7f9fc;    // Fond général de la page (très clair)\r\n$container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n$input-background: #f0f2f5;    // Fond des champs de saisie (léger)\r\n$date-background: #e9ecef;     // Fond pour éléments spécifiques comme la date\r\n$table-header-background: #f9fafb; // Fond des en-têtes de tableau\r\n$table-row-hover: rgba(0, 0, 0, 0.04); // Survol des lignes de tableau\r\n\r\n// --- Bordures et Ombres ---\r\n$border-color: #e0e0e0;         // Couleur de bordure légère\r\n$border-radius: 8px;           // Rayon de bordure standard\r\n$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre standard pour les cartes\r\n\r\n// --- Typographie (Optionnel, à définir si besoin) ---\r\n$font-family-base: 'Poppins', sans-serif;\r\n$font-size-base: 14px;\r\n$font-weight-normal: 400;\r\n$font-weight-medium: 500;\r\n$font-weight-semibold: 600;\r\n$font-weight-bold: 700;\r\n\r\n// --- Espacements (Optionnel, pour cohérence) ---\r\n$spacing-xs: 4px;\r\n$spacing-sm: 8px;\r\n$spacing-md: 16px;\r\n$spacing-lg: 24px;\r\n$spacing-xl: 32px;\r\n\r\n// --- Couleurs spécifiques aux actions (si vous préférez garder les noms originaux) ---\r\n// $edit-action-color: $success-color; // Ou #4CAF50 directement\r\n// $delete-action-color: $warn-color;   // Ou #F44336 directement\r\n"
+        }
+    ]
+}

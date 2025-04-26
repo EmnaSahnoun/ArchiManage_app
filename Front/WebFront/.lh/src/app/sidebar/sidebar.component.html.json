@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 100,
+            "activePatchIndex": 102,
             "patches": [
                 {
                     "date": 1741609885165,
@@ -408,6 +408,14 @@
                 {
                     "date": 1745326727603,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,11 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <button mat-list-item   (click)=\"logout()\">\r\n+      <li mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n-      </button>\r\n+      </li>\r\n       \r\n     </ul>\r\n   </mat-sidenav>\r\n   \r\n"
+                },
+                {
+                    "date": 1745623456973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,27 +5,30 @@\n       <h3>ArchiManage</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n-      <li routerLink=\"/dashboard\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n+      <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n         <i class=\"bi bi-clipboard2-data\"></i> Dashboard</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Projets')\">\r\n+      <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n         <i class=\"bi bi-briefcase\"></i> Projects</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Clients')\">\r\n+      <li mat-list-item routerLink=\"/super-admin/agences\" routerLinkActive=\"active\" *ngIf=\"isSuperAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n+        <i class=\"bi bi-briefcase\"></i> Agences</a>\r\n+      </li>\r\n+      <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Clients')\">\r\n         <i class=\"bi bi-person-lines-fill\"></i> Clients</a>\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" >\r\n+      <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n       <li mat-list-item routerLink=\"/profile\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-person-circle\"></i> Profile\r\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/login\" routerLinkActive=\"active\" (click)=\"logout()\">\r\n+      <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n         <i class=\"bi bi-box-arrow-right\"></i> Sign out\r\n       </li>\r\n       \r\n     </ul>\r\n"
+                },
+                {
+                    "date": 1745623559776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,11 +20,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/profile\" routerLinkActive=\"active\">\r\n-        <i class=\"bi bi-person-circle\"></i> Profile\r\n-      </li>\r\n+      \r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n       <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n"
                 }
             ],
             "date": 1741609885165,

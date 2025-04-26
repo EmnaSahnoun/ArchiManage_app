@@ -156,19 +156,19 @@
   <!-- Section Liste des Utilisateurs (Mise à jour avec Inline Edit) -->
 <mat-card class="user-list-section section-card" *ngIf="isAdmin">
   <div class="section-header" style="padding: 0 24px;">
-    <h2 class="mat-card-title">Gestion des Utilisateurs</h2>
+    <h2 class="mat-card-title">Gestion des Membres</h2>
     <button mat-flat-button color="primary" class="add-user-button"
             (click)="triggerAddUser()"
             [disabled]="!currentAgence || isLoadingUsers || !!editingUserId || !!activeModalRef">
       <mat-icon>person_add</mat-icon>
-      <span>Ajouter Utilisateur</span>
+      <span>Ajouter membre</span>
     </button>
   </div>
 
   <mat-card-content>
     <div *ngIf="isLoadingUsers" class="loading-indicator">
       <mat-spinner [diameter]="50"></mat-spinner>
-      <p>Chargement des utilisateurs...</p>
+      <p>Chargement des membres...</p>
     </div>
 
     <table mat-table [dataSource]="userDataSource" class="data-table" *ngIf="!isLoadingUsers">
@@ -180,7 +180,7 @@
           <!-- Display Mode -->
           <span *ngIf="editingUserId !== user.id">{{ user.username }}</span>
           <!-- Edit Mode -->
-          <input *ngIf="editingUserId === user.id" type="text" [(ngModel)]="editedUserData.username" class="inline-edit-input" placeholder="Nom d'utilisateur" />
+          <input *ngIf="editingUserId === user.id" type="text" [(ngModel)]="editedUserData.username" class="inline-edit-input" placeholder="Nom du membre" />
         </td>
       </ng-container>
 
@@ -221,7 +221,7 @@
             <input class="form-check-input" type="checkbox" role="switch"
                    id="userStatusSwitch-{{user.id}}"
                    [(ngModel)]="editedUserData.enabled"
-                   [attr.aria-label]="editedUserData.enabled ? 'Désactiver l\'utilisateur' : 'Activer l\'utilisateur'">
+                   [attr.aria-label]="editedUserData.enabled ? 'Désactiver le membre' : 'Activer le membre'">
             
           </div>
         </td>
@@ -261,7 +261,7 @@
 
       <!-- Ligne affichée quand il n'y a pas de données -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [attr.colspan]="userDisplayedColumns.length">Aucun utilisateur trouvé pour cette agence.</td>
+        <td class="mat-cell" [attr.colspan]="userDisplayedColumns.length">Aucun membre trouvé pour cette agence.</td>
       </tr>
     </table>
   </mat-card-content>

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 74,
+            "activePatchIndex": 131,
             "patches": [
                 {
                     "date": 1741609891837,
@@ -304,6 +304,234 @@
                 {
                     "date": 1742345919412,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,7 +81,7 @@\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n-    width: 200px;\r\n+    width: 180px;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622217594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,87 +1,115 @@\n-/* MatSidenavContainer prend toute la hauteur */\r\n-.sidenav-container {\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n-  display: flex;\r\n-  overflow: hidden;\r\n-}\r\n+// Dans votre fichier sidebar.component.scss (ou équivalent)\r\n \r\n-/* Sidebar toujours visible */\r\n-.sidenav {\r\n-  width: 250px; /* Largeur de la sidebar */\r\n-  background: #3d5653; \r\n-  color: white;\r\n-  position: fixed;\r\n-  padding: 1.3rem;\r\n-  border-radius: 0 2rem 2rem 0;\r\n-  left: 0;\r\n-  top: 0;\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n-}\r\n+// --- Variables de couleurs (Idéalement, importez-les depuis _variables.scss) ---\r\n+$primary-color: #41B3A3;       // Teal/Vert principal\r\n+$accent-color: #E27D60;        // Coral/Orange\r\n+$text-color-primary: #333;     // Texte principal\r\n+$text-color-secondary: #666;   // Texte secondaire\r\n+$text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n+$container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n+$border-color: #e0e0e0;         // Couleur de bordure légère\r\n+$border-radius: 8px;           // Rayon de bordure standard\r\n \r\n-/* Assurer que le contenu ne chevauche pas la sidebar */\r\n-mat-sidenav-content {\r\n-  flex: 1;\r\n-  display: flex;\r\n-  flex-direction: column;\r\n-  height: 100vh;\r\n-  overflow-y: auto;\r\n-}\r\n+// --- Styles de la Sidebar ---\r\n \r\n-/* Logo centré */\r\n-.logo {\r\n-  text-align: center;\r\n-}\r\n+// Ciblez le conteneur principal de votre sidebar\r\n+.sidebar-container { // Remplacez par le sélecteur correct de votre sidebar\r\n+  background-color: $container-background; // Fond blanc (ou une autre couleur si vous préférez)\r\n+  color: $text-color-primary; // Couleur de texte par défaut\r\n+  border-right: 1px solid $border-color; // Bordure légère à droite (optionnel)\r\n+  padding: 16px 0; // Padding vertical, pas horizontal pour les liens\r\n+  font-family: 'Poppins', sans-serif; // Assurer la cohérence de la police\r\n \r\n-.logo img {\r\n-  width: 80px;\r\n-  border-radius: 50%;\r\n-}\r\n+  // Style pour le logo ou le titre en haut (si applicable)\r\n+  .sidebar-header {\r\n+    padding: 0 16px 16px 16px; // Padding horizontal ici\r\n+    margin-bottom: 16px;\r\n+    border-bottom: 1px solid $border-color;\r\n+    text-align: center; // Ou à gauche selon votre design\r\n \r\n-/* Liste de navigation */\r\n-ul {\r\n-  padding-left: 0;\r\n-  margin-top: 20px;\r\n-  list-style-type: none;\r\n-}\r\n+    img { // Si vous avez un logo\r\n+      max-width: 80%;\r\n+      height: auto;\r\n+    }\r\n+    h3 { // Si vous avez un titre\r\n+        color: $primary-color; // Utiliser la couleur primaire\r\n+        margin: 0;\r\n+        font-weight: 600;\r\n+    }\r\n+  }\r\n \r\n-ul li {\r\n-  cursor: pointer; \r\n-  display: flex;\r\n-  align-items: center;\r\n-  padding: 0.8rem;\r\n-  border-radius: 2rem;\r\n-  transition: background 0.3s ease; \r\n-}\r\n+  // Style pour les liens de navigation\r\n+  .nav-links {\r\n+    list-style: none;\r\n+    padding: 0;\r\n+    margin: 0;\r\n \r\n-ul li i {\r\n-  margin-right: 1rem;\r\n-}\r\n+    .nav-item {\r\n+      a { // Style des liens\r\n+        display: flex;\r\n+        align-items: center;\r\n+        padding: 12px 20px; // Padding pour les liens\r\n+        color: $text-color-secondary; // Couleur de texte secondaire pour les liens inactifs\r\n+        text-decoration: none;\r\n+        transition: background-color 0.2s ease, color 0.2s ease;\r\n+        border-left: 3px solid transparent; // Indicateur actif (transparent par défaut)\r\n+        margin-bottom: 4px; // Petit espace entre les liens\r\n \r\n-ul li:hover {\r\n-  background: #4d716e; \r\n-}\r\n+        mat-icon, i { // Style des icônes\r\n+          margin-right: 12px;\r\n+          font-size: 20px; // Taille icône\r\n+          vertical-align: middle;\r\n+        }\r\n \r\n-ul li a {\r\n-  color: white;\r\n-  text-decoration: none;\r\n-  display: flex;\r\n-  align-items: center;\r\n-  width: 100%;\r\n-}\r\n+        span { // Style du texte du lien\r\n+          font-size: 14px;\r\n+          font-weight: 500; // Medium weight\r\n+        }\r\n \r\n-ul li a:hover {\r\n-  background: transparent;\r\n-}\r\n+        &:hover { // Style au survol\r\n+          background-color: lighten($primary-color, 40%); // Fond très léger de la couleur primaire\r\n+          color: $primary-color; // Texte en couleur primaire\r\n+        }\r\n \r\n-/* Responsive */\r\n-@media (max-width: 768px) {\r\n-  .sidenav {\r\n-    width: 200px;\r\n+        // Style pour le lien actif (utilisez [routerLinkActive] dans le HTML)\r\n+        &.active {\r\n+          background-color: lighten($primary-color, 45%); // Fond légèrement différent pour actif\r\n+          color: $primary-color; // Texte en couleur primaire\r\n+          font-weight: 600; // Texte plus gras pour actif\r\n+          border-left-color: $primary-color; // Indicateur de couleur primaire\r\n+        }\r\n+      }\r\n+    }\r\n   }\r\n-}\r\n \r\n-@media (max-width: 480px) {\r\n-  .sidenav {\r\n-    width: 180px;\r\n+  // Style pour la section de déconnexion (si en bas)\r\n+  .logout-section {\r\n+    margin-top: auto; // Pousse en bas si la sidebar est en flex column\r\n+    padding: 16px 20px;\r\n+    border-top: 1px solid $border-color;\r\n+\r\n+    button {\r\n+      display: flex;\r\n+      align-items: center;\r\n+      width: 100%;\r\n+      background: none;\r\n+      border: none;\r\n+      color: $warn-color; // Couleur rouge pour déconnexion\r\n+      padding: 10px 0; // Ajuster padding\r\n+      text-align: left;\r\n+      cursor: pointer;\r\n+      font-size: 14px;\r\n+      font-weight: 500;\r\n+      transition: color 0.2s ease;\r\n+\r\n+      mat-icon, i {\r\n+        margin-right: 12px;\r\n+        font-size: 20px;\r\n+      }\r\n+\r\n+      &:hover {\r\n+        color: darken($warn-color, 10%); // Assombrir au survol\r\n+      }\r\n+    }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622254661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,10 @@\n $text-color-secondary: #666;   // Texte secondaire\r\n $text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n $container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n $border-color: #e0e0e0;         // Couleur de bordure légère\r\n-$border-radius: 8px;           // Rayon de bordure standard\r\n+$border-radius: 8px;    \r\n+       // Rayon de bordure standard\r\n \r\n // --- Styles de la Sidebar ---\r\n \r\n // Ciblez le conteneur principal de votre sidebar\r\n"
+                },
+                {
+                    "date": 1745622262061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,10 @@\n $text-color-secondary: #666;   // Texte secondaire\r\n $text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n $container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n $border-color: #e0e0e0;         // Couleur de bordure légère\r\n-$border-radius: 8px;    \r\n-       // Rayon de bordure standard\r\n-\r\n+$border-radius: 8px;           // Rayon de bordure standard\r\n+$warning-color: #f5a623;\r\n // --- Styles de la Sidebar ---\r\n \r\n // Ciblez le conteneur principal de votre sidebar\r\n .sidebar-container { // Remplacez par le sélecteur correct de votre sidebar\r\n"
+                },
+                {
+                    "date": 1745622310970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,9 +107,9 @@\n         font-size: 20px;\r\n       }\r\n \r\n       &:hover {\r\n-        color: darken($warn-color, 10%); // Assombrir au survol\r\n+        color: darken($-colwarnor, 10%); // Assombrir au survol\r\n       }\r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622316930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,9 +107,9 @@\n         font-size: 20px;\r\n       }\r\n \r\n       &:hover {\r\n-        color: darken($-colwarnor, 10%); // Assombrir au survol\r\n+        color: darken($warning-color, 10%); // Assombrir au survol\r\n       }\r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622324501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n       align-items: center;\r\n       width: 100%;\r\n       background: none;\r\n       border: none;\r\n-      color: $warn-color; // Couleur rouge pour déconnexion\r\n+      color: $warning-color: // Couleur rouge pour déconnexion\r\n       padding: 10px 0; // Ajuster padding\r\n       text-align: left;\r\n       cursor: pointer;\r\n       font-size: 14px;\r\n"
+                },
+                {
+                    "date": 1745622337800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n $text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n $container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n $border-color: #e0e0e0;         // Couleur de bordure légère\r\n $border-radius: 8px;           // Rayon de bordure standard\r\n-$warning-color: #f5a623;\r\n+--warning-color: #f5a623;\r\n // --- Styles de la Sidebar ---\r\n \r\n // Ciblez le conteneur principal de votre sidebar\r\n .sidebar-container { // Remplacez par le sélecteur correct de votre sidebar\r\n@@ -93,9 +93,9 @@\n       align-items: center;\r\n       width: 100%;\r\n       background: none;\r\n       border: none;\r\n-      color: $warning-color: // Couleur rouge pour déconnexion\r\n+      color: $warn-color; // Couleur rouge pour déconnexion\r\n       padding: 10px 0; // Ajuster padding\r\n       text-align: left;\r\n       cursor: pointer;\r\n       font-size: 14px;\r\n@@ -107,9 +107,9 @@\n         font-size: 20px;\r\n       }\r\n \r\n       &:hover {\r\n-        color: darken($warning-color, 10%); // Assombrir au survol\r\n+        color: darken($warn-color, 10%); // Assombrir au survol\r\n       }\r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622411217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,115 +1,87 @@\n-// Dans votre fichier sidebar.component.scss (ou équivalent)\r\n+/* MatSidenavContainer prend toute la hauteur */\r\n+.sidenav-container {\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+  display: flex;\r\n+  overflow: hidden;\r\n+}\r\n \r\n-// --- Variables de couleurs (Idéalement, importez-les depuis _variables.scss) ---\r\n-$primary-color: #41B3A3;       // Teal/Vert principal\r\n-$accent-color: #E27D60;        // Coral/Orange\r\n-$text-color-primary: #333;     // Texte principal\r\n-$text-color-secondary: #666;   // Texte secondaire\r\n-$text-color-light: #fff;       // Texte sur fonds sombres/colorés\r\n-$container-background: #fff;   // Fond des conteneurs/cartes (blanc)\r\n-$border-color: #e0e0e0;         // Couleur de bordure légère\r\n-$border-radius: 8px;           // Rayon de bordure standard\r\n---warning-color: #f5a623;\r\n-// --- Styles de la Sidebar ---\r\n+/* Sidebar toujours visible */\r\n+.sidenav {\r\n+  width: 250px; /* Largeur de la sidebar */\r\n+  background: ##4a90e2; \r\n+  color: white;\r\n+  position: fixed;\r\n+  padding: 1.3rem;\r\n+  border-radius: 0 2rem 2rem 0;\r\n+  left: 0;\r\n+  top: 0;\r\n+  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+}\r\n \r\n-// Ciblez le conteneur principal de votre sidebar\r\n-.sidebar-container { // Remplacez par le sélecteur correct de votre sidebar\r\n-  background-color: $container-background; // Fond blanc (ou une autre couleur si vous préférez)\r\n-  color: $text-color-primary; // Couleur de texte par défaut\r\n-  border-right: 1px solid $border-color; // Bordure légère à droite (optionnel)\r\n-  padding: 16px 0; // Padding vertical, pas horizontal pour les liens\r\n-  font-family: 'Poppins', sans-serif; // Assurer la cohérence de la police\r\n+/* Assurer que le contenu ne chevauche pas la sidebar */\r\n+mat-sidenav-content {\r\n+  flex: 1;\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  height: 100vh;\r\n+  overflow-y: auto;\r\n+}\r\n \r\n-  // Style pour le logo ou le titre en haut (si applicable)\r\n-  .sidebar-header {\r\n-    padding: 0 16px 16px 16px; // Padding horizontal ici\r\n-    margin-bottom: 16px;\r\n-    border-bottom: 1px solid $border-color;\r\n-    text-align: center; // Ou à gauche selon votre design\r\n+/* Logo centré */\r\n+.logo {\r\n+  text-align: center;\r\n+}\r\n \r\n-    img { // Si vous avez un logo\r\n-      max-width: 80%;\r\n-      height: auto;\r\n-    }\r\n-    h3 { // Si vous avez un titre\r\n-        color: $primary-color; // Utiliser la couleur primaire\r\n-        margin: 0;\r\n-        font-weight: 600;\r\n-    }\r\n-  }\r\n+.logo img {\r\n+  width: 80px;\r\n+  border-radius: 50%;\r\n+}\r\n \r\n-  // Style pour les liens de navigation\r\n-  .nav-links {\r\n-    list-style: none;\r\n-    padding: 0;\r\n-    margin: 0;\r\n+/* Liste de navigation */\r\n+ul {\r\n+  padding-left: 0;\r\n+  margin-top: 20px;\r\n+  list-style-type: none;\r\n+}\r\n \r\n-    .nav-item {\r\n-      a { // Style des liens\r\n-        display: flex;\r\n-        align-items: center;\r\n-        padding: 12px 20px; // Padding pour les liens\r\n-        color: $text-color-secondary; // Couleur de texte secondaire pour les liens inactifs\r\n-        text-decoration: none;\r\n-        transition: background-color 0.2s ease, color 0.2s ease;\r\n-        border-left: 3px solid transparent; // Indicateur actif (transparent par défaut)\r\n-        margin-bottom: 4px; // Petit espace entre les liens\r\n+ul li {\r\n+  cursor: pointer; \r\n+  display: flex;\r\n+  align-items: center;\r\n+  padding: 0.8rem;\r\n+  border-radius: 2rem;\r\n+  transition: background 0.3s ease; \r\n+}\r\n \r\n-        mat-icon, i { // Style des icônes\r\n-          margin-right: 12px;\r\n-          font-size: 20px; // Taille icône\r\n-          vertical-align: middle;\r\n-        }\r\n+ul li i {\r\n+  margin-right: 1rem;\r\n+}\r\n \r\n-        span { // Style du texte du lien\r\n-          font-size: 14px;\r\n-          font-weight: 500; // Medium weight\r\n-        }\r\n+ul li:hover {\r\n+  background: #4d716e; \r\n+}\r\n \r\n-        &:hover { // Style au survol\r\n-          background-color: lighten($primary-color, 40%); // Fond très léger de la couleur primaire\r\n-          color: $primary-color; // Texte en couleur primaire\r\n-        }\r\n+ul li a {\r\n+  color: white;\r\n+  text-decoration: none;\r\n+  display: flex;\r\n+  align-items: center;\r\n+  width: 100%;\r\n+}\r\n \r\n-        // Style pour le lien actif (utilisez [routerLinkActive] dans le HTML)\r\n-        &.active {\r\n-          background-color: lighten($primary-color, 45%); // Fond légèrement différent pour actif\r\n-          color: $primary-color; // Texte en couleur primaire\r\n-          font-weight: 600; // Texte plus gras pour actif\r\n-          border-left-color: $primary-color; // Indicateur de couleur primaire\r\n-        }\r\n-      }\r\n-    }\r\n+ul li a:hover {\r\n+  background: transparent;\r\n+}\r\n+\r\n+/* Responsive */\r\n+@media (max-width: 768px) {\r\n+  .sidenav {\r\n+    width: 200px;\r\n   }\r\n+}\r\n \r\n-  // Style pour la section de déconnexion (si en bas)\r\n-  .logout-section {\r\n-    margin-top: auto; // Pousse en bas si la sidebar est en flex column\r\n-    padding: 16px 20px;\r\n-    border-top: 1px solid $border-color;\r\n-\r\n-    button {\r\n-      display: flex;\r\n-      align-items: center;\r\n-      width: 100%;\r\n-      background: none;\r\n-      border: none;\r\n-      color: $warn-color; // Couleur rouge pour déconnexion\r\n-      padding: 10px 0; // Ajuster padding\r\n-      text-align: left;\r\n-      cursor: pointer;\r\n-      font-size: 14px;\r\n-      font-weight: 500;\r\n-      transition: color 0.2s ease;\r\n-\r\n-      mat-icon, i {\r\n-        margin-right: 12px;\r\n-        font-size: 20px;\r\n-      }\r\n-\r\n-      &:hover {\r\n-        color: darken($warn-color, 10%); // Assombrir au survol\r\n-      }\r\n-    }\r\n+@media (max-width: 480px) {\r\n+  .sidenav {\r\n+    width: 180px;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745622422915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: ##4a90e2; \r\n+  background: #3d5653; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622433740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #3d5653; \r\n+  background: #50e3c2; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622472398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #50e3c2; \r\n+  background: ##41B3A3; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622483681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: ##41B3A3; \r\n+  background: #2ea595; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622507658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #2ea595; \r\n+  background: #4f6360; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622514661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #4f6360; \r\n+  background: #4f5463; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622521701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #4f5463; \r\n+  background: #2b3b67; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622531242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #2b3b67; \r\n+  background: #2c3349; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622536910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #2c3349; \r\n+  background: #0f1423; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622542556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #0f1423; \r\n+  background: #8493bc; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622553076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #8493bc; \r\n+  background: #384a7c87; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622561318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #384a7c87; \r\n+  background: ##41B3A3; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622569397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: ##41B3A3; \r\n+  background: #41b3a49a; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622574546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #41b3a49a; \r\n+  background: #41b3a442; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622585861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #41b3a442; \r\n+  background: #205a5242; \r\n   color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622609334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n \r\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n-  background: #205a5242; \r\n-  color: white;\r\n+  background: #205a52; \r\n+  color: rgb(105, 66, 66);\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622615355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n /* Sidebar toujours visible */\r\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n-  color: rgb(105, 66, 66);\r\n+  color: white;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622620960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n+  fo\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622626683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n-  fo\r\n+  font-weight: bold;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622632896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n   font-weight: bold;\r\n+  overflow-y: auto;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622639660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n-  font-weight: bold;\r\n+  font-weight: ;\r\n   overflow-y: auto;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622657960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n-  font-weight: ;\r\n+  font-weight: bo;\r\n   overflow-y: auto;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622670430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,10 @@\n .sidenav {\r\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n-  font-weight: bo;\r\n+  font-weight: normal;\r\n+  \r\n   overflow-y: auto;\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n"
+                },
+                {
+                    "date": 1745622684511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n   width: 250px; /* Largeur de la sidebar */\r\n   background: #205a52; \r\n   color: white;\r\n   font-weight: normal;\r\n-  \r\n-  overflow-y: auto;\r\n+  font-size: large;\r\n+\r\n   position: fixed;\r\n   padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n"
+                },
+                {
+                    "date": 1745622698895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n   flex: 1;\r\n   display: flex;\r\n   flex-direction: column;\r\n   height: 100vh;\r\n-  overflow-y: auto;\r\n+  \r\n }\r\n \r\n /* Logo centré */\r\n .logo {\r\n"
+                },
+                {
+                    "date": 1745622806080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,12 @@\n   font-weight: normal;\r\n   font-size: large;\r\n \r\n   position: fixed;\r\n-  padding: 1.3rem;\r\n+  display: flex; // Utiliser flexbox pour organiser le contenu verticalement\r\n+  flex-direction: column; // Aligner les éléments en colonne\r\n+  box-sizing: border-box; // Inclure padding dans la hauteur/largeur\r\n+  padding: 0; \r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n   top: 0;\r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n"
+                },
+                {
+                    "date": 1745622814406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,12 +13,9 @@\n   font-weight: normal;\r\n   font-size: large;\r\n \r\n   position: fixed;\r\n-  display: flex; // Utiliser flexbox pour organiser le contenu verticalement\r\n-  flex-direction: column; // Aligner les éléments en colonne\r\n-  box-sizing: border-box; // Inclure padding dans la hauteur/largeur\r\n-  padding: 0; \r\n+  padding: 1.3rem;\r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n   top: 0;\r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n"
+                },
+                {
+                    "date": 1745622820493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,12 @@\n   font-size: large;\r\n \r\n   position: fixed;\r\n   padding: 1.3rem;\r\n+  display: flex; // Utiliser flexbox pour organiser le contenu verticalement\r\n+  flex-direction: column; // Aligner les éléments en colonne\r\n+  box-sizing: border-box; // Inclure padding dans la hauteur/largeur\r\n+ \r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n   top: 0;\r\n   height: 100vh; /* Prend toute la hauteur de l'écran */\r\n"
+                },
+                {
+                    "date": 1745622839854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n  \r\n   border-radius: 0 2rem 2rem 0;\r\n   left: 0;\r\n   top: 0;\r\n-  height: 100vh; /* Prend toute la hauteur de l'écran */\r\n+   /* Prend toute la hauteur de l'écran */\r\n }\r\n \r\n /* Assurer que le contenu ne chevauche pas la sidebar */\r\n mat-sidenav-content {\r\n"
+                },
+                {
+                    "date": 1745622903914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,10 @@\n   flex: 1;\r\n   display: flex;\r\n   flex-direction: column;\r\n   height: 100vh;\r\n-  \r\n+  overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire\r\n+  margin-left: 250px;\r\n }\r\n \r\n /* Logo centré */\r\n .logo {\r\n"
+                },
+                {
+                    "date": 1745622920190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,8 +37,11 @@\n \r\n /* Logo centré */\r\n .logo {\r\n   text-align: center;\r\n+  padding: 1.3rem 1.3rem 1rem 1.3rem; // Appliquer le padding ici\r\n+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); // Séparateur léger\r\n+\r\n }\r\n \r\n .logo img {\r\n   width: 80px;\r\n"
+                },
+                {
+                    "date": 1745622960078,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,9 @@\n   border-radius: 50%;\r\n }\r\n \r\n /* Liste de navigation */\r\n+\r\n ul {\r\n   padding-left: 0;\r\n   margin-top: 20px;\r\n   list-style-type: none;\r\n"
+                },
+                {
+                    "date": 1745622982916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,63 @@\n   border-radius: 50%;\r\n }\r\n \r\n /* Liste de navigation */\r\n+ul.nav-links { // Cibler plus spécifiquement\r\n+  padding: 1rem 0; // Padding vertical pour la liste\r\n+  margin: 0;\r\n+  list-style-type: none;\r\n+  // **** AJOUT IMPORTANT ****\r\n+  flex-grow: 1; // Permet à cette section de prendre l'espace vertical disponible\r\n+  overflow-y: auto; // Permet le scroll SEULEMENT pour la liste si elle est trop longue\r\n+  // **** FIN AJOUT IMPORTANT ****\r\n \r\n+  li.nav-item { // Cibler plus spécifiquement\r\n+    cursor: pointer;\r\n+    display: flex;\r\n+    align-items: center;\r\n+    padding: 0; // Retirer padding ici, il est sur le lien <a>\r\n+    border-radius: 0; // Retirer radius ici, il est sur le lien <a>\r\n+    transition: none; // Retirer transition ici\r\n+    margin: 0 1rem 4px 1rem; // Marges pour espacer et centrer visuellement\r\n+\r\n+    a {\r\n+          text-decoration: none;\r\n+      display: flex;\r\n+      align-items: center;\r\n+      width: 100%;\r\n+      padding: 12px 16px; // Padding sur le lien\r\n+      border-radius: 2rem; // Radius sur le lien\r\n+      border-left: 3px solid transparent; // Indicateur actif\r\n+      transition: background-color 0.2s ease, color 0.2s ease;\r\n+\r\n+      mat-icon, i {\r\n+        margin-right: 1rem;\r\n+        font-size: 20px;\r\n+        vertical-align: middle;\r\n+      }\r\n+\r\n+      span {\r\n+        font-size: 14px;\r\n+        font-weight: 500;\r\n+      }\r\n+\r\n+      &:hover {\r\n+        background-color: $sidebar-hover-background; // Utiliser variable\r\n+        color: $text-color-light; // Garder blanc ou éclaircir légèrement\r\n+      }\r\n+\r\n+      // Style pour le lien actif\r\n+      &.active {\r\n+        background-color: $sidebar-active-background; // Utiliser variable\r\n+        color: $sidebar-active-border; // Utiliser variable\r\n+        font-weight: 600;\r\n+        border-left-color: $sidebar-active-border; // Utiliser variable\r\n+      }\r\n+    }\r\n+  }\r\n+}\r\n+\r\n ul {\r\n   padding-left: 0;\r\n   margin-top: 20px;\r\n   list-style-type: none;\r\n"
+                },
+                {
+                    "date": 1745623001765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n     transition: none; // Retirer transition ici\r\n     margin: 0 1rem 4px 1rem; // Marges pour espacer et centrer visuellement\r\n \r\n     a {\r\n-          text-decoration: none;\r\n+      text-decoration: none;\r\n       display: flex;\r\n       align-items: center;\r\n       width: 100%;\r\n       padding: 12px 16px; // Padding sur le lien\r\n@@ -88,9 +88,9 @@\n         font-weight: 500;\r\n       }\r\n \r\n       &:hover {\r\n-        background-color: $sidebar-hover-background; // Utiliser variable\r\n+        background-color: #; // Utiliser variable\r\n         color: $text-color-light; // Garder blanc ou éclaircir légèrement\r\n       }\r\n \r\n       // Style pour le lien actif\r\n"
+                },
+                {
+                    "date": 1745623031085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,10 +88,10 @@\n         font-weight: 500;\r\n       }\r\n \r\n       &:hover {\r\n-        background-color: #; // Utiliser variable\r\n-        color: $text-color-light; // Garder blanc ou éclaircir légèrement\r\n+        background-color: #4d716e; // Utiliser variable\r\n+        color: #$text-color-light; // Garder blanc ou éclaircir légèrement\r\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n"
+                },
+                {
+                    "date": 1745623036346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n       }\r\n \r\n       &:hover {\r\n         background-color: #4d716e; // Utiliser variable\r\n-        color: #$text-color-light; // Garder blanc ou éclaircir légèrement\r\n+        color: #fff; // Garder blanc ou éclaircir légèrement\r\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n"
+                },
+                {
+                    "date": 1745623051396,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: $sidebar-active-background; // Utiliser variable\r\n+        background-color: li; // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623056991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: li; // Utiliser variable\r\n+        background-color: lighten($color: #000000, $amount: 0); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623065953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: lighten($color: #000000, $amount: 0); // Utiliser variable\r\n+        background-color: lighten($color: #, $amount: 0); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623071893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: lighten($color: #, $amount: 0); // Utiliser variable\r\n+        background-color: lighten($color: #41, $amount: 0); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623078422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: lighten($color: #41, $amount: 0); // Utiliser variable\r\n+        background-color: lighten($color: #41B3A3, $amount: 0); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623094133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: lighten($color: #41B3A3, $amount: 0); // Utiliser variable\r\n+        background-color: lighten($color: #41B3A3, 45%); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623102424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n       }\r\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n-        background-color: lighten($color: #41B3A3, 45%); // Utiliser variable\r\n+        background-color: lighten( #41B3A3, 45%); // Utiliser variable\r\n         color: $sidebar-active-border; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n"
+                },
+                {
+                    "date": 1745623119248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n         background-color: lighten( #41B3A3, 45%); // Utiliser variable\r\n-        color: $sidebar-active-border; // Utiliser variable\r\n+        color: 41B3A3; // Utiliser variable\r\n         font-weight: 600;\r\n         border-left-color: $sidebar-active-border; // Utiliser variable\r\n       }\r\n     }\r\n"
+                },
+                {
+                    "date": 1745623130885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,11 +95,11 @@\n \r\n       // Style pour le lien actif\r\n       &.active {\r\n         background-color: lighten( #41B3A3, 45%); // Utiliser variable\r\n-        color: 41B3A3; // Utiliser variable\r\n+        color: #41B3A3; // Utiliser variable\r\n         font-weight: 600;\r\n-        border-left-color: $sidebar-active-border; // Utiliser variable\r\n+        border-left-color: 41B3A3; // Utiliser variable\r\n       }\r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745623185967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,9 @@\n       &.active {\r\n         background-color: lighten( #41B3A3, 45%); // Utiliser variable\r\n         color: #41B3A3; // Utiliser variable\r\n         font-weight: 600;\r\n-        border-left-color: 41B3A3; // Utiliser variable\r\n+        border-left-color: #41B3A3; // Utiliser variable\r\n       }\r\n     }\r\n   }\r\n }\r\n@@ -137,9 +137,37 @@\n \r\n ul li a:hover {\r\n   background: transparent;\r\n }\r\n+.logout-section {\r\n+  // margin-top: auto; // Déjà géré par flex-grow sur ul.nav-links\r\n+  padding: 1rem 1.3rem; // Padding\r\n+  border-top: 1px solid rgba(255, 255, 255, 0.1); // Séparateur léger\r\n \r\n+  button {\r\n+    display: flex;\r\n+    align-items: center;\r\n+    width: 100%;\r\n+    background: none;\r\n+    border: none;\r\n+    color: lighten($warn-color, 15%); // Rouge clair pour déconnexion\r\n+    padding: 10px 0;\r\n+    text-align: left;\r\n+    cursor: pointer;\r\n+    font-size: 14px;\r\n+    font-weight: 500;\r\n+    transition: color 0.2s ease;\r\n+\r\n+    mat-icon, i {\r\n+      margin-right: 12px;\r\n+      font-size: 20px;\r\n+    }\r\n+\r\n+    &:hover {\r\n+      color: $text-color-light; // Blanc au survol\r\n+    }\r\n+  }\r\n+}\r\n /* Responsive */\r\n @media (max-width: 768px) {\r\n   .sidenav {\r\n     width: 200px;\r\n"
+                },
+                {
+                    "date": 1745623204615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n     align-items: center;\r\n     width: 100%;\r\n     background: none;\r\n     border: none;\r\n-    color: lighten($warn-color, 15%); // Rouge clair pour déconnexion\r\n+    color: lighten(##F44336, 15%); // Rouge clair pour déconnexion\r\n     padding: 10px 0;\r\n     text-align: left;\r\n     cursor: pointer;\r\n     font-size: 14px;\r\n"
+                },
+                {
+                    "date": 1745623220740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n     align-items: center;\r\n     width: 100%;\r\n     background: none;\r\n     border: none;\r\n-    color: lighten(##F44336, 15%); // Rouge clair pour déconnexion\r\n+    color: lighten(#F44336, 15%); // Rouge clair pour déconnexion\r\n     padding: 10px 0;\r\n     text-align: left;\r\n     cursor: pointer;\r\n     font-size: 14px;\r\n@@ -162,9 +162,9 @@\n       font-size: 20px;\r\n     }\r\n \r\n     &:hover {\r\n-      color: $text-color-light; // Blanc au survol\r\n+      color: #fff; // Blanc au survol\r\n     }\r\n   }\r\n }\r\n /* Responsive */\r\n"
+                },
+                {
+                    "date": 1745623248201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -171,11 +171,17 @@\n @media (max-width: 768px) {\r\n   .sidenav {\r\n     width: 200px;\r\n   }\r\n+  mat-sidenav-content {\r\n+    margin-left: 200px; // Ajuster le décalage\r\n+  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n     width: 180px;\r\n   }\r\n+  mat-sidenav-content {\r\n+    margin-left: 180px; // Ajuster le décalage\r\n+  }\r\n }\r\n"
                 }
             ],
             "date": 1741609891837,

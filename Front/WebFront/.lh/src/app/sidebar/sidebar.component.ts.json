@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1741687942503,
@@ -84,6 +84,14 @@
                 {
                     "date": 1745326961618,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,6 +18,7 @@\n   }\r\n   \r\n   logout(){\r\n     this.authService.logout();\r\n+    this.router.navigate(['/login']);\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1745623610698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,28 @@\n-import { Component, EventEmitter, Output } from '@angular/core';\r\n+import { Component, EventEmitter, OnInit, Output } from '@angular/core';\r\n import { NavigationEnd, Router } from '@angular/router';\r\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-sidebar',\r\n   templateUrl: './sidebar.component.html',\r\n   styleUrl: './sidebar.component.scss'\r\n })\r\n-export class SidebarComponent {\r\n+export class SidebarComponent implements OnInit {\r\n+  isUser:boolean=false;\r\n+  isAdmin:boolean=false;\r\n+\r\n+  isSuperAdmin:boolean=false;\r\n   constructor(private authService:AuthService,\r\n     private router:Router\r\n   ){}\r\n   @Output() titleChange = new EventEmitter<string>();\r\n-\r\n+ngOnInit(): void {\r\n+  this.isUser=this.authService.isUser();\r\n+  this.isSuperAdmin=this.authService.isSuperAdmin();\r\n+  this.isAdmin=this.authService.isAdmin();\r\n+  console\r\n+}\r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n   \r\n"
+                },
+                {
+                    "date": 1745623624425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n ngOnInit(): void {\r\n   this.isUser=this.authService.isUser();\r\n   this.isSuperAdmin=this.authService.isSuperAdmin();\r\n   this.isAdmin=this.authService.isAdmin();\r\n-  console\r\n+  \r\n }\r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n"
                 }
             ],
             "date": 1741687942503,

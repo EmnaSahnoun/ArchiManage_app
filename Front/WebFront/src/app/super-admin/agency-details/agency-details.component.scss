@@ -1,333 +1,259 @@
-// Import Bootstrap variables/mixins if you use them, otherwise define colors
-// Example color variables (adjust to your theme)
-$primary-color: #41B3A3;
-$secondary-color: #E27D60;
-$success-color: #28a745;
-$danger-color: #dc3545;
-$cancel-color: #6c757d;
-$light-gray: #f1f1f1;
-$medium-gray: #ddd;
-$dark-gray: #777;
-$text-color: #333;
-
-
+// --- Variables de couleurs (inspirées de agences/dashboard) ---
+$primary-color: #41B3A3;       // Teal/Vert principal
+$accent-color: #E27D60;        // Coral/Orange (utilisé pour les titres et bouton ajout user)
+$warn-color: #F44336;          // Rouge (suppression)
+$success-color: #4CAF50;       // Vert (validation, édition)
+$cancel-color: #6c757d;        // Gris (annulation)
+$text-color-primary: #333;     // Texte principal
+$text-color-secondary: #666;   // Texte secondaire
+$background-color: #f7f9fc;    // Fond général (si la modal ne couvre pas tout)
+$container-background: #fff;   // Fond de la modal/conteneur principal
+$info-background: #f8f9fa;     // Fond section info (très léger)
+$border-color: #e0e0e0;         // Couleur de bordure légère
+$table-header-background: #f9fafb; // Fond en-tête tableau
+$table-row-hover: rgba(0, 0, 0, 0.04); // Survol ligne tableau
+$border-radius: 8px;           // Rayon de bordure
+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre (si la modal est comme une carte)
+$edit-color: #4CAF50;   // Vert
+$delete-color: #F44336; // Rouge
+// --- Styles Généraux du Conteneur ---
 .agency-details-container {
+  padding: 24px; // Padding général
+  font-family: 'Poppins', sans-serif;
+  background-color: $container-background; // Fond blanc pour la modal
+  border-radius: $border-radius; // Coins arrondis pour la modal
+  box-shadow: $card-shadow; // Ombre pour la modal
+  position: relative; // Pour positionner le bouton fermer
+  color: $text-color-primary;
+}
+
+// --- Bouton Fermer ---
+.close-modal-btn {
+  position: absolute;
+  top: 12px; // Ajuster
+  right: 12px; // Ajuster
+  background: none;
+  border: none;
+  font-size: 1.6rem; // Taille icône
+  color: $text-color-secondary; // Couleur gris moyen
+  cursor: pointer;
+  z-index: 10; // Au-dessus du contenu
+  padding: 5px;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+  &:hover {
+    background-color: rgba(0,0,0,0.05); // Léger fond au survol
+    color: $text-color-primary;
+  }
+  &:focus {
+     outline: none;
+     box-shadow: 0 0 0 2px rgba($primary-color, 0.4); // Indicateur de focus
+  }
+}
+
+// --- Section Informations Agence ---
+.agency-info {
+  margin-bottom: 30px;
   padding: 20px;
-  font-family: 'Poppins', sans-serif; // Ensure Poppins is loaded
+  background: $info-background; // Fond très léger
+  border-radius: $border-radius;
+  border: 1px solid $border-color; // Bordure subtile
 
-  .close-modal-btn {
-    position: absolute;
-    top: 10px; // Adjusted position
-    right: 10px; // Adjusted position
-    background: none;
-    border: none;
-    font-size: 1.5rem; // Larger icon
-    color: $dark-gray;
-    cursor: pointer;
-    z-index: 1051; // Ensure it's above modal content
-    padding: 5px;
-    border-radius: 50%;
-    width: 35px; // Slightly larger hit area
-    height: 35px; // Slightly larger hit area
+  .header-section {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    line-height: 1; // Prevent extra space
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $border-color; // Utiliser la couleur de bordure standard
 
-    &:hover {
-      background-color: $light-gray;
-      color: $text-color;
-    }
-    &:focus {
-       outline: none;
-       box-shadow: 0 0 0 2px rgba($primary-color, 0.4); // Focus indicator
+    h2 {
+      color: $primary-color; // Utiliser la couleur primaire pour le titre
+      margin: 0;
+      font-weight: 600;
     }
   }
 
-  .agency-info {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: #f8f9fa; // Lighter background
-    border-radius: 8px; // Slightly less rounded
-    border: 1px solid #e9ecef; // Subtle border
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px 24px;
 
-    .header-section {
+    .info-item {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px; // Space below header
-      border-bottom: 1px solid #e9ecef; // Separator line
+      flex-direction: column;
 
-      h2 {
-        color: $secondary-color;
-        margin: 0;
-        font-weight: 600; // Bolder title
+      .label {
+        font-weight: 500; // Medium
+        color: $text-color-secondary; // Gris moyen
+        margin-bottom: 4px;
+        font-size: 0.85em;
+        display: block;
       }
-    }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Responsive grid
-      gap: 15px;
-
-      .info-item {
-        display: flex;
-        flex-direction: column;
-
-        .label {
-          font-weight: 600;
-          color: #555;
-          margin-bottom: 3px; // Reduced space
-          font-size: 0.9em; // Slightly smaller label
-        }
-
-        .value {
-          color: $text-color;
-          word-break: break-word; // Prevent long text overflow
-        }
+      .value {
+        color: $text-color-primary; // Noir/gris foncé
+        word-break: break-word;
+        font-size: 0.95em;
       }
     }
   }
+}
 
-  .projects-btn {
-    background: $primary-color;
-    color: white;
-    border-radius: 20px;
-    padding: 8px 20px;
-    font-weight: 500;
-    display: inline-flex; // Use inline-flex
+// --- Bouton Voir Projets ---
+.projects-btn {
+  background: $primary-color; // Couleur primaire
+  color: white;
+  border-radius: $border-radius; // Utiliser le radius standard
+  padding: 8px 20px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  border: none;
+  transition: background-color 0.2s ease;
+
+  &:hover { background: darken($primary-color, 10%); }
+  &:focus { outline: none; box-shadow: 0 0 0 3px rgba($primary-color, 0.5); }
+  i { font-size: 1.1em; }
+}
+
+// --- Section Utilisateurs ---
+.users-section {
+  .users-header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    border: none; // Ensure no default border
-    transition: background-color 0.2s ease; // Smooth transition
+    margin-bottom: 20px; // Plus d'espace avant la table
 
-    &:hover {
-      background: darken($primary-color, 10%);
+    h3 {
+      color: $accent-color; // Utiliser la couleur accent pour ce titre
+      margin: 0;
+      font-weight: 600;
     }
-     &:focus {
-       outline: none;
-       box-shadow: 0 0 0 3px rgba($primary-color, 0.5);
+
+    .add-user-btn {
+      background: $accent-color; // Couleur accent
+      color: white;
+      border-radius: $border-radius; // Radius standard
+      padding: 8px 18px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      transition: background-color 0.2s ease;
+
+      &:hover { background: darken($accent-color, 10%); }
+      &:focus { outline: none; box-shadow: 0 0 0 3px rgba($accent-color, 0.5); }
+      i { font-size: 1.1em; }
     }
-     i {
-       font-size: 1.1em; // Adjust icon size if needed
-     }
   }
 
-  .users-section {
-    .users-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
+  // --- Table des Utilisateurs ---
+  .users-table {
+    width: 100%;
+    overflow-x: auto; // Scroll horizontal si nécessaire
 
-      h3 {
-        color: $secondary-color;
-        margin: 0; // Remove default margin
-        font-weight: 600;
-      }
-
-      .add-user-btn {
-        background: $secondary-color;
-        color: white;
-        border-radius: 20px;
-        padding: 8px 18px; // Adjusted padding
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border: none;
-        transition: background-color 0.2s ease;
-
-        &:hover {
-          background: darken($secondary-color, 10%);
-        }
-         &:focus {
-           outline: none;
-           box-shadow: 0 0 0 3px rgba($secondary-color, 0.5);
-        }
-         i {
-           font-size: 1.1em;
-         }
-      }
-    }
-
-    .users-table {
+    table {
       width: 100%;
-      overflow-x: auto; // Allow horizontal scroll on small screens
+      border-collapse: collapse;
+      min-width: 600px; // Largeur minimale
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 500px; // Ensure table has minimum width for columns
-
-        th, td {
-          padding: 12px 15px;
-          text-align: left;
-          border-bottom: 1px solid $medium-gray;
-          vertical-align: middle; // Align content vertically
-        }
-
-        th {
-          background-color: #f4f4f4;
-          font-weight: 600;
-          white-space: nowrap; // Prevent header text wrapping
-        }
-        td.status-cell { // Style the cell itself if needed (e.g., alignment)
-          text-align: center; // Center the badge
-          white-space: nowrap;
-        }
-  
-        .status-badge {
-          padding: 4px 10px;
-          border-radius: 12px; // Pill shape
-          font-size: 0.85em;
-          font-weight: 500;
-          display: inline-flex; // Align icon and text
-          align-items: center;
-          gap: 5px; // Space between icon and text
-  
-          i {
-            font-size: 1.1em; // Slightly larger icon
-          }
-  
-          &.status-enabled {
-            background-color: rgba($success-color, 0.15); // Light green background
-            color: darken($success-color, 10%); // Darker green text
-          }
-  
-          &.status-disabled {
-            background-color: rgba($danger-color, 0.1); // Light red background
-            color: darken($danger-color, 10%); // Darker red text
-          }
-        }
-  
-  
-        .no-users, .loading-state {
-          text-align: center;
-          padding: 30px 15px; // More padding
-          color: $dark-gray;
-          font-style: italic;
-        }
-
-        // --- Inline Edit Styles ---
-        .inline-edit-input {
-          width: 100%;
-          padding: 6px 8px;
-          border: 1px solid $medium-gray;
-          border-radius: 4px;
-          font-size: inherit; // Use table font size
-          font-family: inherit;
-          box-sizing: border-box; // Include padding/border in width
-
-          &:focus {
-            outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
-          }
-        }
-        // Highlight row being edited (optional)
-        tr.editing-row {
-           background-color: lighten($primary-color, 45%);
-        }
-        // --- End Inline Edit Styles ---
-
-
-        // --- Action Button Styles ---
-        td.actions {
-          white-space: nowrap; // Prevent buttons wrapping
-          text-align: right; // Align buttons to the right
-          width: 1%; // Prevent column from taking too much space
-
-          button {
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 1.2rem; // Slightly larger icons
-            padding: 6px; // Increase padding/hit area
-            border-radius: 50%;
-            width: 34px; // Consistent size
-            height: 34px; // Consistent size
-            display: inline-flex; // Use inline-flex for centering
-            align-items: center;
-            justify-content: center;
-            margin-left: 5px; // Space between buttons
-            transition: all 0.2s ease;
-            vertical-align: middle; // Align with text/inputs
-
-            &:disabled {
-               opacity: 0.5;
-               cursor: not-allowed;
-            }
-
-            // Specific button colors and hover effects
-            &.edit-btn {
-              color: $primary-color;
-              &:hover:not(:disabled) { background-color: rgba($primary-color, 0.1); }
-            }
-            &.delete-btn {
-              color: $danger-color;
-              &:hover:not(:disabled) { background-color: rgba($danger-color, 0.1); }
-            }
-            &.save-btn {
-              color: $success-color;
-              &:hover:not(:disabled) { background-color: rgba($success-color, 0.1); }
-            }
-            &.cancel-btn {
-              color: $cancel-color;
-              &:hover:not(:disabled) { background-color: rgba($cancel-color, 0.1); }
-            }
-
-             // Spinner alignment inside buttons
-             .spinner-border {
-               width: 1em; // Match font size
-               height: 1em;
-             }
-          }
-        }
-        th.actions-header {
-           text-align: right; // Align header with buttons
-           width: 1%; // Match td width
-           padding-right: 20px; // Ensure space for buttons
-        }
-        // --- End Action Button Styles ---
+      th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid $border-color; // Utiliser la couleur de bordure standard
+        vertical-align: middle;
       }
+
+      th {
+        background-color: $table-header-background; // Fond très léger
+        font-weight: 600;
+        font-size: 12px; // Standard header size
+        color: $text-color-secondary; // Gris moyen
+        text-transform: uppercase; // Majuscules
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+      }
+
+      td {
+          font-size: 14px; // Standard data size
+          color: $text-color-primary;
+      }
+
+      // Centrer le texte spécifiquement si besoin (classes ajoutées dans HTML)
+      .text-center { text-align: center; }
+
+      // --- Badges de Statut ---
+      td.status-cell { text-align: center; white-space: nowrap; }
+      .status-badge {
+        padding: 4px 10px; border-radius: 12px; font-size: 0.85em;
+        font-weight: 500; display: inline-flex; align-items: center; gap: 5px;
+        i { font-size: 1.1em; }
+        &.status-enabled { background-color: rgba($success-color, 0.15); color: darken($success-color, 10%); }
+        &.status-disabled { background-color: rgba($warn-color, 0.1); color: darken($warn-color, 10%); }
+      }
+
+      // --- Messages (Chargement, Pas d'utilisateurs) ---
+      .no-users, .loading-state {
+        text-align: center; padding: 30px 15px;
+        color: $text-color-secondary; font-style: italic;
+      }
+
+      // --- Styles d'Édition Inline ---
+      .inline-edit-input {
+        width: 100%; padding: 6px 8px; border: 1px solid $border-color;
+        border-radius: 4px; font-size: inherit; font-family: inherit;
+        box-sizing: border-box;
+        &:focus {
+          outline: none; border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
+        }
+      }
+      tr.editing-row { background-color: lighten($primary-color, 45%); } // Surlignage léger
+
+      // --- Boutons d'Action (Styles conservés, couleurs ajustées) ---
+      td.actions {
+        white-space: nowrap; text-align: center; // Centrer les boutons
+        width: 1%;
+
+        button {
+          border: none; background: none; cursor: pointer;
+          font-size: 1.2rem; padding: 6px; border-radius: 50%;
+          width: 34px; height: 34px; display: inline-flex;
+          align-items: center; justify-content: center;
+          margin-left: 5px; transition: all 0.2s ease;
+          vertical-align: middle;
+
+          &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+          // Couleurs spécifiques
+          &.edit-btn { color: $edit-color; &:hover:not(:disabled) { background-color: rgba($edit-color, 0.1); } }
+          &.delete-btn { color: $delete-color; &:hover:not(:disabled) { background-color: rgba($delete-color, 0.1); } }
+          &.save-btn { color: $success-color; &:hover:not(:disabled) { background-color: rgba($success-color, 0.1); } }
+          &.cancel-btn { color: $cancel-color; &:hover:not(:disabled) { background-color: rgba($cancel-color, 0.1); } }
+
+          // Spinner Bootstrap
+          .spinner-border { width: 1em; height: 1em; }
+        }
+      }
+      th.actions-header { text-align: center; width: 1%; padding-right: 15px; } // Centrer header actions
+
+      // Enlever bordure dernière ligne
+      tbody tr:last-child td { border-bottom: none; }
     }
   }
 }
 
-// Style for the dialog container itself (if needed, often handled globally)
-.agency-details-dialog {
-  .mat-dialog-container { // Or the equivalent for NgbModal if needed
-    padding: 0;
-    border-radius: 10px; // Match inner radius
-    overflow: hidden; // Important for border-radius
-    max-width: 800px; // Example max-width
-    width: 90vw; // Example width
-  }
-}
-
-// Styles for Bootstrap spinner if not globally available
-.spinner-border-sm {
-    width: 1rem;
-    height: 1rem;
-    border-width: .2em;
-}
-.spinner-border {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: text-bottom;
-    border: .25em solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    -webkit-animation: spinner-border .75s linear infinite;
-    animation: spinner-border .75s linear infinite;
-}
-@-webkit-keyframes spinner-border {
-  to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spinner-border {
-  to { transform: rotate(360deg); }
-}
+// Styles pour Bootstrap spinner (si non global)
+.spinner-border-sm { width: 1rem; height: 1rem; border-width: .2em; }
+.spinner-border { display: inline-block; width: 2rem; height: 2rem; vertical-align: text-bottom; border: .25em solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spinner-border .75s linear infinite; }
+@keyframes spinner-border { to { transform: rotate(360deg); } }

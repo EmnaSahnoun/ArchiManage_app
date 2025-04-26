@@ -20,6 +20,7 @@ ngOnInit(): void {
   this.isUser=this.authService.isUser();
   this.isSuperAdmin=this.authService.isSuperAdmin();
   this.isAdmin=this.authService.isAdmin();
+  
 }
   changeTitle(title: string): void {
     this.titleChange.emit(title);  // Émettre un événement pour changer le titre
