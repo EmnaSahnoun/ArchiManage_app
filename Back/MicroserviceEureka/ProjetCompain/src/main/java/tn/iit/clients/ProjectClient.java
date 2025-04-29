@@ -7,7 +7,7 @@ import tn.iit.dto.response.ProjectResponse;
 
 import java.util.List;
 
-@FeignClient(name = "PROJECT-SERVICE")
+@FeignClient(name = "ProjectService")
 public interface ProjectClient {
     @GetMapping("/ProjectService/project/company/{companyId}")
     List<ProjectResponse> getProjectsByCompanyId(@PathVariable String companyId);
