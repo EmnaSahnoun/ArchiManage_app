@@ -28,7 +28,7 @@ public class ProjectService implements IProject {
         Project project = new Project();
         project.setName(request.getName());
         project.setDescription(request.getDescription());
-        project.setDescription(request.getIdCompany());
+        project.setIdCompain(request.getIdCompany()); // Correction ici
         project.setIdAdmin(request.getIdAdmin());
         project.setDeleted(false);
 
