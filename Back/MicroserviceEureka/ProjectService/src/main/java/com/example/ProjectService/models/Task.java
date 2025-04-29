@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection = "tasks")
 public class Task {
     @Id
-    private Long id;
+    private String id;
     private String name;
     private Date startDate;
     private Date endDate;
@@ -30,11 +30,11 @@ public class Task {
     @DBRef
     private Phase phase;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

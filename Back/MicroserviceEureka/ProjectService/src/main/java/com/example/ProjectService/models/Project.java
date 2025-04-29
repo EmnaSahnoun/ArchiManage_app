@@ -13,11 +13,11 @@ import java.util.List;
 
 public class Project {
     @Id
-    private Long id;
-    private Long idCompain;
+    private String id;
+    private String idCompain;
     private String name;
     private String description;
-    private Long idAdmin;
+    private String idAdmin;
     private boolean isDeleted = false;
 
     @DBRef
@@ -26,15 +26,15 @@ public class Project {
     @DBRef
     private List<Phase> phases;
 
-    public Long getIdCompain() {
+    public String getIdCompain() {
         return idCompain;
     }
 
-    public void setIdCompain(Long idCompain) {
+    public void setIdCompain(String idCompain) {
         this.idCompain = idCompain;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -46,7 +46,7 @@ public class Project {
         return description;
     }
 
-    public Long getIdAdmin() {
+    public String getIdAdmin() {
         return idAdmin;
     }
 
@@ -62,7 +62,7 @@ public class Project {
         return phases;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -74,7 +74,7 @@ public class Project {
         this.description = description;
     }
 
-    public void setIdAdmin(Long idAdmin) {
+    public void setIdAdmin(String idAdmin) {
         this.idAdmin = idAdmin;
     }
 

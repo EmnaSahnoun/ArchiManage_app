@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "project_accesses")
 public class ProjectAccess {
     @Id
-    private Long id;
-    private Long idUser;
+    private String id;
+    private String idUser;
     private String emailUser;
     private InvitationStatus invitationStatus;
     private Role role;
@@ -20,19 +20,19 @@ public class ProjectAccess {
     @DBRef
     private Project project;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 

@@ -9,26 +9,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "phase_accesses")
 public class PhaseAccess {
     @Id
-    private Long id;
-    private Long idUser;
+    private String id;
+    private String idUser;
     private boolean canView;
 
     @DBRef
     private Phase phase;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 

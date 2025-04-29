@@ -12,7 +12,7 @@ import java.util.List;
 @Document(collection = "phases")
 public class Phase {
     @Id
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private Date startDate;
@@ -27,7 +27,7 @@ public class Phase {
     @DBRef
     private List<PhaseAccess> phaseAccesses;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -55,7 +55,7 @@ public class Phase {
         return project;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
