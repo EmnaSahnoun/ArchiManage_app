@@ -9,6 +9,6 @@ import java.util.List;
 
 @FeignClient(name = "PROJECT-SERVICE")
 public interface ProjectClient {
-    @GetMapping("/ProjectService/project/compain/{companyId}")
+    @GetMapping("/ProjectService/project/company/{companyId}")
     List<ProjectResponse> getProjectsByCompanyId(@PathVariable String companyId);
 }
