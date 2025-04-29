@@ -14,7 +14,7 @@ import java.util.List;
 public class Project {
     @Id
     private String id;
-    private String idCompain;
+    private String idCompany;
     private String name;
     private String description;
     private String idAdmin;
@@ -26,12 +26,12 @@ public class Project {
     @DBRef
     private List<Phase> phases;
 
-    public String getIdCompain() {
-        return idCompain;
+    public String getIdCompany() {
+        return idCompany;
     }
 
-    public void setIdCompain(String idCompain) {
-        this.idCompain = idCompain;
+    public void setIdCompany(String idCompany) {
+        this.idCompany = idCompany;
     }
 
     public String getId() {
