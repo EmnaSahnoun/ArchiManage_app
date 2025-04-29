@@ -29,7 +29,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
+    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable String id) {
         ProjectResponse response = projectService.getProjectById(id);
         return ResponseEntity.ok(response);
     }
@@ -40,26 +40,26 @@ public class ProjectController {
         return ResponseEntity.ok(responses);
     }
     @GetMapping("/compain/{idCompain}")
-    public ResponseEntity<List<ProjectResponse>> getProjectsByCompain(@PathVariable Long idCompain) {
+    public ResponseEntity<List<ProjectResponse>> getProjectsByCompain(@PathVariable String idCompain) {
         List<ProjectResponse> responses = projectService.getProjectsByCompain(idCompain);
         return ResponseEntity.ok(responses);
     }
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponse> updateProject(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody ProjectRequest request) {
         ProjectResponse response = projectService.updateProject(id, request);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProject(@PathVariable String id) {
         projectService.deleteProject(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/admin/{adminId}")
-    public ResponseEntity<List<ProjectResponse>> getProjectsByAdmin(@PathVariable Long adminId) {
+    public ResponseEntity<List<ProjectResponse>> getProjectsByAdmin(@PathVariable String adminId) {
         List<ProjectResponse> responses = projectService.getProjectsByAdmin(adminId);
         return ResponseEntity.ok(responses);
     }

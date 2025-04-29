@@ -19,7 +19,7 @@ public class PhaseRequest {
     private Date endDate;
 
     @NotNull(message = "Project ID is required")
-    private Long projectId;
+    private String projectId;
 
     public String getName() {
         return name;
@@ -37,7 +37,7 @@ public class PhaseRequest {
         return endDate;
     }
 
-    public Long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
@@ -57,7 +57,7 @@ public class PhaseRequest {
         this.endDate = endDate;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 }

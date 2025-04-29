@@ -7,16 +7,16 @@ import java.util.List;
 
 
 public class PhaseResponse {
-    private Long id;
+    private String id;
     private String name;
     private String description;
     private Date startDate;
     private Date endDate;
-    private Long projectId;
-    private List<Long> taskIds;
-    private List<Long> phaseAccessIds;
+    private String projectId;
+    private List<String> taskIds;
+    private List<String> phaseAccessIds;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -36,15 +36,15 @@ public class PhaseResponse {
         return endDate;
     }
 
-    public Long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public List<Long> getTaskIds() {
+    public List<String> getTaskIds() {
         return taskIds;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,19 +64,19 @@ public class PhaseResponse {
         this.endDate = endDate;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
-    public void setTaskIds(List<Long> taskIds) {
+    public void setTaskIds(List<String> taskIds) {
         this.taskIds = taskIds;
     }
 
-    public List<Long> getPhaseAccessIds() {
+    public List<String> getPhaseAccessIds() {
         return phaseAccessIds;
     }
 
-    public void setPhaseAccessIds(List<Long> phaseAccessIds) {
+    public void setPhaseAccessIds(List<String> phaseAccessIds) {
         this.phaseAccessIds = phaseAccessIds;
     }
 }

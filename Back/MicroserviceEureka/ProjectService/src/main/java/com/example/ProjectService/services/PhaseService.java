@@ -28,7 +28,7 @@ public class PhaseService implements IPhase {
     private ProjectAccessRepository projectAccessRepository;
     @Override
     public PhaseResponse createPhase(PhaseRequest request) {
-        Long id=request.getProjectId();
+        String id=request.getProjectId();
         Project project = projectRepository.findById(request.getProjectId())
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + id));
 
@@ -62,21 +62,21 @@ public class PhaseService implements IPhase {
     }
 
     @Override
-    public PhaseResponse getPhaseById(Long id) {
+    public PhaseResponse getPhaseById(String id) {
         Phase phase = phaseRepository.findById(id)
                 .orElseThrow(() -> new PhaseNotFoundException("Phase not found with id: " + id));
         return mapToResponse(phase);
     }
 
     @Override
-    public List<PhaseResponse> getPhasesByProject(Long projectId) {
+    public List<PhaseResponse> getPhasesByProject(String projectId) {
         return phaseRepository.findByProjectId(projectId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public PhaseResponse updatePhase(Long id, PhaseRequest request) {
+    public PhaseResponse updatePhase(String id, PhaseRequest request) {
         Phase phase = phaseRepository.findById(id)
                 .orElseThrow(() -> new PhaseNotFoundException("Phase not found with id: " + id));
 
@@ -97,7 +97,7 @@ public class PhaseService implements IPhase {
     }
 
     @Override
-    public void deletePhase(Long id) {
+    public void deletePhase(String id) {
         if (!phaseRepository.existsById(id)) {
             throw new PhaseNotFoundException("Phase not found with id: " + id);
         }

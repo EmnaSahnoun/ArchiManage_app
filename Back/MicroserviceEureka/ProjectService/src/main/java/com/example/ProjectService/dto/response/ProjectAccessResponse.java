@@ -6,18 +6,18 @@ import lombok.Data;
 
 
 public class ProjectAccessResponse {
-    private Long id;
-    private Long idUser;
+    private String id;
+    private String idUser;
     private String emailUser;
     private InvitationStatus invitationStatus;
     private Role role;
-    private Long projectId;
+    private String projectId;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
@@ -33,15 +33,15 @@ public class ProjectAccessResponse {
         return role;
     }
 
-    public Long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -57,7 +57,7 @@ public class ProjectAccessResponse {
         this.role = role;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 }

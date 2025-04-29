@@ -7,18 +7,22 @@ import com.example.ProjectService.models.Phase;
 import com.example.ProjectService.models.Project;
 import com.example.ProjectService.models.ProjectAccess;
 import com.example.ProjectService.repositories.ProjectRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 
 public class ProjectService implements IProject {
     private  final ProjectRepository projectRepository;
-
+    @Autowired // Optionnel depuis Spring 4.3+
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
     @Override
     public ProjectResponse createProject(ProjectRequest request) {
         Project project = new Project();
@@ -32,7 +36,7 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public ProjectResponse getProjectById(Long id) {
+    public ProjectResponse getProjectById(String id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
 
@@ -52,7 +56,7 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public ProjectResponse updateProject(Long id, ProjectRequest request) {
+    public ProjectResponse updateProject(String id, ProjectRequest request) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
 
@@ -69,7 +73,7 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public void deleteProject(Long id) {
+    public void deleteProject(String id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
 
@@ -78,7 +82,7 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public List<ProjectResponse> getProjectsByAdmin(Long adminId) {
+    public List<ProjectResponse> getProjectsByAdmin(String adminId) {
         return projectRepository.findByIdAdminAndIsDeletedFalse(adminId)
                 .stream()
                 .map(this::mapToProjectResponse)
@@ -86,7 +90,7 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public List<ProjectResponse> getProjectsByCompain(Long idCompain) {
+    public List<ProjectResponse> getProjectsByCompain(String idCompain) {
         return projectRepository.findByIdCompainAndIsDeletedFalse(idCompain).stream()
                 .map(this::mapToProjectResponse)
                 .collect(Collectors.toList());

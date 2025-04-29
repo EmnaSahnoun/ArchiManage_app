@@ -25,27 +25,27 @@ public class PhaseAccessController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PhaseAccessResponse> getPhaseAccessById(@PathVariable Long id) {
+    public ResponseEntity<PhaseAccessResponse> getPhaseAccessById(@PathVariable String id) {
         PhaseAccessResponse response = phaseAccessService.getPhaseAccessById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/phase/{phaseId}")
-    public ResponseEntity<List<PhaseAccessResponse>> getAccessesByPhase(@PathVariable Long phaseId) {
+    public ResponseEntity<List<PhaseAccessResponse>> getAccessesByPhase(@PathVariable String phaseId) {
         List<PhaseAccessResponse> responses = phaseAccessService.getAccessesByPhase(phaseId);
         return ResponseEntity.ok(responses);
     }
 
     @PatchMapping("/{id}/view-permission")
     public ResponseEntity<PhaseAccessResponse> updateViewPermission(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam boolean canView) {
         PhaseAccessResponse response = phaseAccessService.updateViewPermission(id, canView);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePhaseAccess(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePhaseAccess(@PathVariable String id) {
         phaseAccessService.deletePhaseAccess(id);
         return ResponseEntity.noContent().build();
     }

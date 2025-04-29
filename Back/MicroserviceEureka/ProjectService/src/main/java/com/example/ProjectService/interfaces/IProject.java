@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface IProject {
     ProjectResponse createProject(ProjectRequest request);
-    ProjectResponse getProjectById(Long id);
+    ProjectResponse getProjectById(String id);
     List<ProjectResponse> getAllProjects();
-    ProjectResponse updateProject(Long id, ProjectRequest request);
-    void deleteProject(Long id);
-    List<ProjectResponse> getProjectsByAdmin(Long adminId);
-    List<ProjectResponse> getProjectsByCompain(Long idCompain);
+    ProjectResponse updateProject(String id, ProjectRequest request);
+    void deleteProject(String id);
+    List<ProjectResponse> getProjectsByAdmin(String adminId);
+    List<ProjectResponse> getProjectsByCompain(String idCompain);
 }

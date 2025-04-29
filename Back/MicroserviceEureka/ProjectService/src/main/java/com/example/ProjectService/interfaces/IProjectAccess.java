@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface IProjectAccess {
     ProjectAccessResponse createProjectAccess(ProjectAccessRequest request);
-    ProjectAccessResponse getProjectAccessById(Long id);
-    List<ProjectAccessResponse> getAccessesByProject(Long projectId);
-    ProjectAccessResponse updateInvitationStatus(Long id, InvitationStatus status);
-    void deleteProjectAccess(Long id);
+    ProjectAccessResponse getProjectAccessById(String id);
+    List<ProjectAccessResponse> getAccessesByProject(String projectId);
+    ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status);
+    void deleteProjectAccess(String id);
 }

@@ -9,16 +9,16 @@ import java.util.List;
 
 
 public class ProjectResponse {
-    private Long id;
-    private Long idCompany;
+    private String id;
+    private String idCompany;
     private String name;
     private String description;
-    private Long idAdmin;
+    private String idAdmin;
     private boolean isDeleted;
-    private List<Long> projectAccessIds;
-    private List<Long> phaseIds;
+    private List<String> projectAccessIds;
+    private List<String> phaseIds;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -30,7 +30,7 @@ public class ProjectResponse {
         return description;
     }
 
-    public Long getIdAdmin() {
+    public String getIdAdmin() {
         return idAdmin;
     }
 
@@ -38,15 +38,15 @@ public class ProjectResponse {
         return isDeleted;
     }
 
-    public List<Long> getProjectAccessIds() {
+    public List<String> getProjectAccessIds() {
         return projectAccessIds;
     }
 
-    public List<Long> getPhaseIds() {
+    public List<String> getPhaseIds() {
         return phaseIds;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class ProjectResponse {
         this.description = description;
     }
 
-    public void setIdAdmin(Long idAdmin) {
+    public void setIdAdmin(String idAdmin) {
         this.idAdmin = idAdmin;
     }
 
@@ -66,19 +66,19 @@ public class ProjectResponse {
         isDeleted = deleted;
     }
 
-    public void setProjectAccessIds(List<Long> projectAccessIds) {
+    public void setProjectAccessIds(List<String> projectAccessIds) {
         this.projectAccessIds = projectAccessIds;
     }
 
-    public void setPhaseIds(List<Long> phaseIds) {
+    public void setPhaseIds(List<String> phaseIds) {
         this.phaseIds = phaseIds;
     }
 
-    public Long getIdCompany() {
+    public String getIdCompany() {
         return idCompany;
     }
 
-    public void setIdCompany(Long idCompany) {
+    public void setIdCompany(String idCompany) {
         this.idCompany = idCompany;
     }
 }

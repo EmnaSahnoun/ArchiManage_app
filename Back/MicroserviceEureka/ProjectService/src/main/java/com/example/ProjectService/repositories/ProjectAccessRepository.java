@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface ProjectAccessRepository extends MongoRepository<ProjectAccess, Long> {
-    List<ProjectAccess> findByProjectId(Long projectId);
-    List<ProjectAccess> findByProjectIdAndInvitationStatus(Long projectId, InvitationStatus status);
+public interface ProjectAccessRepository extends MongoRepository<ProjectAccess, String> {
+    List<ProjectAccess> findByProjectId(String projectId);
+    List<ProjectAccess> findByProjectIdAndInvitationStatus(String projectId, InvitationStatus status);
 }

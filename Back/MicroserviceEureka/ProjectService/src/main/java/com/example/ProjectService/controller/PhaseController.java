@@ -26,24 +26,24 @@ public class PhaseController {
     }
 
     @GetMapping("/{id}")
-    public PhaseResponse getPhaseById(@PathVariable Long id) {
+    public PhaseResponse getPhaseById(@PathVariable String id) {
         return phaseService.getPhaseById(id);
     }
 
     @GetMapping("/project/{projectId}")
-    public List<PhaseResponse> getPhasesByProject(@PathVariable Long projectId) {
+    public List<PhaseResponse> getPhasesByProject(@PathVariable String projectId) {
         return phaseService.getPhasesByProject(projectId);
     }
 
     @PutMapping("/{id}")
-    public PhaseResponse updatePhase(@PathVariable Long id,
+    public PhaseResponse updatePhase(@PathVariable String id,
                                      @RequestBody @Valid PhaseRequest request) {
         return phaseService.updatePhase(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePhase(@PathVariable Long id) {
+    public void deletePhase(@PathVariable String id) {
         phaseService.deletePhase(id);
     }
 }

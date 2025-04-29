@@ -53,7 +53,7 @@ public class TaskService implements ITask {
 
 
     @Override
-    public TaskResponse getTaskById(Long id) {
+    public TaskResponse getTaskById(String id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         return mapToTaskResponse(task);
@@ -61,7 +61,7 @@ public class TaskService implements ITask {
     }
 
     @Override
-    public List<TaskResponse> getTasksByPhase(Long phaseId) {
+    public List<TaskResponse> getTasksByPhase(String phaseId) {
         return taskRepository.findByPhaseId(phaseId)
                 .stream()
                 .map(this::mapToTaskResponse)
@@ -69,7 +69,7 @@ public class TaskService implements ITask {
     }
 
     @Override
-    public TaskResponse updateTaskStatus(Long id, TaskStatus status) {
+    public TaskResponse updateTaskStatus(String id, TaskStatus status) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
 
@@ -79,7 +79,7 @@ public class TaskService implements ITask {
     }
 
     @Override
-    public TaskResponse updateTaskPriority(Long id, TaskPriority priority) {
+    public TaskResponse updateTaskPriority(String id, TaskPriority priority) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
 
@@ -89,7 +89,7 @@ public class TaskService implements ITask {
     }
 
     @Override
-    public TaskResponse addSubTask(Long parentId, TaskRequest request) {
+    public TaskResponse addSubTask(String parentId, TaskRequest request) {
         Task parentTask = taskRepository.findById(parentId)
                 .orElseThrow(() -> new RuntimeException("Parent task not found with id: " + parentId));
 
@@ -114,7 +114,7 @@ public class TaskService implements ITask {
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public void deleteTask(String id) {
         if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException("task non trouvé!");
         }

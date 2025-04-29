@@ -14,16 +14,16 @@ public class ProjectRequest {
     private String description;
 
     @NotNull(message = "Admin ID is required")
-    private Long idAdmin;
+    private String idAdmin;
 
     @NotNull(message = "Compain ID is required")
-    private Long idCompany;
+    private String idCompany;
 
-    public Long getIdCompany() {
+    public String getIdCompany() {
         return idCompany;
     }
 
-    public void setIdCompany(Long idCompany) {
+    public void setIdCompany(String idCompany) {
         this.idCompany = idCompany;
     }
 
@@ -35,7 +35,7 @@ public class ProjectRequest {
         return description;
     }
 
-    public Long getIdAdmin() {
+    public String getIdAdmin() {
         return idAdmin;
     }
 
@@ -47,7 +47,7 @@ public class ProjectRequest {
         this.description = description;
     }
 
-    public void setIdAdmin(Long idAdmin) {
+    public void setIdAdmin(String idAdmin) {
         this.idAdmin = idAdmin;
     }
 }

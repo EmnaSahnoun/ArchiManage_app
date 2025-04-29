@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface PhaseAccessRepository extends MongoRepository<PhaseAccess, Long> {
-    List<PhaseAccess> findByPhaseId(Long phaseId);
+public interface PhaseAccessRepository extends MongoRepository<PhaseAccess, String> {
+    List<PhaseAccess> findByPhaseId(String phaseId);
 }

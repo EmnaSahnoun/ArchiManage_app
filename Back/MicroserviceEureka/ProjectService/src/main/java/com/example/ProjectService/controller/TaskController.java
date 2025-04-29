@@ -27,20 +27,20 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable String id) {
         TaskResponse response = taskService.getTaskById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/phase/{phaseId}")
-    public ResponseEntity<List<TaskResponse>> getTasksByPhase(@PathVariable Long phaseId) {
+    public ResponseEntity<List<TaskResponse>> getTasksByPhase(@PathVariable String phaseId) {
         List<TaskResponse> responses = taskService.getTasksByPhase(phaseId);
         return ResponseEntity.ok(responses);
     }
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<TaskResponse> updateTaskStatus(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam TaskStatus status) {
         TaskResponse response = taskService.updateTaskStatus(id, status);
         return ResponseEntity.ok(response);
@@ -48,7 +48,7 @@ public class TaskController {
 
     @PatchMapping("/{id}/priority")
     public ResponseEntity<TaskResponse> updateTaskPriority(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam TaskPriority priority) {
         TaskResponse response = taskService.updateTaskPriority(id, priority);
         return ResponseEntity.ok(response);
@@ -56,14 +56,14 @@ public class TaskController {
 
     @PostMapping("/{parentId}/subtasks")
     public ResponseEntity<TaskResponse> addSubTask(
-            @PathVariable Long parentId,
+            @PathVariable String parentId,
             @RequestBody TaskRequest request) {
         TaskResponse response = taskService.addSubTask(parentId, request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }

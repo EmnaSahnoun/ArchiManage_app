@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface ProjectRepository extends MongoRepository<Project, Long> {
+public interface ProjectRepository extends MongoRepository<Project, String> {
     List<Project> findAllByIsDeletedFalse();
-    List<Project> findByIdAdminAndIsDeletedFalse(Long adminId);
-    List<Project> findByIdCompainAndIsDeletedFalse(Long idCompain);
+    List<Project> findByIdAdminAndIsDeletedFalse(String adminId);
+    List<Project> findByIdCompainAndIsDeletedFalse(String idCompain);
 }

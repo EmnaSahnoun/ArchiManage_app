@@ -4,24 +4,24 @@ import lombok.Data;
 
 
 public class PhaseAccessResponse {
-    private Long id;
-    private Long idUser;
+    private String id;
+    private String idUser;
     private boolean canView;
-    private Long phaseId;
+    private String phaseId;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -33,11 +33,11 @@ public class PhaseAccessResponse {
         this.canView = canView;
     }
 
-    public Long getPhaseId() {
+    public String getPhaseId() {
         return phaseId;
     }
 
-    public void setPhaseId(Long phaseId) {
+    public void setPhaseId(String phaseId) {
         this.phaseId = phaseId;
     }
 }

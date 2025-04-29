@@ -9,18 +9,18 @@ import java.util.List;
 
 
 public class TaskResponse {
-    private Long id;
+    private String id;
     private String name;
     private Date startDate;
     private Date endDate;
     private TaskStatus status;
     private TaskPriority priority;
-    private Long phaseId;
-    private Long parentTaskId;
-    private List<Long> subTaskIds;
+    private String phaseId;
+    private String parentTaskId;
+    private List<String> subTaskIds;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -44,21 +44,21 @@ public class TaskResponse {
         return priority;
     }
 
-    public Long getPhaseId() {
+    public String getPhaseId() {
         return phaseId;
     }
 
-    public Long getParentTaskId() {
+    public String getParentTaskId() {
         return parentTaskId;
     }
 
-    public List<Long> getSubTaskIds() {
+    public List<String> getSubTaskIds() {
         return subTaskIds;
     }
 
 
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -82,15 +82,15 @@ public class TaskResponse {
         this.priority = priority;
     }
 
-    public void setPhaseId(Long phaseId) {
+    public void setPhaseId(String phaseId) {
         this.phaseId = phaseId;
     }
 
-    public void setParentTaskId(Long parentTaskId) {
+    public void setParentTaskId(String parentTaskId) {
         this.parentTaskId = parentTaskId;
     }
 
-    public void setSubTaskIds(List<Long> subTaskIds) {
+    public void setSubTaskIds(List<String> subTaskIds) {
         this.subTaskIds = subTaskIds;
     }
 

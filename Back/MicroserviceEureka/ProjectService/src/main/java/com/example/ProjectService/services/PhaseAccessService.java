@@ -33,14 +33,14 @@ public class PhaseAccessService implements IPhaseAccess {
     }
 
     @Override
-    public PhaseAccessResponse getPhaseAccessById(Long id) {
+    public PhaseAccessResponse getPhaseAccessById(String id) {
         PhaseAccess phaseAccess = phaseAccessRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Phase access not found with id: " + id));
         return mapToPhaseAccessResponse(phaseAccess);
     }
 
     @Override
-    public List<PhaseAccessResponse> getAccessesByPhase(Long phaseId) {
+    public List<PhaseAccessResponse> getAccessesByPhase(String phaseId) {
         return phaseAccessRepository.findByPhaseId(phaseId)
                 .stream()
                 .map(this::mapToPhaseAccessResponse)
@@ -48,7 +48,7 @@ public class PhaseAccessService implements IPhaseAccess {
     }
 
     @Override
-    public PhaseAccessResponse updateViewPermission(Long id, boolean canView) {
+    public PhaseAccessResponse updateViewPermission(String id, boolean canView) {
         PhaseAccess phaseAccess = phaseAccessRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Phase access not found with id: " + id));
 
@@ -58,7 +58,7 @@ public class PhaseAccessService implements IPhaseAccess {
     }
 
     @Override
-    public void deletePhaseAccess(Long id) {
+    public void deletePhaseAccess(String id) {
         if (!phaseAccessRepository.existsById(id)) {
             throw new RuntimeException("Phase access not found with id: " + id);
         }

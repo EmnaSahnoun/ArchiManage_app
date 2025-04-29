@@ -23,8 +23,8 @@ public class TaskRequest {
     private TaskPriority priority;
 
     @NotNull(message = "Phase ID is required")
-    private Long phaseId;
-    private Long parentTaskId;
+    private String phaseId;
+    private String parentTaskId;
 
     public String getName() {
         return name;
@@ -46,11 +46,11 @@ public class TaskRequest {
         return priority;
     }
 
-    public Long getPhaseId() {
+    public String getPhaseId() {
         return phaseId;
     }
 
-    public Long getParentTaskId() {
+    public String getParentTaskId() {
         return parentTaskId;
     }
 
@@ -74,11 +74,11 @@ public class TaskRequest {
         this.priority = priority;
     }
 
-    public void setPhaseId(Long phaseId) {
+    public void setPhaseId(String phaseId) {
         this.phaseId = phaseId;
     }
 
-    public void setParentTaskId(Long parentTaskId) {
+    public void setParentTaskId(String parentTaskId) {
         this.parentTaskId = parentTaskId;
     }
 }

@@ -37,14 +37,14 @@ public class ProjectAccessService implements IProjectAccess {
     }
 
     @Override
-    public ProjectAccessResponse getProjectAccessById(Long id) {
+    public ProjectAccessResponse getProjectAccessById(String id) {
         ProjectAccess projectAccess = projectAccessRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project access not found with id: " + id));
         return mapToProjectAccessResponse(projectAccess);
     }
 
     @Override
-    public List<ProjectAccessResponse> getAccessesByProject(Long projectId) {
+    public List<ProjectAccessResponse> getAccessesByProject(String projectId) {
         return projectAccessRepository.findByProjectId(projectId)
                 .stream()
                 .map(this::mapToProjectAccessResponse)
@@ -52,7 +52,7 @@ public class ProjectAccessService implements IProjectAccess {
     }
 
     @Override
-    public ProjectAccessResponse updateInvitationStatus(Long id, InvitationStatus status) {
+    public ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status) {
         ProjectAccess projectAccess = projectAccessRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project access not found with id: " + id));
 
@@ -62,7 +62,7 @@ public class ProjectAccessService implements IProjectAccess {
     }
 
     @Override
-    public void deleteProjectAccess(Long id) {
+    public void deleteProjectAccess(String id) {
         if (!projectAccessRepository.existsById(id)) {
             throw new RuntimeException("Project access not found with id: " + id);
         }

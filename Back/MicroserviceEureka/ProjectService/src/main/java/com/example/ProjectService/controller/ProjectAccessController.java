@@ -27,27 +27,27 @@ public class ProjectAccessController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectAccessResponse> getProjectAccessById(@PathVariable Long id) {
+    public ResponseEntity<ProjectAccessResponse> getProjectAccessById(@PathVariable String id) {
         ProjectAccessResponse response = projectAccessService.getProjectAccessById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<ProjectAccessResponse>> getAccessesByProject(@PathVariable Long projectId) {
+    public ResponseEntity<List<ProjectAccessResponse>> getAccessesByProject(@PathVariable String projectId) {
         List<ProjectAccessResponse> responses = projectAccessService.getAccessesByProject(projectId);
         return ResponseEntity.ok(responses);
     }
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<ProjectAccessResponse> updateInvitationStatus(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam InvitationStatus status) {
         ProjectAccessResponse response = projectAccessService.updateInvitationStatus(id, status);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProjectAccess(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProjectAccess(@PathVariable String id) {
         projectAccessService.deleteProjectAccess(id);
         return ResponseEntity.noContent().build();
     }

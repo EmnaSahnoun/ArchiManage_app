@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface IPhaseAccess {
     PhaseAccessResponse createPhaseAccess(PhaseAccessRequest request);
-    PhaseAccessResponse getPhaseAccessById(Long id);
-    List<PhaseAccessResponse> getAccessesByPhase(Long phaseId);
-    PhaseAccessResponse updateViewPermission(Long id, boolean canView);
-    void deletePhaseAccess(Long id);
+    PhaseAccessResponse getPhaseAccessById(String id);
+    List<PhaseAccessResponse> getAccessesByPhase(String phaseId);
+    PhaseAccessResponse updateViewPermission(String id, boolean canView);
+    void deletePhaseAccess(String id);
 }

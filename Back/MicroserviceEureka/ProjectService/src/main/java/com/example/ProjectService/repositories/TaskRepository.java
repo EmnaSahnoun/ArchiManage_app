@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface TaskRepository extends MongoRepository<Task, Long> {
-    List<Task> findByPhaseId(Long phaseId);
+public interface TaskRepository extends MongoRepository<Task, String> {
+    List<Task> findByPhaseId(String phaseId);
     List<Task> findAllBySubTasksContaining(Task task);
 }

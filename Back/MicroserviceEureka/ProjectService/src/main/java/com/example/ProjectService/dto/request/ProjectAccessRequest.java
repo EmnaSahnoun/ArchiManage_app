@@ -9,20 +9,20 @@ import lombok.Data;
 
 public class ProjectAccessRequest {
 
-    private Long idUser;
+    private String idUser;
 
     @Email(message = "Email should be valid")
     private String emailUser;
 
     @NotNull(message = "Project ID is required")
-    private Long projectId;
+    private String projectId;
 
     private InvitationStatus invitationStatus = InvitationStatus.PENDING;
 
     @NotNull(message = "Role is required")
     private Role role;
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
@@ -30,7 +30,7 @@ public class ProjectAccessRequest {
         return emailUser;
     }
 
-    public Long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
@@ -42,7 +42,7 @@ public class ProjectAccessRequest {
         return role;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -50,7 +50,7 @@ public class ProjectAccessRequest {
         this.emailUser = emailUser;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 

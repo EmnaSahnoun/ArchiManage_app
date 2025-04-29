@@ -10,10 +10,10 @@ import java.util.List;
 public interface ITask {
 
     TaskResponse createTask(TaskRequest request);
-    TaskResponse getTaskById(Long id);
-    List<TaskResponse> getTasksByPhase(Long phaseId);
-    TaskResponse updateTaskStatus(Long id, TaskStatus status);
-    TaskResponse updateTaskPriority(Long id, TaskPriority priority);
-    TaskResponse addSubTask(Long parentId, TaskRequest request);
-    void deleteTask(Long id);
+    TaskResponse getTaskById(String id);
+    List<TaskResponse> getTasksByPhase(String phaseId);
+    TaskResponse updateTaskStatus(String id, TaskStatus status);
+    TaskResponse updateTaskPriority(String id, TaskPriority priority);
+    TaskResponse addSubTask(String parentId, TaskRequest request);
+    void deleteTask(String id);
 }

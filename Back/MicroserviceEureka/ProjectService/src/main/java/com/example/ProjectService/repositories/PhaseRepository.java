@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface PhaseRepository extends MongoRepository<Phase, Long> {
-    List<Phase> findByProjectId(Long projectId);
-    boolean existsByProjectIdAndName(Long projectId, String name);
+public interface PhaseRepository extends MongoRepository<Phase, String> {
+    List<Phase> findByProjectId(String projectId);
+    boolean existsByProjectIdAndName(String projectId, String name);
 }

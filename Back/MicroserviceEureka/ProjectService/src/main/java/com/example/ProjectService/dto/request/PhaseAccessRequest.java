@@ -6,27 +6,27 @@ import lombok.Data;
 
 public class PhaseAccessRequest {
     @NotNull(message = "User ID is required")
-    private Long idUser;
+    private String idUser;
 
     @NotNull(message = "Phase ID is required")
-    private Long phaseId;
+    private String phaseId;
 
     @NotNull(message = "View permission is required")
     private Boolean canView;
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
-    public Long getPhaseId() {
+    public String getPhaseId() {
         return phaseId;
     }
 
-    public void setPhaseId(Long phaseId) {
+    public void setPhaseId(String phaseId) {
         this.phaseId = phaseId;
     }
 
