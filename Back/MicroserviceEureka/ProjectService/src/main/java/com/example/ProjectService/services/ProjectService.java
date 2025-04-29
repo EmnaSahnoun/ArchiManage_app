@@ -15,8 +15,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+
 public class ProjectService implements IProject {
-    private  ProjectRepository projectRepository;
+    private  final ProjectRepository projectRepository;
 
     @Override
     public ProjectResponse createProject(ProjectRequest request) {
