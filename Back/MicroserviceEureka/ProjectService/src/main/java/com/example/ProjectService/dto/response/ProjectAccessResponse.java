@@ -4,7 +4,7 @@ import com.example.ProjectService.models.enums.InvitationStatus;
 import com.example.ProjectService.models.enums.Role;
 import lombok.Data;
 
-@Data
+
 public class ProjectAccessResponse {
     private Long id;
     private Long idUser;

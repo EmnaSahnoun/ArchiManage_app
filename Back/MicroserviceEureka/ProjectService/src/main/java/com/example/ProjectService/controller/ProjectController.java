@@ -17,6 +17,7 @@ import java.util.List;
         allowCredentials = "true")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/project")
 public class ProjectController {
     private  ProjectService projectService;
 
@@ -38,7 +39,11 @@ public class ProjectController {
         List<ProjectResponse> responses = projectService.getAllProjects();
         return ResponseEntity.ok(responses);
     }
-
+    @GetMapping("/compain/{idCompain}")
+    public ResponseEntity<List<ProjectResponse>> getProjectsByCompain(@PathVariable Long idCompain) {
+        List<ProjectResponse> responses = projectService.getProjectsByCompain(idCompain);
+        return ResponseEntity.ok(responses);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponse> updateProject(
             @PathVariable Long id,

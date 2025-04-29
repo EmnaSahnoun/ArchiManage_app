@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
-@Data
+
 public class ProjectRequest {
     @NotBlank(message = "Project name is required")
     private String name;
@@ -15,6 +15,17 @@ public class ProjectRequest {
 
     @NotNull(message = "Admin ID is required")
     private Long idAdmin;
+
+    @NotNull(message = "Compain ID is required")
+    private Long idCompany;
+
+    public Long getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(Long idCompany) {
+        this.idCompany = idCompany;
+    }
 
     public String getName() {
         return name;

@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-@Data
+
 public class TaskRequest {
     @NotBlank(message = "Task name is required")
     private String name;

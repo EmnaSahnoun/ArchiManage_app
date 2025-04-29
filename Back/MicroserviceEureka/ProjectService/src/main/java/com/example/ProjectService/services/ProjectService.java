@@ -84,12 +84,20 @@ public class ProjectService implements IProject {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ProjectResponse> getProjectsByCompain(Long idCompain) {
+        return projectRepository.findByIdCompainAndIsDeletedFalse(idCompain).stream()
+                .map(this::mapToProjectResponse)
+                .collect(Collectors.toList());
+    }
+
     private ProjectResponse mapToProjectResponse(Project project) {
         ProjectResponse response = new ProjectResponse();
         response.setId(project.getId());
         response.setName(project.getName());
         response.setDescription(project.getDescription());
         response.setIdAdmin(project.getIdAdmin());
+        response.setIdCompany(project.getIdCompain()); // Ajouté
         response.setDeleted(project.isDeleted());
 
         // Map project accesses IDs

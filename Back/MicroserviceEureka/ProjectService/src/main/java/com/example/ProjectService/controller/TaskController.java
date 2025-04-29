@@ -17,6 +17,7 @@ import java.util.List;
         allowCredentials = "true")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/task")
 public class TaskController {
     private  TaskService taskService;
     @PostMapping

@@ -2,14 +2,16 @@ package com.example.ProjectService.services;
 
 import com.example.ProjectService.dto.request.PhaseRequest;
 import com.example.ProjectService.dto.response.PhaseResponse;
+import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.exception.PhaseNotFoundException;
 import com.example.ProjectService.exception.ProjectNotFoundException;
 import com.example.ProjectService.interfaces.IPhase;
-import com.example.ProjectService.models.Phase;
-import com.example.ProjectService.models.Project;
+import com.example.ProjectService.models.*;
 
-import com.example.ProjectService.models.Task;
+import com.example.ProjectService.models.enums.InvitationStatus;
+import com.example.ProjectService.repositories.PhaseAccessRepository;
 import com.example.ProjectService.repositories.PhaseRepository;
+import com.example.ProjectService.repositories.ProjectAccessRepository;
 import com.example.ProjectService.repositories.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,8 @@ import java.util.stream.Collectors;
 public class PhaseService implements IPhase {
     private  PhaseRepository phaseRepository;
     private   ProjectRepository projectRepository;
-
+    private PhaseAccessRepository phaseAccessRepository;
+    private ProjectAccessRepository projectAccessRepository;
     @Override
     public PhaseResponse createPhase(PhaseRequest request) {
         Long id=request.getProjectId();
@@ -37,7 +40,25 @@ public class PhaseService implements IPhase {
         phase.setProject(project);
 
         Phase savedPhase = phaseRepository.save(phase);
+        // Récupérer tous les membres du projet (acceptés)
+        List<ProjectAccess> projectMembers = projectAccessRepository.findByProjectIdAndInvitationStatus(
+                phase.getProject().getId(),
+                InvitationStatus.ACCEPTED
+        );
+
+        // Créer les TaskAccess pour chaque membre
+        createDefaultPhaseAccesses(savedPhase, projectMembers);
         return mapToResponse(savedPhase);
+    }
+
+    private void createDefaultPhaseAccesses(Phase phase, List<ProjectAccess> projectMembers) {
+        for (ProjectAccess member : projectMembers) {
+            PhaseAccess phaseAccess = new PhaseAccess();
+            phaseAccess.setIdUser(member.getIdUser());
+            phaseAccess.setCanView(true);
+            phaseAccess.setPhase(phase);
+            phaseAccessRepository.save(phaseAccess);
+        }
     }
 
     @Override
@@ -97,7 +118,13 @@ public class PhaseService implements IPhase {
                     .map(Task::getId)
                     .collect(Collectors.toList()));
         }
-
+        if (phase.getPhaseAccesses() != null) {
+            response.setPhaseAccessIds(phase.getPhaseAccesses()
+                    .stream()
+                    .map(PhaseAccess::getId)
+                    .collect(Collectors.toList()));
+        }
         return response;
     }
+
 }

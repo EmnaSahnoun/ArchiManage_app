@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 public class TaskResponse {
     private Long id;
     private String name;
@@ -18,7 +18,7 @@ public class TaskResponse {
     private Long phaseId;
     private Long parentTaskId;
     private List<Long> subTaskIds;
-    private List<Long> taskAccessIds;
+
 
     public Long getId() {
         return id;
@@ -56,9 +56,7 @@ public class TaskResponse {
         return subTaskIds;
     }
 
-    public List<Long> getTaskAccessIds() {
-        return taskAccessIds;
-    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -96,7 +94,5 @@ public class TaskResponse {
         this.subTaskIds = subTaskIds;
     }
 
-    public void setTaskAccessIds(List<Long> taskAccessIds) {
-        this.taskAccessIds = taskAccessIds;
-    }
+
 }

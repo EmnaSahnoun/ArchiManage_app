@@ -7,9 +7,10 @@ import com.example.ProjectService.dto.response.PhaseResponse;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 public class ProjectResponse {
     private Long id;
+    private Long idCompany;
     private String name;
     private String description;
     private Long idAdmin;
@@ -71,5 +72,13 @@ public class ProjectResponse {
 
     public void setPhaseIds(List<Long> phaseIds) {
         this.phaseIds = phaseIds;
+    }
+
+    public Long getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(Long idCompany) {
+        this.idCompany = idCompany;
     }
 }

@@ -1,21 +1,20 @@
 package com.example.ProjectService.models;
 
-
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Document(collection = "task_accesses")
-public class TaskAccess {
+
+@Document(collection = "phase_accesses")
+public class PhaseAccess {
     @Id
     private Long id;
     private Long idUser;
     private boolean canView;
 
     @DBRef
-    private Task task;
+    private Phase phase;
 
     public Long getId() {
         return id;
@@ -41,11 +40,11 @@ public class TaskAccess {
         this.canView = canView;
     }
 
-    public Task getTask() {
-        return task;
+    public Phase getPhase() {
+        return phase;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setPhase(Phase phase) {
+        this.phase = phase;
     }
 }

@@ -2,8 +2,10 @@ package tn.iit.services;
 
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import tn.iit.clients.ProjectClient;
 import tn.iit.dto.request.CompainRequest;
 import tn.iit.dto.response.CompainResponse;
+import tn.iit.dto.response.ProjectResponse;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
 import tn.iit.interfaces.ICompainService;
@@ -164,4 +166,13 @@ public class CompainService implements ICompainService {
         return response;
     }
 
+    @Service
+    @RequiredArgsConstructor
+    public class CompanyService {
+        private final ProjectClient projectClient;
+
+        public List<ProjectResponse> getProjectsByCompany(String companyId) {
+            return projectClient.getProjectsByCompanyId(companyId);
+        }
+    }
 }

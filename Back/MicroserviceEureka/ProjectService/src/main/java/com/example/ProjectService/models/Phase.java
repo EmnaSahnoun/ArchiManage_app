@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 @Document(collection = "phases")
 public class Phase {
     @Id
@@ -23,6 +23,9 @@ public class Phase {
 
     @DBRef
     private Project project;
+
+    @DBRef
+    private List<PhaseAccess> phaseAccesses;
 
     public Long getId() {
         return id;
@@ -78,5 +81,13 @@ public class Phase {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public List<PhaseAccess> getPhaseAccesses() {
+        return phaseAccesses;
+    }
+
+    public void setPhaseAccesses(List<PhaseAccess> phaseAccesses) {
+        this.phaseAccesses = phaseAccesses;
     }
 }

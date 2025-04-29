@@ -10,10 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 @Document(collection = "projects")
-@Data
+
 public class Project {
     @Id
     private Long id;
+    private Long idCompain;
     private String name;
     private String description;
     private Long idAdmin;
@@ -24,6 +25,14 @@ public class Project {
 
     @DBRef
     private List<Phase> phases;
+
+    public Long getIdCompain() {
+        return idCompain;
+    }
+
+    public void setIdCompain(Long idCompain) {
+        this.idCompain = idCompain;
+    }
 
     public Long getId() {
         return id;

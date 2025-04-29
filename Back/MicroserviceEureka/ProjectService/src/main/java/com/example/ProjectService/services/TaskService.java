@@ -6,16 +6,14 @@ import com.example.ProjectService.exception.PhaseNotFoundException;
 import com.example.ProjectService.exception.TaskNotFoundException;
 import com.example.ProjectService.interfaces.ITask;
 import com.example.ProjectService.models.Phase;
+import com.example.ProjectService.models.PhaseAccess;
 import com.example.ProjectService.models.ProjectAccess;
 import com.example.ProjectService.models.Task;
-import com.example.ProjectService.models.TaskAccess;
 import com.example.ProjectService.models.enums.InvitationStatus;
-import com.example.ProjectService.models.enums.Role;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
 import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectAccessRepository;
-import com.example.ProjectService.repositories.TaskAccessRepository;
 import com.example.ProjectService.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,6 @@ public class TaskService implements ITask {
     private  TaskRepository taskRepository;
     private  PhaseRepository phaseRepository;
     private ProjectAccessRepository projectAccessRepository;
-    private TaskAccessRepository taskAccessRepository;
     @Override
     @Transactional
     public TaskResponse createTask(TaskRequest request) {
@@ -49,26 +46,12 @@ public class TaskService implements ITask {
         // Sauvegarder la tâche
         Task savedTask = taskRepository.save(task);
 
-        // Récupérer tous les membres du projet (acceptés)
-        List<ProjectAccess> projectMembers = projectAccessRepository.findByProjectIdAndInvitationStatus(
-                phase.getProject().getId(),
-                InvitationStatus.ACCEPTED
-        );
 
-        // Créer les TaskAccess pour chaque membre
-        createDefaultTaskAccesses(savedTask, projectMembers);
 
         return mapToTaskResponse(savedTask);
     }
 
-    private void createDefaultTaskAccesses(Task task, List<ProjectAccess> projectMembers) {
-        for (ProjectAccess member : projectMembers) {
-            TaskAccess taskAccess = new TaskAccess();
-            taskAccess.setIdUser(member.getIdUser());
-            taskAccess.setTask(task);
-            taskAccessRepository.save(taskAccess);
-        }
-    }
+
     @Override
     public TaskResponse getTaskById(Long id) {
         Task task = taskRepository.findById(id)
@@ -158,12 +141,7 @@ public class TaskService implements ITask {
                     .collect(Collectors.toList()));
         }
 
-        if (task.getTaskAccesses() != null) {
-            response.setTaskAccessIds(task.getTaskAccesses()
-                    .stream()
-                    .map(TaskAccess::getId)
-                    .collect(Collectors.toList()));
-        }
+
 
         return response;
     }

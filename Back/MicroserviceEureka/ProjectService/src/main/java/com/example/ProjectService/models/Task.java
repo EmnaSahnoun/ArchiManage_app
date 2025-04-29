@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 @Document(collection = "tasks")
 public class Task {
     @Id
@@ -25,8 +25,7 @@ public class Task {
     @DBRef
     private List<Task> subTasks;
 
-    @DBRef
-    private List<TaskAccess> taskAccesses;
+
 
     @DBRef
     private Phase phase;
@@ -87,13 +86,7 @@ public class Task {
         this.subTasks = subTasks;
     }
 
-    public List<TaskAccess> getTaskAccesses() {
-        return taskAccesses;
-    }
 
-    public void setTaskAccesses(List<TaskAccess> taskAccesses) {
-        this.taskAccesses = taskAccesses;
-    }
 
     public Phase getPhase() {
         return phase;

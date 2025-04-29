@@ -19,11 +19,14 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import tn.iit.dto.request.CompainRequest;
 import tn.iit.dto.response.CompainResponse;
+import tn.iit.dto.response.ProjectResponse;
 import tn.iit.entites.Compain;
 import tn.iit.exception.CompainNotFoundException;
 import tn.iit.services.CompainService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import tn.iit.services.ProjectService;
+
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
            allowedHeaders = "*",
            allowCredentials = "true")
@@ -32,7 +35,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public class CompainController {
 
     private final CompainService compainService;
-
+    private  ProjectService projectService;
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/all")
@@ -89,7 +92,11 @@ public CompainResponse  updateCompain(@PathVariable String id,
 
 
 
-
+    @GetMapping("/{companyId}/projects")
+    public ResponseEntity<List<ProjectResponse>> getCompanyProjects(@PathVariable String companyId) {
+        List<ProjectResponse> projects = projectService.getProjectsByCompany(companyId);
+        return ResponseEntity.ok(projects);
+    }
 
 
 }

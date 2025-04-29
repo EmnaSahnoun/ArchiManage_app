@@ -15,6 +15,7 @@ import java.util.List;
         allowCredentials = "true")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/phase")
 public class PhaseController {
     private  PhaseService phaseService;
 

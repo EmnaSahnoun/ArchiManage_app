@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-@Data
+
 public class PhaseResponse {
     private Long id;
     private String name;
@@ -14,6 +14,7 @@ public class PhaseResponse {
     private Date endDate;
     private Long projectId;
     private List<Long> taskIds;
+    private List<Long> phaseAccessIds;
 
     public Long getId() {
         return id;
@@ -69,5 +70,13 @@ public class PhaseResponse {
 
     public void setTaskIds(List<Long> taskIds) {
         this.taskIds = taskIds;
+    }
+
+    public List<Long> getPhaseAccessIds() {
+        return phaseAccessIds;
+    }
+
+    public void setPhaseAccessIds(List<Long> phaseAccessIds) {
+        this.phaseAccessIds = phaseAccessIds;
     }
 }

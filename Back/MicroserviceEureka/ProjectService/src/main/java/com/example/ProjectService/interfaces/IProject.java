@@ -12,4 +12,5 @@ public interface IProject {
     ProjectResponse updateProject(Long id, ProjectRequest request);
     void deleteProject(Long id);
     List<ProjectResponse> getProjectsByAdmin(Long adminId);
+    List<ProjectResponse> getProjectsByCompain(Long idCompain);
 }

@@ -17,6 +17,7 @@ import java.util.List;
         allowCredentials = "true")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/project-accesses")
 public class ProjectAccessController {
     private ProjectAccessService projectAccessService;
     @PostMapping
