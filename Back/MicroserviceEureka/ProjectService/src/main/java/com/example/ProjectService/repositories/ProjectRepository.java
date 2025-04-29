@@ -9,5 +9,5 @@ import java.util.List;
 public interface ProjectRepository extends MongoRepository<Project, String> {
     List<Project> findAllByIsDeletedFalse();
     List<Project> findByIdAdminAndIsDeletedFalse(String adminId);
-    List<Project> findByIdCompainAndIsDeletedFalse(String idCompain);
+    List<Project> findByIdCompanyAndIsDeletedFalse(String idCompany);
 }

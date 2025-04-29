@@ -16,7 +16,7 @@ public class ProjectRequest {
     @NotNull(message = "Admin ID is required")
     private String idAdmin;
 
-    @NotNull(message = "Compain ID is required")
+    @NotNull(message = "Company ID is required")
     private String idCompany;
 
     public String getIdCompany() {

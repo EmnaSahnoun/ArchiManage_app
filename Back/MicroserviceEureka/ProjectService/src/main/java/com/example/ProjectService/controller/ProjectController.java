@@ -39,9 +39,10 @@ public class ProjectController {
         List<ProjectResponse> responses = projectService.getAllProjects();
         return ResponseEntity.ok(responses);
     }
-    @GetMapping("/compain/{idCompain}")
-    public ResponseEntity<List<ProjectResponse>> getProjectsByCompain(@PathVariable String idCompain) {
-        List<ProjectResponse> responses = projectService.getProjectsByCompain(idCompain);
+   
+    @GetMapping("/company/{idCompany}") // Changé de /compain/
+    public ResponseEntity<List<ProjectResponse>> getProjectsByCompany(@PathVariable String idCompany) {
+        List<ProjectResponse> responses = projectService.getProjectsByCompany(idCompany);
         return ResponseEntity.ok(responses);
     }
     @PutMapping("/{id}")

@@ -91,8 +91,9 @@ public class ProjectService implements IProject {
     }
 
     @Override
-    public List<ProjectResponse> getProjectsByCompain(String idCompain) {
-        return projectRepository.findByIdCompainAndIsDeletedFalse(idCompain).stream()
+    public List<ProjectResponse> getProjectsByCompany(String idCompany) {
+        return projectRepository.findByIdCompanyAndIsDeletedFalse(idCompany)
+                .stream()
                 .map(this::mapToProjectResponse)
                 .collect(Collectors.toList());
     }

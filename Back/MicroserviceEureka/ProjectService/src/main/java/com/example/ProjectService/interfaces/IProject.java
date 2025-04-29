@@ -12,5 +12,5 @@ public interface IProject {
     ProjectResponse updateProject(String id, ProjectRequest request);
     void deleteProject(String id);
     List<ProjectResponse> getProjectsByAdmin(String adminId);
-    List<ProjectResponse> getProjectsByCompain(String idCompain);
+    List<ProjectResponse> getProjectsByCompany(String idCompany);
 }
