@@ -10,7 +10,8 @@ import java.util.List;
 @FeignClient(
         name = "ProjectService",
         url = "https://e1.systeo.tn/ProjectService",
-        configuration = FeignConfig.class
+        configuration = FeignConfig.class,
+        path = "/project"
 )
 public interface ProjectClient {
     @GetMapping("/company/{idCompany}")
