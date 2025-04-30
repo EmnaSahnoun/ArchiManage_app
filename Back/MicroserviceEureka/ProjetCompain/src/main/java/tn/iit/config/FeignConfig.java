@@ -1,9 +1,18 @@
 package tn.iit.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import feign.RequestInterceptor;
+import feign.codec.Decoder;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
+import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -15,22 +24,32 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class FeignConfig {
 
     @Bean
+    public Decoder feignDecoder() {
+        ObjectFactory<HttpMessageConverters> messageConverters = () -> new HttpMessageConverters(
+                new MappingJackson2HttpMessageConverter(customObjectMapper())
+        );
+        return new ResponseEntityDecoder(new SpringDecoder(messageConverters));
+    }
+
+    @Bean
+    public ObjectMapper customObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return mapper;
+    }
+
+    @Bean
     public RequestInterceptor bearerTokenRequestInterceptor() {
         return requestTemplate -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes)
                     RequestContextHolder.getRequestAttributes();
 
             if (attributes != null) {
-                HttpServletRequest request = attributes.getRequest();
-                String token = request.getHeader("Authorization");
-
+                String token = attributes.getRequest().getHeader("Authorization");
                 if (token != null) {
                     requestTemplate.header("Authorization", token);
-                } else {
-                    throw new IllegalStateException("No JWT token found in request headers");
                 }
-            } else {
-                throw new IllegalStateException("Request attributes not available");
             }
         };
     }
