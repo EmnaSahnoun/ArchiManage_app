@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import tn.iit.dto.response.ProjectResponse;
 
 import java.util.List;
-@FeignClient(name = "ProjectService", url = "https://e1.systeo.tn/ProjectService")
+@FeignClient(name = "ProjectService", path = "/project")
 public interface ProjectClient {
-    @GetMapping("/ProjectService/project/company/{companyId}")
+    @GetMapping("/company/{idCompany}")
     List<ProjectResponse> getProjectsByCompanyId(@PathVariable String companyId);
 }
