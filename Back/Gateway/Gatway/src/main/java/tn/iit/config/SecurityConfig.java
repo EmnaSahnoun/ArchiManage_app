@@ -51,13 +51,10 @@ public class SecurityConfig {
                     .jwkSetUri("https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/certs")
                     .jwtAuthenticationConverter(new ReactiveJwtAuthenticationConverterAdapter(jwtAuthConverter))
                 )
+
             )
 
- .headers(headers -> headers
-            .contentSecurityPolicy(csp -> csp
-                .policyDirectives("default-src 'self' https://m1.systeo.tn; script-src 'self' 'unsafe-inline' https://m1.systeo.tn; style-src 'self' 'unsafe-inline' https://m1.systeo.tn")
-            )
-        )
+
 
             .build();
     }

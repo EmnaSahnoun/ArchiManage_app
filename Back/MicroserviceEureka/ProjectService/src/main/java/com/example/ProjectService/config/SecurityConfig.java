@@ -12,16 +12,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                //.cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwkSetUri("https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/certs")
-                        )
+                        .anyRequest().permitAll() // Toutes les requêtes sont autorisées
                 );
+
         return http.build();
     }
 }
