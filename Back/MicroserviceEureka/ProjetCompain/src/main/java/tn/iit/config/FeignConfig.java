@@ -11,10 +11,13 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public class FeignConfig {
     @Bean
     public RequestInterceptor bearerTokenRequestInterceptor() {
-        return template -> {
+        return requestTemplate -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication instanceof JwtAuthenticationToken jwtAuth) {
-                template.header("Authorization", "Bearer " + jwtAuth.getToken().getTokenValue());
+            if (authentication != null && authentication.isAuthenticated()
+                    && authentication instanceof JwtAuthenticationToken jwtAuth) {
+                requestTemplate.header("Authorization", "Bearer " + jwtAuth.getToken().getTokenValue());
+            } else {
+                throw new IllegalStateException("Cannot propagate authentication token - no JWT found");
             }
         };
     }
