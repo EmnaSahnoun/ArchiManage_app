@@ -15,5 +15,5 @@ import java.util.List;
 )
 public interface ProjectClient {
     @GetMapping("/company/{idCompany}")
-    List<ProjectResponse> getProjectsByCompany(@PathVariable String companyId);
+    List<ProjectResponse> getProjectsByCompany(@PathVariable("idCompany") String idCompany);
 }
