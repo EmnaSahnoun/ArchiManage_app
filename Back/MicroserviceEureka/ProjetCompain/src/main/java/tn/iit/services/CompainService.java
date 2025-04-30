@@ -172,7 +172,7 @@ public class CompainService implements ICompainService {
         private final ProjectClient projectClient;
 
         public List<ProjectResponse> getProjectsByCompany(String companyId) {
-            return projectClient.getProjectsByCompanyId(companyId);
+            return projectClient.getProjectsByCompany(companyId);
         }
     }
 }

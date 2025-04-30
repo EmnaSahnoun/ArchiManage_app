@@ -14,6 +14,6 @@ public class ProjectService implements IProjectService {
 
     @Override
     public List<ProjectResponse> getProjectsByCompany(String companyId) {
-        return projectClient.getProjectsByCompanyId(companyId);
+        return projectClient.getProjectsByCompany(companyId);
     }
 }
