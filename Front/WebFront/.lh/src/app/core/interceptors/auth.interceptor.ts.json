@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1745058518520,
@@ -76,6 +76,10 @@
                 {
                     "date": 1745155706027,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,18 +6,11 @@\n @Injectable()\r\n export class AuthInterceptor implements HttpInterceptor {\r\n   constructor(private oauthService: OAuthService) {}\r\n \r\n-   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\r\n-      // Clonez la requête pour ajouter les headers\r\n-      const authReq = req.clone({\r\n-        setHeaders: {\r\n-          Authorization: `Bearer ${this.oauthService.getAccessToken()}`,\r\n-          'X-Requested-With': 'XMLHttpRequest' // Important pour certaines configs Spring\r\n-        }\r\n-      });\r\n-  \r\n-      console.log('Requête interceptée:', authReq);\r\n-      return next.handle(authReq);\r\n+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\r\n+    console.log('Interceptor - URL:', req.url);\r\n+    console.log('Interceptor - Token valide:', this.oauthService.hasValidAccessToken());\r\n     \r\n+    return next.handle(req);\r\n   }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746118077406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n export class AuthInterceptor implements HttpInterceptor {\r\n   constructor(private oauthService: OAuthService) {}\r\n \r\n   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\r\n-    console.log('Interceptor - URL:', req.url);\r\n+    //console.log('Interceptor - URL:', req.url);\r\n     console.log('Interceptor - Token valide:', this.oauthService.hasValidAccessToken());\r\n     \r\n     return next.handle(req);\r\n   }\r\n"
                 }
             ],
             "date": 1745058518520,

@@ -1,0 +1,114 @@
+{
+    "sourceFile": "src/app/shared/project-form/project-form.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 24,
+            "patches": [
+                {
+                    "date": 1746123785682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746123791287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746123797074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup } from '@angular/forms';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746123810651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n+import { AuthService } from '../../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746123823814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Component, OnInit } from '@angular/core';\r\n-import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n+import { MatDialogRef } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746123849998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n-    const idAdmin = this.authService.getCurrentUserId(); // Obtenez l'ID de l'admin connecté\r\n+    const idAdmin = localStorage // Obtenez l'ID de l'admin connecté\r\n \r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1746123856676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n-    const idAdmin = localStorage // Obtenez l'ID de l'admin connecté\r\n+    const idAdmin = localStorage.getItem(\"idAdmin\"); // Obtenez l'ID de l'admin connecté\r\n \r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1746123869702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n-    const idAdmin = localStorage.getItem(\"idAdmin\"); // Obtenez l'ID de l'admin connecté\r\n+    const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n \r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1746124286223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,13 @@\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { MatDialogRef } from '@angular/material/dialog';\r\n+import { Component, OnInit, Inject } from '@angular/core';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n+import { AuthService } from '../../services/auth.service'; // Assurez-vous que ce service peut fournir l'ID admin\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746124298003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n-import { MatDialogRef } from '@angular/material/dialog';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n import { ProjectService } from '../../services/ProjectService';\r\n"
+                },
+                {
+                    "date": 1746124303702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component, OnInit } from '@angular/core';\r\n+\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n"
+                },
+                {
+                    "date": 1746124308879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n import { Component, OnInit, Inject } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n import { ProjectService } from '../../services/ProjectService';\r\n-import { AuthService } from '../../services/auth.service'; // Assurez-vous que ce service peut fournir l'ID admin\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746124316390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,11 @@\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n-import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n-import { ProjectService } from '../../services/ProjectService';\r\n \r\n+\r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n   styleUrl: './project-form.component.scss'\r\n"
+                },
+                {
+                    "date": 1746132588789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,11 @@\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n \r\n-\r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n   styleUrl: './project-form.component.scss'\r\n"
+                },
+                {
+                    "date": 1746132596270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,8 @@\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n-import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746136024303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import { ProjectService } from '../../services/ProjectService';\r\n import { AuthService } from '../../services/auth.service';\r\n import { Component, OnInit, Inject } from '@angular/core';\r\n import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746136036872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n-  styleUrl: './project-form.component.scss'\r\n+  styleUrls: ['./project-form.component.scss']\r\n+\r\n })\r\n export class ProjectFormComponent implements OnInit {\r\n   projectForm: FormGroup;\r\n   isLoading = false;\r\n"
+                },
+                {
+                    "date": 1746136049150,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private projectService: ProjectService,\r\n     private authService: AuthService, // Injectez AuthService\r\n-    public dialogRef: MatDialogRef<ProjectFormComponent>,\r\n     // @Inject(MAT_DIALOG_DATA) public data: any // Injectez si vous passez des données à la modale\r\n   ) {\r\n     this.projectForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n"
+                },
+                {
+                    "date": 1746136061843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n   errorMessage: string | null = null;\r\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n+    public activeModal: NgbActiveModal, // Inject NgbActiveModal\r\n+  \r\n     private projectService: ProjectService,\r\n     private authService: AuthService, // Injectez AuthService\r\n     // @Inject(MAT_DIALOG_DATA) public data: any // Injectez si vous passez des données à la modale\r\n   ) {\r\n"
+                },
+                {
+                    "date": 1746136094270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n-        this.dialogRef.close(newProject); // Ferme la modale et renvoie le nouveau projet\r\n+        this.activeModal.close(newProject); // Ferme la modale et renvoie le nouveau projet\r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n         this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n"
+                },
+                {
+                    "date": 1746136107347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,7 +75,7 @@\n     });\r\n   }\r\n \r\n   cancel(): void {\r\n-    this.dialogRef.close(); // Ferme simplement la modale sans renvoyer de données\r\n+    this.activeModal.dismiss('cancel click'); // Ferme simplement la modale sans renvoyer de données\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746137430235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n-        this.activeModal.close(newProject); // Ferme la modale et renvoie le nouveau projet\r\n+        this.activeModal.close(newProject); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n         this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n"
+                },
+                {
+                    "date": 1746137510094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       description: this.description?.value,\r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n-\r\n+    console\r\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n"
+                },
+                {
+                    "date": 1746137518928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       description: this.description?.value,\r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n-    console\r\n+    console.log(\"pr\")\r\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n"
+                },
+                {
+                    "date": 1746137524543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       description: this.description?.value,\r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n-    console.log(\"pr\")\r\n+    console.log(\"projet ajoutéé\",)\r\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n"
+                }
+            ],
+            "date": 1746123785682,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-project-form',\r\n  templateUrl: './project-form.component.html',\r\n  styleUrl: './project-form.component.scss'\r\n})\r\nexport class ProjectFormComponent implements OnInit {\r\n  projectForm: FormGroup;\r\n  isLoading = false;\r\n  errorMessage: string | null = null;\r\n\r\n  constructor(\r\n    private fb: FormBuilder,\r\n    private projectService: ProjectService,\r\n    private authService: AuthService, // Injectez AuthService\r\n    public dialogRef: MatDialogRef<ProjectFormComponent>,\r\n    // @Inject(MAT_DIALOG_DATA) public data: any // Injectez si vous passez des données à la modale\r\n  ) {\r\n    this.projectForm = this.fb.group({\r\n      name: ['', [Validators.required, Validators.minLength(3)]],\r\n      description: ['', Validators.maxLength(500)] // Description optionnelle, max 500 caractères\r\n    });\r\n  }\r\n\r\n  ngOnInit(): void { }\r\n\r\n  get name() { return this.projectForm.get('name'); }\r\n  get description() { return this.projectForm.get('description'); }\r\n\r\n  saveProject(): void {\r\n    if (this.projectForm.invalid || this.isLoading) {\r\n      this.projectForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n      return;\r\n    }\r\n\r\n    this.isLoading = true;\r\n    this.errorMessage = null;\r\n\r\n    const idCompany = localStorage.getItem(\"idAgence\");\r\n    const idAdmin = this.authService.getCurrentUserId(); // Obtenez l'ID de l'admin connecté\r\n\r\n    if (!idCompany || !idAdmin) {\r\n      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n      this.isLoading = false;\r\n      return;\r\n    }\r\n\r\n    const projectData = {\r\n      name: this.name?.value,\r\n      description: this.description?.value,\r\n      idCompany: idCompany,\r\n      idAdmin: idAdmin\r\n    };\r\n\r\n    this.projectService.createProject(projectData).subscribe({\r\n      next: (newProject) => {\r\n        this.isLoading = false;\r\n        console.log('Projet créé:', newProject);\r\n        this.dialogRef.close(newProject); // Ferme la modale et renvoie le nouveau projet\r\n      },\r\n      error: (err) => {\r\n        this.isLoading = false;\r\n        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n        console.error('Erreur création projet:', err);\r\n      }\r\n    });\r\n  }\r\n\r\n  cancel(): void {\r\n    this.dialogRef.close(); // Ferme simplement la modale sans renvoyer de données\r\n  }\r\n}\r\n"
+        }
+    ]
+}

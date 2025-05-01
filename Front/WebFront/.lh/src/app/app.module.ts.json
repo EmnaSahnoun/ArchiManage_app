@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 69,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -284,6 +284,10 @@
                 {
                     "date": 1745498123128,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n     MatTableModule,\r\n-    // Ajoutez les autres modules Material\r\n+    MatProgressSpinnerModule\r\n     MatCardModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n"
+                },
+                {
+                    "date": 1746134723134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-    SignupComponent,\r\n+   \r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n \r\n@@ -90,9 +90,11 @@\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n     MatTableModule,\r\n-    MatProgressSpinnerModule\r\n+    MatProgressSpinnerModule,\r\n+    MatPaginatorModule,\r\n+    MatSortModule,\r\n     MatCardModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n"
                 }
             ],
             "date": 1741609977833,

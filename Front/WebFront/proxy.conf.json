@@ -18,6 +18,14 @@
     "pathRewrite": {
       "^/agence": "/projectcompany"
     }
+  },
+  "/projet": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/projet": "/ProjectService"
+    }
   }
 }
     

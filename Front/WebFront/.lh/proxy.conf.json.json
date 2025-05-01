@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -52,6 +52,46 @@
                 {
                     "date": 1745275683851,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,12 +16,8 @@\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n-    },\r\n-  },\r\n-  \"headers\": {\r\n-    \"Connection\": \"keep-alive\"\r\n+    }\r\n   }\r\n-  }\r\n }\r\n\\ No newline at end of file\n-    \n+    \r\n"
+                },
+                {
+                    "date": 1746121584382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n {\r\n-    \"/api\": {\r\n+    \"/keycloak\": {\r\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n@@ -19,5 +19,5 @@\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   }\r\n }\r\n-    \n\\ No newline at end of file\n+    \r\n"
+                },
+                {
+                    "date": 1746121589868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n {\r\n-    \"/keycloak\": {\r\n+    \"/api\": {\r\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1746121596554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n {\r\n-    \"/api\": {\r\n+    \"/keycloak\": {\r\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1746121602029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n-        \"^/api\": \"\"\r\n+        \"^/apkeycloaki\": \"\"\r\n       },\r\n       \"headers\": {\r\n         \"Connection\": \"keep-alive\"\r\n       }\r\n"
+                },
+                {
+                    "date": 1746121646870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n-        \"^/apkeycloaki\": \"\"\r\n+        \"^/keycloak\": \"\"\r\n       },\r\n       \"headers\": {\r\n         \"Connection\": \"keep-alive\"\r\n       }\r\n     },\r\n   \r\n-  \"/agence\": {\r\n+  \"/api\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1746122325148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n {\r\n-    \"/keycloak\": {\r\n+    \"/api\": {\r\n       \"target\": \"https://esmm.systeo.tn\",\r\n       \"secure\": false,\r\n       \"changeOrigin\": true,\r\n       \"pathRewrite\": {\r\n-        \"^/keycloak\": \"\"\r\n+        \"^/api\": \"\"\r\n       },\r\n       \"headers\": {\r\n         \"Connection\": \"keep-alive\"\r\n       }\r\n     },\r\n   \r\n-  \"/api\": {\r\n+  \"/agence\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1746137782970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,7 +17,8 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n-  }\r\n+  },\r\n+  \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1746137789548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,14 @@\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   },\r\n-  \r\n+  \"/p\": {\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/agence\": \"/projectcompany\"\r\n+    }\r\n+  }\r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1746137830061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,14 +18,14 @@\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   },\r\n-  \"/p\": {\r\n+  \"/projet\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/agence\": \"/projectcompany\"\r\n+      \"^/agence\": \"/ProjectService\"\r\n     }\r\n   }\r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1746137939019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/agence\": \"/ProjectService\"\r\n+      \"^/projet\": \"/ProjectService\"\r\n     }\r\n   }\r\n }\r\n     \r\n"
                 }
             ],
             "date": 1745069337198,

@@ -1,0 +1,94 @@
+{
+    "sourceFile": "src/app/services/ProjectService.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 19,
+            "patches": [
+                {
+                    "date": 1746121451638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746121457039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n-export class AgenceService {\r\n+export class ProjectService {\r\n     private apiUrl = '/agence';\r\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n \r\n"
+                },
+                {
+                    "date": 1746121471452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,6 @@\n     private keycloakUrl = '/api';\r\n \r\n     \r\n     \r\n-    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\n\\ No newline at end of file\n+    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121483504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,6 @@\n     private apiUrl = '/agence';\r\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n \r\n-    \r\n-    \r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n-    \n\\ No newline at end of file\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121490884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,8 @@\n export class ProjectService {\r\n     private apiUrl = '/agence';\r\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n+    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+    \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121497416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,6 @@\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    \r\n+    getP\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121521525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,13 @@\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getP\r\n+    getAllAgencies(): Observable<any[]> {\r\n+        console.log(\"l'url\",`${this.apiUrl}/all`);\r\n+        return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n+          headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121528675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getAllAgencies(): Observable<any[]> {\r\n+    getAllProjects(): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/all`);\r\n         return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n"
+                },
+                {
+                    "date": 1746121540638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,5 +20,32 @@\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n       }\r\n+\r\n+\r\n+\r\n+\r\n+      private getApiHeaders(): HttpHeaders {\r\n+        const token = this.authService.getAccessToken();\r\n+        return new HttpHeaders({\r\n+          'Content-Type': 'application/json',\r\n+          'Authorization': `Bearer ${token}`\r\n+        });\r\n+      }\r\n+      \r\n+        private handleError(error: HttpErrorResponse): Observable<never> {\r\n+          console.error('API Error Details:', error);\r\n+          \r\n+          let errorMessage = 'Une erreur est survenue';\r\n+          if (error.status === 401) {\r\n+            errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+            this.authService.logout();\r\n+          } else if (error.error?.message) {\r\n+            errorMessage = error.error.message;\r\n+          } else if (error.status === 500) {\r\n+            errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+          }\r\n+      \r\n+          return throwError(() => new Error(errorMessage));\r\n+        }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746121672873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n-    private apiUrl = '/agence';\r\n+    private apiUrl = '/api';\r\n     private realm = 'systeodigital';\r\n     private keycloakUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n"
+                },
+                {
+                    "date": 1746121695947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n })\r\n export class ProjectService {\r\n     private apiUrl = '/api';\r\n     private realm = 'systeodigital';\r\n-    private keycloakUrl = '/api';\r\n+    private keycloakUrl = '/keycloak';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/all`);\r\n"
+                },
+                {
+                    "date": 1746121755184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,13 +8,11 @@\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n     private apiUrl = '/api';\r\n-    private realm = 'systeodigital';\r\n-    private keycloakUrl = '/keycloak';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getAllProjects(): Observable<any[]> {\r\n+    getAllProjects(idCompany:string): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/all`);\r\n         return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n"
+                },
+                {
+                    "date": 1746121785776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n-        console.log(\"l'url\",`${this.apiUrl}/all`);\r\n+        console.log(\"l'url\",`${this.apiUrl}${this.realm}/protocol`);\r\n         return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1746121806250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n-        console.log(\"l'url\",`${this.apiUrl}${this.realm}/protocol`);\r\n+        console.log(\"l'url\",`${this.apiUrl}/${id}/protocol`);\r\n         return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1746121819216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/api';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n-        console.log(\"l'url\",`${this.apiUrl}/${id}/protocol`);\r\n+        console.log(\"l'url\",`${this.apiUrl}/${idCompany}/projects`);\r\n         return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1746121833616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/${idCompany}/projects`);\r\n-        return this.http.get<any[]>(`${this.apiUrl}/all`, { \r\n+        return this.http.get<any[]>(`${this.apiUrl}//${idCompany}/projects`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1746122359734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,14 +7,14 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n-    private apiUrl = '/api';\r\n+    private apiUrl = '/agence';\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/${idCompany}/projects`);\r\n-        return this.http.get<any[]>(`${this.apiUrl}//${idCompany}/projects`, { \r\n+        return this.http.get<any[]>(`${this.apiUrl}/${idCompany}/projects`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1746122522395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,12 +18,19 @@\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n       }\r\n+      createUser(userData: any): Observable<any> {\r\n+        const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users`;\r\n+        const headers = this.getApiHeaders();\r\n+      \r\n+        return this.http.post(url, userData, { headers }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n \r\n \r\n \r\n-\r\n       private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1746122533184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n       }\r\n-      \r\n-      createUser(userData: any): Observable<any> {\r\n+\r\n+    createUser(userData: any): Observable<any> {\r\n         const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n         return this.http.post(url, userData, { headers }).pipe(\r\n"
+                },
+                {
+                    "date": 1746137857858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n     private apiUrl = '/agence';\r\n-    private projetUr\r\n+    private projetUrl\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getAllProjects(idCompany:string): Observable<any[]> {\r\n         console.log(\"l'url\",`${this.apiUrl}/${idCompany}/projects`);\r\n"
+                }
+            ],
+            "date": 1746121451638,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\nimport { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\nimport { UserService } from './UserService';\r\nimport { AuthService } from './auth.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class AgenceService {\r\n    private apiUrl = '/agence';\r\n    private realm = 'systeodigital';\r\n    private keycloakUrl = '/api';\r\n\r\n    \r\n    \r\n    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }"
+        }
+    ]
+}

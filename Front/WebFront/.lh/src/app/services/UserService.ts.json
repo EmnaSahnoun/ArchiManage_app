@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1744990690983,
@@ -136,6 +136,14 @@
                 {
                     "date": 1745318599853,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n   // Obtenir la liste des rôles\r\n-  /* getRoles(): Observable<any[]> {\r\n+  getRoles(): Observable<any[]> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/roles`;\r\n     const headers = this.getAdminHeaders();\r\n \r\n     return this.http.get<any[]>(url, { headers }).pipe(\r\n@@ -69,9 +69,9 @@\n         console.error('Error fetching roles:', error);\r\n         return throwError(() => new Error('Failed to load roles. Please check your permissions.'));\r\n       })\r\n     );\r\n-  } */\r\n+  }\r\n \r\n   // Assigner un rôle à un utilisateur\r\n   assignRoleToUser(userId: string, role: any): Observable<any> {\r\n     const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/role-mappings/realm`;\r\n"
+                },
+                {
+                    "date": 1746121637454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   providedIn: 'root'\r\n })\r\n export class UserService\r\n  {\r\n-  private keycloakUrl = '/api';\r\n+  private keycloakUrl = '/keycloak';\r\n   private realm = 'systeodigital';\r\n   \r\n   constructor(private http: HttpClient,private authService: AuthService) {}\r\n \r\n"
+                },
+                {
+                    "date": 1746122364726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   providedIn: 'root'\r\n })\r\n export class UserService\r\n  {\r\n-  private keycloakUrl = '/keycloak';\r\n+  private keycloakUrl = '/api';\r\n   private realm = 'systeodigital';\r\n   \r\n   constructor(private http: HttpClient,private authService: AuthService) {}\r\n \r\n"
                 }
             ],
             "date": 1744990690983,

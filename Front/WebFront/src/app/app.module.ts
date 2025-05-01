@@ -26,7 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+
 import { SharedModule } from './shared/shared.module';
 import { TasksComponent } from './shared/tasks/tasks.component';
 import { MatTableModule } from '@angular/material/table';
@@ -56,7 +56,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ProjectDetailsComponent,
     AddMemberComponent,
     LoginComponent,
-    SignupComponent,
+   
     TasksComponent,
     TaskDetailsComponent,
     ConfirmationDialogComponent,

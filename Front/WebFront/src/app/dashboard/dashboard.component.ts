@@ -9,6 +9,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationDialogComponent } from '../super-admin/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 // Interface pour la structure des données de projet (basée sur le HTML)
 export interface Project {
@@ -78,10 +79,62 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.getUser();
+    this.getGroup();
     this.role();
     this.loadAgence();
     console.log('userss',this.users);
     this.subscribeToRouterEvents(); // Start listening to router changes
+  }
+
+  getUser(){
+    const userProfileString = localStorage.getItem("user_profile");
+  
+  if (userProfileString) {
+    const userProfile = JSON.parse(userProfileString);
+    const username = userProfile?.preferred_username || null;
+    
+    if (username) {
+      this.agenceService.getUserByUsername(username).subscribe({
+        next: (user) => {
+          
+          localStorage.setItem('user_id', user.id);
+         
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+        }
+      });
+    }
+  } else {
+    console.warn("User profile not found in localStorage.");
+   
+  }
+
+  }
+  getGroup(){
+    const idUser = localStorage.getItem("user_id");
+    if (idUser){
+      this.agenceService.getAgenceByUser(idUser).subscribe({
+        next: (agence) => {
+                   
+          this.agenceService.getAgenceByName(agence[0].name).subscribe({
+            next: (a) => {
+              
+              console.log("les agences",a)
+             localStorage.setItem('idAgence', a.id);
+             localStorage.setItem('AgencyName', a.name);
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+            }
+          });
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+        }
+      });
+    }
   }
 role(){
  if (this.authService.isAdmin()){

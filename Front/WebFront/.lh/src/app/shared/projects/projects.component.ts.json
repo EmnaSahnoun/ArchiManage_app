@@ -1,0 +1,106 @@
+{
+    "sourceFile": "src/app/shared/projects/projects.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 22,
+            "patches": [
+                {
+                    "date": 1746115113460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746115154990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,10 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    this.filteredProjects = this.projects; // Initially display all projects\r\n     \r\n+    this.applyFilter(); \r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115185452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,19 @@\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n     this.viewMode = mode;\r\n   }\r\n-\r\n+  applyFilter(): void {\r\n+    if (!this.searchQuery) {\r\n+      this.filteredProjects = [...this.projects]; // Use spread operator for a new array instance\r\n+    } else {\r\n+      const lowerCaseQuery = this.searchQuery.toLowerCase();\r\n+      this.filteredProjects = this.projects.filter(project =>\r\n+        project.name.toLowerCase().includes(lowerCaseQuery)\r\n+        // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n+      );\r\n+    }\r\n+   }\r\n   // Filter projects based on search query\r\n   getfilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n"
+                },
+                {
+                    "date": 1746115212707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     } else {\r\n       const lowerCaseQuery = this.searchQuery.toLowerCase();\r\n       this.filteredProjects = this.projects.filter(project =>\r\n         project.name.toLowerCase().includes(lowerCaseQuery)\r\n-        // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n+        \r\n       );\r\n     }\r\n    }\r\n   // Filter projects based on search query\r\n"
+                },
+                {
+                    "date": 1746115222945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,16 +68,16 @@\n       );\r\n     }\r\n    }\r\n   // Filter projects based on search query\r\n-  getfilteredProjects(): any[] {\r\n+  /* getfilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n     }\r\n     return this.projects.filter(project =>\r\n       project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n     );\r\n-  }\r\n+  } */\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746115246943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,28 +56,18 @@\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n     this.viewMode = mode;\r\n   }\r\n-  applyFilter(): void {\r\n-    if (!this.searchQuery) {\r\n-      this.filteredProjects = [...this.projects]; // Use spread operator for a new array instance\r\n-    } else {\r\n-      const lowerCaseQuery = this.searchQuery.toLowerCase();\r\n-      this.filteredProjects = this.projects.filter(project =>\r\n-        project.name.toLowerCase().includes(lowerCaseQuery)\r\n-        \r\n-      );\r\n-    }\r\n-   }\r\n+\r\n   // Filter projects based on search query\r\n-  /* getfilteredProjects(): any[] {\r\n+  getfilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n     }\r\n     return this.projects.filter(project =>\r\n       project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n     );\r\n-  } */\r\n+  }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746115272275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,11 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n+    this\r\n+    this.filteredProjects = this.projects; // Initially display all projects\r\n     \r\n-    this.applyFilter(); \r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115359154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,11 +48,9 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    this\r\n     this.filteredProjects = this.projects; // Initially display all projects\r\n-    \r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115364943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    this.filteredProjects = this.projects; // Initially display all projects\r\n+    thi// Initially display all projects\r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115376496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,19 @@\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n     this.viewMode = mode;\r\n   }\r\n-\r\n+  applyFilter(): void {\r\n+    if (!this.searchQuery) {\r\n+      this.filteredProjects = [...this.projects]; // Use spread operator for a new array instance\r\n+    } else {\r\n+      const lowerCaseQuery = this.searchQuery.toLowerCase();\r\n+      this.filteredProjects = this.projects.filter(project =>\r\n+        project.name.toLowerCase().includes(lowerCaseQuery)\r\n+        // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n+      );\r\n+    }\r\n+   }\r\n   // Filter projects based on search query\r\n   getfilteredProjects(): any[] {\r\n     if (!this.searchQuery) {\r\n       return this.projects;\r\n"
+                },
+                {
+                    "date": 1746115381728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    thi// Initially display all projects\r\n+    this\r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115387487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     ];\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    this\r\n+    this.applyFilter();\r\n   }\r\n \r\n   // Toggle view mode\r\n   toggleViewMode(mode: 'list' | 'card'): void {\r\n"
+                },
+                {
+                    "date": 1746115425695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,17 +66,9 @@\n         // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n       );\r\n     }\r\n    }\r\n-  // Filter projects based on search query\r\n-  getfilteredProjects(): any[] {\r\n-    if (!this.searchQuery) {\r\n-      return this.projects;\r\n-    }\r\n-    return this.projects.filter(project =>\r\n-      project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n-    );\r\n-  }\r\n+\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746121951191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n         // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n       );\r\n     }\r\n    }\r\n-\r\n+get\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746121957636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n         // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n       );\r\n     }\r\n    }\r\n-get\r\n+getProjects()\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746121966274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,11 @@\n         // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n       );\r\n     }\r\n    }\r\n-getProjects()\r\n+getProjects(){\r\n+  const \r\n+}\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n   // Add project action\r\n"
+                },
+                {
+                    "date": 1746121975957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n       );\r\n     }\r\n    }\r\n getProjects(){\r\n-  const \r\n+  const id\r\n }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746121982232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n       );\r\n     }\r\n    }\r\n getProjects(){\r\n-  const id\r\n+  const idCompany\r\n }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746122014835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n       );\r\n     }\r\n    }\r\n getProjects(){\r\n-  const idCompany\r\n+  const idCompany=localStorage\r\n }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746122020579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,10 @@\n       );\r\n     }\r\n    }\r\n getProjects(){\r\n-  const idCompany=localStorage\r\n+  const idCompany=localStorage.getItem(\"idComapny\");\r\n+  if (idCompany){}\r\n }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746122028563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,11 @@\n     }\r\n    }\r\n getProjects(){\r\n   const idCompany=localStorage.getItem(\"idComapny\");\r\n-  if (idCompany){}\r\n+  if (idCompany){\r\n+    this.projectService.getAllProjects(idCompany).subscribe({\r\n+  }\r\n }\r\n   goToProjectDetails(project: any): void {\r\n     this.router.navigate(['/project', project._id]);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746122062487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,19 @@\n    }\r\n getProjects(){\r\n   const idCompany=localStorage.getItem(\"idComapny\");\r\n   if (idCompany){\r\n-    \r\n+    this.agenceService.getAgenceByName(agence[0].name).subscribe({\r\n+            next: (a) => {\r\n+              \r\n+              console.log(\"les agences\",a)\r\n+             localStorage.setItem('idComapny', a.id);\r\n+             localStorage.setItem('CompanyName', a.name);\r\n+            },\r\n+            error: (err) => {\r\n+              console.error('Erreur lors de la récupération de l\\'utilisateur:', err);\r\n+            }\r\n+          });\r\n \r\n   }\r\n }\r\n   goToProjectDetails(project: any): void {\r\n"
+                },
+                {
+                    "date": 1746135601959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,93 @@\n+import { Component, OnInit } from '@angular/core';\r\n+import { Router } from '@angular/router';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n+import { MatDialog } from '@angular/material/dialog'; // <-- Importer MatDialog\r\n+import { ProjectFormComponent } from '../project-form/project-form.component'; // <-- Importer le composant formulaire\r\n+import { FormsModule } from '@angular/forms';\r\n+\r\n+@Component({\r\n+  \r\n+  selector: 'app-projects',\r\n+  templateUrl: './projects.component.html',\r\n+  styleUrl: './projects.component.scss'\r\n+})\r\n+export class ProjectsComponent implements OnInit{\r\n+  currentDate: string;\r\n+  searchQuery: string = '';\r\n+  viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n+  projects: any[] = [];\r\n+  filteredProjects: any[] = [];\r\n+ \r\n+  constructor(private router: Router\r\n+    ,private projectService:ProjectService,\r\n+    public dialog: MatDialog // <-- Injecter MatDialog\r\n+\r\n+  ) { \r\n+    this.currentDate = new Date().toLocaleDateString(); \r\n+    \r\n+  }\r\n+\r\n+  ngOnInit(): void {\r\n+    \r\n+    this.getProjects();\r\n+\r\n+    \r\n+  }\r\n+\r\n+  // Toggle view mode\r\n+  toggleViewMode(mode: 'list' | 'card'): void {\r\n+    this.viewMode = mode;\r\n+  }\r\n+  applyFilter(): void {\r\n+    if (!this.searchQuery) {\r\n+      this.filteredProjects = [...this.projects]; // Use spread operator for a new array instance\r\n+    } else {\r\n+      const lowerCaseQuery = this.searchQuery.toLowerCase();\r\n+      this.filteredProjects = this.projects.filter(project =>\r\n+        project.name.toLowerCase().includes(lowerCaseQuery)\r\n+        // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)\r\n+      );\r\n+    }\r\n+   }\r\n+   getProjects(){\r\n+    const idCompany=localStorage.getItem(\"idAgence\");\r\n+    if (idCompany){\r\n+      this.projectService.getAllProjects(idCompany).subscribe({\r\n+        next: (projects) => {\r\n+          this.projects = projects;\r\n+          this.applyFilter(); // Appliquer le filtre une fois les projets chargés\r\n+          console.log(\"les projets\",this.projects);\r\n+        },\r\n+        error: (err) => {\r\n+          console.error('Erreur lors de la récupération des projets:', err);\r\n+          this.projects = []; // Vider en cas d'erreur\r\n+          this.applyFilter(); // Appliquer le filtre même en cas d'erreur (liste vide)\r\n+        }\r\n+      });\r\n+    };\r\n+  }\r\n+  goToProjectDetails(project: any): void {\r\n+    this.router.navigate(['/project', project._id]);\r\n+  }\r\n+  // Add project action\r\n+  addProject(): void { // Modifié pour ouvrir la modale\r\n+    const dialogRef = this.dialog.open(ProjectFormComponent, {\r\n+      width: '500px', // Ajustez la largeur si nécessaire\r\n+      disableClose: true, // Empêche la fermeture en cliquant à l'extérieur ou avec Echap\r\n+      // data: { } // Vous pouvez passer des données ici si nécessaire\r\n+    });\r\n+    const modalRef = this.modalService.open(ProjectFormComponent, { \r\n+          size: 'lg',\r\n+          centered: true,\r\n+          backdrop: 'static'\r\n+        });\r\n+\r\n+    dialogRef.afterClosed().subscribe(result => {\r\n+      console.log('La modale a été fermée');\r\n+      if (result) { // Si la modale a renvoyé un résultat (le nouveau projet)\r\n+        console.log('Nouveau projet ajouté:', result);\r\n+        this.getProjects(); // Recharger la liste des projets pour inclure le nouveau\r\n+      }\r\n+    });\r\n+   }\r\n+}\r\n"
+                }
+            ],
+            "date": 1746115113460,
+            "name": "Commit-0",
+            "content": "import { Component, OnInit } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\n\r\n@Component({\r\n  selector: 'app-projects',\r\n  templateUrl: './projects.component.html',\r\n  styleUrl: './projects.component.scss'\r\n})\r\nexport class ProjectsComponent implements OnInit{\r\n  currentDate: string;\r\n  searchQuery: string = '';\r\n  viewMode: 'list' | 'card' = 'list'; // Default view mode is list\r\n  projects: any[] = [];\r\n  filteredProjects: any[] = [];\r\n \r\n  constructor(private router: Router) { \r\n    this.currentDate = new Date().toLocaleDateString(); \r\n    this.projects = [\r\n      {\r\n        _id: '1',\r\n        name: 'Projet 1',\r\n        createdAt:'01/01/2025',\r\n        startDate: '01/01/2025',\r\n        endDate: '31/12/2025',\r\n        progress: 50,\r\n        status: 'En cours',\r\n        members: [\r\n          { name: 'John Doe', image: 'assets/member1.jpg' },\r\n          { name: 'Jane Smith', image: 'assets/member2.jpg' }\r\n        ],\r\n        phases: ['Phase 1', 'Phase 2']\r\n      },\r\n      {\r\n        _id: '2',\r\n        name: 'Projet 2',\r\n        createdAt:'01/01/2025',\r\n        startDate: '01/02/2025',\r\n        endDate: '30/06/2025',\r\n        progress: 30,\r\n        status: 'A venir',\r\n        members: [\r\n          { name: 'Alice Johnson', image: 'assets/member3.jpg' },\r\n          { name: 'Bob Brown', image: 'assets/member4.jpg' }\r\n        ],\r\n        phases: ['Phase 1']\r\n      },\r\n      // Add more project objects here...\r\n    ];\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    this.filteredProjects = this.projects; // Initially display all projects\r\n    \r\n  }\r\n\r\n  // Toggle view mode\r\n  toggleViewMode(mode: 'list' | 'card'): void {\r\n    this.viewMode = mode;\r\n  }\r\n\r\n  // Filter projects based on search query\r\n  getfilteredProjects(): any[] {\r\n    if (!this.searchQuery) {\r\n      return this.projects;\r\n    }\r\n    return this.projects.filter(project =>\r\n      project.name.toLowerCase().includes(this.searchQuery.toLowerCase())\r\n    );\r\n  }\r\n  goToProjectDetails(project: any): void {\r\n    this.router.navigate(['/project', project._id]);\r\n  }\r\n  // Add project action\r\n  addProject(): void {\r\n    alert('Ajouter un nouveau projet');\r\n  }\r\n}\r\n"
+        }
+    ]
+}

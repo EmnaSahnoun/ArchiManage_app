@@ -10,9 +10,7 @@ import { AuthService } from './auth.service';
 export class AgenceService {
     private apiUrl = '/agence';
     private realm = 'systeodigital';
-    private keycloakUrl = '/api';
-
-    
+    private keycloakUrl = '/api';   
     
     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
   // Méthode pour créer une agence
@@ -331,7 +329,13 @@ getAgenceByUser(idUser: string): Observable<any> {
             catchError(this.handleError)
         );
 }
-
+getAgenceByName(name: string){
+  return this.http.get<any>(`${this.apiUrl}/name/${name}`, { 
+    headers: this.getApiHeaders()
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
   private getApiHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();
     return new HttpHeaders({

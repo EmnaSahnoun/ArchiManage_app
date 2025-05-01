@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1743940149215,
@@ -40,6 +40,58 @@
                 {
                     "date": 1743945671980,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n-import { HeaderComponent } from './header/header.component';\r\n+import { HeaderComponent } from '../header/header.component';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent],\r\n   imports: [CommonModule],\r\n"
+                },
+                {
+                    "date": 1746132898806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,18 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n+import { ProjectFormComponent } from './project-form/project-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent],\r\n-  imports: [CommonModule],\r\n+  declarations: [HeaderComponent, ProjectFormComponent],\r\n+  imports: [CommonModule,\r\n+    MatDialogModule,\r\n+    MatFormFieldModule,\r\n+    MatInputModule,\r\n+    MatButtonModule,\r\n+    MatIconModule\r\n+  ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746132905979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,13 @@\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n import { ProjectFormComponent } from './project-form/project-form.component';\r\n+import { MatDialogModule } from '@angular/material/dialog';\r\n+import { MatButtonModule } from '@angular/material/button';\r\n+import { MatFormFieldModule } from '@angular/material/form-field';\r\n+import { MatIconModule } from '@angular/material/icon';\r\n+import { MatInputModule } from '@angular/material/input';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746132938571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n-    MatIconModule\r\n+    MatIconModule,\r\n+    ReactiveFormsModule,\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746132954146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n+import { ReactiveFormsModule } from '@angular/forms';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n@@ -17,8 +18,9 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n+    MatFormFieldModule,\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746132959546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n-    MatFormFieldModule,\r\n+    \r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746133020170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n-    \r\n+    MatInputModule\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746133037114,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n-    MatInputModule\r\n+    FormsModule\r\n+    \r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746133053413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n-import { ReactiveFormsModule } from '@angular/forms';\r\n+import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n@@ -18,9 +18,15 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n-    FormsModule\r\n+    FormsModule,\r\n+    MatSnackBarModule,\r\n+        MatIconModule,\r\n+        ReactiveFormsModule,\r\n+        MatToolbarModule,\r\n+        MatSidenavModule,\r\n+        MatListModule,\r\n     \r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n"
+                },
+                {
+                    "date": 1746133059807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n+import { MatListModule } from '@angular/material/list';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746133065425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n import { MatListModule } from '@angular/material/list';\r\n+import { MatSidenavModule } from '@angular/material/sidenav';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746133071873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,10 @@\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n import { MatListModule } from '@angular/material/list';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n+import { MatToolbarModule } from '@angular/material/toolbar';\r\n+import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746133094374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n         MatSidenavModule,\r\n         MatListModule,\r\n-    \r\n+        MatProgressSpinnerModule\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746133454858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n import { MatListModule } from '@angular/material/list';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n@@ -23,8 +24,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n+    FormsModule,\r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n"
                 }
             ],
             "date": 1743940149215,

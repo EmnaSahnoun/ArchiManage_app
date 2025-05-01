@@ -8,8 +8,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private oauthService: OAuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Interceptor - URL:', req.url);
-    console.log('Interceptor - Token valide:', this.oauthService.hasValidAccessToken());
+    //console.log('Interceptor - URL:', req.url);
+   // console.log('Interceptor - Token valide:', this.oauthService.hasValidAccessToken());
     
     return next.handle(req);
   }

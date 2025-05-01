@@ -1,93 +1,105 @@
 <div class="project-container">
-  <app-header [title]="'Liste des Projets'"></app-header>
+    <app-header [title]="'Liste des Projets'"></app-header>
 
- <div class="container"><!-- Row 1: Search Bar, Current Date, Sort and View Mode -->
+    <!-- Header Section -->
     <div class="project-header">
-        <!-- Search Bar -->
-        <div class="input-container">
-            <i class="bi bi-search icon"></i>
-            <input type="text" placeholder="Rechercher un projet..." [(ngModel)]="searchQuery" />
+      <!-- Search Bar -->
+      <div class="search-container">
+        <!-- Using mat-icon for consistency, but i works too if Bootstrap is globally available -->
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" placeholder="Rechercher un projet..." [(ngModel)]="searchQuery" (input)="applyFilter()" />
+      </div>
+
+      <!-- Actions: Filter, View Mode, Add Project -->
+      <div class="actions-container">
+        <!-- Filter Button -->
+        <button class="filter-button">
+          <mat-icon>filter_list</mat-icon>
+          <span>Filtrer</span>
+        </button>
+
+        <!-- View Mode Toggle -->
+        <div class="view-mode">
+          <button (click)="toggleViewMode('list')" [class.active]="viewMode === 'list'" matTooltip="Vue Liste">
+            <mat-icon>view_list</mat-icon>
+          </button>
+          <button (click)="toggleViewMode('card')" [class.active]="viewMode === 'card'" matTooltip="Vue Cartes">
+            <mat-icon>view_module</mat-icon>
+          </button>
         </div>
-    
-        <!-- Date -->
-        <div class="current-date">
-            {{ currentDate | date: 'dd/MM/yyyy' }}
-        </div>
-    
-        <!-- Sort By and View Mode + Bouton Ajouter Projet -->
-        <div class="actions-container">
-            <div class="sort-and-view">
-                <button class="sort-button">
-                    <i class="bi bi-arrow-up"></i> Filtrer
-                </button>
-    
-                <div class="view-mode">
-                    <button (click)="toggleViewMode('list')" [class.active]="viewMode === 'list'">
-                        <i class="bi bi-card-list"></i>
-                    </button>
-                    <button (click)="toggleViewMode('card')" [class.active]="viewMode === 'card'">
-                        <i class="bi bi-grid-3x3-gap"></i>
-                    </button>
-                </div>
-            </div>
-    
-            <button mat-button class="add-project" (click)="addProject()">
-                <i class="bi bi-plus"></i> Nouveau Projet
-            </button>
-        </div>
+
+        <!-- Add Project Button -->
+        <button class="add-project-button" (click)="addProject()">
+          <mat-icon>add</mat-icon>
+          <span>Nouveau Projet</span>
+        </button>
+      </div>
     </div>
-    
 
-  <!-- Contenu affiché en fonction du mode sélectionné -->
-  <div class="project-display" [ngClass]="{'center-table': viewMode === 'list', 'center-cards': viewMode === 'card'}">             
-      <!-- Affichage en mode Liste -->
-      <div *ngIf="viewMode === 'list'" class="project-table">
-          <table>
-              <thead>
-                  <tr>
-                      <th>Nom du Projet</th>
-                      <th>Date de Création</th>
-                      <th>Date (Start-End)</th>
-                      <th>Progression</th>
-                      <th>Status</th>
-                      <th>Membres</th>
-                      <th>Phases</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let project of filteredProjects; let i = index" [class.even]="i % 2 === 0" [class.odd]="i % 2 !== 0" (click)="goToProjectDetails(project)">
-                      <td>{{ project.name }}</td>
-                      <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
-                      <td>{{ project.startDate  }} - {{ project.endDate }}</td>
-                      <td>{{ project.progress }}%</td>
-                      <td>{{ project.status }}</td>
-                      <td>
-                          <div class="members">
-                              <img *ngFor="let member of project.members" [src]="member.image" alt="Member" />
-                          </div>
-                      </td>
-                      <td>{{ project.phases.length }}</td>
-                  </tr>
-              </tbody>
-          </table>
+    <!-- Project Display Area -->
+    <div class="project-display">
+      <!-- List View (Table) -->
+      <div *ngIf="viewMode === 'list'" class="project-table-card">
+        <!-- Apply .data-table class for styling -->
+        <table class="data-table">
+          <thead>
+            <tr>
+              <!-- Use mat-header-cell if using Material Table, otherwise th -->
+              <th>Nom du Projet</th>
+              <th>Date Création</th>
+              <th>Dates (Début-Fin)</th>
+              <th>Progression</th>
+              <th>Statut</th>
+              <th>Membres</th>
+              <!-- <th>Phases</th> --> <!-- Consider if phases count is needed here -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Use mat-row if using Material Table, otherwise tr -->
+            <tr *ngFor="let project of filteredProjects" (click)="goToProjectDetails(project)">
+              <!-- Use mat-cell if using Material Table, otherwise td -->
+              <td>{{ project.name }}</td>
+              <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
+              <td>{{ project.startDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</td>
+              <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->
+              <td>{{ project.status }}</td> <!-- Add status badge later if needed -->
+              <td class="members-cell">
+                <img *ngFor="let member of project.members" [src]="member.image || 'assets/images/default-avatar.png'" alt="Membre" matTooltip="{{member.name}}"/> <!-- Added default image and tooltip -->
+              </td>
+              <!-- <td>{{ project.phases?.length || 0 }}</td> --> <!-- Safer access to length -->
+            </tr>
+          </tbody>
+        </table>
+        <!-- Add *matNoDataRow equivalent if needed -->
+        <div *ngIf="!filteredProjects || filteredProjects.length === 0" style="text-align: center; padding: 20px; color: var(--text-color-secondary);">
+          Aucun projet trouvé.
+        </div>
       </div>
 
-      <!-- Affichage en mode Carte -->
-      <div *ngIf="viewMode === 'card'" class="project-cards">
-          <div class="card" *ngFor="let project of filteredProjects"(click)="goToProjectDetails(project)">
-              <div class="card-header">
-                  <h3>{{ project.name }}</h3>
-                  <div>{{ project.startDate }} - {{ project.endDate }}</div>
-              </div>
-              <div class="card-body">
-                  <div class="progress-bar" [style.width]="project.progress + '%'"></div>
-                  <div>Status: {{ project.status }}</div>
-                  <div class="members">
-                      <img *ngFor="let member of project.members" [src]="member.image" alt="Member" />
-                  </div>
-              </div>
+      <!-- Card View -->
+      <div *ngIf="viewMode === 'card'" class="project-cards-grid">
+        <!-- Use project-card class -->
+        <div class="project-card" *ngFor="let project of filteredProjects" (click)="goToProjectDetails(project)">
+          <div class="card-header">
+            <h3>{{ project.name }}</h3>
+            <div class="card-dates">{{ project.startDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</div>
           </div>
+          <div class="card-body">
+            <div class="progress-bar-container" matTooltip="{{project.progress}}%">
+              <div class="progress-bar-fill" [style.width]="project.progress + '%'"></div>
+            </div>
+            <div class="card-status">Statut: {{ project.status }}</div> <!-- Add status badge later -->
+          </div>
+          <div class="card-footer">
+            <div class="members-list">
+              <img *ngFor="let member of project.members" [src]="member.image || 'assets/images/default-avatar.png'" alt="Membre" matTooltip="{{member.name}}"/> <!-- Added default image and tooltip -->
+            </div>
+          </div>
+        </div>
+         <!-- Add message for no projects in card view -->
+         <div *ngIf="!filteredProjects || filteredProjects.length === 0" style="grid-column: 1 / -1; text-align: center; padding: 20px; color: var(--text-color-secondary);">
+          Aucun projet trouvé.
+        </div>
       </div>
+    </div>
   </div>
-</div> 
-</div>
