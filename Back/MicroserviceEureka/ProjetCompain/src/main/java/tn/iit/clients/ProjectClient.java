@@ -7,11 +7,9 @@ import tn.iit.config.FeignConfig;
 import tn.iit.dto.response.ProjectResponse;
 
 import java.util.List;
-@FeignClient(name = "ProjectService",
-        url = "https://e1.systeo.tn/ProjectService",
-        configuration = FeignConfig.class,
-        path = "/project")
+@FeignClient(name = "PROJECTSERVICE",
+        configuration = FeignConfig.class)
 public interface ProjectClient {
-    @GetMapping("/company/{idCompany}")
-    List<ProjectResponse> getProjectsByCompany(@PathVariable("idCompany") String idCompany);
+    @GetMapping("/ProjectService/project/company/{idCompany}")
+    List<ProjectResponse> getProjectsByCompany(@PathVariable String idCompany);
 }

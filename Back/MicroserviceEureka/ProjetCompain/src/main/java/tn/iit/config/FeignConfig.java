@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
@@ -16,7 +15,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,15 +40,22 @@ public class FeignConfig {
     @Bean
     public RequestInterceptor bearerTokenRequestInterceptor() {
         return requestTemplate -> {
-            ServletRequestAttributes attributes = (ServletRequestAttributes)
-                    RequestContextHolder.getRequestAttributes();
-
+            // WebMvc
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             if (attributes != null) {
                 String token = attributes.getRequest().getHeader("Authorization");
                 if (token != null) {
                     requestTemplate.header("Authorization", token);
                 }
             }
+
+            // WebFlux
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication instanceof JwtAuthenticationToken) {
+                String token = ((JwtAuthenticationToken) authentication).getToken().getTokenValue();
+                requestTemplate.header("Authorization", "Bearer " + token);
+            }
         };
     }
+
 }
