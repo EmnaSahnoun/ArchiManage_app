@@ -23,6 +23,9 @@ public class CompainService implements ICompainService {
     // Méthode pour la création
     @Override
     public Compain createCompain(Compain compain, String authToken) {
+        if (compainRepository.existsByName(compain.getName())) {
+            throw new RuntimeException("Company name already exists: " + compain.getName());
+        }
         // 1. Sauvegarde dans MongoDB
         Compain savedCompain = compainRepository.save(compain);
         
@@ -117,6 +120,12 @@ public class CompainService implements ICompainService {
         // Ajoutez les autres champs nécessaires
         
         return compainRepository.save(existingCompain);
+    }
+
+    @Override
+    public Compain getCompainByName(String name) throws CompainNotFoundException {
+        return compainRepository.findByName(name)
+                .orElseThrow(() -> new CompainNotFoundException("Company with name '" + name + "' not found"));
     }
 
     @Override

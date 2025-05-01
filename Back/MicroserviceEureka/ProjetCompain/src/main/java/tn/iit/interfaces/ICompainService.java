@@ -12,4 +12,5 @@ public interface ICompainService {
     Compain getById(String id) throws CompainNotFoundException;
     void deleteCompain(String id, String authToken) throws CompainNotFoundException;
     Compain update(String id, Compain updatedCompain) throws CompainNotFoundException;
+    Compain getCompainByName(String name) throws CompainNotFoundException;
 }

@@ -98,5 +98,16 @@ public CompainResponse  updateCompain(@PathVariable String id,
         return ResponseEntity.ok(projects);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> getCompainByName(@PathVariable String name) {
+        try {
+            Compain compain = compainService.getCompainByName(name);
+            return ResponseEntity.ok(compainService.convertToResponse(compain));
+        } catch (CompainNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Company with name '" + name + "' not found");
+        }
+    }
+
 
 }
