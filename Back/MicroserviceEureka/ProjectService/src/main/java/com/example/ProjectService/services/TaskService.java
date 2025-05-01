@@ -140,6 +140,7 @@ public class TaskService implements ITask {
         response.setEndDate(task.getEndDate());
         response.setStatus(task.getStatus());
         response.setPriority(task.getPriority());
+        response.setCreatedAt(task.getCreatedAt());
 
         if (task.getPhase() != null) {
             response.setPhaseId(task.getPhase().getId());

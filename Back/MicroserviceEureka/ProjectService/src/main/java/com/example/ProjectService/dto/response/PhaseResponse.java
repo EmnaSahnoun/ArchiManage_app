@@ -15,6 +15,15 @@ public class PhaseResponse {
     private String projectId;
     private List<String> taskIds;
     private List<String> phaseAccessIds;
+    private Date createdAt;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getId() {
         return id;

@@ -126,6 +126,7 @@ public class PhaseService implements IPhase {
         response.setStartDate(phase.getStartDate());
         response.setEndDate(phase.getEndDate());
         response.setProjectId(phase.getProject().getId());
+        response.setCreatedAt(phase.getCreatedAt());
 
         if (phase.getTasks() != null) {
             response.setTaskIds(phase.getTasks().stream()

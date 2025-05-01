@@ -18,7 +18,15 @@ public class TaskResponse {
     private String phaseId;
     private String parentTaskId;
     private List<String> subTaskIds;
+    private Date createdAt;
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getId() {
         return id;

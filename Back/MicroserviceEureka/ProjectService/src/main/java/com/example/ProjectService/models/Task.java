@@ -21,7 +21,7 @@ public class Task {
     private Date endDate;
     private TaskStatus status;
     private TaskPriority priority;
-
+    private Date createdAt = new Date();
     @DBRef
     private List<Task> subTasks;
 
@@ -29,6 +29,14 @@ public class Task {
 
     @DBRef
     private Phase phase;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getId() {
         return id;

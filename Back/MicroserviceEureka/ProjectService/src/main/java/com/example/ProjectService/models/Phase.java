@@ -17,6 +17,9 @@ public class Phase {
     private String description;
     private Date startDate;
     private Date endDate;
+    private Date createdAt = new Date();
+
+
 
     @DBRef
     private List<Task> tasks;
@@ -26,7 +29,13 @@ public class Phase {
 
     @DBRef
     private List<PhaseAccess> phaseAccesses;
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
     public String getId() {
         return id;
     }
