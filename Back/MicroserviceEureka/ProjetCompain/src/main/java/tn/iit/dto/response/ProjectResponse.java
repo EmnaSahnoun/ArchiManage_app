@@ -3,19 +3,19 @@ package tn.iit.dto.response;
 import java.util.List;
 
 public class ProjectResponse {
-    private Long id;
+    private String id;
     private String name;
     private String description;
-    private Long idAdmin;
+    private String idAdmin;
     private boolean isDeleted;
-    private List<Long> projectAccessIds;
-    private List<Long> phaseIds;
+    private List<String> projectAccessIds;
+    private List<String> phaseIds;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -35,11 +35,11 @@ public class ProjectResponse {
         this.description = description;
     }
 
-    public Long getIdAdmin() {
+    public String getIdAdmin() {
         return idAdmin;
     }
 
-    public void setIdAdmin(Long idAdmin) {
+    public void setIdAdmin(String idAdmin) {
         this.idAdmin = idAdmin;
     }
 
@@ -51,19 +51,19 @@ public class ProjectResponse {
         isDeleted = deleted;
     }
 
-    public List<Long> getProjectAccessIds() {
+    public List<String> getProjectAccessIds() {
         return projectAccessIds;
     }
 
-    public void setProjectAccessIds(List<Long> projectAccessIds) {
+    public void setProjectAccessIds(List<String> projectAccessIds) {
         this.projectAccessIds = projectAccessIds;
     }
 
-    public List<Long> getPhaseIds() {
+    public List<String> getPhaseIds() {
         return phaseIds;
     }
 
-    public void setPhaseIds(List<Long> phaseIds) {
+    public void setPhaseIds(List<String> phaseIds) {
         this.phaseIds = phaseIds;
     }
 }
