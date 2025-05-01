@@ -14,8 +14,10 @@ import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
 import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectAccessRepository;
+import com.example.ProjectService.repositories.ProjectRepository;
 import com.example.ProjectService.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +26,18 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TaskService implements ITask {
-    private  TaskRepository taskRepository;
-    private  PhaseRepository phaseRepository;
-    private ProjectAccessRepository projectAccessRepository;
+    private  final TaskRepository taskRepository;
+    private  final PhaseRepository phaseRepository;
+    private final ProjectAccessRepository projectAccessRepository;
+
+    @Autowired
+    public TaskService(TaskRepository taskRepository,
+                       PhaseRepository phaseRepository,
+                       ProjectAccessRepository projectAccessRepository) {
+        this.taskRepository = taskRepository;
+        this.phaseRepository = phaseRepository;
+        this.projectAccessRepository = projectAccessRepository;
+    }
     @Override
     @Transactional
     public TaskResponse createTask(TaskRequest request) {

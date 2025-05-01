@@ -4,6 +4,8 @@ import com.example.ProjectService.models.enums.InvitationStatus;
 import com.example.ProjectService.models.enums.Role;
 import lombok.Data;
 
+import java.util.Date;
+
 
 public class ProjectAccessResponse {
     private String id;
@@ -12,6 +14,15 @@ public class ProjectAccessResponse {
     private InvitationStatus invitationStatus;
     private Role role;
     private String projectId;
+    private Date createdAt;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getId() {
         return id;

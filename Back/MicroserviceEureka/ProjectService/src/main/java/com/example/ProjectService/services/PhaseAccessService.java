@@ -8,16 +8,23 @@ import com.example.ProjectService.models.PhaseAccess;
 import com.example.ProjectService.repositories.PhaseAccessRepository;
 import com.example.ProjectService.repositories.PhaseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+
 public class PhaseAccessService implements IPhaseAccess {
-    private PhaseRepository phaseRepository;
-    private PhaseAccessRepository phaseAccessRepository;
+    private final PhaseRepository phaseRepository;
+    private final PhaseAccessRepository phaseAccessRepository;
+    @Autowired
+    public PhaseAccessService(PhaseRepository phaseRepository,
+                              PhaseAccessRepository phaseAccessRepository) {
+        this.phaseRepository = phaseRepository;
+        this.phaseAccessRepository = phaseAccessRepository;
+    }
     @Override
     public PhaseAccessResponse createPhaseAccess(PhaseAccessRequest request) {
         Phase phase = phaseRepository.findById(request.getPhaseId())

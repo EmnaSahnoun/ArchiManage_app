@@ -7,7 +7,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
- 
+import java.util.Date;
+
+
 @Document(collection = "project_accesses")
 public class ProjectAccess {
     @Id
@@ -16,6 +18,15 @@ public class ProjectAccess {
     private String emailUser;
     private InvitationStatus invitationStatus;
     private Role role;
+    private Date createdAt = new Date();
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @DBRef
     private Project project;

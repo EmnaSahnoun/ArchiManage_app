@@ -15,11 +15,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
-@RequiredArgsConstructor
+
 public class ProjectAccessService implements IProjectAccess {
 
-    private  ProjectAccessRepository projectAccessRepository;
-    private  ProjectRepository projectRepository;
+    private final ProjectAccessRepository projectAccessRepository;
+    private  final ProjectRepository projectRepository;
+    @Autowired
+    public ProjectAccessService(ProjectAccessRepository projectAccessRepository,
+                                ProjectRepository projectRepository) {
+        this.projectAccessRepository = projectAccessRepository;
+        this.projectRepository = projectRepository;
+    }
     @Override
     public ProjectAccessResponse createProjectAccess(ProjectAccessRequest request) {
         Project project = projectRepository.findById(request.getProjectId())
@@ -76,6 +82,7 @@ public class ProjectAccessService implements IProjectAccess {
         response.setEmailUser(projectAccess.getEmailUser());
         response.setInvitationStatus(projectAccess.getInvitationStatus());
         response.setRole(projectAccess.getRole());
+        response.setCreatedAt(projectAccess.getCreatedAt());
 
         if (projectAccess.getProject() != null) {
             response.setProjectId(projectAccess.getProject().getId());
