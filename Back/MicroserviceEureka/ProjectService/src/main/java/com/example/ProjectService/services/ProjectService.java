@@ -68,6 +68,8 @@ public class ProjectService implements IProject {
         project.setName(request.getName());
         project.setDescription(request.getDescription());
         project.setIdAdmin(request.getIdAdmin());
+        project.setCreatedAt(project.getCreatedAt());
+        project.setDeleted(request.isDeleted());
 
         Project updatedProject = projectRepository.save(project);
         return mapToProjectResponse(updatedProject);
@@ -106,6 +108,8 @@ public class ProjectService implements IProject {
         response.setIdAdmin(project.getIdAdmin());
         response.setIdCompany(project.getIdCompany()); // Ajouté
         response.setDeleted(project.isDeleted());
+        response.setCreatedAt(project.getCreatedAt());
+
 
         // Map project accesses IDs
         if (project.getProjectAccesses() != null) {

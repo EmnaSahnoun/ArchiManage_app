@@ -1,5 +1,6 @@
 package tn.iit.dto.response;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProjectResponse {
@@ -10,6 +11,15 @@ public class ProjectResponse {
     private boolean isDeleted;
     private List<String> projectAccessIds;
     private List<String> phaseIds;
+    private Date createdAt;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getId() {
         return id;
