@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Task {
     private TaskPriority priority;
     private Date createdAt = new Date();
     @DBRef
-    private List<Task> subTasks;
+    private List<Task> subTasks = new ArrayList<>();;
 
 
 

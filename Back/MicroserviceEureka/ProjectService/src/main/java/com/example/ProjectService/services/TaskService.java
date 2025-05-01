@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -104,6 +106,11 @@ public class TaskService implements ITask {
         Task parentTask = taskRepository.findById(parentId)
                 .orElseThrow(() -> new RuntimeException("Parent task not found with id: " + parentId));
 
+        // Initialiser subTasks si null
+        if (parentTask.getSubTasks() == null) {
+            parentTask.setSubTasks(new ArrayList<>());
+        }
+
         Phase phase = phaseRepository.findById(request.getPhaseId())
                 .orElseThrow(() -> new RuntimeException("Phase not found with id: " + request.getPhaseId()));
 
@@ -123,7 +130,6 @@ public class TaskService implements ITask {
         response.setParentTaskId(parentId);
         return response;
     }
-
     @Override
     public void deleteTask(String id) {
         if (!taskRepository.existsById(id)) {
@@ -151,6 +157,8 @@ public class TaskService implements ITask {
                     .stream()
                     .map(Task::getId)
                     .collect(Collectors.toList()));
+        } else {
+            response.setSubTaskIds(Collections.emptyList());
         }
 
 

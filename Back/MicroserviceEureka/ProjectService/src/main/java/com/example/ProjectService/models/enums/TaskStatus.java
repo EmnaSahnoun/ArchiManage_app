@@ -1,7 +1,7 @@
 package com.example.ProjectService.models.enums;
 
 public enum TaskStatus {
-    PENDING,
+    TODO,
     IN_PROGRESS,
     COMPLETED,
     CANCELED
