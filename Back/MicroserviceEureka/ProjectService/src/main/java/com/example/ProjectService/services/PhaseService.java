@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,9 +43,8 @@ public class PhaseService implements IPhase {
 
     @Override
     public PhaseResponse createPhase(PhaseRequest request) {
-        String id=request.getProjectId();
         Project project = projectRepository.findById(request.getProjectId())
-                .orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + id));
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + request.getProjectId()));
 
         Phase phase = new Phase();
         phase.setName(request.getName());
@@ -53,18 +53,41 @@ public class PhaseService implements IPhase {
         phase.setEndDate(request.getEndDate());
         phase.setProject(project);
 
-        Phase savedPhase = phaseRepository.save(phase);
-        // Récupérer tous les membres du projet (acceptés)
-        List<ProjectAccess> projectMembers = projectAccessRepository.findByProjectIdAndInvitationStatus(
-                phase.getProject().getId(),
-                InvitationStatus.ACCEPTED
-        );
+        // Initialiser les listes pour éviter les NullPointerException
+        phase.setTasks(new ArrayList<>());
+        phase.setPhaseAccesses(new ArrayList<>());
 
-        // Créer les TaskAccess pour chaque membre
-        createDefaultPhaseAccesses(savedPhase, projectMembers);
+        Phase savedPhase = phaseRepository.save(phase);
+
+        // Créer les PhaseAccess pour chaque membre accepté du projet
+        createPhaseAccessesForProjectMembers(savedPhase, project);
+
         return mapToResponse(savedPhase);
     }
 
+    private void createPhaseAccessesForProjectMembers(Phase phase, Project project) {
+        // Récupérer tous les ProjectAccess ACCEPTED pour ce projet
+        List<ProjectAccess> acceptedMembers = projectAccessRepository.findByProjectIdAndInvitationStatus(
+                project.getId(),
+                InvitationStatus.ACCEPTED
+        );
+
+        // Créer un PhaseAccess pour chaque membre
+        for (ProjectAccess member : acceptedMembers) {
+            PhaseAccess phaseAccess = new PhaseAccess();
+            phaseAccess.setIdUser(member.getIdUser());
+            phaseAccess.setCanView(true); // Par défaut, l'accès en lecture est autorisé
+            phaseAccess.setPhase(phase);
+
+            PhaseAccess savedAccess = phaseAccessRepository.save(phaseAccess);
+
+            // Ajouter le PhaseAccess à la liste de la phase
+            phase.getPhaseAccesses().add(savedAccess);
+        }
+
+        // Sauvegarder la phase avec les accès mis à jour
+        phaseRepository.save(phase);
+    }
     private void createDefaultPhaseAccesses(Phase phase, List<ProjectAccess> projectMembers) {
         for (ProjectAccess member : projectMembers) {
             PhaseAccess phaseAccess = new PhaseAccess();

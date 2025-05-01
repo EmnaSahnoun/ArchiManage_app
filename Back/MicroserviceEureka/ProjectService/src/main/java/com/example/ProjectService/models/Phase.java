@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,14 +22,16 @@ public class Phase {
 
 
 
-    @DBRef
-    private List<Task> tasks;
 
     @DBRef
     private Project project;
 
+
     @DBRef
-    private List<PhaseAccess> phaseAccesses;
+    private List<Task> tasks = new ArrayList<>();
+
+    @DBRef
+    private List<PhaseAccess> phaseAccesses = new ArrayList<>();
     public Date getCreatedAt() {
         return createdAt;
     }
