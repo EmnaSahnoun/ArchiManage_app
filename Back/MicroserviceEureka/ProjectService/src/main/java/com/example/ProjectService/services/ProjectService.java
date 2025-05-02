@@ -6,6 +6,7 @@ import com.example.ProjectService.interfaces.IProject;
 import com.example.ProjectService.models.Phase;
 import com.example.ProjectService.models.Project;
 import com.example.ProjectService.models.ProjectAccess;
+import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-
 public class ProjectService implements IProject {
     private  final ProjectRepository projectRepository;
+    private final PhaseRepository phaseRepository;
     @Autowired // Optionnel depuis Spring 4.3+
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, PhaseRepository phaseRepository) {
+        this.phaseRepository=phaseRepository;
         this.projectRepository = projectRepository;
     }
     @Override
@@ -120,12 +122,19 @@ public class ProjectService implements IProject {
         }
 
         // Map phase IDs
-        if (project.getPhases() != null) {
+        if (project.getPhases() != null && !project.getPhases().isEmpty()) {
             response.setPhaseIds(project.getPhases()
                     .stream()
                     .map(Phase::getId)
                     .collect(Collectors.toList()));
+        } else {
+            // Si null, vérifier en base de données
+            List<Phase> phases = phaseRepository.findByProjectId(project.getId());
+            response.setPhaseIds(phases.stream()
+                    .map(Phase::getId)
+                    .collect(Collectors.toList()));
         }
+
 
         return response;
     }

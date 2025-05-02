@@ -21,13 +21,7 @@ public class Project {
     private boolean isDeleted = false;
     private Date createdAt = new Date();
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 
     @DBRef
     private List<ProjectAccess> projectAccesses;
@@ -35,6 +29,13 @@ public class Project {
     @DBRef
     private List<Phase> phases;
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
     public String getIdCompany() {
         return idCompany;
     }

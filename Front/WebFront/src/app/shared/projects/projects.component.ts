@@ -31,7 +31,6 @@ export class ProjectsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
     this.getProjects();
 
     
@@ -91,8 +90,7 @@ export class ProjectsComponent implements OnInit{
           this.getProjects(); // Recharger la liste des projets
         } else {
           console.log('La modale a été fermée avec succès mais sans résultat.');
-          // Optionnel: recharger quand même si une action a pu être faite sans retour direct
-          // this.getProjects();
+        
         }
       },
       (reason) => {
