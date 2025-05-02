@@ -9,10 +9,7 @@ import com.example.ProjectService.interfaces.IPhase;
 import com.example.ProjectService.models.*;
 
 import com.example.ProjectService.models.enums.InvitationStatus;
-import com.example.ProjectService.repositories.PhaseAccessRepository;
-import com.example.ProjectService.repositories.PhaseRepository;
-import com.example.ProjectService.repositories.ProjectAccessRepository;
-import com.example.ProjectService.repositories.ProjectRepository;
+import com.example.ProjectService.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +25,18 @@ public class PhaseService implements IPhase {
     private  final  ProjectRepository projectRepository;
     private final PhaseAccessRepository phaseAccessRepository;
     private final ProjectAccessRepository projectAccessRepository;
-
+    private final TaskRepository taskRepository;
     @Autowired
     public PhaseService(PhaseRepository phaseRepository,
                         ProjectRepository projectRepository,
                         PhaseAccessRepository phaseAccessRepository,
-                        ProjectAccessRepository projectAccessRepository) {
+                        ProjectAccessRepository projectAccessRepository,
+                        TaskRepository taskRepository) {
         this.phaseRepository = phaseRepository;
         this.projectRepository = projectRepository;
         this.phaseAccessRepository = phaseAccessRepository;
         this.projectAccessRepository = projectAccessRepository;
+        this.taskRepository = taskRepository;
 
     }
 
@@ -151,11 +150,14 @@ public class PhaseService implements IPhase {
         response.setProjectId(phase.getProject().getId());
         response.setCreatedAt(phase.getCreatedAt());
 
-        if (phase.getTasks() != null) {
-            response.setTaskIds(phase.getTasks().stream()
-                    .map(Task::getId)
-                    .collect(Collectors.toList()));
+        List<Task> tasks = phase.getTasks();
+        if (tasks == null || tasks.isEmpty()) {
+            tasks = taskRepository.findByPhaseId(phase.getId());
         }
+
+        response.setTaskIds(tasks.stream()
+                .map(Task::getId)
+                .collect(Collectors.toList()));
         if (phase.getPhaseAccesses() != null) {
             response.setPhaseAccessIds(phase.getPhaseAccesses()
                     .stream()

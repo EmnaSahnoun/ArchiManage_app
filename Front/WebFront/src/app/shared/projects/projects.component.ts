@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog'; // <-- Importer MatDialog
 import { ProjectFormComponent } from '../project-form/project-form.component'; // <-- Importer le composant formulaire
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { forkJoin } from 'rxjs';
 @Component({
   
   selector: 'app-projects',
@@ -18,7 +18,8 @@ export class ProjectsComponent implements OnInit{
   viewMode: 'list' | 'card' = 'list'; // Default view mode is list
   projects: any[] = [];
   filteredProjects: any[] = [];
- 
+   minStartDate: Date | null = null;
+   maxEndDate: Date | null = null;
   constructor(
     private modalService: NgbModal,
     private router: Router
@@ -57,8 +58,14 @@ export class ProjectsComponent implements OnInit{
       this.projectService.getAllProjects(idCompany).subscribe({
         next: (projects) => {
           this.projects = projects;
+          this.getDates(this.projects);
+        
+
           this.applyFilter(); // Appliquer le filtre une fois les projets chargés
           console.log("les projets",this.projects);
+          // Pour chaque projet, récupérer les détails des phases
+        
+          
         },
         error: (err) => {
           console.error('Erreur lors de la récupération des projets:', err);
@@ -68,6 +75,43 @@ export class ProjectsComponent implements OnInit{
       });
     };
   }
+getDates(projects: any[]){
+  // Initialiser les variables pour les dates min/max
+ 
+  
+  // Pour chaque projet et chaque phase
+  projects.forEach(project => {
+    if (project.phaseIds && project.phaseIds.length > 0) {
+      project.phaseIds.forEach((phaseId:string) => {
+        this.projectService.getphaseById(phaseId).subscribe({
+          next: (phase) => {
+            console.log(`Phase ${phaseId}:`, phase);
+            
+            // Convertir les dates strings en objets Date
+            const phaseStartDate = new Date(phase.startDate);
+            const phaseEndDate = new Date(phase.endDate);
+            
+            // Comparaison pour trouver le min/max
+            if (!this.minStartDate || phaseStartDate < this.minStartDate) {
+              this.minStartDate = phaseStartDate;
+            }
+            
+            if (!this.maxEndDate || phaseEndDate > this.maxEndDate) {
+              this.maxEndDate = phaseEndDate;
+            }
+            
+            // Afficher les dates min/max actuelles
+            console.log('Date de début min actuelle:', this.minStartDate);
+            console.log('Date de fin max actuelle:', this.maxEndDate);
+          },
+          error: (err) => {
+            console.error(`Erreur phase ${phaseId}:`, err);
+          }
+        });
+      });
+    }
+  });
+}
   goToProjectDetails(project: any): void {
     this.router.navigate(['/project', project._id]);
   }

@@ -60,7 +60,7 @@
               <!-- Use mat-cell if using Material Table, otherwise td -->
               <td>{{ project.name }}</td>
               <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
-              <td>{{ project.startDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</td>
+              <td>{{ minStartDate | date:'dd/MM/yy' }} - {{ maxEndDate | date:'dd/MM/yy' }}</td>
               <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->
               <td>{{ project.status }}</td> <!-- Add status badge later if needed -->
               <td class="members-cell">

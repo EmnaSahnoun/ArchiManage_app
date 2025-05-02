@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1746114398708,
@@ -120,6 +120,18 @@
                 {
                     "date": 1746115401929,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n       <!-- Search Bar -->\r\n       <div class=\"search-container\">\r\n         <!-- Using mat-icon for consistency, but i works too if Bootstrap is globally available -->\r\n         <mat-icon class=\"search-icon\">search</mat-icon>\r\n-        <input type=\"text\" placeholder=\"Rechercher un projet...\" [(ngModel)]=\"searchQuery\" />\r\n+        <input type=\"text\" placeholder=\"Rechercher un projet...\" [(ngModel)]=\"searchQuery\" (input)=\"applyFilter()\" />\r\n       </div>\r\n \r\n       <!-- Actions: Filter, View Mode, Add Project -->\r\n       <div class=\"actions-container\">\r\n"
+                },
+                {
+                    "date": 1746185030759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n         <mat-icon class=\"search-icon\">search</mat-icon>\r\n         <input type=\"text\" placeholder=\"Rechercher un projet...\" [(ngModel)]=\"searchQuery\" (input)=\"applyFilter()\" />\r\n       </div>\r\n \r\n-      <!-- Actions: Filter, View Mode, Add Project -->\r\n+      <!-- Actions: Filter, View Mode, Add PDroject -->\r\n       <div class=\"actions-container\">\r\n         <!-- Filter Button -->\r\n         <button class=\"filter-button\">\r\n           <mat-icon>filter_list</mat-icon>\r\n"
+                },
+                {
+                    "date": 1746185057032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n         <mat-icon class=\"search-icon\">search</mat-icon>\r\n         <input type=\"text\" placeholder=\"Rechercher un projet...\" [(ngModel)]=\"searchQuery\" (input)=\"applyFilter()\" />\r\n       </div>\r\n \r\n-      <!-- Actions: Filter, View Mode, Add PDroject -->\r\n+      <!-- Actions: Filter, View Mode, Add Project -->\r\n       <div class=\"actions-container\">\r\n         <!-- Filter Button -->\r\n         <button class=\"filter-button\">\r\n           <mat-icon>filter_list</mat-icon>\r\n@@ -59,9 +59,9 @@\n             <tr *ngFor=\"let project of filteredProjects\" (click)=\"goToProjectDetails(project)\">\r\n               <!-- Use mat-cell if using Material Table, otherwise td -->\r\n               <td>{{ project.name }}</td>\r\n               <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>\r\n-              <td>{{ project.startDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</td>\r\n+              <td>{{ minStartDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</td>\r\n               <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->\r\n               <td>{{ project.status }}</td> <!-- Add status badge later if needed -->\r\n               <td class=\"members-cell\">\r\n                 <img *ngFor=\"let member of project.members\" [src]=\"member.image || 'assets/images/default-avatar.png'\" alt=\"Membre\" matTooltip=\"{{member.name}}\"/> <!-- Added default image and tooltip -->\r\n"
+                },
+                {
+                    "date": 1746185148058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n             <tr *ngFor=\"let project of filteredProjects\" (click)=\"goToProjectDetails(project)\">\r\n               <!-- Use mat-cell if using Material Table, otherwise td -->\r\n               <td>{{ project.name }}</td>\r\n               <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>\r\n-              <td>{{ minStartDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</td>\r\n+              <td>{{ minStartDate | date:'dd/MM/yy' }} - {{ maxEndDate | date:'dd/MM/yy' }}</td>\r\n               <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->\r\n               <td>{{ project.status }}</td> <!-- Add status badge later if needed -->\r\n               <td class=\"members-cell\">\r\n                 <img *ngFor=\"let member of project.members\" [src]=\"member.image || 'assets/images/default-avatar.png'\" alt=\"Membre\" matTooltip=\"{{member.name}}\"/> <!-- Added default image and tooltip -->\r\n"
                 }
             ],
             "date": 1746114398708,

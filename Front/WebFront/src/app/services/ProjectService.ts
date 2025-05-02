@@ -30,6 +30,14 @@ export class ProjectService {
         );
       }
 
+      getphaseById(idphase:string): Observable<any> {
+        console.log("l'url",`${this.projetUrl}/phase/${idphase}`);
+        return this.http.get<any>(`${this.projetUrl}/phase/${idphase}`, { 
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
 
 
       private getApiHeaders(): HttpHeaders {
