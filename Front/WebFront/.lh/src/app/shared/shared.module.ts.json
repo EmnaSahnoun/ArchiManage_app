@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1743940149215,
@@ -108,6 +108,10 @@
                 {
                     "date": 1746221386977,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n import { MatSelectModule } from '@angular/material/select';\r\n+import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n   imports: [CommonModule,\r\n@@ -52,8 +53,9 @@\n     MatInputModule,\r\n     MatSelectModule,\r\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n+    NgbModule\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746306906957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,15 @@\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n import { MatSelectModule } from '@angular/material/select';\r\n import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n+import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n+import { ProjectAccessComponent } from './project-access/project-access.component';\r\n+import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
                 }
             ],
             "date": 1743940149215,

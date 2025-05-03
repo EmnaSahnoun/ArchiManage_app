@@ -9,8 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PhaseFormComponent } from '../phase-form/phase-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Importer MatSnackBar
 import { AgenceService } from '../../services/agenceService';
-import { ProjectMembersComponent } from '../project-members/project-members.component';
-import { ProjectAccessComponent } from '../project-access/project-access.component';
+import { PhaseAccessComponent } from '../phase-access/phase-access.component';
 
 @Component({
   selector: 'app-project-details',
@@ -311,7 +310,7 @@ export class ProjectDetailsComponent implements OnInit {
   });
 } 
 openPhaseAccesssModal(phase: any): void {
-  const modalRef = this.modalService.open(ProjectAccessComponent, {
+  const modalRef = this.modalService.open(PhaseAccessComponent, {
     size: 'lg',
     centered: true,
     backdrop: 'static',

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 60,
+            "activePatchIndex": 64,
             "patches": [
                 {
                     "date": 1744707748545,
@@ -248,6 +248,22 @@
                 {
                     "date": 1746294303545,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n         \r\n       </table>\r\n     </div>\r\n   \r\n-    <div *ngIf=\"project.phases.length === 0\">\r\n+    <div *ngIf=\"phases.length === 0\">\r\n       <p>Aucune phase disponible pour ce projet.</p>\r\n     </div>\r\n   </div>\r\n   \r\n"
+                },
+                {
+                    "date": 1746308163019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,16 +90,11 @@\n             \r\n             <td>\r\n               <div class=\"members-container\">\r\n                 <div class=\"members\">3\r\n-                <!--   <ng-container *ngIf=\"phase.members.length > 2\" >\r\n-                    <img *ngFor=\"let member of phase.members.slice(0, 2)\" \r\n-                         [src]=\"member.image\" \r\n-                         [alt]=\"member.name\" \r\n-                         class=\"member-img\">\r\n-                    <div class=\"more-members\">+{{ phase.members.length - 2 }}</div>\r\n-                  </ng-container> -->\r\n-            \r\n+                  <button class=\"members-action-button\" (click)=\"openMembersModal(project, $event)\" matTooltip=\"Voir/Gérer les membres\">\r\n+                    <mat-icon>group</mat-icon>\r\n+                  </button>\r\n                   \r\n                 </div>\r\n             \r\n                 <button (click)=\"openMemberModal(phase)\" class=\"add-member-btn\">\r\n"
+                },
+                {
+                    "date": 1746308200019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n             \r\n             <td>\r\n               <div class=\"members-container\">\r\n                 <div class=\"members\">3\r\n-                  <button class=\"members-action-button\" (click)=\"openMembersModal(project, $event)\" matTooltip=\"Voir/Gérer les membres\">\r\n+                  <button class=\"members-action-button\" (click)=\"openPhaseAccesssModal(phase: any)\" matTooltip=\"Voir/Gérer les membres\">\r\n                     <mat-icon>group</mat-icon>\r\n                   </button>\r\n                   \r\n                 </div>\r\n"
+                },
+                {
+                    "date": 1746308210789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n             \r\n             <td>\r\n               <div class=\"members-container\">\r\n                 <div class=\"members\">3\r\n-                  <button class=\"members-action-button\" (click)=\"openPhaseAccesssModal(phase: any)\" matTooltip=\"Voir/Gérer les membres\">\r\n+                  <button class=\"members-action-button\" (click)=\"openPhaseAccesssModal(phase)\" matTooltip=\"Voir/Gérer les membres\">\r\n                     <mat-icon>group</mat-icon>\r\n                   </button>\r\n                   \r\n                 </div>\r\n"
+                },
+                {
+                    "date": 1746308914601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n \r\n             \r\n             <td>\r\n               <div class=\"members-container\">\r\n-                <div class=\"members\">3\r\n+                <div class=\"members\">\r\n                   <button class=\"members-action-button\" (click)=\"openPhaseAccesssModal(phase)\" matTooltip=\"Voir/Gérer les membres\">\r\n                     <mat-icon>group</mat-icon>\r\n                   </button>\r\n                   \r\n"
                 }
             ],
             "date": 1744707748545,

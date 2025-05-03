@@ -121,8 +121,15 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
-      updatePhaseAccess(idPhase: string, accessUpdates: any[]) {
+      updatePhaseAccess(idPhaseAccess: string, canView: boolean) {
+        const url = `${this.projetUrl}/phase-accesses/${idPhaseAccess}/view-permission?canView=${canView}`;
+        return this.http.patch(url, {}, {
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
       }
+      
     getTaskByPhase(idphase:string): Observable<any> {
       console.log("l'url",`${this.projetUrl}/task/phase/${idphase}`);
       return this.http.get<any>(`${this.projetUrl}/task/phase/${idphase}`, { 

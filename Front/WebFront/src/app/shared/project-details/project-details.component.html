@@ -90,15 +90,10 @@
             
             <td>
               <div class="members-container">
-                <div class="members">3
-                <!--   <ng-container *ngIf="phase.members.length > 2" >
-                    <img *ngFor="let member of phase.members.slice(0, 2)" 
-                         [src]="member.image" 
-                         [alt]="member.name" 
-                         class="member-img">
-                    <div class="more-members">+{{ phase.members.length - 2 }}</div>
-                  </ng-container> -->
-            
+                <div class="members">
+                  <button class="members-action-button" (click)="openPhaseAccesssModal(phase)" matTooltip="Voir/Gérer les membres">
+                    <mat-icon>group</mat-icon>
+                  </button>
                   
                 </div>
             

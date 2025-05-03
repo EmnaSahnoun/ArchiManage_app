@@ -2,9 +2,8 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AgenceService } from '../../services/agenceService'; // Service pour récupérer les utilisateurs
 import { ProjectService } from '../../services/ProjectService'; // Service pour gérer les accès projet
-import { forkJoin, map } from 'rxjs';
+import { catchError, forkJoin, map, of } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 export interface ProjectAccessData {
   projectId: string;
   agenceId: string; // ID de l'agence pour récupérer les utilisateurs
@@ -19,18 +18,16 @@ export interface UserAccess {
   canView: boolean;
 }
 @Component({
-  selector: 'app-project-access',
-  templateUrl: './project-access.component.html',
-  styleUrl: './project-access.component.scss'
+  selector: 'app-phase-access',
+  templateUrl: './phase-access.component.html',
+  styleUrl: './phase-access.component.scss'
 })
-//interface
-
-export class ProjectAccessComponent {
-  isLoading = false;
-  searchQuery = '';
-  allUsers: UserAccess[] = []; 
- 
-  filteredUsers: UserAccess[] = []; // Utilisateurs filtrés par la recherche
+export class PhaseAccessComponent {
+isLoading = false;
+allUsers: any[] = []; // Liste complète des utilisateurs avec leurs accès
+initialUserStates: Map<string, boolean> = new Map(); // Pour suivre les états initiaux
+searchQuery: string = ''; // Pour la recherche/filtrage
+filteredUsers: any[] = []; // Utilisateurs filtrés par la recherche
   @Input() phase: any;
 
   constructor(
@@ -54,13 +51,15 @@ export class ProjectAccessComponent {
         console.log('Utilisateurs avec accès:', phaseAccesses);
   
         // Créer un tableau pour stocker toutes les requêtes
-        const userRequests = phaseAccesses.map(access => 
+        const userRequests = phaseAccesses.map((access:any) => 
           this.agenceService.getUserById(access.idUser).pipe(
             map(user => ({
               ...access, // Conserver les données d'accès originales
               id: access.idUser, // Ensure the main ID is the user ID for consistency if needed later
               username: user.username, // Ajouter le username
-              email: user.email 
+              email: user.email ,
+              canView: access.canView,
+          originalCanView: access.canView
             }))
           )
         );
@@ -71,10 +70,12 @@ export class ProjectAccessComponent {
             // Maintenant usersWithAccess contient les accès avec les usernames
             console.log('Utilisateurs avec accès:', usersWithAccess);
             this.allUsers = usersWithAccess.map(u => ({
+
               id: u.idUser, // User ID
               username: u.username || 'N/A', // Provide fallback
               email: u.email || '', // Provide fallback (empty string is safe for .toLowerCase())
-              canView: u.canView // Get canView from the original access object
+              canView: u.canView ,
+              idPhaseAccess:phaseAccesses[0].id
             }));
             console.log('Usernames:', this.allUsers);
             
@@ -87,6 +88,8 @@ export class ProjectAccessComponent {
             this.isLoading = false;
           }
         });
+        this.applyFilter();
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Erreur lors du chargement des accès:', err);
@@ -109,31 +112,70 @@ export class ProjectAccessComponent {
       );
     }
   }
-
+  onAccessChange(user: UserAccess, newValue: boolean): void {
+    // Ici vous pouvez implémenter une sauvegarde immédiate si nécessaire
+    console.log(`Accès modifié pour ${user.username}: ${newValue}`);
+  }
+  
   onSave(): void {
     this.isLoading = true;
-    // Préparer les données à envoyer : liste des ID utilisateur avec leur état canView
-    const accessUpdates = this.allUsers.map(user => ({
-      userId: user.id,
-      canView: user.canView
-    }));
-    console.log("Updating access for phase:", this.phase.id, "with data:", accessUpdates);
+    
+    const modifiedUsers = this.allUsers.filter(user => 
+      user.canView !== user.originalCanView
+    );
 
-    // Appeler le service pour mettre à jour les accès
-   /*  this.projectService.updatePhaseAccess(this.phase.id, accessUpdates).subscribe({ // Utiliser this.phase._id
-      next: () => {
+    if (modifiedUsers.length === 0) {
+      this.isLoading = false;
+      this.snackBar.open('Aucune modification à sauvegarder', 'Fermer', { 
+        duration: 3000,
+        panelClass: ['info-snackbar']
+      });
+      return;
+    }
+
+    const updateRequests = modifiedUsers.map(user => 
+      this.projectService.updatePhaseAccess(user.idPhaseAccess, user.canView).pipe(
+        map(() => ({ success: true, idPhaseAccess: user.idPhaseAccess })),
+        
+        catchError(error => of({ 
+          success: false, 
+          idPhaseAccess: user.idPhaseAccess,
+          error: error.message 
+        }))
+      ),
+    
+    )
+    ;
+
+    forkJoin(updateRequests).subscribe({
+      next: (results) => {
+        const failedUpdates = results.filter(r => !r.success);
+        
+        if (failedUpdates.length === 0) {
+          modifiedUsers.forEach(user => user.originalCanView = user.canView);
+          this.snackBar.open('Modifications sauvegardées', 'Fermer', {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+          this.activeModal.dismiss();
+        } else {
+          this.snackBar.open(
+            `${failedUpdates.length} erreur(s) lors de la sauvegarde`,
+            'Fermer',
+            { duration: 5000, panelClass: ['error-snackbar'] }
+          );
+        }
         this.isLoading = false;
-        this.snackBar.open('Accès mis à jour avec succès', 'Fermer', { duration: 3000 });
-        this.activeModal.close(true);// Fermer et indiquer le succès
       },
-      error: (err:any) => {
+      error: () => {
         this.isLoading = false;
-        console.error('Erreur lors de la mise à jour des accès:', err);
-        this.snackBar.open('Erreur lors de la mise à jour des accès', 'Fermer', { duration: 5000 });
-        // Ne pas fermer le modal pour permettre à l'utilisateur de réessayer
+        this.snackBar.open('Erreur lors de la sauvegarde', 'Fermer', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
       }
-    }); */
-  } 
+    });
+  }
 
   onCancel(): void {
     this.activeModal.dismiss(); // Fermer sans sauvegarder
