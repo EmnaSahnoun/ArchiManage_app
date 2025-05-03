@@ -12,9 +12,9 @@
     <div class="left-panel">
       <div class="card">
         <h2>Détails du projet</h2>
-        <p><strong>Nom :</strong> {{ project.name }}</p>
-        <p><strong>Description :</strong> {{ project.description }}</p>
-        <p><strong>Date de création :</strong> {{ project.createdAt }}</p>
+        <p><strong>Nom :</strong> {{ projet.name }}</p>
+        <p><strong>Description :</strong> {{ projet.description || 'Pas de description' }}</p>
+        <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>
         <button class="edit-btn">Modifier</button>
       </div>
     </div>

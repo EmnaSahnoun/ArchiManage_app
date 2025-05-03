@@ -20,7 +20,15 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
-
+    
+    getProjectById(idProjet:string): Observable<any[]> {
+        console.log("l'url",`${this.projetUrl}/project/${idProjet}`);
+        return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { 
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
     createProject(projectData: any): Observable<any> {
         const url = `${this.projetUrl}/project`;
         const headers = this.getApiHeaders();
@@ -29,7 +37,22 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
-
+      createProjectAccess(projectAccessData: any): Observable<any> {
+        const url = `${this.projetUrl}/project-accesses`;
+        const headers = this.getApiHeaders();
+      
+        return this.http.post(url, projectAccessData, { headers }).pipe(
+          catchError(this.handleError)
+        );
+      }
+      getProjectAccessByIdProject(idproject:string): Observable<any[]> {
+        console.log("l'url",`${this.projetUrl}/project-accesses/project/${idproject}`);
+        return this.http.get<any[]>(`${this.projetUrl}/project-accesses/project/${idproject}`, { 
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
       getphaseById(idphase:string): Observable<any> {
         console.log("l'url",`${this.projetUrl}/phase/${idphase}`);
         return this.http.get<any>(`${this.projetUrl}/phase/${idphase}`, { 
@@ -39,6 +62,14 @@ export class ProjectService {
         );
       }
 
+    getTaskByPhase(idphase:string): Observable<any> {
+      console.log("l'url",`${this.projetUrl}/task/phase/${idphase}`);
+      return this.http.get<any>(`${this.projetUrl}/task/phase/${idphase}`, { 
+        headers: this.getApiHeaders()
+      }).pipe(
+        catchError(this.handleError)
+      );
+    }
 
       private getApiHeaders(): HttpHeaders {
         const token = this.authService.getAccessToken();

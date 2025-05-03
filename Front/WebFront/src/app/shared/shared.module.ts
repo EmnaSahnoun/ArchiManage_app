@@ -14,9 +14,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProjectMembersComponent } from './project-members/project-members.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [HeaderComponent, ProjectFormComponent],
+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],
   imports: [CommonModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -32,7 +39,23 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatToolbarModule,
         MatSidenavModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        FormsModule, // Ajoutez FormsModule
+    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs
+
+    // Modules Material
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    NgbModule
   ],
   exports: [HeaderComponent]
 })

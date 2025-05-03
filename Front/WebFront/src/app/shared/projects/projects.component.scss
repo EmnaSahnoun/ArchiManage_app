@@ -206,19 +206,27 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
     }
 
-    // Specific cell styling (example for members)
-    .members-cell img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      margin-right: -8px; // Overlap slightly
-      border: 2px solid $container-background; // Create separation
-      display: inline-block;
-      vertical-align: middle;
-    }
+    // Style for the members button in the table
+    .members-action-button {
+      background-color: transparent;
+      border: none;
+      color: $primary-color;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: $border-radius / 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background-color 0.2s ease, color 0.2s ease;
 
-    // Add styles for status badges, progress bars etc. if needed, similar to dashboard
-  }
+      mat-icon { font-size: 18px; }
+      span { font-size: 13px; font-weight: 500; }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+ }
 }
 
 // --- Card View ---
@@ -318,5 +326,24 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   .project-cards-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Adjust min size
+  }
+}
+.members-action-button {
+  background-color: transparent;
+  border: none;
+  color: $primary-color; // Utilise la variable de couleur primaire définie
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: $border-radius / 2; // Utilise la variable de border-radius
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  mat-icon { font-size: 18px; }
+  span { font-size: 13px; font-weight: 500; }
+
+  &:hover {
+    background-color: rgba($primary-color, 0.1); // Léger fond au survol
   }
 }

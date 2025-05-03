@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1743940149215,
@@ -92,6 +92,22 @@
                 {
                     "date": 1746133454858,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n import { MatListModule } from '@angular/material/list';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent],\r\n   imports: [CommonModule,\r\n@@ -23,8 +24,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n+    FormsModule,\r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746216095043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,27 +13,43 @@\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n+import { ProjectMembersComponent } from './project-members/project-members.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent],\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n-    FormsModule,\r\n+    \r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n         MatSidenavModule,\r\n         MatListModule,\r\n-        MatProgressSpinnerModule\r\n+        MatProgressSpinnerModule,\r\n+        FormsModule, // Ajoutez FormsModule\r\n+    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs\r\n+\r\n+    // Modules Material\r\n+    MatDialogModule,\r\n+    MatButtonModule,\r\n+    MatIconModule,\r\n+    MatTooltipModule,\r\n+    MatTableModule,\r\n+    MatDividerModule,\r\n+    MatFormFieldModule,\r\n+    MatInputModule,\r\n+    MatSelectModule,\r\n+    MatSnackBarModule,\r\n+    MatProgressBarModule,\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746216100552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,10 @@\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n+import { MatTooltipModule } from '@angular/material/tooltip';\r\n+import { MatTableModule } from '@angular/material/table';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746216107393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,10 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n import { MatTableModule } from '@angular/material/table';\r\n+import { MatDividerModule } from '@angular/material/divider';\r\n+import { MatSelectModule } from '@angular/material/select';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746221386977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n import { MatSelectModule } from '@angular/material/select';\r\n+import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n   imports: [CommonModule,\r\n@@ -52,8 +53,9 @@\n     MatInputModule,\r\n     MatSelectModule,\r\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n+    NgbModule\r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1743940149215,

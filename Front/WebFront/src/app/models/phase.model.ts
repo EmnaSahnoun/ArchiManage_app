@@ -1,11 +1,13 @@
 import { Task } from "./task.model";
 
 export interface Phase {
-  _id?: string;
+  id: string;
   name: string;
-  description?: string;
-  startDate: Date;
-  endDate?: Date;
-  project: string; // ID du projet
-  tasks?: Task[];
+  description: string;
+  startDate: string;
+  endDate: string;
+  projectId: string;
+  taskIds: string[];
+  phaseAccessIds: string[];
+  createdAt: string;
 }

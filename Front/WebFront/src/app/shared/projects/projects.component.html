@@ -51,7 +51,7 @@
               <th>Progression</th>
               <th>Statut</th>
               <th>Membres</th>
-              <!-- <th>Phases</th> --> <!-- Consider if phases count is needed here -->
+               <th>Phases</th> <!-- Consider if phases count is needed here -->
             </tr>
           </thead>
           <tbody>
@@ -60,13 +60,15 @@
               <!-- Use mat-cell if using Material Table, otherwise td -->
               <td>{{ project.name }}</td>
               <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
-              <td>{{ minStartDate | date:'dd/MM/yy' }} - {{ maxEndDate | date:'dd/MM/yy' }}</td>
+              <td>{{ project.minStartDate | date:'dd/MM/yy' }} - {{ project.maxEndDate | date:'dd/MM/yy' }}</td>
               <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->
               <td>{{ project.status }}</td> <!-- Add status badge later if needed -->
-              <td class="members-cell">
-                <img *ngFor="let member of project.members" [src]="member.image || 'assets/images/default-avatar.png'" alt="Membre" matTooltip="{{member.name}}"/> <!-- Added default image and tooltip -->
+              <td>
+                <button class="members-action-button" (click)="openMembersModal(project, $event)" matTooltip="Voir/Gérer les membres">
+                  <mat-icon>group</mat-icon> 
+                </button>
               </td>
-              <!-- <td>{{ project.phases?.length || 0 }}</td> --> <!-- Safer access to length -->
+               <td>{{ project.phases?.length || 0 }}</td>  <!-- Safer access to length -->
             </tr>
           </tbody>
         </table>

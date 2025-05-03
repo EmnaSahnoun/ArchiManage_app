@@ -1,15 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import * as bootstrap from 'bootstrap';
 import { AddMemberComponent } from '../../add-member/add-member.component';
+import { ProjectService } from '../../services/ProjectService';
 @Component({
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.scss'
 })
-export class ProjectDetailsComponent {
+export class ProjectDetailsComponent implements OnInit {
   projectId: string | null = null;
   selectedTab: string = 'details';
   selectedPhase: any = null;
@@ -51,15 +52,43 @@ export class ProjectDetailsComponent {
       }
     ]
   };
+  projet!: any ;
   availableMembers: any[] = [];
   progressOffset: string = '';
   selectedMember: any = null;
-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private router:Router) {}
+  constructor(private route: ActivatedRoute, 
+    private dialog: MatDialog, 
+    private router:Router,
+    private projectService:ProjectService
+  
+  ) {}
 
   ngOnInit(): void {
-    this.projectId = this.route.snapshot.paramMap.get('_id');
+    this.projectId = this.route.snapshot.paramMap.get('id');
+    //this.project = this.router.getCurrentNavigation()?.extras.state?.['projectData'];
+    console.log('Données du projectId :', this.projectId);
     this.calculateProgress();
     this.formatDates();
+    this.getProjetById();
+  }
+  getProjetById(){
+    if (this.projectId){
+      this.projectService.getProjectById(this.projectId).subscribe({
+        next: (p) => {
+          this.projet = p;
+          
+          // Appliquer le filtre une fois les projets chargés
+          console.log("le projet",this.projet);
+          // Pour chaque projet, récupérer les détails des phases
+        
+          
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération des projets:', err);
+          
+        }
+      });
+    };
   }
   private formatDates() {
     this.project.phases.forEach(phase => {

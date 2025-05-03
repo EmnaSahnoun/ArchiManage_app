@@ -3,11 +3,79 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1746114379973,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746187446972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,10 +212,9 @@\n       height: 30px;\r\n       border-radius: 50%;\r\n       margin-right: -8px; // Overlap slightly\r\n       border: 2px solid $container-background; // Create separation\r\n-      display: inline-block;\r\n-      vertical-align: middle;\r\n+      \r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187455898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,9 +212,10 @@\n       height: 30px;\r\n       border-radius: 50%;\r\n       margin-right: -8px; // Overlap slightly\r\n       border: 2px solid $container-background; // Create separation\r\n-      \r\n+      display: inline-block;\r\n+      vertical-align: middle;\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187466342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,12 +207,9 @@\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n     .members-cell img {\r\n-      width: 30px;\r\n-      height: 30px;\r\n-      border-radius: 50%;\r\n-      margin-right: -8px; // Overlap slightly\r\n+      \r\n       border: 2px solid $container-background; // Create separation\r\n       display: inline-block;\r\n       vertical-align: middle;\r\n     }\r\n"
+                },
+                {
+                    "date": 1746187576924,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,11 +206,10 @@\n       }\r\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n-    .members-cell img {\r\n-      \r\n-      border: 2px solid $container-background; // Create separation\r\n+    .members-cell  {\r\n+       // Create separation\r\n       display: inline-block;\r\n       vertical-align: middle;\r\n     }\r\n \r\n"
+                },
+                {
+                    "date": 1746187587418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,11 +207,9 @@\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n-       // Create separation\r\n-      display: inline-block;\r\n-      vertical-align: middle;\r\n+      data-table\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187603056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,9 +207,9 @@\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n-      data-table\r\n+      text-align: center;\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187611723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,9 +207,11 @@\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n-      text-align: center;\r\n+       // Create separation\r\n+      display: inline-block;\r\n+      vertical-align: middle;\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187639785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -209,9 +209,9 @@\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n        // Create separation\r\n       display: inline-block;\r\n-      vertical-align: middle;\r\n+      ali\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187645374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -209,9 +209,9 @@\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n        // Create separation\r\n       display: inline-block;\r\n-      ali\r\n+      align\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187655378,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -209,9 +209,9 @@\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n        // Create separation\r\n       display: inline-block;\r\n-      align\r\n+      text-align: center;\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187701649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -207,11 +207,14 @@\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n     .members-cell  {\r\n-       // Create separation\r\n-      display: inline-block;\r\n-      text-align: center;\r\n+      padding: 14px 16px;\r\n+      border-bottom: 1px solid $border-color;\r\n+      font-size: 14px;\r\n+      color: $text-color-primary;\r\n+      text-align: left; // Default align left\r\n+      vertical-align: middle;\r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187715349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,9 +212,9 @@\n       border-bottom: 1px solid $border-color;\r\n       font-size: 14px;\r\n       color: $text-color-primary;\r\n       text-align: left; // Default align left\r\n-      vertical-align: middle;\r\n+      \r\n     }\r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n"
+                },
+                {
+                    "date": 1746187728343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,16 +206,9 @@\n       }\r\n     }\r\n \r\n     // Specific cell styling (example for members)\r\n-    .members-cell  {\r\n-      padding: 14px 16px;\r\n-      border-bottom: 1px solid $border-color;\r\n-      font-size: 14px;\r\n-      color: $text-color-primary;\r\n-      text-align: left; // Default align left\r\n-      \r\n-    }\r\n+    \r\n \r\n     // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746187817825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,14 +204,9 @@\n       &:last-child {\r\n         td.mat-cell, td { border-bottom: none; }\r\n       }\r\n     }\r\n-\r\n-    // Specific cell styling (example for members)\r\n-    \r\n-\r\n-    // Add styles for status badges, progress bars etc. if needed, similar to dashboard\r\n-  }\r\n+ }\r\n }\r\n \r\n // --- Card View ---\r\n .project-cards-grid {\r\n"
+                },
+                {
+                    "date": 1746210934685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,8 +203,9 @@\n       }\r\n       &:last-child {\r\n         td.mat-cell, td { border-bottom: none; }\r\n       }\r\n+      \r\n     }\r\n  }\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1746210945099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,10 +203,30 @@\n       }\r\n       &:last-child {\r\n         td.mat-cell, td { border-bottom: none; }\r\n       }\r\n-      \r\n     }\r\n+\r\n+    // Style for the members button in the table\r\n+    .members-action-button {\r\n+      background-color: transparent;\r\n+      border: none;\r\n+      color: $primary-color;\r\n+      cursor: pointer;\r\n+      padding: 4px 8px;\r\n+      border-radius: $border-radius / 2;\r\n+      display: inline-flex;\r\n+      align-items: center;\r\n+      gap: 4px;\r\n+      transition: background-color 0.2s ease, color 0.2s ease;\r\n+\r\n+      mat-icon { font-size: 18px; }\r\n+      span { font-size: 13px; font-weight: 500; }\r\n+\r\n+      &:hover {\r\n+        background-color: rgba($primary-color, 0.1);\r\n+      }\r\n+    }\r\n  }\r\n }\r\n \r\n // --- Card View ---\r\n"
+                },
+                {
+                    "date": 1746215642539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -326,5 +326,24 @@\n \r\n   .project-cards-grid {\r\n     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Adjust min size\r\n   }\r\n-}\n\\ No newline at end of file\n+}\r\n+.members-action-button {\r\n+  background-color: transparent;\r\n+  border: none;\r\n+  color: $primary-color; // Utilise la variable de couleur primaire définie\r\n+  cursor: pointer;\r\n+  padding: 4px 8px;\r\n+  border-radius: $border-radius / 2; // Utilise la variable de border-radius\r\n+  display: inline-flex;\r\n+  align-items: center;\r\n+  gap: 4px;\r\n+  transition: background-color 0.2s ease, color 0.2s ease;\r\n+\r\n+  mat-icon { font-size: 18px; }\r\n+  span { font-size: 13px; font-weight: 500; }\r\n+\r\n+  &:hover {\r\n+    background-color: rgba($primary-color, 0.1); // Léger fond au survol\r\n+  }\r\n+}\r\n"
                 }
             ],
             "date": 1746114379973,

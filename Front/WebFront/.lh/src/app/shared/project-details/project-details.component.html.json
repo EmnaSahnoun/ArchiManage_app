@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1744707748545,
@@ -56,6 +56,18 @@
                 {
                     "date": 1744723613474,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,10 +62,10 @@\n             <th>Actions</th>\r\n           </tr>\r\n         </thead>\r\n         <tbody>\r\n-          <tr *n(clgFor=\"let phase of project.phases\" >\r\n-            <td ick)=\"openTasks(phase)\" >{{ phase.name }}</td>\r\n+          <tr *ngFor=\"let phase of project.phases\" >\r\n+            <td  >{{ phase.name }}</td>\r\n             <td >{{ phase.description || 'Pas de description' }}</td>\r\n             <td >{{ phase.startDate }} - {{ phase.endDate }}</td>\r\n             <td >{{ phase.tasks.length }}</td>\r\n             \r\n"
+                },
+                {
+                    "date": 1746190928953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,11 @@\n   <div *ngIf=\"selectedTab === 'details'\" class=\"tab-content details-content\">\r\n     <div class=\"left-panel\">\r\n       <div class=\"card\">\r\n         <h2>Détails du projet</h2>\r\n-        <p><strong>Nom :</strong> {{ project.name }}</p>\r\n-        <p><strong>Description :</strong> {{ project.description }}</p>\r\n-        <p><strong>Date de création :</strong> {{ project.createdAt }}</p>\r\n+        <p><strong>Nom :</strong> {{ projet.name }}</p>\r\n+        <p><strong>Description :</strong> {{ projet.description }}</p>\r\n+        <p><strong>Date de création :</strong> {{ projet.createdAt }}</p>\r\n         <button class=\"edit-btn\">Modifier</button>\r\n       </div>\r\n     </div>\r\n \r\n@@ -62,9 +62,9 @@\n             <th>Actions</th>\r\n           </tr>\r\n         </thead>\r\n         <tbody>\r\n-          <tr *ngFor=\"let phase of project.phases\" >\r\n+          <tr *ngFor=\"let phase of project.phases\"(click)=\"openTasks(phase)\" >\r\n             <td  >{{ phase.name }}</td>\r\n             <td >{{ phase.description || 'Pas de description' }}</td>\r\n             <td >{{ phase.startDate }} - {{ phase.endDate }}</td>\r\n             <td >{{ phase.tasks.length }}</td>\r\n"
+                },
+                {
+                    "date": 1746191559937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n       <div class=\"card\">\r\n         <h2>Détails du projet</h2>\r\n         <p><strong>Nom :</strong> {{ projet.name }}</p>\r\n         <p><strong>Description :</strong> {{ projet.description }}</p>\r\n-        <p><strong>Date de création :</strong> {{ projet.createdAt }}</p>\r\n+        <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>\r\n         <button class=\"edit-btn\">Modifier</button>\r\n       </div>\r\n     </div>\r\n \r\n"
+                },
+                {
+                    "date": 1746191627914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     <div class=\"left-panel\">\r\n       <div class=\"card\">\r\n         <h2>Détails du projet</h2>\r\n         <p><strong>Nom :</strong> {{ projet.name }}</p>\r\n-        <p><strong>Description :</strong> {{ projet.description }}</p>\r\n+        <p><strong>Description :</strong> {{ projet.description || 'Pas de description' }}</p>\r\n         <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>\r\n         <button class=\"edit-btn\">Modifier</button>\r\n       </div>\r\n     </div>\r\n"
                 }
             ],
             "date": 1744707748545,
