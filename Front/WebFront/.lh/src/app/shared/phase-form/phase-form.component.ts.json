@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/app/shared/phase-form/phase-form.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1746257670150,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746257678062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-phase-form',\r\n   templateUrl: './phase-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746257685245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-import { Component, OnInit } from '@angular/core';\r\n+import { Component, Input, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup } from '@angular/forms';\r\n \r\n @Component({\r\n   selector: 'app-phase-form',\r\n   templateUrl: './phase-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746257698235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,11 @@\n import { Component, Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { Component, Input, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { ProjectService } from '../../services/ProjectService'; // Assurez-vous que le chemin est correct\r\n \r\n @Component({\r\n   selector: 'app-phase-form',\r\n   templateUrl: './phase-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746257705335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,5 @@\n import { Component, Input, OnInit } from '@angular/core';\r\n-import { FormBuilder, FormGroup } from '@angular/forms';\r\n-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n-import { Component, Input, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { ProjectService } from '../../services/ProjectService'; // Assurez-vous que le chemin est correct\r\n \r\n"
+                },
+                {
+                    "date": 1746257712834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,9 @@\n \r\n   // Optionnel: Ajouter une validation pour s'assurer que endDate >= startDate\r\n   // private dateRangeValidator(group: FormGroup): { [key: string]: boolean } | null {\r\n   //   const start = group.controls['startDate'].value;\r\n-  *   const end = group.controls['endDate'].value;\r\n+     const end = group.controls['endDate'].value;\r\n   *   return start && end && new Date(start) > new Date(end) ? { dateRangeInvalid: true } : null;\r\n   * }\r\n   // Si vous ajoutez ce validateur, ajoutez-le au fb.group:\r\n   // this.phaseForm = this.fb.group({ ... }, { validators: this.dateRangeValidator });\r\n"
+                },
+                {
+                    "date": 1746257720407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,8 +91,5 @@\n   //   const start = group.controls['startDate'].value;\r\n      const end = group.controls['endDate'].value;\r\n      return start && end && new Date(start) > new Date(end) ? { dateRangeInvalid: true } : null;\r\n    }\r\n-  // Si vous ajoutez ce validateur, ajoutez-le au fb.group:\r\n-  // this.phaseForm = this.fb.group({ ... }, { validators: this.dateRangeValidator });\r\n-  // Et ajoutez un message d'erreur dans le HTML.\r\n-}\r\n+\r\n"
+                }
+            ],
+            "date": 1746257670150,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-phase-form',\r\n  templateUrl: './phase-form.component.html',\r\n  styleUrl: './phase-form.component.scss'\r\n})\r\nexport class PhaseFormComponent  implements OnInit {\r\n  // Reçoit l'ID du projet parent depuis le composant qui ouvre la modale\r\n  @Input() projectId!: string;\r\n\r\n  phaseForm: FormGroup;\r\n  isLoading = false;\r\n  errorMessage: string | null = null;\r\n\r\n  constructor(\r\n    private fb: FormBuilder,\r\n    public activeModal: NgbActiveModal,\r\n    private projectService: ProjectService\r\n  ) {\r\n    this.phaseForm = this.fb.group({\r\n      name: ['', [Validators.required, Validators.minLength(3)]],\r\n      description: ['', Validators.maxLength(500)], // Optionnel, max 500 caractères\r\n      startDate: ['', Validators.required],\r\n      endDate: ['', Validators.required]\r\n      // projectId n'est pas dans le formulaire, il est passé en @Input\r\n    });\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    if (!this.projectId) {\r\n      console.error(\"Erreur: Project ID manquant pour créer une phase.\");\r\n      this.errorMessage = \"L'identifiant du projet est manquant. Impossible de créer la phase.\";\r\n      // Optionnellement, désactiver le formulaire ou fermer la modale\r\n      this.phaseForm.disable();\r\n    }\r\n  }\r\n\r\n  // Getters pour un accès facile dans le template HTML\r\n  get name() { return this.phaseForm.get('name'); }\r\n  get description() { return this.phaseForm.get('description'); }\r\n  get startDate() { return this.phaseForm.get('startDate'); }\r\n  get endDate() { return this.phaseForm.get('endDate'); }\r\n\r\n  savePhase(): void {\r\n    if (this.phaseForm.invalid || this.isLoading || !this.projectId) {\r\n      this.phaseForm.markAllAsTouched(); // Affiche les erreurs si le formulaire est invalide\r\n      if (!this.projectId) {\r\n        this.errorMessage = \"L'identifiant du projet est manquant.\";\r\n      }\r\n      return;\r\n    }\r\n\r\n    this.isLoading = true;\r\n    this.errorMessage = null;\r\n\r\n    const phaseData = {\r\n      name: this.name?.value,\r\n      description: this.description?.value,\r\n      startDate: this.startDate?.value,\r\n      endDate: this.endDate?.value,\r\n      projectId: this.projectId // Utilise l'ID reçu en Input\r\n    };\r\n\r\n    console.log(\"Données de la phase à créer :\", phaseData);\r\n\r\n    this.projectService.createPhase(phaseData).subscribe({\r\n      next: (newPhase) => {\r\n        this.isLoading = false;\r\n        console.log('Phase créée:', newPhase);\r\n        this.activeModal.close(newPhase); // Ferme la modale et renvoie la nouvelle phase\r\n      },\r\n      error: (err) => {\r\n        this.isLoading = false;\r\n        // Utilise le message d'erreur du service s'il existe\r\n        this.errorMessage = err.message || 'Une erreur est survenue lors de la création de la phase.';\r\n        console.error('Erreur création phase:', err);\r\n      }\r\n    });\r\n  }\r\n\r\n  cancel(): void {\r\n    this.activeModal.dismiss('cancel click'); // Ferme la modale sans renvoyer de données\r\n  }\r\n\r\n  // Optionnel: Ajouter une validation pour s'assurer que endDate >= startDate\r\n  // private dateRangeValidator(group: FormGroup): { [key: string]: boolean } | null {\r\n  //   const start = group.controls['startDate'].value;\r\n  *   const end = group.controls['endDate'].value;\r\n  *   return start && end && new Date(start) > new Date(end) ? { dateRangeInvalid: true } : null;\r\n  * }\r\n  // Si vous ajoutez ce validateur, ajoutez-le au fb.group:\r\n  // this.phaseForm = this.fb.group({ ... }, { validators: this.dateRangeValidator });\r\n  // Et ajoutez un message d'erreur dans le HTML.\r\n}\r\n"
+        }
+    ]
+}

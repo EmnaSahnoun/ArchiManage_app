@@ -40,9 +40,12 @@
               <td>{{ member.email }}</td>
               <td><span class="role-badge">{{ member.role }}</span></td>
               <td>
+                
                 <button (click)="removeMember(member)" class="button-icon button-warn">
-                  <i class="icon-person-remove"></i>
+                  <i  class="bi bi-trash"></i> 
                 </button>
+                
+
               </td>
             </tr>
           </tbody>
@@ -72,8 +75,9 @@
               <td><span class="role-badge">{{ pending.role }}</span></td>
               <td>{{ pending.createdAt | date:'shortDate' }}</td>
               <td>
+               
                 <button (click)="cancelInvitation(pending)" class="button-icon button-warn">
-                  <i class="icon-cancel"></i>
+                  <i  class="bi bi-trash"></i> 
                 </button>
               </td>
             </tr>

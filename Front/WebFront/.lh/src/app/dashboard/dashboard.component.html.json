@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 168,
+            "activePatchIndex": 169,
             "patches": [
                 {
                     "date": 1741610235266,
@@ -680,6 +680,10 @@
                 {
                     "date": 1745624423977,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,9 @@\n \r\n   <!-- Section Liste des Utilisateurs (Mise à jour avec Inline Edit) -->\r\n <mat-card class=\"user-list-section section-card\" *ngIf=\"isAdmin\">\r\n   <div class=\"section-header\" style=\"padding: 0 24px;\">\r\n-    <h2 class=\"mat-card-title\">Gestion des Utilisateurs</h2>\r\n+    <h2 class=\"mat-card-title\">Gestion des Membres</h2>\r\n     <button mat-flat-button color=\"primary\" class=\"add-user-button\"\r\n             (click)=\"triggerAddUser()\"\r\n             [disabled]=\"!currentAgence || isLoadingUsers || !!editingUserId || !!activeModalRef\">\r\n       <mat-icon>person_add</mat-icon>\r\n"
+                },
+                {
+                    "date": 1746287226615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \r\n   <!-- Section Résumé des Projets -->\r\n   <div class=\"section-header\">\r\n     <h2>Résumé des Projets</h2>\r\n-    <button mat-flat-button color=\"primary\" class=\"add-project-button\" (click)=\"addNewProject()\">\r\n+    <button mat-flat-button color=\"primary\" class=\"add-project-button\" (click)=\"addProject()\">\r\n       <mat-icon>add</mat-icon>\r\n       <span>Nouveau Projet</span>\r\n     </button>\r\n   </div>\r\n"
                 }
             ],
             "date": 1741610235266,

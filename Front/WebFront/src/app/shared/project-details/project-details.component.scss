@@ -23,7 +23,7 @@
   }
   
   .tabs button.active {
-    background: #E27D60;
+    background: #41B3A3;
     color: white;
   }
   
@@ -55,7 +55,7 @@
   
   .edit-btn {
     cursor: pointer;
-    background: #E27D60;
+    background: #41B3A3;
     border-radius: 40px;
     font-weight: bold;
     min-height: 2.5rem;
@@ -107,7 +107,7 @@
 
 .add-phase {
   cursor: pointer;
-  background: #E27D60;
+  background: #41B3A3;
   border-radius: 40px;
   font-weight: bold;
   min-height: 3rem;
@@ -229,15 +229,16 @@ tbody{tr{
     background: none;
     border: none;
     cursor: pointer;
+    
   }
   
   .icon {
     font-size: 18px;
-    color: #000000;
+    color: #ffffff;
   }
   
   .icon:hover {
-    color: #E27D60;
+    color: #41B3A3;
   }
   .bi-trash{
     color: red;

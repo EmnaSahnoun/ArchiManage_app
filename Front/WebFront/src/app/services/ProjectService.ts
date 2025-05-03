@@ -37,6 +37,32 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
+      updateProject(idProject: string, projectData: any): Observable<any> {
+        const fullAgenceData = {
+            ...projectData,
+            id: idProject // On s'assure que l'ID est bien inclus
+        };
+    
+        return this.http.put(`${this.projetUrl}/project/${idProject}`, fullAgenceData, {
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
+    deleteProject(idProject: string): Observable<any> {
+      
+      const updateData = { deleted: true };
+      
+      return this.http.put(`${this.projetUrl}/project/${idProject}`, updateData, {
+          headers: this.getApiHeaders()
+      }).pipe(
+          catchError(error => {
+              console.error('Erreur lors de la suppression logique:', error);
+              return throwError(() => new Error('Échec de la suppression logique du projet'));
+          })
+      );
+  }
+
       createProjectAccess(projectAccessData: any): Observable<any> {
         const url = `${this.projetUrl}/project-accesses`;
         const headers = this.getApiHeaders();
@@ -45,9 +71,35 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
+      createPhase(phaseData: any): Observable<any> {
+        const url = `${this.projetUrl}/phase`;
+        const headers = this.getApiHeaders();
+      
+        return this.http.post(url, phaseData, { headers }).pipe(
+          catchError(this.handleError)
+        );
+      }
       getProjectAccessByIdProject(idproject:string): Observable<any[]> {
         console.log("l'url",`${this.projetUrl}/project-accesses/project/${idproject}`);
         return this.http.get<any[]>(`${this.projetUrl}/project-accesses/project/${idproject}`, { 
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
+      deleteProjectAccess(idProjectAccess: string): Observable<any> {
+        const url = `${this.projetUrl}/project-accesses/${idProjectAccess}`;
+        const headers = this.getApiHeaders();
+        
+        return this.http.delete(url, { headers }).pipe(
+            tap(() => console.log(`ProjectAccess ${idProjectAccess} supprimé`)),
+            catchError(this.handleError)
+        );
+      }
+   
+      getphaseByIdProject(idProject:string): Observable<any> {
+        console.log("l'url",`${this.projetUrl}/phase/project/${idProject}`);
+        return this.http.get<any>(`${this.projetUrl}/phase/project/${idProject}`, { 
           headers: this.getApiHeaders()
         }).pipe(
           catchError(this.handleError)
@@ -61,7 +113,16 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
-
+      getPhaseAccessByIdPhase(idphase:string): Observable<any[]> {
+        console.log("l'url",`${this.projetUrl}/phase-accesses/phase/${idphase}`);
+        return this.http.get<any[]>(`${this.projetUrl}/phase-accesses/phase/${idphase}`, { 
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
+      updatePhaseAccess(idPhase: string, accessUpdates: any[]) {
+      }
     getTaskByPhase(idphase:string): Observable<any> {
       console.log("l'url",`${this.projetUrl}/task/phase/${idphase}`);
       return this.http.get<any>(`${this.projetUrl}/task/phase/${idphase}`, { 

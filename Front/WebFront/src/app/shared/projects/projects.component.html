@@ -51,24 +51,54 @@
               <th>Progression</th>
               <th>Statut</th>
               <th>Membres</th>
-               <th>Phases</th> <!-- Consider if phases count is needed here -->
+               <th>Phases</th> 
+               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <!-- Use mat-row if using Material Table, otherwise tr -->
-            <tr *ngFor="let project of filteredProjects" (click)="goToProjectDetails(project)">
-              <!-- Use mat-cell if using Material Table, otherwise td -->
-              <td>{{ project.name }}</td>
-              <td>{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
-              <td>{{ project.minStartDate | date:'dd/MM/yy' }} - {{ project.maxEndDate | date:'dd/MM/yy' }}</td>
-              <td>{{ project.progress }}%</td> <!-- Add progress bar later if needed -->
-              <td>{{ project.status }}</td> <!-- Add status badge later if needed -->
+            <tr *ngFor="let project of filteredProjects" (click)="goToProjectDetails(project)" [class.editing-row]="editingProjectId === project.id">
+              <!-- Name Column -->
               <td>
+                <span *ngIf="editingProjectId !== project.id">{{ project.name }}</span>
+                <input *ngIf="editingProjectId === project.id" type="text" [(ngModel)]="editedProjectData.name" class="inline-edit-input" (click)="$event.stopPropagation()" />
+              </td>
+              <!-- Created At (Read-only example) -->
+              <td>
+                {{ project.createdAt | date:'dd/MM/yyyy' }}
+              </td>
+              <!-- Dates (Read-only example) -->
+              <td>
+                 {{ project.minStartDate | date:'dd/MM/yy' }} - {{ project.maxEndDate | date:'dd/MM/yy' }}
+              </td>
+               <!-- Progress (Read-only example) -->
+              <td>
+                {{ project.progress }}%
+              </td>
+              <!-- Status Column (Example of editable status) -->
+              <td>
+                <span>{{ project.status }}</span>
+            
+              </td>
+              <!-- Members (Button remains) -->
+               <td>
                 <button class="members-action-button" (click)="openMembersModal(project, $event)" matTooltip="Voir/Gérer les membres">
-                  <mat-icon>group</mat-icon> 
+                  <mat-icon>group</mat-icon>
                 </button>
               </td>
-               <td>{{ project.phases?.length || 0 }}</td>  <!-- Safer access to length -->
+               <td>{{ project.phases?.length || 0 }}</td> 
+               
+               <td class="actions">
+                
+                 <!-- View Mode Buttons -->
+                 <ng-container *ngIf="editingProjectId !== project.id">
+                  <button class="delete-btn" (click)="deleteProject(project.id)"(click)="$event.stopPropagation()" title="Supprimer" > <!-- Disable delete if any row is being edited -->
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </ng-container>
+               
+                
+              </td>
             </tr>
           </tbody>
         </table>

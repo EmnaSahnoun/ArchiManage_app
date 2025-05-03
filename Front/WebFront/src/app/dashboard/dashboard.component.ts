@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent } from '../super-admin/confirmation-dialog/
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ProjectFormComponent } from '../shared/project-form/project-form.component';
 
 // Interface pour la structure des données de projet (basée sur le HTML)
 export interface Project {
@@ -286,10 +287,34 @@ role(){
       }
     }
 
-  addNewProject(): void {
-    console.log('Action: Ajouter un nouveau projet');
-    // Logique pour ouvrir un formulaire ou naviguer vers la page de création
-  }
+  addProject(): void {
+      const modalRef = this.modalService.open(ProjectFormComponent, {
+        size: 'lg',
+        centered: true,
+        backdrop: 'static',
+        keyboard: false // Empêche la fermeture avec la touche Echap si backdrop='static'
+      });
+  
+      // Utiliser modalRef.result qui est une promesse
+      modalRef.result.then(
+        (result) => {
+          // Ce bloc est exécuté quand la modale est fermée avec succès (ex: via modal.close(result))
+          console.log('La modale a été fermée avec succès');
+          if (result) {
+            console.log('Nouveau projet ajouté:', result);
+            
+          } else {
+            console.log('La modale a été fermée avec succès mais sans résultat.');
+          
+          }
+        },
+        (reason) => {
+          // Ce bloc est exécuté quand la modale est annulée (ex: clic hors modale, touche Echap, ou via modal.dismiss(reason))
+          console.log(`La modale a été annulée/fermée (${reason})`);
+          // Pas besoin de recharger les projets si l'action a été annulée
+        }
+      );
+    }
 
   viewProject(project: Project): void {
     console.log('Action: Voir le projet', project);

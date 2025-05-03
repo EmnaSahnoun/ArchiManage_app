@@ -8,7 +8,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin } from 'rxjs';
 import { Phase } from '../../models/phase.model';
 import { ProjectMembersComponent } from '../project-members/project-members.component'; 
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+export interface Project {
+  id: string; // Or number, depending on your backend
+  name: string;
+  createdAt: string | Date;
+  minStartDate: string | Date | null;
+  maxEndDate: string | Date | null;
+  progress: number;
+  status: string;
+  members?: any[]; // Define a Member interface if possible
+  phases?: any[]; // Define a Phase interface if possible
+  description?: string; // Add other editable fields
+  // Add other relevant project properties
+}
 @Component({
   
   selector: 'app-projects',
@@ -22,11 +35,17 @@ export class ProjectsComponent implements OnInit{
   projects: any[] = [];
   filteredProjects: any[] = [];
   members: any[] = [];
+  isLoading: boolean = false;
+  editingProjectId: string | null = null; // Track the ID of the project being edited
+  editedProjectData: Partial<Project> = {}; // Holds the data being edited
+
+
   constructor(
     private modalService: NgbModal,
     private router: Router
     ,private projectService:ProjectService,
-    public dialog: MatDialog 
+    public dialog: MatDialog ,
+    private snackBar: MatSnackBar,
 
     
 
@@ -36,9 +55,7 @@ export class ProjectsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getProjects();
-
-    
+    this.getProjects();    
   }
 
   // Toggle view mode
@@ -65,7 +82,8 @@ export class ProjectsComponent implements OnInit{
           this.projects.forEach(project => {
             this.getDates(project);
             this.checkProjectStatus(project);
-          });                   
+          }); 
+          this.projects = this.projects.filter(p => p.deleted !== true);                  
           this.applyFilter(); // Appliquer le filtre une fois les projets chargés
           console.log("les projets",this.projects);
           // Pour chaque projet, récupérer les détails des phases
@@ -174,7 +192,9 @@ async checkPhaseStatus(phase: any): Promise<string> {
 }
   goToProjectDetails(project: any): void {
     this.router.navigate(['/project', project.id], {
-      state: { projectData: project }
+      state: { projectData: project ,
+        members:this.members
+      }
     });
   }
   // Add project action
@@ -227,5 +247,35 @@ async checkPhaseStatus(phase: any): Promise<string> {
     }, (reason) => { console.log(`La modale des membres a été annulée/fermée (${reason})`); });
 
   }
+ 
+
+
+  
+  deleteProject(projectId: string): void {
+
+        this.isLoading = true;
+        
+        this.projectService.deleteProject(projectId).subscribe({
+            next: () => {
+                this.isLoading = false;
+                this.snackBar.open('Projet archivé avec succès', 'Fermer', { 
+                    duration: 3000,
+                    panelClass: ['success-snackbar'] 
+                });
+                
+                this.getProjects(); // Recharger la liste des projets
+                
+            },
+            error: (err) => {
+                this.isLoading = false;
+                console.error('Erreur:', err);
+                this.snackBar.open('Échec de l\'archivage du projet', 'Fermer', { 
+                    duration: 5000,
+                    panelClass: ['error-snackbar'] 
+                });
+            }
+        });
+ 
+}
  }
 

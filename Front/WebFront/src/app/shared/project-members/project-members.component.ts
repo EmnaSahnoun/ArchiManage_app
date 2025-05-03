@@ -33,7 +33,6 @@ export class ProjectMembersComponent implements OnInit {
     
     
   }
-
   ngOnInit(): void {
     
     this.loadProjectMembers();
@@ -43,10 +42,11 @@ export class ProjectMembersComponent implements OnInit {
     this.isLoading = true;
     this.projectService.getProjectAccessByIdProject(this.project.id).subscribe({
       next: (accessList) => {
-        // Normalisez la structure des données
+        console.log("les membres",accessList)
         this.members = accessList
           .filter(access => access.invitationStatus === 'ACCEPTED')
           .map(access => ({
+            idAccess: access.id,
             id: access.idUser,
             name: access.name || `User ${access.idUser.substring(0, 4)}`,
             email: access.emailUser,
@@ -56,7 +56,8 @@ export class ProjectMembersComponent implements OnInit {
         this.pendingMembers = accessList
           .filter(access => access.invitationStatus === 'PENDING')
           .map(pending => ({
-            id: pending.id,
+            
+            idAccess: pending.id,
             idUser: pending.idUser,
             emailUser: pending.emailUser,
             role: pending.role,
@@ -92,11 +93,7 @@ export class ProjectMembersComponent implements OnInit {
    }
 
    
-
-
-  // --- Actions ---
-
-  addMember(): void {
+   addMember(): void {
     if (!this.selectedUserId) {
       this.snackBar.open('Veuillez sélectionner un utilisateur à ajouter.', 'Fermer', { duration: 3000 });
       return;
@@ -115,7 +112,7 @@ export class ProjectMembersComponent implements OnInit {
   }
 
   removeMember(memberToRemove: any): void {
-    // Confirmation avant suppression (optionnel mais recommandé)
+    
     if (!confirm(`Êtes-vous sûr de vouloir retirer ${this.getMemberFullName(memberToRemove)} du projet ?`)) {
       return;
     }
@@ -130,10 +127,6 @@ export class ProjectMembersComponent implements OnInit {
        this.isLoading = false;
      }, 1000);
   }
-
-  // Fonction pour charger les utilisateurs potentiels (à implémenter)
- 
-
 
   closeDialog(): void {
     this.activeModal.close('Modal closed');
@@ -206,8 +199,25 @@ export class ProjectMembersComponent implements OnInit {
     });
   }
   cancelInvitation(member: any): void {
-    this.pendingMembers = this.pendingMembers.filter(m => m.id !== member.id);
-    this.usersToAdd.push(member); // Remettre dans la liste des disponibles
+    this.isLoading = true;
+    
+    // Trouver l'ID du ProjectAccess correspondant
+    const projectAccessId = member.idAccess
+    this.projectService.deleteProjectAccess(projectAccessId).subscribe({
+      next: () => {
+          this.loadProjectMembers();
+          
+        this.isLoading = false;
+    },
+    error: (err) => {
+        console.error('Erreur lors de la suppression:', err);
+        this.snackBar.open('Échec du retrait du membre', 'Fermer', { 
+            duration: 5000,
+            panelClass: ['error-snackbar'] 
+        });
+        this.isLoading = false;
+    }
+});
   }
   setActiveTab(tab: 'current' | 'pending' | 'add'): void {
     console.log('Changing active tab to:', tab); // Log pour vérifier le changement

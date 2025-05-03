@@ -35,7 +35,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 24px;
   padding: 16px;
   background-color: $container-background;
-  border-radius: $border-radius;
+  border-radius: 8px;
   box-shadow: $card-shadow;
 
   .search-container {
@@ -55,7 +55,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     input {
       padding: 10px 15px 10px 40px; // Adjust padding for icon
       border: 1px solid $border-color;
-      border-radius: $border-radius;
+      border-radius: 8px;
       min-height: 40px;
       width: 100%;
       font-size: 14px;
@@ -79,7 +79,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     .filter-button, .view-mode button, .add-project-button {
       // Common button styles
       border: none;
-      border-radius: $border-radius;
+      border-radius: 8px;
       padding: 0 16px;
       min-height: 40px;
       display: inline-flex;
@@ -160,7 +160,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 // --- Table View (Adopted from .data-table) ---
 .project-table-card { // Wrap table in a card for consistent styling
   background-color: $container-background;
-  border-radius: $border-radius;
+  border-radius: 8px;
   box-shadow: $card-shadow;
   overflow: hidden; // Important for table border radius
 
@@ -213,7 +213,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       color: $primary-color;
       cursor: pointer;
       padding: 4px 8px;
-      border-radius: $border-radius / 2;
+      border-radius: 8px / 2;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -237,7 +237,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   .project-card { // Style individual cards like section-card
     background-color: $container-background;
-    border-radius: $border-radius;
+    border-radius: 8px;
     box-shadow: $card-shadow;
     padding: 20px;
     display: flex;
@@ -334,7 +334,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   color: $primary-color; // Utilise la variable de couleur primaire définie
   cursor: pointer;
   padding: 4px 8px;
-  border-radius: $border-radius / 2; // Utilise la variable de border-radius
+  border-radius: 8px / 2; // Utilise la variable de border-radius
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -346,4 +346,85 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   &:hover {
     background-color: rgba($primary-color, 0.1); // Léger fond au survol
   }
+}
+// In projects.component.scss
+
+.inline-edit-input {
+  width: 90%; // Adjust as needed
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+}
+
+// Style the row being edited (optional)
+tr.editing-row {
+  background-color: #f0f8ff; // Example: light blue background
+  
+}
+
+// Ensure action buttons have consistent size/alignment
+.actions {
+  button {
+    margin: 0 4px; // Add some spacing between buttons
+    min-width: 30px; // Ensure buttons have a minimum width
+    
+    border: none; 
+    background: none; 
+    cursor: pointer;
+          font-size: 1.2rem; 
+          padding: 6px; 
+          border-radius: 50%;
+          width: 34px; height: 34px; display: inline-flex;
+          align-items: center; justify-content: center;
+          margin-left: 5px; transition: all 0.2s ease;
+          vertical-align: middle;
+    &.delete-btn { color: #F44336; &:hover:not(:disabled) { background-color: rgba(#F44336, 0.1); } }
+          
+  }
+  .spinner-border-sm {
+    width: 1em;
+    height: 1em;
+    border-width: .2em;
+  }
+}
+
+// Style for save/cancel buttons (similar to edit/delete)
+.save-btn {
+  color: var(--success-color, #28a745); // Use CSS variables or fallback
+  background: none;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: darken(#28a745, 10%);
+  }
+  &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.cancel-btn {
+  color: var(--secondary-color, #6c757d); // Use CSS variables or fallback
+  background: none;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: darken(#6c757d, 10%);
+  }
+   &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+// You might already have styles for edit-btn and delete-btn
+.edit-btn {
+  color: var(--primary-color, #007bff);
+  // ... other styles
+}
+
+.delete-btn {
+   color: var(--danger-color, #dc3545);
+   // ... other styles
 }

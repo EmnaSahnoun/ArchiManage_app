@@ -79,8 +79,7 @@ export class AgencyDetailsComponent implements OnInit {
         if (confirm) {
             this.isDeletingUser = user.id; // Set deleting flag for this user
             // Use the service method that handles both group removal and user deletion
-            this.agenceService.deleteUserCompletely(user.id, this.agency.name)
-            .pipe(
+            this.agenceService.deleteUserCompletely(user.id, this.agency.name).pipe(
                 finalize(() => this.isDeletingUser = null) // Ensure flag is reset
             )
             .subscribe({

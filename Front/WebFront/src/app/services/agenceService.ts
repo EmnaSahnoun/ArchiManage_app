@@ -114,6 +114,15 @@ getUserByUsername(username: string): Observable<any> {
       catchError(this.handleError)
   );
 }
+getUserById(id: string): Observable<any> {
+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;
+  const headers = this.getApiHeaders();
+
+  return this.http.get<any>(url, { headers }).pipe(
+    catchError(this.handleError)
+  );
+}
+
 // Créer un nouvel utilisateur
 createUser(userData: any): Observable<any> {
   const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users`;

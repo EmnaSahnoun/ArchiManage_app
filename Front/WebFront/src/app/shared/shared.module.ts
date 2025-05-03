@@ -21,9 +21,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PhaseFormComponent } from './phase-form/phase-form.component';
+import { ProjectAccessComponent } from './project-access/project-access.component';
 
 @NgModule({
-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],
+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent, ProjectAccessComponent],
   imports: [CommonModule,
     MatDialogModule,
     MatFormFieldModule,

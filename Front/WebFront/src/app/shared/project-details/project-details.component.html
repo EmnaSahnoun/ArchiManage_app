@@ -1,5 +1,6 @@
-<div class="project-details-container">
-  <app-header [title]="project.name"></app-header>
+<div class="project-details-container" *ngIf="projet"> <!-- Add *ngIf here -->
+  <app-header [title]="projet?.name"></app-header> <!-- Use projet?.name -->
+
 
   <!-- Navigation entre les onglets -->
   <div class="tabs">
@@ -12,10 +13,26 @@
     <div class="left-panel">
       <div class="card">
         <h2>Détails du projet</h2>
-        <p><strong>Nom :</strong> {{ projet.name }}</p>
-        <p><strong>Description :</strong> {{ projet.description || 'Pas de description' }}</p>
-        <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>
-        <button class="edit-btn">Modifier</button>
+        <div *ngIf="!isEditing">
+          <p><strong>Nom :</strong> {{ projet?.name }}</p>
+          <p><strong>Description :</strong> {{ projet?.description || 'Pas de description' }}</p>
+          <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>
+          <button class="edit-btn" (click)="startEdit()">Modifier</button>
+        </div>
+        <!-- Mode édition -->
+        <div *ngIf="isEditing">
+          <div class="form-group mb-3">
+            <label for="projectName"><strong>Nom :</strong></label>
+            <input type="text" id="projectName" class="form-control" [(ngModel)]="editedProjectData.name">
+          </div>
+          <div class="form-group mb-3">
+            <label for="projectDescription"><strong>Description :</strong></label>
+            <textarea id="projectDescription" class="form-control" rows="3" [(ngModel)]="editedProjectData.description"></textarea>
+          </div>
+          <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p> <!-- Date non modifiable -->
+          <button class="save-btn me-2" (click)="saveEdit()" [disabled]="isLoading">Enregistrer</button>
+          <button class="cancel-btn" (click)="cancelEdit()" [disabled]="isLoading">Annuler</button>
+        </div>
       </div>
     </div>
 
@@ -25,17 +42,18 @@
         <div class="progress-container">
           <svg width="100" height="100">
             <circle cx="50" cy="50" r="40" stroke="#ddd" stroke-width="8" fill="none"></circle>
-            <circle cx="50" cy="50" r="40" stroke="#E27D60" stroke-width="8" fill="none"
+            <circle cx="50" cy="50" r="40" stroke="#41B3A3" stroke-width="8" fill="none"
                     stroke-dasharray="251.2" attr.stroke-dashoffset="{{ progressOffset }}"></circle>
           </svg>
-          <div class="progress-text">{{ project.progress }}%</div>
+          <div class="progress-text">{{ projet?.progress }}%</div> <!-- Use projet?.progress -->
+  
         </div>
       </div>
 
       <div class="card">
         <h2>Membres du projet</h2>
         <ul>
-          <li *ngFor="let member of project.members">{{ member.name }}</li>
+          <li *ngFor="let member of members">{{ member.username }}  - {{ member.role }}</li>
         </ul>
       </div>
     </div>
@@ -44,13 +62,13 @@
   <div *ngIf="selectedTab === 'phases'" class="tab-content">
     <div class="header">
       <h2>Phases</h2>
-      <button mat-button class="add-phase">
+      <button mat-button class="add-phase" (click)="addPhase()">
         <i class="bi bi-plus"></i> Ajouter une phase
       </button>
     </div>
   
     <!-- Affichage des phases dans un tableau -->
-    <div *ngIf="project.phases.length > 0" class="phases-table">
+    <div *ngIf="phases.length > 0" class="phases-table">
       <table>
         <thead>
           <tr>
@@ -63,29 +81,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let phase of project.phases"(click)="openTasks(phase)" >
+          <tr *ngFor="let phase of phases"(click)="openTasks(phase)" >
             <td  >{{ phase.name }}</td>
             <td >{{ phase.description || 'Pas de description' }}</td>
-            <td >{{ phase.startDate }} - {{ phase.endDate }}</td>
-            <td >{{ phase.tasks.length }}</td>
+            <td >{{ phase.startDate | date:'dd/MM/yyyy'}} - {{ phase.endDate | date:'dd/MM/yyyy' }}</td>
+            <td >{{ phase.taskIds?.length ?? 0 }}</td>
+
             
             <td>
               <div class="members-container">
-                <div class="members">
-                  <ng-container *ngIf="phase.members.length > 2; else allMembers">
+                <div class="members">3
+                <!--   <ng-container *ngIf="phase.members.length > 2" >
                     <img *ngFor="let member of phase.members.slice(0, 2)" 
                          [src]="member.image" 
                          [alt]="member.name" 
                          class="member-img">
                     <div class="more-members">+{{ phase.members.length - 2 }}</div>
-                  </ng-container>
+                  </ng-container> -->
             
-                  <ng-template #allMembers>
-                    <img *ngFor="let member of phase.members" 
-                         [src]="member.image" 
-                         [alt]="member.name" 
-                         class="member-img">
-                  </ng-template>
+                  
                 </div>
             
                 <button (click)="openMemberModal(phase)" class="add-member-btn">
@@ -98,7 +112,7 @@
         
             <td>
               <button mat-icon-button (click)="editPhase(phase)">
-                <i class="bi bi-pencil icon"></i>
+                <i class="bi bi-pencil icon" ></i>
               </button>
               <button mat-icon-button (click)="deletePhase(phase)">
                 <i class="bi bi-trash"></i>
@@ -110,7 +124,7 @@
       </table>
     </div>
   
-    <div *ngIf="project.phases.length === 0">
+    <div *ngIf="phases.length === 0">
       <p>Aucune phase disponible pour ce projet.</p>
     </div>
   </div>
