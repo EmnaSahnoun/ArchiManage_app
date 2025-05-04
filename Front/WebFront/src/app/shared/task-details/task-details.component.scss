@@ -1,0 +1,334 @@
+$primary-color: #41B3A3;
+$accent-color: #E27D60;
+$warn-color: #F44336; // For delete actions
+$success-color: #4CAF50; // For save/add actions
+$cancel-color: #6c757d; // For cancel actions
+
+$text-color-primary: #333;
+$text-color-secondary: #666;
+$text-color-light: #fff;
+
+$background-color: #f7f9fc;
+$container-background: #fff;
+$border-color: #e0e0e0;
+$border-radius: 8px;
+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+$priority-high-color: #D9534F; // Adjusted warn color
+$priority-medium-color: #E9A28A; // Adjusted accent color
+$priority-low-color: #6CBBAF;
+$priority-high-bg: lighten($priority-high-color, 40%); // Corrected lighten syntax if needed elsewhere
+$priority-medium-bg: lighten($priority-medium-color, 35%); // Corrected lighten syntax if needed elsewhere
+$priority-low-bg: lighten($priority-low-color, 40%);
+
+
+.task-details-container {
+  display: flex; // Rendre le conteneur principal flex
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90vw;
+  max-width: 1100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $border-color;
+
+    h2 {
+      margin: 0;
+      color: $primary-color;
+      font-size: 1.8rem;
+    }
+
+    .close-btn {
+      color: $text-color-secondary;
+      transition: all 0.2s;
+
+      &:hover {
+        color: $warn-color;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .task-content {
+    display: flex;
+    flex: 1; // Permet à cette zone de s'étendre pour remplir l'espace vertical restant
+    overflow-y: hidden;
+    gap: 30px;
+
+    .task-left-column {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .task-right-column {
+      flex: 2;
+    }
+  }
+
+  .task-section {
+    margin-bottom: 25px;
+
+    h3 {
+      color: $primary-color;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        background: $primary-color;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .priority-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+
+    &.high {
+      background-color: rgba($priority-high-color, 0.1);
+      color: $priority-high-color;
+      border: 1px solid rgba($priority-high-color, 0.3);
+    }
+
+    &.medium {
+      background-color: rgba($priority-medium-color, 0.1);
+      color: $priority-medium-color;
+      border: 1px solid rgba($priority-medium-color, 0.3);
+    }
+
+    &.low {
+      background-color: rgba($priority-low-color, 0.1);
+      color: $priority-low-color;
+      border: 1px solid rgba($priority-low-color, 0.3);
+    }
+  }
+
+  .date-range {
+    display: flex;
+    gap: 20px;
+
+    .date-item {
+      label {
+        display: block;
+        font-size: 0.8rem;
+        color: $text-color-secondary;
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    mat-progress-bar {
+      flex-grow: 1;
+      height: 8px;
+      border-radius: 4px;
+    }
+
+    .progress-value {
+      font-weight: 600;
+      color: $primary-color;
+    }
+  }
+
+  .subtasks-list {
+    .subtask-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba($border-color, 0.5);
+
+      .subtask-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        i {
+          color: $success-color;
+        }
+      }
+
+      .assignee {
+        background: rgba($primary-color, 0.1);
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+
+        .assignee-name {
+          color: $primary-color;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .attachments-list {
+    .attachment-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba($border-color, 0.5);
+
+      i {
+        color: $accent-color;
+        font-size: 1.2rem;
+      }
+
+      .attachment-info {
+        flex-grow: 1;
+
+        strong {
+          display: block;
+          font-size: 0.9rem;
+        }
+
+        small {
+          color: $text-color-secondary;
+          font-size: 0.75rem;
+        }
+      }
+
+      button {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .task-description {
+    line-height: 1.6;
+    color: $text-color-primary;
+  }
+
+  .requirements-list, .guidelines-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+
+      i {
+        color: $success-color;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .guidelines-list li i {
+    color: $accent-color;
+  }
+
+  .activity-timeline {
+    .activity-item {
+      padding: 15px 0;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+
+      .activity-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+
+        .user {
+          font-weight: 600;
+          color: $primary-color;
+        }
+
+        .timestamp {
+          color: $text-color-secondary;
+          font-size: 0.8rem;
+        }
+      }
+
+      .activity-content {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .reply-btn {
+        background: none;
+        border: none;
+        color: $primary-color;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        cursor: pointer;
+        padding: 0;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .new-comment {
+    margin-top: 20px;
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $border-color;
+      border-radius: 6px;
+      min-height: 80px;
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+
+    button {
+      float: right;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .task-details-container {
+    width: 95vw;
+    padding: 15px;
+  }
+
+  .task-content {
+    flex-direction: column !important;
+  }
+
+  .date-range {
+    flex-direction: column;
+    gap: 10px !important;
+  }
+}

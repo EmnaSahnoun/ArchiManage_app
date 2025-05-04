@@ -27,10 +27,19 @@ public class Task {
     @DBRef
     private List<Task> subTasks = new ArrayList<>();;
 
+    private String parentTaskId;
 
 
     @DBRef
     private Phase phase;
+
+    public String getParentTaskId() {
+        return parentTaskId;
+    }
+
+    public void setParentTaskId(String parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
 
     public String getDescription() {
         return description;

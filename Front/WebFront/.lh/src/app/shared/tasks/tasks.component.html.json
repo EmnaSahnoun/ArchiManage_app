@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1744707614675,
@@ -48,6 +48,74 @@
                 {
                     "date": 1744730327649,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     <!-- Colonne À faire -->\r\n     <div class=\"task-column\">\r\n       <h3>À faire</h3>\r\n       <div cdkDropList id=\"todo-list\" [cdkDropListData]=\"todo\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" *ngFor=\"let task of todo\" cdkDrag (click)=\"openTaskDetails(task)\">\r\n+        <div class=\"task-card\" *ngFor=\"let task of todo\" cdkDrag >\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n                   [class.medium]=\"task.priority === 'MEDIUM'\"\r\n@@ -54,9 +54,9 @@\n     <!-- Colonne En cours -->\r\n     <div class=\"task-column\">\r\n       <h3>En cours</h3>\r\n       <div cdkDropList id=\"inProgress-list\" [cdkDropListData]=\"inProgress\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" *ngFor=\"let task of inProgress\" cdkDrag >\r\n+        <div class=\"task-card\" *ngFor=\"let task of inProgress\" cdkDrag>\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n"
+                },
+                {
+                    "date": 1746374477555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n                   [class.low]=\"task.priority === 'LOW'\">\r\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n-          <p class=\"task-description\">{{ task.description || 'Pas de description' }}</p>\r\n+          \r\n           <div class=\"task-footer\">\r\n             <small class=\"task-dates\">\r\n               {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n             </small>\r\n"
+                },
+                {
+                    "date": 1746374485736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,11 +98,8 @@\n             </span>\r\n           </div>\r\n           \r\n           <div class=\"task-footer\">\r\n-            <small class=\"task-dates\">\r\n-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n-            </small>\r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n"
+                },
+                {
+                    "date": 1746374517672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n                   [class.low]=\"task.priority === 'LOW'\">\r\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n-          <p class=\"task-description\">{{ task.description || 'Pas de description' }}</p>\r\n+          \r\n           <div class=\"task-footer\">\r\n             <small class=\"task-dates\">\r\n               {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n             </small>\r\n"
+                },
+                {
+                    "date": 1746374526671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n                   [class.low]=\"task.priority === 'LOW'\">\r\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n-          <p class=\"task-description\">{{ task.description || 'Pas de description' }}</p>\r\n+          \r\n           <div class=\"task-footer\">\r\n             <small class=\"task-dates\">\r\n               {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n             </small>\r\n@@ -66,11 +66,9 @@\n             </span>\r\n           </div>\r\n           \r\n           <div class=\"task-footer\">\r\n-            <small class=\"task-dates\">\r\n-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n-            </small>\r\n+            \r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n"
+                },
+                {
+                    "date": 1746375203476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,13 @@\n     <!-- Colonne À faire -->\r\n     <div class=\"task-column\">\r\n       <h3>À faire</h3>\r\n       <div cdkDropList id=\"todo-list\" [cdkDropListData]=\"todo\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" *ngFor=\"let task of todo\" cdkDrag >\r\n+        <div class=\"task-card\"\r\n+             *ngFor=\"let task of todo\"\r\n+             cdkDrag\r\n+             [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             >\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n                   [class.medium]=\"task.priority === 'MEDIUM'\"\r\n@@ -34,11 +38,9 @@\n             </span>\r\n           </div>\r\n           \r\n           <div class=\"task-footer\">\r\n-            <small class=\"task-dates\">\r\n-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}\r\n-            </small>\r\n+            \r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n"
+                },
+                {
+                    "date": 1746375226920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n           \r\n-          <div class=\"task-footer\">\r\n+       \r\n             \r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n"
+                },
+                {
+                    "date": 1746375232008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n               </button>\r\n             </div>\r\n           </div>\r\n         </div>\r\n-      </div>\r\n+\r\n     </div>\r\n \r\n     <!-- Colonne En cours -->\r\n     <div class=\"task-column\">\r\n"
+                },
+                {
+                    "date": 1746375253763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,13 @@\n     <!-- Colonne En cours -->\r\n     <div class=\"task-column\">\r\n       <h3>En cours</h3>\r\n       <div cdkDropList id=\"inProgress-list\" [cdkDropListData]=\"inProgress\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" *ngFor=\"let task of inProgress\" cdkDrag>\r\n+        <div class=\"task-card\"\r\n+             *ngFor=\"let task of inProgress\"\r\n+             cdkDrag\r\n+             [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n"
+                },
+                {
+                    "date": 1746375260822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,9 @@\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n           \r\n-          <div class=\"task-footer\">\r\n+   \r\n             \r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n@@ -81,9 +81,9 @@\n               <button mat-icon-button (click)=\"deleteTask(task, 'inProgress'); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n-          </div>\r\n+ \r\n         </div>\r\n       </div>\r\n     </div>\r\n \r\n"
+                },
+                {
+                    "date": 1746375272700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,13 @@\n     <!-- Colonne Terminé -->\r\n     <div class=\"task-column\">\r\n       <h3>Terminé</h3>\r\n       <div cdkDropList id=\"done-list\" [cdkDropListData]=\"done\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" *ngFor=\"let task of done\" cdkDrag>\r\n+        <div class=\"task-card\"\r\n+             *ngFor=\"let task of done\"\r\n+             cdkDrag\r\n+             [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n"
+                },
+                {
+                    "date": 1746375281525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,18 +105,18 @@\n               {{ task.priority }}\r\n             </span>\r\n           </div>\r\n           \r\n-          <div class=\"task-footer\">\r\n+       \r\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n               <button mat-icon-button (click)=\"deleteTask(task, 'done'); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n-          </div>\r\n+          <\r\n         </div>\r\n       </div>\r\n     </div>\r\n   </div>\r\n"
+                },
+                {
+                    "date": 1746377427670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     <!-- Colonne En cours -->\r\n     <div class=\"task-column\">\r\n       <h3>En cours</h3>\r\n       <div cdkDropList id=\"inProgress-list\" [cdkDropListData]=\"inProgress\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\"\r\n+        <div class=\"task-card\" cli\r\n              *ngFor=\"let task of inProgress\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n              >\r\n@@ -114,9 +114,9 @@\n               <button mat-icon-button (click)=\"deleteTask(task, 'done'); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n-          <\r\n+          \r\n         </div>\r\n       </div>\r\n     </div>\r\n   </div>\r\n"
+                },
+                {
+                    "date": 1746377443320,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     <!-- Colonne En cours -->\r\n     <div class=\"task-column\">\r\n       <h3>En cours</h3>\r\n       <div cdkDropList id=\"inProgress-list\" [cdkDropListData]=\"inProgress\" (cdkDropListDropped)=\"drop($event)\" class=\"task-list\">\r\n-        <div class=\"task-card\" cli\r\n+        <div class=\"task-card\" \r\n              *ngFor=\"let task of inProgress\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n              >\r\n"
+                },
+                {
+                    "date": 1746377450672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,8 +60,9 @@\n         <div class=\"task-card\" \r\n              *ngFor=\"let task of inProgress\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             (click)=\"expression\"\r\n              >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n"
+                },
+                {
+                    "date": 1746377456055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n         <div class=\"task-card\" \r\n              *ngFor=\"let task of inProgress\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n-             (click)=\"expression\"\r\n+             (click)=\"openTaskDetails(task)\"\r\n              >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n"
+                },
+                {
+                    "date": 1746377468467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n         <div class=\"task-card\"\r\n              *ngFor=\"let task of todo\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             \r\n              >\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n"
+                },
+                {
+                    "date": 1746377475422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n         <div class=\"task-card\"\r\n              *ngFor=\"let task of todo\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n-             \r\n+             (click)=\"openTaskDetails(task)\"\r\n              >\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n@@ -96,8 +96,9 @@\n         <div class=\"task-card\"\r\n              *ngFor=\"let task of done\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             (click)=\"openTaskDetails(task)\"\r\n              >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n"
                 }
             ],
             "date": 1744707614675,

@@ -103,31 +103,39 @@ public class TaskService implements ITask {
 
     @Override
     public TaskResponse addSubTask(String parentId, TaskRequest request) {
+        // Vérifier que la tâche parent existe
         Task parentTask = taskRepository.findById(parentId)
                 .orElseThrow(() -> new RuntimeException("Parent task not found with id: " + parentId));
 
-        // Initialiser subTasks si null
-        if (parentTask.getSubTasks() == null) {
-            parentTask.setSubTasks(new ArrayList<>());
-        }
-
+        // Vérifier que la phase existe
         Phase phase = phaseRepository.findById(request.getPhaseId())
                 .orElseThrow(() -> new RuntimeException("Phase not found with id: " + request.getPhaseId()));
 
+        // Créer la sous-tâche
         Task subTask = new Task();
         subTask.setName(request.getName());
+        subTask.setDescription(request.getDescription());
         subTask.setStartDate(request.getStartDate());
         subTask.setEndDate(request.getEndDate());
         subTask.setStatus(request.getStatus());
         subTask.setPriority(request.getPriority());
         subTask.setPhase(phase);
+        subTask.setParentTaskId(parentId); // Définir l'ID du parent
 
+        // Sauvegarder la sous-tâche
         Task savedSubTask = taskRepository.save(subTask);
+
+        // Ajouter la sous-tâche à la liste des sous-tâches du parent
+        if (parentTask.getSubTasks() == null) {
+            parentTask.setSubTasks(new ArrayList<>());
+        }
         parentTask.getSubTasks().add(savedSubTask);
         taskRepository.save(parentTask);
 
+        // Créer la réponse
         TaskResponse response = mapToTaskResponse(savedSubTask);
-        response.setParentTaskId(parentId);
+        response.setParentTaskId(parentId); // S'assurer que l'ID parent est dans la réponse
+
         return response;
     }
     @Override
@@ -148,6 +156,7 @@ public class TaskService implements ITask {
         response.setStatus(task.getStatus());
         response.setPriority(task.getPriority());
         response.setCreatedAt(task.getCreatedAt());
+        response.setParentTaskId(task.getParentTaskId());
 
         if (task.getPhase() != null) {
             response.setPhaseId(task.getPhase().getId());

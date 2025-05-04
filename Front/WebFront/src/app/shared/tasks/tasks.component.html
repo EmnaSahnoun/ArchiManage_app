@@ -24,7 +24,12 @@
     <div class="task-column">
       <h3>À faire</h3>
       <div cdkDropList id="todo-list" [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)" class="task-list">
-        <div class="task-card" *ngFor="let task of todo" cdkDrag >
+        <div class="task-card"
+             *ngFor="let task of todo"
+             cdkDrag
+             [ngClass]="{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}"
+             (click)="openTaskDetails(task)"
+             >
           <div class="task-header">
             <h4>{{ task.name }}</h4>
             <span class="task-priority" [class.high]="task.priority === 'HIGH'"
@@ -33,11 +38,9 @@
               {{ task.priority }}
             </span>
           </div>
-          <p class="task-description">{{ task.description || 'Pas de description' }}</p>
-          <div class="task-footer">
-            <small class="task-dates">
-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}
-            </small>
+          
+       
+            
             <div class="task-actions">
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
@@ -48,14 +51,19 @@
             </div>
           </div>
         </div>
-      </div>
+
     </div>
 
     <!-- Colonne En cours -->
     <div class="task-column">
       <h3>En cours</h3>
       <div cdkDropList id="inProgress-list" [cdkDropListData]="inProgress" (cdkDropListDropped)="drop($event)" class="task-list">
-        <div class="task-card" *ngFor="let task of inProgress" cdkDrag>
+        <div class="task-card" 
+             *ngFor="let task of inProgress"
+             cdkDrag
+             [ngClass]="{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}"
+             (click)="openTaskDetails(task)"
+             >
           <!-- Même structure que pour À faire -->
           <div class="task-header">
             <h4>{{ task.name }}</h4>
@@ -65,11 +73,9 @@
               {{ task.priority }}
             </span>
           </div>
-          <p class="task-description">{{ task.description || 'Pas de description' }}</p>
-          <div class="task-footer">
-            <small class="task-dates">
-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}
-            </small>
+          
+   
+            
             <div class="task-actions">
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
@@ -78,7 +84,7 @@
                 <i class="bi bi-trash"></i>
               </button>
             </div>
-          </div>
+ 
         </div>
       </div>
     </div>
@@ -87,7 +93,12 @@
     <div class="task-column">
       <h3>Terminé</h3>
       <div cdkDropList id="done-list" [cdkDropListData]="done" (cdkDropListDropped)="drop($event)" class="task-list">
-        <div class="task-card" *ngFor="let task of done" cdkDrag>
+        <div class="task-card"
+             *ngFor="let task of done"
+             cdkDrag
+             [ngClass]="{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}"
+             (click)="openTaskDetails(task)"
+             >
           <!-- Même structure que pour À faire -->
           <div class="task-header">
             <h4>{{ task.name }}</h4>
@@ -97,11 +108,8 @@
               {{ task.priority }}
             </span>
           </div>
-          <p class="task-description">{{ task.description || 'Pas de description' }}</p>
-          <div class="task-footer">
-            <small class="task-dates">
-              {{ task.startDate | date:'dd/MM' }} - {{ task.endDate | date:'dd/MM' }}
-            </small>
+          
+       
             <div class="task-actions">
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
@@ -110,7 +118,7 @@
                 <i class="bi bi-trash"></i>
               </button>
             </div>
-          </div>
+          
         </div>
       </div>
     </div>

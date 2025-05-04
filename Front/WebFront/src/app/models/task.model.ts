@@ -13,6 +13,9 @@ export enum TaskStatus {
   }
   
   export interface Task {
+    subtasks: any;
+    attachments: any;
+    activities: any;
     _id?: string;
     name: string;
     description?: string;

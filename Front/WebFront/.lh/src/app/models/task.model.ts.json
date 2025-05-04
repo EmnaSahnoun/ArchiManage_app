@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1741770516763,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746377111835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,11 @@\n     CRITICAL = \"CRITICAL\"\r\n   }\r\n   \r\n   export interface Task {\r\n+    subtasks: any;\r\n+    attachments: any;\r\n+    activities: any;\r\n     _id?: string;\r\n     name: string;\r\n     description?: string;\r\n     startDate: Date;\r\n"
                 }
             ],
             "date": 1741770516763,

@@ -3,6 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from '../projects/projects.component';
 import { ProjectService } from '../../services/ProjectService';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tasks',
@@ -19,7 +22,9 @@ export class TasksComponent implements OnInit {
   phase:any;
   projet:any;
   constructor(private router: Router, private route: ActivatedRoute, 
-    private projectService:ProjectService
+    private projectService:ProjectService,
+     public dialog: MatDialog ,
+     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +40,11 @@ export class TasksComponent implements OnInit {
     this.projectService.getTaskByPhase(phaseId).subscribe({
       next: (task) => {
         this.tasks = task;
-        
+        this.tasks=this.tasks.filter((task: any) => task.parentTaskId=== null);
         // Appliquer le filtre une fois les projets chargés
         console.log("les tasks",this.tasks);
         // Pour chaque projet, récupérer les détails des phases
-      
+      this.organizeTasks(this.tasks);
         
       },
       error: (err) => {
@@ -49,13 +54,17 @@ export class TasksComponent implements OnInit {
     });
 
     
-    this.organizeTasks();
+    
   }
 
-  organizeTasks(): void {
-    this.todo = this.tasks.filter((task: any) => task.status === 'PENDING');
-    this.inProgress = this.tasks.filter((task: any) => task.status === 'IN_PROGRESS');
-    this.done = this.tasks.filter((task: any) => task.status === 'COMPLETED');
+  organizeTasks(tasks:any): void {
+    console.log("les tasks ",tasks)
+    this.todo = tasks.filter((task: any) => task.status === 'TODO');
+    this.inProgress = tasks.filter((task: any) => task.status === 'IN_PROGRESS');
+    this.done = tasks.filter((task: any) => task.status === 'COMPLETED');
+    console.log("les tasks to do",this.todo)
+    console.log("les tasks in progress",this.inProgress)
+    console.log("les tasks done",this.done)
   }
   switchPhase(newPhase: any) {
     if (newPhase._id !== this.phase?._id) {
@@ -139,5 +148,18 @@ export class TasksComponent implements OnInit {
       
   }
 
+  openTaskDetails(task: any): void {
+    // Ouvre le modal en utilisant le service NgbModal
+    const modalRef = this.modalService.open(TaskDetailsComponent, {
+      size: 'lg',           // Grande taille
+      centered: true,        // Centré verticalement
+      backdrop: 'static',    // Ne se ferme pas en cliquant à l'extérieur
+      keyboard: false        // Ne se ferme pas avec la touche Echap
+    });
+
+    // !!! IMPORTANT : Passer les données de la tâche au composant modal !!!
+    // NgbModal utilise componentInstance pour passer des données
+    modalRef.componentInstance.task = task;
+  }
   
 }
