@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Project } from '../projects/projects.component';
+import { ProjectService } from '../../services/ProjectService';
 
 @Component({
   selector: 'app-tasks',
@@ -8,80 +10,52 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent implements OnInit {
-  @Input()phase: any;
-  projectId: string = '';
   
+  projectId: string = '';
+  tasks:any[]=[];
   todo: any[] = [];
   inProgress: any[] = [];
   done: any[] = [];
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  phase:any;
+  projet:any;
+  constructor(private router: Router, private route: ActivatedRoute, 
+    private projectService:ProjectService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.projectId = params['id'];
-      const phaseId = params['phaseId'];
-      this.loadPhase(phaseId);
-    });
+    this.phase = history.state.phaseData;
+    this.projet = history.state.projectData;
+    console.log("phase dans task",this.phase)
+    this.loadTasks(this.phase.id);
+   
   }
 
-  loadPhase(phaseId: string): void {
-    const mockPhases = [
-      {
-        _id: "67c85299bae88e131703dd8e",
-        name: "Étude de Faisabilité",
-        description: "Analyse des contraintes techniques et réglementaires.",
-        startDate: "2025-01-10T00:00:00.000Z",
-        endDate: "2025-02-10T00:00:00.000Z",
-        tasks: [
-          {
-            _id: "67c8556dbae88e131703dda4",
-            name: "Analyse des contraintes techniques",
-            description: "Étudier les contraintes techniques du projet.",
-            status: "PENDING",
-            priority: "HIGH",
-            startDate: "2025-01-10T00:00:00.000Z",
-            endDate: "2025-01-30T00:00:00.000Z",
-            subTasks: [
-              {
-                _id: "67d03bc0497c0e90359d6cb7",
-                name: "Identifier les matériaux de construction",
-                description: "Rechercher et lister les matériaux adaptés aux contraintes techniques.",
-                status: "PENDING",
-                priority: "MEDIUM"
-              }
-            ]
-          },
-          {
-            _id: "67c8556dbae88e131703dda5",
-            name: "Analyse des contraintes réglementaires",
-            description: "Vérifier les normes et réglementations applicables.",
-            status: "IN_PROGRESS",
-            priority: "MEDIUM",
-            startDate: "2025-01-15T00:00:00.000Z",
-            endDate: "2025-02-05T00:00:00.000Z",
-            subTasks: []
-          }
-        ]
-      },
-      {
-        _id: "67c852e7bae88e131703dd92",
-        name: "Conception Détaillée",
-        description: "Élaboration des plans détaillés.",
-        startDate: "2025-02-15T00:00:00.000Z",
-        endDate: "2025-03-20T00:00:00.000Z",
-        tasks: []
-      }
-    ];
+  loadTasks(phaseId: string): void {
 
-    this.phase = mockPhases.find(p => p._id === phaseId);
+    this.projectService.getTaskByPhase(phaseId).subscribe({
+      next: (task) => {
+        this.tasks = task;
+        
+        // Appliquer le filtre une fois les projets chargés
+        console.log("les tasks",this.tasks);
+        // Pour chaque projet, récupérer les détails des phases
+      
+        
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des projets:', err);
+        
+      }
+    });
+
+    
     this.organizeTasks();
   }
 
   organizeTasks(): void {
-    this.todo = this.phase.tasks.filter((task: any) => task.status === 'PENDING');
-    this.inProgress = this.phase.tasks.filter((task: any) => task.status === 'IN_PROGRESS');
-    this.done = this.phase.tasks.filter((task: any) => task.status === 'COMPLETED');
+    this.todo = this.tasks.filter((task: any) => task.status === 'PENDING');
+    this.inProgress = this.tasks.filter((task: any) => task.status === 'IN_PROGRESS');
+    this.done = this.tasks.filter((task: any) => task.status === 'COMPLETED');
   }
   switchPhase(newPhase: any) {
     if (newPhase._id !== this.phase?._id) {

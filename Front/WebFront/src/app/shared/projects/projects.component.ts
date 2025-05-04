@@ -181,12 +181,16 @@ async checkPhaseStatus(phase: any): Promise<string> {
     // Récupérer toutes les tâches de la phase
     const tasks = await this.projectService.getTaskByPhase(phase.id).toPromise();
     
+    if (!tasks || tasks.length === 0) {
+      return 'NOT_STARTED';
+    }
+
     // Vérifier si toutes les tâches sont complétées
     const allTasksCompleted = tasks.every((task: any) => task.status === 'COMPLETED');
-    
     return allTasksCompleted ? 'COMPLETED' : 'IN_PROGRESS';
+    
   } catch (error) {
-    console.error(`Erreur tâches phase ${phase.id}:`, error);
+    console.error(`Erreur lors de la récupération des tâches pour la phase ${phase.id}:`, error);
     return 'ERROR';
   }
 }

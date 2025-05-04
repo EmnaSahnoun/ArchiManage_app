@@ -18,6 +18,7 @@ public class Task {
     @Id
     private String id;
     private String name;
+    private String description;
     private Date startDate;
     private Date endDate;
     private TaskStatus status;
@@ -30,6 +31,14 @@ public class Task {
 
     @DBRef
     private Phase phase;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

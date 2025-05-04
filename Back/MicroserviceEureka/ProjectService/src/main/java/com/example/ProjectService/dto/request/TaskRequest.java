@@ -12,7 +12,7 @@ import java.util.Date;
 public class TaskRequest {
     @NotBlank(message = "Task name is required")
     private String name;
-
+    private String description;
     private Date startDate;
     private Date endDate;
 
@@ -25,6 +25,14 @@ public class TaskRequest {
     @NotNull(message = "Phase ID is required")
     private String phaseId;
     private String parentTaskId;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getName() {
         return name;

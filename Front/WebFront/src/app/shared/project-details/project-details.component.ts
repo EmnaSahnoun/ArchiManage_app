@@ -429,7 +429,11 @@ openTasks(phase: any): void {
   if (this.expandedPhaseId === null) {
     console.log('Ouvrir les tâches pour la phase:', phase.name);
    
-  this.router.navigate(['project', this.projet.id, 'phase', phase.id]);
+  this.router.navigate(['project', this.projet.id, 'phase', phase.id],
+    {state:{phaseData:phase,
+      projectData:this.projet
+    }}
+  );
 }}
 togglePhaseExpansion(phaseId: string): void {
   if (this.expandedPhaseId === phaseId) {

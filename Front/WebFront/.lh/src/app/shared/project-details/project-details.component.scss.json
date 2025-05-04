@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 74,
             "patches": [
                 {
                     "date": 1746257287810,
@@ -256,6 +256,54 @@
                 {
                     "date": 1746356514120,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -225,9 +225,16 @@\n   &:nth-child(1),\r\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n- &:nth-child(2) {  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;vertical-align: middle; } // Adjust max-width as needed\r\n+  &:nth-child(2) {\r\n+    white-space: nowrap;      // Empêche le retour à la ligne\r\n+    overflow: hidden;         // Cache ce qui dépasse\r\n+    text-overflow: ellipsis;  // Ajoute \"...\"\r\n+    max-width: 250px;         // Largeur max avant troncature (ajustez si besoin)\r\n+    vertical-align: middle;   // Alignement vertical par défaut\r\n+    transition: all 0.3s ease; // Ajoute une transition douce\r\n+  }\r\n   // Styles for the description cell when its row is expanded\r\n   &.expanded:nth-child(2) {\r\n     white-space: normal; // Allow text wrapping\r\n     overflow: visible;   // Show overflow content\r\n@@ -235,8 +242,33 @@\n     max-width: none;     // Remove max-width constraint\r\n     vertical-align: top; // Align text to top might look better when expanded\r\n     background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight\r\n   }\r\n+  .inline-edit-input, .inline-edit-textarea {\r\n+    width: 95%; // Prend presque toute la largeur de la cellule\r\n+    padding: 6px 8px;\r\n+    border: 1px solid $border-color;\r\n+    border-radius: 4px;\r\n+    font-size: inherit; // Garde la taille de police du tableau\r\n+    font-family: inherit;\r\n+    box-sizing: border-box;\r\n+    &:focus {\r\n+      outline: none;\r\n+      border-color: $primary-color;\r\n+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);\r\n+    }\r\n+  }\r\n+  .inline-edit-textarea {\r\n+    resize: vertical; // Permet le redimensionnement vertical\r\n+    min-height: 40px; // Hauteur minimale\r\n+  }\r\n+  .inline-edit-dates {\r\n+    display: flex;\r\n+    gap: 5px;\r\n+    align-items: center;\r\n+    .date-input { width: auto; } // Ajuste la largeur des inputs date\r\n+  }\r\n+\r\n   &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap\r\n \r\n }\r\n tbody{tr{\r\n"
+                },
+                {
+                    "date": 1746357791296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -243,11 +243,16 @@\n     vertical-align: top; // Align text to top might look better when expanded\r\n     background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight\r\n   }\r\n   .inline-edit-input, .inline-edit-textarea {\r\n-    width: 95%; // Prend presque toute la largeur de la cellule\r\n-    padding: 6px 8px;\r\n-    border: 1px solid $border-color;\r\n+    appearance: none;\r\n+    background: transparent;\r\n+    border: none; // Pas de bordure par défaut\r\n+    outline: none; // Pas d'outline par défaut\r\n+\r\n+    width: 100%; // Prend toute la largeur de la cellule\r\n+    padding: 0; // Ajustez si nécessaire pour aligner avec le texte du span\r\n+    margin: 0;\r\n     border-radius: 4px;\r\n     font-size: inherit; // Garde la taille de police du tableau\r\n     font-family: inherit;\r\n     box-sizing: border-box;\r\n"
+                },
+                {
+                    "date": 1746357838874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -254,8 +254,9 @@\n     margin: 0;\r\n     border-radius: 4px;\r\n     font-size: inherit; // Garde la taille de police du tableau\r\n     font-family: inherit;\r\n+    line-height: inherit; \r\n     box-sizing: border-box;\r\n     &:focus {\r\n       outline: none;\r\n       border-color: $primary-color;\r\n"
+                },
+                {
+                    "date": 1746357845836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -256,8 +256,9 @@\n     font-size: inherit; // Garde la taille de police du tableau\r\n     font-family: inherit;\r\n     line-height: inherit; \r\n     box-sizing: border-box;\r\n+    border-bottom: 1px dashed $border-color;\r\n     &:focus {\r\n       outline: none;\r\n       border-color: $primary-color;\r\n       box-shadow: 0 0 0 2px rgba($primary-color, 0.2);\r\n"
+                },
+                {
+                    "date": 1746357855927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -258,11 +258,11 @@\n     line-height: inherit; \r\n     box-sizing: border-box;\r\n     border-bottom: 1px dashed $border-color;\r\n     &:focus {\r\n-      outline: none;\r\n-      border-color: $primary-color;\r\n-      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);\r\n+      border-bottom: 1px solid $primary-color; // Bordure plus visible au focus\r\n+      background-color: lighten($background-color, 2%); // Léger fond au focus\r\n+  \r\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n"
+                },
+                {
+                    "date": 1746357868503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -265,9 +265,11 @@\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n-    min-height: 40px; // Hauteur minimale\r\n+    min-height: calc(1em * var(--bs-body-line-height, 1.5)); // Hauteur minimale basée sur la ligne\r\n+    overflow: auto; // Ajoute une barre de défilement si nécessaire\r\n+ \r\n   }\r\n   .inline-edit-dates {\r\n     display: flex;\r\n     gap: 5px;\r\n"
+                },
+                {
+                    "date": 1746358073322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -247,9 +247,9 @@\n     appearance: none;\r\n     background: transparent;\r\n     border: none; // Pas de bordure par défaut\r\n     outline: none; // Pas d'outline par défaut\r\n-\r\n+    box-shadow: none;\r\n     width: 100%; // Prend toute la largeur de la cellule\r\n     padding: 0; // Ajustez si nécessaire pour aligner avec le texte du span\r\n     margin: 0;\r\n     border-radius: 4px;\r\n"
+                },
+                {
+                    "date": 1746358089800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -249,9 +249,9 @@\n     border: none; // Pas de bordure par défaut\r\n     outline: none; // Pas d'outline par défaut\r\n     box-shadow: none;\r\n     width: 100%; // Prend toute la largeur de la cellule\r\n-    padding: 0; // Ajustez si nécessaire pour aligner avec le texte du span\r\n+    padding: 1px 2px;// Ajustez si nécessaire pour aligner avec le texte du span\r\n     margin: 0;\r\n     border-radius: 4px;\r\n     font-size: inherit; // Garde la taille de police du tableau\r\n     font-family: inherit;\r\n"
+                },
+                {
+                    "date": 1746358106395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,8 +255,9 @@\n     border-radius: 4px;\r\n     font-size: inherit; // Garde la taille de police du tableau\r\n     font-family: inherit;\r\n     line-height: inherit; \r\n+    color: inherit;\r\n     box-sizing: border-box;\r\n     border-bottom: 1px dashed $border-color;\r\n     &:focus {\r\n       border-bottom: 1px solid $primary-color; // Bordure plus visible au focus\r\n"
+                },
+                {
+                    "date": 1746358125977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -257,9 +257,9 @@\n     font-family: inherit;\r\n     line-height: inherit; \r\n     color: inherit;\r\n     box-sizing: border-box;\r\n-    border-bottom: 1px dashed $border-color;\r\n+    border-bottom: 1px dashed transparent;\r\n     &:focus {\r\n       border-bottom: 1px solid $primary-color; // Bordure plus visible au focus\r\n       background-color: lighten($background-color, 2%); // Léger fond au focus\r\n   \r\n"
+                },
+                {
+                    "date": 1746358195173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -261,9 +261,9 @@\n     border-bottom: 1px dashed transparent;\r\n     &:focus {\r\n       border-bottom: 1px solid $primary-color; // Bordure plus visible au focus\r\n       background-color: lighten($background-color, 2%); // Léger fond au focus\r\n-  \r\n+      \r\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n"
+                },
+                {
+                    "date": 1746358215466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -261,14 +261,14 @@\n     border-bottom: 1px dashed transparent;\r\n     &:focus {\r\n       border-bottom: 1px solid $primary-color; // Bordure plus visible au focus\r\n       background-color: lighten($background-color, 2%); // Léger fond au focus\r\n-      \r\n+      outline: none;\r\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n-    min-height: calc(1em * var(--bs-body-line-height, 1.5)); // Hauteur minimale basée sur la ligne\r\n+    min-height: auto // Hauteur minimale basée sur la ligne\r\n     overflow: auto; // Ajoute une barre de défilement si nécessaire\r\n  \r\n   }\r\n   .inline-edit-dates {\r\n"
+                },
+                {
+                    "date": 1746358233206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -266,11 +266,11 @@\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n-    min-height: auto // Hauteur minimale basée sur la ligne\r\n+    min-height: auto; // Hauteur minimale basée sur la ligne\r\n     overflow: auto; // Ajoute une barre de défilement si nécessaire\r\n- \r\n+    height: auto;\r\n   }\r\n   .inline-edit-dates {\r\n     display: flex;\r\n     gap: 5px;\r\n"
                 }
             ],
             "date": 1746257287810,

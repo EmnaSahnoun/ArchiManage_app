@@ -152,9 +152,9 @@ export class ProjectService {
         );
       }
       
-    getTaskByPhase(idphase:string): Observable<any> {
+    getTaskByPhase(idphase:string): Observable<any[]> {
       console.log("l'url",`${this.projetUrl}/task/phase/${idphase}`);
-      return this.http.get<any>(`${this.projetUrl}/task/phase/${idphase}`, { 
+      return this.http.get<any[]>(`${this.projetUrl}/task/phase/${idphase}`, { 
         headers: this.getApiHeaders()
       }).pipe(
         catchError(this.handleError)

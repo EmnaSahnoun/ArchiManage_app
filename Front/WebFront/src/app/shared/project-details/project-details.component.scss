@@ -244,22 +244,32 @@ tr {
     background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight
   }
   .inline-edit-input, .inline-edit-textarea {
-    width: 95%; // Prend presque toute la largeur de la cellule
-    padding: 6px 8px;
-    border: 1px solid $border-color;
+    appearance: none;
+    background: transparent;
+    border: none; // Pas de bordure par défaut
+    outline: none; // Pas d'outline par défaut
+    box-shadow: none;
+    width: 100%; // Prend toute la largeur de la cellule
+    padding: 1px 2px;// Ajustez si nécessaire pour aligner avec le texte du span
+    margin: 0;
     border-radius: 4px;
     font-size: inherit; // Garde la taille de police du tableau
     font-family: inherit;
+    line-height: inherit; 
+    color: inherit;
     box-sizing: border-box;
+    border-bottom: 1px dashed transparent;
     &:focus {
+      border-bottom: 1px solid $primary-color; // Bordure plus visible au focus
+      background-color: lighten($background-color, 2%); // Léger fond au focus
       outline: none;
-      border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
     }
   }
   .inline-edit-textarea {
     resize: vertical; // Permet le redimensionnement vertical
-    min-height: 40px; // Hauteur minimale
+    min-height: auto; // Hauteur minimale basée sur la ligne
+    overflow: auto; // Ajoute une barre de défilement si nécessaire
+    height: auto;
   }
   .inline-edit-dates {
     display: flex;

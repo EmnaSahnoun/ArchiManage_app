@@ -11,6 +11,7 @@ import java.util.List;
 public class TaskResponse {
     private String id;
     private String name;
+    private String description;
     private Date startDate;
     private Date endDate;
     private TaskStatus status;
@@ -19,6 +20,14 @@ public class TaskResponse {
     private String parentTaskId;
     private List<String> subTaskIds;
     private Date createdAt;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

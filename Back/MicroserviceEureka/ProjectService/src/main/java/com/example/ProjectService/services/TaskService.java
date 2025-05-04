@@ -142,6 +142,7 @@ public class TaskService implements ITask {
         TaskResponse response = new TaskResponse();
         response.setId(task.getId());
         response.setName(task.getName());
+        response.setDescription(task.getDescription());
         response.setStartDate(task.getStartDate());
         response.setEndDate(task.getEndDate());
         response.setStatus(task.getStatus());

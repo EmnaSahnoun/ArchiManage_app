@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 102,
+            "activePatchIndex": 136,
             "patches": [
                 {
                     "date": 1744707473598,
@@ -416,6 +416,142 @@
                 {
                     "date": 1744730303822,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,9 +152,9 @@\n     }\r\n   }\r\n \r\n   deleteTask(task: any, list: string): void {\r\n-          if (list === 'todo') {\r\n+      if (list === 'todo') {\r\n         this.todo = this.todo.filter(t => t._id !== task._id);\r\n       } else if (list === 'inProgress') {\r\n         this.inProgress = this.inProgress.filter(t => t._id !== task._id);\r\n       } else if (list === 'done') {\r\n@@ -163,5 +163,7 @@\n       // Supprimer de la liste principale\r\n       this.phase.tasks = this.phase.tasks.filter((t: any) => t._id !== task._id);\r\n       \r\n   }\r\n+\r\n+  \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746359339264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       this.loadPhase(phaseId);\r\n     });\r\n   }\r\n \r\n-  loadPhase(phaseId: string): void {\r\n+  loadTasks(phaseId: string): void {\r\n     const mockPhases = [\r\n       {\r\n         _id: \"67c85299bae88e131703dd8e\",\r\n         name: \"Étude de Faisabilité\",\r\n"
+                },
+                {
+                    "date": 1746359344770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n       const phaseId = params['phaseId'];\r\n-      this.loadPhase(phaseId);\r\n+      this.loadTasks(phaseId);\r\n     });\r\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n"
+                },
+                {
+                    "date": 1746360023976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n     });\r\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n+    \r\n     const mockPhases = [\r\n       {\r\n         _id: \"67c85299bae88e131703dd8e\",\r\n         name: \"Étude de Faisabilité\",\r\n"
+                },
+                {
+                    "date": 1746360029935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,57 +25,11 @@\n     });\r\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n-    \r\n-    const mockPhases = [\r\n-      {\r\n-        _id: \"67c85299bae88e131703dd8e\",\r\n-        name: \"Étude de Faisabilité\",\r\n-        description: \"Analyse des contraintes techniques et réglementaires.\",\r\n-        startDate: \"2025-01-10T00:00:00.000Z\",\r\n-        endDate: \"2025-02-10T00:00:00.000Z\",\r\n-        tasks: [\r\n-          {\r\n-            _id: \"67c8556dbae88e131703dda4\",\r\n-            name: \"Analyse des contraintes techniques\",\r\n-            description: \"Étudier les contraintes techniques du projet.\",\r\n-            status: \"PENDING\",\r\n-            priority: \"HIGH\",\r\n-            startDate: \"2025-01-10T00:00:00.000Z\",\r\n-            endDate: \"2025-01-30T00:00:00.000Z\",\r\n-            subTasks: [\r\n-              {\r\n-                _id: \"67d03bc0497c0e90359d6cb7\",\r\n-                name: \"Identifier les matériaux de construction\",\r\n-                description: \"Rechercher et lister les matériaux adaptés aux contraintes techniques.\",\r\n-                status: \"PENDING\",\r\n-                priority: \"MEDIUM\"\r\n-              }\r\n-            ]\r\n-          },\r\n-          {\r\n-            _id: \"67c8556dbae88e131703dda5\",\r\n-            name: \"Analyse des contraintes réglementaires\",\r\n-            description: \"Vérifier les normes et réglementations applicables.\",\r\n-            status: \"IN_PROGRESS\",\r\n-            priority: \"MEDIUM\",\r\n-            startDate: \"2025-01-15T00:00:00.000Z\",\r\n-            endDate: \"2025-02-05T00:00:00.000Z\",\r\n-            subTasks: []\r\n-          }\r\n-        ]\r\n-      },\r\n-      {\r\n-        _id: \"67c852e7bae88e131703dd92\",\r\n-        name: \"Conception Détaillée\",\r\n-        description: \"Élaboration des plans détaillés.\",\r\n-        startDate: \"2025-02-15T00:00:00.000Z\",\r\n-        endDate: \"2025-03-20T00:00:00.000Z\",\r\n-        tasks: []\r\n-      }\r\n-    ];\r\n \r\n+   \r\n+\r\n     this.phase = mockPhases.find(p => p._id === phaseId);\r\n     this.organizeTasks();\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1746360035392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   loadTasks(phaseId: string): void {\r\n \r\n    \r\n \r\n-    this.phase = mockPhases.find(p => p._id === phaseId);\r\n+    \r\n     this.organizeTasks();\r\n   }\r\n \r\n   organizeTasks(): void {\r\n"
+                },
+                {
+                    "date": 1746360120767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,23 @@\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n \r\n-   \r\n+    this.projectService.getphaseByIdProject(this.projectId).subscribe({\r\n+      next: (phase) => {\r\n+        this.phases = phase;\r\n+        \r\n+        // Appliquer le filtre une fois les projets chargés\r\n+        console.log(\"les phases\",this.phases);\r\n+        // Pour chaque projet, récupérer les détails des phases\r\n+      \r\n+        \r\n+      },\r\n+      error: (err) => {\r\n+        console.error('Erreur lors de la récupération des projets:', err);\r\n+        \r\n+      }\r\n+    });\r\n \r\n     \r\n     this.organizeTasks();\r\n   }\r\n"
+                },
+                {
+                    "date": 1746360127155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n-  constructor(private router: Router, private route: ActivatedRoute) {}\r\n+  constructor(private router: Router, private route: ActivatedRoute, ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n"
+                },
+                {
+                    "date": 1746360132497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,11 @@\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n-  constructor(private router: Router, private route: ActivatedRoute, ) {}\r\n+  constructor(private router: Router, private route: ActivatedRoute, \r\n+    private \r\n+  ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n"
+                },
+                {
+                    "date": 1746360139427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n-    private \r\n+    private project\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n"
+                },
+                {
+                    "date": 1746360145241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n-    private project\r\n+    private projectService:\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n"
+                },
+                {
+                    "date": 1746360150490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n-    private projectService:\r\n+    private projectService:Proj\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n"
+                },
+                {
+                    "date": 1746360156444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';\r\n import { Component, Input, OnInit } from '@angular/core';\r\n import { ActivatedRoute, Router } from '@angular/router';\r\n+import { Project } from '../projects/projects.component';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n \r\n @Component({\r\n   selector: 'app-tasks',\r\n   templateUrl: './tasks.component.html',\r\n@@ -15,9 +17,9 @@\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n-    private projectService:Proj\r\n+    private projectService:ProjectService\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n"
+                },
+                {
+                    "date": 1746360162023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n \r\n-    this.projectService.getphaseByIdProject(this.projectId).subscribe({\r\n+    this.projectService.get(this.projectId).subscribe({\r\n       next: (phase) => {\r\n         this.phases = phase;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n"
+                },
+                {
+                    "date": 1746360172026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,10 @@\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n \r\n-    this.projectService.get(this.projectId).subscribe({\r\n+    this.projectService.getTaskByPhase(  loadTasks(phaseId: string): void {\r\n+    ).subscribe({\r\n       next: (phase) => {\r\n         this.phases = phase;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n"
+                },
+                {
+                    "date": 1746360181276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,9 @@\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n \r\n-    this.projectService.getTaskByPhase(  loadTasks(phaseId: string): void {\r\n-    ).subscribe({\r\n+    this.projectService.getTaskByPhase(phaseId).subscribe({\r\n       next: (phase) => {\r\n         this.phases = phase;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n"
+                },
+                {
+                    "date": 1746360190018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class TasksComponent implements OnInit {\r\n   @Input()phase: any;\r\n   projectId: string = '';\r\n-  \r\n+  tasks\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n"
+                },
+                {
+                    "date": 1746360198231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class TasksComponent implements OnInit {\r\n   @Input()phase: any;\r\n   projectId: string = '';\r\n-  tasks\r\n+  tasks:any[]=[]\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n"
+                },
+                {
+                    "date": 1746360204002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class TasksComponent implements OnInit {\r\n   @Input()phase: any;\r\n   projectId: string = '';\r\n-  tasks:any[]=[]\r\n+  tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n \r\n@@ -32,9 +32,9 @@\n   loadTasks(phaseId: string): void {\r\n \r\n     this.projectService.getTaskByPhase(phaseId).subscribe({\r\n       next: (phase) => {\r\n-        this.phases = phase;\r\n+        this.tasks = phase;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n         console.log(\"les phases\",this.phases);\r\n         // Pour chaque projet, récupérer les détails des phases\r\n"
+                },
+                {
+                    "date": 1746360209180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,10 +31,10 @@\n \r\n   loadTasks(phaseId: string): void {\r\n \r\n     this.projectService.getTaskByPhase(phaseId).subscribe({\r\n-      next: (phase) => {\r\n-        this.tasks = phase;\r\n+      next: (task) => {\r\n+        this.tasks = task;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n         console.log(\"les phases\",this.phases);\r\n         // Pour chaque projet, récupérer les détails des phases\r\n"
+                },
+                {
+                    "date": 1746360216394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n       next: (task) => {\r\n         this.tasks = task;\r\n         \r\n         // Appliquer le filtre une fois les projets chargés\r\n-        console.log(\"les phases\",this.phases);\r\n+        console.log(\"les tasks\",this.tasks);\r\n         // Pour chaque projet, récupérer les détails des phases\r\n       \r\n         \r\n       },\r\n"
+                },
+                {
+                    "date": 1746360227432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     this.organizeTasks();\r\n   }\r\n \r\n   organizeTasks(): void {\r\n-    this.todo = this.phase.tasks.filter((task: any) => task.status === 'PENDING');\r\n+    this.todo = this.tasks.filter((task: any) => task.status === 'PENDING');\r\n     this.inProgress = this.phase.tasks.filter((task: any) => task.status === 'IN_PROGRESS');\r\n     this.done = this.phase.tasks.filter((task: any) => task.status === 'COMPLETED');\r\n   }\r\n   switchPhase(newPhase: any) {\r\n"
+                },
+                {
+                    "date": 1746360233453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,10 +52,10 @@\n   }\r\n \r\n   organizeTasks(): void {\r\n     this.todo = this.tasks.filter((task: any) => task.status === 'PENDING');\r\n-    this.inProgress = this.phase.tasks.filter((task: any) => task.status === 'IN_PROGRESS');\r\n-    this.done = this.phase.tasks.filter((task: any) => task.status === 'COMPLETED');\r\n+    this.inProgress = this.tasks.filter((task: any) => task.status === 'IN_PROGRESS');\r\n+    this.done = this.tasks.filter((task: any) => task.status === 'COMPLETED');\r\n   }\r\n   switchPhase(newPhase: any) {\r\n     if (newPhase._id !== this.phase?._id) {\r\n       this.router.navigate(['phase', newPhase._id], {\r\n"
+                },
+                {
+                    "date": 1746360424352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n+      console.log\r\n       const phaseId = params['phaseId'];\r\n       this.loadTasks(phaseId);\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1746360431704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,11 @@\n \r\n   ngOnInit(): void {\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n-      console.log\r\n+      console.log('Project ID:', this.projectId);\r\n       const phaseId = params['phaseId'];\r\n+      con\r\n       this.loadTasks(phaseId);\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1746360437107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n       console.log('Project ID:', this.projectId);\r\n       const phaseId = params['phaseId'];\r\n-      con\r\n+      console.log('Phase ID:', phaseId);\r\n       this.loadTasks(phaseId);\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1746360804003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n-\r\n+  phase\r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n     private projectService:ProjectService\r\n   ) {}\r\n \r\n"
+                },
+                {
+                    "date": 1746360811487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n-  phase\r\n+  phase:any;\r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n     private projectService:ProjectService\r\n   ) {}\r\n \r\n"
+                },
+                {
+                    "date": 1746360830235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n-  phase:any;\r\n+  phase!:any;\r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n     private projectService:ProjectService\r\n   ) {}\r\n \r\n"
+                },
+                {
+                    "date": 1746360841080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   templateUrl: './tasks.component.html',\r\n   styleUrls: ['./tasks.component.scss']\r\n })\r\n export class TasksComponent implements OnInit {\r\n-  @Input()phase: any;\r\n+  \r\n   projectId: string = '';\r\n   tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n"
+                },
+                {
+                    "date": 1746360849921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,14 +15,15 @@\n   tasks:any[]=[];\r\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n-  phase!:any;\r\n+  phase:any;\r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n     private projectService:ProjectService\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n+    this.phase = history.state.phaseData;\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n       console.log('Project ID:', this.projectId);\r\n       const phaseId = params['phaseId'];\r\n"
+                },
+                {
+                    "date": 1746360856648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.phase = history.state.phaseData;\r\n+    console.log()\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n       console.log('Project ID:', this.projectId);\r\n       const phaseId = params['phaseId'];\r\n"
+                },
+                {
+                    "date": 1746360864507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.phase = history.state.phaseData;\r\n-    console.log()\r\n+    console.log(\"phase dans task\")\r\n     this.route.params.subscribe(params => {\r\n       this.projectId = params['id'];\r\n       console.log('Project ID:', this.projectId);\r\n       const phaseId = params['phaseId'];\r\n"
+                },
+                {
+                    "date": 1746360901105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   todo: any[] = [];\r\n   inProgress: any[] = [];\r\n   done: any[] = [];\r\n   phase:any;\r\n-  projet:any\r\n+  projet:any.\r\n   constructor(private router: Router, private route: ActivatedRoute, \r\n     private projectService:ProjectService\r\n   ) {}\r\n \r\n"
+                },
+                {
+                    "date": 1746360948389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n   ngOnInit(): void {\r\n     this.phase = history.state.phaseData;\r\n     this.projet = history.state.projectData;\r\n     console.log(\"phase dans task\",this.phase)\r\n-    this.loadTasks(thisphase.id);\r\n+    this.loadTasks(this.phase.id);\r\n    \r\n   }\r\n \r\n   loadTasks(phaseId: string): void {\r\n"
                 }
             ],
             "date": 1744707473598,
