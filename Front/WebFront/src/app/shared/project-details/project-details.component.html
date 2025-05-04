@@ -81,39 +81,79 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let phase of phases"(click)="openTasks(phase)" >
-            <td  >{{ phase.name }}</td>
-            <td >{{ phase.description || 'Pas de description' }}</td>
-            <td >{{ phase.startDate | date:'dd/MM/yyyy'}} - {{ phase.endDate | date:'dd/MM/yyyy' }}</td>
-            <td >{{ phase.taskIds?.length ?? 0 }}</td>
+          
+          <ng-container *ngFor="let phase of phases">
+            <tr (click)="editingPhaseId !== phase.id && openTasks(phase)"
+                [class.editing-row]="editingPhaseId === phase.id"> <!-- Classe pour la ligne en édition -->
 
-            
-            <td>
-              <div class="members-container">
-                <div class="members">
-                  <button class="members-action-button" (click)="openPhaseAccesssModal(phase)" matTooltip="Voir/Gérer les membres">
-                    <mat-icon>group</mat-icon>
-                  </button>
-                  
+              <!-- Nom de la Phase -->
+              <td>
+                <span *ngIf="editingPhaseId !== phase.id">{{ phase.name }}</span>
+                <input *ngIf="editingPhaseId === phase.id" type="text" [(ngModel)]="editedPhaseData.name" class="inline-edit-input" (click)="$event.stopPropagation()">
+              </td>
+
+              <!-- Description -->
+              <td [class.expanded]="expandedPhaseId === phase.id && editingPhaseId !== phase.id">
+                <span *ngIf="editingPhaseId !== phase.id">{{ phase.description || 'Pas de description' }}</span>
+                <textarea *ngIf="editingPhaseId === phase.id" [(ngModel)]="editedPhaseData.description" class="inline-edit-textarea" rows="2" (click)="$event.stopPropagation()"></textarea>
+              </td>
+
+              <!-- Dates -->
+              <td>
+                <span *ngIf="editingPhaseId !== phase.id">{{ phase.startDate | date:'dd/MM/yyyy'}} - {{ phase.endDate | date:'dd/MM/yyyy' }}</span>
+                 <!-- Utilisation de input type="date" -->
+                 <div *ngIf="editingPhaseId === phase.id" class="inline-edit-dates" (click)="$event.stopPropagation()">
+                   <input type="date" [(ngModel)]="editedPhaseData.startDate" class="inline-edit-input date-input"> -
+                   <input type="date" [(ngModel)]="editedPhaseData.endDate" class="inline-edit-input date-input">
+                 </div>
+              </td>
+
+              <!-- Nombre de Tâches (Non éditable) -->
+              <td >{{ phase.taskIds?.length ?? 0 }}</td>
+
+              <!-- Membres (Non éditable inline ici) -->
+              <td>
+                <div class="members-container">
+                  <div class="members">
+                    <button class="members-action-button" (click)="openPhaseAccesssModal(phase); $event.stopPropagation()" matTooltip="Voir/Gérer les membres">
+                      <mat-icon>group</mat-icon>
+                    </button>
+                  </div>
                 </div>
-            
-                <button (click)="openMemberModal(phase)" class="add-member-btn">
-                  <i class="bi bi-plus-circle icon"></i>
-                </button>
-              </div>
-            </td>
-            
-            
-        
-            <td>
-              <button mat-icon-button (click)="editPhase(phase)">
-                <i class="bi bi-pencil icon" ></i>
-              </button>
-              <button mat-icon-button (click)="deletePhase(phase)">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
+              </td>
+
+              <!-- Actions -->
+              <td>
+                <!-- Mode Normal -->
+                <ng-container *ngIf="editingPhaseId !== phase.id">
+                  <button mat-icon-button class="view-btn-phase"
+                          (click)="togglePhaseExpansion(phase.id); $event.stopPropagation()" matTooltip="Voir/Masquer détails">
+                    <i class="bi" [class.bi-eye]="expandedPhaseId !== phase.id" [class.bi-eye-slash]="expandedPhaseId === phase.id"></i>
+                  </button>
+                  <button mat-icon-button class="edit-btn-phase" (click)="editPhase(phase); $event.stopPropagation()" matTooltip="Modifier la phase">
+                    <i class="bi bi-pencil icon"></i>
+                  </button>
+                  <button mat-icon-button class="delete-btn-phase" (click)="deletePhase(phase); $event.stopPropagation()" matTooltip="Supprimer la phase">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </ng-container>
+
+                <!-- Mode Édition -->
+                <ng-container *ngIf="editingPhaseId === phase.id">
+                   <button mat-icon-button class="save-btn-phase" (click)="savePhaseEdit(); $event.stopPropagation()" [disabled]="isLoading" matTooltip="Enregistrer">
+                     <i class="bi bi-check-lg icon"></i>
+                   </button>
+                   <button mat-icon-button class="cancel-btn-phase" (click)="cancelPhaseEdit(); $event.stopPropagation()" [disabled]="isLoading" matTooltip="Annuler">
+                     <i class="bi bi-x-lg icon"></i>
+                   </button>
+                 </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+       
+
+                        
+          
         </tbody>
         
       </table>

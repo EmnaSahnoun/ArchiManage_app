@@ -38,12 +38,12 @@ export class ProjectService {
         );
       }
       updateProject(idProject: string, projectData: any): Observable<any> {
-        const fullAgenceData = {
+        const data = {
             ...projectData,
             id: idProject // On s'assure que l'ID est bien inclus
         };
     
-        return this.http.put(`${this.projetUrl}/project/${idProject}`, fullAgenceData, {
+        return this.http.put(`${this.projetUrl}/project/${idProject}`, data, {
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError)
@@ -79,6 +79,28 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
+      deletePhase(idPhase: string): Observable<any> {
+      
+        const url = `${this.projetUrl}/phase/${idPhase}`;
+        const headers = this.getApiHeaders();
+        
+        return this.http.delete(url, { headers }).pipe(
+            tap(() => console.log(`Phase ${idPhase} supprimée`)),
+            catchError(this.handleError)
+        );
+    }
+    updatePhase(idPhase: string, phaseData: any): Observable<any> {
+      const data = {
+          ...phaseData,
+          id: idPhase // On s'assure que l'ID est bien inclus
+      };
+  
+      return this.http.put(`${this.projetUrl}/phase/${idPhase}`, data, {
+          headers: this.getApiHeaders()
+      }).pipe(
+          catchError(this.handleError)
+      );
+  }
       getProjectAccessByIdProject(idproject:string): Observable<any[]> {
         console.log("l'url",`${this.projetUrl}/project-accesses/project/${idproject}`);
         return this.http.get<any[]>(`${this.projetUrl}/project-accesses/project/${idproject}`, { 
@@ -138,7 +160,14 @@ export class ProjectService {
         catchError(this.handleError)
       );
     }
-
+    createTask(taskData: any): Observable<any> {
+      const url = `${this.projetUrl}/task`;
+      const headers = this.getApiHeaders();
+    
+      return this.http.post(url, taskData, { headers }).pipe(
+        catchError(this.handleError)
+      );
+    }
       private getApiHeaders(): HttpHeaders {
         const token = this.authService.getAccessToken();
         return new HttpHeaders({

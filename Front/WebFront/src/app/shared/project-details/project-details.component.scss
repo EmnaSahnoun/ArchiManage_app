@@ -1,3 +1,22 @@
+
+$primary-color: #41B3A3;
+$accent-color: #E27D60;
+$warn-color: #F44336; // For delete actions
+$success-color: #4CAF50; // For save actions
+$cancel-color: #6c757d; // For cancel actions
+
+$text-color-primary: #333;
+$text-color-secondary: #666;
+$text-color-light: #fff;
+
+$background-color: #f7f9fc;
+$container-background: #fff;
+$border-color: #e0e0e0;
+$border-radius: 8px;
+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+
+
 .project-details-container {
     padding: 20px;
     font-family: 'Poppins', sans-serif;
@@ -23,15 +42,17 @@
   }
   
   .tabs button.active {
-    background: #41B3A3;
-    color: white;
+    background-color: $container-background; // Keep background consistent
+    color: $primary-color;
+    font-weight: 600;
+    border-bottom: 3px solid $primary-color; // Use border like in projects header
   }
   
   .tab-content {
     background: white;
     padding: 20px;
     border-radius: 20px;
-    
+    box-shadow: $card-shadow;
   }
   .details-content{
     display: flex;
@@ -101,27 +122,39 @@
  .header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pour que le texte et le bouton soient espacés */
-  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 24px; // Consistent margin
+  padding-bottom: 16px; // Padding below header content
+  border-bottom: 1px solid $border-color; // Separator line
+  
+  h2 {
+    margin: 0;
+    color: $primary-color !important; // Use primary color for title
+    font-size: 1.5em; // Slightly larger title
+    font-weight: 600;
+  }
 }
 
 .add-phase {
   cursor: pointer;
-  background: #41B3A3;
-  border-radius: 40px;
-  font-weight: bold;
-  min-height: 3rem;
-  padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */
+  background-color: $primary-color;
   border: none;
-  color: white;
-  display: flex;
+  color: $text-color-light !important; // Use variable
+  border-radius: $border-radius; // Match projects button radius (8px)
+  padding: 0 16px; // Match projects button padding
+  min-height: 40px; // Match projects button height
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px; // Match projects button font size
+  font-weight: 600; // Match projects button font weight
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease; // Match projects button transition
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); // Match projects button shadow
 
+  
   i {
-    font-size: 1rem; /* Taille de l'icône */
-    font-weight: bold; 
-    margin-right: 0.5rem; /* Espacement entre l'icône et le texte */
+    font-size: 18px; // Match projects button icon size
+    margin-right: 6px;
   }
 
   /* Positionner le bouton à droite avec auto margin */
@@ -143,15 +176,15 @@
   
   .phases-table {
     width: 100%;
-    overflow: hidden; 
-    border-radius: 12px; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-    background: white; 
+    overflow: hidden; // Important for table border radius within card
+     border-radius: $border-radius; // Use variable
+     box-shadow: $card-shadow; // Use variable
+     background-color: $container-background; // Use variable
+     margin-top: 24px;
 }
 .phases-table table {
     width: 100%;
-    border-radius: 12px; 
-    overflow: hidden; 
+    
     border-collapse: collapse;
 }
 
@@ -160,9 +193,89 @@
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
+// Table Data Cells (td) - Adapted from .data-table td
+.phases-table th {
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-color-secondary;
+  background-color: lighten($background-color, 2%); // Slight background for header
+  border-bottom: 2px solid $border-color; // Thicker bottom border for header
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left; // Default align left
+  vertical-align: middle;
+  &:not(:first-child):not(:last-child) { text-align: center; } // Center intermediate columns
+  &:last-child { text-align: right; padding-right: 24px; } // Align last column (Actions) right
+}
+tr {
+  transition: all 0.3s ease;
+  
+  &.expanded {
+    background-color: rgba(0, 0, 0, 0.02);
+    
+    td {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+.phases-table td {
+  // Align first two columns (Name, Description) to the left
+  &:nth-child(1),
+  &:nth-child(2) { text-align: left; }
+
+  // Apply ellipsis to the Description column (second column)
+  &:nth-child(2) {
+    white-space: nowrap;      // Empêche le retour à la ligne
+    overflow: hidden;         // Cache ce qui dépasse
+    text-overflow: ellipsis;  // Ajoute "..."
+    max-width: 250px;         // Largeur max avant troncature (ajustez si besoin)
+    vertical-align: middle;   // Alignement vertical par défaut
+    transition: all 0.3s ease; // Ajoute une transition douce
+  }
+  // Styles for the description cell when its row is expanded
+  &.expanded:nth-child(2) {
+    white-space: normal; // Allow text wrapping
+    overflow: visible;   // Show overflow content
+    text-overflow: clip; // Remove ellipsis
+    max-width: none;     // Remove max-width constraint
+    vertical-align: top; // Align text to top might look better when expanded
+    background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight
+  }
+  .inline-edit-input, .inline-edit-textarea {
+    width: 95%; // Prend presque toute la largeur de la cellule
+    padding: 6px 8px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-size: inherit; // Garde la taille de police du tableau
+    font-family: inherit;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+  .inline-edit-textarea {
+    resize: vertical; // Permet le redimensionnement vertical
+    min-height: 40px; // Hauteur minimale
+  }
+  .inline-edit-dates {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    .date-input { width: auto; } // Ajuste la largeur des inputs date
+  }
+
+  &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap
+
+}
 tbody{tr{
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    &:last-child td { border-bottom: none; } // Remove border from last row cells
+
 }}
 .phases-table tr:hover {
     background-color: #f9f9f9; /* Effet au survol */
@@ -229,20 +342,59 @@ tbody{tr{
     background: none;
     border: none;
     cursor: pointer;
-    
+    &[mat-icon-button] {
+      padding: 6px;
+      border-radius: 50%;
+      width: 34px; // Fixed size
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px; // Spacing between buttons
+      transition: background-color 0.2s ease;
+      vertical-align: middle; // Align with text/other elements if needed
+
+      &:hover:not(:disabled) {
+     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+     background-color: darken($primary-color, 8%); // Match projects button hover background
+   }
+   &:active:not(:disabled) {
+      transform: translateY(1px); // Match projects button active state
+   }
+   &:disabled { // Match projects button disabled state
+     opacity: 0.6;
+     cursor: not-allowed;
+    }
+
+      .icon, .bi { // Target icons within the button
+        font-size: 18px; // Consistent icon size
+        color: $text-color-secondary; // Default icon color
+      }
+    }
   }
   
   .icon {
     font-size: 18px;
-    color: #ffffff;
+ 
   }
   
   .icon:hover {
     color: #41B3A3;
   }
   .bi-trash{
-    color: red;
+    color: $warn-color !important ;
     font-size: 18px;
+  }
+  button[mat-icon-button]:hover:not(:disabled) {
+    &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }
+    &.view-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } } // Style for view button hover
+    &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }
+  }
+  // Style for the "Add Member" button (+) in the members column
+  .add-member-btn {
+    // Inherits base button styles, add specifics if needed
+    .icon { color: $primary-color; } // Make the plus icon primary color
+    &:hover { background-color: rgba($primary-color, 0.1); }
   }
   .bi-trash:hover{
     
@@ -271,4 +423,39 @@ tbody{tr{
       top: 10% !important;
     }
   }
+  .members-action-button {
+    color: $primary-color;
+    
+  }
+
+  .description-container {
+    position: relative;
+  }
   
+  .description-preview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+  }
+  
+  .description-full {
+    white-space: normal;
+    word-break: break-word;
+    padding-top: 0.5rem;
+  }
+  
+  /* Style pour l'icône œil */
+  .bi-eye-slash {
+    color: #666;
+  }
+  
+  /* Animation pour l'expansion */
+  @keyframes fadeIn {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 500px; }
+  }
+  
+  .expanded .description-full {
+    animation: fadeIn 0.3s ease-out;
+  }

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 62,
             "patches": [
                 {
                     "date": 1746257287810,
@@ -56,6 +56,206 @@
                 {
                     "date": 1746287689047,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -233,9 +233,9 @@\n   }\r\n   \r\n   .icon {\r\n     font-size: 18px;\r\n-    color: #000000;\r\n+    color: #ffffff;\r\n   }\r\n   \r\n   .icon:hover {\r\n     color: #41B3A3;\r\n"
+                },
+                {
+                    "date": 1746350676497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,7 @@\n+\r\n+\r\n+\r\n .project-details-container {\r\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n"
+                },
+                {
+                    "date": 1746350686419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,23 @@\n \r\n+$primary-color: #41B3A3;\r\n+$accent-color: #E27D60;\r\n+$warn-color: #F44336; // For delete actions\r\n+$success-color: #4CAF50; // For save actions\r\n+$cancel-color: #6c757d; // For cancel actions\r\n \r\n+$text-color-primary: #333;\r\n+$text-color-secondary: #666;\r\n+$text-color-light: #fff;\r\n \r\n+$background-color: #f7f9fc;\r\n+$container-background: #fff;\r\n+$border-color: #e0e0e0;\r\n+$border-radius: 8px;\r\n+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\r\n+\r\n+\r\n+\r\n .project-details-container {\r\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n"
+                },
+                {
+                    "date": 1746350712478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,13 @@\n     font-size: 16px;\r\n   }\r\n   \r\n   .tabs button.active {\r\n-    background: #41B3A3;\r\n+    background-color: $container-background; // Keep background consistent\r\n+    color: $primary-color;\r\n+    font-weight: 600;\r\n+    border-bottom: 3px solid $primary-color; // Use border like in projects header\r\n+\r\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n"
+                },
+                {
+                    "date": 1746350740374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n   .tab-content {\r\n     background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n-    \r\n+    box-shadow: $card-shadow;\r\n   }\r\n   .details-content{\r\n     display: flex;\r\n   gap: 20px;\r\n"
+                },
+                {
+                    "date": 1746350780214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,10 +123,19 @@\n   }\r\n  .header {\r\n   display: flex;\r\n   align-items: center;\r\n-  justify-content: space-between; /* Pour que le texte et le bouton soient espacés */\r\n-  width: 100%;\r\n+  justify-content: space-between;\r\n+  margin-bottom: 24px; // Consistent margin\r\n+  padding-bottom: 16px; // Padding below header content\r\n+  border-bottom: 1px solid $border-color; // Separator line\r\n+\r\n+  h2 {\r\n+    margin: 0;\r\n+    color: $primary-color; // Use primary color for title\r\n+    font-size: 1.5em; // Slightly larger title\r\n+    font-weight: 600;\r\n+  }\r\n }\r\n \r\n .add-phase {\r\n   cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1746350797708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -138,9 +138,9 @@\n }\r\n \r\n .add-phase {\r\n   cursor: pointer;\r\n-  background: #41B3A3;\r\n+  background-color: $primary-color;\r\n   border-radius: 40px;\r\n   font-weight: bold;\r\n   min-height: 3rem;\r\n   padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n"
+                },
+                {
+                    "date": 1746350822351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,11 +150,11 @@\n   align-items: center;\r\n   justify-content: center;\r\n \r\n   i {\r\n-    font-size: 1rem; /* Taille de l'icône */\r\n-    font-weight: bold; \r\n-    margin-right: 0.5rem; /* Espacement entre l'icône et le texte */\r\n+    font-size: 1.1rem; // Consistent icon size\r\n+     font-weight: normal; // Reset font weight if needed\r\n+     margin-right: 8px;\r\n   }\r\n \r\n   /* Positionner le bouton à droite avec auto margin */\r\n   margin-left: auto;\r\n"
+                },
+                {
+                    "date": 1746350866934,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,12 +174,13 @@\n \r\n   \r\n   .phases-table {\r\n     width: 100%;\r\n-    overflow: hidden; \r\n-    border-radius: 12px; \r\n-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); \r\n-    background: white; \r\n+    overflow: hidden; // Important for table border radius within card\r\n+     border-radius: $border-radius; // Use variable\r\n+     box-shadow: $card-shadow; // Use variable\r\n+     background-color: $container-background; // Use variable\r\n+     margin-top: 24px;\r\n }\r\n .phases-table table {\r\n     width: 100%;\r\n     border-radius: 12px; \r\n"
+                },
+                {
+                    "date": 1746350883280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,10 +182,9 @@\n      margin-top: 24px;\r\n }\r\n .phases-table table {\r\n     width: 100%;\r\n-    border-radius: 12px; \r\n-    overflow: hidden; \r\n+    \r\n     border-collapse: collapse;\r\n }\r\n \r\n .phases-table th, .phases-table td {\r\n"
+                },
+                {
+                    "date": 1746350939699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,8 +191,9 @@\n     padding: 15px;\r\n     text-align: center;\r\n     border-bottom: 1px solid #ddd;\r\n }\r\n+\r\n tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n }}\r\n"
+                },
+                {
+                    "date": 1746350948511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,9 +191,22 @@\n     padding: 15px;\r\n     text-align: center;\r\n     border-bottom: 1px solid #ddd;\r\n }\r\n-\r\n+// Table Data Cells (td) - Adapted from .data-table td\r\n+.phases-table th {\r\n+  font-size: 12px;\r\n+  font-weight: 600;\r\n+  color: $text-color-secondary;\r\n+  background-color: lighten($background-color, 2%); // Slight background for header\r\n+  border-bottom: 2px solid $border-color; // Thicker bottom border for header\r\n+  text-transform: uppercase;\r\n+  letter-spacing: 0.5px;\r\n+  text-align: left; // Default align left\r\n+  vertical-align: middle;\r\n+  &:not(:first-child):not(:last-child) { text-align: center; } // Center intermediate columns\r\n+  &:last-child { text-align: right; padding-right: 24px; } // Align last column (Actions) right\r\n+}\r\n tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n }}\r\n"
+                },
+                {
+                    "date": 1746350973402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -208,8 +208,10 @@\n }\r\n tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n+    &:last-child td { border-bottom: none; } // Remove border from last row cells\r\n+\r\n }}\r\n .phases-table tr:hover {\r\n     background-color: #f9f9f9; /* Effet au survol */\r\n }\r\n"
+                },
+                {
+                    "date": 1746351023192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -276,9 +276,29 @@\n   button {\r\n     background: none;\r\n     border: none;\r\n     cursor: pointer;\r\n-    \r\n+    &[mat-icon-button] {\r\n+      padding: 6px;\r\n+      border-radius: 50%;\r\n+      width: 34px; // Fixed size\r\n+      height: 34px;\r\n+      display: inline-flex;\r\n+      align-items: center;\r\n+      justify-content: center;\r\n+      margin-left: 4px; // Spacing between buttons\r\n+      transition: background-color 0.2s ease;\r\n+      vertical-align: middle; // Align with text/other elements if needed\r\n+\r\n+      &:hover:not(:disabled) {\r\n+        background-color: rgba($primary-color, 0.1); // Default hover\r\n+      }\r\n+\r\n+      .icon, .bi { // Target icons within the button\r\n+        font-size: 18px; // Consistent icon size\r\n+        color: $text-color-secondary; // Default icon color\r\n+      }\r\n+    }\r\n   }\r\n   \r\n   .icon {\r\n     font-size: 18px;\r\n"
+                },
+                {
+                    "date": 1746351028623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -301,9 +301,9 @@\n   }\r\n   \r\n   .icon {\r\n     font-size: 18px;\r\n-    color: #ffffff;\r\n+ \r\n   }\r\n   \r\n   .icon:hover {\r\n     color: #41B3A3;\r\n"
+                },
+                {
+                    "date": 1746351046647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -308,9 +308,9 @@\n   .icon:hover {\r\n     color: #41B3A3;\r\n   }\r\n   .bi-trash{\r\n-    color: red;\r\n+    color: $warn-color;\r\n     font-size: 18px;\r\n   }\r\n   .bi-trash:hover{\r\n     \r\n"
+                },
+                {
+                    "date": 1746351059694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -311,8 +311,9 @@\n   .bi-trash{\r\n     color: $warn-color;\r\n     font-size: 18px;\r\n   }\r\n+  \r\n   .bi-trash:hover{\r\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746351071810,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -311,9 +311,12 @@\n   .bi-trash{\r\n     color: $warn-color;\r\n     font-size: 18px;\r\n   }\r\n-  \r\n+  button[mat-icon-button]:hover:not(:disabled) {\r\n+    &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n+    &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }\r\n+  }\r\n   .bi-trash:hover{\r\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746351084752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -315,8 +315,14 @@\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n     &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }\r\n   }\r\n+  // Style for the \"Add Member\" button (+) in the members column\r\n+  .add-member-btn {\r\n+    // Inherits base button styles, add specifics if needed\r\n+    .icon { color: $primary-color; } // Make the plus icon primary color\r\n+    &:hover { background-color: rgba($primary-color, 0.1); }\r\n+  }\r\n   .bi-trash:hover{\r\n     \r\n     color: rgba(121, 0, 0, 0.638);\r\n   }\r\n"
+                },
+                {
+                    "date": 1746351118088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -348,5 +348,10 @@\n       left: 2.5% !important; /* Centre encore mieux */\r\n       top: 10% !important;\r\n     }\r\n   }\r\n-  \n\\ No newline at end of file\n+  .members-action-button {\r\n+    // Styles should be similar to .members-action-button in projects.component.scss\r\n+    // Example:\r\n+    color: $primary-color;\r\n+    // ... other styles like padding, border-radius, hover effect ...\r\n++  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746351124723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -352,6 +352,6 @@\n   .members-action-button {\r\n     // Styles should be similar to .members-action-button in projects.component.scss\r\n     // Example:\r\n     color: $primary-color;\r\n-    // ... other styles like padding, border-radius, hover effect ...\r\n-+  }\n\\ No newline at end of file\n+    \r\n+  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746351345996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -308,9 +308,9 @@\n   .icon:hover {\r\n     color: #41B3A3;\r\n   }\r\n   .bi-trash{\r\n-    color: $warn-color;\r\n+    color: $warn-color ;\r\n     font-size: 18px;\r\n   }\r\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n@@ -349,9 +349,7 @@\n       top: 10% !important;\r\n     }\r\n   }\r\n   .members-action-button {\r\n-    // Styles should be similar to .members-action-button in projects.component.scss\r\n-    // Example:\r\n     color: $primary-color;\r\n     \r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746351558207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -139,12 +139,8 @@\n \r\n .add-phase {\r\n   cursor: pointer;\r\n   background-color: $primary-color;\r\n-  border-radius: 40px;\r\n-  font-weight: bold;\r\n-  min-height: 3rem;\r\n-  padding: 0 1.5rem; /* Ajout de padding pour rendre le bouton plus large */\r\n   border: none;\r\n   color: white;\r\n   display: flex;\r\n   align-items: center;\r\n@@ -308,9 +304,9 @@\n   .icon:hover {\r\n     color: #41B3A3;\r\n   }\r\n   .bi-trash{\r\n-    color: $warn-color ;\r\n+    color: $warn-color !important ;\r\n     font-size: 18px;\r\n   }\r\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n"
+                },
+                {
+                    "date": 1746351568059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -140,10 +140,9 @@\n .add-phase {\r\n   cursor: pointer;\r\n   background-color: $primary-color;\r\n   border: none;\r\n-  color: white;\r\n-  display: flex;\r\n+  \r\n   align-items: center;\r\n   justify-content: center;\r\n \r\n   i {\r\n"
+                },
+                {
+                    "date": 1746351575645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -140,9 +140,13 @@\n .add-phase {\r\n   cursor: pointer;\r\n   background-color: $primary-color;\r\n   border: none;\r\n-  \r\n+  color: $text-color-light; // Use variable\r\n+  border-radius: $border-radius; // Match projects button radius (8px)\r\n+  padding: 0 16px; // Match projects button padding\r\n+  min-height: 40px; // Match projects button height\r\n+  display: inline-flex;\r\n   align-items: center;\r\n   justify-content: center;\r\n \r\n   i {\r\n"
+                },
+                {
+                    "date": 1746351585368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -147,9 +147,14 @@\n   min-height: 40px; // Match projects button height\r\n   display: inline-flex;\r\n   align-items: center;\r\n   justify-content: center;\r\n+  font-size: 14px; // Match projects button font size\r\n+  font-weight: 600; // Match projects button font weight\r\n+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease; // Match projects button transition\r\n+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); // Match projects button shadow\r\n \r\n+  \r\n   i {\r\n     font-size: 1.1rem; // Consistent icon size\r\n      font-weight: normal; // Reset font weight if needed\r\n      margin-right: 8px;\r\n"
+                },
+                {
+                    "date": 1746351597423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -154,11 +154,10 @@\n   box-shadow: 0 1px 3px rgba(0,0,0,0.1); // Match projects button shadow\r\n \r\n   \r\n   i {\r\n-    font-size: 1.1rem; // Consistent icon size\r\n-     font-weight: normal; // Reset font weight if needed\r\n-     margin-right: 8px;\r\n+    font-size: 18px; // Match projects button icon size\r\n+    margin-right: 6px;\r\n   }\r\n \r\n   /* Positionner le bouton à droite avec auto margin */\r\n   margin-left: auto;\r\n"
+                },
+                {
+                    "date": 1746351656532,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -292,10 +292,18 @@\n       transition: background-color 0.2s ease;\r\n       vertical-align: middle; // Align with text/other elements if needed\r\n \r\n       &:hover:not(:disabled) {\r\n-        background-color: rgba($primary-color, 0.1); // Default hover\r\n+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);\r\n+        background-color: darken($primary-color, 8%); // Match projects button hover background\r\n       }\r\n+      &:active:not(:disabled) {\r\n+         transform: translateY(1px); // Match projects button active state\r\n+      }\r\n+      &:disabled { // Match projects button disabled state\r\n+        opacity: 0.6;\r\n+        cursor: not-allowed;\r\n+       }\r\n \r\n       .icon, .bi { // Target icons within the button\r\n         font-size: 18px; // Consistent icon size\r\n         color: $text-color-secondary; // Default icon color\r\n"
+                },
+                {
+                    "date": 1746351685782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -292,18 +292,18 @@\n       transition: background-color 0.2s ease;\r\n       vertical-align: middle; // Align with text/other elements if needed\r\n \r\n       &:hover:not(:disabled) {\r\n-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);\r\n-        background-color: darken($primary-color, 8%); // Match projects button hover background\r\n-      }\r\n-      &:active:not(:disabled) {\r\n-         transform: translateY(1px); // Match projects button active state\r\n-      }\r\n-      &:disabled { // Match projects button disabled state\r\n-        opacity: 0.6;\r\n-        cursor: not-allowed;\r\n-       }\r\n+     box-shadow: 0 2px 6px rgba(0,0,0,0.15);\r\n+     background-color: darken($primary-color, 8%); // Match projects button hover background\r\n+   }\r\n+   &:active:not(:disabled) {\r\n+      transform: translateY(1px); // Match projects button active state\r\n+   }\r\n+   &:disabled { // Match projects button disabled state\r\n+     opacity: 0.6;\r\n+     cursor: not-allowed;\r\n+    }\r\n \r\n       .icon, .bi { // Target icons within the button\r\n         font-size: 18px; // Consistent icon size\r\n         color: $text-color-secondary; // Default icon color\r\n"
+                },
+                {
+                    "date": 1746351691201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -292,18 +292,10 @@\n       transition: background-color 0.2s ease;\r\n       vertical-align: middle; // Align with text/other elements if needed\r\n \r\n       &:hover:not(:disabled) {\r\n-     box-shadow: 0 2px 6px rgba(0,0,0,0.15);\r\n-     background-color: darken($primary-color, 8%); // Match projects button hover background\r\n-   }\r\n-   &:active:not(:disabled) {\r\n-      transform: translateY(1px); // Match projects button active state\r\n-   }\r\n-   &:disabled { // Match projects button disabled state\r\n-     opacity: 0.6;\r\n-     cursor: not-allowed;\r\n-    }\r\n+        background-color: rgba($primary-color, 0.1); // Default hover\r\n+      }\r\n \r\n       .icon, .bi { // Target icons within the button\r\n         font-size: 18px; // Consistent icon size\r\n         color: $text-color-secondary; // Default icon color\r\n"
+                },
+                {
+                    "date": 1746351703834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -292,10 +292,18 @@\n       transition: background-color 0.2s ease;\r\n       vertical-align: middle; // Align with text/other elements if needed\r\n \r\n       &:hover:not(:disabled) {\r\n-        background-color: rgba($primary-color, 0.1); // Default hover\r\n-      }\r\n+     box-shadow: 0 2px 6px rgba(0,0,0,0.15);\r\n+     background-color: darken($primary-color, 8%); // Match projects button hover background\r\n+   }\r\n+   &:active:not(:disabled) {\r\n+      transform: translateY(1px); // Match projects button active state\r\n+   }\r\n+   &:disabled { // Match projects button disabled state\r\n+     opacity: 0.6;\r\n+     cursor: not-allowed;\r\n+    }\r\n \r\n       .icon, .bi { // Target icons within the button\r\n         font-size: 18px; // Consistent icon size\r\n         color: $text-color-secondary; // Default icon color\r\n"
+                },
+                {
+                    "date": 1746351751408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,9 @@\n   justify-content: space-between;\r\n   margin-bottom: 24px; // Consistent margin\r\n   padding-bottom: 16px; // Padding below header content\r\n   border-bottom: 1px solid $border-color; // Separator line\r\n-\r\n+  color: ;\r\n   h2 {\r\n     margin: 0;\r\n     color: $primary-color; // Use primary color for title\r\n     font-size: 1.5em; // Slightly larger title\r\n"
+                },
+                {
+                    "date": 1746351772213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,9 @@\n   justify-content: space-between;\r\n   margin-bottom: 24px; // Consistent margin\r\n   padding-bottom: 16px; // Padding below header content\r\n   border-bottom: 1px solid $border-color; // Separator line\r\n-  color: ;\r\n+  \r\n   h2 {\r\n     margin: 0;\r\n     color: $primary-color; // Use primary color for title\r\n     font-size: 1.5em; // Slightly larger title\r\n"
+                },
+                {
+                    "date": 1746351815383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n   border-bottom: 1px solid $border-color; // Separator line\r\n   \r\n   h2 {\r\n     margin: 0;\r\n-    color: $primary-color; // Use primary color for title\r\n+    color: $primary-color !important; // Use primary color for title\r\n     font-size: 1.5em; // Slightly larger title\r\n     font-weight: 600;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746351829877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n   border-bottom: 1px solid $border-color; // Separator line\r\n   \r\n   h2 {\r\n     margin: 0;\r\n-    color: $primary-color !important; // Use primary color for title\r\n+    color: b; // Use primary color for title\r\n     font-size: 1.5em; // Slightly larger title\r\n     font-weight: 600;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746351842890,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n   border-bottom: 1px solid $border-color; // Separator line\r\n   \r\n   h2 {\r\n     margin: 0;\r\n-    color: b; // Use primary color for title\r\n+    color: $primary-color !important; // Use primary color for title\r\n     font-size: 1.5em; // Slightly larger title\r\n     font-weight: 600;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746351923049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    background: white;\r\n+    \r\n     padding: 20px;\r\n     border-radius: 20px;\r\n     box-shadow: $card-shadow;\r\n   }\r\n"
+                },
+                {
+                    "date": 1746351932424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n     color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n-    \r\n+    background: white;\r\n     padding: 20px;\r\n     border-radius: 20px;\r\n     box-shadow: $card-shadow;\r\n   }\r\n"
+                },
+                {
+                    "date": 1746351949951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,11 +44,9 @@\n   .tabs button.active {\r\n     background-color: $container-background; // Keep background consistent\r\n     color: $primary-color;\r\n     font-weight: 600;\r\n-    border-bottom: 3px solid $primary-color; // Use border like in projects header\r\n-\r\n-    color: white;\r\n+    \r\n   }\r\n   \r\n   .tab-content {\r\n     background: white;\r\n"
+                },
+                {
+                    "date": 1746351956801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,11 @@\n   .tabs button.active {\r\n     background-color: $container-background; // Keep background consistent\r\n     color: $primary-color;\r\n     font-weight: 600;\r\n-    \r\n+    border-bottom: 3px solid $primary-color; // Use border like in projects header\r\n+\r\n+    color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n     background: white;\r\n"
+                },
+                {
+                    "date": 1746352007510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,8 @@\n     background-color: $container-background; // Keep background consistent\r\n     color: $primary-color;\r\n     font-weight: 600;\r\n     border-bottom: 3px solid $primary-color; // Use border like in projects header\r\n-\r\n-    color: white;\r\n   }\r\n   \r\n   .tab-content {\r\n     background: white;\r\n@@ -140,9 +138,9 @@\n .add-phase {\r\n   cursor: pointer;\r\n   background-color: $primary-color;\r\n   border: none;\r\n-  color: $text-color-light; // Use variable\r\n+  color: $text-color-light !important; // Use variable\r\n   border-radius: $border-radius; // Match projects button radius (8px)\r\n   padding: 0 16px; // Match projects button padding\r\n   min-height: 40px; // Match projects button height\r\n   display: inline-flex;\r\n"
+                },
+                {
+                    "date": 1746352177028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,8 +206,16 @@\n   vertical-align: middle;\r\n   &:not(:first-child):not(:last-child) { text-align: center; } // Center intermediate columns\r\n   &:last-child { text-align: right; padding-right: 24px; } // Align last column (Actions) right\r\n }\r\n+.phases-table td {\r\n+  // Align first two columns (Name, Description) to the left\r\n+  &:nth-child(1),\r\n+  &:nth-child(2) { text-align: left; }\r\n+\r\n+  // Apply ellipsis to the Description column (second column)\r\n+  &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; } // Adjust max-width as needed\r\n+}\r\n tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n     &:last-child td { border-bottom: none; } // Remove border from last row cells\r\n"
+                },
+                {
+                    "date": 1746352311879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,8 +213,9 @@\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n   &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; } // Adjust max-width as needed\r\n+\r\n }\r\n tbody{tr{\r\n     cursor: pointer;\r\n     transition: background-color 0.3s ease-in-out;\r\n"
+                },
+                {
+                    "date": 1746352421039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,8 +213,9 @@\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n   &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; } // Adjust max-width as needed\r\n+  &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap\r\n \r\n }\r\n tbody{tr{\r\n     cursor: pointer;\r\n@@ -331,8 +332,9 @@\n     font-size: 18px;\r\n   }\r\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n+    \r\n     &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }\r\n   }\r\n   // Style for the \"Add Member\" button (+) in the members column\r\n   .add-member-btn {\r\n"
+                },
+                {
+                    "date": 1746352427088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -332,8 +332,9 @@\n     font-size: 18px;\r\n   }\r\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n+    &.view-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } } // Style for view button hover\r\n     \r\n     &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }\r\n   }\r\n   // Style for the \"Add Member\" button (+) in the members column\r\n"
+                },
+                {
+                    "date": 1746353205116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,8 +213,9 @@\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n   &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; } // Adjust max-width as needed\r\n+  \r\n   &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap\r\n \r\n }\r\n tbody{tr{\r\n@@ -333,9 +334,8 @@\n   }\r\n   button[mat-icon-button]:hover:not(:disabled) {\r\n     &.edit-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } }\r\n     &.view-btn-phase { background-color: rgba($primary-color, 0.1); .icon { color: $primary-color; } } // Style for view button hover\r\n-    \r\n     &.delete-btn-phase { background-color: rgba($warn-color, 0.1); .bi-trash { color: darken($warn-color, 10%); } }\r\n   }\r\n   // Style for the \"Add Member\" button (+) in the members column\r\n   .add-member-btn {\r\n"
+                },
+                {
+                    "date": 1746353717345,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,10 +212,18 @@\n   &:nth-child(1),\r\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n-  &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; } // Adjust max-width as needed\r\n-  \r\n+  &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;vertical-align: middle; } // Adjust max-width as needed\r\n+  // Styles for the description cell when its row is expanded\r\n+  &.expanded:nth-child(2) {\r\n+    white-space: normal; // Allow text wrapping\r\n+    overflow: visible;   // Show overflow content\r\n+    text-overflow: clip; // Remove ellipsis\r\n+    max-width: none;     // Remove max-width constraint\r\n+    vertical-align: top; // Align text to top might look better when expanded\r\n+    background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight\r\n+  }\r\n   &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap\r\n \r\n }\r\n tbody{tr{\r\n"
+                },
+                {
+                    "date": 1746354862950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,8 +206,21 @@\n   vertical-align: middle;\r\n   &:not(:first-child):not(:last-child) { text-align: center; } // Center intermediate columns\r\n   &:last-child { text-align: right; padding-right: 24px; } // Align last column (Actions) right\r\n }\r\n+tr {\r\n+  transition: all 0.3s ease;\r\n+  \r\n+  &.expanded {\r\n+    background-color: rgba(0, 0, 0, 0.02);\r\n+    \r\n+    td {\r\n+      padding-top: 1rem;\r\n+      padding-bottom: 1rem;\r\n+      border-bottom: 1px solid #eee;\r\n+    }\r\n+  }\r\n+}\r\n .phases-table td {\r\n   // Align first two columns (Name, Description) to the left\r\n   &:nth-child(1),\r\n   &:nth-child(2) { text-align: left; }\r\n"
+                },
+                {
+                    "date": 1746354916952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -393,5 +393,37 @@\n   }\r\n   .members-action-button {\r\n     color: $primary-color;\r\n     \r\n+  }\r\n+\r\n+  .description-container {\r\n+    position: relative;\r\n+  }\r\n+  \r\n+  .description-preview {\r\n+    white-space: nowrap;\r\n+    overflow: hidden;\r\n+    text-overflow: ellipsis;\r\n+    max-width: 250px;\r\n+  }\r\n+  \r\n+  .description-full {\r\n+    white-space: normal;\r\n+    word-break: break-word;\r\n+    padding-top: 0.5rem;\r\n+  }\r\n+  \r\n+  /* Style pour l'icône œil */\r\n+  .bi-eye-slash {\r\n+    color: #666;\r\n+  }\r\n+  \r\n+  /* Animation pour l'expansion */\r\n+  @keyframes fadeIn {\r\n+    from { opacity: 0; max-height: 0; }\r\n+    to { opacity: 1; max-height: 500px; }\r\n+  }\r\n+  \r\n+  .expanded .description-full {\r\n+    animation: fadeIn 0.3s ease-out;\r\n   }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746355434761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -225,9 +225,9 @@\n   &:nth-child(1),\r\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n-  &:nth-child(2) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;vertical-align: middle; } // Adjust max-width as needed\r\n+ &:nth-child(2) {  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;vertical-align: middle; } // Adjust max-width as needed\r\n   // Styles for the description cell when its row is expanded\r\n   &.expanded:nth-child(2) {\r\n     white-space: normal; // Allow text wrapping\r\n     overflow: visible;   // Show overflow content\r\n"
+                },
+                {
+                    "date": 1746356514120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -225,9 +225,16 @@\n   &:nth-child(1),\r\n   &:nth-child(2) { text-align: left; }\r\n \r\n   // Apply ellipsis to the Description column (second column)\r\n- &:nth-child(2) {  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;vertical-align: middle; } // Adjust max-width as needed\r\n+  &:nth-child(2) {\r\n+    white-space: nowrap;      // Empêche le retour à la ligne\r\n+    overflow: hidden;         // Cache ce qui dépasse\r\n+    text-overflow: ellipsis;  // Ajoute \"...\"\r\n+    max-width: 250px;         // Largeur max avant troncature (ajustez si besoin)\r\n+    vertical-align: middle;   // Alignement vertical par défaut\r\n+    transition: all 0.3s ease; // Ajoute une transition douce\r\n+  }\r\n   // Styles for the description cell when its row is expanded\r\n   &.expanded:nth-child(2) {\r\n     white-space: normal; // Allow text wrapping\r\n     overflow: visible;   // Show overflow content\r\n@@ -235,8 +242,33 @@\n     max-width: none;     // Remove max-width constraint\r\n     vertical-align: top; // Align text to top might look better when expanded\r\n     background-color: lighten($background-color, 1.5%); // Optional: Subtle background highlight\r\n   }\r\n+  .inline-edit-input, .inline-edit-textarea {\r\n+    width: 95%; // Prend presque toute la largeur de la cellule\r\n+    padding: 6px 8px;\r\n+    border: 1px solid $border-color;\r\n+    border-radius: 4px;\r\n+    font-size: inherit; // Garde la taille de police du tableau\r\n+    font-family: inherit;\r\n+    box-sizing: border-box;\r\n+    &:focus {\r\n+      outline: none;\r\n+      border-color: $primary-color;\r\n+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);\r\n+    }\r\n+  }\r\n+  .inline-edit-textarea {\r\n+    resize: vertical; // Permet le redimensionnement vertical\r\n+    min-height: 40px; // Hauteur minimale\r\n+  }\r\n+  .inline-edit-dates {\r\n+    display: flex;\r\n+    gap: 5px;\r\n+    align-items: center;\r\n+    .date-input { width: auto; } // Ajuste la largeur des inputs date\r\n+  }\r\n+\r\n   &:last-child { text-align: right; white-space: nowrap; padding-right: 16px; } // Match header alignment and prevent wrap\r\n \r\n }\r\n tbody{tr{\r\n"
                 }
             ],
             "date": 1746257287810,
