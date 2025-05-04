@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1744707614675,
@@ -116,6 +116,14 @@
                 {
                     "date": 1746377475422,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n         <div class=\"task-card\"\r\n              *ngFor=\"let task of todo\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n-             \r\n+             (click)=\"openTaskDetails(task)\"\r\n              >\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n             <span class=\"task-priority\" [class.high]=\"task.priority === 'HIGH'\"\r\n@@ -96,8 +96,9 @@\n         <div class=\"task-card\"\r\n              *ngFor=\"let task of done\"\r\n              cdkDrag\r\n              [ngClass]=\"{'high': task.priority === 'HIGH', 'medium': task.priority === 'MEDIUM', 'low': task.priority === 'LOW'}\"\r\n+             (click)=\"openTaskDetails(task)\"\r\n              >\r\n           <!-- Même structure que pour À faire -->\r\n           <div class=\"task-header\">\r\n             <h4>{{ task.name }}</h4>\r\n"
+                },
+                {
+                    "date": 1746387444676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n-              <button mat-icon-button (click)=\"deleteTask(task, 'todo'); $event.stopPropagation()\">\r\n+              <button mat-icon-button (click)=\"deleteTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n           </div>\r\n"
+                },
+                {
+                    "date": 1746387451692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n-              <button mat-icon-button (click)=\"deleteTask(task, 'inProgress'); $event.stopPropagation()\">\r\n+              <button mat-icon-button (click)=\"deleteTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n  \r\n"
                 }
             ],
             "date": 1744707614675,

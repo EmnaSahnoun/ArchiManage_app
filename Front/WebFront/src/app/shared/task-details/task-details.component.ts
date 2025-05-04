@@ -1,6 +1,8 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importé pour contrôler le modal Ngb
+import { ProjectService } from '../../services/ProjectService';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-task-details',
@@ -9,16 +11,22 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importé pour co
 })
 export class TaskDetailsComponent implements OnInit {
   @Input() task: any;
+  subtasks: any[] = [];
+  isLoadingSubtasks = false;
 
   constructor(
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private projectService:ProjectService
   ) {
     
   }
 
   ngOnInit(): void {
-    console.log('Task details:', this.task);  
-    //this.getSampleTask();
+    console.log('Task details:', this.task);
+    if (this.task?.subTaskIds?.length > 0) {
+      this.getSubtasks(this.task.subTaskIds);
+    }
+    this.getSampleTask();
     if (!this.task.subtasks) {
       this.task.subtasks = [];
     }
@@ -77,5 +85,25 @@ export class TaskDetailsComponent implements OnInit {
       ]
     };
   }
-  
+  getSubtasks(subTaskIds: string[]): void {
+    this.isLoadingSubtasks = true;
+    
+    // Créer un tableau de requêtes pour toutes les sous-tâches
+    const requests = subTaskIds.map(id => 
+      this.projectService.getTaskByid(id)
+    );
+
+    // Exécuter toutes les requêtes en parallèle
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        this.subtasks = results.flat(); // Fusionner les résultats
+        this.isLoadingSubtasks = false;
+        console.log('Subtasks loaded:', this.subtasks);
+      },
+      error: (err) => {
+        console.error('Error loading subtasks:', err);
+        this.isLoadingSubtasks = false;
+      }
+    });
+  }
 }

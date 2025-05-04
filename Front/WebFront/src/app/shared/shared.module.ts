@@ -23,9 +23,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PhaseFormComponent } from './phase-form/phase-form.component';
 import { PhaseAccessComponent } from './phase-access/phase-access.component';
+import { TaskFormComponent } from './task-form/task-form.component';
 
 @NgModule({
-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent],
+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],
   imports: [CommonModule,
     MatDialogModule,
     MatFormFieldModule,

@@ -160,6 +160,14 @@ export class ProjectService {
         catchError(this.handleError)
       );
     }
+    getTaskByid(idTask:string): Observable<any[]> {
+      console.log("l'url",`${this.projetUrl}/task/${idTask}`);
+      return this.http.get<any[]>(`${this.projetUrl}/task/${idTask}`, { 
+        headers: this.getApiHeaders()
+      }).pipe(
+        catchError(this.handleError)
+      );
+    }
     createTask(taskData: any): Observable<any> {
       const url = `${this.projetUrl}/task`;
       const headers = this.getApiHeaders();
@@ -168,6 +176,16 @@ export class ProjectService {
         catchError(this.handleError)
       );
     }
+    deleteTask(idTask: string): Observable<any> {
+      
+      const url = `${this.projetUrl}/task/${idTask}`;
+      const headers = this.getApiHeaders();
+      
+      return this.http.delete(url, { headers }).pipe(
+          tap(() => console.log(`Tache ${idTask} supprimée`)),
+          catchError(this.handleError)
+      );
+  }
       private getApiHeaders(): HttpHeaders {
         const token = this.authService.getAccessToken();
         return new HttpHeaders({

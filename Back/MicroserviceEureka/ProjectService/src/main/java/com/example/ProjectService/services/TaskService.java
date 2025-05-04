@@ -146,6 +146,30 @@ public class TaskService implements ITask {
         taskRepository.deleteById(id);
     }
 
+    @Override
+    public TaskResponse updateTask(String id, TaskRequest request) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+
+        // Mettre à jour tous les champs
+        task.setName(request.getName());
+        task.setDescription(request.getDescription());
+        task.setStartDate(request.getStartDate());
+        task.setEndDate(request.getEndDate());
+        task.setStatus(request.getStatus());
+        task.setPriority(request.getPriority());
+        task.setParentTaskId(request.getParentTaskId());
+
+        // Si la phase a changé
+        if (!task.getPhase().getId().equals(request.getPhaseId())) {
+            Phase newPhase = phaseRepository.findById(request.getPhaseId())
+                    .orElseThrow(() -> new RuntimeException("Phase not found with id: " + request.getPhaseId()));
+            task.setPhase(newPhase);
+        }
+
+        Task updatedTask = taskRepository.save(task);
+        return mapToTaskResponse(updatedTask);
+    }
     private TaskResponse mapToTaskResponse(Task task) {
         TaskResponse response = new TaskResponse();
         response.setId(task.getId());

@@ -45,7 +45,7 @@
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
               </button>
-              <button mat-icon-button (click)="deleteTask(task, 'todo'); $event.stopPropagation()">
+              <button mat-icon-button (click)="deleteTask(task); $event.stopPropagation()">
                 <i class="bi bi-trash"></i>
               </button>
             </div>
@@ -80,7 +80,7 @@
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
               </button>
-              <button mat-icon-button (click)="deleteTask(task, 'inProgress'); $event.stopPropagation()">
+              <button mat-icon-button (click)="deleteTask(task); $event.stopPropagation()">
                 <i class="bi bi-trash"></i>
               </button>
             </div>
@@ -114,7 +114,7 @@
               <button mat-icon-button (click)="editTask(task); $event.stopPropagation()">
                 <i class="bi bi-pencil"></i>
               </button>
-              <button mat-icon-button (click)="deleteTask(task, 'done'); $event.stopPropagation()">
+              <button mat-icon-button (click)="deleteTask(task); $event.stopPropagation()">
                 <i class="bi bi-trash"></i>
               </button>
             </div>

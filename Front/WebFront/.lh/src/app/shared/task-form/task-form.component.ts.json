@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/shared/task-form/task-form.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1746386376557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746386385180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,9 @@\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n   styleUrl: './task-form.component.scss'\r\n })\r\n-export class TaskFormComponent {\r\n-  implements OnInit {\r\n+export class TaskFormComponent   implements OnInit {\r\n     // Reçoit l'ID de la phase parente depuis le composant qui ouvre la modale\r\n     @Input() phaseId!: string;\r\n   \r\n     taskForm: FormGroup;\r\n"
+                },
+                {
+                    "date": 1746386391951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-import { Component } from '@angular/core';\r\n+import { Component, Input, OnInit } from '@angular/core';\r\n+import { FormGroup } from '@angular/forms';\r\n \r\n @Component({\r\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746386397511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component, Input, OnInit } from '@angular/core';\r\n-import { FormGroup } from '@angular/forms';\r\n+import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746386403452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Component, Input, OnInit } from '@angular/core';\r\n-import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n \r\n @Component({\r\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n"
+                }
+            ],
+            "date": 1746386376557,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-task-form',\r\n  templateUrl: './task-form.component.html',\r\n  styleUrl: './task-form.component.scss'\r\n})\r\nexport class TaskFormComponent {\r\n  implements OnInit {\r\n    // Reçoit l'ID de la phase parente depuis le composant qui ouvre la modale\r\n    @Input() phaseId!: string;\r\n  \r\n    taskForm: FormGroup;\r\n    isLoading = false;\r\n    errorMessage: string | null = null;\r\n  \r\n    // Options pour les listes déroulantes\r\n    statuses = ['TODO', 'IN_PROGRESS', 'COMPLETED'];\r\n    priorities = ['LOW', 'MEDIUM', 'HIGH'];\r\n  \r\n    constructor(\r\n      private fb: FormBuilder,\r\n      public activeModal: NgbActiveModal,\r\n      private projectService: ProjectService\r\n    ) {\r\n      this.taskForm = this.fb.group({\r\n        name: ['', [Validators.required, Validators.minLength(3)]],\r\n        description: ['', Validators.maxLength(1000)], // Optionnel, max 1000 caractères\r\n        startDate: ['', Validators.required],\r\n        endDate: ['', Validators.required],\r\n        status: ['TODO', Validators.required], // Valeur par défaut\r\n        priority: ['MEDIUM', Validators.required] // Valeur par défaut\r\n        // phaseId n'est pas dans le formulaire, il est passé en @Input\r\n      });\r\n    }\r\n  \r\n    ngOnInit(): void {\r\n      if (!this.phaseId) {\r\n        console.error(\"Erreur: Phase ID manquant pour créer une tâche.\");\r\n        this.errorMessage = \"L'identifiant de la phase est manquant. Impossible de créer la tâche.\";\r\n        this.taskForm.disable();\r\n      }\r\n    }\r\n  \r\n    // Getters pour un accès facile dans le template HTML\r\n    get name() { return this.taskForm.get('name'); }\r\n    get description() { return this.taskForm.get('description'); }\r\n    get startDate() { return this.taskForm.get('startDate'); }\r\n    get endDate() { return this.taskForm.get('endDate'); }\r\n    get status() { return this.taskForm.get('status'); }\r\n    get priority() { return this.taskForm.get('priority'); }\r\n  \r\n    saveTask(): void {\r\n      if (this.taskForm.invalid || this.isLoading || !this.phaseId) {\r\n        this.taskForm.markAllAsTouched(); // Affiche les erreurs si le formulaire est invalide\r\n        if (!this.phaseId) {\r\n          this.errorMessage = \"L'identifiant de la phase est manquant.\";\r\n        }\r\n        return;\r\n      }\r\n  \r\n      this.isLoading = true;\r\n      this.errorMessage = null;\r\n  \r\n      const taskData = {\r\n        name: this.name?.value,\r\n        description: this.description?.value || '', // Assurer une chaîne vide si null\r\n        startDate: this.startDate?.value,\r\n        endDate: this.endDate?.value,\r\n        status: this.status?.value,\r\n        priority: this.priority?.value,\r\n        phaseId: this.phaseId // Utilise l'ID reçu en Input\r\n      };\r\n  \r\n      console.log(\"Données de la tâche à créer :\", taskData);\r\n  \r\n      this.projectService.createTask(taskData).subscribe({\r\n        next: (newTask) => {\r\n          this.isLoading = false;\r\n          console.log('Tâche créée:', newTask);\r\n          this.activeModal.close(newTask); // Ferme la modale et renvoie la nouvelle tâche\r\n        },\r\n        error: (err) => {\r\n          this.isLoading = false;\r\n          this.errorMessage = err.message || 'Une erreur est survenue lors de la création de la tâche.';\r\n          console.error('Erreur création tâche:', err);\r\n        }\r\n      });\r\n    }\r\n  \r\n    cancel(): void {\r\n      this.activeModal.dismiss('cancel click'); // Ferme la modale sans renvoyer de données\r\n    }\r\n}\r\n"
+        }
+    ]
+}

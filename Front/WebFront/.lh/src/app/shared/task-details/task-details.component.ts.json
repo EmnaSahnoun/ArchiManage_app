@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1744726808515,
@@ -120,6 +120,14 @@
                 {
                     "date": 1746378699683,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   }\r\n \r\n   ngOnInit(): void {\r\n     console.log('Task details:', this.task);  \r\n-    this.getSampleTask();\r\n+    //this.getSampleTask();\r\n     if (!this.task.subtasks) {\r\n       this.task.subtasks = [];\r\n     }\r\n     \r\n"
+                },
+                {
+                    "date": 1746385275692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   styleUrl: './task-details.component.scss'\r\n })\r\n export class TaskDetailsComponent implements OnInit {\r\n   @Input() task: any;\r\n-eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJOSzA0N0N4LU9vUEFldTRDdlhmOFFQVEhXQzRKLVJXOGVrUzRQd25sUGFVIn0.eyJleHAiOjE3NDYzODU0NjAsImlhdCI6MTc0NjM4NTE2MCwianRpIjoiYzFlNTYyZGYtMmNmNi00YWIzLWI1NTgtOTJkOWQzZTg3ZDY4IiwiaXNzIjoiaHR0cHM6Ly9lc21tLnN5c3Rlby50bi9yZWFsbXMvc3lzdGVvZGlnaXRhbCIsImF1ZCI6WyJhcHAtcHJvamVjdFBGRSIsInJlYWxtLW1hbmFnZW1lbnQiLCJicm9rZXIiLCJhY2NvdW50Il0sInN1YiI6IjJkMzk0MDM4LTlkY2ItNGQyMS1hNzFlLTk3YWFmNzEyMmY0NCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwcC1wcm9qZWN0UEZFIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIiLCJodHRwOi8vbG9jYWxob3N0OjQyMDAvKiIsImh0dHBzOi8vZTEuc3lzdGVvLnRuIiwiaHR0cDovL2xvY2FsaG9zdDo0MjAwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXN5c3Rlb2RpZ2l0YWwiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsInZpZXctYXBwbGljYXRpb25zIiwibWFuYWdlLXVzZXJzIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInJlYWQtdG9rZW4iLCJ2aWV3LWNvbnNlbnQiLCJ2aWV3LWdyb3VwcyIsInZpZXctdXNlcnMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwiZGVsZXRlLWFjY291bnQiLCJtYW5hZ2UtY29uc2VudCIsIm1hbmFnZS1jbGllbnRzIiwidmlldy1wcm9maWxlIiwicXVlcnktZ3JvdXBzIl19LCJhcHAtcHJvamVjdFBGRSI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsInZpZXctYXBwbGljYXRpb25zIiwibWFuYWdlLXVzZXJzIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInJlYWQtdG9rZW4iLCJ2aWV3LWNvbnNlbnQiLCJ2aWV3LWdyb3VwcyIsInZpZXctdXNlcnMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwiZGVsZXRlLWFjY291bnQiLCJtYW5hZ2UtY29uc2VudCIsIm1hbmFnZS1jbGllbnRzIiwidmlldy1wcm9maWxlIiwicXVlcnktZ3JvdXBzIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiY2xpZW50SG9zdCI6IjEwMi4xNTMuMTU4LjUyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtYXBwLXByb2plY3RwZmUiLCJjbGllbnRBZGRyZXNzIjoiMTAyLjE1My4xNTguNTIiLCJjbGllbnRfaWQiOiJhcHAtcHJvamVjdFBGRSJ9.EM7p0zQzB_kA3o8uESVELY9HueW6iDDZvWdBSsPYlVJ6xwBcYAVRucq6R--DgccYWdzBQDjZUve1GQHu4gzg2hKqlo2OdcoVNYw78q2zMFW5YefLUHzEbYr5_wAc4X1D-Df8IYtRixhynRDRrSMUTQqEWLyY8Q1ifPAzvk7ERCUoPajjaZuejH_9cRTpCo-svEQJ-ddrUkSi3P1Mxo2V4U05Hta9wXeIXNnfPntLATRwuv3RFN6ujByH3NO1-s5_HQhQSZqrYlvUuMEu9mr8fNU5dyFEHg_3otqHTX4_dSJASSX2oN_QZ_hUf2PHOFTCo6OTP2uhN8ljQ0euF-RzDQ\r\n+\r\n   constructor(\r\n     public activeModal: NgbActiveModal\r\n   ) {\r\n     \r\n"
+                },
+                {
+                    "date": 1746385370189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   styleUrl: './task-details.component.scss'\r\n })\r\n export class TaskDetailsComponent implements OnInit {\r\n   @Input() task: any;\r\n-  sub\r\n+  subtask\r\n   constructor(\r\n     public activeModal: NgbActiveModal\r\n   ) {\r\n     \r\n"
                 }
             ],
             "date": 1744726808515,

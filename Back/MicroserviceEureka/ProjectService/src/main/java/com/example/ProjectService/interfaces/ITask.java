@@ -16,4 +16,5 @@ public interface ITask {
     TaskResponse updateTaskPriority(String id, TaskPriority priority);
     TaskResponse addSubTask(String parentId, TaskRequest request);
     void deleteTask(String id);
+    TaskResponse updateTask(String id, TaskRequest request);
 }

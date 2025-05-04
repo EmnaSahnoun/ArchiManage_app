@@ -109,16 +109,27 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   
   .add-task-btn {
     cursor: pointer;
-    background: #4CAF50;
-    border-radius: 40px;
-    font-weight: bold;
+    background: $primary-color;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
     min-height: 40px;
-    padding: 0 1rem;
+    padding: 0 16px;
     border: none;
-    color: white;
-    display: flex;
+    color: $text-color-light !important;
+    display:inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease; // Match projects button transition
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); // Match projects button shadow
+  i {
+    font-size: 18px; // Match projects button icon size
+    margin-right: 6px;
+  }
+
+  /* Positionner le bouton à droite avec auto margin */
+  margin-left: auto;
   }
   
   .board-description {

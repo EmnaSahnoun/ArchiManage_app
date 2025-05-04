@@ -6,6 +6,8 @@ import { ProjectService } from '../../services/ProjectService';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TaskFormComponent } from '../task-form/task-form.component';
+import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -16,6 +18,7 @@ export class TasksComponent implements OnInit {
   
   projectId: string = '';
   tasks:any[]=[];
+  subtasks:any[]=[];
   todo: any[] = [];
   inProgress: any[] = [];
   done: any[] = [];
@@ -31,30 +34,30 @@ export class TasksComponent implements OnInit {
     this.phase = history.state.phaseData;
     this.projet = history.state.projectData;
     console.log("phase dans task",this.phase)
-    this.loadTasks(this.phase.id);
+     // Assurez-vous que this.phase et this.phase.id existent avant de charger
+     if (this.phase?.id) {
+      this.loadTasks();
+    }
    
   }
 
-  loadTasks(phaseId: string): void {
-
-    this.projectService.getTaskByPhase(phaseId).subscribe({
+  loadTasks(): void {
+    this.phase = history.state.phaseData;
+    this.projectService.getTaskByPhase(this.phase.id).subscribe({
       next: (task) => {
         this.tasks = task;
-        this.tasks=this.tasks.filter((task: any) => task.parentTaskId=== null);
+        this.tasks=task.filter((task: any) => task.parentTaskId=== null);
+
         // Appliquer le filtre une fois les projets chargés
         console.log("les tasks",this.tasks);
         // Pour chaque projet, récupérer les détails des phases
-      this.organizeTasks(this.tasks);
-        
+      this.organizeTasks(this.tasks);        
       },
       error: (err) => {
-        console.error('Erreur lors de la récupération des projets:', err);
-        
+        console.error('Erreur lors de la récupération des projets:', err);      
       }
     });
 
-    
-    
   }
 
   organizeTasks(tasks:any): void {
@@ -109,22 +112,35 @@ export class TasksComponent implements OnInit {
 
  
   addTask(): void {
-    const taskName = prompt('Entrez le nom de la nouvelle tâche:');
-    if (taskName) {
-      const newTask = {
-        _id: Math.random().toString(36).substring(2, 9),
-        name: taskName,
-        description: '',
-        status: 'PENDING',
-        priority: 'MEDIUM',
-        startDate: new Date().toISOString(),
-        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-        subTasks: []
-      };
-
-      this.todo.push(newTask);
-      this.phase.tasks.push(newTask);
+    
+    if (!this.phase?.id) {
+      console.error("Impossible d'ajouter une tâche sans ID de phase.");
+      // Afficher une notification à l'utilisateur si nécessaire
+      return;
     }
+    const modalRef = this.modalService.open(TaskFormComponent, {
+      size: 'lg',
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    // Passer l'ID de la phase au composant modal
+    modalRef.componentInstance.phaseId = this.phase.id;
+
+    // Gérer le résultat de la fermeture du modal
+    modalRef.result.then(
+      (newTask) => {
+        // Succès : la tâche a été créée et renvoyée
+        console.log('Nouvelle tâche ajoutée:', newTask);
+        // Recharger les tâches pour afficher la nouvelle ou l'ajouter manuellement à la bonne liste
+        this.loadTasks();
+      },
+      (reason) => {
+        // Échec ou annulation
+        console.log(`Modal fermé: ${reason}`);
+      }
+    );
   }
 
   editTask(task: any): void {
@@ -135,17 +151,37 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  deleteTask(task: any, list: string): void {
-      if (list === 'todo') {
-        this.todo = this.todo.filter(t => t._id !== task._id);
-      } else if (list === 'inProgress') {
-        this.inProgress = this.inProgress.filter(t => t._id !== task._id);
-      } else if (list === 'done') {
-        this.done = this.done.filter(t => t._id !== task._id);
-      }
-      // Supprimer de la liste principale
-      this.phase.tasks = this.phase.tasks.filter((t: any) => t._id !== task._id);
+  deleteTask(task: any): void {
       
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+            centered: true,
+            windowClass: 'confirmation-modal'
+        });
+    
+        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer cette tache ${task.name}  ?`;
+        modalRef.componentInstance.username = task.name; // Pass username for confirmation if needed
+    
+        modalRef.result.then((confirm) => {
+            if (confirm) {
+              this.projectService.deleteTask(task.id).subscribe({
+                next: () => {
+                    
+                    this.loadTasks(); 
+                    
+                    
+                },
+                error: (err) => {
+                   
+                    console.error('Erreur lors de la suppression:', err);
+                   
+                }
+            });
+                
+                
+            }
+        }).catch(() => {
+            console.log('Suppression annulée');
+        });  
   }
 
   openTaskDetails(task: any): void {
@@ -160,6 +196,7 @@ export class TasksComponent implements OnInit {
     // !!! IMPORTANT : Passer les données de la tâche au composant modal !!!
     // NgbModal utilise componentInstance pour passer des données
     modalRef.componentInstance.task = task;
+   
   }
   
 }
