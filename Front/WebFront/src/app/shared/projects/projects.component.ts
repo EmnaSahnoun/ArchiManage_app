@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { Phase } from '../../models/phase.model';
 import { ProjectMembersComponent } from '../project-members/project-members.component'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../services/auth.service';
 export interface Project {
   id: string; // Or number, depending on your backend
   name: string;
@@ -38,7 +39,10 @@ export class ProjectsComponent implements OnInit{
   isLoading: boolean = false;
   editingProjectId: string | null = null; // Track the ID of the project being edited
   editedProjectData: Partial<Project> = {}; // Holds the data being edited
-
+  
+  isUser:boolean=false;
+  isAdmin:boolean=false;
+  isSuperAdmin:boolean=false;
 
   constructor(
     private modalService: NgbModal,
@@ -46,7 +50,7 @@ export class ProjectsComponent implements OnInit{
     ,private projectService:ProjectService,
     public dialog: MatDialog ,
     private snackBar: MatSnackBar,
-
+private authService:AuthService,
     
 
   ) { 
@@ -55,6 +59,9 @@ export class ProjectsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.isUser=this.authService.isUser();
+  this.isSuperAdmin=this.authService.isSuperAdmin();
+  this.isAdmin=this.authService.isAdmin();
     this.getProjects();    
   }
 
@@ -83,7 +90,17 @@ export class ProjectsComponent implements OnInit{
             this.getDates(project);
             this.checkProjectStatus(project);
           }); 
-          this.projects = this.projects.filter(p => p.deleted !== true);                  
+          
+          console.log("les projets",this.projects);
+          
+          if(this.isUser){
+            const idUser=localStorage.getItem("user_id");
+            this.projects=this.projects.filter(p => p.idAdmin === idUser);
+            this.projects = this.projects.filter(p => p.deleted !== true);
+          }      
+          if(this.isAdmin){
+            this.projects = this.projects.filter(p => p.deleted !== true);
+          }            
           this.applyFilter(); // Appliquer le filtre une fois les projets chargés
           console.log("les projets",this.projects);
           // Pour chaque projet, récupérer les détails des phases

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 24,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1746123785682,
@@ -104,6 +104,18 @@
                 {
                     "date": 1746137524543,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       description: this.description?.value,\r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n-    console.log(\"pr\")\r\n+    console.log(\"projet ajoutéé\",)\r\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n"
+                },
+                {
+                    "date": 1746390717530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-\r\n+    console\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n@@ -59,9 +59,9 @@\n       description: this.description?.value,\r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n-    console.log(\"projet ajoutéé\",)\r\n+    console.log(\"projet ajoutéé\",projectData)\r\n     this.projectService.createProject(projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n"
+                },
+                {
+                    "date": 1746390723696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-    console\r\n+    console.log(\"\")\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1746390729518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-    console.log(\"\")\r\n+    console.log(\"iduser\",)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
                 }
             ],
             "date": 1746123785682,

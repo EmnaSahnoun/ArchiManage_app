@@ -176,6 +176,27 @@ export class ProjectService {
         catchError(this.handleError)
       );
     }
+    updateTask(idTask: string, taskData: any): Observable<any> {
+      const data = {
+          ...taskData,
+          id: idTask // On s'assure que l'ID est bien inclus
+      };
+  
+      return this.http.put(`${this.projetUrl}/task/${idTask}`, data, {
+          headers: this.getApiHeaders()
+      }).pipe(
+          catchError(this.handleError)
+      );
+  }
+
+updatestatusTask(idTask: string, status: any) {
+  const url = `${this.projetUrl}/task/${idTask}/status?status=${status}`;
+  return this.http.patch(url, {}, {
+    headers: this.getApiHeaders()
+  }).pipe(
+    catchError(this.handleError)
+  );
+} 
     deleteTask(idTask: string): Observable<any> {
       
       const url = `${this.projetUrl}/task/${idTask}`;

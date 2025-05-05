@@ -4,6 +4,7 @@ import com.example.ProjectService.dto.request.ProjectRequest;
 import com.example.ProjectService.dto.response.ProjectResponse;
 import com.example.ProjectService.interfaces.IProject;
 import com.example.ProjectService.services.ProjectService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class ProjectController {
 
 
     @PostMapping
-    public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest request) {
+    public ResponseEntity<ProjectResponse> createProject(@Valid @RequestBody ProjectRequest request) {
         ProjectResponse response = projectService.createProject(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

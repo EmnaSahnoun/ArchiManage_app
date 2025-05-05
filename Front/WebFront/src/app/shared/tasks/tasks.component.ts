@@ -96,18 +96,39 @@ export class TasksComponent implements OnInit {
 
   updateTaskStatus(event: CdkDragDrop<any[]>): void {
     const task = event.container.data[event.currentIndex];
-    
+    const taskId = task.id; // Assurez-vous que vos objets task ont une propriété 'id'
+    let newStatus: string;
+
     // Déterminer le nouveau statut
     if (event.container.id === 'todo-list') {
-      task.status = 'PENDING';
+      newStatus = 'PENDING';
     } else if (event.container.id === 'inProgress-list') {
-      task.status = 'IN_PROGRESS';
+      newStatus = 'IN_PROGRESS';
     } else if (event.container.id === 'done-list') {
-      task.status = 'COMPLETED';
+      newStatus = 'COMPLETED';
     }
-    
-    // Ici, normalement vous feriez un appel API pour sauvegarder le changement
-    console.log('Task status updated:', task);
+    else {
+      console.error("Conteneur de dépôt inconnu:", event.container.id);
+      // Peut-être annuler le changement local si le conteneur est invalide ?
+      // Revenir à l'état précédent pourrait être complexe, il vaut mieux s'assurer que les ID sont corrects.
+      return; // Ne pas appeler l'API si le statut est indéterminé
+    }
+     // Mettre à jour le statut localement (optimistic update)
+     task.status = newStatus;
+     console.log(`Tentative de mise à jour du statut de la tâche ${taskId} à ${newStatus}`);
+ 
+     // Appeler le service pour sauvegarder le changement en base de données
+     this.projectService.updatestatusTask(taskId, newStatus).subscribe({
+       next: () => console.log(`Statut de la tâche ${taskId} mis à jour avec succès à ${newStatus}`),
+       error: (err) => {
+         console.error(`Erreur lors de la mise à jour du statut de la tâche ${taskId}:`, err);
+         // Gérer l'erreur : Annuler le changement local ? Afficher un message ?
+         // Pour annuler, il faudrait re-transférer l'item à sa position initiale, ce qui est plus complexe.
+         // Une approche simple est de recharger les tâches pour refléter l'état réel du backend.
+         alert(`Erreur: Impossible de mettre à jour le statut de la tâche. ${err.message}`);
+         this.loadTasks(); // Recharger pour corriger l'état visuel
+       }
+     });
   }
 
  
@@ -144,11 +165,31 @@ export class TasksComponent implements OnInit {
   }
 
   editTask(task: any): void {
-    const newName = prompt('Modifier le nom de la tâche:', task.name);
-    if (newName && newName !== task.name) {
-      task.name = newName;
-      // Ici, vous feriez un appel API pour sauvegarder
+    if (!this.phase?.id) {
+      console.error("Impossible d'éditer une tâche sans ID de phase (contexte).");
+      // Afficher une notification à l'utilisateur si nécessaire
+      return;
     }
+    const modalRef = this.modalService.open(TaskFormComponent, {
+      size: 'lg',
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    // Passer la tâche à éditer ET l'ID de la phase actuelle
+    modalRef.componentInstance.taskToEdit = task;
+    modalRef.componentInstance.phaseId = this.phase.id; // Peut être utile pour le contexte
+
+    // Gérer le résultat de la fermeture du modal
+    modalRef.result.then(
+      (updatedTask) => {
+        console.log('Tâche mise à jour:', updatedTask);
+        // Recharger les tâches pour afficher les modifications
+        this.loadTasks();
+      },
+      (reason) => { console.log(`Modal fermé (édition): ${reason}`); }
+    );
   }
 
   deleteTask(task: any): void {

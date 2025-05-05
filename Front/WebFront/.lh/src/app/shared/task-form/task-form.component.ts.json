@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1746386376557,
@@ -24,6 +24,50 @@
                 {
                     "date": 1746386403452,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Component, Input, OnInit } from '@angular/core';\r\n-import { FormBuilder, FormGroup } from '@angular/forms';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { ProjectService } from '../../services/ProjectService';\r\n \r\n @Component({\r\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n"
+                },
+                {
+                    "date": 1746388956647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n })\r\n export class TaskFormComponent   implements OnInit {\r\n     // Reçoit l'ID de la phase parente depuis le composant qui ouvre la modale\r\n     @Input() phaseId!: string;\r\n-  \r\n+    @Input() taskToEdit?: any;\r\n     taskForm: FormGroup;\r\n     isLoading = false;\r\n     errorMessage: string | null = null;\r\n   \r\n"
+                },
+                {
+                    "date": 1746388980922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     // Options pour les listes déroulantes\r\n     statuses = ['TODO', 'IN_PROGRESS', 'COMPLETED'];\r\n     priorities = ['LOW', 'MEDIUM', 'HIGH'];\r\n   \r\n+    isEditMode = false; \r\n     constructor(\r\n       private fb: FormBuilder,\r\n       public activeModal: NgbActiveModal,\r\n       private projectService: ProjectService\r\n"
+                },
+                {
+                    "date": 1746388997973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,8 +37,9 @@\n       });\r\n     }\r\n   \r\n     ngOnInit(): void {\r\n+      this.isEditMode = !!this.taskToEdit; \r\n       if (!this.phaseId) {\r\n         console.error(\"Erreur: Phase ID manquant pour créer une tâche.\");\r\n         this.errorMessage = \"L'identifiant de la phase est manquant. Impossible de créer la tâche.\";\r\n         this.taskForm.disable();\r\n"
+                },
+                {
+                    "date": 1746389012988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n       if (!this.phaseId) {\r\n         console.error(\"Erreur: Phase ID manquant pour créer une tâche.\");\r\n         this.errorMessage = \"L'identifiant de la phase est manquant. Impossible de créer la tâche.\";\r\n         this.taskForm.disable();\r\n+        re\r\n       }\r\n     }\r\n   \r\n     // Getters pour un accès facile dans le template HTML\r\n"
+                },
+                {
+                    "date": 1746389020444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n       if (!this.phaseId) {\r\n         console.error(\"Erreur: Phase ID manquant pour créer une tâche.\");\r\n         this.errorMessage = \"L'identifiant de la phase est manquant. Impossible de créer la tâche.\";\r\n         this.taskForm.disable();\r\n-        re\r\n+        return;      \r\n       }\r\n     }\r\n   \r\n     // Getters pour un accès facile dans le template HTML\r\n"
+                },
+                {
+                    "date": 1746389032523,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,8 +44,20 @@\n         this.errorMessage = \"L'identifiant de la phase est manquant. Impossible de créer la tâche.\";\r\n         this.taskForm.disable();\r\n         return;      \r\n       }\r\n+      if (this.isEditMode && this.taskToEdit) {\r\n+        // Pré-remplir le formulaire avec les données de la tâche à éditer\r\n+        this.taskForm.patchValue({\r\n+          name: this.taskToEdit.name,\r\n+          description: this.taskToEdit.description,\r\n+          // Assurez-vous que les dates sont au format YYYY-MM-DD pour l'input type=\"date\"\r\n+          startDate: this.formatDateForInput(this.taskToEdit.startDate),\r\n+          endDate: this.formatDateForInput(this.taskToEdit.endDate),\r\n+          status: this.taskToEdit.status,\r\n+          priority: this.taskToEdit.priority\r\n+        });\r\n+      }\r\n     }\r\n   \r\n     // Getters pour un accès facile dans le template HTML\r\n     get name() { return this.taskForm.get('name'); }\r\n"
+                },
+                {
+                    "date": 1746389043188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,13 @@\n           priority: this.taskToEdit.priority\r\n         });\r\n       }\r\n     }\r\n-  \r\n+    private formatDateForInput(dateString: string | Date): string {\r\n+      if (!dateString) return '';\r\n+      const date = new Date(dateString);\r\n+      return date.toISOString().split('T')[0]; // Format YYYY-MM-DD\r\n+    }\r\n     // Getters pour un accès facile dans le template HTML\r\n     get name() { return this.taskForm.get('name'); }\r\n     get description() { return this.taskForm.get('description'); }\r\n     get startDate() { return this.taskForm.get('startDate'); }\r\n"
+                },
+                {
+                    "date": 1746389060841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,10 @@\n     get status() { return this.taskForm.get('status'); }\r\n     get priority() { return this.taskForm.get('priority'); }\r\n   \r\n     saveTask(): void {\r\n-      if (this.taskForm.invalid || this.isLoading || !this.phaseId) {\r\n+      if (this.taskForm.invalid || this.isLoading || (!this.phaseId && !this.isEditMode)) { // phaseId requis seulement en création\r\n+     \r\n         this.taskForm.markAllAsTouched(); // Affiche les erreurs si le formulaire est invalide\r\n         if (!this.phaseId) {\r\n           this.errorMessage = \"L'identifiant de la phase est manquant.\";\r\n         }\r\n"
+                },
+                {
+                    "date": 1746389136233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,8 +94,23 @@\n         phaseId: this.phaseId // Utilise l'ID reçu en Input\r\n       };\r\n   \r\n       console.log(\"Données de la tâche à créer :\", taskData);\r\n+      if (this.isEditMode && this.taskToEdit?.id) {\r\n+        // --- Mode Édition ---\r\n+        console.log(\"Données de la tâche à mettre à jour :\", taskData);\r\n+        this.projectService.updateTask(this.taskToEdit.id, taskData).subscribe({\r\n+          next: (updatedTask) => {\r\n+            this.isLoading = false;\r\n+            console.log('Tâche mise à jour:', updatedTask);\r\n+            this.activeModal.close(updatedTask); // Ferme et renvoie la tâche mise à jour\r\n+          },\r\n+          error: (err) => {\r\n+            this.isLoading = false;\r\n+            this.errorMessage = err.message || 'Une erreur est survenue lors de la mise à jour de la tâche.';\r\n+            console.error('Erreur mise à jour tâche:', err);\r\n+          }\r\n+        });\r\n   \r\n       this.projectService.createTask(taskData).subscribe({\r\n         next: (newTask) => {\r\n           this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1746389147424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,20 +110,9 @@\n             console.error('Erreur mise à jour tâche:', err);\r\n           }\r\n         });\r\n   \r\n-      this.projectService.createTask(taskData).subscribe({\r\n-        next: (newTask) => {\r\n-          this.isLoading = false;\r\n-          console.log('Tâche créée:', newTask);\r\n-          this.activeModal.close(newTask); // Ferme la modale et renvoie la nouvelle tâche\r\n-        },\r\n-        error: (err) => {\r\n-          this.isLoading = false;\r\n-          this.errorMessage = err.message || 'Une erreur est survenue lors de la création de la tâche.';\r\n-          console.error('Erreur création tâche:', err);\r\n-        }\r\n-      });\r\n+      \r\n     }\r\n   \r\n     cancel(): void {\r\n       this.activeModal.dismiss('cancel click'); // Ferme la modale sans renvoyer de données\r\n"
+                },
+                {
+                    "date": 1746389155519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,9 +110,29 @@\n             console.error('Erreur mise à jour tâche:', err);\r\n           }\r\n         });\r\n   \r\n-      \r\n+      } else {\r\n+        // --- Mode Création ---\r\n+        if (!this.phaseId) { // Double vérification\r\n+           this.errorMessage = \"L'identifiant de la phase est requis pour créer une tâche.\";\r\n+           this.isLoading = false;\r\n+           return;\r\n+        }\r\n+        console.log(\"Données de la tâche à créer :\", taskData);\r\n+        this.projectService.createTask(taskData).subscribe({\r\n+          next: (newTask) => {\r\n+            this.isLoading = false;\r\n+            console.log('Tâche créée:', newTask);\r\n+            this.activeModal.close(newTask); // Ferme la modale et renvoie la nouvelle tâche\r\n+          },\r\n+          error: (err) => {\r\n+            this.isLoading = false;\r\n+            this.errorMessage = err.message || 'Une erreur est survenue lors de la création de la tâche.';\r\n+            console.error('Erreur création tâche:', err);\r\n+          }\r\n+        });\r\n+      }\r\n     }\r\n   \r\n     cancel(): void {\r\n       this.activeModal.dismiss('cancel click'); // Ferme la modale sans renvoyer de données\r\n"
                 }
             ],
             "date": 1746386376557,

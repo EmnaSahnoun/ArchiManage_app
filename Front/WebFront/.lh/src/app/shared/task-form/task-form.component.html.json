@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1746386414129,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746389172493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n <div class=\"user-form-container\"> <!-- Utilisation de la même classe racine -->\r\n-    <h2>Nouvelle Tâche</h2>\r\n+    <h2>{{ isEditMode ? 'Modifier la Tâche' : 'Nouvelle Tâche' }}</h2>\r\n+\r\n   \r\n     <form [formGroup]=\"taskForm\" (ngSubmit)=\"saveTask()\" novalidate>\r\n   \r\n       <!-- Champ Nom de la Tâche -->\r\n"
+                },
+                {
+                    "date": 1746389194939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,10 +79,11 @@\n       <div class=\"form-actions\">\r\n         <button type=\"button\" class=\"cancel-btn\" (click)=\"cancel()\" [disabled]=\"isLoading\">\r\n           Annuler\r\n         </button>\r\n-        <button type=\"submit\" class=\"submit-btn\" [disabled]=\"taskForm.invalid || isLoading || !phaseId\">\r\n-          <span *ngIf=\"!isLoading\">Enregistrer la Tâche</span>\r\n+        <button type=\"submit\" class=\"submit-btn\" [disabled]=\"taskForm.invalid || isLoading || (!phaseId && !isEditMode)\">\r\n+            <span *ngIf=\"!isLoading\">{{ isEditMode ? 'Enregistrer les Modifications' : 'Enregistrer la Tâche' }}</span>\r\n+          \r\n           <span *ngIf=\"isLoading\">En cours...</span>\r\n         </button>\r\n       </div>\r\n     </form>\r\n"
                 }
             ],
             "date": 1746386414129,

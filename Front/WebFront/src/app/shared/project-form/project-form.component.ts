@@ -47,7 +47,7 @@ export class ProjectFormComponent implements OnInit {
 
     const idCompany = localStorage.getItem("idAgence");
     const idAdmin = localStorage.getItem("user_id"); // Obtenez l'ID de l'admin connecté
-
+    console.log("iduser",idAdmin)
     if (!idCompany || !idAdmin) {
       this.errorMessage = "Impossible de récupérer les informations nécessaires (Agence ou Administrateur).";
       this.isLoading = false;
