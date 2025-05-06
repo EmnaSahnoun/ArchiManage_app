@@ -20,7 +20,8 @@ export interface UserAccess {
 @Component({
   selector: 'app-phase-access',
   templateUrl: './phase-access.component.html',
-  styleUrl: './phase-access.component.scss'
+  styleUrl: './phase-access.component.scss',
+  standalone: false
 })
 export class PhaseAccessComponent {
 isLoading = false;

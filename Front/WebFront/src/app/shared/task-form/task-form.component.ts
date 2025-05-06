@@ -6,7 +6,8 @@ import { ProjectService } from '../../services/ProjectService';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.scss'
+  styleUrl: './task-form.component.scss',
+  standalone: false
 })
 export class TaskFormComponent   implements OnInit {
     // Reçoit l'ID de la phase parente depuis le composant qui ouvre la modale

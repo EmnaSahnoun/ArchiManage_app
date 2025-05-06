@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1742129622661,
@@ -140,6 +140,10 @@
                 {
                     "date": 1745058735898,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { NavigationStart, NavigationEnd, Router, NavigationCancel, NavigationError } from '@angular/router';\r\n import { OAuthService } from 'angular-oauth2-oidc';\r\n import { AuthService } from './services/auth.service';\r\n import { filter } from 'rxjs/operators';\r\n+import { authConfig } from './config/auth.config';\r\n \r\n @Component({\r\n   selector: 'app-root',\r\n   templateUrl: './app.component.html',\r\n"
+                },
+                {
+                    "date": 1746446027364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,10 @@\n \r\n @Component({\r\n   selector: 'app-root',\r\n   templateUrl: './app.component.html',\r\n-  styleUrls: ['./app.component.scss']\r\n+  styleUrls: ['./app.component.scss'],\r\n+  standalone: false\r\n })\r\n export class AppComponent implements OnInit {\r\n   title = 'WebFront';\r\n   showSidebar = true;\r\n"
                 }
             ],
             "date": 1742129622661,

@@ -4,11 +4,13 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap'; // Impor
 import { ProjectService } from '../../services/ProjectService';
 import { Agence } from '../../models/agence.model';
 import { AgenceService } from '../../services/agenceService';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-project-members',
   templateUrl: './project-members.component.html',
-  styleUrls: ['./project-members.component.scss']
+  styleUrls: ['./project-members.component.scss'],
+  standalone: false
 })
 
 
@@ -21,23 +23,38 @@ export class ProjectMembersComponent implements OnInit {
   isLoading: boolean = false; // Pour afficher un indicateur de chargement
   selectedRole: string = 'MEMBER';
   selectedUserId: string | null = null; // ID de l'utilisateur sélectionné pour l'ajout
-
+  viewInvitations:boolean=false;
+  isAdmin:boolean=false;
+  isSuperAdmin:boolean=false;
   constructor(
     public activeModal: NgbActiveModal, // Injecter NgbActiveModal
     private snackBar: MatSnackBar ,// Pour afficher des messages
     private projectService: ProjectService,
     private agenceService:AgenceService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private authService:AuthService
     
   ) {
     
     
   }
   ngOnInit(): void {
-    
+    this.isSuperAdmin=this.authService.isSuperAdmin();
+  this.isAdmin=this.authService.isAdmin();
+  this.canViewInvitations()
     this.loadProjectMembers();
   }
-
+canViewInvitations() {
+  
+    const idUser=localStorage.getItem("user_id");
+    if (this.project.idAdmin===idUser || this.isAdmin || this.isSuperAdmin){
+      this.viewInvitations=true;
+    }
+   else{
+    this.viewInvitations=false;
+  }
+  
+}
   loadProjectMembers(): void {
     this.isLoading = true;
     this.projectService.getProjectAccessByIdProject(this.project.id).subscribe({
@@ -47,7 +64,7 @@ export class ProjectMembersComponent implements OnInit {
           .filter(access => access.invitationStatus === 'ACCEPTED')
           .map(access => ({
             idAccess: access.id,
-            id: access.idUser,
+            idUser: access.idUser,
             name: access.name || `User ${access.idUser.substring(0, 4)}`,
             email: access.emailUser,
             role: access.role
@@ -65,8 +82,9 @@ export class ProjectMembersComponent implements OnInit {
           }));
 
         console.log('Members:', this.members);
+        this.getMemberName(this.members)
         console.log('Pending Members:', this.pendingMembers);
-        
+        this.getMemberName(this.pendingMembers)
         this.isLoading = false;
         this.cdRef.detectChanges();
       },
@@ -81,7 +99,21 @@ export class ProjectMembersComponent implements OnInit {
     // Adaptez ceci à la structure de vos données membre/rôle
     return member?.role || 'Non défini';
   }
-
+getMemberName(projects:any){
+  projects.forEach((p:any) => {
+    this.agenceService.getUserById(p.idUser).subscribe({
+      next: (user) => {
+        p.name=user.username
+        console.log("projet",p)
+      },
+      error: (err) => {
+        console.error('Erreur:', err);
+        // Affichez un message d'erreur à l'utilisateur
+        this.isLoading = false;
+      }
+    });
+  });
+}
   getMemberFullName(member: any): string {
      // Adaptez ceci à la structure de vos données membre
      return member?.name || member?.fullName || 'Nom non défini';
@@ -169,6 +201,7 @@ export class ProjectMembersComponent implements OnInit {
     }
 
     const selectedUser = this.usersToAdd.find(user => user.id === this.selectedUserId);
+    console.log("le user sélectionné",selectedUser)
     if (!selectedUser) return;
 
     this.isLoading = true;

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1741687942503,
@@ -92,6 +92,10 @@
                 {
                     "date": 1745623624425,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n ngOnInit(): void {\r\n   this.isUser=this.authService.isUser();\r\n   this.isSuperAdmin=this.authService.isSuperAdmin();\r\n   this.isAdmin=this.authService.isAdmin();\r\n-  console\r\n+  \r\n }\r\n   changeTitle(title: string): void {\r\n     this.titleChange.emit(title);  // Émettre un événement pour changer le titre\r\n   }\r\n"
+                },
+                {
+                    "date": 1746446002379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n \r\n @Component({\r\n   selector: 'app-sidebar',\r\n   templateUrl: './sidebar.component.html',\r\n-  styleUrl: './sidebar.component.scss'\r\n+  styleUrl: './sidebar.component.scss',\r\n+  standalone: false\r\n })\r\n export class SidebarComponent implements OnInit {\r\n   isUser:boolean=false;\r\n   isAdmin:boolean=false;\r\n"
                 }
             ],
             "date": 1741687942503,

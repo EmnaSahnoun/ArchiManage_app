@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 67,
             "patches": [
                 {
                     "date": 1743940149215,
@@ -112,6 +112,170 @@
                 {
                     "date": 1746306906957,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,15 @@\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n import { MatSelectModule } from '@angular/material/select';\r\n import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n+import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n+import { ProjectAccessComponent } from './project-access/project-access.component';\r\n+import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent],\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
+                },
+                {
+                    "date": 1746444030518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,13 +21,13 @@\n import { MatSelectModule } from '@angular/material/select';\r\n import { MatProgressBarModule } from '@angular/material/progress-bar';\r\n import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n-import { ProjectAccessComponent } from './project-access/project-access.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n+import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent],\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
+                },
+                {
+                    "date": 1746444379788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n+\r\n import { ProjectFormComponent } from './project-form/project-form.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n"
+                },
+                {
+                    "date": 1746444386092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n-\r\n+MatCardModule\r\n import { ProjectFormComponent } from './project-form/project-form.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n"
+                },
+                {
+                    "date": 1746444396561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n-import { CommonModule } from '@angular/common';\r\n+import { CommonModule, DatePipe } from '@angular/common'; // Importer CommonModule une fois\r\n+\r\n import { HeaderComponent } from '../header/header.component';\r\n-MatCardModule\r\n+\r\n import { ProjectFormComponent } from './project-form/project-form.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n"
+                },
+                {
+                    "date": 1746444413334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n-import { MatListModule } from '@angular/material/list';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n"
+                },
+                {
+                    "date": 1746444422749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n-import { MatSidenavModule } from '@angular/material/sidenav';\r\n+\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n"
+                },
+                {
+                    "date": 1746444433031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n \r\n-import { MatToolbarModule } from '@angular/material/toolbar';\r\n+\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n"
+                },
+                {
+                    "date": 1746444443489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n \r\n \r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n+\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n"
+                },
+                {
+                    "date": 1746444456123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n"
+                },
+                {
+                    "date": 1746444480571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,10 +27,21 @@\n import { TaskFormComponent } from './task-form/task-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n-  imports: [CommonModule,\r\n+  declarations: [\r\n+    HeaderComponent,\r\n+    ProjectFormComponent,\r\n+    ProjectMembersComponent,\r\n+    PhaseFormComponent,\r\n+    PhaseAccessComponent,\r\n+    TaskFormComponent\r\n+  ],\r\n+  imports: [\r\n+    CommonModule, // Nécessaire pour les directives comme *ngIf, *ngFor\r\n+    FormsModule, // Si vous utilisez [(ngModel)] dans les composants déclarés ici\r\n+    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs dans les composants déclarés ici\r\n+    NgbModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444487858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,21 +27,10 @@\n import { TaskFormComponent } from './task-form/task-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n-  declarations: [\r\n-    HeaderComponent,\r\n-    ProjectFormComponent,\r\n-    ProjectMembersComponent,\r\n-    PhaseFormComponent,\r\n-    PhaseAccessComponent,\r\n-    TaskFormComponent\r\n-  ],\r\n-  imports: [\r\n-    CommonModule, // Nécessaire pour les directives comme *ngIf, *ngFor\r\n-    FormsModule, // Si vous utilisez [(ngModel)] dans les composants déclarés ici\r\n-    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs dans les composants déclarés ici\r\n-    NgbModule,\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444500568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n import { TaskFormComponent } from './task-form/task-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  declarations: [\r\n+    \r\n+  ],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
+                },
+                {
+                    "date": 1746444509304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,14 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n   declarations: [\r\n-    \r\n+    HeaderComponent,\r\n+    ProjectFormComponent,\r\n+    ProjectMembersComponent,\r\n+    PhaseFormComponent,\r\n+    PhaseAccessComponent,\r\n+    TaskFormComponent\r\n   ],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n"
+                },
+                {
+                    "date": 1746444515424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,9 @@\n     PhaseAccessComponent,\r\n     TaskFormComponent\r\n   ],\r\n   imports: [CommonModule,\r\n+    FormsModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444521501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,8 +37,9 @@\n     TaskFormComponent\r\n   ],\r\n   imports: [CommonModule,\r\n     FormsModule,\r\n+    ReactiveFormsModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444527796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,8 +38,9 @@\n   ],\r\n   imports: [CommonModule,\r\n     FormsModule,\r\n     ReactiveFormsModule,\r\n+    NgbModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444549146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,10 +44,8 @@\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n-    ReactiveFormsModule,\r\n-    FormsModule,\r\n     \r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n"
+                },
+                {
+                    "date": 1746444559567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n+import { MatToolbarModule } from '@angular/material/toolbar';\r\n \r\n @NgModule({\r\n   declarations: [\r\n     HeaderComponent,\r\n@@ -43,10 +44,9 @@\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n-    MatIconModule,\r\n-    \r\n+    MatIconModule,    \r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746444582698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,8 @@\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n-import { MatToolbarModule } from '@angular/material/toolbar';\r\n \r\n @NgModule({\r\n   declarations: [\r\n     HeaderComponent,\r\n@@ -46,9 +45,9 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n-        MatIconModule,\r\n+        MatIconMoule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n         MatSidenavModule,\r\n         MatListModule,\r\n"
+                },
+                {
+                    "date": 1746444589036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,8 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n-        MatIconMoule,\r\n-        ReactiveFormsModule,\r\n         MatToolbarModule,\r\n         MatSidenavModule,\r\n         MatListModule,\r\n         MatProgressSpinnerModule,\r\n"
+                },
+                {
+                    "date": 1746444597837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,8 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n-        MatToolbarModule,\r\n-        MatSidenavModule,\r\n         MatListModule,\r\n         MatProgressSpinnerModule,\r\n         FormsModule, // Ajoutez FormsModule\r\n     ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs\r\n"
+                },
+                {
+                    "date": 1746444608907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,8 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n-        MatListModule,\r\n-        MatProgressSpinnerModule,\r\n         FormsModule, // Ajoutez FormsModule\r\n     ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs\r\n \r\n     // Modules Material\r\n"
+                },
+                {
+                    "date": 1746444615323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,8 @@\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n-        FormsModule, // Ajoutez FormsModule\r\n-    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs\r\n \r\n     // Modules Material\r\n     MatDialogModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746444621539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     MatIconModule,    \r\n     MatSnackBarModule,\r\n \r\n     // Modules Material\r\n-    MatDialogModule,\r\n+    \r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatTooltipModule,\r\n     MatTableModule,\r\n"
+                },
+                {
+                    "date": 1746444635987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,15 +48,14 @@\n     MatSnackBarModule,\r\n \r\n     // Modules Material\r\n     \r\n-    MatButtonModule,\r\n-    MatIconModule,\r\n+    \r\n+   \r\n     MatTooltipModule,\r\n     MatTableModule,\r\n     MatDividerModule,\r\n-    MatFormFieldModule,\r\n-    MatInputModule,\r\n+    M    MatInputModule,\r\n     MatSelectModule,\r\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n"
+                },
+                {
+                    "date": 1746444642281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,8 @@\n    \r\n     MatTooltipModule,\r\n     MatTableModule,\r\n     MatDividerModule,\r\n-    M    MatInputModule,\r\n     MatSelectModule,\r\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n"
+                },
+                {
+                    "date": 1746444648734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,14 +44,9 @@\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n     MatIconModule,    \r\n-    MatSnackBarModule,\r\n-\r\n-    // Modules Material\r\n-    \r\n-    \r\n-   \r\n+    MatSnackBarModule,   \r\n     MatTooltipModule,\r\n     MatTableModule,\r\n     MatDividerModule,\r\n     MatSelectModule,\r\n"
+                },
+                {
+                    "date": 1746444654415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     MatTooltipModule,\r\n     MatTableModule,\r\n     MatDividerModule,\r\n     MatSelectModule,\r\n-    MatSnackBarModule,\r\n+    \r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n   exports: [HeaderComponent]\r\n"
+                },
+                {
+                    "date": 1746444662045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     MatDividerModule,\r\n     MatSelectModule,\r\n     \r\n     MatProgressBarModule,\r\n-    NgbModule\r\n+    \r\n   ],\r\n   exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746444674000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,7 +53,14 @@\n     \r\n     MatProgressBarModule,\r\n     \r\n   ],\r\n-  exports: [HeaderComponent]\r\n+  exports: [\r\n+    HeaderComponent, // Exporter pour l'utiliser dans AppModule\r\n+    ProjectFormComponent, // Exporter pour l'ouvrir comme modale depuis ProjectsComponent\r\n+    ProjectMembersComponent, // Exporter pour l'ouvrir comme modale depuis ProjectsComponent\r\n+    PhaseFormComponent, // Exporter si utilisé ailleurs\r\n+    PhaseAccessComponent, // Exporter si utilisé ailleurs\r\n+    TaskFormComponent,\r\n+  ]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746444691887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,14 +28,9 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n   declarations: [\r\n-    HeaderComponent,\r\n-    ProjectFormComponent,\r\n-    ProjectMembersComponent,\r\n-    PhaseFormComponent,\r\n-    PhaseAccessComponent,\r\n-    TaskFormComponent\r\n+ \r\n   ],\r\n   imports: [CommonModule,\r\n     FormsModule,\r\n     ReactiveFormsModule,\r\n"
+                },
+                {
+                    "date": 1746444697433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,14 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n   declarations: [\r\n- \r\n+    HeaderComponent,\r\n+    ProjectFormComponent,\r\n+    ProjectMembersComponent,\r\n+    PhaseFormComponent,\r\n+    PhaseAccessComponent,\r\n+    TaskFormComponent\r\n   ],\r\n   imports: [CommonModule,\r\n     FormsModule,\r\n     ReactiveFormsModule,\r\n"
+                },
+                {
+                    "date": 1746444703055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,13 +54,8 @@\n     MatProgressBarModule,\r\n     \r\n   ],\r\n   exports: [\r\n-    HeaderComponent, // Exporter pour l'utiliser dans AppModule\r\n-    ProjectFormComponent, // Exporter pour l'ouvrir comme modale depuis ProjectsComponent\r\n-    ProjectMembersComponent, // Exporter pour l'ouvrir comme modale depuis ProjectsComponent\r\n-    PhaseFormComponent, // Exporter si utilisé ailleurs\r\n-    PhaseAccessComponent, // Exporter si utilisé ailleurs\r\n-    TaskFormComponent,\r\n+    \r\n   ]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746444762846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,21 +1,20 @@\n // src/app/shared/shared.module.ts\r\n import { NgModule } from '@angular/core';\r\n-import { CommonModule, DatePipe } from '@angular/common'; // Importer CommonModule une fois\r\n-\r\n+import { CommonModule } from '@angular/common';\r\n import { HeaderComponent } from '../header/header.component';\r\n-\r\n import { ProjectFormComponent } from './project-form/project-form.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { MatButtonModule } from '@angular/material/button';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { FormsModule, ReactiveFormsModule } from '@angular/forms';\r\n-\r\n-\r\n+import { MatListModule } from '@angular/material/list';\r\n+import { MatSidenavModule } from '@angular/material/sidenav';\r\n+import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n-\r\n+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { ProjectMembersComponent } from './project-members/project-members.component';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatDividerModule } from '@angular/material/divider';\r\n@@ -24,38 +23,43 @@\n import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importer une fois si nécessaire\r\n \r\n @NgModule({\r\n-  declarations: [\r\n-    HeaderComponent,\r\n-    ProjectFormComponent,\r\n-    ProjectMembersComponent,\r\n-    PhaseFormComponent,\r\n-    PhaseAccessComponent,\r\n-    TaskFormComponent\r\n-  ],\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n-    FormsModule,\r\n-    ReactiveFormsModule,\r\n-    NgbModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n-    MatIconModule,    \r\n-    MatSnackBarModule,   \r\n+    MatIconModule,\r\n+    ReactiveFormsModule,\r\n+    FormsModule,\r\n+    \r\n+    MatSnackBarModule,\r\n+        MatIconModule,\r\n+        ReactiveFormsModule,\r\n+        MatToolbarModule,\r\n+        MatSidenavModule,\r\n+        MatListModule,\r\n+        MatProgressSpinnerModule,\r\n+        FormsModule, // Ajoutez FormsModule\r\n+    ReactiveFormsModule, // Si vous utilisez des formulaires réactifs ailleurs\r\n+\r\n+    // Modules Material\r\n+    MatDialogModule,\r\n+    MatButtonModule,\r\n+    MatIconModule,\r\n     MatTooltipModule,\r\n     MatTableModule,\r\n     MatDividerModule,\r\n+    MatFormFieldModule,\r\n+    MatInputModule,\r\n     MatSelectModule,\r\n-    \r\n+    MatSnackBarModule,\r\n     MatProgressBarModule,\r\n-    \r\n+    NgbModule\r\n   ],\r\n-  exports: [\r\n-    \r\n-  ]\r\n+  exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746445403673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  declarations: [, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
+                },
+                {
+                    "date": 1746445409537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,12 @@\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n-  imports: [CommonModule,\r\n+  declarations: [ ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  imports: [\r\n+    HeaderComponent\r\n+    CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n"
+                },
+                {
+                    "date": 1746445419764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,11 +25,11 @@\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [ ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  declarations: [ ],\r\n   imports: [\r\n-    HeaderComponent\r\n+    HeaderComponent,\r\n     CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n"
+                },
+                {
+                    "date": 1746445426721,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n \r\n @NgModule({\r\n   declarations: [ ],\r\n   imports: [\r\n+    ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent,\r\n     HeaderComponent,\r\n     CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n"
+                },
+                {
+                    "date": 1746445433359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n \r\n @NgModule({\r\n   declarations: [ ],\r\n   imports: [\r\n-    ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent,\r\n+    ProjectFormComponent, \r\n+    ProjectMembersComponent, \r\n+    PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent,\r\n     HeaderComponent,\r\n     CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n"
+                },
+                {
+                    "date": 1746445451209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,11 @@\n   declarations: [ ],\r\n   imports: [\r\n     ProjectFormComponent, \r\n     ProjectMembersComponent, \r\n-    PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent,\r\n+    PhaseFormComponent,  \r\n+    PhaseAccessComponent, \r\n+    TaskFormComponent,\r\n     HeaderComponent,\r\n     CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n@@ -64,7 +66,12 @@\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n-  exports: [HeaderComponent]\r\n+  exports: [HeaderComponent,\r\n+    ProjectFormComponent,\r\n+    ProjectMembersComponent,\r\n+    PhaseFormComponent,\r\n+    PhaseAccessComponent,\r\n+    TaskFormComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746445751552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,17 +25,10 @@\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [ ],\r\n-  imports: [\r\n-    ProjectFormComponent, \r\n-    ProjectMembersComponent, \r\n-    PhaseFormComponent,  \r\n-    PhaseAccessComponent, \r\n-    TaskFormComponent,\r\n-    HeaderComponent,\r\n-    CommonModule,\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n@@ -66,12 +59,7 @@\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n-  exports: [HeaderComponent,\r\n-    ProjectFormComponent,\r\n-    ProjectMembersComponent,\r\n-    PhaseFormComponent,\r\n-    PhaseAccessComponent,\r\n-    TaskFormComponent]\r\n+  exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1743940149215,

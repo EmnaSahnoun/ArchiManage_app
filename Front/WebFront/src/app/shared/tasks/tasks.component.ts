@@ -12,7 +12,8 @@ import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dial
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss']
+  styleUrls: ['./tasks.component.scss'],
+  standalone: false
 })
 export class TasksComponent implements OnInit {
   
@@ -174,7 +175,7 @@ export class TasksComponent implements OnInit {
       size: 'lg',
       centered: true,
       backdrop: 'static',
-      keyboard: false
+      keyboard: true
     });
 
     // Passer la tâche à éditer ET l'ID de la phase actuelle
@@ -228,10 +229,12 @@ export class TasksComponent implements OnInit {
   openTaskDetails(task: any): void {
     // Ouvre le modal en utilisant le service NgbModal
     const modalRef = this.modalService.open(TaskDetailsComponent, {
+
       size: 'lg',           // Grande taille
       centered: true,        // Centré verticalement
       backdrop: 'static',    // Ne se ferme pas en cliquant à l'extérieur
-      keyboard: false        // Ne se ferme pas avec la touche Echap
+      keyboard: false,
+      
     });
 
     // !!! IMPORTANT : Passer les données de la tâche au composant modal !!!

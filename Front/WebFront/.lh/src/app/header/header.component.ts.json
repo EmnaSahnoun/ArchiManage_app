@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 30,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1741687617491,
@@ -128,6 +128,14 @@
                 {
                     "date": 1745513298196,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,13 +14,11 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-\r\n-        console.log(\"User Profile Object:\", userProfile);\r\n-        console.log(\"Extracted Username:\", this.username);\r\n+       \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n-      this.username = null; // Ensure username is null if not found\r\n+      this.username = null; \r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746444952270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n-  styleUrl: './header.component.scss'\r\n+  styleUrls: './header.component.scss'\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n"
+                },
+                {
+                    "date": 1746445960534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,10 @@\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n-  styleUrls: './header.component.scss'\r\n+  styleUrl: './header.component.scss',\r\n+  standalone: false\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n"
                 }
             ],
             "date": 1741687617491,

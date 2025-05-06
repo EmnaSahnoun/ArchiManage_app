@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/messages/messages.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746446048763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746446048763,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-messages',\r\n  templateUrl: './messages.component.html',\r\n  styleUrl: './messages.component.scss',\r\n  standalone: false\r\n})\r\nexport class MessagesComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

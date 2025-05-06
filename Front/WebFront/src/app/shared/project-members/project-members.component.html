@@ -9,13 +9,13 @@
 
   <!-- Onglets -->
   <div class="modal-tabs">
-    <button class="tab-button" [class.active]="activeTab === 'current'" (click)="setActiveTab('current')">
+    <button class="tab-button"  [class.active]="activeTab === 'current'" (click)="setActiveTab('current')">
       Membres Actuels ({{ members.length }})
     </button>
-    <button class="tab-button" [class.active]="activeTab === 'pending'" (click)="setActiveTab('pending')">
+    <button class="tab-button" *ngIf="viewInvitations" [class.active]="activeTab === 'pending'" (click)="setActiveTab('pending')">
       Invitations ({{ pendingMembers.length }})
     </button>
-    <button class="tab-button" [class.active]="activeTab === 'add'" (click)="setActiveTab('add')">
+    <button class="tab-button" *ngIf="viewInvitations" [class.active]="activeTab === 'add'" (click)="setActiveTab('add')">
       Ajouter Membre
     </button>
   </div>

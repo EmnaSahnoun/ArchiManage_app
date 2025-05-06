@@ -4,7 +4,8 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  template: '<div>Redirection vers le portail d\'authentification...</div>'
+  template: '<div>Redirection vers le portail d\'authentification...</div>',
+  standalone: false
 
 })
 export class LoginComponent  {

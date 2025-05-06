@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 28,
             "patches": [
                 {
                     "date": 1746123785682,
@@ -116,6 +116,10 @@
                 {
                     "date": 1746390729518,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-    console.log(\"\")\r\n+    console.log(\"iduser\",)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1746446200175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n-  styleUrls: ['./project-form.component.scss']\r\n+  styleUrls: ['./project-form.component.scss'],\r\n+  \r\n \r\n })\r\n export class ProjectFormComponent implements OnInit {\r\n   projectForm: FormGroup;\r\n@@ -46,9 +47,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-    console.log(\"iduser\",)\r\n+    console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
                 }
             ],
             "date": 1746123785682,

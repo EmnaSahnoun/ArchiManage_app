@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 97,
+            "activePatchIndex": 99,
             "patches": [
                 {
                     "date": 1746216026471,
@@ -396,6 +396,14 @@
                 {
                     "date": 1746282461833,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n               <td><span class=\"role-badge\">{{ pending.role }}</span></td>\r\n               <td>{{ pending.createdAt | date:'shortDate' }}</td>\r\n               <td>\r\n                \r\n-                <button (click)=\"cancelInvitation(pending.idAccess)\" class=\"button-icon button-warn\">\r\n+                <button (click)=\"cancelInvitation(pending)\" class=\"button-icon button-warn\">\r\n                   <i  class=\"bi bi-trash\"></i> \r\n                 </button>\r\n               </td>\r\n             </tr>\r\n"
+                },
+                {
+                    "date": 1746437487739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   </div>\r\n \r\n   <!-- Onglets -->\r\n   <div class=\"modal-tabs\">\r\n-    <button class=\"tab-button\" [class.active]=\"activeTab === 'current'\" (click)=\"setActiveTab('current')\">\r\n+    <button class=\"tab-button\"  [class.active]=\"activeTab === 'current'\" (click)=\"setActiveTab('current')\">\r\n       Membres Actuels ({{ members.length }})\r\n     </button>\r\n     <button class=\"tab-button\" [class.active]=\"activeTab === 'pending'\" (click)=\"setActiveTab('pending')\">\r\n       Invitations ({{ pendingMembers.length }})\r\n"
+                },
+                {
+                    "date": 1746437493755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   </div>\r\n \r\n   <!-- Onglets -->\r\n   <div class=\"modal-tabs\">\r\n-    <button class=\"tab-button\" *ngIf=\"expression\" [class.active]=\"activeTab === 'current'\" (click)=\"setActiveTab('current')\">\r\n+    <button class=\"tab-button\" *ngIf=\"viewInvitations\" [class.active]=\"activeTab === 'current'\" (click)=\"setActiveTab('current')\">\r\n       Membres Actuels ({{ members.length }})\r\n     </button>\r\n     <button class=\"tab-button\" [class.active]=\"activeTab === 'pending'\" (click)=\"setActiveTab('pending')\">\r\n       Invitations ({{ pendingMembers.length }})\r\n"
                 }
             ],
             "date": 1746216026471,

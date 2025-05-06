@@ -6,7 +6,8 @@ import { ProjectService } from '../../services/ProjectService'; // Assurez-vous 
 @Component({
   selector: 'app-phase-form',
   templateUrl: './phase-form.component.html',
-  styleUrl: './phase-form.component.scss'
+  styleUrl: './phase-form.component.scss',
+  standalone: false
 })
 export class PhaseFormComponent  implements OnInit {
   // Reçoit l'ID du projet parent depuis le composant qui ouvre la modale

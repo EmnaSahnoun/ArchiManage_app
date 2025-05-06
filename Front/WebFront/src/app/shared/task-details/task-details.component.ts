@@ -7,7 +7,8 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
-  styleUrl: './task-details.component.scss'
+  styleUrl: './task-details.component.scss',
+  standalone: false
 })
 export class TaskDetailsComponent implements OnInit {
   @Input() task: any;
@@ -26,10 +27,10 @@ export class TaskDetailsComponent implements OnInit {
     if (this.task?.subTaskIds?.length > 0) {
       this.getSubtasks(this.task.subTaskIds);
     }
-    this.getSampleTask();
-    if (!this.task.subtasks) {
+    //this.getSampleTask();
+    /* if (!this.task.subtasks) {
       this.task.subtasks = [];
-    }
+    } */
     
     // If no attachments, initialize empty array
     if (!this.task.attachments) {

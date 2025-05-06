@@ -1,6 +1,14 @@
 <div class="task-details-container">
     <div class="task-header">
       <h2>{{ task?.name }}</h2>
+      <div class="priority-badge" [class.high]="task?.priority === 'HIGH'"
+                                    [class.medium]="task?.priority === 'MEDIUM'"
+                                    [class.low]="task?.priority === 'LOW'">
+              {{ task?.priority }}
+            </div>
+            <span class="status-badge" [class.TODO]="task?.status === 'TODO'"
+            [class.COMPLETED]="task?.status === 'COMPLETED'"
+            [class.IN_PROGRESS]="task?.status === 'IN_PROGRESS'">{{ task?.status }}</span>
       <button mat-icon-button class="close-btn" (click)="closeModal()">
         <i class="bi bi-x-lg"></i>
       </button>
@@ -9,13 +17,10 @@
     <div class="task-content">
       <!-- Left Column -->
       <div class="task-left-column">
+        
+       
+  
         <div class="task-section">
-          <h3>Priority</h3>
-          <div class="priority-badge" [class.high]="task?.priority === 'HIGH'" 
-                                  [class.medium]="task?.priority === 'MEDIUM'" 
-                                  [class.low]="task?.priority === 'LOW'">
-            {{ task?.priority }}
-          </div>
           
           <div class="date-range">
             <div class="date-item">
@@ -30,17 +35,9 @@
         </div>
   
         <div class="task-section">
-          <h3>Status</h3>
-          <div class="progress-container">
-            <mat-progress-bar mode="determinate" [value]="task?.progress || 0"></mat-progress-bar>
-            <span class="progress-value">{{ task?.progress || 0 }}%</span>
-          </div>
-        </div>
-  
-        <div class="task-section">
           <h3>Assignees</h3>
           <div class="subtasks-list">
-            <div class="subtask-item" *ngFor="let subtask of task?.subtasks">
+            <div class="subtask-item" *ngFor="let subtask of subtasks">
               <div class="subtask-info">
                 <i class="bi bi-check-circle"></i>
                 <span>{{ subtask.name }}</span>
@@ -76,15 +73,7 @@
           <p class="task-description">{{ task?.description }}</p>
         </div>
   
-        <div class="task-section">
-          <h3>Requirements</h3>
-          <ul class="requirements-list">
-            <li *ngFor="let requirement of task?.requirements">
-              <i class="bi bi-check-circle-fill"></i>
-              <span>{{ requirement }}</span>
-            </li>
-          </ul>
-        </div>
+       
   
         
   

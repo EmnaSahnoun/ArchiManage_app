@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 55,
+            "activePatchIndex": 56,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -228,6 +228,10 @@
                 {
                     "date": 1745532323732,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,17 +12,13 @@\n     \r\n     this.authService.login();\r\n   }\r\n \r\n-  user = {\r\n-    email: '',\r\n-    password: ''\r\n-  };\r\n-  errorMessage: string = '';\r\n   \r\n+  \r\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.router.navigate(['/super-admin/agences']);\r\n+    \r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1746446161567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,10 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n+  template: '<div>Redirection vers le portail d\\'authentification...</div>',\r\n+  standalone: false\r\n \r\n })\r\n export class LoginComponent  {\r\n   constructor(private authService: AuthService , private router:Router) {\r\n"
                 }
             ],
             "date": 1742130408469,

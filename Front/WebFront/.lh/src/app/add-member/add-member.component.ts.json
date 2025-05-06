@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1741861390056,
@@ -132,6 +132,10 @@
                 {
                     "date": 1741865768021,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,16 +22,15 @@\n // Méthode pour ajouter un membre\r\n // AddMemberComponent\r\n \r\n addMember(member: any): void {\r\n-  // Ajouter le membre à la phase sélectionnée\r\n   if (this.selectedPhase) {\r\n-    this.selectedPhase.members.push(member);\r\n+    this.selectedPhase.members.push(member);  // Ajouter le membre à la phase\r\n   }\r\n \r\n   console.log('Membre ajouté:', member);\r\n \r\n-  // Fermer le modal avec le membre ajouté\r\n+  // Fermer le modal et retourner le membre ajouté\r\n   this.dialogRef.close(member);\r\n }\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1746446077221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,10 @@\n \r\n @Component({\r\n   selector: 'app-add-member',\r\n   templateUrl: './add-member.component.html',\r\n-  styleUrls: ['./add-member.component.scss']\r\n+  styleUrls: ['./add-member.component.scss'],\r\n+  standalone: false\r\n })\r\n export class AddMemberComponent {\r\n availableMembers: any[];\r\n selectedMember: any;  \r\n"
                 }
             ],
             "date": 1741861390056,

@@ -73,7 +73,8 @@
               </td>
                <!-- Progress (Read-only example) -->
               <td>
-                {{ project.progress }}%
+                <span >{{ (project.progress || 0) | number:'1.0-0' }}%</span>
+                <span *ngIf="(project.progress)==='NaN'">0%</span>
               </td>
               <!-- Status Column (Example of editable status) -->
               <td>

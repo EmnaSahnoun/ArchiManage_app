@@ -28,10 +28,10 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   background: white;
   border-radius: 12px;
   padding: 24px;
-  width: 90vw;
-  max-width: 1100px;
+  
+
   max-height: 90vh;
-  overflow-y: auto;
+  //overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 
   .task-header {
@@ -46,6 +46,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       margin: 0;
       color: $primary-color;
       font-size: 1.8rem;
+      overflow-wrap: break-word;
     }
 
     .close-btn {
@@ -62,16 +63,22 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   .task-content {
     display: flex;
     flex: 1; // Permet à cette zone de s'étendre pour remplir l'espace vertical restant
-    overflow-y: hidden;
+    //overflow-y: hidden;
     gap: 30px;
-
+    min-height: 0;
     .task-left-column {
       flex: 1;
       min-width: 300px;
+      overflow-y: auto; 
+      overflow-x: hidden;
+      min-height: 0;
     }
 
     .task-right-column {
       flex: 2;
+      overflow-y: auto; // Allow this column to scroll if needed
+      min-height: 0;
+      overflow-x: hidden; 
     }
   }
 
@@ -123,6 +130,37 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       background-color: rgba($priority-low-color, 0.1);
       color: $priority-low-color;
       border: 1px solid rgba($priority-low-color, 0.3);
+    }
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    &.TODO {
+      background-color: rgba($accent-color, 0.3);
+      color: $accent-color;
+      border: 1px solid rgba($accent-color, 0.6);
+    
+    }
+
+    &.COMPLETED {
+      background-color: rgba($success-color, 0.3);
+      color: $success-color;
+      border: 1px solid rgba($success-color, 0.6);
+  
+    }
+
+    &.IN_PROGRESS {
+      background-color: rgba($primary-color, 0.3);
+      color: $primary-color;
+      border: 1px solid rgba($primary-color, 0.6);
+ 
     }
   }
 
@@ -212,6 +250,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
 
         strong {
           display: block;
+          overflow-wrap: break-word;
           font-size: 0.9rem;
         }
 
@@ -230,6 +269,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   .task-description {
     line-height: 1.6;
     color: $text-color-primary;
+    overflow-wrap: break-word;
   }
 
   .requirements-list, .guidelines-list {
@@ -247,6 +287,10 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       i {
         color: $success-color;
         margin-top: 2px;
+      }
+      span {
+        flex: 1; // Allow text to take space and wrap
+        overflow-wrap: break-word; // Ajouter pour les requirements/guidelines
       }
     }
   }
@@ -279,6 +323,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       .activity-content {
         margin: 0;
         font-size: 0.9rem;
+        overflow-wrap: break-word;
         line-height: 1.5;
       }
 
@@ -331,4 +376,4 @@ $priority-low-bg: lighten($priority-low-color, 40%);
     flex-direction: column;
     gap: 10px !important;
   }
-}
+}   

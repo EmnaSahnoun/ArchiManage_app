@@ -11,54 +11,40 @@ import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProjectFormComponent } from '../shared/project-form/project-form.component';
-
-// Interface pour la structure des données de projet (basée sur le HTML)
-export interface Project {
-  id: number; // Ajout d'un ID pour la gestion
-  name: string;
-  statusClass: string; // Classe CSS pour le badge (ex: 'in-progress', 'completed')
-  statusText: string;  // Texte du badge (ex: 'En cours', 'Terminé')
-  progress: number;    // Pourcentage de progression
-}
-
-// Interface pour la structure des données utilisateur (basée sur le HTML)
-export interface User {
-  id: number; // Ajout d'un ID
-  fullName: string;
-  email: string;
-  roleClass: string; // Classe CSS pour le badge de rôle (ex: 'super-admin', 'admin', 'user')
-  roleText: string;  // Texte du badge de rôle
-  statusClass: string; // Classe CSS pour le badge de statut (ex: 'active', 'inactive')
-  statusText: string;  // Texte du badge de statut
-}
+import { ProjectService } from '../services/ProjectService';
+import { ProjectMembersComponent } from '../shared/project-members/project-members.component'; // Import ProjectMembersComponent
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'] // Correction: utiliser styleUrls au lieu de styleUrl
+  styleUrls: ['./dashboard.component.scss'] ,
+  standalone: false
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   currentAgence: any;
   isLoadingUsers: boolean = false;
+  isLoadingProjects: boolean = false;
   isUser: boolean = false;
   isAdmin: boolean = false;
   // --- Variables pour les statistiques ---
-  pendingProjectCount: number = 12;
-  inProgressProjectCount: number = 64;
-  completedProjectCount: number = 105;
-  totalTasks: number = 56;
-  assignedMembers: number = 8;
-  relatedProjects: number = 30;
+
+  inProgressProjectCount: number = 0;
+  completedProjectCount: number = 0;
+  totalTasks: number = 0;
+ 
+  notStartedProjectCount: number = 0;
+  
+  errorProjectCount: number = 0;
   // Tables de données
-  projectDataSource = new MatTableDataSource<Project>();
-  userDataSource = new MatTableDataSource<User>();
+  projectDataSource = new MatTableDataSource<any>();
+  userDataSource = new MatTableDataSource<any>();
 
   projectDisplayedColumns: string[] = ['name', 'status', 'progress', 'actions'];
   userDisplayedColumns: string[] = ['fullName', 'email', 'role', 'status', 'actions'];
 
-  projects: Project[] = [ /* ... */ ];
-  users: User[] = []; // Use the User interface
+  projects: any[] = [ /* ... */ ];
+  users: any[] = []; // Use the User interface
 
   public chart: Chart | undefined;
 
@@ -75,15 +61,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router, // Inject Router
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private projectService:ProjectService
 
   ) { }
 
   ngOnInit(): void {
+    
     this.getUser();
     this.getGroup();
     this.role();
     this.loadAgence();
+    this.getProjects()
+   
     console.log('userss',this.users);
     this.subscribeToRouterEvents(); // Start listening to router changes
   }
@@ -94,11 +84,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   if (userProfileString) {
     const userProfile = JSON.parse(userProfileString);
     const username = userProfile?.preferred_username || null;
-    
+    console.log("le username",username)
     if (username) {
       this.agenceService.getUserByUsername(username).subscribe({
         next: (user) => {
-          
+          console.log("le useru",user)
           localStorage.setItem('user_id', user.id);
          
         },
@@ -144,6 +134,187 @@ role(){
  else { 
   this.isUser=true
  }
+}
+getProjects(){
+  const idCompany=localStorage.getItem("idAgence");
+  if (idCompany){
+    this.isLoadingUsers = true;
+    this.projectService.getAllProjects(idCompany).subscribe({
+      next: (projects) => {
+        this.projects = projects.filter(p => !p.deleted);
+        
+
+        if(this.isUser){
+          const idUser=localStorage.getItem("user_id");  
+                  
+          projects.filter(p => p.deleted !== true);
+          console.log("les projets apres le 1er filtrage",projects);
+          projects.forEach(projet => {
+            this.projectService.getProjectAccessByIdProject(projet.id).subscribe({
+              next: (projectAccesses) => {
+                console.log("Accès pour le projet", projet.id, ":", projectAccesses);
+                projectAccesses.forEach(projectAccess => {
+                  console.log("projectAccess.idUser ===idUser",projectAccess.idUser ===idUser)
+                  console.log("projectAccess.invitationStatus===",projectAccess.invitationStatus==="ACCEPTED")
+                  if (projectAccess.idUser ===idUser && projectAccess.invitationStatus==="ACCEPTED" ){
+                    this.projects.push(projet);                      
+                  }
+                });
+                console.log("les projets de user",this.projects)
+           
+              },
+              error: (err) => {
+                console.error("Erreur récupération accès projet", projet.id, ":", err);
+              }
+            });
+          });
+          this.projects.forEach(projet => {
+            this.checkProjectStatus(projet)
+          });
+          this.countProjectStatuses(this.projects)
+          this.countTasks(this.projects)
+          console.log("les projets de user",this.projects)
+        } 
+        else if(this.isAdmin){
+          this.projects = projects.filter(p => p.deleted !== true);
+          this.projects.forEach(projet => {
+            this.checkProjectStatus(projet)
+          });
+          this.countProjectStatuses(this.projects)
+          this.countTasks(this.projects)
+          console.log('les projets de admin',this.projects)
+        }   
+        else{
+          this.projects = projects.filter(p => p.deleted !== true);
+   
+        }        
+         // Appliquer le filtre une fois les projets chargés
+        console.log("les projets",this.projects);
+        // Pour chaque projet, récupérer les détails des phases
+      
+        
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des projets:', err);
+        this.projects = []; // Vider en cas d'erreur
+        
+      }
+    });
+  };
+}
+checkProjectStatus(project: any) {
+  if (!project.phaseIds || project.phaseIds.length === 0) {
+    project.status = 'NOT_STARTED';
+    return;
+  }
+
+  let allPhasesCompleted = true;
+  
+  // Vérifier chaque phase du projet
+  project.phaseIds.forEach((phaseId: string) => {
+    this.projectService.getphaseById(phaseId).subscribe({
+      next: (phase) => {
+        
+        this.checkPhaseStatus(phase).then(phaseStatus => {
+          phase.status = phaseStatus;
+          
+          // Si une phase n'est pas complète, le projet ne l'est pas
+          if (phaseStatus !== 'COMPLETED') {
+            allPhasesCompleted = false;
+          }
+          
+          // Mettre à jour le statut du projet
+          project.status = allPhasesCompleted ? 'COMPLETED' : 'IN_PROGRESS';
+        });
+      },
+      error: (err) => {
+        console.error(`Erreur phase ${phaseId}:`, err);
+        project.status = 'ERROR';
+      }
+    });
+  });
+}
+async checkPhaseStatus(phase: any): Promise<string> {
+  if (!phase.taskIds || phase.taskIds.length === 0) {
+    return 'NOT_STARTED';
+  }
+
+  try {
+    // Récupérer toutes les tâches de la phase
+    const tasks = await this.projectService.getTaskByPhase(phase.id).toPromise();
+    
+    if (!tasks || tasks.length === 0) {
+      return 'NOT_STARTED';
+    }
+
+    // Vérifier si toutes les tâches sont complétées
+    const allTasksCompleted = tasks.every((task: any) => task.status === 'COMPLETED');
+    return allTasksCompleted ? 'COMPLETED' : 'IN_PROGRESS';
+    
+  } catch (error) {
+    console.error(`Erreur lors de la récupération des tâches pour la phase ${phase.id}:`, error);
+    return 'ERROR';
+  }
+}
+countProjectStatuses(projects:any): void {
+  // Réinitialiser les compteurs
+  this.notStartedProjectCount = 0;
+  this.inProgressProjectCount = 0;
+  this.completedProjectCount = 0;
+  this.errorProjectCount = 0;
+  console.log("le status",projects)
+  // Parcourir les projets et incrémenter les compteurs
+  projects.forEach((project:any) => {
+    console.log("le type de variable",project.status)
+    console.log("project.status===",project.status=='"IN_PROGRESS"')
+    if (project.status==='"IN_PROGRESS"'){
+
+      this.inProgressProjectCount++
+      
+    }else if(project.status==='NOT_STARTED'){
+      this.notStartedProjectCount++
+    }else if(project.status==='COMPLETED'){ 
+      this.completedProjectCount++
+    }else if(project.status==='ERROR'){
+      this.errorProjectCount++
+    }
+    
+  });
+
+  console.log('Comptes des statuts de projets:', {
+    notStarted: this.notStartedProjectCount,
+    inProgress: this.inProgressProjectCount,
+    completed: this.completedProjectCount,
+    error: this.errorProjectCount
+  });
+}
+countTasks(projects:any): void {
+  projects.forEach((project:any) => {
+    this.projectService.getphaseByIdProject(project.id).subscribe({
+      next: (phases) => {
+        phases.forEach((phase:any) => {
+          this.projectService.getTaskByPhase(phase.id).subscribe({
+            next: (tasks) => {
+              this.totalTasks += tasks.length;
+              
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération des projets:', err);
+              this.projects = []; // Vider en cas d'erreur
+              
+            }
+          });
+        })
+        
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des projets:', err);
+        this.projects = []; // Vider en cas d'erreur
+        
+      }
+    });
+  })
+
 }
   ngAfterViewInit(): void {
     this.createChart();
@@ -316,17 +487,17 @@ role(){
       );
     }
 
-  viewProject(project: Project): void {
+  viewProject(project: any): void {
     console.log('Action: Voir le projet', project);
     // Logique pour afficher les détails du projet (modal, navigation)
   }
 
-  editProject(project: Project): void {
+  editProject(project: any): void {
     console.log('Action: Modifier le projet', project);
     // Logique pour ouvrir le formulaire d'édition du projet
   }
 
-  deleteProject(project: Project): void {
+  deleteProject(project: any): void {
     console.warn('Action: Supprimer le projet', project);
     // Logique pour confirmer et supprimer le projet (appel API)
     // Pensez à mettre à jour this.projects après suppression
@@ -366,7 +537,7 @@ role(){
     }
   }
 
-  viewUser(user: User): void {
+  viewUser(user: any): void {
     console.log('Action: Voir l\'utilisateur', user);
      // Logique pour afficher les détails de l'utilisateur
   }

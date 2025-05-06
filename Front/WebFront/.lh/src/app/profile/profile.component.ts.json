@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/profile/profile.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746446055235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746446055235,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-profile',\r\n  templateUrl: './profile.component.html',\r\n  styleUrl: './profile.component.scss',\r\n  standalone: false\r\n})\r\nexport class ProfileComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

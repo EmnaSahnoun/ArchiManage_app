@@ -12,6 +12,9 @@
       <li mat-list-item routerLink="/projects" routerLinkActive="active" *ngIf="isUser || isAdmin"><a (click)="changeTitle('Projets')">
         <i class="bi bi-briefcase"></i> Projects</a>
       </li>
+      <li mat-list-item routerLink="/invitations" routerLinkActive="active" *ngIf="isUser || isAdmin"><a (click)="changeTitle('Invitations')">
+        <i class="bi bi-envelope-paper"></i> Invitations</a>
+      </li>
       <li mat-list-item routerLink="/super-admin/agences" routerLinkActive="active" *ngIf="isSuperAdmin"><a (click)="changeTitle('Projets')">
         <i class="bi bi-briefcase"></i> Agences</a>
       </li>

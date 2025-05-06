@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/clients/clients.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746446042482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746446042482,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-clients',\r\n  templateUrl: './clients.component.html',\r\n  styleUrl: './clients.component.scss',\r\n  standalone: false\r\n})\r\nexport class ClientsComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

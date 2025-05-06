@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 86,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -352,6 +352,18 @@
                 {
                     "date": 1745513651671,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { LoginComponent } from './login/login.component';\r\n import { AuthGuard } from './guard/auth.guard';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n+import { UserFormComponent } from './super-admin/user-form/user-form.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -15,9 +16,10 @@\n     canActivate:[AuthGuard],\r\n     children: [\r\n       {\r\n         path: 'users/new',\r\n-        component:\r\n+        component: UserFormComponent,\r\n+        canActivate: [AuthGuard]\r\n       }\r\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n"
+                },
+                {
+                    "date": 1746443686267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n     ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n+  { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n"
+                },
+                {
+                    "date": 1746443696785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n import { LoginComponent } from './login/login.component';\r\n import { AuthGuard } from './guard/auth.guard';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { UserFormComponent } from './super-admin/user-form/user-form.component';\r\n+import { InvitationsComponent } from './invitations/invitations.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -24,9 +25,9 @@\n     ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n-  { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n+  { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n"
+                },
+                {
+                    "date": 1746445146576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n-  { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n+  { path: 'invitations', component: InvitationsComponent},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n"
                 }
             ],
             "date": 1741609914429,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1746386376557,
@@ -68,6 +68,10 @@
                 {
                     "date": 1746389155519,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,9 +110,29 @@\n             console.error('Erreur mise à jour tâche:', err);\r\n           }\r\n         });\r\n   \r\n-      \r\n+      } else {\r\n+        // --- Mode Création ---\r\n+        if (!this.phaseId) { // Double vérification\r\n+           this.errorMessage = \"L'identifiant de la phase est requis pour créer une tâche.\";\r\n+           this.isLoading = false;\r\n+           return;\r\n+        }\r\n+        console.log(\"Données de la tâche à créer :\", taskData);\r\n+        this.projectService.createTask(taskData).subscribe({\r\n+          next: (newTask) => {\r\n+            this.isLoading = false;\r\n+            console.log('Tâche créée:', newTask);\r\n+            this.activeModal.close(newTask); // Ferme la modale et renvoie la nouvelle tâche\r\n+          },\r\n+          error: (err) => {\r\n+            this.isLoading = false;\r\n+            this.errorMessage = err.message || 'Une erreur est survenue lors de la création de la tâche.';\r\n+            console.error('Erreur création tâche:', err);\r\n+          }\r\n+        });\r\n+      }\r\n     }\r\n   \r\n     cancel(): void {\r\n       this.activeModal.dismiss('cancel click'); // Ferme la modale sans renvoyer de données\r\n"
+                },
+                {
+                    "date": 1746446226943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,10 @@\n \r\n @Component({\r\n   selector: 'app-task-form',\r\n   templateUrl: './task-form.component.html',\r\n-  styleUrl: './task-form.component.scss'\r\n+  styleUrl: './task-form.component.scss',\r\n+  standalone: false\r\n })\r\n export class TaskFormComponent   implements OnInit {\r\n     // Reçoit l'ID de la phase parente depuis le composant qui ouvre la modale\r\n     @Input() phaseId!: string;\r\n"
                 }
             ],
             "date": 1746386376557,

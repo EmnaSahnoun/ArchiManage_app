@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1746306825369,
@@ -180,6 +180,10 @@
                 {
                     "date": 1746310111766,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n               id: u.idUser, // User ID\r\n               username: u.username || 'N/A', // Provide fallback\r\n               email: u.email || '', // Provide fallback (empty string is safe for .toLowerCase())\r\n               canView: u.canView ,\r\n-              idPhaseAccess:phaseAccesses[]\r\n+              idPhaseAccess:phaseAccesses[0].id\r\n             }));\r\n             console.log('Usernames:', this.allUsers);\r\n             \r\n             this.applyFilter();\r\n"
+                },
+                {
+                    "date": 1746446220236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n }\r\n @Component({\r\n   selector: 'app-phase-access',\r\n   templateUrl: './phase-access.component.html',\r\n-  styleUrl: './phase-access.component.scss'\r\n+  styleUrl: './phase-access.component.scss',\r\n+  standalone: false\r\n })\r\n export class PhaseAccessComponent {\r\n isLoading = false;\r\n allUsers: any[] = []; // Liste complète des utilisateurs avec leurs accès\r\n"
                 }
             ],
             "date": 1746306825369,

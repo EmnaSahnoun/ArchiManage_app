@@ -11,11 +11,13 @@ import { MatSnackBar } from '@angular/material/snack-bar'; // Importer MatSnackB
 import { AgenceService } from '../../services/agenceService';
 import { PhaseAccessComponent } from '../phase-access/phase-access.component';
 import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dialog/confirmation-dialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
-  styleUrl: './project-details.component.scss'
+  styleUrl: './project-details.component.scss',
+  standalone: false
 })
 export class ProjectDetailsComponent implements OnInit {
   projectId: string | null = null;
@@ -73,6 +75,11 @@ export class ProjectDetailsComponent implements OnInit {
   editedPhaseData: any = {}; 
   expandedPhaseId: string | null = null;
   selectedMember: any = null;
+  isAdmin:boolean=false;
+  isSuperAdmin:boolean=false;
+  completed:number=0;
+  nbTasks:number=0;
+
   constructor(private route: ActivatedRoute, 
     private dialog: MatDialog, 
     private router:Router,
@@ -80,6 +87,7 @@ export class ProjectDetailsComponent implements OnInit {
     private modalService: NgbModal,
     private snackBar: MatSnackBar,
     private agenceService: AgenceService,
+    private authService:AuthService
     
   
   ) {}
@@ -87,6 +95,8 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectId = this.route.snapshot.paramMap.get('id');
+    this.isSuperAdmin=this.authService.isSuperAdmin();
+  this.isAdmin=this.authService.isAdmin();
     //this.project = this.router.getCurrentNavigation()?.extras.state?.['projectData'];
     console.log('Données du projectId :', this.projectId);
     this.calculateProgress();
@@ -101,7 +111,7 @@ export class ProjectDetailsComponent implements OnInit {
         next: (p) => {
           this.projet = p;
           
-          // Appliquer le filtre une fois les projets chargés
+          this.getProgress(this.projet);
           console.log("le projet",this.projet);
           // Pour chaque projet, récupérer les détails des phases
         
@@ -113,6 +123,59 @@ export class ProjectDetailsComponent implements OnInit {
         }
       });
     };
+  }
+  getProgress(project:any){
+    
+    this.completed=0;
+    this.nbTasks=0
+        this.projectService.getphaseByIdProject(project.id).subscribe({
+          next: (phases) => {
+            phases.forEach((phase:any) => {
+              this.projectService.getTaskByPhase(phase.id).subscribe({
+                next: (tasks) => {
+                  this.nbTasks+=tasks.length;
+                  
+                  tasks.forEach((task:any) => {
+                    this.projectService.getTaskByid(task.id).subscribe({
+                      next: (t) => {
+                        if(t.status==="COMPLETED"){
+                          this.completed++;
+                        }
+                        console.log("this.completed",this.completed)
+                        console.log("this.nbTasks",this.nbTasks)
+                        project.progress=(this.completed/this.nbTasks)*100
+                        console.log("le progress",project.progress)
+                      },
+                      error: (err) => {
+                        console.error('Erreur lors de la récupération des projets:', err);
+                        
+                        
+                      }
+                    });
+                  })
+                  
+                },
+                error: (err) => {
+                  console.error('Erreur lors de la récupération des projets:', err);
+                  
+                  
+                }
+              });
+            })
+            console.log("this.completed",this.completed)
+            console.log("this.nbTasks",this.nbTasks)
+            project.progress=this.completed/this.nbTasks
+            console.log("le progress",project.progress)
+          },
+          error: (err) => {
+            console.error('Erreur lors de la récupération des projets:', err);
+          
+            
+          }
+        });
+      
+    
+    
   }
   startEdit(): void {
     this.editedProjectData = { ...this.projet }; // Copie pour l'édition
@@ -157,11 +220,32 @@ export class ProjectDetailsComponent implements OnInit {
     if (this.projectId){
       this.projectService.getphaseByIdProject(this.projectId).subscribe({
         next: (phase) => {
-          this.phases = phase;
+          if(this.isAdmin || this.isSuperAdmin){
+            this.phases=phase;
+            console.log("les phases",this.phases);
+            return;
+          }
           
-          // Appliquer le filtre une fois les projets chargés
-          console.log("les phases",this.phases);
-          // Pour chaque projet, récupérer les détails des phases
+
+          phase.forEach((p:any) => {
+            const idUser=localStorage.getItem("user_id");
+            this.projectService.getPhaseAccessByIdPhase(p.id).subscribe({
+              next: (phaseAccesses) => {
+                console.log("Accès pour la phase ", p.id, ":", phaseAccesses);
+                phaseAccesses.forEach(phaseAccess => {
+                  if (phaseAccess.idUser ===idUser && phaseAccess.canView===true ){
+                    this.phases.push(p);
+                    
+
+                  }
+                });
+                
+              },
+              error: (err) => {
+                console.error("Erreur récupération accès phase", p.id, ":", err);
+              }
+            });
+          });
         
           
         },
@@ -279,10 +363,19 @@ export class ProjectDetailsComponent implements OnInit {
 
   calculateProgress() {
     const progress = this.projet?.progress || 0;
-    this.progressOffset = 251.2 * (1 - progress / 100);
+    this.progressOffset = 251.2 * ( progress / 100);
   
   }
+  getProgressOffset(): number {
+    const progress = this.projet?.progress;
+    const validProgress = isNaN(progress) || progress === null ? 0 : Math.min(100, Math.max(0, progress));
+    return 251.2 - (251.2 * validProgress / 100);
+  }
   
+  getDisplayProgress(): string {
+    const progress = this.projet?.progress;
+    return isNaN(progress) || progress === null ? '0%' : `${Math.round(progress)}%`;
+  }
   editPhase(phase: any) :void{
     console.log("Modifier la phase:", phase.id);
     this.editingPhaseId = phase.id;

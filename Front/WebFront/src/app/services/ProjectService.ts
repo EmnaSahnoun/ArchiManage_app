@@ -13,7 +13,7 @@ export class ProjectService {
     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
 
     getAllProjects(idCompany:string): Observable<any[]> {
-        console.log("l'url",`${this.apiUrl}/${idCompany}/projects`);
+        
         return this.http.get<any[]>(`${this.apiUrl}/${idCompany}/projects`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -22,7 +22,7 @@ export class ProjectService {
       }
     
     getProjectById(idProjet:string): Observable<any[]> {
-        console.log("l'url",`${this.projetUrl}/project/${idProjet}`);
+        
         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -71,6 +71,14 @@ export class ProjectService {
           catchError(this.handleError)
         );
       }
+      updateProjectAccess(idProjectAccess: string, status: string) {
+        const url = `${this.projetUrl}/project-accesses/${idProjectAccess}/status?status=${status}`;
+        return this.http.patch(url, {}, {
+          headers: this.getApiHeaders()
+        }).pipe(
+          catchError(this.handleError)
+        );
+      }
       createPhase(phaseData: any): Observable<any> {
         const url = `${this.projetUrl}/phase`;
         const headers = this.getApiHeaders();
@@ -102,7 +110,6 @@ export class ProjectService {
       );
   }
       getProjectAccessByIdProject(idproject:string): Observable<any[]> {
-        console.log("l'url",`${this.projetUrl}/project-accesses/project/${idproject}`);
         return this.http.get<any[]>(`${this.projetUrl}/project-accesses/project/${idproject}`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -120,7 +127,7 @@ export class ProjectService {
       }
    
       getphaseByIdProject(idProject:string): Observable<any> {
-        console.log("l'url",`${this.projetUrl}/phase/project/${idProject}`);
+        
         return this.http.get<any>(`${this.projetUrl}/phase/project/${idProject}`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -128,7 +135,7 @@ export class ProjectService {
         );
       }
       getphaseById(idphase:string): Observable<any> {
-        console.log("l'url",`${this.projetUrl}/phase/${idphase}`);
+        
         return this.http.get<any>(`${this.projetUrl}/phase/${idphase}`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -136,7 +143,7 @@ export class ProjectService {
         );
       }
       getPhaseAccessByIdPhase(idphase:string): Observable<any[]> {
-        console.log("l'url",`${this.projetUrl}/phase-accesses/phase/${idphase}`);
+       
         return this.http.get<any[]>(`${this.projetUrl}/phase-accesses/phase/${idphase}`, { 
           headers: this.getApiHeaders()
         }).pipe(
@@ -153,16 +160,16 @@ export class ProjectService {
       }
       
     getTaskByPhase(idphase:string): Observable<any[]> {
-      console.log("l'url",`${this.projetUrl}/task/phase/${idphase}`);
+      
       return this.http.get<any[]>(`${this.projetUrl}/task/phase/${idphase}`, { 
         headers: this.getApiHeaders()
       }).pipe(
         catchError(this.handleError)
       );
     }
-    getTaskByid(idTask:string): Observable<any[]> {
-      console.log("l'url",`${this.projetUrl}/task/${idTask}`);
-      return this.http.get<any[]>(`${this.projetUrl}/task/${idTask}`, { 
+    getTaskByid(idTask:string): Observable<any> {
+      
+      return this.http.get<any>(`${this.projetUrl}/task/${idTask}`, { 
         headers: this.getApiHeaders()
       }).pipe(
         catchError(this.handleError)

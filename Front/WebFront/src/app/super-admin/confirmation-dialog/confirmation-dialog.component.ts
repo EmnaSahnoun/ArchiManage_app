@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
-  styleUrl: './confirmation-dialog.component.scss'
+  styleUrl: './confirmation-dialog.component.scss',
+  standalone: false
 })
 export class ConfirmationDialogComponent {
   @Input()username!: string;

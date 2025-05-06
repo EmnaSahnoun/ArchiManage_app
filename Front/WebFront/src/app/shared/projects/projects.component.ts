@@ -27,7 +27,8 @@ export interface Project {
   
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss'
+  styleUrls: ['./projects.component.scss'],
+  standalone: false
 })
 export class ProjectsComponent implements OnInit{
   currentDate: string;
@@ -44,6 +45,8 @@ export class ProjectsComponent implements OnInit{
   isAdmin:boolean=false;
   isSuperAdmin:boolean=false;
 
+  completed:number=0;
+  nbTasks:number=0;
   constructor(
     private modalService: NgbModal,
     private router: Router
@@ -85,23 +88,61 @@ private authService:AuthService,
     if (idCompany){
       this.projectService.getAllProjects(idCompany).subscribe({
         next: (projects) => {
-          this.projects = projects;
-          this.projects.forEach(project => {
+          
+          projects.forEach(project => {
             this.getDates(project);
             this.checkProjectStatus(project);
           }); 
           
-          console.log("les projets",this.projects);
+          
           
           if(this.isUser){
+            
             const idUser=localStorage.getItem("user_id");
-            this.projects=this.projects.filter(p => p.idAdmin === idUser);
-            this.projects = this.projects.filter(p => p.deleted !== true);
-          }      
-          if(this.isAdmin){
-            this.projects = this.projects.filter(p => p.deleted !== true);
-          }            
-          this.applyFilter(); // Appliquer le filtre une fois les projets chargés
+            //this.projects=this.projects.filter(p => p.idAdmin === idUser);
+            
+            projects.filter(p => p.deleted !== true);
+            console.log("les projets apres le 1er filtrage",projects);
+            projects.forEach(projet => {
+              this.projectService.getProjectAccessByIdProject(projet.id).subscribe({
+                next: (projectAccesses) => {
+                  console.log("Accès pour le projet", projet.id, ":", projectAccesses);
+                  projectAccesses.forEach(projectAccess => {
+                    console.log("projectAccess.idUser ===idUser",projectAccess.idUser ===idUser)
+                    console.log("projectAccess.invitationStatus===",projectAccess.invitationStatus==="ACCEPTED")
+                    if (projectAccess.idUser ===idUser && projectAccess.invitationStatus==="ACCEPTED" ){
+                      this.projects.push(projet);                      
+                    }
+                  });
+                  
+                  this.projects.forEach((projet:any) => {
+                    this.getProgress(projet);
+                  })
+                  console.log("les projets de user",this.projects)
+                  this.applyFilter();
+                },
+                error: (err) => {
+                  console.error("Erreur récupération accès projet", projet.id, ":", err);
+                }
+              });
+            });
+          } 
+          else if(this.isAdmin){
+            this.projects = projects.filter(p => p.deleted !== true);
+            this.projects.forEach((projet:any) => {
+              this.getProgress(projet);
+            })
+            console.log("les projets de user",this.projects)
+            this.applyFilter();
+          }   
+          else{
+            this.projects = projects.filter(p => p.deleted !== true);
+            this.projects.forEach((projet:any) => {
+              this.getProgress(projet);
+            })
+            this.applyFilter();
+          }        
+           // Appliquer le filtre une fois les projets chargés
           console.log("les projets",this.projects);
           // Pour chaque projet, récupérer les détails des phases
         
@@ -114,6 +155,59 @@ private authService:AuthService,
         }
       });
     };
+  }
+  getProgress(project:any){
+    
+    this.completed=0;
+    this.nbTasks=0
+        this.projectService.getphaseByIdProject(project.id).subscribe({
+          next: (phases) => {
+            phases.forEach((phase:any) => {
+              this.projectService.getTaskByPhase(phase.id).subscribe({
+                next: (tasks) => {
+                  this.nbTasks+=tasks.length;
+                  
+                  tasks.forEach((task:any) => {
+                    this.projectService.getTaskByid(task.id).subscribe({
+                      next: (t) => {
+                        if(t.status==="COMPLETED"){
+                          this.completed++;
+                        }
+                        console.log("this.completed",this.completed)
+                        console.log("this.nbTasks",this.nbTasks)
+                        project.progress=(this.completed/this.nbTasks)*100
+                        console.log("le progress",project.progress)
+                      },
+                      error: (err) => {
+                        console.error('Erreur lors de la récupération des projets:', err);
+                        this.projects = []; // Vider en cas d'erreur
+                        
+                      }
+                    });
+                  })
+                  
+                },
+                error: (err) => {
+                  console.error('Erreur lors de la récupération des projets:', err);
+                  this.projects = []; // Vider en cas d'erreur
+                  
+                }
+              });
+            })
+            console.log("this.completed",this.completed)
+            console.log("this.nbTasks",this.nbTasks)
+            project.progress=this.completed/this.nbTasks
+            console.log("le progress",project.progress)
+          },
+          error: (err) => {
+            console.error('Erreur lors de la récupération des projets:', err);
+            this.projects = []; // Vider en cas d'erreur
+            
+          }
+        });
+      
+    
+    
   }
   getDates(project: any) {
     project.minStartDate = null;

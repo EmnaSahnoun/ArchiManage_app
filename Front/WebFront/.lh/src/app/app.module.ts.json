@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 70,
+            "activePatchIndex": 114,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -288,6 +288,182 @@
                 {
                     "date": 1746134723134,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-    SignupComponent,\r\n+   \r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n \r\n@@ -90,9 +90,11 @@\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n     MatTableModule,\r\n-    MatProgressSpinnerModule\r\n+    MatProgressSpinnerModule,\r\n+    MatPaginatorModule,\r\n+    MatSortModule,\r\n     MatCardModule,\r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n"
+                },
+                {
+                    "date": 1746443945456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n \r\n import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n-import { SignupComponent } from './signup/signup.component';\r\n+\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n@@ -42,8 +42,9 @@\n import { ConfirmationDialogComponent } from './super-admin/confirmation-dialog/confirmation-dialog.component';\r\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n+import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -55,12 +56,13 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-   \r\n+   H\r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n+    InvitationsComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1746443958354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n+import { HeaderComponent } from './header/header.component';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -56,9 +57,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-   H\r\n+   \r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n"
+                },
+                {
+                    "date": 1746443995617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n \r\n import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n-\r\n+import { FormsModule } from '@angular/forms';\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n"
+                },
+                {
+                    "date": 1746444019504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,8 @@\n \r\n import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n-import { FormsModule } from '@angular/forms';\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n@@ -80,8 +79,9 @@\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n     SharedModule,\r\n+    HeaderComponent\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746444122158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n import { NgModule } from '@angular/core';\r\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n-import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n import { FormsModule } from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n@@ -79,9 +78,9 @@\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n     SharedModule,\r\n-    HeaderComponent\r\n+    HeaderComponent,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746444128152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { NgModule } from '@angular/core';\r\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n+import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n import { FormsModule } from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n"
+                },
+                {
+                    "date": 1746444134491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n import { NgModule } from '@angular/core';\r\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n-import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n import { FormsModule } from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n"
+                },
+                {
+                    "date": 1746444140699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n import { ToastrModule } from 'ngx-toastr';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { HeaderComponent } from './header/header.component';\r\n+import { AppRoutingModule } from './app-routing.module';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
+                },
+                {
+                    "date": 1746444173120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,8 @@\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n-import { HeaderComponent } from './header/header.component';\r\n import { AppRoutingModule } from './app-routing.module';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n"
+                },
+                {
+                    "date": 1746444181406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,8 @@\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n     SharedModule,\r\n-    HeaderComponent,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746444202773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     SettingsComponent,\r\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n-    ProjectsComponent,\r\n+\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n"
+                },
+                {
+                    "date": 1746444210470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n import { SettingsComponent } from './settings/settings.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n-import { ProjectsComponent } from './shared/projects/projects.component';\r\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { BidiModule } from '@angular/cdk/bidi';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n"
+                },
+                {
+                    "date": 1746444229080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,8 +62,9 @@\n     InvitationsComponent,\r\n \r\n   ],\r\n   imports: [\r\n+    HttpClientModule,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746444238989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,8 +63,10 @@\n \r\n   ],\r\n   imports: [\r\n     HttpClientModule,\r\n+    FormsModule, // Importer une seule fois\r\n+    SharedModule,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746444263393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,14 +74,13 @@\n     MatListModule,\r\n     MatIconModule,\r\n     MatCardModule,\r\n     MatProgressBarModule,\r\n-    FormsModule,\r\n+    \r\n     MatDialogModule,\r\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n-    SharedModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746444270447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     MatCardModule,\r\n     MatProgressBarModule,\r\n     \r\n     MatDialogModule,\r\n-    NgbModalModule,\r\n+   \r\n     NgbModule,\r\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n"
+                },
+                {
+                    "date": 1746444286820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,15 +77,15 @@\n     MatProgressBarModule,\r\n     \r\n     MatDialogModule,\r\n    \r\n-    NgbModule,\r\n+   \r\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n-    HttpClientModule,\r\n+    \r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n"
+                },
+                {
+                    "date": 1746444294632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,9 @@\n    \r\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n-    BrowserModule,\r\n+  \r\n     AppRoutingModule,\r\n     \r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n"
+                },
+                {
+                    "date": 1746444310557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,18 +82,18 @@\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n   \r\n-    AppRoutingModule,\r\n     \r\n+    \r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n-    MatTableModule,\r\n+    \r\n     MatProgressSpinnerModule,\r\n     MatPaginatorModule,\r\n     MatSortModule,\r\n     MatCardModule,\r\n"
+                },
+                {
+                    "date": 1746444319009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,18 +82,18 @@\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n   \r\n+    ,\r\n     \r\n-    \r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n       progressBar: true\r\n     }),\r\n     MatSnackBarModule,\r\n-    \r\n+    MatTableModule,\r\n     MatProgressSpinnerModule,\r\n     MatPaginatorModule,\r\n     MatSortModule,\r\n     MatCardModule,\r\n"
+                },
+                {
+                    "date": 1746444349788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,10 +82,10 @@\n     BidiModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n   \r\n-    ,\r\n     \r\n+    \r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n@@ -95,9 +95,9 @@\n     MatTableModule,\r\n     MatProgressSpinnerModule,\r\n     MatPaginatorModule,\r\n     MatSortModule,\r\n-    MatCardModule,\r\n+   \r\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n"
+                },
+                {
+                    "date": 1746444357183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,9 @@\n     MatPaginatorModule,\r\n     MatSortModule,\r\n    \r\n     MatButtonModule,\r\n-    MatIconModule,\r\n+\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n     \r\n   ],\r\n"
+                },
+                {
+                    "date": 1746444362514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,10 +97,8 @@\n     MatPaginatorModule,\r\n     MatSortModule,\r\n    \r\n     MatButtonModule,\r\n-\r\n-    MatProgressBarModule,\r\n     MatTooltipModule,\r\n     \r\n   ],\r\n   providers: [\r\n"
+                },
+                {
+                    "date": 1746444751008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { NgModule } from '@angular/core';\r\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n+import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n import { FormsModule } from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n@@ -15,16 +16,18 @@\n import { SettingsComponent } from './settings/settings.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { MessagesComponent } from './messages/messages.component';\r\n import { ProfileComponent } from './profile/profile.component';\r\n+import { ProjectsComponent } from './shared/projects/projects.component';\r\n import { ProjectDetailsComponent } from './shared/project-details/project-details.component';\r\n import { MatDialogModule } from '@angular/material/dialog';\r\n import { BidiModule } from '@angular/cdk/bidi';\r\n import { MatTooltipModule } from '@angular/material/tooltip';\r\n \r\n import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { AddMemberComponent } from './add-member/add-member.component';\r\n import { LoginComponent } from './login/login.component';\r\n+\r\n import { SharedModule } from './shared/shared.module';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { MatTableModule } from '@angular/material/table';\r\n import { MatPaginatorModule } from '@angular/material/paginator';\r\n@@ -40,9 +43,8 @@\n import { MatSnackBarModule } from '@angular/material/snack-bar';\r\n import { ToastrModule } from 'ngx-toastr';\r\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n-import { AppRoutingModule } from './app-routing.module';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -50,9 +52,9 @@\n     SettingsComponent,\r\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n-\r\n+    ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n@@ -62,11 +64,8 @@\n     InvitationsComponent,\r\n \r\n   ],\r\n   imports: [\r\n-    HttpClientModule,\r\n-    FormsModule, // Importer une seule fois\r\n-    SharedModule,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n@@ -74,18 +73,19 @@\n     MatListModule,\r\n     MatIconModule,\r\n     MatCardModule,\r\n     MatProgressBarModule,\r\n-    \r\n+    FormsModule,\r\n     MatDialogModule,\r\n-   \r\n-   \r\n+    NgbModalModule,\r\n+    NgbModule,\r\n     BidiModule,\r\n+    SharedModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n-  \r\n-    \r\n-    \r\n+    BrowserModule,\r\n+    AppRoutingModule,\r\n+    HttpClientModule,\r\n     MatButtonModule,\r\n     ToastrModule.forRoot({\r\n       positionClass: 'toast-top-right',\r\n       preventDuplicates: true,\r\n@@ -95,10 +95,12 @@\n     MatTableModule,\r\n     MatProgressSpinnerModule,\r\n     MatPaginatorModule,\r\n     MatSortModule,\r\n-   \r\n+    MatCardModule,\r\n     MatButtonModule,\r\n+    MatIconModule,\r\n+    MatProgressBarModule,\r\n     MatTooltipModule,\r\n     \r\n   ],\r\n   providers: [\r\n"
+                },
+                {
+                    "date": 1746445123728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n     MatDialogModule,\r\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n-    SharedModule,\r\n+\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746445136447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n     MatDialogModule,\r\n     NgbModalModule,\r\n     NgbModule,\r\n     BidiModule,\r\n-\r\n+    SharedModule,\r\n     DragDropModule,\r\n     OAuthModule.forRoot(),\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n"
+                },
+                {
+                    "date": 1746445545300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n     ProjectsComponent,\r\n-    ProjectDetailsComponent,\r\n+    \r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n     TasksComponent,\r\n"
+                },
+                {
+                    "date": 1746445553900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,15 +57,16 @@\n     \r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n-    TasksComponent,\r\n+    ,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n \r\n   ],\r\n   imports: [\r\n+    ProjectDetailsComponent,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746445571083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,16 +57,16 @@\n     \r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n-    ,\r\n-    TaskDetailsComponent,\r\n+    \r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n \r\n   ],\r\n   imports: [\r\n     ProjectDetailsComponent,\r\n+    TasksComponent,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1746445577327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,14 +58,14 @@\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n     \r\n-    ConfirmationDialogComponent,\r\n-    InvitationsComponent,\r\n+  \r\n \r\n   ],\r\n   imports: [\r\n     ProjectDetailsComponent,\r\n+    TaskDetailsComponent,\r\n     TasksComponent,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n"
+                },
+                {
+                    "date": 1746445588387,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     SettingsComponent,\r\n     ClientsComponent,\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n-    ProjectsComponent,\r\n+\r\n     \r\n     AddMemberComponent,\r\n     LoginComponent,\r\n    \r\n@@ -64,8 +64,10 @@\n   ],\r\n   imports: [\r\n     ProjectDetailsComponent,\r\n     TaskDetailsComponent,\r\n+    ConfirmationDialogComponent,\r\n+    InvitationsComponent,\r\n     TasksComponent,\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n"
+                },
+                {
+                    "date": 1746445595294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,25 +45,16 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n-    AppComponent,\r\n-    SidebarComponent,\r\n-    DashboardComponent,\r\n-    SettingsComponent,\r\n-    ClientsComponent,\r\n-    MessagesComponent,\r\n-    ProfileComponent,\r\n-\r\n     \r\n-    AddMemberComponent,\r\n-    LoginComponent,\r\n    \r\n     \r\n   \r\n \r\n   ],\r\n   imports: [\r\n+    ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n"
+                },
+                {
+                    "date": 1746445610380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,19 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n+    AppComponent,\r\n+    SidebarComponent,\r\n+    DashboardComponent,\r\n+    SettingsComponent,\r\n+    ClientsComponent,\r\n+    MessagesComponent,\r\n+    ProfileComponent,\r\n+\r\n     \r\n+    AddMemberComponent,\r\n+    LoginComponent,\r\n    \r\n     \r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1746445616306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,11 +54,10 @@\n     MessagesComponent,\r\n     ProfileComponent,\r\n \r\n     \r\n-    AddMemberComponent,\r\n-    LoginComponent,\r\n    \r\n+   \r\n     \r\n   \r\n \r\n   ],\r\n"
+                },
+                {
+                    "date": 1746445634474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,13 +47,9 @@\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n-    DashboardComponent,\r\n-    SettingsComponent,\r\n-    ClientsComponent,\r\n-    MessagesComponent,\r\n-    ProfileComponent,\r\n+    \r\n \r\n     \r\n    \r\n    \r\n@@ -61,8 +57,10 @@\n   \r\n \r\n   ],\r\n   imports: [\r\n+    AddMemberComponent,\r\n+    LoginComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n"
+                },
+                {
+                    "date": 1746445647633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,13 @@\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n-    \r\n+    DashboardComponent,\r\n+    SettingsComponent,\r\n+    ClientsComponent,\r\n+    MessagesComponent,\r\n+    ProfileComponent,\r\n \r\n     \r\n    \r\n    \r\n"
+                },
+                {
+                    "date": 1746445652760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     DashboardComponent,\r\n     SettingsComponent,\r\n     ClientsComponent,\r\n     MessagesComponent,\r\n-    ProfileComponent,\r\n+    \r\n \r\n     \r\n    \r\n    \r\n"
+                },
+                {
+                    "date": 1746445658551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,10 +50,10 @@\n     SidebarComponent,\r\n     DashboardComponent,\r\n     SettingsComponent,\r\n     ClientsComponent,\r\n-    MessagesComponent,\r\n     \r\n+    \r\n \r\n     \r\n    \r\n    \r\n@@ -61,8 +61,9 @@\n   \r\n \r\n   ],\r\n   imports: [\r\n+    ProfileComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1746445667115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n-    AppComponent,\r\n+\r\n     SidebarComponent,\r\n     DashboardComponent,\r\n     SettingsComponent,\r\n     ClientsComponent,\r\n@@ -61,8 +61,9 @@\n   \r\n \r\n   ],\r\n   imports: [\r\n+    MessagesComponent,\r\n     ProfileComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n     ProjectsComponent,\r\n"
+                },
+                {
+                    "date": 1746445679342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,12 +46,8 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n \r\n-    SidebarComponent,\r\n-    DashboardComponent,\r\n-    SettingsComponent,\r\n-    ClientsComponent,\r\n     \r\n     \r\n \r\n     \r\n@@ -60,9 +56,13 @@\n     \r\n   \r\n \r\n   ],\r\n-  imports: [\r\n+  imports: [SidebarComponent,\r\n+    DashboardComponent,\r\n+    SettingsComponent,\r\n+    ClientsComponent,\r\n+    \r\n     MessagesComponent,\r\n     ProfileComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n"
+                },
+                {
+                    "date": 1746445701224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,23 +46,20 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n \r\n+    SidebarComponent,\r\n+    DashboardComponent,\r\n+    SettingsComponent,\r\n+    ClientsComponent,\r\n     \r\n     \r\n \r\n-    \r\n-   \r\n-   \r\n-    \r\n+        \r\n   \r\n \r\n   ],\r\n-  imports: [SidebarComponent,\r\n-    DashboardComponent,\r\n-    SettingsComponent,\r\n-    ClientsComponent,\r\n-    \r\n+  imports: [\r\n     MessagesComponent,\r\n     ProfileComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n"
+                },
+                {
+                    "date": 1746445712963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,16 +51,16 @@\n     DashboardComponent,\r\n     SettingsComponent,\r\n     ClientsComponent,\r\n     \r\n-    \r\n+    MessagesComponent,\r\n \r\n         \r\n   \r\n \r\n   ],\r\n   imports: [\r\n-    MessagesComponent,\r\n+    \r\n     ProfileComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n     ProjectsComponent,\r\n"
+                },
+                {
+                    "date": 1746445725333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,15 +53,15 @@\n     ClientsComponent,\r\n     \r\n     MessagesComponent,\r\n \r\n-        \r\n+        ProfileComponent,\r\n   \r\n \r\n   ],\r\n   imports: [\r\n     \r\n-    ProfileComponent,\r\n+    \r\n     AddMemberComponent,\r\n     LoginComponent,\r\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n"
+                },
+                {
+                    "date": 1746445730860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,31 +45,27 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n @NgModule({\r\n   declarations: [\r\n-\r\n+    AppComponent,\r\n     SidebarComponent,\r\n     DashboardComponent,\r\n     SettingsComponent,\r\n     ClientsComponent,\r\n-    \r\n     MessagesComponent,\r\n-\r\n-        ProfileComponent,\r\n-  \r\n-\r\n-  ],\r\n-  imports: [\r\n-    \r\n-    \r\n+    ProfileComponent,\r\n+    ProjectsComponent,\r\n+    ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-    ProjectsComponent,\r\n-    ProjectDetailsComponent,\r\n+   \r\n+    TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n-    TasksComponent,\r\n+\r\n+  ],\r\n+  imports: [\r\n     BrowserModule,\r\n     AppRoutingModule,\r\n     BrowserAnimationsModule,\r\n     MatToolbarModule,\r\n"
                 }
             ],
             "date": 1741609977833,

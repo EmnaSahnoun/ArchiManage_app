@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/settings/settings.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746446036126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746446036126,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-settings',\r\n  templateUrl: './settings.component.html',\r\n  styleUrl: './settings.component.scss',\r\n  standalone: false\r\n})\r\nexport class SettingsComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}
