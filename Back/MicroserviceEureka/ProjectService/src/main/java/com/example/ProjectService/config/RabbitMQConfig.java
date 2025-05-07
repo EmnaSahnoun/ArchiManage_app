@@ -1,5 +1,6 @@
 package com.example.ProjectService.config;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -63,5 +64,20 @@ public class RabbitMQConfig {
             rabbitTemplate.setMessageConverter(converter());
             return rabbitTemplate;
         }
+    @Bean
+    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(converter());
+        rabbitTemplate.setChannelTransacted(true); // Activer les transactions
+        return rabbitTemplate;
+    }
 
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setMessageConverter(converter());
+        factory.setAcknowledgeMode(AcknowledgeMode.AUTO); // Gestion automatique des accusés de réception
+        return factory;
+    }
 }

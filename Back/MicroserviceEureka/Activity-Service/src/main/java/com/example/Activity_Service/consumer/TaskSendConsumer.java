@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class TaskSendConsumer {
     @RabbitListener(queues = "${rabbitmq.queueJson.name}")
     public void consumeTaskEvent(String message) {
         try {
+            LOGGER.info("Received message: {}", message);
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> event = mapper.readValue(message, new TypeReference<Map<String, Object>>() {});
 
@@ -63,7 +65,9 @@ public class TaskSendConsumer {
             taskHistoryService.recordHistory(history);
             LOGGER.info("Task history saved for taskId: {}", taskId);
         } catch (Exception e) {
+
             LOGGER.error("Error processing task event", e);
+            throw new AmqpRejectAndDontRequeueException(e);
         }
     }
 }
