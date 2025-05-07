@@ -3,15 +3,14 @@ package com.example.ProjectService.services;
 import com.example.ProjectService.dto.request.TaskRequest;
 import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.exception.PhaseNotFoundException;
+import com.example.ProjectService.exception.ProjectNotFoundException;
 import com.example.ProjectService.exception.TaskNotFoundException;
 import com.example.ProjectService.interfaces.ITask;
-import com.example.ProjectService.models.Phase;
-import com.example.ProjectService.models.PhaseAccess;
-import com.example.ProjectService.models.ProjectAccess;
-import com.example.ProjectService.models.Task;
+import com.example.ProjectService.models.*;
 import com.example.ProjectService.models.enums.InvitationStatus;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
+import com.example.ProjectService.publisher.ProjectServiceEventProducer;
 import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectAccessRepository;
 import com.example.ProjectService.repositories.ProjectRepository;
@@ -24,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 @Service
 
@@ -31,14 +31,19 @@ public class TaskService implements ITask {
     private  final TaskRepository taskRepository;
     private  final PhaseRepository phaseRepository;
     private final ProjectAccessRepository projectAccessRepository;
+    private final ProjectServiceEventProducer eventProducer;
+    private final ProjectRepository projectRepository;
 
     @Autowired
     public TaskService(TaskRepository taskRepository,
                        PhaseRepository phaseRepository,
-                       ProjectAccessRepository projectAccessRepository) {
+                       ProjectAccessRepository projectAccessRepository,
+                       ProjectServiceEventProducer eventProducer, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.phaseRepository = phaseRepository;
         this.projectAccessRepository = projectAccessRepository;
+        this.eventProducer = eventProducer;
+        this.projectRepository = projectRepository;
     }
     @Override
     @Transactional
@@ -46,7 +51,8 @@ public class TaskService implements ITask {
         // Récupérer la phase
         Phase phase = phaseRepository.findById(request.getPhaseId())
                 .orElseThrow(() -> new PhaseNotFoundException(request.getPhaseId()));
-
+        Project project=projectRepository.findById(phase.getProject().getId())
+                .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
         // Créer la tâche
         Task task = new Task();
         task.setName(request.getName());
@@ -60,7 +66,7 @@ public class TaskService implements ITask {
         Task savedTask = taskRepository.save(task);
 
 
-
+        eventProducer.sendTaskinMessage(savedTask, "CREATE", null, project.getIdAdmin());
         return mapToTaskResponse(savedTask);
     }
 
@@ -140,17 +146,28 @@ public class TaskService implements ITask {
     }
     @Override
     public void deleteTask(String id) {
+
         if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException("task non trouvé!");
         }
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+        Phase phase = phaseRepository.findById(task.getPhase().getId())
+                .orElseThrow(() -> new PhaseNotFoundException(task.getPhase().getId()));
+        Project project=projectRepository.findById(phase.getProject().getId())
+                .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
         taskRepository.deleteById(id);
+        eventProducer.sendTaskinMessage(task, "DELETE", null, project.getIdAdmin());
     }
 
     @Override
     public TaskResponse updateTask(String id, TaskRequest request) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
-
+// Capture des anciennes valeurs pour l'historique
+        String oldName = task.getName();
+        String oldDescription = task.getDescription();
+        TaskStatus oldStatus = task.getStatus();
         // Mettre à jour tous les champs
         task.setName(request.getName());
         task.setDescription(request.getDescription());
@@ -168,6 +185,17 @@ public class TaskService implements ITask {
         }
 
         Task updatedTask = taskRepository.save(task);
+        Phase phase = phaseRepository.findById(request.getPhaseId())
+                .orElseThrow(() -> new PhaseNotFoundException(request.getPhaseId()));
+        Project project=projectRepository.findById(phase.getProject().getId())
+                .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
+        // Envoi de l'événement à RabbitMQ
+        eventProducer.sendTaskinMessage(
+                updatedTask,
+                "UPDATE",
+                Map.of("oldName", oldName, "oldStatus", oldStatus.toString()),
+                project.getIdAdmin()
+        );
         return mapToTaskResponse(updatedTask);
     }
     private TaskResponse mapToTaskResponse(Task task) {

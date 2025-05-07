@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class CommentResponse implements Serializable {
     private String id;
     private String taskId;
-    private String username;
+    private String idUser;
     private String content;
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
@@ -29,12 +29,12 @@ public class CommentResponse implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getusername() {
-        return username;
+    public String getidUser() {
+        return idUser;
     }
 
-    public void setusername(String username) {
-        this.username = username;
+    public void setidUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getContent() {

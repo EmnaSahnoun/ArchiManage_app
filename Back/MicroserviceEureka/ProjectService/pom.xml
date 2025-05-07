@@ -35,6 +35,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.2.1</version>
 		</dependency>
+		<!-- Pour Project Service et Activity Service -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-loadbalancer -->

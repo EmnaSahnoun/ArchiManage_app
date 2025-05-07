@@ -9,6 +9,6 @@ import java.util.List;
 public interface IComment {
     CommentResponse addComment(CommentRequest commentRequest);
     List<CommentResponse> getCommentsForTask(String taskId);
-    void deleteComment(String commentId, String taskId, String username);
+    void deleteComment(String commentId, String taskId, String idUser);
     CommentResponse updateComment(String commentId, CommentRequest commentRequest);
 }

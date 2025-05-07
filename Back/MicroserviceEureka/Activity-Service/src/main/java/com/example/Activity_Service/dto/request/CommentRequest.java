@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class CommentRequest implements Serializable {
     private String taskId;
-    private String username;
+    private String idUser;
     private String content;
     private static final long serialVersionUID = 1L;
     public String getTaskId() {
@@ -18,12 +18,12 @@ public class CommentRequest implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getusername() {
-        return username;
+    public String getidUser() {
+        return idUser;
     }
 
-    public void setusername(String username) {
-        this.username = username;
+    public void setidUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getContent() {

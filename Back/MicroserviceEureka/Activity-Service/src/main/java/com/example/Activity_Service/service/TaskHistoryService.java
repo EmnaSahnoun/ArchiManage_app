@@ -27,10 +27,10 @@ public class TaskHistoryService implements ITaskHistory {
         return taskHistoryRepository.findByTaskId(taskId);
     }
     @Override
-    public TaskHistory recordCommentHistory(String taskId, String username, String action, String content) {
+    public TaskHistory recordCommentHistory(String taskId, String idUser, String action, String content) {
         TaskHistory history = new TaskHistory();
         history.setTaskId(taskId);
-        history.setusername(username);
+        history.setidUser(idUser);
         history.setAction(action);
         history.setFieldChanged("comments");
         history.setNewValue(content);

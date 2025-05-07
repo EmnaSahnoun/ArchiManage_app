@@ -33,7 +33,7 @@ public class CommentService implements IComment {
         CommentResponse comment = commentRepository.save(commentRequest);
         TaskHistory history = new TaskHistory();
         history.setTaskId(commentRequest.getTaskId());
-        history.setusername(commentRequest.getusername());
+        history.setidUser(commentRequest.getidUser());
         history.setAction("COMMENT");
         history.setFieldChanged("comments");
         history.setNewValue("Comment added: " + commentRequest.getContent().substring(0, Math.min(50, commentRequest.getContent().length())));
@@ -48,7 +48,7 @@ public class CommentService implements IComment {
     }
 
     @Override
-    public void deleteComment(String commentId, String taskId, String username) {
+    public void deleteComment(String commentId, String taskId, String idUser) {
         List<CommentResponse> comments = commentRepository.findByTaskId(taskId);
         comments.removeIf(c -> c.getId().equals(commentId));
 
@@ -61,7 +61,7 @@ public class CommentService implements IComment {
         }
 
         // Enregistrer dans l'historique
-        taskHistoryService.recordCommentHistory(taskId, username, "DELETE", "Comment deleted");
+        taskHistoryService.recordCommentHistory(taskId, idUser, "DELETE", "Comment deleted");
     }
 
     @Override
@@ -91,7 +91,7 @@ public class CommentService implements IComment {
         // Enregistrer dans l'historique
         taskHistoryService.recordCommentHistory(
                 commentRequest.getTaskId(),
-                commentRequest.getusername(),
+                commentRequest.getidUser(),
                 "UPDATE",
                 "Content changed from: " + oldContent.substring(0, Math.min(20, oldContent.length())) +
                         " to: " + commentRequest.getContent().substring(0, Math.min(20, commentRequest.getContent().length()))

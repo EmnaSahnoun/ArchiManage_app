@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class TaskHistory implements Serializable {
     private String id;
     private String taskId;
-    private String username;
+    private String idUser;
     private String action; // "CREATE", "UPDATE", "DELETE", etc.
     private String fieldChanged;
     private String oldValue;
@@ -35,12 +35,12 @@ public class TaskHistory implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getusername() {
-        return username;
+    public String getidUser() {
+        return idUser;
     }
 
-    public void setusername(String username) {
-        this.username = username;
+    public void setidUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getAction() {

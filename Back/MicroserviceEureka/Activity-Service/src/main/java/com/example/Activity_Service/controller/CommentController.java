@@ -32,8 +32,8 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(
             @PathVariable String commentId,
             @RequestParam String taskId,
-            @RequestParam String username) {
-        commentService.deleteComment(commentId, taskId, username);
+            @RequestParam String idUser) {
+        commentService.deleteComment(commentId, taskId, idUser);
         return ResponseEntity.noContent().build();
     }
 
