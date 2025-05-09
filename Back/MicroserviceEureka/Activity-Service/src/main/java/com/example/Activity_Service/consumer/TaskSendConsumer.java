@@ -37,7 +37,7 @@ private ObjectMapper objectMapper;
     public void handleTaskEvent(String event) throws IOException {
         {
 
-            LOGGER.info("Received task event: {}", event);
+            LOGGER.info("Received task : {}", event);
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
 
@@ -47,7 +47,7 @@ try{
     history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
     history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
     history.setCreatedAt(LocalDateTime.now());
-
+    LOGGER.info("history : ", history);
     // 3. Sauvegarder l'historique
     taskHistoryService.recordHistory(history);
 
