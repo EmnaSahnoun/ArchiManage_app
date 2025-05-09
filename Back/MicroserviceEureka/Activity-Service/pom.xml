@@ -85,8 +85,6 @@
 				<includes>
 					<include>**/*.properties</include>
 				</includes>
-				<!-- Ajoutez cette configuration -->
-				<encoding>UTF-8</encoding>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -96,6 +94,18 @@
 				</excludes>
 			</resource>
 		</resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.1</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
