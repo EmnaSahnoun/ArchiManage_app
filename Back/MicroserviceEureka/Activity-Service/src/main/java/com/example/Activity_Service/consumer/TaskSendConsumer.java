@@ -32,10 +32,9 @@ public class TaskSendConsumer {
     @RabbitListener(queues = "queue.ActivityService.taskCreated")
     public void consumeTaskEvent(Message message, Channel channel) throws IOException {
         try {
-            String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
-            LOGGER.info("Received message: {}", messageBody);
 
-            Map<String, Object> event = objectMapper.readValue(messageBody, new TypeReference<Map<String, Object>>() {});
+            byte[] body = message.getBody();
+            Map<String, Object> event = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {});
 
             String action = (String) event.get("action");
             String taskId = (String) event.get("taskId");
