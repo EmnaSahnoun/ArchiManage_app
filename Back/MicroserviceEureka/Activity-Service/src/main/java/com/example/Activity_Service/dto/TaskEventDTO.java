@@ -9,12 +9,6 @@ import java.util.Map;
 
 public class TaskEventDTO {
 
-    private Task task;
-
-
-
-        @Data
-        public static class Task {
             private String id;
             private String name;
             private String description;
@@ -23,109 +17,108 @@ public class TaskEventDTO {
             private String status;
             private String priority;
             private Date createdAt;
-            private List<Task> subTasks;
+            private List<Object> subTasks;
             private String parentTaskId;
             private Phase phase;
             private String action;
 
-            public String getAction() {
-                return action;
-            }
+    public String getId() {
+        return id;
+    }
 
-            public void setAction(String action) {
-                this.action = action;
-            }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-            public String getId() {
-                return id;
-            }
+    public String getName() {
+        return name;
+    }
 
-            public void setId(String id) {
-                this.id = id;
-            }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-            public String getName() {
-                return name;
-            }
+    public String getDescription() {
+        return description;
+    }
 
-            public void setName(String name) {
-                this.name = name;
-            }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-            public String getDescription() {
-                return description;
-            }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-            public void setDescription(String description) {
-                this.description = description;
-            }
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-            public Date getStartDate() {
-                return startDate;
-            }
+    public Date getEndDate() {
+        return endDate;
+    }
 
-            public void setStartDate(Date startDate) {
-                this.startDate = startDate;
-            }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-            public Date getEndDate() {
-                return endDate;
-            }
+    public String getStatus() {
+        return status;
+    }
 
-            public void setEndDate(Date endDate) {
-                this.endDate = endDate;
-            }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-            public String getStatus() {
-                return status;
-            }
+    public String getPriority() {
+        return priority;
+    }
 
-            public void setStatus(String status) {
-                this.status = status;
-            }
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
-            public String getPriority() {
-                return priority;
-            }
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-            public void setPriority(String priority) {
-                this.priority = priority;
-            }
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
-            public Date getCreatedAt() {
-                return createdAt;
-            }
+    public List<Object> getSubTasks() {
+        return subTasks;
+    }
 
-            public void setCreatedAt(Date createdAt) {
-                this.createdAt = createdAt;
-            }
+    public void setSubTasks(List<Object> subTasks) {
+        this.subTasks = subTasks;
+    }
 
-            public List<Task> getSubTasks() {
-                return subTasks;
-            }
+    public String getParentTaskId() {
+        return parentTaskId;
+    }
 
-            public void setSubTasks(List<Task> subTasks) {
-                this.subTasks = subTasks;
-            }
+    public void setParentTaskId(String parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
 
-            public String getParentTaskId() {
-                return parentTaskId;
-            }
+    public Phase getPhase() {
+        return phase;
+    }
 
-            public void setParentTaskId(String parentTaskId) {
-                this.parentTaskId = parentTaskId;
-            }
+    public void setPhase(Phase phase) {
+        this.phase = phase;
+    }
 
-            public Phase getPhase() {
-                return phase;
-            }
+    public String getAction() {
+        return action;
+    }
 
-            public void setPhase(Phase phase) {
-                this.phase = phase;
-            }
-        }
+    public void setAction(String action) {
+        this.action = action;
+    }
 
-        @Data
+    @Data
         public static class Phase {
             private String id;
             private String name;
@@ -260,14 +253,6 @@ public class TaskEventDTO {
         }
 
 
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
 }
 
 

@@ -42,9 +42,9 @@ try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
 
     TaskHistory history = new TaskHistory();
-    history.setTaskId(taskEventDTO.getTask().getId()); // ID de la tâche
-    history.setidUser(taskEventDTO.getTask().getPhase().getProject().getIdAdmin()); // ID de l'admin
-    history.setAction(taskEventDTO.getTask().getAction()); // "CREATE", "UPDATE", etc.
+    history.setTaskId(taskEventDTO.getId()); // ID de la tâche
+    history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin()); // ID de l'admin
+    history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
     history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
     history.setCreatedAt(LocalDateTime.now());
 
