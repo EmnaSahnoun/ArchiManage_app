@@ -80,7 +80,7 @@ public class RabbitMQConfig {
         factory.setAcknowledgeMode(AcknowledgeMode.AUTO); // Gestion automatique des accusés de réception
         return factory;
     }
-    @Bean
+    /*@Bean
     public Queue dlq() {
         return QueueBuilder.durable("queue.ActivityService.taskCreated.DLQ").build();
     }
@@ -90,5 +90,5 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(dlq())
                 .to(exchange())
                 .with("ProjectService.envoye.ActivityService.DLQ");
-    }
+    }*/
 }
