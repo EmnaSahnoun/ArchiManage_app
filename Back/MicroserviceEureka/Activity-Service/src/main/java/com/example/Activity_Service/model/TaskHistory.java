@@ -19,6 +19,10 @@ public class TaskHistory implements Serializable {
     private String newValue;
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
+
+    public TaskHistory() {
+    }
+
     public String getId() {
         return id;
     }

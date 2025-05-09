@@ -58,5 +58,6 @@ public class ProjectServiceEventProducer {
             LOGGER.error("Failed to send task event to RabbitMQ", e);
             throw new RuntimeException("Failed to send message to RabbitMQ", e);
         }
-    }
+    }cd ..
+
 }

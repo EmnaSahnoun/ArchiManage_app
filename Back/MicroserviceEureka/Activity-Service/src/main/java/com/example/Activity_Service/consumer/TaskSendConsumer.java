@@ -3,7 +3,6 @@ package com.example.Activity_Service.consumer;
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.service.TaskHistoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,12 @@ import java.util.Map;
 public class TaskSendConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskSendConsumer.class);
     private final TaskHistoryService taskHistoryService;
-    private final ObjectMapper objectMapper;
+
 
     @Autowired
-    public TaskSendConsumer(TaskHistoryService taskHistoryService, ObjectMapper objectMapper) {
+    public TaskSendConsumer(TaskHistoryService taskHistoryService) {
         this.taskHistoryService = taskHistoryService;
-        this.objectMapper = objectMapper;
+
     }
 
     @RabbitListener(queues = "queue.ActivityService.taskCreated")
