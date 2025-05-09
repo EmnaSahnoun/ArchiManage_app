@@ -15,6 +15,6 @@ public class CompainRequest {
     @Email(message = "Email should be valid")
     private String email;
 
-    @Pattern(regexp = "^[0-9]{8}$", message = "Phone number should be 8 digits")
+
     private String phone;
 }

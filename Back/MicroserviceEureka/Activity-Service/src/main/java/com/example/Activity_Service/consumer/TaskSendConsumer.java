@@ -2,37 +2,40 @@ package com.example.Activity_Service.consumer;
 
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.service.TaskHistoryService;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskSendConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskSendConsumer.class);
     private final TaskHistoryService taskHistoryService;
+    private final ObjectMapper objectMapper;
+
     @Autowired
-    public TaskSendConsumer(TaskHistoryService taskHistoryService) {
+    public TaskSendConsumer(TaskHistoryService taskHistoryService, ObjectMapper objectMapper) {
         this.taskHistoryService = taskHistoryService;
+        this.objectMapper = objectMapper;
     }
+
     @RabbitListener(queues = "${rabbitmq.queueJson.name}")
-    public void consumeTaskEvent(String message) {
+    public void consumeTaskEvent(Message message, Channel channel) throws IOException {
         try {
-            LOGGER.info("Received message: {}", message);
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> event = mapper.readValue(message, new TypeReference<Map<String, Object>>() {});
+            String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
+            LOGGER.info("Received message: {}", messageBody);
+
+            Map<String, Object> event = objectMapper.readValue(messageBody, new TypeReference<Map<String, Object>>() {});
 
             String action = (String) event.get("action");
             String taskId = (String) event.get("taskId");
@@ -53,7 +56,7 @@ public class TaskSendConsumer {
                     break;
                 case "UPDATE":
                     history.setFieldChanged("Multiple fields");
-                    history.setOldValue("Before: " + oldValues.toString());
+                    history.setOldValue(oldValues != null ? "Before: " + oldValues.toString() : "N/A");
                     history.setNewValue("After: " + newTaskData.toString());
                     break;
                 case "DELETE":
@@ -64,10 +67,17 @@ public class TaskSendConsumer {
 
             taskHistoryService.recordHistory(history);
             LOGGER.info("Task history saved for taskId: {}", taskId);
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
+            LOGGER.error("Error processing message", e);
 
-            LOGGER.error("Error processing task event", e);
-            throw new AmqpRejectAndDontRequeueException(e);
+            if (message.getMessageProperties().getRedelivered()) {
+                LOGGER.warn("Message already redelivered, sending to DLQ");
+                channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
+            } else {
+                LOGGER.info("Requesting message redelivery");
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            }
         }
     }
 }

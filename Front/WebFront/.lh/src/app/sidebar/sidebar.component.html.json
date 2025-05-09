@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 103,
+            "activePatchIndex": 112,
             "patches": [
                 {
                     "date": 1741609885165,
@@ -420,6 +420,42 @@
                 {
                     "date": 1746440609602,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n         <i class=\"bi bi-briefcase\"></i> Projects</a>\r\n       </li>\r\n+      \r\n       <li mat-list-item routerLink=\"/super-admin/agences\" routerLinkActive=\"active\" *ngIf=\"isSuperAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n         <i class=\"bi bi-briefcase\"></i> Agences</a>\r\n       </li>\r\n       <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Clients')\">\r\n@@ -20,9 +21,8 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n-      \r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n       <li mat-list-item  routerLinkActive=\"active\" (click)=\"logout()\">\r\n"
+                },
+                {
+                    "date": 1746752229421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n       <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h3>ArchiManage</h3>\r\n+      <h3> </h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n@@ -11,9 +11,11 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/projects\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n         <i class=\"bi bi-briefcase\"></i> Projects</a>\r\n       </li>\r\n-      \r\n+      <li mat-list-item routerLink=\"/invitations\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Invitations')\">\r\n+        <i class=\"bi bi-envelope-paper\"></i> Invitations</a>\r\n+      </li>\r\n       <li mat-list-item routerLink=\"/super-admin/agences\" routerLinkActive=\"active\" *ngIf=\"isSuperAdmin\"><a (click)=\"changeTitle('Projets')\">\r\n         <i class=\"bi bi-briefcase\"></i> Agences</a>\r\n       </li>\r\n       <li mat-list-item routerLink=\"/clients\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\"><a (click)=\"changeTitle('Clients')\">\r\n"
+                },
+                {
+                    "date": 1746752246930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n       <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h3> </h3>\r\n+      <h3>Super</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752257531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n-      <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h3>Super</h3>\r\n+     // <img src=\"assets/user.jpg\" alt=\"logo\">\r\n+      <h3>SuperAdmin</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752264597,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n      // <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h3>SuperAdmin</h3>\r\n+      <h2>SuperAdmin</h2>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752274631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n-     // <img src=\"assets/user.jpg\" alt=\"logo\">\r\n+      <img src=\"assets/user.jpg\" alt=\"logo\">\r\n       <h2>SuperAdmin</h2>\r\n     </div>\r\n     \r\n     <ul>\r\n"
+                },
+                {
+                    "date": 1746752291964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n-      <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h2>SuperAdmin</h2>\r\n+      <!-- <img src=\"assets/user.jpg\" alt=\"logo\">-->\r\n+      <h2>SuperAdmin</h2> \r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752317305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n-      <!-- <img src=\"assets/user.jpg\" alt=\"logo\">-->\r\n-      <h2>SuperAdmin</h2> \r\n+      <img src=\"assets/user.jpg\" alt=\"logo\">\r\n+      <h3>ArchiManage</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752323599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n-      <img src=\"assets/user.jpg\" alt=\"logo\">\r\n-      <h3>ArchiManage</h3>\r\n+      <!-- <img src=\"assets/user.jpg\" alt=\"logo\"> -->\r\n+      <h>ArchiManage</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
+                },
+                {
+                    "date": 1746752340651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <mat-sidenav-container class=\"sidenav-container\" >\r\n   <mat-sidenav mode=\"side\" opened class=\"sidenav\">\r\n     <div class=\"logo\">\r\n       <!-- <img src=\"assets/user.jpg\" alt=\"logo\"> -->\r\n-      <h>ArchiManage</h3>\r\n+      <h3>ArchiManage</h3>\r\n     </div>\r\n     \r\n     <ul>\r\n       <li routerLink=\"{{ isSuperAdmin ? '/super-admin/dashboard' : '/dashboard' }}\" routerLinkActive=\"active\"><a (click)=\"changeTitle('Tableau de bord')\">\r\n"
                 }
             ],
             "date": 1741609885165,
