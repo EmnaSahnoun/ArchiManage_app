@@ -66,7 +66,7 @@ public class TaskService implements ITask {
         Task savedTask = taskRepository.save(task);
 
 
-        eventProducer.sendTaskinMessage(savedTask, "CREATE", null, project.getIdAdmin());
+        eventProducer.sendTaskinMessage(savedTask, project.getIdAdmin());
         return mapToTaskResponse(savedTask);
     }
 
@@ -157,7 +157,7 @@ public class TaskService implements ITask {
         Project project=projectRepository.findById(phase.getProject().getId())
                 .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
         taskRepository.deleteById(id);
-        eventProducer.sendTaskinMessage(task, "DELETE", null, project.getIdAdmin());
+        eventProducer.sendTaskinMessage(task,  project.getIdAdmin());
     }
 
     @Override
@@ -192,10 +192,7 @@ public class TaskService implements ITask {
                 .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
         // Envoi de l'événement à RabbitMQ
         eventProducer.sendTaskinMessage(
-                updatedTask,
-                "UPDATE",
-                Map.of("oldName", oldName, "oldStatus", oldStatus.toString()),
-                project.getIdAdmin()
+                updatedTask,project.getIdAdmin()
         );
         return mapToTaskResponse(updatedTask);
     }

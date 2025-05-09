@@ -18,15 +18,8 @@ public class RabbitMQConfig {
         private String JsonQueue;
         @Value("${rabbitmq.exchange.name}")
         private String exchange;
-        /*@Value("${rabbitmq.routing.key.name}")
-        private String routingKey;*/
         @Value("${rabbitmq.routing.json.key.name}")
         private String JsonRoutingKey;
-
-        /*@Bean
-        public Queue queue() {
-            return new Queue(queue); // durable = true
-        }*/
 
         @Bean
         public Queue JsonQueue() {
@@ -38,15 +31,6 @@ public class RabbitMQConfig {
             return new TopicExchange(exchange);
         }
 
-        //binding between queu and exchange using routing key
-        /*@Bean
-        public Binding binding() {
-            return BindingBuilder.bind(queue())
-                    .to(exchange())
-                    .with(routingKey);
-        }*/
-
-
         //binding between JsonQueue and exchange using routing key
         @Bean
         public Binding jsonBinding() {
@@ -55,58 +39,15 @@ public class RabbitMQConfig {
                     .with(JsonRoutingKey);
         }
 
-
+    @Bean
+    public MessageConverter converter(){
+        return new Jackson2JsonMessageConverter();
+    }
         @Bean
         public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
             RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
             rabbitTemplate.setMessageConverter(converter());
             return rabbitTemplate;
         }
-    @Bean
-    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(converter());
-        rabbitTemplate.setChannelTransacted(true); // Activer les transactions
-        return rabbitTemplate;
-    }
 
-    @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(converter());
-        factory.setAcknowledgeMode(AcknowledgeMode.AUTO); // Gestion automatique des accusés de réception
-        return factory;
-    }
-    @Bean
-    public MessageConverter converter() {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
-        converter.setCreateMessageIds(true); // Pour le suivi
-        return converter;
-    }
-    @Bean
-    public MessageConverter messageConverter() {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
-        converter.setTypePrecedence(Jackson2JavaTypeMapper.TypePrecedence.TYPE_ID);
-        converter.setClassMapper(classMapper());
-        return converter;
-    }
-
-    @Bean
-    public DefaultClassMapper classMapper() {
-        DefaultClassMapper classMapper = new DefaultClassMapper();
-        classMapper.setTrustedPackages("com.example.common.messaging", "com.example.*");
-        return classMapper;
-    }
-    /*@Bean
-    public Queue dlq() {
-        return QueueBuilder.durable("queue.ActivityService.taskCreated.DLQ").build();
-    }
-
-    @Bean
-    public Binding dlqBinding() {
-        return BindingBuilder.bind(dlq())
-                .to(exchange())
-                .with("ProjectService.envoye.ActivityService.DLQ");
-    }*/
 }
