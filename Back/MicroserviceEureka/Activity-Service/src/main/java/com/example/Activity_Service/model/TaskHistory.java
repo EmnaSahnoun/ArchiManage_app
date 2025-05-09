@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 
-public class TaskHistory implements Serializable {
+public class TaskHistory {
     private String id;
     private String taskId;
     private String idUser;
