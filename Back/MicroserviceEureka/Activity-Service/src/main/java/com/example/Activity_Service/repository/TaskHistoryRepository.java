@@ -20,7 +20,7 @@ public class TaskHistoryRepository {
     private final Path storagePath;
 
     @Autowired
-    public TaskHistoryRepository(@Value("${storage.location}") String storageLocation) {
+    public TaskHistoryRepository(@Value("./activity-storage") String storageLocation) {
         this.storagePath = Paths.get(storageLocation).resolve("history");
         try {
             Files.createDirectories(storagePath);

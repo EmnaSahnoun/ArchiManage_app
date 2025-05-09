@@ -29,7 +29,7 @@ public class TaskSendConsumer {
         this.objectMapper = objectMapper;
     }
 
-    @RabbitListener(queues = "${rabbitmq.queueJson.name}")
+    @RabbitListener(queues = "queue.ActivityService.taskCreated")
     public void consumeTaskEvent(Message message, Channel channel) throws IOException {
         try {
             String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
