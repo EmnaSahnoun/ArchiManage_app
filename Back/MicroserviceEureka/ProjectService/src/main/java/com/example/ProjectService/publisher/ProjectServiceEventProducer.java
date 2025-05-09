@@ -27,7 +27,8 @@ public class ProjectServiceEventProducer {
     @Value("${rabbitmq.routing.json.key.name}")
     private String routingKeyJson;
     private RabbitTemplate rabbitTemplate;
-
+    @Autowired
+    private  ObjectMapper objectMapper;
     private static  final Logger LOGGER= LoggerFactory.getLogger(ProjectServiceEventProducer.class);
 
 
@@ -37,10 +38,14 @@ public class ProjectServiceEventProducer {
     }
 
     public void sendTaskinMessage(Task task) {
+try{
+        String jsonMessage = objectMapper.writeValueAsString(task);
+        LOGGER.info(String.format("Json message sent -> %s", jsonMessage));
 
-
-        LOGGER.info(String.format("Json message sent -> %s", task.toString()));
-
-        rabbitTemplate.convertAndSend(exchange, routingKeyJson, task);
+        rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
+    }
+    catch(Exception e){
+        LOGGER.error("errerur while sending taskin message", e);
+}
     }
 }
