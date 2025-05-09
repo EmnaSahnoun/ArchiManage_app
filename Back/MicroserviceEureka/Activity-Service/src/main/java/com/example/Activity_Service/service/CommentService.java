@@ -36,7 +36,7 @@ public class CommentService implements IComment {
         history.setidUser(commentRequest.getidUser());
         history.setAction("COMMENT");
         history.setFieldChanged("comments");
-        history.setNewValue("Comment added: " + commentRequest.getContent().substring(0, Math.min(50, commentRequest.getContent().length())));
+
         taskHistoryService.recordHistory(history);
 
         return comment;

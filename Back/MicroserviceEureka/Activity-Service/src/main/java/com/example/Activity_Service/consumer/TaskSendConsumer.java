@@ -37,9 +37,9 @@ public class TaskSendConsumer {
             LOGGER.info("Received task event: {}", event);
 
             TaskHistory history = new TaskHistory();
-            history.setTaskId(event.getIdTask());
+
             history.setidUser(event.getIdUser());
-            history.setAction(event.getAction());
+
             history.setFieldChanged("task");
             history.setCreatedAt(LocalDateTime.now());
 

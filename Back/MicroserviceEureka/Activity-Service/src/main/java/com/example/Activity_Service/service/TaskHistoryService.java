@@ -33,7 +33,7 @@ public class TaskHistoryService implements ITaskHistory {
         history.setidUser(idUser);
         history.setAction(action);
         history.setFieldChanged("comments");
-        history.setNewValue(content);
+
         return this.recordHistory(history);
     }
 
