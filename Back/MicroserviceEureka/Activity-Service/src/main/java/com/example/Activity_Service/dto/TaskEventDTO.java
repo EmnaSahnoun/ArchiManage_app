@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskEventDTO {
-    private String idUser;
+
     private Task task;
 
 
@@ -250,13 +250,7 @@ public class TaskEventDTO {
             }
         }
 
-    public String getIdUser() {
-        return idUser;
-    }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
 
     public Task getTask() {
         return task;

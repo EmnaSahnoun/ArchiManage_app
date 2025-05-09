@@ -4,6 +4,7 @@ import com.example.Activity_Service.dto.TaskEventDTO;
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.service.TaskHistoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,8 @@ public class TaskSendConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskSendConsumer.class);
     private final TaskHistoryService taskHistoryService;
 
-
+@Autowired
+private ObjectMapper objectMapper;
     @Autowired
     public TaskSendConsumer(TaskHistoryService taskHistoryService) {
         this.taskHistoryService = taskHistoryService;
@@ -32,17 +34,21 @@ public class TaskSendConsumer {
     }
 
     @RabbitListener(queues ={"${rabbitmq.queueJson.name}"})
-    public void handleTaskEvent(@Payload TaskEventDTO event, Message message, Channel channel) throws IOException {
+    public void handleTaskEvent(String event) throws IOException {
         {
+
             LOGGER.info("Received task event: {}", event);
+try{
+    TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
 
             TaskHistory history = new TaskHistory();
 
-            history.setidUser(event.getIdUser());
-
             history.setFieldChanged("task");
             history.setCreatedAt(LocalDateTime.now());
-
+            LOGGER.info("Task event received: {}", objectMapper.writeValueAsString(taskEventDTO));
+        }catch (Exception e){
+    LOGGER.error("Error while parsing task event", e);
+}
 
              }
     }
