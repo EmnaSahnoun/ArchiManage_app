@@ -31,17 +31,7 @@ public class ProjectServiceEventProducer {
     private  ObjectMapper objectMapper;
     private static  final Logger LOGGER= LoggerFactory.getLogger(ProjectServiceEventProducer.class);
 
-    @Bean
-    public Queue dlq() {
-        return QueueBuilder.durable("queue.ActivityService.taskCreated.DLQ").build();
-    }
 
-    @Bean
-    public Binding dlqBinding() {
-        return BindingBuilder.bind(dlq())
-                .to(exchange())
-                .with("ProjectService.envoye.ActivityService.DLQ");
-    }
 
     public ProjectServiceEventProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
