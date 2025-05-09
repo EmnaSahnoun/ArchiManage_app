@@ -31,40 +31,8 @@ public class TaskSendConsumer {
 
     }
 
-    @RabbitListener(queues = "queue.ActivityService.taskCreated")
-    public void handleTaskEvent(@Payload TaskEventDTO event,
-                                Message message,
-                                Channel channel) throws IOException {
-        try {
-            LOGGER.info("Received task event: {}", event);
-
-            TaskHistory history = new TaskHistory();
-            history.setTaskId(event.getTaskId());
-            history.setidUser(event.getIdUser());
-            history.setAction(event.getAction());
-            history.setCreatedAt(LocalDateTime.now());
-
-            switch (event.getAction()) {
-                case "CREATE":
-                    history.setFieldChanged("ALL");
-                    history.setNewValue("Created: " + event.getNewTaskData().get("name"));
-                    break;
-                case "UPDATE":
-                    history.setFieldChanged("Fields updated");
-                    history.setOldValue("Before: " + event.getOldValues());
-                    history.setNewValue("After: " + event.getNewTaskData().get("name"));
-                    break;
-                case "DELETE":
-                    history.setFieldChanged("ALL");
-                    history.setNewValue("Deleted task");
-                    break;
-            }
-
-            taskHistoryService.recordHistory(history);
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        } catch (Exception e) {
-            LOGGER.error("Error processing event", e);
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-        }
+    @RabbitListener(queues ={"${rabbitmq.queueJson.name}"})
+    public void handleTaskEvent(@Payload TaskEventDTO event) {
+        LOGGER.info(String.format("Received JSON message -> %s", event.toString()));
     }
 }
