@@ -5,6 +5,7 @@ import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -28,10 +29,20 @@ public class Task {
     private List<Task> subTasks = new ArrayList<>();;
 
     private String parentTaskId;
+    @Transient
+    private String action;
 
 
     @DBRef
     private Phase phase;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public String getParentTaskId() {
         return parentTaskId;

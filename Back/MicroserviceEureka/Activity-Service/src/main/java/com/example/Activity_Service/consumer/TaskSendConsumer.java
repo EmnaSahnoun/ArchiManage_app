@@ -32,7 +32,31 @@ public class TaskSendConsumer {
     }
 
     @RabbitListener(queues ={"${rabbitmq.queueJson.name}"})
-    public void handleTaskEvent(@Payload TaskEventDTO event) {
-        LOGGER.info(String.format("Received JSON message -> %s", event.toString()));
+    public void handleTaskEvent(@Payload TaskEventDTO event, Message message, Channel channel) throws IOException {
+        try {
+            LOGGER.info("Received task event: {}", event);
+
+            TaskHistory history = new TaskHistory();
+            history.setTaskId(event.getIdTask());
+            history.setAction(event.getAction());
+            history.setIdUser(event.getIdUser());
+            history.setCreatedAt(LocalDateTime.now());
+
+            // Pour les mises à jour, enregistrer les changements
+            if ("UPDATE".equals(event.getAction()) && event.getChanges() != null) {
+                history.setFieldChanged("task_details");
+                history.setOldValue(event.getChanges().get("oldValue"));
+                history.setNewValue(event.getChanges().get("newValue"));
+            }
+
+            taskHistoryService.recordHistory(history);
+
+            // Ack du message
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (Exception e) {
+            LOGGER.error("Error processing task event: {}", e.getMessage());
+            // Reject le message (ne pas le remettre dans la queue)
+            channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
+        }
     }
 }

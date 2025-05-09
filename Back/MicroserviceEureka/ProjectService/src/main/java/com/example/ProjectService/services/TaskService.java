@@ -62,11 +62,12 @@ public class TaskService implements ITask {
         task.setPriority(request.getPriority());
         task.setPhase(phase);
 
+
         // Sauvegarder la tâche
         Task savedTask = taskRepository.save(task);
 
 
-        eventProducer.sendTaskinMessage(savedTask, project.getIdAdmin());
+
         return mapToTaskResponse(savedTask);
     }
 
@@ -127,7 +128,7 @@ public class TaskService implements ITask {
         subTask.setPriority(request.getPriority());
         subTask.setPhase(phase);
         subTask.setParentTaskId(parentId); // Définir l'ID du parent
-
+        subTask.setAction("CREATE");
         // Sauvegarder la sous-tâche
         Task savedSubTask = taskRepository.save(subTask);
 
@@ -136,6 +137,7 @@ public class TaskService implements ITask {
             parentTask.setSubTasks(new ArrayList<>());
         }
         parentTask.getSubTasks().add(savedSubTask);
+        eventProducer.sendTaskinMessage(savedSubTask);
         taskRepository.save(parentTask);
 
         // Créer la réponse
@@ -157,7 +159,8 @@ public class TaskService implements ITask {
         Project project=projectRepository.findById(phase.getProject().getId())
                 .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
         taskRepository.deleteById(id);
-        eventProducer.sendTaskinMessage(task,  project.getIdAdmin());
+        task.setAction("DELETE");
+        eventProducer.sendTaskinMessage(task);
     }
 
     @Override
@@ -186,13 +189,10 @@ public class TaskService implements ITask {
         }
 
         Task updatedTask = taskRepository.save(task);
-        Phase phase = phaseRepository.findById(request.getPhaseId())
-                .orElseThrow(() -> new PhaseNotFoundException(request.getPhaseId()));
-        Project project=projectRepository.findById(phase.getProject().getId())
-                .orElseThrow(() -> new ProjectNotFoundException(phase.getProject().getId()));
+        updatedTask.setAction("UPDATE");
         // Envoi de l'événement à RabbitMQ
         eventProducer.sendTaskinMessage(
-                updatedTask,project.getIdAdmin()
+                updatedTask
         );
         return mapToTaskResponse(updatedTask);
     }

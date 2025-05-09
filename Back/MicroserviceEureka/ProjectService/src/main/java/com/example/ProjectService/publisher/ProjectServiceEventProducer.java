@@ -36,13 +36,11 @@ public class ProjectServiceEventProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendTaskinMessage(Task task, String idUser) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("task", task);
-        message.put("idUser", idUser);
+    public void sendTaskinMessage(Task task) {
 
-        LOGGER.info(String.format("Json message sent -> %s", message));
 
-        rabbitTemplate.convertAndSend(exchange, routingKeyJson, message);
+        LOGGER.info(String.format("Json message sent -> %s", task));
+
+        rabbitTemplate.convertAndSend(exchange, routingKeyJson, task);
     }
 }

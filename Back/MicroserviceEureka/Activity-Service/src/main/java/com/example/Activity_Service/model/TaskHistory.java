@@ -15,8 +15,6 @@ public class TaskHistory {
     private String idUser;
     private String action; // "CREATE", "UPDATE", "DELETE", etc.
     private String fieldChanged;
-    private String oldValue;
-    private String newValue;
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
 
@@ -61,22 +59,6 @@ public class TaskHistory {
 
     public void setFieldChanged(String fieldChanged) {
         this.fieldChanged = fieldChanged;
-    }
-
-    public String getOldValue() {
-        return oldValue;
-    }
-
-    public void setOldValue(String oldValue) {
-        this.oldValue = oldValue;
-    }
-
-    public String getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(String newValue) {
-        this.newValue = newValue;
     }
 
     public LocalDateTime getCreatedAt() {
