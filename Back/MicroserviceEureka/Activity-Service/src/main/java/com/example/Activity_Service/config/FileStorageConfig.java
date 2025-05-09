@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 @Configuration
 public class FileStorageConfig {
-    @Value("./activity-storage")
+    @Value("${storage.location}")
     private String storageLocation;
 
     @Bean

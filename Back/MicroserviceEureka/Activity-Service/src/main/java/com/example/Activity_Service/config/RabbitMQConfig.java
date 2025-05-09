@@ -18,13 +18,13 @@ public class RabbitMQConfig {
 
         //@Value("${rabbitmq.queue.name}")
         //private String queue;
-        @Value("queue.ActivityService.taskCreated")
+        @Value("${rabbitmq.queueJson.name}")
         private String JsonQueue;
-        @Value("exchange.ProjectService.TaskCreated")
+        @Value("${rabbitmq.exchange.name}")
         private String exchange;
         /*@Value("${rabbitmq.routing.key.name}")
         private String routingKey;*/
-        @Value("ProjectService.envoye.ActivityService")
+        @Value("${rabbitmq.routing.json.key.name}")
        private String JsonRoutingKey;
 
         //@Bean

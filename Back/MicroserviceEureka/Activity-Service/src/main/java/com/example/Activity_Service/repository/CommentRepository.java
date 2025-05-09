@@ -21,7 +21,7 @@ public class CommentRepository {
     public Path getStoragePath() {
         return storagePath;
     }
-    public CommentRepository(@Value("./activity-storage") String storageLocation) {
+    public CommentRepository(@Value("${storage.location}") String storageLocation) {
         this.storagePath = Paths.get(storageLocation).resolve("comments");
         try {
             Files.createDirectories(storagePath);
