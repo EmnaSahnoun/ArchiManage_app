@@ -26,6 +26,15 @@ public class TaskEventDTO {
             private List<Task> subTasks;
             private String parentTaskId;
             private Phase phase;
+            private String action;
+
+            public String getAction() {
+                return action;
+            }
+
+            public void setAction(String action) {
+                this.action = action;
+            }
 
             public String getId() {
                 return id;

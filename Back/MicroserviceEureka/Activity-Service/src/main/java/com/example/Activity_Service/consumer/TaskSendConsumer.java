@@ -41,10 +41,21 @@ private ObjectMapper objectMapper;
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
 
-            TaskHistory history = new TaskHistory();
+    TaskHistory history = new TaskHistory();
+    history.setTaskId(taskEventDTO.getTask().getId()); // ID de la tâche
+    history.setidUser(taskEventDTO.getTask().getPhase().getProject().getIdAdmin()); // ID de l'admin
+    history.setAction(taskEventDTO.getTask().getAction()); // "CREATE", "UPDATE", etc.
+    history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
+    history.setCreatedAt(LocalDateTime.now());
 
-            history.setFieldChanged("task");
-            history.setCreatedAt(LocalDateTime.now());
+    // 3. Sauvegarder l'historique
+    taskHistoryService.recordHistory(history);
+
+    // 4. Envoyer un ACK pour confirmer le traitement
+    /*channel.basicAck(
+            message.getMessageProperties().getDeliveryTag(),
+            false
+    );*/
             LOGGER.info("Task event received: {}", objectMapper.writeValueAsString(taskEventDTO));
         }catch (Exception e){
     LOGGER.error("Error while parsing task event", e);
