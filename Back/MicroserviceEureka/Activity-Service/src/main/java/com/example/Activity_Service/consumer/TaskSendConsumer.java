@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Map;
 
 @Service
@@ -30,17 +32,19 @@ public class TaskSendConsumer {
     }
 
     @RabbitListener(queues = "queue.ActivityService.taskCreated")
-    public void consumeTaskEvent(Message message, Channel channel) throws IOException {
+    public void consumeTaskEvent(@Payload Map<String, Object> event,
+                                 Message message,
+                                 Channel channel) throws IOException {
         try {
-
-            byte[] body = message.getBody();
-            Map<String, Object> event = objectMapper.readValue(body, new TypeReference<Map<String, Object>>() {});
-
             String action = (String) event.get("action");
             String taskId = (String) event.get("taskId");
             String idUser = (String) event.get("idUser");
+
+            // Cast des données (attention aux nulls)
             Map<String, Object> newTaskData = (Map<String, Object>) event.get("newTaskData");
-            Map<String, String> oldValues = (Map<String, String>) event.get("oldValues");
+            Map<String, String> oldValues = event.get("oldValues") != null ?
+                    (Map<String, String>) event.get("oldValues") :
+                    Collections.emptyMap();
 
             TaskHistory history = new TaskHistory();
             history.setTaskId(taskId);
@@ -48,33 +52,29 @@ public class TaskSendConsumer {
             history.setAction(action);
             history.setCreatedAt(LocalDateTime.now());
 
-            switch (action) {
-                case "CREATE":
-                    history.setFieldChanged("ALL");
-                    history.setNewValue("Task created: " + newTaskData.get("name"));
-                    break;
-                case "UPDATE":
-                    history.setFieldChanged("Multiple fields");
-                    history.setOldValue(oldValues != null ? "Before: " + oldValues.toString() : "N/A");
-                    history.setNewValue("After: " + newTaskData.toString());
-                    break;
-                case "DELETE":
-                    history.setFieldChanged("ALL");
-                    history.setNewValue("Task deleted: " + newTaskData.get("name"));
-                    break;
+            // Traitement selon l'action
+            if ("CREATE".equals(action)) {
+                history.setFieldChanged("ALL");
+                history.setNewValue("Task created: " + newTaskData.get("name"));
+            }
+            else if ("UPDATE".equals(action)) {
+                history.setFieldChanged("Multiple fields");
+                history.setOldValue(oldValues.toString());
+                history.setNewValue(newTaskData.toString());
+            }
+            else if ("DELETE".equals(action)) {
+                history.setFieldChanged("ALL");
+                history.setNewValue("Task deleted: " + newTaskData.get("name"));
             }
 
             taskHistoryService.recordHistory(history);
-            LOGGER.info("Task history saved for taskId: {}", taskId);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+
         } catch (Exception e) {
             LOGGER.error("Error processing message", e);
-
             if (message.getMessageProperties().getRedelivered()) {
-                LOGGER.warn("Message already redelivered, sending to DLQ");
                 channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
             } else {
-                LOGGER.info("Requesting message redelivery");
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             }
         }

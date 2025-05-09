@@ -41,15 +41,16 @@ public class ProjectServiceEventProducer {
         try {
             Map<String, Object> eventPayload = new HashMap<>();
             eventPayload.put("taskId", task.getId());
-            eventPayload.put("action", action); // "CREATE", "UPDATE", "DELETE"
+            eventPayload.put("action", action);
             eventPayload.put("idUser", idUser);
             eventPayload.put("newTaskData", task);
-            eventPayload.put("oldValues", oldValues); // Pour les updates
+            eventPayload.put("oldValues", oldValues);
             eventPayload.put("timestamp", LocalDateTime.now());
 
-            String jsonMessage = objectMapper.writeValueAsString(eventPayload);
-            LOGGER.info("Sending task event to RabbitMQ: {}", jsonMessage);
-            rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage, message -> {
+            LOGGER.info("Sending task event to RabbitMQ: {}", eventPayload);
+
+            // Envoyez directement la Map, le MessageConverter fera la conversion
+            rabbitTemplate.convertAndSend(exchange, routingKeyJson, eventPayload, message -> {
                 message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                 return message;
             });

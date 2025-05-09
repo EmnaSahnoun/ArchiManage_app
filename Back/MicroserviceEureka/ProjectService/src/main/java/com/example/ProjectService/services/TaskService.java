@@ -164,6 +164,7 @@ public class TaskService implements ITask {
     public TaskResponse updateTask(String id, TaskRequest request) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+
 // Capture des anciennes valeurs pour l'historique
         String oldName = task.getName();
         String oldDescription = task.getDescription();
