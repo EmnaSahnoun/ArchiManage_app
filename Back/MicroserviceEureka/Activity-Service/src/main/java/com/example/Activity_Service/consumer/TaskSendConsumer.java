@@ -1,5 +1,6 @@
 package com.example.Activity_Service.consumer;
 
+import com.example.Activity_Service.dto.TaskEventDTO;
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.service.TaskHistoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -31,51 +32,39 @@ public class TaskSendConsumer {
     }
 
     @RabbitListener(queues = "queue.ActivityService.taskCreated")
-    public void consumeTaskEvent(@Payload Map<String, Object> event,
-                                 Message message,
-                                 Channel channel) throws IOException {
+    public void handleTaskEvent(@Payload TaskEventDTO event,
+                                Message message,
+                                Channel channel) throws IOException {
         try {
-            String action = (String) event.get("action");
-            String taskId = (String) event.get("taskId");
-            String idUser = (String) event.get("idUser");
-
-            // Cast des données (attention aux nulls)
-            Map<String, Object> newTaskData = (Map<String, Object>) event.get("newTaskData");
-            Map<String, String> oldValues = event.get("oldValues") != null ?
-                    (Map<String, String>) event.get("oldValues") :
-                    Collections.emptyMap();
+            LOGGER.info("Received task event: {}", event);
 
             TaskHistory history = new TaskHistory();
-            history.setTaskId(taskId);
-            history.setidUser(idUser);
-            history.setAction(action);
+            history.setTaskId(event.getTaskId());
+            history.setidUser(event.getIdUser());
+            history.setAction(event.getAction());
             history.setCreatedAt(LocalDateTime.now());
 
-            // Traitement selon l'action
-            if ("CREATE".equals(action)) {
-                history.setFieldChanged("ALL");
-                history.setNewValue("Task created: " + newTaskData.get("name"));
-            }
-            else if ("UPDATE".equals(action)) {
-                history.setFieldChanged("Multiple fields");
-                history.setOldValue(oldValues.toString());
-                history.setNewValue(newTaskData.toString());
-            }
-            else if ("DELETE".equals(action)) {
-                history.setFieldChanged("ALL");
-                history.setNewValue("Task deleted: " + newTaskData.get("name"));
+            switch (event.getAction()) {
+                case "CREATE":
+                    history.setFieldChanged("ALL");
+                    history.setNewValue("Created: " + event.getNewTaskData().get("name"));
+                    break;
+                case "UPDATE":
+                    history.setFieldChanged("Fields updated");
+                    history.setOldValue("Before: " + event.getOldValues());
+                    history.setNewValue("After: " + event.getNewTaskData().get("name"));
+                    break;
+                case "DELETE":
+                    history.setFieldChanged("ALL");
+                    history.setNewValue("Deleted task");
+                    break;
             }
 
             taskHistoryService.recordHistory(history);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-
         } catch (Exception e) {
-            LOGGER.error("Error processing message", e);
-            if (message.getMessageProperties().getRedelivered()) {
-                channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
-            } else {
-                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-            }
+            LOGGER.error("Error processing event", e);
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
         }
     }
 }

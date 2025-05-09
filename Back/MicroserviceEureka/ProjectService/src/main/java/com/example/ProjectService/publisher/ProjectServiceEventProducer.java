@@ -1,6 +1,8 @@
 package com.example.ProjectService.publisher;
 
+import com.example.ProjectService.dto.response.TaskEventDTO;
 import com.example.ProjectService.models.Task;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,25 +41,23 @@ public class ProjectServiceEventProducer {
 
     public void sendTaskinMessage(Task task, String action, Map<String, String> oldValues, String idUser) {
         try {
-            Map<String, Object> eventPayload = new HashMap<>();
-            eventPayload.put("taskId", task.getId());
-            eventPayload.put("action", action);
-            eventPayload.put("idUser", idUser);
-            eventPayload.put("newTaskData", task);
-            eventPayload.put("oldValues", oldValues);
-            eventPayload.put("timestamp", LocalDateTime.now());
+            TaskEventDTO event = new TaskEventDTO();
+            event.setTaskId(task.getId());
+            event.setAction(action);
+            event.setIdUser(idUser);
 
-            LOGGER.info("Sending task event to RabbitMQ: {}", eventPayload);
+            // Convert Task to Map
+            Map<String, Object> taskMap = objectMapper.convertValue(task, new TypeReference<Map<String, Object>>() {});
+            event.setNewTaskData(taskMap);
 
-            // Envoyez directement la Map, le MessageConverter fera la conversion
-            rabbitTemplate.convertAndSend(exchange, routingKeyJson, eventPayload, message -> {
-                message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-                return message;
-            });
+            event.setOldValues(oldValues);
+            event.setTimestamp(LocalDateTime.now());
+
+            LOGGER.info("Sending task event: {}", event);
+            rabbitTemplate.convertAndSend(exchange, routingKeyJson, event);
         } catch (Exception e) {
-            LOGGER.error("Failed to send task event to RabbitMQ", e);
-            throw new RuntimeException("Failed to send message to RabbitMQ", e);
+            LOGGER.error("Failed to send event", e);
+            throw new RuntimeException("Message sending failed", e);
         }
     }
-
 }
