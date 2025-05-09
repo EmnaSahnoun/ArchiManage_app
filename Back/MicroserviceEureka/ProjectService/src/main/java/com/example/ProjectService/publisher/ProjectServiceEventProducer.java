@@ -39,7 +39,7 @@ public class ProjectServiceEventProducer {
     public void sendTaskinMessage(Task task) {
 
 
-        LOGGER.info(String.format("Json message sent -> %s", task));
+        LOGGER.info(String.format("Json message sent -> %s", task.toString()));
 
         rabbitTemplate.convertAndSend(exchange, routingKeyJson, task);
     }
