@@ -39,11 +39,12 @@ private ObjectMapper objectMapper;
         LOGGER.info("Received task : {}", event);
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
-
+    TaskHistory history = new TaskHistory();
 
     if (taskEventDTO.getChanges() != null) {
+        if(taskEventDTO.getParentTaskId() == null) {
         for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
-            TaskHistory history = new TaskHistory();
+
             history.setTaskId(taskEventDTO.getId());
             history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
             history.setAction(taskEventDTO.getAction());
@@ -59,7 +60,32 @@ try{
                     change.getOldValue(),
                     change.getNewValue());
         }
-    }    }catch (Exception e){
+    }
+
+        if (taskEventDTO.getParentTaskId() != null)  {
+                for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
+
+                    history.setTaskId(taskEventDTO.getParentTaskId());
+                    history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+                    history.setAction(taskEventDTO.getAction());
+                    history.setFieldChanged(change.getFieldChanged());
+                    history.setOldValue(change.getOldValue());
+                    history.setNewValue(change.getNewValue());
+                    history.setCreatedAt(LocalDateTime.now());
+
+                    taskHistoryService.recordHistory(history);
+                    LOGGER.info("Recorded change for task {}: {} from {} to {}",
+                            taskEventDTO.getId(),
+                            change.getFieldChanged(),
+                            change.getOldValue(),
+                            change.getNewValue());
+                }
+            }
+
+
+    }
+
+}catch (Exception e){
     LOGGER.error("Error while parsing task event", e);
 }
 
