@@ -87,6 +87,39 @@ public class PhaseService implements IPhase {
         // Sauvegarder la phase avec les accès mis à jour
         phaseRepository.save(phase);
     }
+    public void synchronizePhaseAccesses(String projectId) {
+        // Récupérer tous les membres acceptés du projet
+        List<ProjectAccess> acceptedMembers = projectAccessRepository.findByProjectIdAndInvitationStatus(
+                projectId,
+                InvitationStatus.ACCEPTED
+        );
+
+        // Récupérer toutes les phases du projet
+        List<Phase> phases = phaseRepository.findByProjectId(projectId);
+
+        for (Phase phase : phases) {
+            for (ProjectAccess member : acceptedMembers) {
+                // Vérifier si l'utilisateur a déjà un accès à cette phase
+                boolean exists = phaseAccessRepository.existsByPhaseIdAndIdUser(
+                        phase.getId(),
+                        member.getIdUser()
+                );
+
+                if (!exists) {
+                    PhaseAccess phaseAccess = new PhaseAccess();
+                    phaseAccess.setIdUser(member.getIdUser());
+                    phaseAccess.setCanView(false); // Accès false par défaut
+                    phaseAccess.setPhase(phase);
+
+                    phaseAccessRepository.save(phaseAccess);
+
+                    // Ajouter à la liste des accès de la phase
+                    phase.getPhaseAccesses().add(phaseAccess);
+                }
+            }
+            phaseRepository.save(phase);
+        }
+    }
     private void createDefaultPhaseAccesses(Phase phase, List<ProjectAccess> projectMembers) {
         for (ProjectAccess member : projectMembers) {
             PhaseAccess phaseAccess = new PhaseAccess();

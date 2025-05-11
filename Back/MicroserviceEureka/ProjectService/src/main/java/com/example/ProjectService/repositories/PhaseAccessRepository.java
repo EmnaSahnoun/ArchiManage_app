@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface PhaseAccessRepository extends MongoRepository<PhaseAccess, String> {
     List<PhaseAccess> findByPhaseId(String phaseId);
+    boolean existsByPhaseIdAndIdUser(String phaseId, String userId);
 }

@@ -120,7 +120,8 @@
         </select>
       </div>
 
-      <button (click)="sendInvitation()" [disabled]="!selectedUserId || isLoading">
+      <button class="button-primary" (click)="sendInvitation()" [disabled]="!selectedUserId || isLoading">
+       
         <i class="icon-person-add "></i> Inviter
       </button>
     </div>

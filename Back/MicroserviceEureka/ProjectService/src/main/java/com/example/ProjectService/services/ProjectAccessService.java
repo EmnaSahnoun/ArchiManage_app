@@ -3,9 +3,13 @@ package com.example.ProjectService.services;
 import com.example.ProjectService.dto.request.ProjectAccessRequest;
 import com.example.ProjectService.dto.response.ProjectAccessResponse;
 import com.example.ProjectService.interfaces.IProjectAccess;
+import com.example.ProjectService.models.Phase;
+import com.example.ProjectService.models.PhaseAccess;
 import com.example.ProjectService.models.Project;
 import com.example.ProjectService.models.ProjectAccess;
 import com.example.ProjectService.models.enums.InvitationStatus;
+import com.example.ProjectService.repositories.PhaseAccessRepository;
+import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectAccessRepository;
 import com.example.ProjectService.repositories.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +24,18 @@ public class ProjectAccessService implements IProjectAccess {
 
     private final ProjectAccessRepository projectAccessRepository;
     private  final ProjectRepository projectRepository;
+    private  final PhaseRepository phaseRepository;
+    private final PhaseAccessRepository phaseAccessRepository;
     @Autowired
     public ProjectAccessService(ProjectAccessRepository projectAccessRepository,
-                                ProjectRepository projectRepository) {
+                                ProjectRepository projectRepository,
+                                PhaseRepository phaseRepository,
+                                PhaseAccessRepository phaseAccessRepository
+                                ) {
         this.projectAccessRepository = projectAccessRepository;
         this.projectRepository = projectRepository;
+        this.phaseRepository = phaseRepository;
+        this.phaseAccessRepository = phaseAccessRepository;
     }
     @Override
     public ProjectAccessResponse createProjectAccess(ProjectAccessRequest request) {
@@ -64,9 +75,35 @@ public class ProjectAccessService implements IProjectAccess {
 
         projectAccess.setInvitationStatus(status);
         ProjectAccess updatedAccess = projectAccessRepository.save(projectAccess);
+        // Si l'invitation est acceptée, créer les PhaseAccess pour toutes les phases existantes
+        if (status == InvitationStatus.ACCEPTED) {
+            createPhaseAccessesForAllPhases(updatedAccess);
+        }
         return mapToProjectAccessResponse(updatedAccess);
     }
 
+    private void createPhaseAccessesForAllPhases(ProjectAccess projectAccess) {
+        // Récupérer toutes les phases du projet
+        List<Phase> phases = phaseRepository.findByProjectId(projectAccess.getProject().getId());
+
+        for (Phase phase : phases) {
+            // Vérifier si l'utilisateur a déjà un PhaseAccess pour cette phase
+            boolean alreadyExists = phaseAccessRepository.existsByPhaseIdAndIdUser(phase.getId(), projectAccess.getIdUser());
+
+            if (!alreadyExists) {
+                PhaseAccess phaseAccess = new PhaseAccess();
+                phaseAccess.setIdUser(projectAccess.getIdUser());
+                phaseAccess.setCanView(false); // Par défaut, l'accès est false
+                phaseAccess.setPhase(phase);
+
+                phaseAccessRepository.save(phaseAccess);
+
+                // Ajouter le PhaseAccess à la liste de la phase
+                phase.getPhaseAccesses().add(phaseAccess);
+                phaseRepository.save(phase);
+            }
+        }
+    }
     @Override
     public void deleteProjectAccess(String id) {
         if (!projectAccessRepository.existsById(id)) {

@@ -13,11 +13,14 @@ export class SidebarComponent implements OnInit {
   isAdmin:boolean=false;
 
   isSuperAdmin:boolean=false;
+  titre:string="ArchiManage";
   constructor(private authService:AuthService,
-    private router:Router
+    private router:Router,
+    
   ){}
   @Output() titleChange = new EventEmitter<string>();
 ngOnInit(): void {
+  this.getTitleAgence();
   this.isUser=this.authService.isUser();
   this.isSuperAdmin=this.authService.isSuperAdmin();
   this.isAdmin=this.authService.isAdmin();
@@ -31,4 +34,12 @@ ngOnInit(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+  getTitleAgence(){
+const name=localStorage.getItem("AgencyName");
+if(name){
+  this.titre=name;
+}
+
+  }
+  
 }
