@@ -198,6 +198,15 @@ public class TaskEventDTO {
                 this.deleted = deleted;
             }
         }
+
+    public TaskChangeEvent getChange() {
+        return change;
+    }
+
+    public void setChange(TaskChangeEvent change) {
+        this.change = change;
+    }
+
     public String getId() {
         return id;
     }

@@ -15,7 +15,7 @@ public class TaskHistory implements Serializable {
     private String taskId;
     private String idUser;
     private String action; // "UPDATE_FIELD", "CREATE", "DELETE"
-    private String fieldName; // "description", "status", etc.
+    private String fieldChanged; // "description", "status", etc.
     private String oldValue;
     private String newValue;
     private LocalDateTime createdAt;
@@ -29,12 +29,12 @@ public class TaskHistory implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public String getFieldChanged() {
+        return fieldChanged;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setFieldChanged(String fieldChanged) {
+        this.fieldChanged = fieldChanged;
     }
 
     public String getOldValue() {

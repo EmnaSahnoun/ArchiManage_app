@@ -52,7 +52,11 @@ try{
     history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin()); // ID de l'admin
 
     history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
-    //history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
+    if(taskEventDTO.getAction().equals("UPDATE")){
+        history.setFieldChanged(taskEventDTO.getChange().getFieldChanged());
+        history.setOldValue(taskEventDTO.getChange().getOldValue());
+        history.setNewValue(taskEventDTO.getChange().getNewValue());
+    }
     history.setCreatedAt(LocalDateTime.now());
 
     // 3. Sauvegarder l'historique
