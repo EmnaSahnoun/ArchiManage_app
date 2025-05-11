@@ -71,20 +71,21 @@ public class TaskHistoryRepository {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(
-                new BufferedInputStream(new FileInputStream(historyFile.toFile())))) {
+        try {
+            // Désérialisation JSON avec Jackson
+            List<TaskHistory> histories = objectMapper.readValue(
+                    historyFile.toFile(),
+                    new TypeReference<List<TaskHistory>>() {}
+            );
 
-            Object obj = ois.readObject();
-            if (obj instanceof List) {
-                return ((List<TaskHistory>) obj).stream()
-                        .sorted((h1, h2) -> h2.getCreatedAt().compareTo(h1.getCreatedAt()))
-                        .collect(Collectors.toList());
-            }
+            // Tri par date décroissante
+            return histories.stream()
+                    .sorted((h1, h2) -> h2.getCreatedAt().compareTo(h1.getCreatedAt()))
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) {
+            // En cas d'erreur (fichier corrompu ou vide), retourner une liste vide
             return new ArrayList<>();
-        } catch (EOFException e) {
-            return new ArrayList<>();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Failed to read task histories for task: " + taskId, e);
         }
     }
 }
