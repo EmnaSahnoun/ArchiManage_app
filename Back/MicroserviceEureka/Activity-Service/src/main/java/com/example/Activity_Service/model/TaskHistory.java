@@ -21,12 +21,37 @@ public class TaskHistory implements Serializable {
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     public String getIdUser() {
         return idUser;
     }
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public String getFieldChanged() {
@@ -52,39 +77,6 @@ public class TaskHistory implements Serializable {
     public void setNewValue(String newValue) {
         this.newValue = newValue;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getidUser() {
-        return idUser;
-    }
-
-    public void setidUser(String idUser) {
-        this.idUser = idUser;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

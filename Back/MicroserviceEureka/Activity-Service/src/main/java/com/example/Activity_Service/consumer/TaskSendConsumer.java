@@ -45,7 +45,7 @@ try{
         for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
             TaskHistory history = new TaskHistory();
             history.setTaskId(taskEventDTO.getId());
-            history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+            history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
             history.setAction(taskEventDTO.getAction());
             history.setFieldChanged(change.getFieldChanged());
             history.setOldValue(change.getOldValue());
