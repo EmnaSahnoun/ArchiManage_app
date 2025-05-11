@@ -87,26 +87,18 @@ try{
 
     if (taskEventDTO.getChanges() == null) {
         if(taskEventDTO.getParentTaskId() == null) {
-            for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
-
                 history.setTaskId(taskEventDTO.getId());
                 history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
                 history.setAction(taskEventDTO.getAction());
-                
                 history.setCreatedAt(LocalDateTime.now());
-
                 taskHistoryService.recordHistory(history);
                 LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                        taskEventDTO.getId(),
-                        change.getFieldChanged(),
-                        change.getOldValue(),
-                        change.getNewValue());
-            }
+                        taskEventDTO.getId());
+
+
         }
 
         if (taskEventDTO.getParentTaskId() != null)  {
-            for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
-
                 history.setTaskId(taskEventDTO.getParentTaskId());
                 history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
                 history.setAction(taskEventDTO.getAction());
@@ -115,12 +107,9 @@ try{
 
                 taskHistoryService.recordHistory(history);
                 LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                        taskEventDTO.getId(),
-                        change.getFieldChanged(),
-                        change.getOldValue(),
-                        change.getNewValue());
+                        taskEventDTO.getId());
             }
-        }
+
 
 
     }
