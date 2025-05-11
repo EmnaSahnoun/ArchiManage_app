@@ -1,8 +1,11 @@
 package com.example.Activity_Service.repository;
 
+import com.example.Activity_Service.consumer.TaskSendConsumer;
 import com.example.Activity_Service.model.TaskHistory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class TaskHistoryRepository {
     private final Path storagePath;
     private final ObjectMapper objectMapper; // Injecté
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskSendConsumer.class);
 
     @Autowired
     public TaskHistoryRepository(@Value("${storage.location}") String storageLocation, ObjectMapper objectMapper) {
@@ -39,29 +43,36 @@ public class TaskHistoryRepository {
         history.setCreatedAt(LocalDateTime.now());
 
         Path historyFile = storagePath.resolve(history.getTaskId() + ".hist.json");
-        List<TaskHistory> histories = new ArrayList<>();
 
-        // 1. Lire les historiques existants de manière sécurisée
-        if (Files.exists(historyFile)) {
-            try {
-                histories = objectMapper.readValue(
-                        historyFile.toFile(),
-                        new TypeReference<List<TaskHistory>>() {}
-                );
-            } catch (IOException e) {
-                // Fichier vide ou corrompu - on recommence avec une nouvelle liste
-                histories = new ArrayList<>();
-            } }  // 2. Ajouter le nouvel historique
-        histories.add(history);
-
-        // 3. Sauvegarder en JSON
         try {
-            objectMapper.writeValue(historyFile.toFile(), histories);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save task histories", e);
-        }
+            // Crée le dossier parent si nécessaire
+            Files.createDirectories(historyFile.getParent());
 
-        return history;
+            // Si le fichier existe, lit son contenu
+            List<TaskHistory> histories = new ArrayList<>();
+            if (Files.exists(historyFile)) {
+                try {
+                    histories = objectMapper.readValue(
+                            historyFile.toFile(),
+                            new TypeReference<List<TaskHistory>>() {}
+                    );
+                } catch (IOException e) {
+                    LOGGER.warn("Could not read history file, starting fresh", e);
+                }
+            }
+
+            // Ajoute le nouvel historique
+            histories.add(history);
+
+            // Écrit le fichier avec indentation pour meilleure lisibilité
+            objectMapper.writerWithDefaultPrettyPrinter()
+                    .writeValue(historyFile.toFile(), histories);
+
+            return history;
+        } catch (IOException e) {
+            LOGGER.error("Failed to save task history for task {}", history.getTaskId(), e);
+            throw new RuntimeException("Failed to save task history", e);
+        }
     }
 
     public List<TaskHistory> findByTaskId(String taskId) {

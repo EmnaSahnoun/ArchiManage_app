@@ -239,12 +239,12 @@ public class TaskService implements ITask {
 
         Task updatedTask = taskRepository.save(task);
         updatedTask.setAction("UPDATE");
-        changes.forEach(change -> {
-            updatedTask.setChange(change);
-            eventProducer.sendTaskinMessage(updatedTask);
-        });
-        // Envoi de l'événement à RabbitMQ
 
+        // Envoi de l'événement à RabbitMQ
+        if (!changes.isEmpty()) {
+            updatedTask.setChanges(changes); // Ajoutez un champ List<TaskChangeEvent> dans Task
+            eventProducer.sendTaskinMessage(updatedTask);
+        }
         return mapToTaskResponse(updatedTask);
     }
     private TaskResponse mapToTaskResponse(Task task) {

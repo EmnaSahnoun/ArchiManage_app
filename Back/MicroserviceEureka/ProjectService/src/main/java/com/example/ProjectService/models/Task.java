@@ -33,17 +33,17 @@ public class Task {
     @Transient
     private String action;
     @Transient
-    private TaskChangeEvent change;
+    private List<TaskChangeEvent> changes;
 
     @DBRef
     private Phase phase;
 
-    public TaskChangeEvent getChange() {
-        return change;
+    public List<TaskChangeEvent> getChanges() {
+        return changes;
     }
 
-    public void setChange(TaskChangeEvent change) {
-        this.change = change;
+    public void setChanges(List<TaskChangeEvent> changes) {
+        this.changes = changes;
     }
 
     public String getAction() {

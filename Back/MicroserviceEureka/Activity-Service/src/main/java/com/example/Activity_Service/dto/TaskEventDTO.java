@@ -21,7 +21,7 @@ public class TaskEventDTO {
             private String parentTaskId;
             private Phase phase;
             private String action;
-            private TaskChangeEvent change;
+            private List<TaskChangeEvent> changes;
 
 
     public static class TaskChangeEvent {
@@ -199,12 +199,12 @@ public class TaskEventDTO {
             }
         }
 
-    public TaskChangeEvent getChange() {
-        return change;
+    public List<TaskChangeEvent> getChanges() {
+        return changes;
     }
 
-    public void setChange(TaskChangeEvent change) {
-        this.change = change;
+    public void setChanges(List<TaskChangeEvent> changes) {
+        this.changes = changes;
     }
 
     public String getId() {

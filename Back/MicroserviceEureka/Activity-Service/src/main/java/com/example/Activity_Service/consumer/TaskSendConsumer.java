@@ -39,31 +39,27 @@ private ObjectMapper objectMapper;
         LOGGER.info("Received task : {}", event);
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
-    LOGGER.info("Received task : {}", taskEventDTO);
-    LOGGER.info("Received idtask : {}", taskEventDTO.getId());
-    LOGGER.info("Received iduser : {}", taskEventDTO.getId());
-    LOGGER.info("Received Action : {}", taskEventDTO.getAction());
-    LOGGER.info("Received CreatedAt : {}", LocalDateTime.now());
 
-    TaskHistory history = new TaskHistory();
 
-    history.setTaskId(taskEventDTO.getId()); // ID de la tâche
+    if (taskEventDTO.getChanges() != null) {
+        for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
+            TaskHistory history = new TaskHistory();
+            history.setTaskId(taskEventDTO.getId());
+            history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+            history.setAction(taskEventDTO.getAction());
+            history.setFieldChanged(change.getFieldChanged());
+            history.setOldValue(change.getOldValue());
+            history.setNewValue(change.getNewValue());
+            history.setCreatedAt(LocalDateTime.now());
 
-    history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin()); // ID de l'admin
-
-    history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
-    if(taskEventDTO.getAction().equals("UPDATE")){
-        history.setFieldChanged(taskEventDTO.getChange().getFieldChanged());
-        history.setOldValue(taskEventDTO.getChange().getOldValue());
-        history.setNewValue(taskEventDTO.getChange().getNewValue());
-    }
-    history.setCreatedAt(LocalDateTime.now());
-
-    // 3. Sauvegarder l'historique
-    taskHistoryService.recordHistory(history);
-    LOGGER.info("History saved for task {}: {}", taskEventDTO.getId(), history);
-     LOGGER.info("Task event received: {}", objectMapper.writeValueAsString(taskEventDTO));
-        }catch (Exception e){
+            taskHistoryService.recordHistory(history);
+            LOGGER.info("Recorded change for task {}: {} from {} to {}",
+                    taskEventDTO.getId(),
+                    change.getFieldChanged(),
+                    change.getOldValue(),
+                    change.getNewValue());
+        }
+    }    }catch (Exception e){
     LOGGER.error("Error while parsing task event", e);
 }
 
