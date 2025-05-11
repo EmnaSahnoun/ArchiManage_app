@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class TaskHistory implements Serializable {
     private String id;
     private String taskId;
+    private String subTaskId;
     private String idUser;
     private String action; // "UPDATE_FIELD", "CREATE", "DELETE"
     private String fieldChanged; // "description", "status", etc.
@@ -21,6 +22,13 @@ public class TaskHistory implements Serializable {
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
 
+    public String getSubTaskId() {
+        return subTaskId;
+    }
+
+    public void setSubTaskId(String subTaskId) {
+        this.subTaskId = subTaskId;
+    }
 
     public String getId() {
         return id;

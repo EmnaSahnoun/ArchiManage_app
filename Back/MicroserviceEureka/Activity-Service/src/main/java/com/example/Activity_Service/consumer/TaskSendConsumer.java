@@ -66,6 +66,7 @@ try{
                 for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
 
                     history.setTaskId(taskEventDTO.getParentTaskId());
+                    history.setSubTaskId(taskEventDTO.getId());
                     history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
                     history.setAction(taskEventDTO.getAction());
                     history.setFieldChanged(change.getFieldChanged());
@@ -100,6 +101,7 @@ try{
 
         if (taskEventDTO.getParentTaskId() != null)  {
                 history.setTaskId(taskEventDTO.getParentTaskId());
+                history.setSubTaskId(taskEventDTO.getId());
                 history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
                 history.setAction(taskEventDTO.getAction());
 
