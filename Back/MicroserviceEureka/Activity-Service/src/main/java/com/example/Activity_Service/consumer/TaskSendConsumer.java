@@ -39,15 +39,22 @@ private ObjectMapper objectMapper;
             LOGGER.info("Received task : {}", event);
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
-    LOGGER.info("Received task taskEventDTO : {}", taskEventDTO.getId());
+    LOGGER.info("Received idtask : {}", taskEventDTO.getId());
+    LOGGER.info("Received iduser : {}", taskEventDTO.getId());
+    LOGGER.info("Received Action : {}", taskEventDTO.getAction());
+    LOGGER.info("Received CreatedAt : {}", LocalDateTime.now());
+
     TaskHistory history = new TaskHistory();
 
     history.setTaskId(taskEventDTO.getId()); // ID de la tâche
+    LOGGER.info("object history with idtask: ", history);
     history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin()); // ID de l'admin
+    LOGGER.info("object history with iduser : ", history);
     history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
+    LOGGER.info("object history with action: ", history);
     history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
     history.setCreatedAt(LocalDateTime.now());
-    LOGGER.info("history : ", history);
+    LOGGER.info("object history : ", history);
     // 3. Sauvegarder l'historique
     taskHistoryService.recordHistory(history);
 
