@@ -1,6 +1,7 @@
 package com.example.ProjectService.models;
 
 
+import com.example.ProjectService.dto.response.TaskChangeEvent;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
 import lombok.Data;
@@ -31,10 +32,19 @@ public class Task {
     private String parentTaskId;
     @Transient
     private String action;
-
+    @Transient
+    private TaskChangeEvent change;
 
     @DBRef
     private Phase phase;
+
+    public TaskChangeEvent getChange() {
+        return change;
+    }
+
+    public void setChange(TaskChangeEvent change) {
+        this.change = change;
+    }
 
     public String getAction() {
         return action;

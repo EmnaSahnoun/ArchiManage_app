@@ -36,7 +36,7 @@ private ObjectMapper objectMapper;
     @RabbitListener(queues ={"${rabbitmq.queueJson.name}"})
     public void handleTaskEvent(String event) throws IOException {
 
-
+        LOGGER.info("Received task : {}", event);
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
     LOGGER.info("Received task : {}", taskEventDTO);
@@ -48,14 +48,13 @@ try{
     TaskHistory history = new TaskHistory();
 
     history.setTaskId(taskEventDTO.getId()); // ID de la tâche
-    LOGGER.info("object history with idtask: ", history);
+
     history.setidUser(taskEventDTO.getPhase().getProject().getIdAdmin()); // ID de l'admin
-    LOGGER.info("object history with iduser : ", history);
+
     history.setAction(taskEventDTO.getAction()); // "CREATE", "UPDATE", etc.
-    LOGGER.info("object history with action: ", history);
-    history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
+    //history.setFieldChanged("task"); // Champ modifié (ici, la tâche entière)
     history.setCreatedAt(LocalDateTime.now());
-    LOGGER.info("object history : ", history);
+
     // 3. Sauvegarder l'historique
     taskHistoryService.recordHistory(history);
     LOGGER.info("History saved for task {}: {}", taskEventDTO.getId(), history);

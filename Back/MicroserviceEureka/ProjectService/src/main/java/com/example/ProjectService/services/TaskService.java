@@ -1,6 +1,7 @@
 package com.example.ProjectService.services;
 
 import com.example.ProjectService.dto.request.TaskRequest;
+import com.example.ProjectService.dto.response.TaskChangeEvent;
 import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.exception.PhaseNotFoundException;
 import com.example.ProjectService.exception.ProjectNotFoundException;
@@ -20,10 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 @Service
 
@@ -167,18 +166,68 @@ public class TaskService implements ITask {
     public TaskResponse updateTask(String id, TaskRequest request) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+        List<TaskChangeEvent> changes = new ArrayList<>();
+// Vérifier chaque champ individuellement
+        if (!task.getName().equals(request.getName())) {
+            changes.add(new TaskChangeEvent(
+                    "name",
+                    task.getName(),
+                    request.getName(),
 
-// Capture des anciennes valeurs pour l'historique
-        String oldName = task.getName();
-        String oldDescription = task.getDescription();
-        TaskStatus oldStatus = task.getStatus();
-        // Mettre à jour tous les champs
-        task.setName(request.getName());
-        task.setDescription(request.getDescription());
-        task.setStartDate(request.getStartDate());
-        task.setEndDate(request.getEndDate());
-        task.setStatus(request.getStatus());
-        task.setPriority(request.getPriority());
+                    LocalDateTime.now()
+            ));
+            task.setName(request.getName());
+        }
+
+        if (!Objects.equals(task.getDescription(), request.getDescription())) {
+            changes.add(new TaskChangeEvent(
+                    "description",
+                    task.getDescription(),
+                    request.getDescription(),
+
+                    LocalDateTime.now()
+            ));
+            task.setDescription(request.getDescription());
+        }
+        if (task.getStatus() != request.getStatus()) {
+            changes.add(new TaskChangeEvent(
+                    "status",
+                    task.getStatus().toString(),
+                    request.getStatus().toString(),
+                    LocalDateTime.now()
+            ));
+            task.setStatus(request.getStatus());
+        }
+        if (task.getPriority() != request.getPriority()) {
+            changes.add(new TaskChangeEvent(
+                    "Priority",
+                    task.getPriority().toString(),
+                    request.getPriority().toString(),
+                    LocalDateTime.now()
+            ));
+            task.setPriority(request.getPriority());
+        }
+
+        if (task.getStartDate() != request.getStartDate()) {
+            changes.add(new TaskChangeEvent(
+                    "StartDate",
+                    task.getStartDate().toString(),
+                    request.getStartDate().toString(),
+                    LocalDateTime.now()
+            ));
+            task.setStartDate(request.getStartDate());
+        }
+
+        if (task.getEndDate() != request.getEndDate()) {
+            changes.add(new TaskChangeEvent(
+                    "EndDate",
+                    task.getEndDate().toString(),
+                    request.getEndDate().toString(),
+                    LocalDateTime.now()
+            ));
+            task.setEndDate(request.getEndDate());
+        }
+
         task.setParentTaskId(request.getParentTaskId());
 
         // Si la phase a changé
@@ -190,10 +239,12 @@ public class TaskService implements ITask {
 
         Task updatedTask = taskRepository.save(task);
         updatedTask.setAction("UPDATE");
+        changes.forEach(change -> {
+            updatedTask.setChange(change);
+            eventProducer.sendTaskinMessage(updatedTask);
+        });
         // Envoi de l'événement à RabbitMQ
-        eventProducer.sendTaskinMessage(
-                updatedTask
-        );
+
         return mapToTaskResponse(updatedTask);
     }
     private TaskResponse mapToTaskResponse(Task task) {
