@@ -65,7 +65,7 @@ public class TaskHistoryRepository {
     }
 
     public List<TaskHistory> findByTaskId(String taskId) {
-        Path historyFile = storagePath.resolve(taskId + ".hist");
+        Path historyFile = storagePath.resolve(taskId + ".hist.json");
 
         if (!Files.exists(historyFile)) {
             return new ArrayList<>();
