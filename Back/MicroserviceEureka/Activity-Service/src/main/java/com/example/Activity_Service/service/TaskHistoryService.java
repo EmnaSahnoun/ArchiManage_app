@@ -30,7 +30,7 @@ public class TaskHistoryService implements ITaskHistory {
     public TaskHistory recordCommentHistory(String taskId, String idUser, String action, String content) {
         TaskHistory history = new TaskHistory();
         history.setTaskId(taskId);
-        history.setidUser(idUser);
+        history.setIdUser(idUser);
         history.setAction(action);
         history.setFieldChanged("comments");
 
