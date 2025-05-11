@@ -36,9 +36,10 @@ private ObjectMapper objectMapper;
     @RabbitListener(queues ={"${rabbitmq.queueJson.name}"})
     public void handleTaskEvent(String event) throws IOException {
 
-            LOGGER.info("Received task : {}", event);
+
 try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
+    LOGGER.info("Received task : {}", taskEventDTO);
     LOGGER.info("Received idtask : {}", taskEventDTO.getId());
     LOGGER.info("Received iduser : {}", taskEventDTO.getId());
     LOGGER.info("Received Action : {}", taskEventDTO.getAction());
@@ -57,7 +58,7 @@ try{
     LOGGER.info("object history : ", history);
     // 3. Sauvegarder l'historique
     taskHistoryService.recordHistory(history);
-
+    LOGGER.info("History saved for task {}: {}", taskEventDTO.getId(), history);
      LOGGER.info("Task event received: {}", objectMapper.writeValueAsString(taskEventDTO));
         }catch (Exception e){
     LOGGER.error("Error while parsing task event", e);

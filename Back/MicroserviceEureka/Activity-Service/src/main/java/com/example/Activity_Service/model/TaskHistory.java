@@ -2,14 +2,15 @@ package com.example.Activity_Service.model;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-
-public class TaskHistory {
+@NoArgsConstructor
+public class TaskHistory implements Serializable {
     private String id;
     private String taskId;
     private String idUser;
@@ -18,8 +19,6 @@ public class TaskHistory {
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
 
-    public TaskHistory() {
-    }
 
     public String getId() {
         return id;
