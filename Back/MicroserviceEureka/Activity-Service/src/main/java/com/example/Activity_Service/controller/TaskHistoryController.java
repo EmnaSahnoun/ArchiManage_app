@@ -26,4 +26,5 @@ public class TaskHistoryController {
     public ResponseEntity<List<TaskHistory>> getHistoryForTask(@PathVariable String taskId) {
         return ResponseEntity.ok(taskHistoryService.getHistoryForTask(taskId));
     }
+
 }
