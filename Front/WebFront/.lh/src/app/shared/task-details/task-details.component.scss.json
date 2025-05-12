@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 124,
+            "activePatchIndex": 131,
             "patches": [
                 {
                     "date": 1746377030998,
@@ -504,6 +504,34 @@
                 {
                     "date": 1746472988146,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -142,9 +142,9 @@\n     font-size: 0.85rem;\r\n     margin-bottom: 15px;\r\n     margin-left: 10px;\r\n     &.TODO {\r\n-      background-color: rgba($accent-color, 0.1);\r\n+      background-color: rgba($accent-color, 0.3);\r\n       color: $accent-color;\r\n       border: 1px solid rgba($accent-color, 0.3);\r\n     \r\n     }\r\n@@ -158,9 +158,9 @@\n \r\n     &.IN_PROGRESS {\r\n       background-color: rgba($primary-color, 0.3);\r\n       color: $primary-color;\r\n-      border: 1px solid rgba($primary-color, 0.3);\r\n+      border: 1px solid rgba($primary-color, 0.6);\r\n  \r\n     }\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1747010811426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n     margin-left: 10px;\r\n     &.TODO {\r\n       background-color: rgba($accent-color, 0.3);\r\n       color: $accent-color;\r\n-      border: 1px solid rgba($accent-color, 0.3);\r\n+      border: 1px solid rgba($accent-color, 0.6);\r\n     \r\n     }\r\n \r\n     &.COMPLETED {\r\n@@ -360,9 +360,61 @@\n       float: right;\r\n     }\r\n   }\r\n }\r\n+// Styles for Comments Section (similar to Activity Timeline)\r\n+.comments-list {\r\n+  .comment-item {\r\n+    padding: 15px 0;\r\n+    border-bottom: 1px solid rgba($border-color, 0.3);\r\n \r\n+    &:last-child {\r\n+      border-bottom: none;\r\n+    }\r\n+\r\n+    .comment-header {\r\n+      display: flex;\r\n+      justify-content: space-between;\r\n+      margin-bottom: 5px;\r\n+\r\n+      .user {\r\n+        font-weight: 600;\r\n+        color: $primary-color; // Or a different color for comment users\r\n+      }\r\n+\r\n+      .timestamp {\r\n+        color: $text-color-secondary;\r\n+        font-size: 0.8rem;\r\n+      }\r\n+    }\r\n+\r\n+    .comment-content {\r\n+      margin: 0;\r\n+      font-size: 0.9rem;\r\n+      overflow-wrap: break-word;\r\n+      line-height: 1.5;\r\n+      color: $text-color-primary;\r\n+    }\r\n+  }\r\n+  .no-comments { // Style for when there are no comments\r\n+    padding: 15px 0;\r\n+    color: $text-color-secondary;\r\n+    font-style: italic;\r\n+    text-align: center;\r\n+  }\r\n+}\r\n+\r\n+.add-comment-section { // Styles for the new comment input area\r\n+  margin-top: 20px; // Consistent with .new-comment\r\n+  textarea {\r\n+    // Inherits from .new-comment textarea if we decide to merge, or define explicitly\r\n+    @extend .new-comment textarea; // Re-use existing textarea styles\r\n+  }\r\n+  button {\r\n+    // Inherits from .new-comment button or define explicitly\r\n+    @extend .new-comment button; // Re-use existing button styles\r\n+  }\r\n+}\r\n @media (max-width: 768px) {\r\n   .task-details-container {\r\n     width: 95vw;\r\n     padding: 15px;\r\n"
+                },
+                {
+                    "date": 1747010817931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -412,9 +412,9 @@\n   button {\r\n     // Inherits from .new-comment button or define explicitly\r\n     @extend .new-comment button; // Re-use existing button styles\r\n   }\r\n-}\r\n+\r\n @media (max-width: 768px) {\r\n   .task-details-container {\r\n     width: 95vw;\r\n     padding: 15px;\r\n"
+                },
+                {
+                    "date": 1747011034505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -341,9 +341,24 @@\n         }\r\n       }\r\n     }\r\n   }\r\n+// Placeholder selectors for shared styles\r\n+  %comment-form-textarea-base {\r\n+    width: 100%;\r\n+    padding: 10px;\r\n+    border: 1px solid $border-color;\r\n+    border-radius: 6px;\r\n+    min-height: 80px;\r\n+    resize: vertical;\r\n+    margin-bottom: 10px;\r\n+  }\r\n \r\n+  %comment-form-button-base {\r\n+    float: right; // Consider using flexbox on parent for alignment if modernizing\r\n+    // Add any other shared button styles here, e.g., from mat-raised-button if applicable\r\n+  }\r\n+\r\n   .new-comment {\r\n     margin-top: 20px;\r\n \r\n     textarea {\r\n@@ -412,9 +427,9 @@\n   button {\r\n     // Inherits from .new-comment button or define explicitly\r\n     @extend .new-comment button; // Re-use existing button styles\r\n   }\r\n-\r\n+}\r\n @media (max-width: 768px) {\r\n   .task-details-container {\r\n     width: 95vw;\r\n     padding: 15px;\r\n"
+                },
+                {
+                    "date": 1747011046685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -361,15 +361,10 @@\n   .new-comment {\r\n     margin-top: 20px;\r\n \r\n     textarea {\r\n-      width: 100%;\r\n-      padding: 10px;\r\n-      border: 1px solid $border-color;\r\n-      border-radius: 6px;\r\n-      min-height: 80px;\r\n-      resize: vertical;\r\n-      margin-bottom: 10px;\r\n+     @extend %comment-form-textarea-base;\r\n+ \r\n     }\r\n \r\n     button {\r\n       float: right;\r\n"
+                },
+                {
+                    "date": 1747011057148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -366,9 +366,10 @@\n  \r\n     }\r\n \r\n     button {\r\n-      float: right;\r\n+      @extend %comment-form-button-base;\r\n+  \r\n     }\r\n   }\r\n }\r\n // Styles for Comments Section (similar to Activity Timeline)\r\n"
+                },
+                {
+                    "date": 1747011082305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -416,10 +416,10 @@\n \r\n .add-comment-section { // Styles for the new comment input area\r\n   margin-top: 20px; // Consistent with .new-comment\r\n   textarea {\r\n-    // Inherits from .new-comment textarea if we decide to merge, or define explicitly\r\n-    @extend .new-comment textarea; // Re-use existing textarea styles\r\n+    @extend %comment-form-textarea-base;\r\n+\r\n   }\r\n   button {\r\n     // Inherits from .new-comment button or define explicitly\r\n     @extend .new-comment button; // Re-use existing button styles\r\n"
+                },
+                {
+                    "date": 1747011092919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -420,10 +420,9 @@\n     @extend %comment-form-textarea-base;\r\n \r\n   }\r\n   button {\r\n-    // Inherits from .new-comment button or define explicitly\r\n-    @extend .new-comment button; // Re-use existing button styles\r\n+    @extend %comment-form-button-base;\r\n   }\r\n }\r\n @media (max-width: 768px) {\r\n   .task-details-container {\r\n"
                 }
             ],
             "date": 1746377030998,

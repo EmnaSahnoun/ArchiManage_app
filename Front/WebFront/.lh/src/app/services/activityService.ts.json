@@ -1,0 +1,70 @@
+{
+    "sourceFile": "src/app/services/activityService.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 13,
+            "patches": [
+                {
+                    "date": 1747010484254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747010501725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,30 @@\n export class ProjectService {\r\n     private apiUrl = '/agence';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+\r\n+\r\n+         private getApiHeaders(): HttpHeaders {\r\n+        const token = this.authService.getAccessToken();\r\n+        return new HttpHeaders({\r\n+          'Content-Type': 'application/json',\r\n+          'Authorization': `Bearer ${token}`\r\n+        });\r\n+      }\r\n+      \r\n+        private handleError(error: HttpErrorResponse): Observable<never> {\r\n+          console.error('API Error Details:', error);\r\n+          \r\n+          let errorMessage = 'Une erreur est survenue';\r\n+          if (error.status === 401) {\r\n+            errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+            this.authService.logout();\r\n+          } else if (error.error?.message) {\r\n+            errorMessage = error.error.message;\r\n+          } else if (error.status === 500) {\r\n+            errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+          }\r\n+      \r\n+          return throwError(() => new Error(errorMessage));\r\n+        }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747010536067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,16 @@\n     private apiUrl = '/agence';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n+    getProjectById(idProjet:string): Observable<any[]> {\r\n+        \r\n+        return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n+          headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n \r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n"
+                },
+                {
+                    "date": 1747010590750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n     private apiUrl = '/agence';\r\n-    private projetUrl=\"/projet\"\r\n+\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getProjectById(idProjet:string): Observable<any[]> {\r\n         \r\n"
+                },
+                {
+                    "date": 1747010597660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class ProjectService {\r\n-    private apiUrl = '/agence';\r\n-\r\n+    private apiUrl = '/activity';\r\n+    private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getProjectById(idProjet:string): Observable<any[]> {\r\n         \r\n"
+                },
+                {
+                    "date": 1747010603406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,9 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getProjectById(idProjet:string): Observable<any[]> {\r\n-        \r\n+    getProjectById(idProjet:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747010612429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getProjectById(idProjet:string): Observable<any[]> {        \r\n+    getCommentstById(idProjet:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747010620611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentstById(idProjet:string): Observable<any[]> {        \r\n+    getCommentsByTask(idProjet:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747010626623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentsByTask(idProjet:string): Observable<any[]> {        \r\n+    getCommentsByTaskId(idProjet:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747010631780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentsByTaskId(idProjet:string): Observable<any[]> {        \r\n+    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747010639457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.projetUrl}/project/${idProjet}`, { \r\n+        return this.http.get<any>(`${this.apiUrl}/project/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747010650112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}/project/${idProjet}`, { \r\n+        return this.http.get<any>(`${this.apiUrl}/task/${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747010670457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}/task/${idProjet}`, { \r\n+        return this.http.get<any>(`${this.apiUrl}//comments/task//${idProjet}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747010678918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,46 @@\n+import { Injectable } from '@angular/core';\r\n+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n+import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n+import { UserService } from './UserService';\r\n+import { AuthService } from './auth.service';\r\n+\r\n+@Injectable({\r\n+  providedIn: 'root'\r\n+})\r\n+export class ProjectService {\r\n+    private apiUrl = '/activity';\r\n+    private projetUrl=\"/projet\"\r\n+    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+\r\n+    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n+        return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+          headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n+\r\n+         private getApiHeaders(): HttpHeaders {\r\n+        const token = this.authService.getAccessToken();\r\n+        return new HttpHeaders({\r\n+          'Content-Type': 'application/json',\r\n+          'Authorization': `Bearer ${token}`\r\n+        });\r\n+      }\r\n+      \r\n+        private handleError(error: HttpErrorResponse): Observable<never> {\r\n+          console.error('API Error Details:', error);\r\n+          \r\n+          let errorMessage = 'Une erreur est survenue';\r\n+          if (error.status === 401) {\r\n+            errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+            this.authService.logout();\r\n+          } else if (error.error?.message) {\r\n+            errorMessage = error.error.message;\r\n+          } else if (error.status === 500) {\r\n+            errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+          }\r\n+      \r\n+          return throwError(() => new Error(errorMessage));\r\n+        }\r\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1747010484254,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\nimport { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\nimport { UserService } from './UserService';\r\nimport { AuthService } from './auth.service';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class ProjectService {\r\n    private apiUrl = '/agence';\r\n    private projetUrl=\"/projet\"\r\n    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n"
+        }
+    ]
+}

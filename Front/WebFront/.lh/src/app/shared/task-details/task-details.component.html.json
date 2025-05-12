@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 57,
+            "activePatchIndex": 62,
             "patches": [
                 {
                     "date": 1744726774081,
@@ -236,6 +236,26 @@
                 {
                     "date": 1746481643806,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,10 @@\n                                     [class.low]=\"task?.priority === 'LOW'\">\r\n               {{ task?.priority }}\r\n             </div>\r\n             <span class=\"status-badge\" [class.TODO]=\"task?.status === 'TODO'\"\r\n-            [class.COMPLETED]=\"task?.priority === 'COMPLETED'\"\r\n-            [class.IN_PROGRESS]=\"task?.priority === 'IN_PROGRESS'\">{{ task?.status }}</span>\r\n+            [class.COMPLETED]=\"task?.status === 'COMPLETED'\"\r\n+            [class.IN_PROGRESS]=\"task?.status === 'IN_PROGRESS'\">{{ task?.status }}</span>\r\n       <button mat-icon-button class=\"close-btn\" (click)=\"closeModal()\">\r\n         <i class=\"bi bi-x-lg\"></i>\r\n       </button>\r\n     </div>\r\n@@ -20,9 +20,9 @@\n         \r\n        \r\n   \r\n         <div class=\"task-section\">\r\n-          <h3>Dates</h3>\r\n+          \r\n           <div class=\"date-range\">\r\n             <div class=\"date-item\">\r\n               <label>Start Date</label>\r\n               <p>{{ task?.startDate | date:'mediumDate' }}</p>\r\n"
+                },
+                {
+                    "date": 1747010854578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,8 +87,9 @@\n               </div>\r\n               <p class=\"activity-content\">{{ activity.content }}</p>\r\n               <button class=\"reply-btn\" *ngIf=\"activity.hasReply\">Reply</button>\r\n             </div>\r\n+            \r\n           </div>\r\n           <div class=\"new-comment\">\r\n             <textarea placeholder=\"Add a comment...\"></textarea>\r\n             <button mat-raised-button color=\"primary\">Post</button>\r\n"
+                },
+                {
+                    "date": 1747010861050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,11 @@\n               </div>\r\n               <p class=\"activity-content\">{{ activity.content }}</p>\r\n               <button class=\"reply-btn\" *ngIf=\"activity.hasReply\">Reply</button>\r\n             </div>\r\n-            \r\n+            <div *ngIf=\"!task?.activities || task?.activities?.length === 0\" class=\"no-comments\">\r\n+              No activities yet.\r\n+            </div>\r\n           </div>\r\n           <div class=\"new-comment\">\r\n             <textarea placeholder=\"Add a comment...\"></textarea>\r\n             <button mat-raised-button color=\"primary\">Post</button>\r\n"
+                },
+                {
+                    "date": 1747010880353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -92,10 +92,11 @@\n               No activities yet.\r\n             </div>\r\n           </div>\r\n           <div class=\"new-comment\">\r\n-            <textarea placeholder=\"Add a comment...\"></textarea>\r\n-            <button mat-raised-button color=\"primary\">Post</button>\r\n+            <textarea placeholder=\"Add an activity update...\"></textarea> <!-- Placeholder text changed for clarity -->\r\n+            <button mat-raised-button color=\"primary\">Post Update</button> <!-- Button text changed for clarity -->\r\n+       \r\n           </div>\r\n         </div>\r\n       </div>\r\n     </div>\r\n"
+                },
+                {
+                    "date": 1747010887946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,7 +97,9 @@\n             <button mat-raised-button color=\"primary\">Post Update</button> <!-- Button text changed for clarity -->\r\n        \r\n           </div>\r\n         </div>\r\n+\r\n+        \r\n       </div>\r\n     </div>\r\n   </div>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747010897253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,8 +98,27 @@\n        \r\n           </div>\r\n         </div>\r\n \r\n-        \r\n+        <!-- Comments Section -->\r\n+        <div class=\"task-section\">\r\n+          <h3>Comments</h3>\r\n+          <div class=\"comments-list\">\r\n+            <div class=\"comment-item\" *ngFor=\"let comment of task?.comments\">\r\n+              <div class=\"comment-header\">\r\n+                <span class=\"user\">{{ comment.user }}</span>\r\n+                <span class=\"timestamp\">{{ comment.timestamp | date:'short' }}</span>\r\n+              </div>\r\n+              <p class=\"comment-content\">{{ comment.content }}</p>\r\n+            </div>\r\n+            <div *ngIf=\"!task?.comments || task?.comments?.length === 0\" class=\"no-comments\">\r\n+              No comments yet. Be the first to comment!\r\n+            </div>\r\n+          </div>\r\n+          <div class=\"add-comment-section\"> <!-- Changed class name -->\r\n+            <textarea [(ngModel)]=\"newCommentText\" placeholder=\"Add a public comment...\"></textarea>\r\n+            <button mat-raised-button color=\"primary\" (click)=\"addComment()\">Post Comment</button>\r\n+          </div>\r\n+        </div>\r\n       </div>\r\n     </div>\r\n   </div>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1744726774081,

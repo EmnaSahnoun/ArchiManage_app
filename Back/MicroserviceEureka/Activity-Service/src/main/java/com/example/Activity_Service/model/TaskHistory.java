@@ -15,12 +15,21 @@ public class TaskHistory implements Serializable {
     private String taskId;
     private String subTaskId;
     private String idUser;
+    private String username;
     private String action; // "UPDATE_FIELD", "CREATE", "DELETE"
     private String fieldChanged; // "description", "status", etc.
     private String oldValue;
     private String newValue;
     private LocalDateTime createdAt;
     private static final long serialVersionUID = 1L;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getSubTaskId() {
         return subTaskId;

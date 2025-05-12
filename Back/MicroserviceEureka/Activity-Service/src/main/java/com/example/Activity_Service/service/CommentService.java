@@ -34,6 +34,7 @@ public class CommentService implements IComment {
         TaskHistory history = new TaskHistory();
         history.setTaskId(commentRequest.getTaskId());
         history.setIdUser(commentRequest.getidUser());
+        history.setUsername(commentRequest.getUsername());
         history.setAction("COMMENT");
         history.setFieldChanged("comments");
 

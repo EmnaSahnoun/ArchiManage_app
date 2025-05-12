@@ -342,26 +342,88 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       }
     }
   }
+// Placeholder selectors for shared styles
+  %comment-form-textarea-base {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    min-height: 80px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+
+  %comment-form-button-base {
+    float: right; // Consider using flexbox on parent for alignment if modernizing
+    // Add any other shared button styles here, e.g., from mat-raised-button if applicable
+  }
 
   .new-comment {
     margin-top: 20px;
 
     textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid $border-color;
-      border-radius: 6px;
-      min-height: 80px;
-      resize: vertical;
-      margin-bottom: 10px;
+     @extend %comment-form-textarea-base;
+ 
     }
 
     button {
-      float: right;
+      @extend %comment-form-button-base;
+  
     }
   }
 }
+// Styles for Comments Section (similar to Activity Timeline)
+.comments-list {
+  .comment-item {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba($border-color, 0.3);
 
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      .user {
+        font-weight: 600;
+        color: $primary-color; // Or a different color for comment users
+      }
+
+      .timestamp {
+        color: $text-color-secondary;
+        font-size: 0.8rem;
+      }
+    }
+
+    .comment-content {
+      margin: 0;
+      font-size: 0.9rem;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: $text-color-primary;
+    }
+  }
+  .no-comments { // Style for when there are no comments
+    padding: 15px 0;
+    color: $text-color-secondary;
+    font-style: italic;
+    text-align: center;
+  }
+}
+
+.add-comment-section { // Styles for the new comment input area
+  margin-top: 20px; // Consistent with .new-comment
+  textarea {
+    @extend %comment-form-textarea-base;
+
+  }
+  button {
+    @extend %comment-form-button-base;
+  }
+}
 @media (max-width: 768px) {
   .task-details-container {
     width: 95vw;

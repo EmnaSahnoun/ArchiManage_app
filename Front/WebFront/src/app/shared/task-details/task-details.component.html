@@ -88,10 +88,35 @@
               <p class="activity-content">{{ activity.content }}</p>
               <button class="reply-btn" *ngIf="activity.hasReply">Reply</button>
             </div>
+            <div *ngIf="!task?.activities || task?.activities?.length === 0" class="no-comments">
+              No activities yet.
+            </div>
           </div>
           <div class="new-comment">
-            <textarea placeholder="Add a comment..."></textarea>
-            <button mat-raised-button color="primary">Post</button>
+            <textarea placeholder="Add an activity update..."></textarea> <!-- Placeholder text changed for clarity -->
+            <button mat-raised-button color="primary">Post Update</button> <!-- Button text changed for clarity -->
+       
+          </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="task-section">
+          <h3>Comments</h3>
+          <div class="comments-list">
+            <div class="comment-item" *ngFor="let comment of task?.comments">
+              <div class="comment-header">
+                <span class="user">{{ comment.user }}</span>
+                <span class="timestamp">{{ comment.timestamp | date:'short' }}</span>
+              </div>
+              <p class="comment-content">{{ comment.content }}</p>
+            </div>
+            <div *ngIf="!task?.comments || task?.comments?.length === 0" class="no-comments">
+              No comments yet. Be the first to comment!
+            </div>
+          </div>
+          <div class="add-comment-section"> <!-- Changed class name -->
+            <textarea [(ngModel)]="newCommentText" placeholder="Add a public comment..."></textarea>
+            <button mat-raised-button color="primary" (click)="addComment()">Post Comment</button>
           </div>
         </div>
       </div>

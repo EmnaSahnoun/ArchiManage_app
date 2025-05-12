@@ -8,6 +8,7 @@ public class Comment {
     private String id;
     private String taskId;
     private String idUser;
+    private String username;
     private String content;
     private LocalDateTime createdAt;
 

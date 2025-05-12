@@ -14,7 +14,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() task: any;
   subtasks: any[] = [];
   isLoadingSubtasks = false;
-
+newCommentText: string = '';
   constructor(
     public activeModal: NgbActiveModal,
     private projectService:ProjectService
@@ -40,6 +40,11 @@ export class TaskDetailsComponent implements OnInit {
     // If no activities, initialize empty array
     if (!this.task.activities) {
       this.task.activities = [];
+       }
+
+    // If no comments, initialize empty array
+    if (!this.task.comments) {
+      this.task.comments = [];
     }
   }
 
@@ -83,7 +88,11 @@ export class TaskDetailsComponent implements OnInit {
         { user: 'Eric Green', timestamp: new Date(), content: 'Initial wireframes are completed and ready for review.', hasReply: true },
         { user: 'Brian Adams', timestamp: new Date(), content: 'Homepage UI design has been finalized and uploaded. Awaiting feedback.', hasReply: false },
         { user: 'Eric Green', timestamp: new Date(), content: 'Client feedback has been integrated. Please review the changes.', hasReply: true }
-      ]
+      ],
+      comments: [
+        { user: 'Alice Wonderland', timestamp: new Date(Date.now() - 86400000), content: 'Great progress on the homepage UI!' },
+        { user: 'Bob The Builder', timestamp: new Date(), content: 'Can we get an update on the inner pages?' }
+      ] // Added sample comments
     };
   }
   getSubtasks(subTaskIds: string[]): void {
@@ -106,5 +115,21 @@ export class TaskDetailsComponent implements OnInit {
         this.isLoadingSubtasks = false;
       }
     });
+  }
+  addComment(): void {
+    if (this.newCommentText.trim()) {
+      const newComment = {
+        user: 'Current User', // TODO: Replace with actual current user
+        timestamp: new Date(),
+        content: this.newCommentText.trim()
+      };
+      if (!this.task.comments) {
+        this.task.comments = [];
+      }
+      this.task.comments.push(newComment);
+      this.newCommentText = ''; // Clear the textarea
+      // Optionally, call a service here to persist the comment
+      console.log('Comment added:', newComment);
+    }
   }
 }

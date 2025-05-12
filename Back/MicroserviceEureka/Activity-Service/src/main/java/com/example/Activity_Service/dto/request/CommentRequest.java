@@ -8,8 +8,26 @@ import java.io.Serializable;
 public class CommentRequest implements Serializable {
     private String taskId;
     private String idUser;
+    private String username;
     private String content;
     private static final long serialVersionUID = 1L;
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getTaskId() {
         return taskId;
     }

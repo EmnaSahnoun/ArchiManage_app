@@ -26,6 +26,15 @@
     "pathRewrite": {
       "^/projet": "/ProjectService"
     }
+  },
+  "/activity": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/projet": "/ActivityService"
+    }
   }
+
 }
     
