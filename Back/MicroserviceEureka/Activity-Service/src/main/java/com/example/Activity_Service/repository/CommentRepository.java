@@ -37,7 +37,7 @@ public class CommentRepository {
         CommentResponse comment = new CommentResponse();
         comment.setId(id);
         comment.setTaskId(commentRequest.getTaskId());
-        comment.setIdUser(commentRequest.getidUser());
+        comment.setIdUser(commentRequest.getIdUser());
         comment.setContent(commentRequest.getContent());
         comment.setCreatedAt(now);
 

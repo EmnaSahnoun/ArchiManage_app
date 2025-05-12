@@ -12,6 +12,7 @@ public class CommentRequest implements Serializable {
     private String content;
     private static final long serialVersionUID = 1L;
 
+
     public String getIdUser() {
         return idUser;
     }
@@ -36,13 +37,6 @@ public class CommentRequest implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getidUser() {
-        return idUser;
-    }
-
-    public void setidUser(String idUser) {
-        this.idUser = idUser;
-    }
 
     public String getContent() {
         return content;
