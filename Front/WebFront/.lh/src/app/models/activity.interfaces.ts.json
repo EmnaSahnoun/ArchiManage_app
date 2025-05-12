@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/models/activity.interfaces.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1747019801492,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747020681193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,19 +7,21 @@\n   createdAt: string | Date; // Depending on how you handle dates\r\n }\r\n \r\n export interface TaskHistory {\r\n+  export interface TaskHistory {\r\n   id: string;\r\n   taskId: string;\r\n-  subTaskId?: string;\r\n+  subTaskId: string | null;\r\n   idUser: string;\r\n-  username: string;\r\n-  action: string;\r\n-  fieldChanged?: string;\r\n-  oldValue?: string;\r\n-  newValue?: string;\r\n-  createdAt: string | Date;\r\n+  username: string | null;\r\n+  action: 'COMMENT' | 'UPDATE' | 'DELETE' | 'CREATE';\r\n+  fieldChanged: string | null;\r\n+  oldValue: string | null;\r\n+  newValue: string | null;\r\n+  createdAt: string;\r\n }\r\n+}\r\n \r\n export interface CommentRequest {\r\n   taskId: string;\r\n   idUser: string;\r\n"
+                },
+                {
+                    "date": 1747020686984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   createdAt: string | Date; // Depending on how you handle dates\r\n }\r\n \r\n export interface TaskHistory {\r\n-  export interface TaskHistory {\r\n+\r\n   id: string;\r\n   taskId: string;\r\n   subTaskId: string | null;\r\n   idUser: string;\r\n@@ -19,10 +19,10 @@\n   oldValue: string | null;\r\n   newValue: string | null;\r\n   createdAt: string;\r\n }\r\n-}\r\n \r\n+\r\n export interface CommentRequest {\r\n   taskId: string;\r\n   idUser: string;\r\n   username: string;\r\n"
+                }
+            ],
+            "date": 1747019801492,
+            "name": "Commit-0",
+            "content": "export interface CommentResponse {\r\n  id: string;\r\n  taskId: string;\r\n  idUser: string;\r\n  username: string;\r\n  content: string;\r\n  createdAt: string | Date; // Depending on how you handle dates\r\n}\r\n\r\nexport interface TaskHistory {\r\n  id: string;\r\n  taskId: string;\r\n  subTaskId?: string;\r\n  idUser: string;\r\n  username: string;\r\n  action: string;\r\n  fieldChanged?: string;\r\n  oldValue?: string;\r\n  newValue?: string;\r\n  createdAt: string | Date;\r\n}\r\n\r\nexport interface CommentRequest {\r\n  taskId: string;\r\n  idUser: string;\r\n  username: string;\r\n  content: string;\r\n}"
+        }
+    ]
+}

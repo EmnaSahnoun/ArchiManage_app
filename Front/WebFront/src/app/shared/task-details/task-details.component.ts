@@ -1,8 +1,12 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Task } from '../../models/task.model';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'; // Importé pour contrôler le modal Ngb
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Importé pour contrôler le modal Ngb
 import { ProjectService } from '../../services/ProjectService';
 import { forkJoin } from 'rxjs';
+import { ActivityService } from '../../services/activityService';
+import { AgenceService } from '../../services/agenceService';
+import { CommentResponse, TaskHistory } from '../../models/activity.interfaces';
+import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-task-details',
@@ -13,17 +17,47 @@ import { forkJoin } from 'rxjs';
 export class TaskDetailsComponent implements OnInit {
   @Input() task: any;
   subtasks: any[] = [];
-  isLoadingSubtasks = false;
-newCommentText: string = '';
+ isLoadingSubtasks = false;
+  newCommentText: string = '';
+  isLoadingComments = false;
+  isLoadingActivities = false;
+// Pour l'édition des commentaires
+  editingCommentId: string | null = null;
+  editedCommentContent: string = '';
+// Pour l'édition des sous-tâches
+  editingSubtaskId: string | null = null;
+  editedSubtaskData: any = {};
+  // Options pour les select des sous-tâches
+  taskStatusOptions = ['TODO', 'IN_PROGRESS', 'COMPLETED']; // Adaptez selon vos statuts
+  taskPriorityOptions = ['LOW', 'MEDIUM', 'HIGH']; // Adaptez selon vos priorités
+
+
   constructor(
     public activeModal: NgbActiveModal,
-    private projectService:ProjectService
+    public agenceService: AgenceService,
+    private activityService:ActivityService,
+    private projectService: ProjectService,
+    private modalService: NgbModal
   ) {
     
   }
 
   ngOnInit(): void {
     console.log('Task details:', this.task);
+    // Initialiser les tableaux pour éviter les erreurs dans le template
+    if (!this.task.attachments) {
+      this.task.attachments = [];
+    }
+    if (!this.task.activities) {
+      this.task.activities = [];
+    }
+    
+
+    if (this.task?.id) {
+      console.log("bonjour")
+      this.loadComments();
+      this.loadActivities(); // Charger l'historique (activités)
+    } 
     if (this.task?.subTaskIds?.length > 0) {
       this.getSubtasks(this.task.subTaskIds);
     }
@@ -32,25 +66,24 @@ newCommentText: string = '';
       this.task.subtasks = [];
     } */
     
-    // If no attachments, initialize empty array
-    if (!this.task.attachments) {
-      this.task.attachments = [];
-    }
     
-    // If no activities, initialize empty array
-    if (!this.task.activities) {
-      this.task.activities = [];
-       }
-
-    // If no comments, initialize empty array
-    if (!this.task.comments) {
-      this.task.comments = [];
-    }
   }
-
-  closeModal(): void {
-    this.activeModal.close();
+loadComments(): void {
+    this.isLoadingComments = true;
+    this.activityService.getCommentsByTaskId(this.task.id).subscribe({
+      next: (comments) => {
+        this.task.comments = comments;
+        this.isLoadingComments = false;
+        console.log('Comments loaded:', this.task.comments);
+      },
+      error: (err) => {
+        console.error('Error loading comments:', err);
+        this.task.comments = []; // Assurer que c'est un tableau en cas d'erreur
+        this.isLoadingComments = false;
+      }
+    });
   }
+  
 
   // Sample data structure for reference
   getSampleTask() {
@@ -116,20 +149,295 @@ newCommentText: string = '';
       }
     });
   }
-  addComment(): void {
-    if (this.newCommentText.trim()) {
-      const newComment = {
-        user: 'Current User', // TODO: Replace with actual current user
-        timestamp: new Date(),
-        content: this.newCommentText.trim()
-      };
-      if (!this.task.comments) {
-        this.task.comments = [];
-      }
-      this.task.comments.push(newComment);
-      this.newCommentText = ''; // Clear the textarea
-      // Optionally, call a service here to persist the comment
-      console.log('Comment added:', newComment);
+ addComment(): void {
+    const currentUserId = localStorage.getItem("user_id");
+    const currentUsername = localStorage.getItem("username");
+    console.log("currentusername",currentUsername)
+    if (this.newCommentText.trim() && this.task?.id) {
+        if (!currentUserId || !currentUsername) {
+            console.error('User not authenticated');
+            return;
+        }
+
+        const commentData = {
+            taskId: this.task.id,
+            idUser: currentUserId,
+            username: currentUsername,
+            content: this.newCommentText.trim()
+        };
+        console.log('Adding comment:', commentData);
+
+        this.activityService.addComment(commentData).subscribe({
+          next: (backendResponse: CommentResponse) => {
+                if (!this.task.comments) {
+                    this.task.comments = [];
+                }
+               const newCommentForUI: CommentResponse = {
+                    ...backendResponse, // Contient généralement id, createdAt générés par le backend
+                    taskId: this.task.id, // Connu
+                    idUser: currentUserId, // Connu
+                    username: currentUsername, // Connu et crucial ici
+                    content: this.newCommentText.trim() // Connu
+                };
+
+                this.task.comments.unshift(newCommentForUI);
+                this.newCommentText = '';
+                this.loadActivities(); // Recharger les activités pour refléter le nouveau commentaire si nécessaire
+                this.loadComments();
+            },
+            error: (err) => {
+                console.error('Error adding comment:', err);
+            }
+        });
     }
+}
+
+loadActivities(): void {
+  this.isLoadingActivities = true;
+  
+  this.activityService.getHistoryByTaskId(this.task.id).subscribe({
+    next: (activities) => {
+      this.task.activities = activities; // Assigner directement les activités brutes
+      this.isLoadingActivities = false;
+      console.log('Activities (history) loaded:', this.task.activities);
+   
+    
+    },
+    error: (err) => {
+      console.error('Error loading activities:', err);
+      this.task.activities = [];
+      this.isLoadingActivities = false;
+    }
+  });
+}
+
+generateActivityDescription(activity: TaskHistory): string {
+  switch(activity.action) {
+    case 'COMMENT':
+      return `a ajouté un commentaire.`;
+    case 'DELETE':
+      if (activity.fieldChanged === 'comments') {
+        return `a supprimé un commentaire.`;
+      }
+      else{
+      return activity.subTaskId ? `a supprimé la sous-tâche.` : `a supprimé la tâche.`;}
+    case 'UPDATE':
+      if (activity.fieldChanged === 'comments') {
+        return `a modifié un commentaire.`;
+      }
+      if (activity.fieldChanged && activity.oldValue && activity.newValue) {
+        return `a mis à jour le champ "${activity.fieldChanged}" de "${activity.oldValue}" à "${activity.newValue}".`;
+    
+      }
+     if (activity.fieldChanged) {
+         return `a mis à jour le champ "${activity.fieldChanged}".`;
+      }
+      return `a effectué une mise à jour.`;
+    case 'CREATE': // Assurez-vous que cette action est envoyée par le backend
+        return `a créé la tâche.`;
+    default:
+       return `a effectué l'action : ${activity.action}.`;
+  }
+}
+ // --- Méthodes pour les actions sur les commentaires ---
+  isCurrentUserComment(comment: CommentResponse): boolean {
+    const currentUserId = localStorage.getItem("user_id");
+    return comment.idUser === currentUserId;
+  }
+
+  startEditComment(comment: CommentResponse): void {
+    this.editingCommentId = comment.id;
+    this.editedCommentContent = comment.content;
+  }
+
+  saveEditComment(comment: CommentResponse): void {
+    if (!this.editingCommentId || this.editedCommentContent.trim() === '') {
+      this.cancelEditComment();
+      return;
+    }
+    const updatedContent = this.editedCommentContent.trim();
+  
+    const currentUserId = localStorage.getItem("user_id");
+    const currentUsername = localStorage.getItem("username");
+
+    if (!this.task?.id || !currentUserId || !currentUsername) {
+      console.error('Missing required information for updating comment (taskId, userId, username)');
+      alert('Could not update comment. User or task information is missing.');
+      this.cancelEditComment();
+      return;
+    }
+
+    const commentUpdatePayload = {
+      taskId: this.task.id,
+      idUser: currentUserId,
+      username: currentUsername,
+      content: updatedContent
+    };
+    this.activityService.updateComment(this.editingCommentId, commentUpdatePayload).subscribe({
+      next: (updatedComment) => {
+        // Mettre à jour le commentaire dans la liste this.task.comments
+        const index = this.task.comments.findIndex((c: CommentResponse) => c.id === this.editingCommentId);
+        if (index > -1) {
+          this.task.comments[index] = { ...this.task.comments[index], ...updatedComment, content: updatedContent }; // Assurez-vous que updatedComment contient toutes les infos
+        }
+        this.cancelEditComment();
+        this.loadActivities(); // Recharger l'historique si la modification de commentaire y est tracée
+      },
+      error: (err) => {
+        console.error('Error updating comment:', err);
+        // Rollback optimistic update si implémenté
+        // comment.content = originalContent;
+        alert('Failed to update comment.');
+        this.cancelEditComment();
+      }
+    });
+  }
+
+  cancelEditComment(): void {
+    this.editingCommentId = null;
+    this.editedCommentContent = '';
+  }
+
+  deleteComment(commentId: string): void {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+                centered: true,
+                windowClass: 'confirmation-modal'
+            });
+        
+            modalRef.componentInstance.message = `Voulez-vous vraiment supprimer ce Commentaire  ?`;
+            
+        
+            modalRef.result.then((confirm) => {
+                if (confirm) {
+                  const currentUserId = localStorage.getItem("user_id");
+      const currentUsername = localStorage.getItem("username");
+      if (!this.task?.id || !currentUserId||!currentUsername) {
+    console.error('Missing required information');
+    return;
+  }
+      this.activityService.deleteComment(commentId, this.task.id, currentUserId).subscribe({
+        next: () => {
+          this.task.comments = this.task.comments.filter((c: CommentResponse) => c.id !== commentId);
+          this.loadActivities(); // Recharger l'historique
+        },
+        error: (err) => {
+          console.error('Error deleting comment:', err);
+          alert('Failed to delete comment.');
+        }
+      });
+                    
+                    
+                }
+            }).catch(() => {
+                console.log('Suppression annulée');
+            });  
+   
+  }
+
+  // --- Méthodes pour la modification des sous-tâches ---
+  startEditSubtask(subtask: any): void {
+    this.editingSubtaskId = subtask.id;
+    this.editedSubtaskData = {
+      ...subtask,
+      // Assurez-vous que les dates sont au format YYYY-MM-DD pour les inputs de type "date"
+      startDate: this.formatDateForInput(subtask.startDate),
+      endDate: this.formatDateForInput(subtask.endDate)
+    };
+    console.log('Editing subtask:', this.editedSubtaskData);
+  }
+
+  saveSubtaskEdit(): void {
+    if (!this.editingSubtaskId) return;
+
+    // Préparer le payload avec les données formatées pour l'API
+    const updatePayload = {
+      ...this.editedSubtaskData,
+      startDate: this.formatDateForApi(this.editedSubtaskData.startDate),
+      endDate: this.formatDateForApi(this.editedSubtaskData.endDate)
+    };
+    // Supprimer l'id du payload si l'API ne l'attend pas dans le corps de la requête PUT/PATCH
+    delete updatePayload.id; 
+    // Conserver d'autres champs non modifiables si nécessaire ou les exclure
+    // delete updatePayload.subTaskIds; // Exemple si ce champ ne doit pas être envoyé
+
+    this.projectService.updateTask(this.editingSubtaskId, updatePayload).subscribe({
+      next: (updatedTask) => {
+        const index = this.subtasks.findIndex(st => st.id === this.editingSubtaskId);
+        if (index > -1) {
+          // Mettre à jour la sous-tâche dans la liste locale avec les données retournées par l'API
+          // et s'assurer que les dates sont correctement formatées pour l'affichage si nécessaire
+          this.subtasks[index] = { ...this.subtasks[index], ...updatedTask };
+        }
+        console.log(`Subtask ${this.editingSubtaskId} updated successfully.`, updatedTask);
+        this.loadActivities(); // Recharger l'historique si les modifications de sous-tâches y sont tracées
+        this.cancelSubtaskEdit();
+
+      },
+      error: (err) => {
+        console.error(`Error updating subtask ${this.editingSubtaskId}:`, err);
+        // Optionnel: Afficher un message d'erreur à l'utilisateur
+        alert('Failed to update subtask.');
+        // Peut-être ne pas annuler l'édition pour permettre à l'utilisateur de réessayer
+      }
+    });
+  }
+
+  cancelSubtaskEdit(): void {
+    this.editingSubtaskId = null;
+    this.editedSubtaskData = {};
+  }
+deleteSubtask(subtaskId: string, subtaskName: string): void {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      centered: true,
+      windowClass: 'confirmation-modal'
+    });
+
+    modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la sous-tâche "${subtaskName}" ?`;
+
+    modalRef.result.then((confirm) => {
+      if (confirm) {
+        // Assurez-vous que votre projectService a une méthode pour supprimer une tâche/sous-tâche
+        // et qu'elle gère la mise à jour de l'historique si nécessaire.
+        this.projectService.deleteTask(subtaskId).subscribe({ // Ou une méthode deleteSubtask dédiée
+          next: () => {
+            this.subtasks = this.subtasks.filter(st => st.id !== subtaskId);
+            console.log(`Subtask ${subtaskId} deleted successfully.`);
+            this.loadActivities(); // Recharger l'historique
+            // Optionnel: Afficher une notification de succès
+            // this.snackBar.open('Sous-tâche supprimée avec succès!', 'Fermer', { duration: 3000 });
+          },
+          error: (err) => {
+            console.error(`Error deleting subtask ${subtaskId}:`, err);
+            alert('Failed to delete subtask.');
+          }
+        });
+      }
+    }).catch(() => {
+      console.log('Subtask deletion cancelled');
+    });
+  }
+  private formatDateForInput(dateSource: string | Date | null): string {
+    if (!dateSource) return '';
+    try {
+      const date = new Date(dateSource);
+      if (isNaN(date.getTime())) return '';
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    } catch (e) {
+      console.error("Error formatting date for input:", dateSource, e);
+      return '';
+    }
+  }
+
+
+  private formatDateForApi(dateString: string): string | null {
+    if (!dateString) return null; // Ou retourner une date par défaut / gérer l'erreur
+    return new Date(dateString).toISOString(); // Ou le format attendu par votre API
+  }
+
+  closeModal(): void {
+    this.activeModal.close();
   }
 }

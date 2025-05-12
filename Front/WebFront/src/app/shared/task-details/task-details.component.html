@@ -16,10 +16,8 @@
   
     <div class="task-content">
       <!-- Left Column -->
-      <div class="task-left-column">
-        
+     <div class="task-column task-main-details-column">
        
-  
         <div class="task-section">
           
           <div class="date-range">
@@ -33,24 +31,71 @@
             </div>
           </div>
         </div>
-  
+  <div class="task-section">
+          <h3><i class="bi bi-text-left"></i> Description</h3>
+          <p class="task-description">{{ task?.description }}</p>
+        </div>
         <div class="task-section">
-          <h3>Assignees</h3>
-          <div class="subtasks-list">
-            <div class="subtask-item" *ngFor="let subtask of subtasks">
-              <div class="subtask-info">
-                <i class="bi bi-check-circle"></i>
-                <span>{{ subtask.name }}</span>
+          <h3>Subtasks</h3>
+          <div *ngIf="isLoadingSubtasks" class="loading-indicator">Loading subtasks...</div>
+          <div *ngIf="!isLoadingSubtasks">
+            <div class="subtasks-list detailed-subtasks">
+              <div class="subtask-item" *ngFor="let subtask of subtasks" [class.editing]="editingSubtaskId === subtask.id">
+                <!-- Display Mode -->
+                <div class="subtask-info-display" *ngIf="editingSubtaskId !== subtask.id">
+                  <span class="subtask-name" [matTooltip]="subtask.name">{{ subtask.name }}</span>
+                  <span class="subtask-dates">{{ subtask.startDate | date:'dd/MM/yy' }} - {{ subtask.endDate | date:'dd/MM/yy' }}</span>
+                  <span class="subtask-priority-badge" [ngClass]="subtask.priority?.toLowerCase()">{{ subtask.priority }}</span>
+                  <span class="subtask-status-badge" [ngClass]="subtask.status?.replace('_', '-').toLowerCase()">{{ subtask.status }}</span>
+                   <div class="subtask-actions">
+                    <button mat-icon-button class="edit-btn-subtask" (click)="startEditSubtask(subtask); $event.stopPropagation()" matTooltip="Modifier la sous-tâche">
+                      <i class="bi bi-pencil icon"></i>
+                 
+                    </button>
+                    <button mat-icon-button class="delete-btn-subtask" (click)="deleteSubtask(subtask.id, subtask.name); $event.stopPropagation()" matTooltip="Supprimer la sous-tâche">
+                      <i class="bi bi-trash icon"></i>
+                    </button>
+                  </div>
+   </div>
+               <!-- Edit Mode -->
+                <div class="subtask-info-edit" *ngIf="editingSubtaskId === subtask.id">
+                 <input type="text" [(ngModel)]="editedSubtaskData.name" placeholder="Nom de la sous-tâche" class="form-control form-control-sm subtask-edit-name">
+                   <div class="subtask-edit-dates">
+                    <input type="date" [(ngModel)]="editedSubtaskData.startDate" class="form-control form-control-sm">
+                    <span>-</span>
+                    <input type="date" [(ngModel)]="editedSubtaskData.endDate" class="form-control form-control-sm">
+                  </div>
+                  <div class="subtask-edit-selects">
+                   <select [(ngModel)]="editedSubtaskData.priority" class="form-select form-select-sm subtask-edit-priority">
+                       <option *ngFor="let p of taskPriorityOptions" [value]="p">{{p}}</option>
+                              </select>
+                    <select [(ngModel)]="editedSubtaskData.status" class="form-select form-select-sm subtask-edit-status">
+                              <option *ngFor="let s of taskStatusOptions" [value]="s">{{s}}</option>
+                         </select>
+                  </div>
+                  <div class="subtask-actions-edit">
+                     <button mat-icon-button class="save-btn-subtask" (click)="saveSubtaskEdit()" matTooltip="Enregistrer">
+                      <i class="bi bi-check-lg icon"></i>
+                  
+                    </button>
+                    <button mat-icon-button class="cancel-btn-subtask" (click)="cancelSubtaskEdit()" matTooltip="Annuler">
+                      <i class="bi bi-x-lg icon"></i>
+                   </button>
+                  </div>
+
+                </div>
               </div>
-              <div class="assignee">
-                <span class="assignee-name">{{ subtask.assignee }}</span>
+              <div *ngIf="!subtasks || subtasks.length === 0" class="no-comments">
+              
+                Aucune sous-tâche assignée.
+
               </div>
             </div>
           </div>
         </div>
   
         <div class="task-section">
-          <h3>Attachments</h3>
+           <h3><i class="bi bi-paperclip"></i> Attachments</h3>
           <div class="attachments-list">
             <div class="attachment-item" *ngFor="let attachment of task?.attachments">
               <i class="bi bi-paperclip"></i>
@@ -64,60 +109,92 @@
             </div>
           </div>
         </div>
+        <div class="task-section">
+          <h3>Historiques</h3>
+          <div *ngIf="isLoadingActivities" class="loading-indicator">Loading activities...</div>
+          <div *ngIf="!isLoadingActivities">
+            <div class="activity-timeline">
+              <div class="activity-item" *ngFor="let activity of task?.activities">
+                <div class="activity-icon"
+                     [class.comment-icon]="activity.action === 'COMMENT'"
+                     [class.update-icon]="activity.action === 'UPDATE'"
+                     [class.delete-icon]="activity.action === 'DELETE'"
+                     [class.create-icon]="activity.action === 'CREATE'">
+                  <i *ngIf="activity.action === 'COMMENT'" class="bi bi-chat-left-text"></i>
+                  <i *ngIf="activity.action === 'UPDATE'" class="bi bi-pencil-square"></i>
+                  <i *ngIf="activity.action === 'DELETE'" class="bi bi-trash3"></i>
+                  <i *ngIf="activity.action === 'CREATE'" class="bi bi-plus-circle"></i>
+                  <!-- Fallback icon for other actions -->
+                  <i *ngIf="!['COMMENT', 'UPDATE', 'DELETE', 'CREATE'].includes(activity.action)" class="bi bi-bell"></i>
+                </div>
+                <div class="activity-content-wrapper">
+                  <div class="activity-main-info">
+                    <span class="user" *ngIf="activity.username">{{ activity.username }}</span>
+                    <span class="user" *ngIf="!activity.username">Système</span> <!-- Fallback for system actions -->
+                    <span class="action-description">{{ generateActivityDescription(activity) }}</span>
+                  </div>
+                  <div class="activity-meta">
+                    <span class="timestamp">{{ activity.createdAt | date:'short' }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="(!task?.activities || task?.activities?.length === 0) && !isLoadingActivities" class="no-comments">
+                No activities yet.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
   
-      <!-- Right Column -->
-      <div class="task-right-column">
-        <div class="task-section">
-          <h3>Task Overview</h3>
-          <p class="task-description">{{ task?.description }}</p>
-        </div>
-  
-       
-  
-        
-  
-        <div class="task-section">
-          <h3>Activity</h3>
-          <div class="activity-timeline">
-            <div class="activity-item" *ngFor="let activity of task?.activities">
-              <div class="activity-header">
-                <span class="user">{{ activity.user }}</span>
-                <span class="timestamp">{{ activity.timestamp | date:'short' }}</span>
-              </div>
-              <p class="activity-content">{{ activity.content }}</p>
-              <button class="reply-btn" *ngIf="activity.hasReply">Reply</button>
-            </div>
-            <div *ngIf="!task?.activities || task?.activities?.length === 0" class="no-comments">
-              No activities yet.
-            </div>
-          </div>
-          <div class="new-comment">
-            <textarea placeholder="Add an activity update..."></textarea> <!-- Placeholder text changed for clarity -->
-            <button mat-raised-button color="primary">Post Update</button> <!-- Button text changed for clarity -->
-       
-          </div>
-        </div>
-
-        <!-- Comments Section -->
-        <div class="task-section">
+      <!-- Middle Column: Comments -->
+     
+      <!-- Right Column: Activity History -->
+      <div class="task-column task-activity-column">
+         <div class="task-section">
           <h3>Comments</h3>
-          <div class="comments-list">
-            <div class="comment-item" *ngFor="let comment of task?.comments">
-              <div class="comment-header">
-                <span class="user">{{ comment.user }}</span>
-                <span class="timestamp">{{ comment.timestamp | date:'short' }}</span>
+          <div *ngIf="isLoadingComments" class="loading-indicator">Loading comments...</div>
+          <div *ngIf="!isLoadingComments">
+            <div class="comments-list">
+             <div class="comment-item" *ngFor="let comment of task?.comments" [class.editing]="editingCommentId === comment.id">
+               
+                <div class="avatar-circle">
+                  {{ comment.username?.charAt(0).toUpperCase() || '?' }}
+                </div>
+                <div class="comment-body">
+                  <div *ngIf="editingCommentId !== comment.id">
+                    <div class="comment-header">
+                      <span class="user">{{ comment.username  }}</span>
+                      <span class="timestamp">{{ comment.createdAt | date:'short' }}</span>
+                    </div>
+                    <p class="comment-content">{{ comment.content }}</p>
+                  </div>
+                  <div *ngIf="editingCommentId === comment.id" class="edit-comment-area">
+                    <textarea [(ngModel)]="editedCommentContent" class="edit-comment-textarea" rows="3"></textarea>
+                    <div class="edit-comment-actions">
+                     <button mat-raised-button color="primary" (click)="saveEditComment(comment)">Save</button>
+                      <button mat-button (click)="cancelEditComment()">Cancel</button>
               </div>
-              <p class="comment-content">{{ comment.content }}</p>
+                  </div>
+                </div>
+                <div class="comment-actions" *ngIf="isCurrentUserComment(comment) && editingCommentId !== comment.id">
+                  
+                  <button mat-icon-button color="primary" (click)="startEditComment(comment)" matTooltip="Edit comment">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button mat-icon-button (click)="deleteComment(comment.id)" matTooltip="Delete comment" color="warn">
+                    <i class="bi bi-trash3"></i>
+                  </button> </div>
+                 
+              </div>
+              <div *ngIf="(!task?.comments || task?.comments?.length === 0) && !isLoadingComments" class="no-comments">
+                No comments yet. Be the first to comment!
+              </div>
             </div>
-            <div *ngIf="!task?.comments || task?.comments?.length === 0" class="no-comments">
-              No comments yet. Be the first to comment!
+          <div class="add-comment-section">
+              <textarea [(ngModel)]="newCommentText" placeholder="Add a public comment..."></textarea>
+              <button mat-raised-button color="primary" (click)="addComment()">Post Comment</button>
             </div>
-          </div>
-          <div class="add-comment-section"> <!-- Changed class name -->
-            <textarea [(ngModel)]="newCommentText" placeholder="Add a public comment..."></textarea>
-            <button mat-raised-button color="primary" (click)="addComment()">Post Comment</button>
-          </div>
+           </div>
         </div>
       </div>
     </div>

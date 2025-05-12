@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1741687617491,
@@ -136,6 +136,30 @@
                 {
                     "date": 1746445960534,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,10 @@\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n-  styleUrls: './header.component.scss'\r\n+  styleUrl: './header.component.scss',\r\n+  standalone: false\r\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n"
+                },
+                {
+                    "date": 1747016876887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n+        \r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n       this.username = null; \r\n"
+                },
+                {
+                    "date": 1747016882504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-        \r\n+        localStorage.\r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n       this.username = null; \r\n"
+                },
+                {
+                    "date": 1747016888748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-        localStorage.\r\n+        localStorage.setItem(\"username\",this.username);\r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n       this.username = null; \r\n"
+                },
+                {
+                    "date": 1747016895116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n+        if\r\n         localStorage.setItem(\"username\",this.username);\r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n"
+                },
+                {
+                    "date": 1747016902724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-        if\r\n+        if(this.)\r\n         localStorage.setItem(\"username\",this.username);\r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n"
+                },
+                {
+                    "date": 1747016908674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     if (userProfileString) {\r\n       \r\n         const userProfile = JSON.parse(userProfileString);\r\n         this.username = userProfile?.preferred_username || null;\r\n-        if(this.)\r\n+        if(this.username){\r\n         localStorage.setItem(\"username\",this.username);\r\n        \r\n     } else {\r\n       console.warn(\"User profile not found in localStorage.\");\r\n"
                 }
             ],
             "date": 1741687617491,

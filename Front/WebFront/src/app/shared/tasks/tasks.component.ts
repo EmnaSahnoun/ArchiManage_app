@@ -229,8 +229,8 @@ export class TasksComponent implements OnInit {
   openTaskDetails(task: any): void {
     // Ouvre le modal en utilisant le service NgbModal
     const modalRef = this.modalService.open(TaskDetailsComponent, {
-
-      size: 'lg',           // Grande taille
+   
+      size: 'xl',           // Grande taille
       centered: true,        // Centré verticalement
       backdrop: 'static',    // Ne se ferme pas en cliquant à l'extérieur
       keyboard: false,

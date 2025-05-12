@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
       
         const userProfile = JSON.parse(userProfileString);
         this.username = userProfile?.preferred_username || null;
+        if(this.username){
+        localStorage.setItem("username",this.username);}
        
     } else {
       console.warn("User profile not found in localStorage.");

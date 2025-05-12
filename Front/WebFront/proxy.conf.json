@@ -32,7 +32,7 @@
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/projet": "/ActivityService"
+      "^/activity": "/ActivityService"
     }
   }
 

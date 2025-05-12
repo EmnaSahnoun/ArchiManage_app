@@ -29,7 +29,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   border-radius: 12px;
   padding: 24px;
   
-
+overflow: hidden;
   max-height: 90vh;
   //overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -65,20 +65,18 @@ $priority-low-bg: lighten($priority-low-color, 40%);
     flex: 1; // Permet à cette zone de s'étendre pour remplir l'espace vertical restant
     //overflow-y: hidden;
     gap: 30px;
-    min-height: 0;
-    .task-left-column {
+    min-height: 0; // Important pour que les enfants flex avec overflow: auto fonctionnent
+    overflow: hidden; // Empêche le défilement sur .task-content lui-même
+
+    .task-column {
       flex: 1;
-      min-width: 300px;
-      overflow-y: auto; 
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
       overflow-x: hidden;
       min-height: 0;
-    }
-
-    .task-right-column {
-      flex: 2;
-      overflow-y: auto; // Allow this column to scroll if needed
-      min-height: 0;
-      overflow-x: hidden; 
+   padding-right: 15px;
+   width: max-content;
     }
   }
 
@@ -200,35 +198,179 @@ $priority-low-bg: lighten($priority-low-color, 40%);
     }
   }
 
-  .subtasks-list {
+  .subtasks-list.detailed-subtasks {
+    
     .subtask-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
+       display: flex;
+      flex-direction: column;
+      padding: 12px 0;
       border-bottom: 1px solid rgba($border-color, 0.5);
 
-      .subtask-info {
+      gap: 8px;
+
+     transition: background-color 0.2s ease-in-out;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.editing {
+        background-color: lighten($background-color, 3%); // Subtle highlight for editing row
+        border-radius: $border-radius / 2;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .subtask-info-display, .subtask-info-edit {
         display: flex;
         align-items: center;
-        gap: 8px;
+        justify-content: space-between;
+        gap: 10px; // Spacing between elements in a row
+        width: 100%;
+      }
 
-        i {
-          color: $success-color;
+      .subtask-info-display {
+        .subtask-name {
+          color: black !important ;
+          flex: 2 1 0%;
+           font-weight: 600; // Slightly bolder for emphasis
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+         // max-width: 200px; // Removed to allow more flexible width
+        }
+        .subtask-dates {
+          flex: 1 1 auto;
+          font-size: 0.8rem;
+          color: $text-color-secondary;
+        text-align: center;
+          min-width: 130px; // Prevents date from wrapping too easily
+        }
+        .subtask-priority, .subtask-status {
+          padding: 4px 10px;
+          border-radius: 16px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-align: center;
+          min-width: 90px; // Minimum width for badges
+          text-transform: capitalize;
+
+           }
+
+        .subtask-priority-badge, .subtask-status-badge { // New specific classes for badges
+          flex: 0 0 auto;
+          padding: 3px 10px;
+          border-radius: 12px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          text-align: center;
+          min-width: 80px;
+          text-transform: capitalize;
+          border: 1px solid transparent;
+
+          // Priority classes for subtasks
+          &.high { background-color: $priority-high-bg; color: $priority-high-color; border-color: $priority-high-color;}
+          &.medium { background-color: $priority-medium-bg; color: $priority-medium-color; border-color: $priority-medium-color;}
+          &.low { background-color: $priority-low-bg; color: $priority-low-color; border-color: $priority-low-color;}
+
+          // Status classes for subtasks
+          &.todo { background-color: rgba($accent-color, 0.15); color: $accent-color; border-color: $accent-color;}
+          &.in-progress { background-color: rgba($primary-color, 0.15); color: $primary-color; border-color: $primary-color;}
+          &.completed { background-color: rgba($success-color, 0.15); color: $success-color; border-color: $success-color;}
+           }
+      }
+
+      .subtask-info-edit {
+        gap: 8px; // Slightly smaller gap for edit fields
+        .subtask-edit-name {
+          flex: 2 1 180px; // More space for name input
+        }
+        .subtask-edit-dates {
+          flex: 1 1 220px; // Combined width for two date inputs and separator
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          input[type="date"] {
+            flex: 1;
+            min-width: 100px; // Ensure date input is usable
+          }
+        }
+        .subtask-edit-selects {
+          flex: 1 1 200px; // Combined width for two selects
+          display: flex;
+          gap: 6px; // Reduced gap for selects
+          .subtask-edit-priority, .subtask-edit-status { // Target specific edit selects
+          
+            flex: 1;
+            min-width: 90px;
+          }
+        }
+
+        // Common style for form controls in edit mode
+        .form-control-sm, .form-select-sm {
+          font-size: 0.8rem; // Smaller font for compact inputs
+          padding: 0.25rem 0.5rem;
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          background-color: #fff;
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 0.15rem rgba($primary-color, 0.2);
+          }
         }
       }
 
-      .assignee {
-        background: rgba($primary-color, 0.1);
-        padding: 4px 10px;
-        border-radius: 12px;
-        font-size: 0.8rem;
+      .subtask-actions, .subtask-actions-edit {
+        flex: 0 0 auto; // Actions take minimal space
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        // margin-left: auto; // Pushes actions to the right if not enough items to fill space
 
-        .assignee-name {
-          color: $primary-color;
-          font-weight: 500;
+          
+        button[mat-icon-button],
+        .edit-btn-subtask, .delete-btn-subtask,
+        .save-btn-subtask, .cancel-btn-subtask {
+          width: 32px; 
+          height: 32px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+          .icon, i.bi {
+            font-size: 16px; // Slightly larger icons for clarity
+            color: $text-color-secondary;
+          }
+
+          &:hover:not(:disabled) {
+            background-color: rgba($primary-color, 0.08);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            .icon, i.bi { color: $primary-color; }
+          }
+
+          &.delete-btn-subtask:hover:not(:disabled),
+          &.cancel-btn-subtask:hover:not(:disabled) {
+            background-color: rgba($warn-color, 0.08);
+            .icon, i.bi { color: $warn-color; }
+          }
+          &.save-btn-subtask:hover:not(:disabled) {
+            background-color: rgba($success-color, 0.08);
+            .icon, i.bi { color: $success-color; }
+          }
+          &.save-btn-subtask .icon, &.save-btn-subtask i.bi { color: $success-color; }
+          &.delete-btn-subtask .icon, &.delete-btn-subtask i.bi { color: $warn-color; }
+
+          }
         }
       }
+    }
+    .no-comments { // Re-using .no-comments style for "No subtasks"
+        padding: 15px 0;
+        color: $text-color-secondary;
+        font-style: italic;
+        text-align: center;
     }
   }
 
@@ -283,7 +425,9 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       gap: 10px;
       padding: 8px 0;
       border-bottom: 1px solid rgba($border-color, 0.3);
-
+position: relative; // For positioning actions absolutely if needed, or use flex for actions
+    gap: 10px; // Gap between avatar, body, and actions
+ 
       i {
         color: $success-color;
         margin-top: 2px;
@@ -301,18 +445,53 @@ $priority-low-bg: lighten($priority-low-color, 40%);
 
   .activity-timeline {
     .activity-item {
-      padding: 15px 0;
+      display: flex;
+      align-items: flex-start; // Aligns icon with the start of the text block
+      padding: 12px 0;
       border-bottom: 1px solid rgba($border-color, 0.3);
 
-      .activity-header {
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .activity-icon {
+        margin-right: 12px;
+        color: $text-color-secondary; // Default icon color
+        font-size: 1.1rem; // Icon size
+        width: 24px; // Fixed width for alignment
+        text-align: center;
+        flex-shrink: 0;
+        margin-top: 2px; // Small adjustment to align with the first line of text
+
+        &.comment-icon { color: $primary-color; }
+        &.update-icon { color: $accent-color; }
+        &.delete-icon { color: $warn-color; }
+        &.create-icon { color: $success-color; } // Assuming you have $success-color
+      }
+
+      .activity-content-wrapper {
+        flex-grow: 1;
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 5px;
+        flex-direction: column;
+      }
+
+      .activity-main-info {
+        margin-bottom: 4px;
 
         .user {
           font-weight: 600;
           color: $primary-color;
+       margin-right: 5px;
         }
+        .action-description {
+          color: $text-color-primary;
+          font-size: 0.9rem;
+          line-height: 1.4;
+          overflow-wrap: break-word; // Ensure long descriptions wrap
+        }
+      }
+
+      .activity-meta {
 
         .timestamp {
           color: $text-color-secondary;
@@ -320,26 +499,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
         }
       }
 
-      .activity-content {
-        margin: 0;
-        font-size: 0.9rem;
-        overflow-wrap: break-word;
-        line-height: 1.5;
-      }
-
-      .reply-btn {
-        background: none;
-        border: none;
-        color: $primary-color;
-        font-size: 0.8rem;
-        margin-top: 5px;
-        cursor: pointer;
-        padding: 0;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+       
     }
   }
 // Placeholder selectors for shared styles
@@ -354,7 +514,7 @@ $priority-low-bg: lighten($priority-low-color, 40%);
   }
 
   %comment-form-button-base {
-    float: right; // Consider using flexbox on parent for alignment if modernizing
+    
     // Add any other shared button styles here, e.g., from mat-raised-button if applicable
   }
 
@@ -363,25 +523,50 @@ $priority-low-bg: lighten($priority-low-color, 40%);
 
     textarea {
      @extend %comment-form-textarea-base;
+      width: 100%; 
  
     }
 
     button {
       @extend %comment-form-button-base;
   
+        // Les styles de mat-raised-button sont appliqués via HTML
     }
+    // Utiliser flexbox pour aligner le bouton à droite
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
+
+.avatar-circle {
+  width: 32px; // Standard avatar size
+  height: 32px;
+  border-radius: 50%;
+  background-color: $primary-color; // Default background, can be dynamic
+  color: $text-color-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem; // Adjust for letter size
+  text-transform: uppercase;
+  margin-right: 10px;
+  flex-shrink: 0; // Prevent shrinking if comment text is long
 }
 // Styles for Comments Section (similar to Activity Timeline)
 .comments-list {
   .comment-item {
+     display: flex; // For aligning avatar and comment body
+    align-items: flex-start;
     padding: 15px 0;
     border-bottom: 1px solid rgba($border-color, 0.3);
 
     &:last-child {
       border-bottom: none;
     }
-
+.comment-body { // Wrapper for header and content, allows flex-grow
+      flex-grow: 1;
+    }
     .comment-header {
       display: flex;
       justify-content: space-between;
@@ -405,6 +590,39 @@ $priority-low-bg: lighten($priority-low-color, 40%);
       line-height: 1.5;
       color: $text-color-primary;
     }
+    
+  }
+  .edit-comment-area {
+    width: 100%;
+    .edit-comment-textarea {
+      @extend %comment-form-textarea-base; // Reuse existing textarea styles
+      min-height: 60px; // Adjust as needed
+      margin-bottom: 8px;
+    }
+    .edit-comment-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px; // Un peu plus d'espace au-dessus des boutons
+
+      button.mat-raised-button,
+      button.mat-button {
+        padding: 0 12px; // Ajuster le padding horizontal
+        min-width: 70px; // Donner une largeur minimale pour une meilleure apparence
+        line-height: 32px; // Ajuster la hauteur de ligne pour des boutons plus petits
+        font-size: 0.85rem;}
+    }
+  }
+
+  .comment-actions {
+    display: flex;
+    gap: 4px;
+    margin-left: auto; // Pushes actions to the right
+    // align-self: flex-start; // Aligns actions to the top of the comment item
+    // For absolute positioning:
+    // position: absolute;
+    // top: 10px;
+    // right: 10px;
   }
   .no-comments { // Style for when there are no comments
     padding: 15px 0;
@@ -421,21 +639,297 @@ $priority-low-bg: lighten($priority-low-color, 40%);
 
   }
   button {
-    @extend %comment-form-button-base;
+    }
+  // Utiliser flexbox pour aligner le bouton à droite
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.loading-indicator {
+        border-radius: 4px;
+        border: 1px solid $border-color;
+        background-color: #fff;
+
+        font-size: 0.8rem;
+
+        
+      }
+   
+  .attachments-list {
+    .attachment-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba($border-color, 0.5);
+
+      i {
+        color: $accent-color;
+        font-size: 1.2rem;
+      }
+
+      .attachment-info {
+        flex-grow: 1;
+
+        strong {
+          display: block;
+          overflow-wrap: break-word;
+          font-size: 0.9rem;
+        }
+
+        small {
+          color: $text-color-secondary;
+          font-size: 0.75rem;
+        }
+      }
+
+      button {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .task-description {
+    line-height: 1.6;
+    color: $text-color-primary;
+    overflow-wrap: break-word;
+  }
+
+  .requirements-list, .guidelines-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+position: relative; // For positioning actions absolutely if needed, or use flex for actions
+    gap: 10px; // Gap between avatar, body, and actions
+ 
+      i {
+        color: $success-color;
+        margin-top: 2px;
+      }
+      span {
+        flex: 1; // Allow text to take space and wrap
+        overflow-wrap: break-word; // Ajouter pour les requirements/guidelines
+      }
+    }
+  }
+
+  .guidelines-list li i {
+    color: $accent-color;
+  }
+
+  .activity-timeline {
+    .activity-item {
+      display: flex;
+      align-items: flex-start; // Aligns icon with the start of the text block
+      padding: 12px 0;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .activity-icon {
+        margin-right: 12px;
+        color: $text-color-secondary; // Default icon color
+        font-size: 1.1rem; // Icon size
+        width: 24px; // Fixed width for alignment
+        text-align: center;
+        flex-shrink: 0;
+        margin-top: 2px; // Small adjustment to align with the first line of text
+
+        &.comment-icon { color: $primary-color; }
+        &.update-icon { color: $accent-color; }
+        &.delete-icon { color: $warn-color; }
+        &.create-icon { color: $success-color; } // Assuming you have $success-color
+      }
+
+      .activity-content-wrapper {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .activity-main-info {
+        margin-bottom: 4px;
+
+        .user {
+          font-weight: 600;
+          color: $primary-color;
+       margin-right: 5px;
+        }
+        .action-description {
+          color: $text-color-primary;
+          font-size: 0.9rem;
+          line-height: 1.4;
+          overflow-wrap: break-word; // Ensure long descriptions wrap
+        }
+      }
+
+      .activity-meta {
+
+        .timestamp {
+          color: $text-color-secondary;
+          font-size: 0.8rem;
+        }
+      }
+
+       
+    }
+  }
+// Placeholder selectors for shared styles
+  %comment-form-textarea-base {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    min-height: 80px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+
+  %comment-form-button-base {
+    
+    // Add any other shared button styles here, e.g., from mat-raised-button if applicable
+  }
+
+  .new-comment {
+    margin-top: 20px;
+
+    textarea {
+     @extend %comment-form-textarea-base;
+      width: 100%; 
+ 
+    }
+
+    button {
+      @extend %comment-form-button-base;
+  
+        // Les styles de mat-raised-button sont appliqués via HTML
+    }
+    // Utiliser flexbox pour aligner le bouton à droite
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+.avatar-circle {
+  width: 32px; // Standard avatar size
+  height: 32px;
+  border-radius: 50%;
+  background-color: $primary-color; // Default background, can be dynamic
+  color: $text-color-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem; // Adjust for letter size
+  text-transform: uppercase;
+  margin-right: 10px;
+  flex-shrink: 0; // Prevent shrinking if comment text is long
+}
+// Styles for Comments Section (similar to Activity Timeline)
+.comments-list {
+  .comment-item {
+     display: flex; // For aligning avatar and comment body
+    align-items: flex-start;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba($border-color, 0.3);
+
+    &:last-child {
+      border-bottom: none;
+    }
+.comment-body { // Wrapper for header and content, allows flex-grow
+      flex-grow: 1;
+    }
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      .user {
+        font-weight: 600;
+        color: $primary-color; // Or a different color for comment users
+      }
+
+      .timestamp {
+        color: $text-color-secondary;
+        font-size: 0.8rem;
+      }
+    }
+
+    .comment-content {
+      margin: 0;
+      font-size: 0.9rem;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: $text-color-primary;
+    }
+    
+  }
+  .edit-comment-area {
+    width: 100%;
+    .edit-comment-textarea {
+      @extend %comment-form-textarea-base; // Reuse existing textarea styles
+      min-height: 60px; // Adjust as needed
+      margin-bottom: 8px;
+    }
+    .edit-comment-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px; // Un peu plus d'espace au-dessus des boutons
+
+      button.mat-raised-button,
+      button.mat-button {
+        padding: 0 12px; // Ajuster le padding horizontal
+        min-width: 70px; // Donner une largeur minimale pour une meilleure apparence
+        line-height: 32px; // Ajuster la hauteur de ligne pour des boutons plus petits
+        font-size: 0.85rem;}
+    }
+  }
+
+  .comment-actions {
+    display: flex;
+    gap: 4px;
+    margin-left: auto; // Pushes actions to the right
+    // align-self: flex-start; // Aligns actions to the top of the comment item
+    // For absolute positioning:
+    // position: absolute;
+    // top: 10px;
+    // right: 10px;
+  }
+  .no-comments { // Style for when there are no comments
+    padding: 15px 0;
+    color: $text-color-secondary;
+    font-style: italic;
+    text-align: center;
   }
 }
-@media (max-width: 768px) {
-  .task-details-container {
-    width: 95vw;
-    padding: 15px;
-  }
 
-  .task-content {
-    flex-direction: column !important;
-  }
+.add-comment-section { // Styles for the new comment input area
+  margin-top: 20px; // Consistent with .new-comment
+  textarea {
+    @extend %comment-form-textarea-base;
 
-  .date-range {
-    flex-direction: column;
-    gap: 10px !important;
   }
-}   
+  button {
+    }
+  // Utiliser flexbox pour aligner le bouton à droite
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.loading-indicator {
+  padding: 20px;
+  text-align: center;
+  color: $text-color-secondary;
+  font-style: italic;
+}
+   

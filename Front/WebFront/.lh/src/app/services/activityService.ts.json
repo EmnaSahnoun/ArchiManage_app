@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1747010484254,
@@ -60,6 +60,134 @@
                 {
                     "date": 1747010678918,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,46 @@\n+import { Injectable } from '@angular/core';\r\n+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n+import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n+import { UserService } from './UserService';\r\n+import { AuthService } from './auth.service';\r\n+\r\n+@Injectable({\r\n+  providedIn: 'root'\r\n+})\r\n+export class ProjectService {\r\n+    private apiUrl = '/activity';\r\n+    private projetUrl=\"/projet\"\r\n+    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+\r\n+    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n+        return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+          headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n+\r\n+         private getApiHeaders(): HttpHeaders {\r\n+        const token = this.authService.getAccessToken();\r\n+        return new HttpHeaders({\r\n+          'Content-Type': 'application/json',\r\n+          'Authorization': `Bearer ${token}`\r\n+        });\r\n+      }\r\n+      \r\n+        private handleError(error: HttpErrorResponse): Observable<never> {\r\n+          console.error('API Error Details:', error);\r\n+          \r\n+          let errorMessage = 'Une erreur est survenue';\r\n+          if (error.status === 401) {\r\n+            errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+            this.authService.logout();\r\n+          } else if (error.error?.message) {\r\n+            errorMessage = error.error.message;\r\n+          } else if (error.status === 500) {\r\n+            errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+          }\r\n+      \r\n+          return throwError(() => new Error(errorMessage));\r\n+        }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747015747862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,54 +19,11 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-         private getApiHeaders(): HttpHeaders {\r\n-        const token = this.authService.getAccessToken();\r\n-        return new HttpHeaders({\r\n-          'Content-Type': 'application/json',\r\n-          'Authorization': `Bearer ${token}`\r\n-        });\r\n-      }\r\n-      \r\n-        private handleError(error: HttpErrorResponse): Observable<never> {\r\n-          console.error('API Error Details:', error);\r\n-          \r\n-          let errorMessage = 'Une erreur est survenue';\r\n-          if (error.status === 401) {\r\n-            errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n-            this.authService.logout();\r\n-          } else if (error.error?.message) {\r\n-            errorMessage = error.error.message;\r\n-          } else if (error.status === 500) {\r\n-            errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n-          }\r\n-      \r\n-          return throwError(() => new Error(errorMessage));\r\n-        }\r\n-}\n-import { Injectable } from '@angular/core';\r\n-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n-import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n-import { UserService } from './UserService';\r\n-import { AuthService } from './auth.service';\r\n+    createProject(projectData: any): Observable<any> {\r\n \r\n-@Injectable({\r\n-  providedIn: 'root'\r\n-})\r\n-export class ProjectService {\r\n-    private apiUrl = '/activity';\r\n-    private projetUrl=\"/projet\"\r\n-    constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}//comments/task//${idProjet}`, { \r\n-          headers: this.getApiHeaders()\r\n-        }).pipe(\r\n-          catchError(this.handleError)\r\n-        );\r\n-      }\r\n-\r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747015753968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,10 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-    createProject(projectData: any): Observable<any> {\r\n+      \r\n \r\n-\r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747015762073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,16 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n+      createProject(projectData: any): Observable<any> {\r\n+        const url = `${this.projetUrl}/project`;\r\n+        const headers = this.getApiHeaders();\r\n       \r\n+        return this.http.post(url, projectData, { headers }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n \r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n"
+                },
+                {
+                    "date": 1747015768936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-      createProject(projectData: any): Observable<any> {\r\n+      addC(projectData: any): Observable<any> {\r\n         const url = `${this.projetUrl}/project`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n         return this.http.post(url, projectData, { headers }).pipe(\r\n"
+                },
+                {
+                    "date": 1747015779977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-      addC(projectData: any): Observable<any> {\r\n+      addComment(commentData: any): Observable<any> {\r\n         const url = `${this.projetUrl}/project`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n         return this.http.post(url, projectData, { headers }).pipe(\r\n"
+                },
+                {
+                    "date": 1747015788061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n         );\r\n       }\r\n \r\n       addComment(commentData: any): Observable<any> {\r\n-        const url = `${this.projetUrl}/project`;\r\n+        const url = `${this.projetUrl}/comments`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n         return this.http.post(url, projectData, { headers }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747015793399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       addComment(commentData: any): Observable<any> {\r\n         const url = `${this.projetUrl}/comments`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n-        return this.http.post(url, projectData, { headers }).pipe(\r\n+        return this.http.post(url, commentData, { headers }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n"
+                },
+                {
+                    "date": 1747015809935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n+      \r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747015818873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,20 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-      \r\n+       updateProject(idComment: string, projectData: any): Observable<any> {\r\n+        const data = {\r\n+            ...projectData,\r\n+            id: idProject // On s'assure que l'ID est bien inclus\r\n+        };\r\n+    \r\n+        return this.http.put(`${this.projetUrl}/project/${idProject}`, data, {\r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError)\r\n+        );\r\n+    }\r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747015827549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n           catchError(this.handleError)\r\n         );\r\n       }\r\n \r\n-       updateProject(idComment: string, projectData: any): Observable<any> {\r\n+       updateProject(idComment: string, commentData: any): Observable<any> {\r\n         const data = {\r\n             ...projectData,\r\n             id: idProject // On s'assure que l'ID est bien inclus\r\n         };\r\n"
+                },
+                {
+                    "date": 1747015834386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n             ...projectData,\r\n             id: idProject // On s'assure que l'ID est bien inclus\r\n         };\r\n     \r\n-        return this.http.put(`${this.projetUrl}/project/${idProject}`, data, {\r\n+        return this.http.put(`${this.projetUrl}/comments/${idProject}`, data, {\r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747015860605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,13 +30,13 @@\n       }\r\n \r\n        updateProject(idComment: string, commentData: any): Observable<any> {\r\n         const data = {\r\n-            ...projectData,\r\n+            ...commentData,\r\n             id: idProject // On s'assure que l'ID est bien inclus\r\n         };\r\n     \r\n-        return this.http.put(`${this.projetUrl}/comments/${idProject}`, data, {\r\n+        return this.http.put(`${this.projetUrl}/comments/${idComment}`, data, {\r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747015867311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n \r\n        updateProject(idComment: string, commentData: any): Observable<any> {\r\n         const data = {\r\n             ...commentData,\r\n-            id: idProject // On s'assure que l'ID est bien inclus\r\n+            id: idComment // On s'assure que l'ID est bien inclus\r\n         };\r\n     \r\n         return this.http.put(`${this.projetUrl}/comments/${idComment}`, data, {\r\n             headers: this.getApiHeaders()\r\n"
+                },
+                {
+                    "date": 1747015890211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,8 +40,15 @@\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n     }\r\n+    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n+        return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+          headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+          catchError(this.handleError)\r\n+        );\r\n+      }\r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747015895317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n     }\r\n-    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n+    getHisByTaskId(idTask:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747016366419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,10 +40,10 @@\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n     }\r\n-    getHisByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+    getHistoryByTaskId(idTask:string): Observable<any[]> {        \r\n+        return this.http.get<any>(`${this.apiUrl}/history/task/${idTask}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n           catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747016547364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n-export class ProjectService {\r\n+export class ActivityService {\r\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n"
+                },
+                {
+                    "date": 1747017700882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n         );\r\n       }\r\n \r\n       addComment(commentData: any): Observable<any> {\r\n-        const url = `${this.projetUrl}/comments`;\r\n+        const url = `${this.apiUrl}/comments`;\r\n         const headers = this.getApiHeaders();\r\n       \r\n         return this.http.post(url, commentData, { headers }).pipe(\r\n           catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747019636747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,15 +11,15 @@\n     private apiUrl = '/activity';\r\n     private projetUrl=\"/projet\"\r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentsByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n-          headers: this.getApiHeaders()\r\n-        }).pipe(\r\n-          catchError(this.handleError)\r\n-        );\r\n-      }\r\n+    getCommentsByTaskId(idTask: string): Observable<CommentResponse[]> {\r\n+    return this.http.get<CommentResponse[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+        headers: this.getApiHeaders()\r\n+    }).pipe(\r\n+        catchError(this.handleError)\r\n+    );\r\n+}\r\n \r\n       addComment(commentData: any): Observable<any> {\r\n         const url = `${this.apiUrl}/comments`;\r\n         const headers = this.getApiHeaders();\r\n@@ -34,9 +34,9 @@\n             ...commentData,\r\n             id: idComment // On s'assure que l'ID est bien inclus\r\n         };\r\n     \r\n-        return this.http.put(`${this.projetUrl}/comments/${idComment}`, data, {\r\n+        return this.http.put(`${this.apiUrl}/comments/${idComment}`, data, {\r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747019644116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,16 +19,16 @@\n         catchError(this.handleError)\r\n     );\r\n }\r\n \r\n-      addComment(commentData: any): Observable<any> {\r\n-        const url = `${this.apiUrl}/comments`;\r\n-        const headers = this.getApiHeaders();\r\n-      \r\n-        return this.http.post(url, commentData, { headers }).pipe(\r\n-          catchError(this.handleError)\r\n-        );\r\n-      }\r\n+      addComment(commentData: any): Observable<CommentResponse> {\r\n+    const url = `${this.apiUrl}/comments`;\r\n+    const headers = this.getApiHeaders();\r\n+    \r\n+    return this.http.post<CommentResponse>(url, commentData, { headers }).pipe(\r\n+        catchError(this.handleError)\r\n+    );\r\n+}\r\n \r\n        updateProject(idComment: string, commentData: any): Observable<any> {\r\n         const data = {\r\n             ...commentData,\r\n"
+                },
+                {
+                    "date": 1747019659171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,20 +28,14 @@\n         catchError(this.handleError)\r\n     );\r\n }\r\n \r\n-       updateProject(idComment: string, commentData: any): Observable<any> {\r\n-        const data = {\r\n-            ...commentData,\r\n-            id: idComment // On s'assure que l'ID est bien inclus\r\n-        };\r\n-    \r\n-        return this.http.put(`${this.apiUrl}/comments/${idComment}`, data, {\r\n-            headers: this.getApiHeaders()\r\n-        }).pipe(\r\n-            catchError(this.handleError)\r\n-        );\r\n-    }\r\n+      updateComment(idComment: string, commentData: any): Observable<CommentResponse> {\r\n+    return this.http.put<CommentResponse>(`${this.apiUrl}/comments/${idComment}`, commentData, {\r\n+        headers: this.getApiHeaders()\r\n+    }).pipe(\r\n+        catchError(this.handleError)\r\n+    );\r\n     getHistoryByTaskId(idTask:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.apiUrl}/history/task/${idTask}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n"
+                },
+                {
+                    "date": 1747019675070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n     return this.http.put<CommentResponse>(`${this.apiUrl}/comments/${idComment}`, commentData, {\r\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n         catchError(this.handleError)\r\n-    );\r\n+    );}\r\n     getHistoryByTaskId(idTask:string): Observable<any[]> {        \r\n         return this.http.get<any>(`${this.apiUrl}/history/task/${idTask}`, { \r\n           headers: this.getApiHeaders()\r\n         }).pipe(\r\n"
+                },
+                {
+                    "date": 1747019680766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,15 +34,15 @@\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n-    getHistoryByTaskId(idTask:string): Observable<any[]> {        \r\n-        return this.http.get<any>(`${this.apiUrl}/history/task/${idTask}`, { \r\n-          headers: this.getApiHeaders()\r\n-        }).pipe(\r\n-          catchError(this.handleError)\r\n-        );\r\n-      }\r\n+    getHistoryByTaskId(idTask: string): Observable<TaskHistory[]> {        \r\n+    return this.http.get<TaskHistory[]>(`${this.apiUrl}/history/task/${idTask}`, { \r\n+        headers: this.getApiHeaders()\r\n+    }).pipe(\r\n+        catchError(this.handleError)\r\n+    );\r\n+}\r\n          private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747019817296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n import { UserService } from './UserService';\r\n import { AuthService } from './auth.service';\r\n+import { CommentResponse } from '../models/activity.interfaces';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n"
+                },
+                {
+                    "date": 1747019823952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n import { UserService } from './UserService';\r\n import { AuthService } from './auth.service';\r\n-import { CommentResponse } from '../models/activity.interfaces';\r\n+import { CommentResponse, TaskHistory } from '../models/activity.interfaces';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n"
+                },
+                {
+                    "date": 1747025052940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,9 @@\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n+    \r\n     getHistoryByTaskId(idTask: string): Observable<TaskHistory[]> {        \r\n     return this.http.get<TaskHistory[]>(`${this.apiUrl}/history/task/${idTask}`, { \r\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n"
+                },
+                {
+                    "date": 1747025682022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,15 @@\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n-    \r\n+    deleteComment(commentId: string, taskId: string, userId: string): Observable<any> {\r\n+      return this.http.delete(`${this.apiUrl}/comments/${idComment}`, {\r\n+        headers: this.getApiHeaders()\r\n+      }).pipe(\r\n+        catchError(this.handleError)\r\n+      );\r\n+    }\r\n     getHistoryByTaskId(idTask: string): Observable<TaskHistory[]> {        \r\n     return this.http.get<TaskHistory[]>(`${this.apiUrl}/history/task/${idTask}`, { \r\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n"
+                },
+                {
+                    "date": 1747025689522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n     deleteComment(commentId: string, taskId: string, userId: string): Observable<any> {\r\n-      return this.http.delete(`${this.apiUrl}/comments/${idComment}`, {\r\n+      return this.http.delete(`${this.apiUrl}/comments/${commentId}`, {\r\n         headers: this.getApiHeaders()\r\n       }).pipe(\r\n         catchError(this.handleError)\r\n       );\r\n"
+                },
+                {
+                    "date": 1747025710702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n         headers: this.getApiHeaders()\r\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n-    deleteComment(commentId: string, taskId: string, userId: string): Observable<any> {\r\n+    deleteComment(commentId: string, taskId: string, userId: string): Observable<void> {\r\n       return this.http.delete(`${this.apiUrl}/comments/${commentId}`, {\r\n         headers: this.getApiHeaders()\r\n       }).pipe(\r\n         catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747025717589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,11 @@\n     }).pipe(\r\n         catchError(this.handleError)\r\n     );}\r\n     deleteComment(commentId: string, taskId: string, userId: string): Observable<void> {\r\n+        const params = new HttpParams()\r\n+    .set('taskId', taskId)\r\n+    .set('idUser', userId);\r\n       return this.http.delete(`${this.apiUrl}/comments/${commentId}`, {\r\n         headers: this.getApiHeaders()\r\n       }).pipe(\r\n         catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747025734913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Injectable } from '@angular/core';\r\n-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';\r\n import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';\r\n import { UserService } from './UserService';\r\n import { AuthService } from './auth.service';\r\n import { CommentResponse, TaskHistory } from '../models/activity.interfaces';\r\n"
+                },
+                {
+                    "date": 1747025754396,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,13 +39,14 @@\n     deleteComment(commentId: string, taskId: string, userId: string): Observable<void> {\r\n         const params = new HttpParams()\r\n     .set('taskId', taskId)\r\n     .set('idUser', userId);\r\n-      return this.http.delete(`${this.apiUrl}/comments/${commentId}`, {\r\n-        headers: this.getApiHeaders()\r\n-      }).pipe(\r\n-        catchError(this.handleError)\r\n-      );\r\n+      return this.http.delete<void>(`${this.apiUrl}/comments/${commentId}`, {\r\n+    headers: this.getApiHeaders(),\r\n+    params: params\r\n+  }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n     }\r\n     getHistoryByTaskId(idTask: string): Observable<TaskHistory[]> {        \r\n     return this.http.get<TaskHistory[]>(`${this.apiUrl}/history/task/${idTask}`, { \r\n         headers: this.getApiHeaders()\r\n"
                 }
             ],
             "date": 1747010484254,
