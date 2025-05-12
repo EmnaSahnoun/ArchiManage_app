@@ -39,6 +39,7 @@ public class CommentRepository {
         comment.setTaskId(commentRequest.getTaskId());
         comment.setIdUser(commentRequest.getIdUser());
         comment.setContent(commentRequest.getContent());
+        comment.setUsername(commentRequest.getUsername());
         comment.setCreatedAt(now);
 
         Path taskFile = storagePath.resolve(commentRequest.getTaskId() + ".task");
