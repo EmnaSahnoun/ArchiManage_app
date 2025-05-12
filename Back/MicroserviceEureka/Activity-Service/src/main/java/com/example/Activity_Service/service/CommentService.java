@@ -53,7 +53,7 @@ public class CommentService implements IComment {
         comments.removeIf(c -> c.getId().equals(commentId));
 
         // Sauvegarder la liste mise à jour
-        Path taskFile = commentRepository.getStoragePath().resolve(taskId + ".task.hist");
+        Path taskFile = commentRepository.getStoragePath().resolve(taskId + ".task");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taskFile.toFile()))) {
             oos.writeObject(comments);
         } catch (IOException e) {
