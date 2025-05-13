@@ -17,16 +17,23 @@ import com.example.ProjectService.repositories.ProjectAccessRepository;
 import com.example.ProjectService.repositories.ProjectRepository;
 import com.example.ProjectService.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+
+
 @Service
 
 public class TaskService implements ITask {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
     private  final TaskRepository taskRepository;
     private  final PhaseRepository phaseRepository;
     private final ProjectAccessRepository projectAccessRepository;
@@ -164,88 +171,74 @@ public class TaskService implements ITask {
 
     @Override
     public TaskResponse updateTask(String id, TaskRequest request) {
+        // 1. Récupération de la tâche existante
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+
+        // 2. Préparation de la liste des changements
         List<TaskChangeEvent> changes = new ArrayList<>();
-// Vérifier chaque champ individuellement
-        if (!task.getName().equals(request.getName())) {
-            changes.add(new TaskChangeEvent(
-                    "name",
-                    task.getName(),
-                    request.getName(),
 
-                    LocalDateTime.now()
-            ));
-            task.setName(request.getName());
+        // 3. Vérification et mise à jour de chaque champ
+        updateFieldIfChanged(task, request.getName(), task.getName(), "name", changes,
+                newValue -> task.setName(newValue));
+
+        updateFieldIfChanged(task, request.getDescription(), task.getDescription(), "description", changes,
+                newValue -> task.setDescription(newValue));
+
+        updateFieldIfChanged(task, request.getStatus(), task.getStatus(), "status", changes,
+                newValue -> task.setStatus(newValue));
+
+        updateFieldIfChanged(task, request.getPriority(), task.getPriority(), "priority", changes,
+                newValue -> task.setPriority(newValue));
+
+        updateFieldIfChanged(task, request.getStartDate(), task.getStartDate(), "startDate", changes,
+                newValue -> task.setStartDate(newValue));
+
+        updateFieldIfChanged(task, request.getEndDate(), task.getEndDate(), "endDate", changes,
+                newValue -> task.setEndDate(newValue));
+
+        // 4. Gestion du parentTaskId
+        if (!Objects.equals(task.getParentTaskId(), request.getParentTaskId())) {
+            task.setParentTaskId(request.getParentTaskId());
         }
 
-        if (!Objects.equals(task.getDescription(), request.getDescription())) {
-            changes.add(new TaskChangeEvent(
-                    "description",
-                    task.getDescription(),
-                    request.getDescription(),
-
-                    LocalDateTime.now()
-            ));
-            task.setDescription(request.getDescription());
-        }
-        if (task.getStatus() != request.getStatus()) {
-            changes.add(new TaskChangeEvent(
-                    "status",
-                    task.getStatus().toString(),
-                    request.getStatus().toString(),
-                    LocalDateTime.now()
-            ));
-            task.setStatus(request.getStatus());
-        }
-        if (task.getPriority() != request.getPriority()) {
-            changes.add(new TaskChangeEvent(
-                    "Priority",
-                    task.getPriority().toString(),
-                    request.getPriority().toString(),
-                    LocalDateTime.now()
-            ));
-            task.setPriority(request.getPriority());
-        }
-
-        if (task.getStartDate() != request.getStartDate()) {
-            changes.add(new TaskChangeEvent(
-                    "StartDate",
-                    task.getStartDate().toString(),
-                    request.getStartDate().toString(),
-                    LocalDateTime.now()
-            ));
-            task.setStartDate(request.getStartDate());
-        }
-
-        if (task.getEndDate() != request.getEndDate()) {
-            changes.add(new TaskChangeEvent(
-                    "EndDate",
-                    task.getEndDate().toString(),
-                    request.getEndDate().toString(),
-                    LocalDateTime.now()
-            ));
-            task.setEndDate(request.getEndDate());
-        }
-
-        task.setParentTaskId(request.getParentTaskId());
-
-        // Si la phase a changé
+        // 5. Gestion du changement de phase
         if (!task.getPhase().getId().equals(request.getPhaseId())) {
             Phase newPhase = phaseRepository.findById(request.getPhaseId())
-                    .orElseThrow(() -> new RuntimeException("Phase not found with id: " + request.getPhaseId()));
+                    .orElseThrow(() -> new PhaseNotFoundException("Phase not found with id: " + request.getPhaseId()));
+            changes.add(new TaskChangeEvent(
+                    "phase",
+                    task.getPhase().getId(),
+                    newPhase.getId(),
+                    LocalDateTime.now()
+            ));
             task.setPhase(newPhase);
         }
 
+        // 6. Sauvegarde et envoi de l'événement
         Task updatedTask = taskRepository.save(task);
         updatedTask.setAction("UPDATE");
 
-        // Envoi de l'événement à RabbitMQ
         if (!changes.isEmpty()) {
-            updatedTask.setChanges(changes); // Ajoutez un champ List<TaskChangeEvent> dans Task
+            updatedTask.setChanges(changes);
             eventProducer.sendTaskinMessage(updatedTask);
         }
+
         return mapToTaskResponse(updatedTask);
+    }
+
+    // Méthode utilitaire pour factoriser le code de mise à jour
+    private <T> void updateFieldIfChanged(Task task, T newValue, T currentValue, String fieldName,
+                                          List<TaskChangeEvent> changes, Consumer<T> setter) {
+        if (!Objects.equals(newValue, currentValue)) {
+            changes.add(new TaskChangeEvent(
+                    fieldName,
+                    currentValue != null ? currentValue.toString() : null,
+                    newValue != null ? newValue.toString() : null,
+                    LocalDateTime.now()
+            ));
+            setter.accept(newValue);
+        }
     }
     private TaskResponse mapToTaskResponse(Task task) {
         TaskResponse response = new TaskResponse();
