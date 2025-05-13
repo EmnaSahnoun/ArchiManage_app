@@ -41,12 +41,12 @@ try{
     TaskEventDTO taskEventDTO = objectMapper.readValue(event,TaskEventDTO.class);
     TaskHistory history = new TaskHistory();
 
-    if (taskEventDTO.getChanges() != null) {
+    if (taskEventDTO.getChanges() != null && !taskEventDTO.getChanges().isEmpty()) {
         if(taskEventDTO.getParentTaskId() == null) {
         for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
 
-            history.setTaskId(taskEventDTO.getId());
-            history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+            history.setTaskId(taskEventDTO.getTaskId());
+            history.setIdUser(taskEventDTO.getUserId());
             history.setAction(taskEventDTO.getAction());
             history.setFieldChanged(change.getFieldChanged());
             history.setOldValue(change.getOldValue());
@@ -55,7 +55,7 @@ try{
 
             taskHistoryService.recordHistory(history);
             LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                    taskEventDTO.getId(),
+                    taskEventDTO.getUserId(),
                     change.getFieldChanged(),
                     change.getOldValue(),
                     change.getNewValue());
@@ -66,8 +66,8 @@ try{
                 for (TaskEventDTO.TaskChangeEvent change : taskEventDTO.getChanges()) {
 
                     history.setTaskId(taskEventDTO.getParentTaskId());
-                    history.setSubTaskId(taskEventDTO.getId());
-                    history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+                    history.setSubTaskId(taskEventDTO.getTaskId());
+                    history.setIdUser(taskEventDTO.getUserId());
                     history.setAction(taskEventDTO.getAction());
                     history.setFieldChanged(change.getFieldChanged());
                     history.setOldValue(change.getOldValue());
@@ -76,7 +76,7 @@ try{
 
                     taskHistoryService.recordHistory(history);
                     LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                            taskEventDTO.getId(),
+                            taskEventDTO.getTaskId(),
                             change.getFieldChanged(),
                             change.getOldValue(),
                             change.getNewValue());
@@ -88,28 +88,28 @@ try{
 
     if (taskEventDTO.getChanges() == null) {
         if(taskEventDTO.getParentTaskId() == null) {
-                history.setTaskId(taskEventDTO.getId());
-                history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+                history.setTaskId(taskEventDTO.getTaskId());
+                history.setIdUser(taskEventDTO.getUserId());
                 history.setAction(taskEventDTO.getAction());
                 history.setCreatedAt(LocalDateTime.now());
                 taskHistoryService.recordHistory(history);
                 LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                        taskEventDTO.getId());
+                        taskEventDTO.getUserId());
 
 
         }
 
         if (taskEventDTO.getParentTaskId() != null)  {
                 history.setTaskId(taskEventDTO.getParentTaskId());
-                history.setSubTaskId(taskEventDTO.getId());
-                history.setIdUser(taskEventDTO.getPhase().getProject().getIdAdmin());
+                history.setSubTaskId(taskEventDTO.getTaskId());
+                history.setIdUser(taskEventDTO.getUserId());
                 history.setAction(taskEventDTO.getAction());
 
                 history.setCreatedAt(LocalDateTime.now());
 
                 taskHistoryService.recordHistory(history);
                 LOGGER.info("Recorded change for task {}: {} from {} to {}",
-                        taskEventDTO.getId());
+                        taskEventDTO.getTaskId());
             }
 
 

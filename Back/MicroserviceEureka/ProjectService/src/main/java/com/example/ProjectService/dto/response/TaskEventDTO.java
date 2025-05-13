@@ -1,15 +1,17 @@
 package com.example.ProjectService.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class TaskEventDTO {
     private String taskId;
+    private String userId;
     private String action;
-    private String idUser;
-    private Map<String, Object> newTaskData;
-    private Map<String, String> oldValues;
-    private LocalDateTime timestamp;
+    private Date createdAt;
+    private String parentTaskId;
+    private List<TaskChangeEvent> changes;
 
     public String getTaskId() {
         return taskId;
@@ -17,6 +19,14 @@ public class TaskEventDTO {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getAction() {
@@ -27,35 +37,27 @@ public class TaskEventDTO {
         this.action = action;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Map<String, Object> getNewTaskData() {
-        return newTaskData;
+    public String getParentTaskId() {
+        return parentTaskId;
     }
 
-    public void setNewTaskData(Map<String, Object> newTaskData) {
-        this.newTaskData = newTaskData;
+    public void setParentTaskId(String parentTaskId) {
+        this.parentTaskId = parentTaskId;
     }
 
-    public Map<String, String> getOldValues() {
-        return oldValues;
+    public List<TaskChangeEvent> getChanges() {
+        return changes;
     }
 
-    public void setOldValues(Map<String, String> oldValues) {
-        this.oldValues = oldValues;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setChanges(List<TaskChangeEvent> changes) {
+        this.changes = changes;
     }
 }

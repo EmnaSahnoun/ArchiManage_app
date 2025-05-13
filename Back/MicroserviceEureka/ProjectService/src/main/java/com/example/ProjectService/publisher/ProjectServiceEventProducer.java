@@ -39,7 +39,14 @@ public class ProjectServiceEventProducer {
 
     public void sendTaskinMessage(Task task) {
 try{
-        String jsonMessage = objectMapper.writeValueAsString(task);
+    TaskEventDTO message = new TaskEventDTO();
+    message.setTaskId(task.getId());
+    message.setUserId(task.getPhase().getProject().getIdAdmin());
+    message.setAction(task.getAction());
+    message.setCreatedAt(task.getCreatedAt());
+    message.setParentTaskId(task.getParentTaskId());
+    message.setChanges(task.getChanges());
+        String jsonMessage = objectMapper.writeValueAsString(message);
         LOGGER.info(String.format("Json message sent -> %s", jsonMessage));
 
         rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
