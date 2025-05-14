@@ -40,6 +40,7 @@ public class CommentService implements IComment {
             try {
                 // 2. Récupérer les infos de notification depuis MSProject
                 notificationInfo = taskService.getTaskNotificationbyIdTask(commentRequest.getTaskId());
+                logger.error("Bien reçu", notificationInfo.getTaskName());
             } catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);
