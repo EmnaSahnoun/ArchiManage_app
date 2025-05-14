@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 
@@ -18,27 +19,24 @@ public class CommentNotificationConsumer {
     @Autowired
     private ObjectMapper objectMapper;
     private static final Logger logger = LoggerFactory.getLogger(CommentNotificationConsumer.class);
-    private final SSENotificationService sseNotificationService;
+
+    private final Sinks.Many<CommentNotificationDto> sink;
     @Autowired
-    public CommentNotificationConsumer(SSENotificationService sseNotificationService) {
-        this.sseNotificationService = sseNotificationService;
+    public CommentNotificationConsumer(ObjectMapper objectMapper,
+                                       Sinks.Many<CommentNotificationDto> sink
+                                       ) {
+
+        this.objectMapper = objectMapper;
+        this.sink = sink;
     }
 
-    @RabbitListener(queues = {"${rabbitmq.queueJson2.name}"})
-    public void consumeMessage(String notificationDto) throws IOException {
-        logger.info("Received notification: {}", notificationDto);
-
-        try{
-            CommentNotificationDto commentNotificationDto = objectMapper.readValue(notificationDto, CommentNotificationDto.class);
-            logger.info("commentNotificationDto recu {}: {} from {} to {}",
-                    commentNotificationDto.getMessage());
-        // Envoyer la notification SSE aux utilisateurs concernés
-        sseNotificationService.sendNotificationToUsers(
-                commentNotificationDto.getUserIdsToNotify(),
-                commentNotificationDto
-        );
-        }catch (Exception e){
-            logger.error("Error while parsing Comment notification ",e.getMessage());
+    @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
+    public void consume(CommentNotificationDto notification) {
+        try {
+            logger.info("Received comment notification for task: {}", notification.getTaskId());
+            sink.tryEmitNext(notification);
+        } catch (Exception e) {
+            logger.error("Error processing comment notification", e);
         }
     }
 }

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
@@ -36,6 +37,10 @@ public class CommentService implements IComment {
     private final ITask taskService;
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
     private final RabbitTemplate rabbitTemplate;
+    @Value("${rabbitmq.exchange2.name}")
+    private String exchangeName;
+    @Value("${rabbitmq.routing.json.key2.name}")
+    private String routingKey;
     @Autowired
     private CommentNotificationProducer notificationProducer;
     @Override
@@ -63,8 +68,8 @@ public class CommentService implements IComment {
                         notificationInfo.getTaskName(),
                         notificationInfo.getProjectName(),
                         notificationInfo.getPhaseName(),
-                        commentRequest.getUsername()+ "a ajouté un commentaire à la tâche" + notificationInfo.getTaskName()
-                                +"(Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
+                        commentRequest.getUsername()+ " a ajouté un commentaire à la tâche" + notificationInfo.getTaskName()
+                                +" (Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
                         LocalDateTime.now(),
                         notificationInfo.getUserIdsToNotify(),
                         commentRequest.getContent(),
@@ -73,7 +78,7 @@ public class CommentService implements IComment {
                         "ADD"
                 );
 
-                notificationProducer.sendNotification(notification);
+                rabbitTemplate.convertAndSend(exchangeName, routingKey, notification);
             } catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);
