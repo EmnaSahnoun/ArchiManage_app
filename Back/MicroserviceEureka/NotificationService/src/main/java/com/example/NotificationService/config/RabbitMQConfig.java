@@ -1,6 +1,5 @@
 package com.example.NotificationService.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -41,10 +40,13 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public MessageConverter messageConverter(ObjectMapper objectMapper) {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
-        converter.setClassMapper(classMapper());
-        return converter;
+    public MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter() {
+            @Override
+            public Object fromMessage(Message message) throws MessageConversionException {
+                return new String(message.getBody(), StandardCharsets.UTF_8);
+            }
+        };
     }
     @Bean
     public DefaultClassMapper classMapper() {
@@ -57,9 +59,9 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
     @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter);
+        rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
 

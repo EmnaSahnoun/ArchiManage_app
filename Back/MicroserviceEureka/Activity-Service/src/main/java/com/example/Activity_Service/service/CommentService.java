@@ -14,8 +14,6 @@ import com.example.Activity_Service.interfaces.ITask;
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.publish.CommentNotificationProducer;
 import com.example.Activity_Service.repository.CommentRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +37,6 @@ public class CommentService implements IComment {
     private final ITask taskService;
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
     @Value("${rabbitmq.exchange2.name}")
     private String exchangeName;
     @Value("${rabbitmq.routing.json.key2.name}")
@@ -80,13 +77,9 @@ public class CommentService implements IComment {
 
                         "ADD"
                 );
-                try {
-                    String jsonNotification = objectMapper.writeValueAsString(notification);
-                    rabbitTemplate.convertAndSend(exchangeName, routingKey, jsonNotification);
-                    logger.info("Notification sent: {}", jsonNotification);
-                } catch (JsonProcessingException e) {
-                    logger.error("Failed to serialize notification", e);
-                }
+                logger.info("Sending notification to RabbitMQ: {}", notification);
+                rabbitTemplate.convertAndSend(exchangeName, routingKey,
+                        notification);
             } catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);

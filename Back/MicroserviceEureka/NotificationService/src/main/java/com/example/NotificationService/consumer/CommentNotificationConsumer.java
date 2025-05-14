@@ -28,10 +28,12 @@ public class CommentNotificationConsumer {
 
 
     @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
-    public void consume(CommentNotificationDto  notification) {
+    public void consume(String message) {
         try {
-            logger.info("Raw JSON received: {}", notification);
+            logger.info("Raw JSON received: {}", message);
 
+            // Conversion du JSON en DTO
+            CommentNotificationDto notification = objectMapper.readValue(message, CommentNotificationDto.class);
 
             // Modification selon le type si nécessaire
             if ("ADD".equals(notification.getActionType())) {
@@ -44,7 +46,7 @@ public class CommentNotificationConsumer {
             sink.tryEmitNext(notification);
 
         } catch (Exception e) {
-            logger.error("Error processing message: {}", notification, e);
+            logger.error("Error processing message: {}", message, e);
             throw new AmqpRejectAndDontRequeueException("Failed to process message", e);
         }
     }
