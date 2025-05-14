@@ -454,7 +454,7 @@ export class ProjectDetailsComponent implements OnInit {
             windowClass: 'confirmation-modal'
         });
     
-        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la phase ${phase.name} ?`;
+        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la phase `;
         modalRef.componentInstance.username = phase.name; // Pass username for confirmation if needed
     
         modalRef.result.then((confirm) => {

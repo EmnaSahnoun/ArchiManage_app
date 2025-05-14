@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ConfirmationDialogComponent {
   @Input()username!: string;
+  @Input()message!:string;
   constructor(
     public activeModal: NgbActiveModal,
   ) {}

@@ -1,6 +1,9 @@
 package com.example.Activity_Service.service;
 
 import com.example.Activity_Service.Exceptions.CommentCreationException;
+import com.example.Activity_Service.Exceptions.CommentDeletionException;
+import com.example.Activity_Service.Exceptions.CommentNotFoundException;
+import com.example.Activity_Service.Exceptions.CommentUpdateException;
 import com.example.Activity_Service.dto.request.CommentRequest;
 import com.example.Activity_Service.dto.response.CommentResponse;
 import com.example.Activity_Service.dto.response.TaskCommentNotificationDto;
@@ -78,54 +81,104 @@ public class CommentService implements IComment {
 
     @Override
     public void deleteComment(String commentId, String taskId, String idUser) {
-        List<CommentResponse> comments = commentRepository.findByTaskId(taskId);
-        comments.removeIf(c -> c.getId().equals(commentId));
+        try {
+            // Récupérer les informations de la tâche
+            TaskCommentNotificationDto notificationInfo;
+            try {
+                notificationInfo = taskService.getTaskNotificationbyIdTask(taskId);
+                logger.info("=== Informations de la tâche (DELETE) ===");
+                logger.info("ID Tâche: {}", taskId);
+                logger.info("Nom Tâche: {}", notificationInfo.getTaskName());
+                logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
+                logger.info("Nom Projet: {}", notificationInfo.getProjectName());
+            } catch (Exception e) {
+                logger.error("Failed to fetch task info from MSProject", e);
+                notificationInfo = new TaskCommentNotificationDto();
+                notificationInfo.setTaskName("Unknown Task");
+            }
 
-        // Sauvegarder la liste mise à jour
-        Path taskFile = commentRepository.getStoragePath().resolve(taskId + ".task");
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taskFile.toFile()))) {
-            oos.writeObject(comments);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save comments after deletion", e);
+            // Suppression du commentaire
+            List<CommentResponse> comments = commentRepository.findByTaskId(taskId);
+            comments.removeIf(c -> c.getId().equals(commentId));
+
+            // Sauvegarder la liste mise à jour
+            Path taskFile = commentRepository.getStoragePath().resolve(taskId + ".task");
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taskFile.toFile()))) {
+                oos.writeObject(comments);
+            } catch (IOException e) {
+                logger.error("Failed to save comments after deletion", e);
+                throw new RuntimeException("Failed to save comments after deletion", e);
+            }
+
+            // Enregistrer dans l'historique
+            taskHistoryService.recordCommentHistory(taskId, idUser, "DELETE",
+                    "Comment deleted from task: " + notificationInfo.getTaskName());
+
+        } catch (Exception e) {
+            logger.error("Failed to delete comment", e);
+            throw new CommentDeletionException("Failed to delete comment", e);
         }
-
-        // Enregistrer dans l'historique
-        taskHistoryService.recordCommentHistory(taskId, idUser, "DELETE", "Comment deleted");
     }
-
     @Override
     public CommentResponse updateComment(String commentId, CommentRequest commentRequest) {
-        List<CommentResponse> comments = commentRepository.findByTaskId(commentRequest.getTaskId());
+        try {
+            // Récupérer les informations de la tâche
+            TaskCommentNotificationDto notificationInfo;
+            try {
+                notificationInfo = taskService.getTaskNotificationbyIdTask(commentRequest.getTaskId());
+                logger.info("=== Informations de la tâche (UPDATE) ===");
+                logger.info("ID Tâche: {}", commentRequest.getTaskId());
+                logger.info("Nom Tâche: {}", notificationInfo.getTaskName());
+                logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
+                logger.info("Nom Projet: {}", notificationInfo.getProjectName());
+            } catch (Exception e) {
+                logger.error("Failed to fetch task info from MSProject", e);
+                notificationInfo = new TaskCommentNotificationDto();
+                notificationInfo.setTaskName("Unknown Task");
+            }
 
-        CommentResponse updatedComment = comments.stream()
-                .filter(c -> c.getId().equals(commentId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+            // Mise à jour du commentaire
+            List<CommentResponse> comments = commentRepository.findByTaskId(commentRequest.getTaskId());
 
-        // Sauvegarder l'ancienne valeur pour l'historique
-        String oldContent = updatedComment.getContent();
+            CommentResponse updatedComment = comments.stream()
+                    .filter(c -> c.getId().equals(commentId))
+                    .findFirst()
+                    .orElseThrow(() -> {
+                        logger.error("Comment not found with id: {}", commentId);
+                        return new CommentNotFoundException("Comment not found with id: " + commentId);
+                    });
 
-        // Mettre à jour le commentaire
-        updatedComment.setContent(commentRequest.getContent());
-        updatedComment.setCreatedAt(LocalDateTime.now());
+            // Sauvegarder l'ancienne valeur pour l'historique
+            String oldContent = updatedComment.getContent();
 
-        // Sauvegarder la liste mise à jour
-        Path taskFile = commentRepository.getStoragePath().resolve(commentRequest.getTaskId() + ".task");
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taskFile.toFile()))) {
-            oos.writeObject(comments);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save comments after update", e);
+            // Mettre à jour le commentaire
+            updatedComment.setContent(commentRequest.getContent());
+            updatedComment.setCreatedAt(LocalDateTime.now());
+
+            // Sauvegarder la liste mise à jour
+            Path taskFile = commentRepository.getStoragePath().resolve(commentRequest.getTaskId() + ".task");
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taskFile.toFile()))) {
+                oos.writeObject(comments);
+            } catch (IOException e) {
+                logger.error("Failed to save comments after update", e);
+                throw new RuntimeException("Failed to save comments after update", e);
+            }
+
+            // Enregistrer dans l'historique
+            taskHistoryService.recordCommentHistory(
+                    commentRequest.getTaskId(),
+                    commentRequest.getIdUser(),
+                    "UPDATE",
+                    String.format("Task: %s | Content changed from: %.20s to: %.20s",
+                            notificationInfo.getTaskName(),
+                            oldContent,
+                            commentRequest.getContent())
+            );
+
+            return updatedComment;
+        } catch (Exception e) {
+            logger.error("Failed to update comment", e);
+            throw new CommentUpdateException("Failed to update comment", e);
         }
-
-        // Enregistrer dans l'historique
-        taskHistoryService.recordCommentHistory(
-                commentRequest.getTaskId(),
-                commentRequest.getIdUser(),
-                "UPDATE",
-                "Content changed from: " + oldContent.substring(0, Math.min(20, oldContent.length())) +
-                        " to: " + commentRequest.getContent().substring(0, Math.min(20, commentRequest.getContent().length()))
-        );
-
-        return updatedComment;
     }
 }

@@ -112,7 +112,7 @@ export class AgencesComponent implements OnInit{
       windowClass: 'confirmation-modal'
   });
 
-  modalRef.componentInstance.message = `Voulez-vous vraiment supprimer l'agence ${name} ?`;
+  modalRef.componentInstance.message = `Voulez-vous vraiment supprimer l'agence `;
   modalRef.componentInstance.username = name;
   modalRef.result.then((confirm) => {
       if (confirm) {

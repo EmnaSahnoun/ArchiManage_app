@@ -200,7 +200,7 @@ export class TasksComponent implements OnInit {
             windowClass: 'confirmation-modal'
         });
     
-        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer cette tache ${task.name}  ?`;
+        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer cette tache `;
         modalRef.componentInstance.username = task.name; // Pass username for confirmation if needed
     
         modalRef.result.then((confirm) => {
