@@ -239,8 +239,8 @@ public class TaskService implements ITask {
             Phase phase = task.getPhase();
             dto.setPhaseName(phase.getName());
 
-            Project project = projectRepository.findByPhasesContaining(phase)
-                    .orElseThrow(() -> new ProjectNotFoundException("Project not found for phase: " + phase.getId()));
+            Project project = phase.getProject();
+
             dto.setProjectName(project.getName());
 
             List<PhaseAccess> phaseAccesses = phaseAccessRepository.findByPhaseAndCanView(phase, true);
