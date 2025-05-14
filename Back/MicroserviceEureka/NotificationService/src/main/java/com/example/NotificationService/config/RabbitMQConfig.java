@@ -5,9 +5,12 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConversionException;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+
+import java.nio.charset.StandardCharsets;
 
 public class RabbitMQConfig {
     @Value("${rabbitmq.queueJson2.name}")
@@ -37,9 +40,12 @@ public class RabbitMQConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
-        converter.setClassMapper(classMapper());
-        return converter;
+        return new Jackson2JsonMessageConverter() {
+            @Override
+            public Object fromMessage(Message message) throws MessageConversionException {
+                return new String(message.getBody(), StandardCharsets.UTF_8);
+            }
+        };
     }
     @Bean
     public DefaultClassMapper classMapper() {
@@ -54,7 +60,7 @@ public class RabbitMQConfig {
     @Bean
     public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(converter());
+        rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
 

@@ -29,17 +29,26 @@ public class CommentNotificationConsumer {
 
 
     @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
-    public void consume(Message message) {
+    public void consume(String message) {
         try {
-            // Conversion manuelle du message
-            CommentNotificationDto notification = (CommentNotificationDto) rabbitTemplate.getMessageConverter()
-                    .fromMessage(message);
+            logger.info("Raw JSON received: {}", message);
 
-            logger.info("Received comment notification for task: {}", notification.getTaskId());
+            // Conversion du JSON en DTO
+            CommentNotificationDto notification = objectMapper.readValue(message, CommentNotificationDto.class);
+
+            // Modification selon le type si nécessaire
+            if ("ADD".equals(notification.getActionType())) {
+                notification.setMessage("Nouveau commentaire: " + notification.getMessage());
+            } else if ("UPDATE".equals(notification.getActionType())) {
+                notification.setMessage("Commentaire modifié: " + notification.getMessage());
+            }
+
+            logger.info("Processed notification: {}", notification);
             sink.tryEmitNext(notification);
+
         } catch (Exception e) {
-            logger.error("Error processing comment notification", e);
-            throw new AmqpRejectAndDontRequeueException(e);
+            logger.error("Error processing message: {}", message, e);
+            throw new AmqpRejectAndDontRequeueException("Failed to process message", e);
         }
     }
 }

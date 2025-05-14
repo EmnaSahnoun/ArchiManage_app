@@ -24,11 +24,9 @@ public class NotificationController {
 
 
 
-    @GetMapping(value = "/subscribe/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<CommentNotificationDto> streamNotifications(@PathVariable String userId) {
-        logger.info("New SSE subscription for user: {}", userId);
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<CommentNotificationDto> streamNotifications() {
         return sink.asFlux()
-                .filter(notification -> notification.getUserIdsToNotify().contains(userId))
-                .doOnCancel(() -> logger.info("SSE connection closed for user: {}", userId));
+                .doOnCancel(() -> logger.info("Client disconnected"));
     }
 }
