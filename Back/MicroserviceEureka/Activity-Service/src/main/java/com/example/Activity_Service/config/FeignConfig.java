@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 @Configuration
 public class FeignConfig {
-    
     @Bean
     public Decoder feignDecoder() {
         ObjectFactory<HttpMessageConverters> messageConverters = () -> new HttpMessageConverters(
