@@ -1,6 +1,7 @@
 package com.example.ProjectService.controller;
 
 import com.example.ProjectService.dto.request.TaskRequest;
+import com.example.ProjectService.dto.response.TaskCommentNotificationDto;
 import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
@@ -74,5 +75,11 @@ public class TaskController {
             @RequestBody TaskRequest request) {
         TaskResponse response = taskService.updateTask(id, request);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/comment/{idTask}") // Changé de /compain/
+    public ResponseEntity<TaskCommentNotificationDto> getTaskNotificationbyIdTask(@PathVariable String idTask) {
+        TaskCommentNotificationDto responses = taskService.getTaskNotificationbyIdTask(idTask);
+        return ResponseEntity.ok(responses);
     }
 }

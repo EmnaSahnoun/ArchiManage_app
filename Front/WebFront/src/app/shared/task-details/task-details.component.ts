@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Importé pour contrôler le modal Ngb
 import { ProjectService } from '../../services/ProjectService';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { ActivityService } from '../../services/activityService';
 import { AgenceService } from '../../services/agenceService';
 import { CommentResponse, TaskHistory } from '../../models/activity.interfaces';
@@ -31,13 +31,14 @@ export class TaskDetailsComponent implements OnInit {
   taskStatusOptions = ['TODO', 'IN_PROGRESS', 'COMPLETED']; // Adaptez selon vos statuts
   taskPriorityOptions = ['LOW', 'MEDIUM', 'HIGH']; // Adaptez selon vos priorités
 
-
+name:string="";
   constructor(
     public activeModal: NgbActiveModal,
     public agenceService: AgenceService,
     private activityService:ActivityService,
     private projectService: ProjectService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+
   ) {
     
   }
@@ -195,17 +196,41 @@ loadComments(): void {
 loadActivities(): void {
   this.isLoadingActivities = true;
   
-  this.activityService.getHistoryByTaskId(this.task.id).subscribe({
-    next: (activities) => {
-      this.task.activities = activities; // Assigner directement les activités brutes
+  this.activityService.getHistoryByTaskId(this.task.id).pipe(
+    switchMap((activities: TaskHistory[]) => {
+      if (!activities || activities.length === 0) {
+        return of([]); // Return empty array if no activities
+      }
+      // Create an array of Observables to fetch usernames
+      // Ensure TaskHistory interface has an optional username property: username?: string;
+      const userRequests: Observable<TaskHistory>[] = activities.map(activity => {
+        if (activity.idUser) { // Check if idUser exists
+          return this.agenceService.getUserById(activity.idUser).pipe(
+            map(user => {
+              return { ...activity, username: user.username }; // Assign username to activity object
+            }),
+            catchError(err => {
+              console.error(`Error fetching user ${activity.idUser} for activity:`, err);
+              return of({ ...activity, username: 'User N/A' }); // Fallback username
+            })
+          );
+        } else {
+          // If no idUser, activity might be a system action or username might already be there from another source
+          return of({ ...activity, username: activity.username || 'System Action' });
+        }
+      });
+      return forkJoin(userRequests); // Execute all user fetch requests
+    })
+  ).subscribe({
+    next: (processedActivitiesWithUsernames) => {
+      this.task.activities = processedActivitiesWithUsernames; // Assigner directement les activités brutes
       this.isLoadingActivities = false;
-      console.log('Activities (history) loaded:', this.task.activities);
-   
+      console.log('Activities (history) loaded with usernames:', this.task.activities);
     
     },
     error: (err) => {
-      console.error('Error loading activities:', err);
-      this.task.activities = [];
+      console.error('Error loading activities or fetching usernames:', err);
+      this.task.activities = []; // Ensure it's an array in case of error
       this.isLoadingActivities = false;
     }
   });
@@ -440,4 +465,6 @@ deleteSubtask(subtaskId: string, subtaskName: string): void {
   closeModal(): void {
     this.activeModal.close();
   }
+
+  
 }

@@ -129,9 +129,7 @@
                 </div>
                 <div class="activity-content-wrapper">
                   <div class="activity-main-info">
-                    <span class="user" *ngIf="activity.username">{{ activity.username }}</span>
-                    <span class="user" *ngIf="!activity.username">Système</span> <!-- Fallback for system actions -->
-                    <span class="action-description">{{ generateActivityDescription(activity) }}</span>
+                    <span class="user" >{{ activity.username || (activity.idUser ? 'Loading user...' : 'System Action') }}</span>  <span class="action-description">{{ generateActivityDescription(activity) }}</span>
                   </div>
                   <div class="activity-meta">
                     <span class="timestamp">{{ activity.createdAt | date:'short' }}</span>

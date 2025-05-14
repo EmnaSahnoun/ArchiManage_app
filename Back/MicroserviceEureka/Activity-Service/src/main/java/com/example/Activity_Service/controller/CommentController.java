@@ -2,8 +2,9 @@ package com.example.Activity_Service.controller;
 
 import com.example.Activity_Service.dto.request.CommentRequest;
 import com.example.Activity_Service.dto.response.CommentResponse;
+import com.example.Activity_Service.dto.response.TaskCommentNotificationDto;
 import com.example.Activity_Service.service.CommentService;
-import lombok.RequiredArgsConstructor;
+import com.example.Activity_Service.service.TaskCommentNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,11 @@ import java.util.List;
 
 public class CommentController {
     private final CommentService commentService;
+    private final TaskCommentNotificationService membersAccessesService;
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService , TaskCommentNotificationService phaseAccessesService) {
         this.commentService = commentService;
+        this.membersAccessesService = phaseAccessesService;
     }
     @PostMapping
     public ResponseEntity<CommentResponse> addComment(@RequestBody CommentRequest commentRequest) {
@@ -42,5 +45,11 @@ public class CommentController {
             @PathVariable String commentId,
             @RequestBody CommentRequest commentRequest) {
         return ResponseEntity.ok(commentService.updateComment(commentId, commentRequest));
+    }
+
+    @GetMapping("/{idTask}/PhaseAccesses")
+    public ResponseEntity<List<TaskCommentNotificationDto>> getTaskNotificationbyIdTask(@PathVariable String idTask) {
+        List<TaskCommentNotificationDto> phaseAccessesResponses = membersAccessesService.getTaskNotificationbyIdTask(idTask);
+        return ResponseEntity.ok(phaseAccessesResponses);
     }
 }

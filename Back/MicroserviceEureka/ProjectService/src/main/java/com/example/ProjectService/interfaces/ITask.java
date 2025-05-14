@@ -1,6 +1,7 @@
 package com.example.ProjectService.interfaces;
 
 import com.example.ProjectService.dto.request.TaskRequest;
+import com.example.ProjectService.dto.response.TaskCommentNotificationDto;
 import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
@@ -17,4 +18,5 @@ public interface ITask {
     TaskResponse addSubTask(String parentId, TaskRequest request);
     void deleteTask(String id);
     TaskResponse updateTask(String id, TaskRequest request);
+    TaskCommentNotificationDto getTaskNotificationbyIdTask(String idTask);
 }

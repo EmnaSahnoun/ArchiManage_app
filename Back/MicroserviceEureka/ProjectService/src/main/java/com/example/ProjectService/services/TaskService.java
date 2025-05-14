@@ -2,6 +2,7 @@ package com.example.ProjectService.services;
 
 import com.example.ProjectService.dto.request.TaskRequest;
 import com.example.ProjectService.dto.response.TaskChangeEvent;
+import com.example.ProjectService.dto.response.TaskCommentNotificationDto;
 import com.example.ProjectService.dto.response.TaskResponse;
 import com.example.ProjectService.exception.PhaseNotFoundException;
 import com.example.ProjectService.exception.ProjectNotFoundException;
@@ -12,10 +13,7 @@ import com.example.ProjectService.models.enums.InvitationStatus;
 import com.example.ProjectService.models.enums.TaskPriority;
 import com.example.ProjectService.models.enums.TaskStatus;
 import com.example.ProjectService.publisher.ProjectServiceEventProducer;
-import com.example.ProjectService.repositories.PhaseRepository;
-import com.example.ProjectService.repositories.ProjectAccessRepository;
-import com.example.ProjectService.repositories.ProjectRepository;
-import com.example.ProjectService.repositories.TaskRepository;
+import com.example.ProjectService.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,17 +37,19 @@ public class TaskService implements ITask {
     private final ProjectAccessRepository projectAccessRepository;
     private final ProjectServiceEventProducer eventProducer;
     private final ProjectRepository projectRepository;
+    private final PhaseAccessRepository phaseAccessRepository;
 
     @Autowired
     public TaskService(TaskRepository taskRepository,
                        PhaseRepository phaseRepository,
                        ProjectAccessRepository projectAccessRepository,
-                       ProjectServiceEventProducer eventProducer, ProjectRepository projectRepository) {
+                       ProjectServiceEventProducer eventProducer, ProjectRepository projectRepository, PhaseAccessRepository phaseAccessRepository) {
         this.taskRepository = taskRepository;
         this.phaseRepository = phaseRepository;
         this.projectAccessRepository = projectAccessRepository;
         this.eventProducer = eventProducer;
         this.projectRepository = projectRepository;
+        this.phaseAccessRepository = phaseAccessRepository;
     }
     @Override
     @Transactional
@@ -225,6 +225,40 @@ public class TaskService implements ITask {
         }
 
         return mapToTaskResponse(updatedTask);
+    }
+
+    @Override
+    public TaskCommentNotificationDto getTaskNotificationbyIdTask(String idTask) {
+        Optional<Task> t = taskRepository.findById(idTask);
+        if (t.isEmpty()){
+            throw new TaskNotFoundException("Task not found with id: " + idTask);
+        }
+        Task task = t.get();
+        TaskCommentNotificationDto dto = new TaskCommentNotificationDto();
+        dto.setTaskName(task.getName());
+        // Récupérer la phase associée à la tâche
+        if (task.getPhase() != null) {
+            Phase phase = task.getPhase();
+            dto.setPhaseName(phase.getName());
+            Optional<Project> project = projectRepository.findByPhasesContaining(phase);
+            if (project != null) {
+                dto.setProjectName(project.get().getName());
+            }
+            // Récupérer les PhaseAccess pour cette phase avec canView=true
+            List<PhaseAccess> phaseAccesses = phaseAccessRepository.findByPhaseAndCanView(phase, true);
+
+            // Extraire les IDs des utilisateurs
+            List<String> userIds = phaseAccesses.stream()
+                    .map(PhaseAccess::getIdUser)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            dto.setUserIdsToNotify(userIds);
+
+
+        }
+
+        return dto;
     }
 
     // Méthode utilitaire pour factoriser le code de mise à jour
