@@ -41,12 +41,11 @@ public class RabbitMQConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter() {
-            @Override
-            public Object fromMessage(Message message) throws MessageConversionException {
-                return new String(message.getBody(), StandardCharsets.UTF_8);
-            }
-        };
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setTrustedPackages("*");
+        converter.setClassMapper(classMapper);
+        return converter;
     }
     @Bean
     public DefaultClassMapper classMapper() {
@@ -59,9 +58,9 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
     @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
+    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter());
+        rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
     }
 
