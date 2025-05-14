@@ -229,38 +229,30 @@ public class TaskService implements ITask {
 
     @Override
     public TaskCommentNotificationDto getTaskNotificationbyIdTask(String idTask) {
-        Optional<Task> t = taskRepository.findById(idTask);
-        if (t.isEmpty()){
-            throw new TaskNotFoundException("Task not found with id: " + idTask);
-        }
-        Task task = t.get();
+        Task task = taskRepository.findById(idTask)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + idTask));
+
         TaskCommentNotificationDto dto = new TaskCommentNotificationDto();
         dto.setTaskName(task.getName());
-        // Récupérer la phase associée à la tâche
+
         if (task.getPhase() != null) {
             Phase phase = task.getPhase();
             dto.setPhaseName(phase.getName());
-            Optional<Project> project = projectRepository.findByPhasesContaining(phase);
-            if (project != null) {
-                dto.setProjectName(project.get().getName());
-            }
-            // Récupérer les PhaseAccess pour cette phase avec canView=true
-            List<PhaseAccess> phaseAccesses = phaseAccessRepository.findByPhaseAndCanView(phase, true);
 
-            // Extraire les IDs des utilisateurs
+            Project project = projectRepository.findByPhasesContaining(phase)
+                    .orElseThrow(() -> new ProjectNotFoundException("Project not found for phase: " + phase.getId()));
+            dto.setProjectName(project.getName());
+
+            List<PhaseAccess> phaseAccesses = phaseAccessRepository.findByPhaseAndCanView(phase, true);
             List<String> userIds = phaseAccesses.stream()
                     .map(PhaseAccess::getIdUser)
                     .distinct()
                     .collect(Collectors.toList());
-
             dto.setUserIdsToNotify(userIds);
-
-
         }
 
         return dto;
     }
-
     // Méthode utilitaire pour factoriser le code de mise à jour
     private <T> void updateFieldIfChanged(Task task, T newValue, T currentValue, String fieldName,
                                           List<TaskChangeEvent> changes, Consumer<T> setter) {
