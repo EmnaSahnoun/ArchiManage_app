@@ -1,11 +1,16 @@
 package com.example.Activity_Service.service;
 
+import com.example.Activity_Service.Exceptions.CommentCreationException;
 import com.example.Activity_Service.dto.request.CommentRequest;
 import com.example.Activity_Service.dto.response.CommentResponse;
+import com.example.Activity_Service.dto.response.TaskCommentNotificationDto;
 import com.example.Activity_Service.interfaces.IComment;
+import com.example.Activity_Service.interfaces.ITask;
 import com.example.Activity_Service.model.TaskHistory;
 import com.example.Activity_Service.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,30 +22,46 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-
+@RequiredArgsConstructor
 public class CommentService implements IComment {
     private final CommentRepository commentRepository;
     private final TaskHistoryService taskHistoryService;
+    private final ITask taskService;
+    private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
-    @Autowired
-    public CommentService(CommentRepository commentRepository, TaskHistoryService taskHistoryService) {
-        this.commentRepository = commentRepository;
-        this.taskHistoryService = taskHistoryService;
-    }
 
     @Override
     public CommentResponse addComment(CommentRequest commentRequest) {
-        CommentResponse comment = commentRepository.save(commentRequest);
-        TaskHistory history = new TaskHistory();
-        history.setTaskId(commentRequest.getTaskId());
-        history.setIdUser(commentRequest.getIdUser());
-        history.setUsername(commentRequest.getUsername());
-        history.setAction("COMMENT");
-        history.setFieldChanged("comments");
+        try {
+            // 1. Enregistrer le commentaire
+            CommentResponse comment = commentRepository.save(commentRequest);
 
-        taskHistoryService.recordHistory(history);
+            TaskCommentNotificationDto notificationInfo;
+            try {
+                // 2. Récupérer les infos de notification depuis MSProject
+                notificationInfo = taskService.getTaskNotificationbyIdTask(commentRequest.getTaskId());
+            } catch (Exception e) {
+                // Log l'erreur mais continue le traitement
+                logger.error("Failed to fetch notification info from MSProject", e);
+                notificationInfo = new TaskCommentNotificationDto(); // Objet vide
+                notificationInfo.setTaskName("Unknown Task");
+            }
 
-        return comment;
+            // 3. Enregistrer dans l'historique
+            TaskHistory history = new TaskHistory();
+            history.setTaskId(commentRequest.getTaskId());
+            history.setIdUser(commentRequest.getIdUser());
+            history.setUsername(commentRequest.getUsername());
+            history.setAction("COMMENT");
+            history.setFieldChanged("comments");
+
+            taskHistoryService.recordHistory(history);
+
+            return comment;
+        } catch (Exception e) {
+            logger.error("Failed to create comment", e);
+            throw new CommentCreationException("Failed to create comment", e);
+        }
     }
 
     @Override

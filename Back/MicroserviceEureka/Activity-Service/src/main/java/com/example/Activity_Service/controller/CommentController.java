@@ -16,11 +16,11 @@ import java.util.List;
 
 public class CommentController {
     private final CommentService commentService;
-    private final TaskCommentNotificationService membersAccessesService;
+    private final TaskCommentNotificationService taskCommentNotificationService;
     @Autowired
-    public CommentController(CommentService commentService , TaskCommentNotificationService phaseAccessesService) {
+    public CommentController(CommentService commentService , TaskCommentNotificationService taskCommentNotificationService) {
         this.commentService = commentService;
-        this.membersAccessesService = phaseAccessesService;
+        this.taskCommentNotificationService = taskCommentNotificationService;
     }
     @PostMapping
     public ResponseEntity<CommentResponse> addComment(@RequestBody CommentRequest commentRequest) {
@@ -47,9 +47,9 @@ public class CommentController {
         return ResponseEntity.ok(commentService.updateComment(commentId, commentRequest));
     }
 
-    @GetMapping("/{idTask}/PhaseAccesses")
-    public ResponseEntity<List<TaskCommentNotificationDto>> getTaskNotificationbyIdTask(@PathVariable String idTask) {
-        List<TaskCommentNotificationDto> phaseAccessesResponses = membersAccessesService.getTaskNotificationbyIdTask(idTask);
-        return ResponseEntity.ok(phaseAccessesResponses);
+    @GetMapping("/{idTask}/taskInfo")
+    public ResponseEntity<TaskCommentNotificationDto> getTaskNotificationbyIdTask(@PathVariable String idTask) {
+        TaskCommentNotificationDto taskCommentNotificationDto = taskCommentNotificationService.getTaskNotificationbyIdTask(idTask);
+        return ResponseEntity.ok(taskCommentNotificationDto);
     }
 }
