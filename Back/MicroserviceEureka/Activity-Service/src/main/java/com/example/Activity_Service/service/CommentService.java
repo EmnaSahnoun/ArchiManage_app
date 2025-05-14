@@ -4,16 +4,20 @@ import com.example.Activity_Service.Exceptions.CommentCreationException;
 import com.example.Activity_Service.Exceptions.CommentDeletionException;
 import com.example.Activity_Service.Exceptions.CommentNotFoundException;
 import com.example.Activity_Service.Exceptions.CommentUpdateException;
+import com.example.Activity_Service.config.RabbitMQConfig;
 import com.example.Activity_Service.dto.request.CommentRequest;
+import com.example.Activity_Service.dto.response.CommentNotificationDto;
 import com.example.Activity_Service.dto.response.CommentResponse;
 import com.example.Activity_Service.dto.response.TaskCommentNotificationDto;
 import com.example.Activity_Service.interfaces.IComment;
 import com.example.Activity_Service.interfaces.ITask;
 import com.example.Activity_Service.model.TaskHistory;
+import com.example.Activity_Service.publish.CommentNotificationProducer;
 import com.example.Activity_Service.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +35,9 @@ public class CommentService implements IComment {
     private final TaskHistoryService taskHistoryService;
     private final ITask taskService;
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
-
-
+    private final RabbitTemplate rabbitTemplate;
+    @Autowired
+    private CommentNotificationProducer notificationProducer;
     @Override
     public CommentResponse addComment(CommentRequest commentRequest) {
         try {
@@ -40,6 +45,7 @@ public class CommentService implements IComment {
             CommentResponse comment = commentRepository.save(commentRequest);
 
             TaskCommentNotificationDto notificationInfo;
+
             try {
                 // 2. Récupérer les infos de notification depuis MSProject
                 notificationInfo = taskService.getTaskNotificationbyIdTask(commentRequest.getTaskId());
@@ -50,6 +56,24 @@ public class CommentService implements IComment {
                 logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
+
+                CommentNotificationDto notification = new CommentNotificationDto(
+
+                        commentRequest.getTaskId(),
+                        notificationInfo.getTaskName(),
+                        notificationInfo.getProjectName(),
+                        notificationInfo.getPhaseName(),
+                        commentRequest.getUsername()+ "a ajouté un commentaire à la tâche" + notificationInfo.getTaskName()
+                                +"(Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
+                        LocalDateTime.now(),
+                        notificationInfo.getUserIdsToNotify(),
+                        commentRequest.getContent(),
+                        commentRequest.getUsername(),
+
+                        "ADD"
+                );
+
+                notificationProducer.sendNotification(notification);
             } catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);
@@ -66,6 +90,7 @@ public class CommentService implements IComment {
             history.setFieldChanged("comments");
 
             taskHistoryService.recordHistory(history);
+            //sendAsyncNotifications(notificationInfo, comment);
 
             return comment;
         } catch (Exception e) {
