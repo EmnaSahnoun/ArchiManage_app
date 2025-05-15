@@ -22,8 +22,8 @@ public class NotificationController {
 
     private final SSENotificationService sseNotificationService;
 
-    @GetMapping(value = "/stream/{idUser}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<CommentNotificationDto> streamNotifications(@PathVariable String userId) {
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<CommentNotificationDto> streamNotifications(@RequestHeader("X-User-ID") String userId) {
         // Envoyer d'abord les notifications en attente
         List<CommentNotificationDto> pending = sseNotificationService.getPendingNotifications(userId);
         if (!pending.isEmpty()) {
