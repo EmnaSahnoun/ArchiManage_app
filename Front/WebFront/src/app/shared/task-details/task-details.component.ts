@@ -329,7 +329,7 @@ generateActivityDescription(activity: TaskHistory): string {
                 windowClass: 'confirmation-modal'
             });
         
-            modalRef.componentInstance.message = `Voulez-vous vraiment supprimer ce Commentaire  ?`;
+            modalRef.componentInstance.message = `Voulez-vous vraiment supprimer ce Commentaire `;
             
         
             modalRef.result.then((confirm) => {
