@@ -25,7 +25,7 @@ public class CommentNotificationConsumer {
 
     private final Sinks.Many<CommentNotificationDto> sink;
 
-
+    private final SSENotificationService sseNotificationService;
 
     @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
     public void consume(String message) {
@@ -41,9 +41,11 @@ public class CommentNotificationConsumer {
             } else if ("UPDATE".equals(notification.getActionType())) {
                 notification.setMessage("Commentaire modifié: " + notification.getMessage());
             }
-
+            // 1. Envoyer via le sink pour les clients SSE
             logger.info("Processed notification: {}", notification);
             sink.tryEmitNext(notification);
+            // 2. Envoyer directement aux utilisateurs concernés
+            sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
 
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
