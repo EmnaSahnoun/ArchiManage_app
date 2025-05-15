@@ -41,11 +41,20 @@ public class CommentNotificationConsumer {
             } else if ("UPDATE".equals(notification.getActionType())) {
                 notification.setMessage("Commentaire modifié: " + notification.getMessage());
             }
-            // 1. Envoyer via le sink pour les clients SSE
-            logger.info("Processed notification: {}", notification);
-            sink.tryEmitNext(notification);
+            sink.emitNext(notification, (signalType, emitResult) -> {
+                if (emitResult == Sinks.EmitResult.FAIL_NON_SERIALIZED) {
+                    logger.warn("Échec d'émission (non sérialisé)");
+                } else if (emitResult == Sinks.EmitResult.FAIL_OVERFLOW) {
+                    logger.warn("Échec d'émission (overflow)");
+                }
+                return true; // Retry
+            });
+
+// 1. Envoyer via le sink pour les clients SSE
+            //logger.info("Processed notification: {}", notification);
+            //sink.tryEmitNext(notification);
             // 2. Envoyer directement aux utilisateurs concernés
-            sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
+            //sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
 
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);

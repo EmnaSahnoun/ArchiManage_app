@@ -78,8 +78,7 @@ public class CommentService implements IComment {
                         "ADD"
                 );
                 logger.info("Sending notification to RabbitMQ: {}", notification);
-                rabbitTemplate.convertAndSend(exchangeName, routingKey,
-                        notification);
+                notificationProducer.sendNotification(notification);
             } catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);
