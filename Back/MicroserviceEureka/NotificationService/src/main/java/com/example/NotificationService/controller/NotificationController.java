@@ -12,7 +12,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
+        allowedHeaders = "*",
+        allowCredentials = "true")
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class NotificationController {
         return sink.asFlux()
                 .filter(notif -> notif.getUserIdsToNotify().contains(userId))
                 .doOnCancel(() -> logger.info("Client déconnecté: {}", userId));
-        
+
     }
 
     @GetMapping("/pending")

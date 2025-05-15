@@ -5,6 +5,18 @@
     <div class="user-info">
         <span class="user-name">{{username}}</span>
         <i class="bi bi-chat-dots icon"></i>
-        <i class="bi bi-bell icon"></i>
+        <!-- Notification icon - click to toggle dropdown -->
+        <i class="bi bi-bell icon" (click)="toggleNotifications()"></i>
+
+        <!-- Notification Dropdown -->
+        <div *ngIf="showNotifications" class="notification-dropdown">
+            <h3>Notifications</h3>
+            <div *ngIf="notifications.length > 0; else noNotifications">
+                <ul>
+                    <li *ngFor="let notification of notifications">{{ notification.message }}</li>
+                </ul>
+            </div>
+            <ng-template #noNotifications><p>No new notifications.</p></ng-template>
+        </div>
     </div>
 </div>
