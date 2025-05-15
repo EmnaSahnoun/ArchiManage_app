@@ -34,7 +34,16 @@
     "pathRewrite": {
       "^/activity": "/ActivityService"
     }
+  },
+  "/notification": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/notification": "/NotificationService"
+    }
   }
+
 
 }
     

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 50,
+            "activePatchIndex": 68,
             "patches": [
                 {
                     "date": 1741687617491,
@@ -208,6 +208,78 @@
                 {
                     "date": 1747311014799,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,45 +36,8 @@\n       console.warn(\"User profile not found in localStorage.\");\r\n       this.username = null; \r\n     }\r\n   }\r\n-}\r\n-import { Component, Input, OnInit } from '@angular/core';\r\n-\r\n-@Component({\r\n-  selector: 'app-header',\r\n-  templateUrl: './header.component.html',\r\n-  styleUrl: './header.component.scss',\r\n-  standalone: false\r\n-})\r\n-export class HeaderComponent implements OnInit {\r\n-  @Input() title: string = 'Tableau de bord';\r\n-  username: string | null = null;\r\n-username: string | null = null; // Stores the logged-in username\r\n-  showNotifications: boolean = false; // Controls the visibility of the notification dropdown\r\n-  // Placeholder for notifications - in a real app, you'd fetch these\r\n-  notifications: { id: number, message: string, read: boolean }[] = [\r\n-    { id: 1, message: 'You have a new message.', read: false },\r\n-    { id: 2, message: 'Your task is due soon.', read: true },\r\n-    { id: 3, message: 'A new update is available.', read: false },\r\n-  ];\r\n-  ngOnInit(): void {\r\n-    this.loadUserProfile();\r\n-   \r\n-    \r\n+  toggleNotifications(): void {\r\n+    this.showNotifications = !this.showNotifications;\r\n   }\r\n-  loadUserProfile():void{\r\n-const userProfileString = localStorage.getItem(\"user_profile\");\r\n-\r\n-    if (userProfileString) {\r\n-      \r\n-        const userProfile = JSON.parse(userProfileString);\r\n-        this.username = userProfile?.preferred_username || null;\r\n-        if(this.username){\r\n-        localStorage.setItem(\"username\",this.username);}\r\n-       \r\n-    } else {\r\n-      console.warn(\"User profile not found in localStorage.\");\r\n-      this.username = null; \r\n-    }\r\n-  }\r\n }\r\n"
+                },
+                {
+                    "date": 1747324733431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n   ];\r\n   ngOnInit(): void {\r\n     this.loadUserProfile();\r\n    \r\n-    \r\n-  }\r\n+      }\r\n   loadUserProfile():void{\r\n const userProfileString = localStorage.getItem(\"user_profile\");\r\n \r\n     if (userProfileString) {\r\n"
+                },
+                {
+                    "date": 1747324739643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,10 @@\n     { id: 2, message: 'Your task is due soon.', read: true },\r\n     { id: 3, message: 'A new update is available.', read: false },\r\n   ];\r\n   ngOnInit(): void {\r\n-    this.loadUserProfile();\r\n-   \r\n-      }\r\n+    this.loadUserProfile();   \r\n+  }\r\n   loadUserProfile():void{\r\n const userProfileString = localStorage.getItem(\"user_profile\");\r\n \r\n     if (userProfileString) {\r\n"
+                },
+                {
+                    "date": 1747324744750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,8 @@\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n-\r\n   showNotifications: boolean = false; // Controls the visibility of the notification dropdown\r\n   // Placeholder for notifications - in a real app, you'd fetch these\r\n   notifications: { id: number, message: string, read: boolean }[] = [\r\n     { id: 1, message: 'You have a new message.', read: false },\r\n"
+                },
+                {
+                    "date": 1747324769548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,9 @@\n })\r\n export class HeaderComponent implements OnInit {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n-  showNotifications: boolean = false; // Controls the visibility of the notification dropdown\r\n-  // Placeholder for notifications - in a real app, you'd fetch these\r\n+  showNotifications: boolean = false;\r\n   notifications: { id: number, message: string, read: boolean }[] = [\r\n     { id: 1, message: 'You have a new message.', read: false },\r\n     { id: 2, message: 'Your task is due soon.', read: true },\r\n     { id: 3, message: 'A new update is available.', read: false },\r\n"
+                },
+                {
+                    "date": 1747324814188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,13 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss',\r\n   standalone: false\r\n })\r\n-export class HeaderComponent implements OnInit {\r\n+export class HeaderComponent implements OnInit, OnDestroy {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n+notifications: any[] = [];\r\n   notifications: { id: number, message: string, read: boolean }[] = [\r\n     { id: 1, message: 'You have a new message.', read: false },\r\n     { id: 2, message: 'Your task is due soon.', read: true },\r\n     { id: 3, message: 'A new update is available.', read: false },\r\n"
+                },
+                {
+                    "date": 1747324821667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component, Input, OnInit } from '@angular/core';\r\n+import { Component, Input, OnDestroy, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n@@ -10,13 +10,9 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n notifications: any[] = [];\r\n-  notifications: { id: number, message: string, read: boolean }[] = [\r\n-    { id: 1, message: 'You have a new message.', read: false },\r\n-    { id: 2, message: 'Your task is due soon.', read: true },\r\n-    { id: 3, message: 'A new update is available.', read: false },\r\n-  ];\r\n+  \r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n   }\r\n   loadUserProfile():void{\r\n"
+                },
+                {
+                    "date": 1747324834268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n export class HeaderComponent implements OnInit, OnDestroy {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n-notifications: any[] = [];\r\n+  notifications: any[] = [];\r\n   \r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n   }\r\n"
+                },
+                {
+                    "date": 1747324839816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component, Input, OnDestroy, OnInit } from '@angular/core';\r\n+import { Subscription } from 'rxjs';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n@@ -10,9 +11,10 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  \r\n+  private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel\r\n+  private notificationSubscription: Subscription;\r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n   }\r\n   loadUserProfile():void{\r\n"
+                },
+                {
+                    "date": 1747324848990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n   private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel\r\n   private notificationSubscription: Subscription;\r\n+  constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n   }\r\n   loadUserProfile():void{\r\n"
+                },
+                {
+                    "date": 1747324854636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component, Input, OnDestroy, OnInit } from '@angular/core';\r\n import { Subscription } from 'rxjs';\r\n+import { NotificationService } from '../services/notification.service';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n"
+                },
+                {
+                    "date": 1747324870350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,10 @@\n   private notificationSubscription: Subscription;\r\n   constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n+     this.loadPendingNotifications();\r\n+    this.setupRealTimeNotifications();\r\n   }\r\n   loadUserProfile():void{\r\n const userProfileString = localStorage.getItem(\"user_profile\");\r\n \r\n"
+                },
+                {
+                    "date": 1747324882097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,5 +38,11 @@\n   }\r\n   toggleNotifications(): void {\r\n     this.showNotifications = !this.showNotifications;\r\n   }\r\n+  ngOnDestroy(): void {\r\n+    this.notificationService.closeConnection();\r\n+    if (this.notificationSubscription) {\r\n+      this.notificationSubscription.unsubscribe();\r\n+    }\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1747324894666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,5 +44,29 @@\n     if (this.notificationSubscription) {\r\n       this.notificationSubscription.unsubscribe();\r\n     }\r\n   }\r\n+  private loadPendingNotifications(): void {\r\n+    this.notificationService.getPendingNotifications(this.userId)\r\n+      .subscribe({\r\n+        next: (notifications) => {\r\n+          this.notifications = [...notifications, ...this.notifications];\r\n+        },\r\n+        error: (err) => console.error('Error loading pending notifications', err)\r\n+      });\r\n+  }\r\n+\r\n+  private setupRealTimeNotifications(): void {\r\n+    this.notificationSubscription = this.notificationService\r\n+      .connectToNotificationStream(this.userId)\r\n+      .subscribe({\r\n+        next: (notification) => {\r\n+          this.notifications = [notification, ...this.notifications];\r\n+        },\r\n+        error: (err) => console.error('SSE error', err)\r\n+      });\r\n+  }\r\n+\r\n+  formatDate(dateString: string): string {\r\n+    return new Date(dateString).toLocaleString();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1747327062968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,9 @@\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n   private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel\r\n-  private notificationSubscription: Subscription;\r\n-  constructor(private notificationService: NotificationService) {}\r\n+  \r\n   ngOnInit(): void {\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n"
+                },
+                {
+                    "date": 1747327068654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,12 +38,9 @@\n   toggleNotifications(): void {\r\n     this.showNotifications = !this.showNotifications;\r\n   }\r\n   ngOnDestroy(): void {\r\n-    this.notificationService.closeConnection();\r\n-    if (this.notificationSubscription) {\r\n-      this.notificationSubscription.unsubscribe();\r\n-    }\r\n+    \r\n   }\r\n   private loadPendingNotifications(): void {\r\n     this.notificationService.getPendingNotifications(this.userId)\r\n       .subscribe({\r\n"
+                },
+                {
+                    "date": 1747327073880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,15 +41,9 @@\n   ngOnDestroy(): void {\r\n     \r\n   }\r\n   private loadPendingNotifications(): void {\r\n-    this.notificationService.getPendingNotifications(this.userId)\r\n-      .subscribe({\r\n-        next: (notifications) => {\r\n-          this.notifications = [...notifications, ...this.notifications];\r\n-        },\r\n-        error: (err) => console.error('Error loading pending notifications', err)\r\n-      });\r\n+    \r\n   }\r\n \r\n   private setupRealTimeNotifications(): void {\r\n     this.notificationSubscription = this.notificationService\r\n"
+                },
+                {
+                    "date": 1747327105482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss',\r\n   standalone: false\r\n })\r\n-export class HeaderComponent implements OnInit, OnDestroy {\r\n+export class HeaderComponent implements  OnDestroy {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n@@ -45,16 +45,9 @@\n     \r\n   }\r\n \r\n   private setupRealTimeNotifications(): void {\r\n-    this.notificationSubscription = this.notificationService\r\n-      .connectToNotificationStream(this.userId)\r\n-      .subscribe({\r\n-        next: (notification) => {\r\n-          this.notifications = [notification, ...this.notifications];\r\n-        },\r\n-        error: (err) => console.error('SSE error', err)\r\n-      });\r\n+    \r\n   }\r\n \r\n   formatDate(dateString: string): string {\r\n     return new Date(dateString).toLocaleString();\r\n"
+                },
+                {
+                    "date": 1747327125144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss',\r\n   standalone: false\r\n })\r\n-export class HeaderComponent implements  OnDestroy {\r\n+export class HeaderComponent implements OnInit, OnDestroy {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n"
                 }
             ],
             "date": 1741687617491,

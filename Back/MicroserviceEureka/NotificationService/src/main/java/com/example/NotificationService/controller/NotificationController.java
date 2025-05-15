@@ -23,14 +23,17 @@ public class NotificationController {
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<CommentNotificationDto> streamNotifications(@RequestHeader("X-User-ID") String userId) {
-// 1. Envoyer les notifications en attente (si besoin)
-        sseNotificationService.getPendingNotifications(userId).forEach(notif ->
-                sink.tryEmitNext(notif)
-        );
-        sseNotificationService.clearPendingNotifications(userId);
-        // 2. S'abonner au Sink et filtrer pour l'utilisateur
-        return sink.asFlux()
-                .filter(notif -> notif.getUserIdsToNotify().contains(userId))
+        // 1. Envoyer d'abord les notifications en attente
+        List<CommentNotificationDto> pending = sseNotificationService.getPendingNotifications(userId);
+        Flux<CommentNotificationDto> pendingFlux = Flux.fromIterable(pending);
+
+        // 2. S'abonner aux nouvelles notifications
+        Flux<CommentNotificationDto> liveFlux = sink.asFlux()
+                .filter(notif -> notif.getUserIdsToNotify().contains(userId));
+
+        // 3. Combiner les deux et nettoyer les notifications en attente
+        return Flux.concat(pendingFlux, liveFlux)
+                .doOnComplete(() -> sseNotificationService.clearPendingNotifications(userId))
                 .doOnCancel(() -> logger.info("Client déconnecté: {}", userId));
 
     }

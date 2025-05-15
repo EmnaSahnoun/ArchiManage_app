@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -6,21 +8,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrl: './header.component.scss',
   standalone: false
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Tableau de bord';
   username: string | null = null;
-
-  showNotifications: boolean = false; // Controls the visibility of the notification dropdown
-  // Placeholder for notifications - in a real app, you'd fetch these
-  notifications: { id: number, message: string, read: boolean }[] = [
-    { id: 1, message: 'You have a new message.', read: false },
-    { id: 2, message: 'Your task is due soon.', read: true },
-    { id: 3, message: 'A new update is available.', read: false },
-  ];
+  showNotifications: boolean = false;
+  notifications: any[] = [];
+  private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel
+  
   ngOnInit(): void {
-    this.loadUserProfile();
-   
-    
+    this.loadUserProfile();   
+     this.loadPendingNotifications();
+    this.setupRealTimeNotifications();
   }
   loadUserProfile():void{
 const userProfileString = localStorage.getItem("user_profile");
@@ -39,5 +37,19 @@ const userProfileString = localStorage.getItem("user_profile");
   }
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
+  }
+  ngOnDestroy(): void {
+    
+  }
+  private loadPendingNotifications(): void {
+    
+  }
+
+  private setupRealTimeNotifications(): void {
+    
+  }
+
+  formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleString();
   }
 }

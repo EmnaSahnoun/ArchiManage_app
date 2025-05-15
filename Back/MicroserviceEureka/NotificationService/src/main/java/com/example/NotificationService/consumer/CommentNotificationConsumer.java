@@ -35,6 +35,7 @@ public class CommentNotificationConsumer {
             // Conversion du JSON en DTO
             CommentNotificationDto notification = objectMapper.readValue(message, CommentNotificationDto.class);
 
+            logger.info("Notification recu: {}", notification);
             // Modification selon le type si nécessaire
             if ("ADD".equals(notification.getActionType())) {
                 notification.setMessage("Nouveau commentaire: " + notification.getMessage());
@@ -50,6 +51,13 @@ public class CommentNotificationConsumer {
                 return true; // Retry
             });
 
+
+            // 1. Envoyer via le sink pour les clients SSE connectés
+            sink.emitNext(notification, Sinks.EmitFailureHandler.FAIL_FAST);
+            // 2. Stocker pour les utilisateurs non connectés
+            notification.getUserIdsToNotify().forEach(userId -> {
+                sseNotificationService.addPendingNotification(userId, notification);
+            });
 // 1. Envoyer via le sink pour les clients SSE
             //logger.info("Processed notification: {}", notification);
             //sink.tryEmitNext(notification);

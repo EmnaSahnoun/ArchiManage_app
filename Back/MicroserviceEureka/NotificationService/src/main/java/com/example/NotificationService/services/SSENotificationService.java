@@ -113,4 +113,7 @@ public class SSENotificationService {
     public void clearPendingNotifications(String userId) {
         pendingNotifications.remove(userId);
     }
+    public void addPendingNotification(String userId, CommentNotificationDto notification) {
+        pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+    }
 }

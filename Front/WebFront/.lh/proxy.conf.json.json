@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -112,6 +112,26 @@
                 {
                     "date": 1747020012230,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/projet\": \"/ActivityService\"\r\n+      \"^/activity\": \"/ActivityService\"\r\n     }\r\n   }\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1747323530116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,7 +34,8 @@\n     \"pathRewrite\": {\r\n       \"^/activity\": \"/ActivityService\"\r\n     }\r\n   }\r\n+  \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747323537228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/activity\": \"/ActivityService\"\r\n     }\r\n-  }\r\n+  },\r\n   \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747323544769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,16 @@\n     \"pathRewrite\": {\r\n       \"^/activity\": \"/ActivityService\"\r\n     }\r\n   },\r\n-  \r\n+  \"/notification\": {\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/activity\": \"/ActivityService\"\r\n+    }\r\n+  }\r\n \r\n+\r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747323576575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/activity\": \"/ActivityService\"\r\n+      \"^/activity\": \"/NotificationService\"\r\n     }\r\n   }\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1747323907822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/activity\": \"/NotificationService\"\r\n+      \"^/notification\": \"/NotificationService\"\r\n     }\r\n   }\r\n \r\n \r\n"
                 }
             ],
             "date": 1745069337198,

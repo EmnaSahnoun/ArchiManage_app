@@ -95,7 +95,6 @@ public class CommentService implements IComment {
             history.setFieldChanged("comments");
 
             taskHistoryService.recordHistory(history);
-            //sendAsyncNotifications(notificationInfo, comment);
 
             return comment;
         } catch (Exception e) {
