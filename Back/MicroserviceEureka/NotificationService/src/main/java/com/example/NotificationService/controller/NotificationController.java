@@ -1,6 +1,5 @@
 package com.example.NotificationService.controller;
 
-import com.example.NotificationService.consumer.CommentNotificationConsumer;
 import com.example.NotificationService.dto.CommentNotificationDto;
 import com.example.NotificationService.services.SSENotificationService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
@@ -43,5 +41,15 @@ public class NotificationController {
     @GetMapping("/pending")
     public ResponseEntity<List<CommentNotificationDto>> getPendingNotifications(@RequestHeader("X-User-ID") String userId) {
         return ResponseEntity.ok(sseNotificationService.getPendingNotifications(userId));
+    }
+    @PostMapping("/send-notification")
+    public ResponseEntity<String> sendTestNotification(@RequestBody CommentNotificationDto notification) {
+        // Envoyer via le sink
+        sink.tryEmitNext(notification);
+
+        // Envoyer directement aux utilisateurs
+        sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
+
+        return ResponseEntity.ok("Notification envoyée");
     }
 }
