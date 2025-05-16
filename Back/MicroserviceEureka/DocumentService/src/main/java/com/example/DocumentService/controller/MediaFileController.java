@@ -24,8 +24,7 @@ public class MediaFileController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MediaFileResponse> uploadFile(
-            @ModelAttribute MediaFileRequest request,
-            @RequestHeader("X-User-ID") String uploadedBy) throws IOException {
+            @ModelAttribute MediaFileRequest request) throws IOException {
 
         MediaFile mediaFile = mediaFileService.uploadFile(request);
         return ResponseEntity.ok(mapToResponse(mediaFile));
