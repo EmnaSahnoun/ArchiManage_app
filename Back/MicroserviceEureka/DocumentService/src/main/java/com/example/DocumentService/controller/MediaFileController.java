@@ -8,6 +8,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,8 +25,19 @@ public class MediaFileController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MediaFileResponse> uploadFile(
-            @ModelAttribute MediaFileRequest request) throws IOException {
-
+            @RequestPart("file") MultipartFile file,
+            @RequestPart("description") String description,
+            @RequestPart("taskId") String taskId,
+            @RequestPart(value = "projectId", required = false) String projectId,
+            @RequestPart(value = "phaseId", required = false) String phaseId,
+            @RequestHeader("X-User-ID") String uploadedBy) throws IOException {
+        MediaFileRequest request = new MediaFileRequest();
+        request.setFile(file);
+        request.setDescription(description);
+        request.setTaskId(taskId);
+        request.setProjectId(projectId);
+        request.setPhaseId(phaseId);
+        request.setUploadedBy(uploadedBy);
         MediaFile mediaFile = mediaFileService.uploadFile(request);
         return ResponseEntity.ok(mapToResponse(mediaFile));
     }
