@@ -2,6 +2,7 @@ package com.example.DocumentService.service;
 
 import com.example.DocumentService.dto.request.MediaFileRequest;
 import com.example.DocumentService.model.MediaFile;
+import com.example.DocumentService.publisher.FileEventProducer;
 import com.example.DocumentService.repositories.MediaFileRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -24,14 +25,18 @@ public class MediaFileService {
     private final MediaFileRepository mediaFileRepository;
     private final GridFsTemplate gridFsTemplate;
     private final GridFsOperations gridFsOperations;
+    private final FileEventProducer eventProducer;
+
     public MediaFileService(MediaFileRepository mediaFileRepository,
                             GridFsTemplate gridFsTemplate,
-                            GridFsOperations gridFsOperations
+                            GridFsOperations gridFsOperations,
+                            FileEventProducer eventProducer
 
                             ) {
         this.mediaFileRepository = mediaFileRepository;
         this.gridFsTemplate = gridFsTemplate;
         this.gridFsOperations = gridFsOperations;
+        this.eventProducer = eventProducer;
 
     }
 
@@ -66,8 +71,10 @@ public class MediaFileService {
         mediaFile.setUploadedBy(request.getUploadedBy());
         mediaFile.setUploadDate(new Date());
         mediaFile.setGridFsId(fileId.toString());
-
-        return mediaFileRepository.save(mediaFile);
+        mediaFile.setAction("CREATE");
+        MediaFile savedMediaFile = mediaFileRepository.save(mediaFile);
+        eventProducer.sendFileinMessage(savedMediaFile);
+        return savedMediaFile;
     }
 
     public InputStream downloadFile(String id) throws IOException {
@@ -95,6 +102,8 @@ public class MediaFileService {
                 .orElseThrow(() -> new RuntimeException("File not found with id: " + id));
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(mediaFile.getGridFsId())));
+        mediaFile.setAction("DELETE");
+        eventProducer.sendFileinMessage(mediaFile);
         mediaFileRepository.delete(mediaFile);
     }
 

@@ -15,12 +15,14 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-
+//configuration des composants MongoDB pour gérer le stockage de fichiers via GridFS.
 @Configuration
+// pour trouver les interfaces de repository (ici: com.example.DocumentService.repositories)
 @EnableMongoRepositories(basePackages = "com.example.DocumentService.repositories")
 public class MongoConfig  {
     @Bean
     public GridFSBucket gridFSBucket(MongoClient mongoClient) {
+        // créer une instance de GridFSBucket
         return GridFSBuckets.create(mongoClient.getDatabase("mediafile"));
     }
 

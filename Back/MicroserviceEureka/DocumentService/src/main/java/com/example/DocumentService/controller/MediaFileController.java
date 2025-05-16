@@ -79,7 +79,7 @@ public class MediaFileController {
         response.setSize(mediaFile.getSize());
         response.setUploadedBy(mediaFile.getUploadedBy());
         response.setUploadDate(mediaFile.getUploadDate());
-        response.setDownloadUrl("/api/media/" + mediaFile.getId());
+        response.setDownloadUrl("https://e1.systeo.tn/DocumentService/media" + mediaFile.getId());
         return response;
     }
 }

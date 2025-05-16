@@ -1,8 +1,10 @@
 package com.example.DocumentService.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -25,6 +27,9 @@ public class MediaFile {
     private Date uploadDate;
     // Référence au fichier dans GridFS
     private String gridFsId;
+    @Transient
+    private String action;
+
     public String getId() {
         return id;
     }
@@ -119,5 +124,13 @@ public class MediaFile {
 
     public void setGridFsId(String gridFsId) {
         this.gridFsId = gridFsId;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

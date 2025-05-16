@@ -21,6 +21,16 @@ public class TaskHistory implements Serializable {
     private String oldValue;
     private String newValue;
     private LocalDateTime createdAt;
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public String getUsername() {
