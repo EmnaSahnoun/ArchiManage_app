@@ -37,6 +37,7 @@ public class DocumentConsumer {
                     history.setAction(documentDTO.getAction());
                     history.setCreatedAt(LocalDateTime.now());
                     history.setFileName(documentDTO.getFilename());
+                    history.setFieldChanged("documents");
                     taskHistoryService.recordHistory(history);
                     LOGGER.info("Recorded document {}: {} from {} to {}",
                             documentDTO.getTaskId());
