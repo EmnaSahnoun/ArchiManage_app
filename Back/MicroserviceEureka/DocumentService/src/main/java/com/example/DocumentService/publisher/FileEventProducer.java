@@ -12,17 +12,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FileEventProducer {
-    @Value("${rabbitmq.exchange.name}")
+    @Value("${rabbitmq.exchange3.name}")
     private String exchange;
-    @Value("${rabbitmq.routing.json.key.name}")
+    @Value("${rabbitmq.routing.json.key3.name}")
     private String routingKeyJson;
     private RabbitTemplate rabbitTemplate;
     @Autowired
     private ObjectMapper objectMapper;
     private static  final Logger LOGGER= LoggerFactory.getLogger(FileEventProducer.class);
 
-    public FileEventProducer(RabbitTemplate rabbitTemplate) {
+    public FileEventProducer(RabbitTemplate rabbitTemplate, ObjectMapper objectMapper) {
         this.rabbitTemplate = rabbitTemplate;
+        this.objectMapper = objectMapper;
     }
 
     public void sendFileinMessage(MediaFile file) {
