@@ -30,6 +30,7 @@ public class MediaFileController {
             @RequestPart("taskId") String taskId,
             @RequestPart(value = "projectId", required = false) String projectId,
             @RequestPart(value = "phaseId", required = false) String phaseId,
+            @RequestHeader("Authorization") String authToken,
             @RequestHeader("X-User-ID") String uploadedBy) throws IOException {
         MediaFileRequest request = new MediaFileRequest();
         request.setFile(file);
@@ -38,7 +39,7 @@ public class MediaFileController {
         request.setProjectId(projectId);
         request.setPhaseId(phaseId);
         request.setUploadedBy(uploadedBy);
-        MediaFile mediaFile = mediaFileService.uploadFile(request);
+        MediaFile mediaFile = mediaFileService.uploadFile(request,authToken);
         return ResponseEntity.ok(mapToResponse(mediaFile));
     }
 
@@ -61,8 +62,8 @@ public class MediaFileController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFile(@PathVariable String id) {
-        mediaFileService.deleteFile(id);
+    public ResponseEntity<Void> deleteFile(@PathVariable String id,@RequestHeader("Authorization") String authToken) {
+        mediaFileService.deleteFile(id,authToken);
         return ResponseEntity.noContent().build();
     }
 

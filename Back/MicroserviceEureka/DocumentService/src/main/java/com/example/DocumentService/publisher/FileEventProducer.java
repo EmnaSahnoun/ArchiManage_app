@@ -26,7 +26,7 @@ public class FileEventProducer {
         this.objectMapper = objectMapper;
     }
 
-    public void sendFileinMessage(MediaFile file) {
+    public void sendFileinMessage(MediaFile file,String authToken) {
         try{
             DocumentDTO event = new DocumentDTO();
             event.setTaskId(file.getTaskId());
@@ -34,6 +34,7 @@ public class FileEventProducer {
             event.setAction(file.getAction());
             event.setTimestamp(file.getUploadDate());
             event.setFilename(file.getFilename());
+            event.setAuthToken(authToken);
             String jsonMessage = objectMapper.writeValueAsString(event);
             LOGGER.info(String.format("Json message sent -> %s", jsonMessage));
 

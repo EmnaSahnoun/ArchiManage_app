@@ -40,7 +40,7 @@ public class MediaFileService {
 
     }
 
-    public MediaFile uploadFile(MediaFileRequest request) throws IOException {
+    public MediaFile uploadFile(MediaFileRequest request,String authToken) throws IOException {
         MultipartFile file = request.getFile();
 
         // Définir les métadonnées
@@ -73,7 +73,7 @@ public class MediaFileService {
         mediaFile.setGridFsId(fileId.toString());
         mediaFile.setAction("CREATE");
         MediaFile savedMediaFile = mediaFileRepository.save(mediaFile);
-        eventProducer.sendFileinMessage(savedMediaFile);
+        eventProducer.sendFileinMessage(savedMediaFile,authToken);
         return savedMediaFile;
     }
 
@@ -97,13 +97,13 @@ public class MediaFileService {
  public MediaFile getMediaFileById(String id) {
         return mediaFileRepository.findById(id).orElse(null);
  }
-    public void deleteFile(String id) {
+    public void deleteFile(String id,String authToken) {
         MediaFile mediaFile = mediaFileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("File not found with id: " + id));
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(mediaFile.getGridFsId())));
         mediaFile.setAction("DELETE");
-        eventProducer.sendFileinMessage(mediaFile);
+        eventProducer.sendFileinMessage(mediaFile,authToken);
         mediaFileRepository.delete(mediaFile);
     }
 

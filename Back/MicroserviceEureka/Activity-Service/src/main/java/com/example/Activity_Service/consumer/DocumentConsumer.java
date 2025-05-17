@@ -12,8 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,6 +35,8 @@ public class DocumentConsumer {
     @Autowired
     private CommentNotificationProducer notificationProducer;
     @Autowired
+    private JwtDecoder jwtDecoder;
+    @Autowired
     public DocumentConsumer(TaskHistoryService taskHistoryService, ObjectMapper objectMapper, ITask taskService) {
         this.taskHistoryService = taskHistoryService;
         this.objectMapper = objectMapper;
@@ -42,11 +49,17 @@ public class DocumentConsumer {
         try{
             DocumentDTO documentDTO = objectMapper.readValue(event,DocumentDTO.class);
             logger.info("Document en json : {}", documentDTO.getTaskId());
+
             TaskCommentNotificationDto notificationInfo;
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
             try {
-                // Exécuter dans un contexte de sécurité
-                SecurityContextHolder.setContext(context);
+            // Créer un contexte de sécurité avec le token reçu
+                if (documentDTO.getAuthToken() != null) {
+                    Jwt jwt = jwtDecoder.decode(documentDTO.getAuthToken().replace("Bearer ", ""));
+                    JwtAuthenticationToken authentication = new JwtAuthenticationToken(jwt);
+                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+                    context.setAuthentication(authentication);
+                    SecurityContextHolder.setContext(context);
+                }
                 // 2. Récupérer les infos de notification depuis MSProject
                 notificationInfo = taskService.getTaskNotificationbyIdTask(documentDTO.getTaskId());
                 logger.info("Notification info : {}", notificationInfo);
@@ -100,5 +113,8 @@ public class DocumentConsumer {
             logger.error("Error while parsing task event", e);
         }
     }
-
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri("https://esmm.systeo.tn/realms/systeodigital/protocol/openid-connect/certs").build();
+    }
 }

@@ -10,13 +10,21 @@ public class DocumentDTO {
     private String username;
     private Date timestamp;
     private String action;
-
+    private String authToken;
     public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     public String getFilename() {
