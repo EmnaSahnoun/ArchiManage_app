@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -41,8 +43,10 @@ public class DocumentConsumer {
             DocumentDTO documentDTO = objectMapper.readValue(event,DocumentDTO.class);
             logger.info("Document en json : {}", documentDTO.getTaskId());
             TaskCommentNotificationDto notificationInfo;
-
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
             try {
+                // Exécuter dans un contexte de sécurité
+                SecurityContextHolder.setContext(context);
                 // 2. Récupérer les infos de notification depuis MSProject
                 notificationInfo = taskService.getTaskNotificationbyIdTask(documentDTO.getTaskId());
                 logger.info("Notification info : {}", notificationInfo);
@@ -73,7 +77,9 @@ public class DocumentConsumer {
                 );
                 logger.info("Sending notification to RabbitMQ: {}", notification);
                 notificationProducer.sendNotification(notification);}
-            } catch (Exception e) {
+            }
+
+            catch (Exception e) {
                 // Log l'erreur mais continue le traitement
                 logger.error("Failed to fetch notification info from MSProject", e);
                 notificationInfo = new TaskCommentNotificationDto(); // Objet vide
