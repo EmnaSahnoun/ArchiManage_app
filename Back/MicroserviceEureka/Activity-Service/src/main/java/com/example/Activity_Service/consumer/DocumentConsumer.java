@@ -70,9 +70,7 @@ public class DocumentConsumer {
                 logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
-                if (documentDTO.getAction()=="CREATE"){
-
-
+                if ("CREATE".equals(documentDTO.getAction())){
                 NotificationDto notification = new NotificationDto(
 
                         documentDTO.getTaskId(),
