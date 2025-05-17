@@ -39,7 +39,7 @@ public class DocumentConsumer {
         logger.info("Received document : {}", event);
         try{
             DocumentDTO documentDTO = objectMapper.readValue(event,DocumentDTO.class);
-
+            logger.info("Document en json : {}", documentDTO.getTaskId());
             TaskCommentNotificationDto notificationInfo;
 
             try {
