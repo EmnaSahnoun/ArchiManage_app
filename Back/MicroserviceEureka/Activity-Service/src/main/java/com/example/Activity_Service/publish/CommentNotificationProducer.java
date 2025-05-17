@@ -1,6 +1,6 @@
 package com.example.Activity_Service.publish;
 
-import com.example.Activity_Service.dto.response.CommentNotificationDto;
+import com.example.Activity_Service.dto.response.NotificationDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class CommentNotificationProducer {
     private static  final Logger LOGGER= LoggerFactory.getLogger(CommentNotificationProducer.class);
 
 
-    public void sendNotification(CommentNotificationDto notificationDto) {
+    public void sendNotification(NotificationDto notificationDto) {
         rabbitTemplate.convertAndSend(exchange, routingKey, notificationDto);
 
         LOGGER.info("Notification sent to RabbitMQ: {}", notificationDto);

@@ -21,6 +21,13 @@ public class RabbitMQConfig {
         @Value("${rabbitmq.routing.json.key.name}")
         private String JsonRoutingKey;
 
+    @Value("${rabbitmq.queueJson3.name}")
+    private String JsonQueue3;
+    @Value("${rabbitmq.exchange3.name}")
+    private String exchange3;
+    @Value("${rabbitmq.routing.json.key3.name}")
+    private String JsonRoutingKey3;
+
         @Bean
         public Queue JsonQueue() {
             return new Queue(JsonQueue); // durable = true
@@ -39,6 +46,24 @@ public class RabbitMQConfig {
                     .with(JsonRoutingKey);
         }
 
+
+    @Bean
+    public Queue JsonQueue3() {
+        return new Queue(JsonQueue3); // durable = true
+    }
+
+    @Bean
+    public TopicExchange exchange3() {
+        return new TopicExchange(exchange3);
+    }
+
+    //binding between JsonQueue and exchange using routing key
+    @Bean
+    public Binding jsonBinding3() {
+        return BindingBuilder.bind(JsonQueue3())
+                .to(exchange3())
+                .with(JsonRoutingKey3);
+    }
     @Bean
     public MessageConverter converter(){
         return new Jackson2JsonMessageConverter();

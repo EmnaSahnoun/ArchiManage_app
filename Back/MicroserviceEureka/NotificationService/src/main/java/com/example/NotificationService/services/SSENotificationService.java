@@ -1,12 +1,11 @@
 package com.example.NotificationService.services;
 
-import com.example.NotificationService.dto.CommentNotificationDto;
+import com.example.NotificationService.dto.NotificationDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -18,7 +17,7 @@ public class SSENotificationService {
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(SSENotificationService.class);
     // Gardez une trace des notifications pour les utilisateurs non connectés
-    private final Map<String, List<CommentNotificationDto>> pendingNotifications = new ConcurrentHashMap<>();
+    private final Map<String, List<NotificationDto>> pendingNotifications = new ConcurrentHashMap<>();
 
     public SseEmitter subscribe(String userId) {
         // Nettoyer les anciens emitters s'ils existent
@@ -31,7 +30,7 @@ public class SSENotificationService {
 
         // Envoyer les notifications en attente si elles existent
         if (pendingNotifications.containsKey(userId)) {
-            List<CommentNotificationDto> notifications = pendingNotifications.get(userId);
+            List<NotificationDto> notifications = pendingNotifications.get(userId);
             notifications.forEach(notification -> {
                 try {
                     emitter.send(SseEmitter.event()
@@ -82,7 +81,7 @@ public class SSENotificationService {
         return emitter;
     }
 
-    public void sendNotificationToUsers(List<String> userIds, CommentNotificationDto notification) {
+    public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
         userIds.forEach(userId -> {
             SseEmitter emitter = emitters.get(userId);
             if (emitter != null) {
@@ -106,14 +105,14 @@ public class SSENotificationService {
 
         });
     }
-    public List<CommentNotificationDto> getPendingNotifications(String userId) {
+    public List<NotificationDto> getPendingNotifications(String userId) {
         return pendingNotifications.getOrDefault(userId, Collections.emptyList());
     }
 
     public void clearPendingNotifications(String userId) {
         pendingNotifications.remove(userId);
     }
-    public void addPendingNotification(String userId, CommentNotificationDto notification) {
+    public void addPendingNotification(String userId, NotificationDto notification) {
         pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
     }
 }

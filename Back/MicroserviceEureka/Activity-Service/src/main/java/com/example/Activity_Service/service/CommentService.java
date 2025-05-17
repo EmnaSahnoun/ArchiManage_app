@@ -4,9 +4,8 @@ import com.example.Activity_Service.Exceptions.CommentCreationException;
 import com.example.Activity_Service.Exceptions.CommentDeletionException;
 import com.example.Activity_Service.Exceptions.CommentNotFoundException;
 import com.example.Activity_Service.Exceptions.CommentUpdateException;
-import com.example.Activity_Service.config.RabbitMQConfig;
 import com.example.Activity_Service.dto.request.CommentRequest;
-import com.example.Activity_Service.dto.response.CommentNotificationDto;
+import com.example.Activity_Service.dto.response.NotificationDto;
 import com.example.Activity_Service.dto.response.CommentResponse;
 import com.example.Activity_Service.dto.response.TaskCommentNotificationDto;
 import com.example.Activity_Service.interfaces.IComment;
@@ -62,7 +61,7 @@ public class CommentService implements IComment {
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
 
-                CommentNotificationDto notification = new CommentNotificationDto(
+                NotificationDto notification = new NotificationDto(
 
                         commentRequest.getTaskId(),
                         notificationInfo.getTaskName(),

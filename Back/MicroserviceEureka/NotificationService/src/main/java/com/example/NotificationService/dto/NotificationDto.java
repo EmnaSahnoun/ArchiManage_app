@@ -1,4 +1,4 @@
-package com.example.Activity_Service.dto.response;
+package com.example.NotificationService.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentNotificationDto {
+public class NotificationDto {
     private String taskId;
     private String taskName;
     private String projectName;
@@ -54,6 +54,13 @@ public class CommentNotificationDto {
         this.phaseName = phaseName;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public LocalDateTime getCommentDate() {
         return commentDate;
@@ -71,14 +78,6 @@ public class CommentNotificationDto {
         this.userIdsToNotify = userIdsToNotify;
     }
 
-    public String getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
-    }
-
     public String getCommentContent() {
         return commentContent;
     }
@@ -93,5 +92,13 @@ public class CommentNotificationDto {
 
     public void setCommentAuthor(String commentAuthor) {
         this.commentAuthor = commentAuthor;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 }
