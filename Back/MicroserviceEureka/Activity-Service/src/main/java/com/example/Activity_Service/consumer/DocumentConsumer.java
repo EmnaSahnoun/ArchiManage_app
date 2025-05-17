@@ -45,6 +45,7 @@ public class DocumentConsumer {
             try {
                 // 2. Récupérer les infos de notification depuis MSProject
                 notificationInfo = taskService.getTaskNotificationbyIdTask(documentDTO.getTaskId());
+                logger.info("Notification info : {}", notificationInfo);
                 logger.info("=== Informations de la tâche récupérées ===");
                 logger.info("ID Tâche: {}", documentDTO.getTaskId());
                 logger.error("Bien reçu", notificationInfo.getTaskName());
