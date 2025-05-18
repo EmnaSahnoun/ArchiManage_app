@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
+        allowedHeaders = "*",
+        allowCredentials = "true")
 
 @RestController
 @RequestMapping("/commercialdocuments")
