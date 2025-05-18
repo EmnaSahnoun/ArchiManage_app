@@ -160,15 +160,26 @@ public class CommercialDocumentService implements ICommercialDocument {
     private CommercialDocumentResponse convertToResponse(CommercialDocument document) {
         CommercialDocumentResponse response = new CommercialDocumentResponse();
         response.setId(document.getId());
-        CompanyResponse companyResponse = companyServiceClient.getCompanyById(document.getCompany().getId());
-        Company company = new Company();
-        company.setId(companyResponse.getId());
-        company.setName(companyResponse.getName());
-        company.setAddress(companyResponse.getAddress());
-        company.setEmail(companyResponse.getEmail());
-        company.setPhone(companyResponse.getPhone());
-        company.setCreatedAt(companyResponse.getCreatedAt());
-        response.setCompany(company);
+        // Gérer le cas où company est null
+        if (document.getCompany() != null) {
+            try {
+                CompanyResponse companyResponse = companyServiceClient.getCompanyById(document.getCompany().getId());
+                Company company = new Company();
+                company.setId(companyResponse.getId());
+                company.setName(companyResponse.getName());
+                company.setAddress(companyResponse.getAddress());
+                company.setEmail(companyResponse.getEmail());
+                company.setPhone(companyResponse.getPhone());
+                company.setCreatedAt(companyResponse.getCreatedAt());
+                response.setCompany(company);
+            } catch (Exception e) {
+                // Log l'erreur mais continue avec company=null
+                response.setCompany(null);
+            }
+        } else {
+            response.setCompany(null);
+        }
+
         response.setDocumentType(document.getDocumentType());
         response.setDocumentNumber(document.getDocumentNumber());
         response.setCreatedAt(document.getCreatedAt());
