@@ -49,7 +49,12 @@ public class CommercialDocumentService implements ICommercialDocument {
         document.setNotes(request.getNotes());
 
         Company company = new Company();
-        company.setId(request.getCompanyId());
+        company.setId(companyResponse.getId());
+        company.setName(companyResponse.getName());
+        company.setAddress(companyResponse.getAddress());
+        company.setEmail(companyResponse.getEmail());
+        company.setPhone(companyResponse.getPhone());
+        company.setCreatedAt(companyResponse.getCreatedAt());
         document.setCompany(company);
 
         // Convertir les lignes
@@ -76,7 +81,7 @@ public class CommercialDocumentService implements ICommercialDocument {
         // Mettre à jour les champs modifiables
         document.setNotes(request.getNotes());
         document.setDiscount(request.getDiscount());
-
+        CompanyResponse companyResponse = companyServiceClient.getCompanyById(request.getCompanyId());
         // Mettre à jour les lignes
         List<CommercialDocumentLine> updatedLines = request.getLines().stream()
                 .map(this::convertToDocumentLine)
@@ -84,7 +89,7 @@ public class CommercialDocumentService implements ICommercialDocument {
 
         document.setLines(updatedLines);
         document.calculateTotals();
-
+        document.setCompany(document.getCompany());
         // Sauvegarder
         CommercialDocument updatedDocument = documentRepository.save(document);
 
