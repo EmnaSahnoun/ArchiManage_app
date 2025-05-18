@@ -10,6 +10,7 @@ import com.example.CommercialService.exceptions.DocumentNotFoundException;
 import com.example.CommercialService.interfaces.ICommercialDocument;
 import com.example.CommercialService.models.CommercialDocument;
 import com.example.CommercialService.models.CommercialDocumentLine;
+import com.example.CommercialService.models.Company;
 import com.example.CommercialService.models.enums.Status;
 import com.example.CommercialService.models.enums.Type;
 import com.example.CommercialService.repositories.ClientRepository;
@@ -46,6 +47,10 @@ public class CommercialDocumentService implements ICommercialDocument {
         document.setTaxAmount(BigDecimal.ZERO);
         document.setSubTotal(BigDecimal.ZERO);
         document.setNotes(request.getNotes());
+
+        Company company = new Company();
+        company.setId(request.getCompanyId());
+        document.setCompany(company);
 
         // Convertir les lignes
         List<CommercialDocumentLine> lines = request.getLines().stream()
