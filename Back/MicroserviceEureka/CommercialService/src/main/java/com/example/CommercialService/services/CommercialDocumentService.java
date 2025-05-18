@@ -160,7 +160,10 @@ public class CommercialDocumentService implements ICommercialDocument {
     private CommercialDocumentResponse convertToResponse(CommercialDocument document) {
         CommercialDocumentResponse response = new CommercialDocumentResponse();
         response.setId(document.getId());
-        response.setCompany(document.getCompany());
+        if(document.getCompany() != null) {
+            Company company = document.getCompany();
+            response.setCompany(company);
+        }
         response.setDocumentType(document.getDocumentType());
         response.setDocumentNumber(document.getDocumentNumber());
         response.setCreatedAt(document.getCreatedAt());
