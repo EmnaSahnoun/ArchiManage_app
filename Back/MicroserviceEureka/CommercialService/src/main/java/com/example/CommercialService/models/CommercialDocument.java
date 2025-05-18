@@ -37,10 +37,23 @@ public class CommercialDocument {
     private List<CommercialDocumentLine> lines = new ArrayList<>();
     // Méthodes utilitaires
     public void calculateTotals() {
+        // Initialiser les valeurs BigDecimal si elles sont null
+        if (this.subTotal == null) {
+            this.subTotal = BigDecimal.ZERO;
+        }
+        if (this.discount == null) {
+            this.discount = BigDecimal.ZERO;
+        }
+        if (this.taxAmount == null) {
+            this.taxAmount = BigDecimal.ZERO;
+        }
+
+        // Calculer le sous-total
         this.subTotal = lines.stream()
-                .map(CommercialDocumentLine::getTotal)
+                .map(line -> line.getTotal() != null ? line.getTotal() : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        // Calculer le total
         this.totalAmount = subTotal.subtract(discount).add(taxAmount);
     }
 

@@ -17,9 +17,14 @@ public class CommercialDocumentLine {
     private String commercialDocumentId;
 
     public void calculateTotal() {
+        if (this.unitPrice == null) {
+            this.unitPrice = BigDecimal.ZERO;
+        }
+        if (this.quantity == null) {
+            this.quantity = BigDecimal.ONE;
+        }
         this.total = unitPrice.multiply(quantity);
     }
-
     public String getId() {
         return id;
     }

@@ -1,11 +1,18 @@
 package com.example.CommercialService.dto.request;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+
 import java.math.BigDecimal;
 
 public class CommercialDocumentLineRequest {
+    @NotBlank
     private String description;
-    private BigDecimal quantity;
-    private BigDecimal unitPrice;
+    @DecimalMin("0.01")
+    private BigDecimal quantity = BigDecimal.ONE;
+
+    @DecimalMin("0.00")
+    private BigDecimal unitPrice = BigDecimal.ZERO;
 
     public String getDescription() {
         return description;

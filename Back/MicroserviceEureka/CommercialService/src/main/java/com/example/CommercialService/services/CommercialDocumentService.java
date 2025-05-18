@@ -43,6 +43,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         document.setCreatedAt(new Date());
         document.setStatus(Status.UNPAID);
         document.setDiscount(request.getDiscount() != null ? request.getDiscount() : BigDecimal.ZERO);
+        document.setTaxAmount(BigDecimal.ZERO);
+        document.setSubTotal(BigDecimal.ZERO);
         document.setNotes(request.getNotes());
 
         // Convertir les lignes
@@ -50,8 +52,8 @@ public class CommercialDocumentService implements ICommercialDocument {
                 .map(lineRequest -> {
                     CommercialDocumentLine line = new CommercialDocumentLine();
                     line.setDescription(lineRequest.getDescription());
-                    line.setQuantity(lineRequest.getQuantity());
-                    line.setUnitPrice(lineRequest.getUnitPrice());
+                    line.setQuantity(lineRequest.getQuantity() != null ? lineRequest.getQuantity() : BigDecimal.ONE);
+                    line.setUnitPrice(lineRequest.getUnitPrice() != null ? lineRequest.getUnitPrice() : BigDecimal.ZERO);
                     line.calculateTotal();
                     return line;
                 })
