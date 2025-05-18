@@ -89,7 +89,15 @@ public class CommercialDocumentService implements ICommercialDocument {
 
         document.setLines(updatedLines);
         document.calculateTotals();
-        document.setCompany(document.getCompany());
+
+        Company company = new Company();
+        company.setId(companyResponse.getId());
+        company.setName(companyResponse.getName());
+        company.setAddress(companyResponse.getAddress());
+        company.setEmail(companyResponse.getEmail());
+        company.setPhone(companyResponse.getPhone());
+        company.setCreatedAt(companyResponse.getCreatedAt());
+        document.setCompany(company);
         // Sauvegarder
         CommercialDocument updatedDocument = documentRepository.save(document);
 
@@ -114,7 +122,14 @@ public class CommercialDocumentService implements ICommercialDocument {
     public CommercialDocumentResponse getDocument(String id) {
         CommercialDocument document = documentRepository.findById(id)
                 .orElseThrow(() -> new DocumentNotFoundException("Document not found"));
-
+        Company company = new Company();
+        company.setId(document.getCompany().getId());
+        company.setName(document.getCompany().getName());
+        company.setAddress(document.getCompany().getAddress());
+        company.setEmail(document.getCompany().getEmail());
+        company.setPhone(document.getCompany().getPhone());
+        company.setCreatedAt(document.getCompany().getCreatedAt());
+        document.setCompany(company);
 
         return convertToResponse(document);
     }
