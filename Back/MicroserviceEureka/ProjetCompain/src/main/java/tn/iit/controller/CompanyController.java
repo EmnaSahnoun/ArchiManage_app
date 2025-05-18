@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import tn.iit.dto.request.CompainRequest;
-import tn.iit.dto.response.CompainResponse;
+import tn.iit.dto.request.CompanyRequest;
+import tn.iit.dto.response.CompanyResponse;
 import tn.iit.dto.response.ProjectResponse;
-import tn.iit.entites.Compain;
-import tn.iit.exception.CompainNotFoundException;
-import tn.iit.services.CompainService;
+import tn.iit.entites.Company;
+import tn.iit.exception.CompanyNotFoundException;
+import tn.iit.services.CompanyService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import tn.iit.services.ProjectService;
@@ -32,34 +32,34 @@ import tn.iit.services.ProjectService;
            allowCredentials = "true")
 @RestController
 @AllArgsConstructor
-public class CompainController {
+public class CompanyController {
 
-    private final CompainService compainService;
+    private final CompanyService companyService;
     private  ProjectService projectService;
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/all")
-    public List<CompainResponse> getAllCompains() {
-        return compainService.findAll().stream()
-                .map(compainService::convertToResponse) // Correction ici
+    public List<CompanyResponse> getAllCompanies() {
+        return companyService.findAll().stream()
+                .map(companyService::convertToResponse) // Correction ici
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public CompainResponse getCompainById(@PathVariable(name = "id") String id) throws CompainNotFoundException {
-        return compainService.convertToResponse(compainService.getById(id));
+    public CompanyResponse getCompanyById(@PathVariable(name = "id") String id) throws CompanyNotFoundException {
+        return companyService.convertToResponse(companyService.getById(id));
     }
 
 @ResponseStatus(HttpStatus.OK)
 @DeleteMapping("/{id}")
-public ResponseEntity<?> deleteCompain(
+public ResponseEntity<?> deleteCompany(
         @PathVariable String id,
         @RequestHeader("Authorization") String authToken) {
     
     try {
-        compainService.deleteCompain(id, authToken);
+        companyService.deletecompany(id, authToken);
         return ResponseEntity.noContent().build();
-    } catch (CompainNotFoundException e) {
+    } catch (CompanyNotFoundException e) {
         return ResponseEntity.notFound().build();
     } catch (RuntimeException e) {
         return ResponseEntity.internalServerError()
@@ -71,23 +71,23 @@ public ResponseEntity<?> deleteCompain(
 
 @ResponseStatus(HttpStatus.CREATED)
 @PostMapping("/create")
-public CompainResponse  createCompain(@RequestBody @Valid CompainRequest request,
-                                      @RequestHeader("Authorization") String authToken) {
-    Compain compain = compainService.convertToEntity(request);
-    return compainService.convertToResponse(compainService.createCompain(compain, authToken));
+public CompanyResponse createCompany(@RequestBody @Valid CompanyRequest request,
+                                     @RequestHeader("Authorization") String authToken) {
+    Company company = companyService.convertToEntity(request);
+    return companyService.convertToResponse(companyService.createcompany(company, authToken));
     }
 
 @PutMapping("/update/{id}")
 @ResponseStatus(HttpStatus.OK)
-public CompainResponse  updateCompain(@PathVariable String id,
-                                             @RequestBody @Valid CompainRequest request,
-                                             @RequestHeader("Authorization") String authToken)
-        throws CompainNotFoundException {
+public CompanyResponse updateCompany(@PathVariable String id,
+                                     @RequestBody @Valid CompanyRequest request,
+                                     @RequestHeader("Authorization") String authToken)
+        throws CompanyNotFoundException {
 
-    Compain compain = compainService.convertToEntity(request);
-    compain.setId(id); // Assurez-vous que l'ID est bien défini
-    Compain updated = compainService.updateCompain(id, compain, authToken);
-    return compainService.convertToResponse(updated);
+    Company company = companyService.convertToEntity(request);
+    company.setId(id); // Assurez-vous que l'ID est bien défini
+    Company updated = companyService.updatecompany(id, company, authToken);
+    return companyService.convertToResponse(updated);
 }
 
 
@@ -99,11 +99,11 @@ public CompainResponse  updateCompain(@PathVariable String id,
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<?> getCompainByName(@PathVariable String name) {
+    public ResponseEntity<?> getCompanyByName(@PathVariable String name) {
         try {
-            Compain compain = compainService.getCompainByName(name);
-            return ResponseEntity.ok(compainService.convertToResponse(compain));
-        } catch (CompainNotFoundException e) {
+            Company company = companyService.getcompanyByName(name);
+            return ResponseEntity.ok(companyService.convertToResponse(company));
+        } catch (CompanyNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Company with name '" + name + "' not found");
         }

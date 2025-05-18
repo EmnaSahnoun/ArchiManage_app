@@ -2,11 +2,10 @@ package tn.iit.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class CompainRequest {
+public class CompanyRequest {
     @NotBlank(message = "Name is mandatory")
     private String name;
 

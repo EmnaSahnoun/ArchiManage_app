@@ -1,12 +1,12 @@
 package tn.iit.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import tn.iit.entites.Compain;
+import tn.iit.entites.Company;
 
 import java.util.Optional;
 
-public interface CompainRepository extends MongoRepository<Compain, String> {
-    Optional<Compain> findByName(String name);
+public interface CompanyRepository extends MongoRepository<Company, String> {
+    Optional<Company> findByName(String name);
     boolean existsByName(String name);
 
 }

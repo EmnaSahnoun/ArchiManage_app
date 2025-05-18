@@ -4,7 +4,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import tn.iit.interfaces.IKeycloakService;
-import tn.iit.repositories.CompainRepository;
 
 import java.util.*;
 

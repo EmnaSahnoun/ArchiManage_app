@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "companies") // Spécifie le nom de la collection MongoDB
 @Data // Lombok - génère getters, setters, toString, etc.
-public class Compain {
+public class Company {
     @Id // Identifiant unique MongoDB
     private String id;
     
