@@ -122,14 +122,7 @@ public class CommercialDocumentService implements ICommercialDocument {
     public CommercialDocumentResponse getDocument(String id) {
         CommercialDocument document = documentRepository.findById(id)
                 .orElseThrow(() -> new DocumentNotFoundException("Document not found"));
-        Company company = new Company();
-        company.setId(document.getCompany().getId());
-        company.setName(document.getCompany().getName());
-        company.setAddress(document.getCompany().getAddress());
-        company.setEmail(document.getCompany().getEmail());
-        company.setPhone(document.getCompany().getPhone());
-        company.setCreatedAt(document.getCompany().getCreatedAt());
-        document.setCompany(company);
+
 
         return convertToResponse(document);
     }
