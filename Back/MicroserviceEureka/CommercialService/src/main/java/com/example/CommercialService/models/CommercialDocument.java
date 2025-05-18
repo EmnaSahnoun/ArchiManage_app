@@ -19,7 +19,7 @@ public class CommercialDocument {
     @Id
     private String id;
 
-    @Transient
+    @DBRef
     private Company company;
     private Type documentType; // "INVOICE", "QUOTE", etc.
     private String documentNumber;

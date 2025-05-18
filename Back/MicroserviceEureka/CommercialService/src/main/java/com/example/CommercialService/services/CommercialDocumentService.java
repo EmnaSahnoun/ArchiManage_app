@@ -23,19 +23,20 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CommercialDocumentService implements ICommercialDocument {
     private final CommercialDocumentRepository documentRepository;
+    private final CompanyRepository companyRepository;
     private final CompanyServiceClient companyServiceClient;
     private final SequenceGeneratorService sequenceGeneratorService;
 
     @Override
     public CommercialDocumentResponse createDocument(CommercialDocumentRequest request) {
         // Récupérer les infos de la company depuis le MS company
-        CompanyResponse companyResponse = companyServiceClient.getCompanyById(request.getCompanyId());
 
         // Convertir la request en entity
         CommercialDocument document = new CommercialDocument();
@@ -48,13 +49,26 @@ public class CommercialDocumentService implements ICommercialDocument {
         document.setSubTotal(BigDecimal.ZERO);
         document.setNotes(request.getNotes());
 
-        Company company = new Company();
-        company.setId(companyResponse.getId());
-        company.setName(companyResponse.getName());
-        company.setAddress(companyResponse.getAddress());
-        company.setEmail(companyResponse.getEmail());
-        company.setPhone(companyResponse.getPhone());
-        company.setCreatedAt(companyResponse.getCreatedAt());
+        Optional<Company> existingCompany = companyRepository.findById(request.getCompanyId());
+        Company company ;
+        if (existingCompany.isPresent()) {
+            // 2a. Si elle existe, on la récupère
+            company = existingCompany.get();
+        } else {
+            // 2b. Si elle n'existe pas, on la récupère du microservice et on la sauvegarde
+            CompanyResponse companyResponse = companyServiceClient.getCompanyById(request.getCompanyId());
+
+            company = new Company();
+            company.setId(companyResponse.getId());
+            company.setName(companyResponse.getName());
+            company.setAddress(companyResponse.getAddress());
+            company.setEmail(companyResponse.getEmail());
+            company.setPhone(companyResponse.getPhone());
+            company.setCreatedAt(companyResponse.getCreatedAt());
+
+            // Sauvegarder la nouvelle company
+            company = companyRepository.save(company);
+        }
         document.setCompany(company);
 
         // Convertir les lignes
