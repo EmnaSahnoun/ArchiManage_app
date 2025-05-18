@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
         allowedHeaders = "*",
         allowCredentials = "true")
@@ -22,6 +25,35 @@ public class CommercialDocumentController {
             @Valid @RequestBody CommercialDocumentRequest request) {
         CommercialDocumentResponse response = commercialDocumentService.createDocument(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommercialDocumentResponse> updateDocument(
+            @PathVariable String id,
+            @Valid @RequestBody CommercialDocumentRequest request) {
+        CommercialDocumentResponse response = commercialDocumentService.updateDocument(id, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommercialDocumentResponse> deleteDocument(
+            @PathVariable String id) {
+        CommercialDocumentResponse response = commercialDocumentService.deleteDocument(id);
+        return ResponseEntity.ok(response);
+         }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommercialDocumentResponse> getDocument(
+            @PathVariable String id) {
+        CommercialDocumentResponse response = commercialDocumentService.getDocument(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommercialDocumentResponse>> getAllDocuments() {
+        List<CommercialDocumentResponse> responses = commercialDocumentService.getAllDocuments();
+        return ResponseEntity.ok(responses);
     }
 
 
