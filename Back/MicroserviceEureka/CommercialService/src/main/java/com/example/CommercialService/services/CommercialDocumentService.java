@@ -171,9 +171,10 @@ public class CommercialDocumentService implements ICommercialDocument {
                 company.setEmail(companyResponse.getEmail());
                 company.setPhone(companyResponse.getPhone());
                 company.setCreatedAt(companyResponse.getCreatedAt());
+                
                 response.setCompany(company);
             } catch (Exception e) {
-                // Log l'erreur mais continue avec company=null
+
                 response.setCompany(null);
             }
         } else {

@@ -3,6 +3,7 @@ package com.example.CommercialService.models;
 import com.example.CommercialService.models.enums.Status;
 import com.example.CommercialService.models.enums.Type;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -18,7 +19,7 @@ public class CommercialDocument {
     @Id
     private String id;
 
-    @DBRef(lazy = true)
+    @Transient
     private Company company;
     private Type documentType; // "INVOICE", "QUOTE", etc.
     private String documentNumber;
