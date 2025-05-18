@@ -14,6 +14,7 @@ import com.example.CommercialService.models.Company;
 import com.example.CommercialService.models.enums.Status;
 import com.example.CommercialService.models.enums.Type;
 import com.example.CommercialService.repositories.ClientRepository;
+import com.example.CommercialService.repositories.CommercialDocumentLineRepository;
 import com.example.CommercialService.repositories.CommercialDocumentRepository;
 import com.example.CommercialService.repositories.CompanyRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class CommercialDocumentService implements ICommercialDocument {
     private final CompanyRepository companyRepository;
     private final CompanyServiceClient companyServiceClient;
     private final SequenceGeneratorService sequenceGeneratorService;
+    private final CommercialDocumentLineRepository commercialDocumentLineRepository;
 
     @Override
     public CommercialDocumentResponse createDocument(CommercialDocumentRequest request) {
@@ -73,7 +75,10 @@ public class CommercialDocumentService implements ICommercialDocument {
 
         // Convertir les lignes
         List<CommercialDocumentLine> lines = request.getLines().stream()
-                .map(this::convertToDocumentLine)
+                .map(lineRequest -> {
+                    CommercialDocumentLine line = convertToDocumentLine(lineRequest);
+                    return commercialDocumentLineRepository.save(line); // Sauvegarde chaque ligne
+                })
                 .collect(Collectors.toList());
 
         document.setLines(lines);
