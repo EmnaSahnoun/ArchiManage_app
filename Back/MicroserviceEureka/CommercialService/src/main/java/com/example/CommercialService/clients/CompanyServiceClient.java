@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "PROJECTCOMPANY",
         configuration = FeignConfig.class,
-        url="https://e1.systeo.tn/PROJECTCOMPANY"
+        url="https://e1.systeo.tn/projectcompany"
 
 )
 public interface CompanyServiceClient {
