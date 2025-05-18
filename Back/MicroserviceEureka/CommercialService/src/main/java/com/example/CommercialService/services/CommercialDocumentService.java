@@ -64,7 +64,7 @@ public class CommercialDocumentService implements ICommercialDocument {
         CommercialDocument savedDocument = documentRepository.save(document);
 
         // Convertir en response
-        return convertToResponse(savedDocument, companyResponse);
+        return convertToResponse(savedDocument);
     }
 
     @Override
@@ -88,9 +88,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         // Sauvegarder
         CommercialDocument updatedDocument = documentRepository.save(document);
 
-        // Récupérer les infos de la company
-        CompanyResponse companyResponse = companyServiceClient.getCompanyById(document.getCompany().getId());
-        return convertToResponse(updatedDocument, companyResponse);
+
+        return convertToResponse(updatedDocument);
     }
 
     @Override
@@ -102,9 +101,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         // Supprimer
         documentRepository.delete(document);
 
-        // Récupérer les infos de la company
-        CompanyResponse companyResponse = companyServiceClient.getCompanyById(document.getCompany().getId());
-        return convertToResponse(document, companyResponse);
+
+        return convertToResponse(document);
     }
 
     @Override
@@ -112,8 +110,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         CommercialDocument document = documentRepository.findById(id)
                 .orElseThrow(() -> new DocumentNotFoundException("Document not found"));
 
-        CompanyResponse companyResponse = companyServiceClient.getCompanyById(document.getCompany().getId());
-        return convertToResponse(document, companyResponse);
+
+        return convertToResponse(document);
     }
 
     @Override
@@ -124,8 +122,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         // Convertir en responses
         List<CommercialDocumentResponse> responses = documents.stream()
                 .map(doc -> {
-                    CompanyResponse company = companyServiceClient.getCompanyById(doc.getCompany().getId());
-                    return convertToResponse(doc, company);
+
+                    return convertToResponse(doc);
                 })
                 .collect(Collectors.toList());
 
@@ -146,10 +144,10 @@ public class CommercialDocumentService implements ICommercialDocument {
         line.calculateTotal();
         return line;
     }
-    private CommercialDocumentResponse convertToResponse(CommercialDocument document, CompanyResponse company) {
+    private CommercialDocumentResponse convertToResponse(CommercialDocument document) {
         CommercialDocumentResponse response = new CommercialDocumentResponse();
         response.setId(document.getId());
-        response.setCompany(company);
+        response.setCompany(document.getCompany());
         response.setDocumentType(document.getDocumentType());
         response.setDocumentNumber(document.getDocumentNumber());
         response.setCreatedAt(document.getCreatedAt());

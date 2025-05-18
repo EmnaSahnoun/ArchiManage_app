@@ -1,5 +1,6 @@
 package com.example.CommercialService.dto.response;
 
+import com.example.CommercialService.models.Company;
 import com.example.CommercialService.models.enums.Status;
 import com.example.CommercialService.models.enums.Type;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class CommercialDocumentResponse {
     private String id;
-    private CompanyResponse company;
+    private Company company;
     private Type documentType;
     private String documentNumber;
     private Date createdAt;
@@ -30,11 +31,11 @@ public class CommercialDocumentResponse {
         this.id = id;
     }
 
-    public CompanyResponse getCompany() {
+    public Company getCompany() {
         return company;
     }
 
-    public void setCompany(CompanyResponse company) {
+    public void setCompany(Company company) {
         this.company = company;
     }
 
@@ -61,8 +62,6 @@ public class CommercialDocumentResponse {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-
 
     public Status getStatus() {
         return status;
