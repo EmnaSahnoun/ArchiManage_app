@@ -79,6 +79,7 @@ try{
 
             task.getAction()
     );
+    LOGGER.info(String.format("Json notification sent -> %s", notification));
     rabbitTemplate.convertAndSend(exchange3, routingKeyJson3, notification);
         rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
 
