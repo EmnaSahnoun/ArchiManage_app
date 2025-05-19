@@ -7,6 +7,7 @@ import com.example.ProjectService.models.Task;
 import com.example.ProjectService.services.TaskService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ import java.util.Map;
 
 
 @Service
+
 public class ProjectServiceEventProducer {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
@@ -38,13 +40,14 @@ public class ProjectServiceEventProducer {
     @Autowired
     private  ObjectMapper objectMapper;
 
-    private TaskService taskService;
+    private final TaskService taskService;
     private static  final Logger LOGGER= LoggerFactory.getLogger(ProjectServiceEventProducer.class);
 
 
 
-    public ProjectServiceEventProducer(RabbitTemplate rabbitTemplate) {
+    public ProjectServiceEventProducer(RabbitTemplate rabbitTemplate, TaskService taskService) {
         this.rabbitTemplate = rabbitTemplate;
+        this.taskService = taskService;
     }
 
     public void sendTaskinMessage(Task task) {
