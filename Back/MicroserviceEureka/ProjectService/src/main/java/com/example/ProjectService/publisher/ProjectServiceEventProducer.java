@@ -76,7 +76,7 @@ try{
             task.getAction()
     );
     rabbitTemplate.convertAndSend(exchange3, routingKeyJson3, jsonMessage);
-        rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
+        rabbitTemplate.convertAndSend(exchange, routingKeyJson, notification);
 
     }
     catch(Exception e){
