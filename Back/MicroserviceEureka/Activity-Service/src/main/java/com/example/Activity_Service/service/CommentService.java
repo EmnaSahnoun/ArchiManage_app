@@ -70,6 +70,7 @@ public class CommentService implements IComment {
                         commentRequest.getUsername()+ " a ajouté un commentaire à la tâche" + notificationInfo.getTaskName()
                                 +" (Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
                         LocalDateTime.now(),
+                        "commentaire",
                         notificationInfo.getUserIdsToNotify(),
                         commentRequest.getContent(),
                         commentRequest.getUsername(),
@@ -92,6 +93,7 @@ public class CommentService implements IComment {
             history.setUsername(commentRequest.getUsername());
             history.setAction("COMMENT");
             history.setFieldChanged("comments");
+            history.setHistoryType("commentaire");
 
             taskHistoryService.recordHistory(history);
 
@@ -140,7 +142,7 @@ public class CommentService implements IComment {
 
             // Enregistrer dans l'historique
             taskHistoryService.recordCommentHistory(taskId, idUser, "DELETE",
-                    "Comment deleted from task: " + notificationInfo.getTaskName());
+                    "Comment deleted from task: " + notificationInfo.getTaskName(),"commentaire");
 
         } catch (Exception e) {
             logger.error("Failed to delete comment", e);
@@ -200,7 +202,8 @@ public class CommentService implements IComment {
                     String.format("Task: %s | Content changed from: %.20s to: %.20s",
                             notificationInfo.getTaskName(),
                             oldContent,
-                            commentRequest.getContent())
+                            commentRequest.getContent()),
+                    "commentaire"
             );
 
             return updatedComment;

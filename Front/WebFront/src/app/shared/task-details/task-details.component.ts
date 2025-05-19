@@ -7,6 +7,9 @@ import { ActivityService } from '../../services/activityService';
 import { AgenceService } from '../../services/agenceService';
 import { CommentResponse, TaskHistory } from '../../models/activity.interfaces';
 import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dialog/confirmation-dialog.component';
+import { DocumentService } from '../../services/document.service';
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { MediaFileResponse } from '../../models/mediaFile';
 
 @Component({
   selector: 'app-task-details',
@@ -17,10 +20,17 @@ import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dial
 export class TaskDetailsComponent implements OnInit {
   @Input() task: any;
   subtasks: any[] = [];
- isLoadingSubtasks = false;
+  isLoadingSubtasks = false;
   newCommentText: string = '';
   isLoadingComments = false;
   isLoadingActivities = false;
+
+  // Document/File related properties
+  isLoadingDocuments = false;
+  selectedFile: File | null = null;
+   uploadProgress: number | null = null;
+  isUploading = false;
+  fileDescription: string = '';
 // Pour l'édition des commentaires
   editingCommentId: string | null = null;
   editedCommentContent: string = '';
@@ -38,6 +48,7 @@ name:string="";
     private activityService:ActivityService,
     private projectService: ProjectService,
     private modalService: NgbModal,
+    private documentService:DocumentService
 
   ) {
     
@@ -46,8 +57,8 @@ name:string="";
   ngOnInit(): void {
     console.log('Task details:', this.task);
     // Initialiser les tableaux pour éviter les erreurs dans le template
-    if (!this.task.attachments) {
-      this.task.attachments = [];
+    if (!this.task.documents) { // Changed from attachments to documents
+      this.task.documents = [];
     }
     if (!this.task.activities) {
       this.task.activities = [];
@@ -55,17 +66,14 @@ name:string="";
     
 
     if (this.task?.id) {
-      console.log("bonjour")
+      this.loadDocuments();
       this.loadComments();
       this.loadActivities(); // Charger l'historique (activités)
     } 
     if (this.task?.subTaskIds?.length > 0) {
       this.getSubtasks(this.task.subTaskIds);
     }
-    //this.getSampleTask();
-    /* if (!this.task.subtasks) {
-      this.task.subtasks = [];
-    } */
+   
     
     
   }
@@ -102,11 +110,14 @@ loadComments(): void {
         { name: 'Design Inner Pages UI', assignee: 'Brian Adams' },
         { name: 'Client Feedback Integration', assignee: 'Eric Green' }
       ],
-      attachments: [
-        { name: 'Innovate.Ltd_Homepage_UI.fig', description: 'Final homepage UI in Figma' },
-        { name: 'Innovate.Ltd_InnerPages.pdf', description: 'Approved layouts for inner pages' },
-        { name: 'Innovate.Ltd_Design_Guidelines.pdf', description: 'Design guidelines for the project' }
-      ],
+         
+      documents: [ // Changed from attachments to documents
+        { id: 'doc1', filename: 'Innovate.Ltd_Homepage_UI.fig', description: 'Final homepage UI in Figma', mediaType: 'DOCUMENT', size: 1024, uploadDate: new Date(), uploadedBy: 'user1', uploaderUsername: 'Eric G.' },
+        { id: 'doc2', filename: 'Innovate.Ltd_InnerPages.pdf', description: 'Approved layouts for inner pages', mediaType: 'DOCUMENT', size: 2048, uploadDate: new Date(), uploadedBy: 'user2', uploaderUsername: 'Brian A.' },
+        { id: 'doc3', filename: 'Project_Overview.mp4', description: 'Project overview video', mediaType: 'VIDEO', size: 10240, uploadDate: new Date(), uploadedBy: 'user1', uploaderUsername: 'Eric G.' },
+        { id: 'doc4', filename: 'Logo_Concept.png', description: 'Logo concept art', mediaType: 'IMAGE', size: 512, uploadDate: new Date(), uploadedBy: 'user2', uploaderUsername: 'Brian A.' }
+
+   ],
       requirements: [
         'Brand Consistency: Ensure the UI elements align with Innovate Ltd\'s branding',
         'Responsive Design: The UI kit must be designed for optimal performance on all devices',
@@ -129,6 +140,140 @@ loadComments(): void {
       ] // Added sample comments
     };
   }
+loadDocuments(): void {
+    if (!this.task?.id) return;
+    this.isLoadingDocuments = true;
+    // Assuming projectService has a method to get documents by task ID
+    // And it needs to resolve uploader usernames similar to loadActivities
+    this.documentService.getFilesByTask(this.task.id as string).pipe(
+      switchMap((documents: MediaFileResponse[]) => {
+        if (!documents || documents.length === 0) {
+          return of([]);
+        }
+        const userRequests: Observable<MediaFileResponse>[] = documents.map(doc => {
+        
+          if (doc.uploadedBy) {
+            return this.agenceService.getUserById(doc.uploadedBy).pipe(
+              map(user => ({ ...doc, uploaderUsername: user.username })),
+              catchError(() => of({ ...doc, uploaderUsername: 'N/A' }))
+            );
+          }
+          return of({ ...doc, uploaderUsername: 'System' });
+        });
+        return forkJoin(userRequests);
+      })
+    ).subscribe({
+      next: (processedDocuments) => {
+         this.task.documents = processedDocuments as MediaFileResponse[];
+               this.isLoadingDocuments = false;
+        console.log('Documents loaded:', this.task.documents);
+      },
+      error: (err) => {
+        console.error('Error loading documents:', err);
+        this.task.documents = [];
+        this.isLoadingDocuments = false;
+      }
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList && fileList.length > 0) {
+      this.selectedFile = fileList[0];
+    } else {
+      this.selectedFile = null;
+    }
+  }
+
+  uploadDocument(): void {
+    if (!this.selectedFile || !this.task?.id) {
+      alert('Please select a file and ensure task context is available.');
+      return;
+    }
+    const currentUserId = localStorage.getItem("user_id");
+    if (!currentUserId) {
+      console.error('User not authenticated for file upload');
+      alert('You must be logged in to upload files.');
+      return;
+    }
+this.isUploading = true;
+    this.uploadProgress = 0;
+
+    this.documentService.uploadFile(
+      this.selectedFile,
+      this.fileDescription,
+      this.task.id as string,
+      this.task.projectId || null, // Ensure projectId is passed or null
+      this.task.phaseId || null,   // Ensure phaseId is passed or null
+      currentUserId
+    ).subscribe({
+        next: (event: HttpEvent<any>) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            if (event.total) {
+              this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            }
+          } else if (event instanceof HttpResponse) {
+            // Assuming the backend returns the MediaFile object in the body of the response
+            const newDocument = event.body as MediaFileResponse;
+            const currentUsername = localStorage.getItem("username") || 'You';
+            
+            if (!this.task.documents) {
+              this.task.documents = [];
+            }
+            this.task.documents.unshift({ ...newDocument, uploaderUsername: currentUsername });
+            
+            this.selectedFile = null;
+            this.fileDescription = '';
+            this.uploadProgress = null;
+            this.isUploading = false;
+            const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
+            if (fileInput) {
+              fileInput.value = ''; // Reset file input
+            }
+            this.loadActivities(); // Reload activities if uploads are logged
+            alert('File uploaded successfully!');
+          }
+        },
+        error: (err) => {
+            console.error('Error uploading document:', err);
+            alert(`Failed to upload file: ${err.message || 'Unknown error'}`);
+            this.isUploading = false;
+            this.uploadProgress = null;
+        }
+    });
+  }
+
+ downloadDocument(doc: MediaFileResponse): void {
+  
+    this.documentService.downloadFile(doc.id).subscribe(blob => {
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = doc.filename;
+      link.click();
+      window.URL.revokeObjectURL(link.href);
+    }, error => {
+      console.error('Error downloading file:', error);
+      alert('Failed to download file.');
+    });
+  }
+
+  deleteDocument(docId: string): void {
+    // Confirmation dialog can be added here similar to deleteComment
+    this.documentService.deleteFile(docId).subscribe({
+      next: () => {
+        this.task.documents = this.task.documents.filter((d: MediaFileResponse) => d.id !== docId);
+       
+        this.loadActivities(); // Reload activities if deletions are logged
+        alert('Document deleted successfully.');
+      },
+      error: (err) => {
+        console.error('Error deleting document:', err);
+        alert('Failed to delete document.');
+      }
+    });
+  }
+
   getSubtasks(subTaskIds: string[]): void {
     this.isLoadingSubtasks = true;
     
@@ -201,9 +346,8 @@ loadActivities(): void {
       if (!activities || activities.length === 0) {
         return of([]); // Return empty array if no activities
       }
-      // Create an array of Observables to fetch usernames
-      // Ensure TaskHistory interface has an optional username property: username?: string;
       const userRequests: Observable<TaskHistory>[] = activities.map(activity => {
+        console.log('Processing activity:', activity);
         if (activity.idUser) { // Check if idUser exists
           return this.agenceService.getUserById(activity.idUser).pipe(
             map(user => {
@@ -215,7 +359,6 @@ loadActivities(): void {
             })
           );
         } else {
-          // If no idUser, activity might be a system action or username might already be there from another source
           return of({ ...activity, username: activity.username || 'System Action' });
         }
       });

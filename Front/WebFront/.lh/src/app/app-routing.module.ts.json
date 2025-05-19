@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 95,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -364,6 +364,30 @@
                 {
                     "date": 1746445146576,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n-  { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n+  { path: 'invitations', component: InvitationsComponent},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n"
+                },
+                {
+                    "date": 1747603988504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     ]\r\n   \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n-  { path: 'invitations', component: InvitationsComponent},\r\n+  { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n@@ -41,9 +41,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  \r\n+  { path: 'login', component: LoginComponent }\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1747603994069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  { path: 'login', component: LoginComponent }\r\n+  { path: 'invoice', component: LoginComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1747604007210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  { path: 'invoice', component: LoginComponent },\r\n+  { path: 'invoice', component: In },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1747604012992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n import { AuthGuard } from './guard/auth.guard';\r\n import { TasksComponent } from './shared/tasks/tasks.component';\r\n import { UserFormComponent } from './super-admin/user-form/user-form.component';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n+import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -41,9 +42,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  { path: 'invoice', component: In },\r\n+  { path: 'invoice', component: InvoiceListComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1747604297558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  { path: 'invoice', component: InvoiceListComponent },\r\n+  { path: 'invoice', component: InvoiceListComponent,  canActivate: [AuthGuard] },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1747604803456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     path: 'super-admin', \r\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n-  { path: 'invoice', component: InvoiceListComponent,  canActivate: [AuthGuard] },\r\n+  { path: 'invoices', component: InvoiceListComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
                 }
             ],
             "date": 1741609914429,

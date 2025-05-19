@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 39,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -132,6 +132,38 @@
                 {
                     "date": 1747323907822,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/activity\": \"/NotificationService\"\r\n+      \"^/notification\": \"/NotificationService\"\r\n     }\r\n   }\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1747600985816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,17 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n-  }\r\n+  },\r\n+  \"/agence\": {\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/agence\": \"/projectcompany\"\r\n+    }\r\n+  },\r\n \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747600997873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n-  \"/agence\": {\r\n+  \"/i\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1747601008111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,14 +42,14 @@\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n-  \"/i\": {\r\n+  \"/invoice\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/agence\": \"/projectcompany\"\r\n+      \"^/invoice\": \"/projectcompany\"\r\n     }\r\n   },\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1747601017885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,11 +47,11 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/invoice\": \"/projectcompany\"\r\n+      \"^/invoice\": \"/CommercialService\"\r\n     }\r\n-  },\r\n+  }\r\n \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747613475624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,10 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/invoice\": \"/CommercialService\"\r\n     }\r\n-  }\r\n+  },\r\n+  DocumentService\r\n \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747613482602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,8 +51,15 @@\n       \"^/invoice\": \"/CommercialService\"\r\n     }\r\n   },\r\n   DocumentService\r\n+\"/invoice\": {\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/invoice\": \"/CommercialService\"\r\n+    }\r\n+  }\r\n \r\n-\r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1747613487856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n       \"^/invoice\": \"/CommercialService\"\r\n     }\r\n   },\r\n   DocumentService\r\n-\"/invoice\": {\r\n+\"/document\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1747613496418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,15 +50,15 @@\n     \"pathRewrite\": {\r\n       \"^/invoice\": \"/CommercialService\"\r\n     }\r\n   },\r\n-  DocumentService\r\n+  \r\n \"/document\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/invoice\": \"/CommercialService\"\r\n+      \"^/document\": \"/DocumentService\"\r\n     }\r\n   }\r\n \r\n }\r\n"
                 }
             ],
             "date": 1745069337198,

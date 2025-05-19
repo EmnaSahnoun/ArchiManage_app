@@ -24,6 +24,9 @@
       <li mat-list-item routerLink="/messages" routerLinkActive="active" *ngIf="isUser || isAdmin">
         <i class="bi bi-chat-dots"></i> Messages
       </li>
+      <li mat-list-item routerLink="/invoices" routerLinkActive="active" *ngIf="isAdmin"><a (click)="changeTitle('Factures')">
+     <i class="bi bi-briefcase"></i> Factures</a>
+      </li>
       <li mat-list-item routerLink="/settings" routerLinkActive="active">
         <i class="bi bi-gear"></i> Settings
       </li>

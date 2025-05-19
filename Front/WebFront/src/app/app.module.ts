@@ -44,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InvitationsComponent } from './invitations/invitations.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { InvitationsComponent } from './invitations/invitations.component';
     TaskDetailsComponent,
     ConfirmationDialogComponent,
     InvitationsComponent,
+    InvoiceListComponent,
 
   ],
   imports: [

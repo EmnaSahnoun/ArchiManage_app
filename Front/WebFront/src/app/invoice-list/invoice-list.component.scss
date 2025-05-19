@@ -1,0 +1,144 @@
+/* d:\satge pfe\application\ArchiManage\Front\WebFront\src\app\invoice-list\invoice-list.component.css */
+.invoice-list-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+}
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8em;
+  margin-right: 5px; /* Spacing between action buttons */
+}
+
+
+.loading-indicator, .error-message, .no-data {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.error-message {
+  color: #dc3545;
+  border: 1px solid #f5c6cb;
+  background-color: #f8d7da;
+  border-radius: 4px;
+}
+
+.no-data a {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.invoices-table-container {
+  overflow-x: auto; /* For responsiveness on small screens */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  text-align: left;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.status-badge {
+  padding: 0.25em 0.6em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+.status-badge.unpaid {
+  background-color: #ffc107; /* Yellow for unpaid */
+  color: #212529;
+}
+.status-badge.paid {
+  background-color: #28a745; /* Green for paid */
+}
+.status-badge.draft {
+  background-color: #6c757d; /* Grey for draft */
+}
+.status-badge.canceled {
+  background-color: #dc3545; /* Red for canceled */
+}
+.status-badge.default {
+  background-color: #17a2b8; /* Default/Info color */
+}

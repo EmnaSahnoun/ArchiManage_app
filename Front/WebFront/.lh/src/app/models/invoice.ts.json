@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/models/invoice.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1747597376442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747597386307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import { InvoiceLine } from \"./invoiceLine\";\r\n \r\n export interface Invoice {\r\n   id: string;\r\n-  company: Age;\r\n+  company: Agen;\r\n   documentType: string; // \"INVOICE\"\r\n   documentNumber: string;\r\n   createdAt: number;\r\n   status: string; // e.g., \"UNPAID\", \"PAID\", \"DRAFT\"\r\n"
+                }
+            ],
+            "date": 1747597376442,
+            "name": "Commit-0",
+            "content": "export interface Invoice {\r\n  id: string;\r\n  company: Company;\r\n  documentType: string; // \"INVOICE\"\r\n  documentNumber: string;\r\n  createdAt: number;\r\n  status: string; // e.g., \"UNPAID\", \"PAID\", \"DRAFT\"\r\n  discount: number;\r\n  subTotal: number;\r\n  taxAmount: number;\r\n  totalAmount: number;\r\n  notes: string;\r\n  lines: InvoiceLine[];\r\n}"
+        }
+    ]
+}

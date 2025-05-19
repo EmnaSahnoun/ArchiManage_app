@@ -10,7 +10,7 @@ import { CommentResponse, TaskHistory } from '../models/activity.interfaces';
 })
 export class ActivityService {
     private apiUrl = '/activity';
-    private projetUrl="/projet"
+    
     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
 
     getCommentsByTaskId(idTask: string): Observable<CommentResponse[]> {

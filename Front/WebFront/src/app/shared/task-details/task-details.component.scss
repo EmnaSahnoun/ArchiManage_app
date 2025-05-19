@@ -374,39 +374,7 @@ overflow: hidden;
     }
   }
 
-  .attachments-list {
-    .attachment-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba($border-color, 0.5);
 
-      i {
-        color: $accent-color;
-        font-size: 1.2rem;
-      }
-
-      .attachment-info {
-        flex-grow: 1;
-
-        strong {
-          display: block;
-          overflow-wrap: break-word;
-          font-size: 0.9rem;
-        }
-
-        small {
-          color: $text-color-secondary;
-          font-size: 0.75rem;
-        }
-      }
-
-      button {
-        color: $primary-color;
-      }
-    }
-  }
 
   .task-description {
     line-height: 1.6;
@@ -655,36 +623,89 @@ position: relative; // For positioning actions absolutely if needed, or use flex
         
       }
    
-  .attachments-list {
-    .attachment-item {
+   .documents-list {
+    .document-item {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 10px 0;
       border-bottom: 1px solid rgba($border-color, 0.5);
 
-      i {
-        color: $accent-color;
-        font-size: 1.2rem;
+      &:last-child {
+        border-bottom: none;
       }
 
-      .attachment-info {
+      .document-icon {
+        font-size: 1.8rem; // Larger icon for file types
+        color: $text-color-secondary;
+        width: 30px; // Fixed width for alignment
+        text-align: center;
+        flex-shrink: 0;
+
+        .bi-file-earmark-image { color: $primary-color; }
+        .bi-file-earmark-play { color: $accent-color; }
+        .bi-file-earmark-text { color: #6c757d; } // A neutral color
+      }
+
+      .document-info {
         flex-grow: 1;
 
-        strong {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .document-filename {
           display: block;
           overflow-wrap: break-word;
           font-size: 0.9rem;
+       font-weight: 600;
+          color: $primary-color;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
-        small {
+        .document-description {
+          font-size: 0.8rem;
+          color: $text-color-secondary;
+          overflow-wrap: break-word;
+        }
+        .document-meta {
           color: $text-color-secondary;
           font-size: 0.75rem;
         }
       }
 
-      button {
-        color: $primary-color;
+      .document-actions {
+        display: flex;
+        gap: 4px;
+        button[mat-icon-button] { // Ensure consistent styling for action buttons
+          width: 32px;
+          height: 32px;
+          .bi { font-size: 16px; }
+        }
+      }
+    }
+  }
+
+  .upload-document-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid $border-color;
+
+    h4 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: $primary-color;
+    }
+    .upload-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      .selected-file-info {
+        font-size: 0.8rem;
+        color: $text-color-secondary;
       }
     }
   }

@@ -95,17 +95,51 @@
         </div>
   
         <div class="task-section">
-           <h3><i class="bi bi-paperclip"></i> Attachments</h3>
-          <div class="attachments-list">
-            <div class="attachment-item" *ngFor="let attachment of task?.attachments">
-              <i class="bi bi-paperclip"></i>
-              <div class="attachment-info">
-                <strong>{{ attachment.name }}</strong>
-                <small>{{ attachment.description }}</small>
+           <h3><i class="bi bi-folder2-open"></i> Documents</h3>
+          <div *ngIf="isLoadingDocuments" class="loading-indicator">Loading documents...</div>
+          <div *ngIf="!isLoadingDocuments">
+            <div class="documents-list">
+              <div class="document-item" *ngFor="let doc of task?.documents">
+                <div class="document-icon">
+                  <i *ngIf="doc.mediaType === 'IMAGE'" class="bi bi-file-earmark-image"></i>
+                  <i *ngIf="doc.mediaType === 'VIDEO'" class="bi bi-file-earmark-play"></i>
+                  <i *ngIf="doc.mediaType === 'DOCUMENT' || (doc.mediaType !== 'IMAGE' && doc.mediaType !== 'VIDEO')" class="bi bi-file-earmark-text"></i>
+                </div>
+                <div class="document-info">
+                  <strong class="document-filename" (click)="downloadDocument(doc)" matTooltip="Download {{doc.filename}}">{{ doc.filename }}</strong>
+                  <small class="document-description" *ngIf="doc.description">{{ doc.description }}</small>
+                  <small class="document-meta">
+                    Size: {{ doc.size | number }} bytes | Uploaded: {{ doc.uploadDate | date:'shortDate' }} by {{ doc.uploaderUsername || doc.uploadedBy }}
+                  </small>
+                </div>
+                <div class="document-actions">
+                  <button mat-icon-button (click)="downloadDocument(doc)" matTooltip="Download document">
+                    <i class="bi bi-download"></i>
+                  </button>
+                  <!-- Add condition for delete, e.g., based on user role or if user is uploader -->
+                  <button mat-icon-button color="warn" (click)="deleteDocument(doc.id)" matTooltip="Delete document">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
               </div>
-              <button mat-icon-button>
-                <i class="bi bi-download"></i>
+              <div *ngIf="(!task?.documents || task?.documents?.length === 0) && !isLoadingDocuments" class="no-comments">
+                No documents attached to this task yet.
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Document Section -->
+          <div class="upload-document-section task-section">
+            <h4>Upload New Document</h4>
+            <div class="upload-form">
+              <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" class="form-control form-control-sm mb-2">
+              <textarea [(ngModel)]="fileDescription" placeholder="Optional: Document description..." class="form-control form-control-sm mb-2" rows="2"></textarea>
+              <button mat-raised-button color="primary" (click)="uploadDocument()" [disabled]="!selectedFile">
+                <i class="bi bi-upload"></i> Upload File
               </button>
+              <div *ngIf="selectedFile" class="selected-file-info mt-2">
+                Selected: {{ selectedFile.name }} ({{ selectedFile.size | number }} bytes)
+              </div>
             </div>
           </div>
         </div>

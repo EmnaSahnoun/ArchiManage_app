@@ -8,6 +8,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { TasksComponent } from './shared/tasks/tasks.component';
 import { UserFormComponent } from './super-admin/user-form/user-form.component';
 import { InvitationsComponent } from './invitations/invitations.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,7 +43,7 @@ const routes: Routes = [
     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),
     canActivate: [AuthGuard]
   },
-  
+  { path: 'invoices', component: InvoiceListComponent },
  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   //{ path: '**', redirectTo: '/dashboard' } 
   

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 45,
+            "activePatchIndex": 47,
             "patches": [
                 {
                     "date": 1747010484254,
@@ -188,6 +188,14 @@
                 {
                     "date": 1747025754396,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,13 +39,14 @@\n     deleteComment(commentId: string, taskId: string, userId: string): Observable<void> {\r\n         const params = new HttpParams()\r\n     .set('taskId', taskId)\r\n     .set('idUser', userId);\r\n-      return this.http.delete(`${this.apiUrl}/comments/${commentId}`, {\r\n-        headers: this.getApiHeaders()\r\n-      }).pipe(\r\n-        catchError(this.handleError)\r\n-      );\r\n+      return this.http.delete<void>(`${this.apiUrl}/comments/${commentId}`, {\r\n+    headers: this.getApiHeaders(),\r\n+    params: params\r\n+  }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n     }\r\n     getHistoryByTaskId(idTask: string): Observable<TaskHistory[]> {        \r\n     return this.http.get<TaskHistory[]>(`${this.apiUrl}/history/task/${idTask}`, { \r\n         headers: this.getApiHeaders()\r\n"
+                },
+                {
+                    "date": 1747601035440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   providedIn: 'root'\r\n })\r\n export class ActivityService {\r\n     private apiUrl = '/activity';\r\n-    private projetUrl=\"/projet\"\r\n+    \r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n     getCommentsByTaskId(idTask: string): Observable<CommentResponse[]> {\r\n     return this.http.get<CommentResponse[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n"
+                },
+                {
+                    "date": 1747669527823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,14 +12,9 @@\n     private apiUrl = '/activity';\r\n     \r\n     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-    getCommentsByTaskId(idTask: string): Observable<CommentResponse[]> {\r\n-    return this.http.get<CommentResponse[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n-        headers: this.getApiHeaders()\r\n-    }).pipe(\r\n-        catchError(this.handleError)\r\n-    );\r\n+    ²\r\n }\r\n \r\n       addComment(commentData: any): Observable<CommentResponse> {\r\n     const url = `${this.apiUrl}/comments`;\r\n"
                 }
             ],
             "date": 1747010484254,

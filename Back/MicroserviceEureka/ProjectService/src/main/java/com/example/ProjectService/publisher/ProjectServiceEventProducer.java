@@ -1,7 +1,10 @@
 package com.example.ProjectService.publisher;
 
+import com.example.ProjectService.dto.response.NotificationDto;
+import com.example.ProjectService.dto.response.TaskCommentNotificationDto;
 import com.example.ProjectService.dto.response.TaskEventDTO;
 import com.example.ProjectService.models.Task;
+import com.example.ProjectService.services.TaskService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -26,9 +29,16 @@ public class ProjectServiceEventProducer {
     private String exchange;
     @Value("${rabbitmq.routing.json.key.name}")
     private String routingKeyJson;
+
+    @Value("${rabbitmq.exchange3.name}")
+    private String exchange3;
+    @Value("${rabbitmq.routing.json.key3.name}")
+    private String routingKeyJson3;
     private RabbitTemplate rabbitTemplate;
     @Autowired
     private  ObjectMapper objectMapper;
+
+    private TaskService taskService;
     private static  final Logger LOGGER= LoggerFactory.getLogger(ProjectServiceEventProducer.class);
 
 
@@ -48,8 +58,26 @@ try{
     message.setChanges(task.getChanges());
         String jsonMessage = objectMapper.writeValueAsString(message);
         LOGGER.info(String.format("Json message sent -> %s", jsonMessage));
+    TaskCommentNotificationDto notificationInfo = taskService.getTaskNotificationbyIdTask(task.getId());
+    NotificationDto notification = new NotificationDto(
 
+            task.getId(),
+            task.getName(),
+            task.getPhase().getProject().getName(),
+            task.getPhase().getName(),
+            " modifications dans la tâche" + task.getName()
+                    +" (Phase ["+task.getPhase().getName() +"], Projet ["+ task.getPhase().getProject().getName()+"])",
+            LocalDateTime.now(),
+            "tache",
+            notificationInfo.getUserIdsToNotify(),
+            null,
+            null,
+
+            task.getAction()
+    );
+    rabbitTemplate.convertAndSend(exchange3, routingKeyJson3, jsonMessage);
         rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
+
     }
     catch(Exception e){
         LOGGER.error("errerur while sending taskin message", e);

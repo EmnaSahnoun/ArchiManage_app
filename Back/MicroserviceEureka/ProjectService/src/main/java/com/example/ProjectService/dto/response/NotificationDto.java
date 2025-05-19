@@ -1,4 +1,4 @@
-package com.example.Activity_Service.dto.response;
+package com.example.ProjectService.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,22 +22,6 @@ public class NotificationDto {
     private String commentContent;
     private String commentAuthor;
     private String actionType;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
 
     public String getTaskId() {
         return taskId;
@@ -71,6 +55,13 @@ public class NotificationDto {
         this.phaseName = phaseName;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public LocalDateTime getCommentDate() {
         return commentDate;
@@ -80,20 +71,20 @@ public class NotificationDto {
         this.commentDate = commentDate;
     }
 
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
+
     public List<String> getUserIdsToNotify() {
         return userIdsToNotify;
     }
 
     public void setUserIdsToNotify(List<String> userIdsToNotify) {
         this.userIdsToNotify = userIdsToNotify;
-    }
-
-    public String getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
     }
 
     public String getCommentContent() {
@@ -110,5 +101,13 @@ public class NotificationDto {
 
     public void setCommentAuthor(String commentAuthor) {
         this.commentAuthor = commentAuthor;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 }

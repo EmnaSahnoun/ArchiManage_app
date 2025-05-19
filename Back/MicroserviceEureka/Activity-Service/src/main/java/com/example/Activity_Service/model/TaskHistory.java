@@ -22,6 +22,15 @@ public class TaskHistory implements Serializable {
     private String newValue;
     private LocalDateTime createdAt;
     private String fileName;
+    private String historyType;
+
+    public String getHistoryType() {
+        return historyType;
+    }
+
+    public void setHistoryType(String historyType) {
+        this.historyType = historyType;
+    }
 
     public String getFileName() {
         return fileName;

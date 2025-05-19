@@ -80,6 +80,7 @@ public class DocumentConsumer {
                         documentDTO.getUsername()+ " a ajouté un document à la tâche" + notificationInfo.getTaskName()
                                 +" (Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
                         LocalDateTime.now(),
+                        "document",
                         notificationInfo.getUserIdsToNotify(),
                         null,
                         documentDTO.getUsername(),
@@ -103,7 +104,8 @@ public class DocumentConsumer {
                     history.setAction(documentDTO.getAction());
                     history.setCreatedAt(LocalDateTime.now());
                     history.setFileName(documentDTO.getFilename());
-                    history.setFieldChanged("documents");
+                    history.setFieldChanged("document");
+                    history.setHistoryType("document");
                     taskHistoryService.recordHistory(history);
                     logger.info("Recorded document {}: {} from {} to {}",
                             documentDTO.getTaskId());

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/models/mediaFile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1747614644104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747614653869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,11 @@\n-MediaFileResponse \n\\ No newline at end of file\n+interface MediaFileResponse {\r\n+  id: string;\r\n+  filename: string;\r\n+  description?: string;\r\n+  mediaType: string;\r\n+  contentType: string;\r\n+  size: number;\r\n+  uploadedBy: string;\r\n+  uploadDate: Date | string; // API might return string\r\n+  uploaderUsername?: string; // For frontend display\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747614736366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-interface MediaFileResponse {\r\n+export interface MediaFileResponse {\r\n   id: string;\r\n   filename: string;\r\n   description?: string;\r\n   mediaType: string;\r\n"
+                }
+            ],
+            "date": 1747614644104,
+            "name": "Commit-0",
+            "content": "MediaFileResponse "
+        }
+    ]
+}

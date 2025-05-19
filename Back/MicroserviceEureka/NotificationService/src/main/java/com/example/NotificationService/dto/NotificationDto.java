@@ -17,10 +17,19 @@ public class NotificationDto {
     private String phaseName;
     private String message;
     private LocalDateTime commentDate;
+    private String notificationType;
     private List<String> userIdsToNotify;
     private String commentContent;
     private String commentAuthor;
     private String actionType; // "COMMENT", "ADD", "UPDATE", "DELETE"
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
 
     public String getTaskId() {
         return taskId;

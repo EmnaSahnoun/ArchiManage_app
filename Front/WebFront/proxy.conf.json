@@ -42,8 +42,24 @@
     "pathRewrite": {
       "^/notification": "/NotificationService"
     }
+  },
+  "/invoice": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/invoice": "/CommercialService"
+    }
+  },
+  
+"/document": {
+    "target": "https://e1.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/document": "/DocumentService"
+    }
   }
-
 
 }
     

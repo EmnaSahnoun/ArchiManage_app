@@ -1,0 +1,134 @@
+{
+    "sourceFile": "src/app/services/invoice.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 29,
+            "patches": [
+                {
+                    "date": 1747600937258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747600942729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-// Create this file at: d:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\app\\services\\invoice.service.ts\r\n import { Injectable } from '@angular/core';\r\n import { HttpClient, HttpHeaders } from '@angular/common/http';\r\n import { Observable } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n"
+                },
+                {
+                    "date": 1747601038467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n })\r\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n   private baseUrl = 'https://e1.systeo.tn/CommercialService/commercialdocuments';\r\n-\r\n+ private apiUrl = '/activity';\r\n   constructor(private http: HttpClient) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n     return this.http.get<Invoice[]>(this.baseUrl);\r\n"
+                },
+                {
+                    "date": 1747601044798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n   providedIn: 'root'\r\n })\r\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n-  private baseUrl = 'https://e1.systeo.tn/CommercialService/commercialdocuments';\r\n- private apiUrl = '/activity';\r\n+\r\n+ private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n     return this.http.get<Invoice[]>(this.baseUrl);\r\n"
+                },
+                {
+                    "date": 1747601052442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,21 +13,21 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n-    return this.http.get<Invoice[]>(this.baseUrl);\r\n+    return this.http.get<Invoice[]>(this.apiUrl);\r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n-    return this.http.get<Invoice>(`${this.baseUrl}/${id}`);\r\n+    return this.http.get<Invoice>(`${this.apiUrl}/${id}`);\r\n   }\r\n \r\n   createInvoice(invoicePayload: InvoicePayload): Observable<Invoice> {\r\n-    return this.http.post<Invoice>(this.baseUrl, invoicePayload);\r\n+    return this.http.post<Invoice>(this.apiUrl, invoicePayload);\r\n   }\r\n \r\n   updateInvoice(id: string, invoicePayload: InvoicePayload): Observable<Invoice> {\r\n-    return this.http.put<Invoice>(`${this.baseUrl}/${id}`, invoicePayload);\r\n+    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload);\r\n   }\r\n \r\n   deleteInvoice(id: string): Observable<void> {\r\n     // The backend CommercialDocumentService returns CommercialDocumentResponse for delete.\r\n"
+                },
+                {
+                    "date": 1747601061332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient, HttpHeaders } from '@angular/common/http';\r\n import { Observable } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n-import { InvoicePayload } from '../models/invoice-payload.model';\r\n \r\n+\r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n export class InvoiceService {\r\n@@ -32,9 +32,9 @@\n   deleteInvoice(id: string): Observable<void> {\r\n     // The backend CommercialDocumentService returns CommercialDocumentResponse for delete.\r\n     // If the actual HTTP response is 204 No Content, Observable<void> is fine.\r\n     // If it returns the deleted object, change to Observable<Invoice>.\r\n-    return this.http.delete<void>(`${this.baseUrl}/${id}`);\r\n+    return this.http.delete<void>(`${this.apiUrl}/${id}`);\r\n   }\r\n \r\n   // For printing, you might have a dedicated backend endpoint\r\n   // or handle it client-side.\r\n"
+                },
+                {
+                    "date": 1747601067691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,13 +20,13 @@\n   getInvoice(id: string): Observable<Invoice> {\r\n     return this.http.get<Invoice>(`${this.apiUrl}/${id}`);\r\n   }\r\n \r\n-  createInvoice(invoicePayload: InvoicePayload): Observable<Invoice> {\r\n+  createInvoice(invoicePayload: any): Observable<Invoice> {\r\n     return this.http.post<Invoice>(this.apiUrl, invoicePayload);\r\n   }\r\n \r\n-  updateInvoice(id: string, invoicePayload: InvoicePayload): Observable<Invoice> {\r\n+  updateInvoice(id: string, invoicePayload: any): Observable<Invoice> {\r\n     return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload);\r\n   }\r\n \r\n   deleteInvoice(id: string): Observable<void> {\r\n"
+                },
+                {
+                    "date": 1747601096177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,28 @@\n     // If it returns the deleted object, change to Observable<Invoice>.\r\n     return this.http.delete<void>(`${this.apiUrl}/${id}`);\r\n   }\r\n \r\n-  // For printing, you might have a dedicated backend endpoint\r\n-  // or handle it client-side.\r\n-  // Example: getPrintableInvoice(id: string): Observable<any> { ... }\r\n+   private getApiHeaders(): HttpHeaders {\r\n+         const token = this.authService.getAccessToken();\r\n+         return new HttpHeaders({\r\n+           'Content-Type': 'application/json',\r\n+           'Authorization': `Bearer ${token}`\r\n+         });\r\n+       }\r\n+       \r\n+         private handleError(error: HttpErrorResponse): Observable<never> {\r\n+           console.error('API Error Details:', error);\r\n+           \r\n+           let errorMessage = 'Une erreur est survenue';\r\n+           if (error.status === 401) {\r\n+             errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+             this.authService.logout();\r\n+           } else if (error.error?.message) {\r\n+             errorMessage = error.error.message;\r\n+           } else if (error.status === 500) {\r\n+             errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+           }\r\n+       \r\n+           return throwError(() => new Error(errorMessage));\r\n+         }\r\n }\r\n"
+                },
+                {
+                    "date": 1747601105297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n-import { HttpClient, HttpHeaders } from '@angular/common/http';\r\n-import { Observable } from 'rxjs';\r\n+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n+import { Observable, throwError } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n \r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1747601134498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n \r\n  private apiUrl = '/invoice';\r\n-  constructor(private http: HttpClient) { }\r\n+  constructor(private http: HttpClient,private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n     return this.http.get<Invoice[]>(this.apiUrl);\r\n   }\r\n"
+                },
+                {
+                    "date": 1747601140920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Observable, throwError } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n+import { AuthService } from './auth.service';\r\n \r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n"
+                },
+                {
+                    "date": 1747602645082,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n \r\n  private apiUrl = '/invoice';\r\n-  constructor(private http: HttpClient,private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+  constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n     return this.http.get<Invoice[]>(this.apiUrl);\r\n   }\r\n"
+                },
+                {
+                    "date": 1747602673949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Observable, throwError } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n import { AuthService } from './auth.service';\r\n+import { UserService } from './UserService';\r\n \r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n@@ -30,11 +31,8 @@\n     return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload);\r\n   }\r\n \r\n   deleteInvoice(id: string): Observable<void> {\r\n-    // The backend CommercialDocumentService returns CommercialDocumentResponse for delete.\r\n-    // If the actual HTTP response is 204 No Content, Observable<void> is fine.\r\n-    // If it returns the deleted object, change to Observable<Invoice>.\r\n     return this.http.delete<void>(`${this.apiUrl}/${id}`);\r\n   }\r\n \r\n    private getApiHeaders(): HttpHeaders {\r\n"
+                },
+                {
+                    "date": 1747602685110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \r\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-  getInvoices(): Observable<Invoice[]> {\r\n+  getInvoices(): Observable<any[]> {\r\n     return this.http.get<Invoice[]>(this.apiUrl);\r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n"
+                },
+                {
+                    "date": 1747602696177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,14 @@\n \r\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-  getInvoices(): Observable<any[]> {\r\n+  getInvoices(): Observable<Invoice[]> {\r\n+    return this.http.get<CommentResponse[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError)\r\n+        );\r\n     return this.http.get<Invoice[]>(this.apiUrl);\r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n"
+                },
+                {
+                    "date": 1747602708964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n-import { Observable, throwError } from 'rxjs';\r\n+import { catchError, Observable, throwError } from 'rxjs';\r\n import { Invoice } from '../models/invoice';\r\n import { AuthService } from './auth.service';\r\n import { UserService } from './UserService';\r\n \r\n@@ -15,9 +15,9 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n-    return this.http.get<CommentResponse[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+    return this.http.get<Invoice[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747602721846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n-    return this.http.get<Invoice[]>(`${this.apiUrl}/comments/task/${idTask}`, { \r\n+    return this.http.get<Invoice[]>(`${this.apiUrl}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n"
+                },
+                {
+                    "date": 1747602729705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );\r\n-    return this.http.get<Invoice[]>(this.apiUrl);\r\n+    \r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n     return this.http.get<Invoice>(`${this.apiUrl}/${id}`);\r\n"
+                },
+                {
+                    "date": 1747602778157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,14 +19,16 @@\n     return this.http.get<Invoice[]>(`${this.apiUrl}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n-        );\r\n-    \r\n+        );    \r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n-    return this.http.get<Invoice>(`${this.apiUrl}/${id}`);\r\n+    return this.http.get<Invoice>(`${this.apiUrl}/${id}`, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError));\r\n   }\r\n \r\n   createInvoice(invoicePayload: any): Observable<Invoice> {\r\n     return this.http.post<Invoice>(this.apiUrl, invoicePayload);\r\n"
+                },
+                {
+                    "date": 1747602786475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,12 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   createInvoice(invoicePayload: any): Observable<Invoice> {\r\n-    return this.http.post<Invoice>(this.apiUrl, invoicePayload);\r\n+    return this.http.post<Invoice>(this.apiUrl, invoicePayload, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError));\r\n   }\r\n \r\n   updateInvoice(id: string, invoicePayload: any): Observable<Invoice> {\r\n     return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload);\r\n"
+                },
+                {
+                    "date": 1747602791826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,12 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   updateInvoice(id: string, invoicePayload: any): Observable<Invoice> {\r\n-    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload);\r\n+    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError));\r\n   }\r\n \r\n   deleteInvoice(id: string): Observable<void> {\r\n     return this.http.delete<void>(`${this.apiUrl}/${id}`);\r\n"
+                },
+                {
+                    "date": 1747604934862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<Invoice[]> {\r\n-    return this.http.get<Invoice[]>(`${this.apiUrl}`, { \r\n+    return this.http.get<any[]>(`${this.apiUrl}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n@@ -44,9 +44,12 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   deleteInvoice(id: string): Observable<void> {\r\n-    return this.http.delete<void>(`${this.apiUrl}/${id}`);\r\n+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError));\r\n   }\r\n \r\n    private getApiHeaders(): HttpHeaders {\r\n          const token = this.authService.getAccessToken();\r\n"
+                },
+                {
+                    "date": 1747605077090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n \r\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-  getInvoices(): Observable<Invoice[]> {\r\n-    return this.http.get<any[]>(`${this.apiUrl}`, { \r\n+  getInvoices(): Observable<any[]> {\r\n+    return this.http.get<any[]>(`${this.apiUrl/}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n"
+                },
+                {
+                    "date": 1747605086760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<any[]> {\r\n-    return this.http.get<any[]>(`${this.apiUrl/}`, { \r\n+    return this.http.get<any[]>(`${this.apiUrl}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n"
+                },
+                {
+                    "date": 1747605098493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,17 +15,17 @@\n  private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<any[]> {\r\n-    return this.http.get<any[]>(`${this.apiUrl}`, { \r\n+    return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n   }\r\n \r\n   getInvoice(id: string): Observable<Invoice> {\r\n-    return this.http.get<Invoice>(`${this.apiUrl}/${id}`, { \r\n+    return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments${id}`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError));\r\n   }\r\n"
+                },
+                {
+                    "date": 1747605188084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,8 +30,9 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   createInvoice(invoicePayload: any): Observable<Invoice> {\r\n+    \r\n     return this.http.post<Invoice>(this.apiUrl, invoicePayload, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError));\r\n"
+                },
+                {
+                    "date": 1747605197956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   createInvoice(invoicePayload: any): Observable<Invoice> {\r\n-    \r\n+    const url = `${this.apiUrl}/comments`;\r\n     return this.http.post<Invoice>(this.apiUrl, invoicePayload, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError));\r\n"
+                },
+                {
+                    "date": 1747605205781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   createInvoice(invoicePayload: any): Observable<Invoice> {\r\n-    const url = `${this.apiUrl}/comments`;\r\n+    const url = `${this.apiUrl}/commercialdocuments`;\r\n     return this.http.post<Invoice>(this.apiUrl, invoicePayload, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError));\r\n"
+                },
+                {
+                    "date": 1747605391668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n \r\n- private apiUrl = '/invoice';\r\n+ private apiUrl = 'https://e1.systeo.tn/CommercialService/commercialdocuments';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n"
+                },
+                {
+                    "date": 1747605465745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class InvoiceService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n \r\n- private apiUrl = 'https://e1.systeo.tn/CommercialService/commercialdocuments';\r\n+ private apiUrl = '/invoice';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n"
+                }
+            ],
+            "date": 1747600937258,
+            "name": "Commit-0",
+            "content": "// Create this file at: d:\\satge pfe\\application\\ArchiManage\\Front\\WebFront\\src\\app\\services\\invoice.service.ts\r\nimport { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpHeaders } from '@angular/common/http';\r\nimport { Observable } from 'rxjs';\r\nimport { Invoice } from '../models/invoice';\r\nimport { InvoicePayload } from '../models/invoice-payload.model';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class InvoiceService {\r\n  // Adjust the baseUrl to your actual API endpoint\r\n  private baseUrl = 'https://e1.systeo.tn/CommercialService/commercialdocuments';\r\n\r\n  constructor(private http: HttpClient) { }\r\n\r\n  getInvoices(): Observable<Invoice[]> {\r\n    return this.http.get<Invoice[]>(this.baseUrl);\r\n  }\r\n\r\n  getInvoice(id: string): Observable<Invoice> {\r\n    return this.http.get<Invoice>(`${this.baseUrl}/${id}`);\r\n  }\r\n\r\n  createInvoice(invoicePayload: InvoicePayload): Observable<Invoice> {\r\n    return this.http.post<Invoice>(this.baseUrl, invoicePayload);\r\n  }\r\n\r\n  updateInvoice(id: string, invoicePayload: InvoicePayload): Observable<Invoice> {\r\n    return this.http.put<Invoice>(`${this.baseUrl}/${id}`, invoicePayload);\r\n  }\r\n\r\n  deleteInvoice(id: string): Observable<void> {\r\n    // The backend CommercialDocumentService returns CommercialDocumentResponse for delete.\r\n    // If the actual HTTP response is 204 No Content, Observable<void> is fine.\r\n    // If it returns the deleted object, change to Observable<Invoice>.\r\n    return this.http.delete<void>(`${this.baseUrl}/${id}`);\r\n  }\r\n\r\n  // For printing, you might have a dedicated backend endpoint\r\n  // or handle it client-side.\r\n  // Example: getPrintableInvoice(id: string): Observable<any> { ... }\r\n}\r\n"
+        }
+    ]
+}
