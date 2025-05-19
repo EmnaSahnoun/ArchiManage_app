@@ -17,6 +17,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -45,7 +46,7 @@ public class ProjectServiceEventProducer {
 
 
 
-    public ProjectServiceEventProducer(RabbitTemplate rabbitTemplate, TaskService taskService) {
+    public ProjectServiceEventProducer(RabbitTemplate rabbitTemplate, @Lazy TaskService taskService) {
         this.rabbitTemplate = rabbitTemplate;
         this.taskService = taskService;
     }
@@ -78,8 +79,8 @@ try{
 
             task.getAction()
     );
-    rabbitTemplate.convertAndSend(exchange3, routingKeyJson3, jsonMessage);
-        rabbitTemplate.convertAndSend(exchange, routingKeyJson, notification);
+    rabbitTemplate.convertAndSend(exchange3, routingKeyJson3, notification);
+        rabbitTemplate.convertAndSend(exchange, routingKeyJson, jsonMessage);
 
     }
     catch(Exception e){
