@@ -14,29 +14,32 @@ import reactor.core.publisher.Sinks;
 
 @Service
 @RequiredArgsConstructor
-public class CommentNotificationConsumer {
+public class TaskNotificationConsumer {
     @Autowired
     private ObjectMapper objectMapper;
-    private static final Logger logger = LoggerFactory.getLogger(CommentNotificationConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskNotificationConsumer.class);
 
     private final Sinks.Many<NotificationDto> sink;
 
     private final SSENotificationService sseNotificationService;
 
-    @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
-    public void consumeComment(String message) {
+    @RabbitListener(queues = "${rabbitmq.queueJson3.name}")
+    public void consumeTask(String message) {
         try {
             logger.info("Raw JSON received: {}", message);
 
             // Conversion du JSON en DTO
             NotificationDto notification = objectMapper.readValue(message, NotificationDto.class);
 
-            logger.info("Notification recu: {}", notification);
+            logger.info("Task  recu: {}", notification);
             // Modification selon le type si nécessaire
             if ("ADD".equals(notification.getActionType())) {
-                notification.setMessage("Nouveau commentaire: " + notification.getMessage());
+                notification.setMessage("Nouveau sous tâche ajouté à  " + notification.getMessage());
             } else if ("UPDATE".equals(notification.getActionType())) {
-                notification.setMessage("Commentaire modifié: " + notification.getMessage());
+                notification.setMessage("nouveaux modifications dans : " + notification.getMessage());
+            }
+            else{
+                return;
             }
             sink.emitNext(notification, (signalType, emitResult) -> {
                 if (emitResult == Sinks.EmitResult.FAIL_NON_SERIALIZED) {
@@ -65,6 +68,4 @@ public class CommentNotificationConsumer {
             throw new AmqpRejectAndDontRequeueException("Failed to process message", e);
         }
     }
-
-
 }

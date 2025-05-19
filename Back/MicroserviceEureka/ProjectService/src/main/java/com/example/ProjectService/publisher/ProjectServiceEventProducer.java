@@ -69,7 +69,7 @@ try{
             task.getName(),
             task.getPhase().getProject().getName(),
             task.getPhase().getName(),
-            " modifications dans la tâche" + task.getName()
+              task.getName()
                     +" (Phase ["+task.getPhase().getName() +"], Projet ["+ task.getPhase().getProject().getName()+"])",
             LocalDateTime.now(),
             "tache",
