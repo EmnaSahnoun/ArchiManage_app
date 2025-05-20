@@ -73,7 +73,7 @@ public class ProjectAccessService implements IProjectAccess {
     }
 
     @Override
-    public ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status) {
+    public ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status,String authToken) {
         ProjectAccess projectAccess = projectAccessRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project access not found with id: " + id));
 
@@ -82,7 +82,7 @@ public class ProjectAccessService implements IProjectAccess {
         // Si l'invitation est acceptée, créer les PhaseAccess pour toutes les phases existantes
         if (status == InvitationStatus.ACCEPTED) {
             createPhaseAccessesForAllPhases(updatedAccess);
-            eventProducer.sendClientCreationMessage(updatedAccess);
+            eventProducer.sendClientCreationMessage(updatedAccess,authToken);
         }
         return mapToProjectAccessResponse(updatedAccess);
     }

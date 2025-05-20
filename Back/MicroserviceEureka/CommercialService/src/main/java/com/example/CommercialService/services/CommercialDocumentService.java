@@ -8,6 +8,7 @@ import com.example.CommercialService.dto.response.CommercialDocumentResponse;
 import com.example.CommercialService.dto.response.CompanyResponse;
 import com.example.CommercialService.exceptions.DocumentNotFoundException;
 import com.example.CommercialService.interfaces.ICommercialDocument;
+import com.example.CommercialService.models.Client;
 import com.example.CommercialService.models.CommercialDocument;
 import com.example.CommercialService.models.CommercialDocumentLine;
 import com.example.CommercialService.models.Company;
@@ -35,6 +36,8 @@ public class CommercialDocumentService implements ICommercialDocument {
     private final CompanyServiceClient companyServiceClient;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final CommercialDocumentLineRepository commercialDocumentLineRepository;
+    private final CommercialDocumentRepository commercialDocumentRepository;
+    private final ClientRepository clientRepository;
 
     @Override
     public CommercialDocumentResponse createDocument(CommercialDocumentRequest request) {
@@ -73,6 +76,14 @@ public class CommercialDocumentService implements ICommercialDocument {
         }
         document.setCompany(company);
 
+        Optional<Client> existingClient = clientRepository.findById(request.getClientId());
+        Client client ;
+        if (existingClient.isPresent()) {
+            // 2a. Si elle existe, on la récupère
+            client = existingClient.get();
+            document.setClient(client);
+        }
+
         // Convertir les lignes
         List<CommercialDocumentLine> lines = request.getLines().stream()
                 .map(lineRequest -> {
@@ -101,6 +112,8 @@ public class CommercialDocumentService implements ICommercialDocument {
         document.setNotes(request.getNotes());
         document.setDiscount(request.getDiscount());
         CompanyResponse companyResponse = companyServiceClient.getCompanyById(request.getCompanyId());
+        Client client = clientRepository.findById(request.getClientId()).get();
+        document.setClient(client);
         // Mettre à jour les lignes
         List<CommercialDocumentLine> updatedLines = request.getLines().stream()
                 .map(this::convertToDocumentLine)
@@ -138,7 +151,7 @@ public class CommercialDocumentService implements ICommercialDocument {
     }
 
     @Override
-    public CommercialDocumentResponse getDocument(String id) {
+    public CommercialDocumentResponse getDocumentById(String id) {
         CommercialDocument document = documentRepository.findById(id)
                 .orElseThrow(() -> new DocumentNotFoundException("Document not found"));
 
@@ -160,6 +173,22 @@ public class CommercialDocumentService implements ICommercialDocument {
                 .collect(Collectors.toList());
 
         return responses;
+    }
+
+    @Override
+    public List<CommercialDocumentResponse> getDocumentByIdCompany(String idCompany) {
+        List<CommercialDocument> documents = documentRepository.findByCompanyId(idCompany);
+        return documents.stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommercialDocumentResponse> getDocumentByIdClient(String idClient) {
+        List<CommercialDocument> documents = documentRepository.findByClientId(idClient);
+        return documents.stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 
     private String generateDocumentNumber(Type documentType) {
@@ -199,6 +228,28 @@ public class CommercialDocumentService implements ICommercialDocument {
         } else {
             response.setCompany(null);
         }
+        if (document.getClient() != null) {
+            try {
+
+                Client client = new Client();
+                client.setId(document.getClient().getId());
+                client.setName(document.getClient().getName());
+                client.setAddress(document.getClient().getAddress());
+                client.setEmail(document.getClient().getEmail());
+                client.setPhone(document.getClient().getPhone());
+                client.setCreatedAt(document.getClient().getCreatedAt());
+                client.setCompanyName(response.getCompany().getName());
+                client.setIdCompany(response.getCompany().getId());
+                response.setClient(client);
+            } catch (Exception e) {
+
+                response.setClient(null);
+            }
+        }
+        else {
+            response.setClient(null);
+        }
+
 
         response.setDocumentType(document.getDocumentType());
         response.setDocumentNumber(document.getDocumentNumber());

@@ -13,6 +13,15 @@ public class ClientCreationMessage {
     private String name;
     private String companyId;
     private String companyName;
+    private String authToken;
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 
     public String getUserId() {
         return userId;

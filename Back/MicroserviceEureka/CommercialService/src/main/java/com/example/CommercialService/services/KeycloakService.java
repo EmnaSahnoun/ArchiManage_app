@@ -94,6 +94,33 @@ public class KeycloakService implements IKeycloak {
     }
 
     @Override
+    public String getUsernameById(String id, String authToken) {
+        String url = KEYCLOAK_BASE_URL + "/users/" + id;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(authToken.replace("Bearer ", ""));
+
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    Map.class
+            );
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                String username = (String) response.getBody().get("username");
+                if (username != null) {
+                    return username;
+                }
+            }
+            throw new RuntimeException("Username not found for user ID: " + id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching user from Keycloak: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
     public String getGroupIdByName(String groupName, String authToken) {
         String url = KEYCLOAK_BASE_URL + "/groups?search=" + groupName;
 

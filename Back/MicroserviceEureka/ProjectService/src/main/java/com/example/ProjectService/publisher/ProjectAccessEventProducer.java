@@ -27,15 +27,16 @@ public class ProjectAccessEventProducer {
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
     }
-    public void sendClientCreationMessage(ProjectAccess projectAccess) {
+    public void sendClientCreationMessage(ProjectAccess projectAccess,String authToken) {
         try {
-            ClientCreationMessage message = new ClientCreationMessage(
-                    projectAccess.getIdUser(),
-                    projectAccess.getEmailUser(),
-                    projectAccess.getProject().getName(), // ou autre champ pour le nom
-                    projectAccess.getProject().getIdCompany(),
-                    projectAccess.getProject().getCompanyName()
-            );
+            ClientCreationMessage message = new ClientCreationMessage();
+                  message.setUserId(  projectAccess.getIdUser());
+                    message.setEmail(projectAccess.getEmailUser());
+                    message.setName("");
+                    message.setCompanyId(projectAccess.getProject().getIdCompany());
+                    message.setCompanyName(projectAccess.getProject().getCompanyName());
+                    message.setAuthToken(authToken);
+
             String jsonMessage = objectMapper.writeValueAsString(message);
             LOGGER.info(String.format("Json message sent -> %s", jsonMessage));
 

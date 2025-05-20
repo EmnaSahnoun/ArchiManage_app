@@ -10,6 +10,6 @@ public interface IProjectAccess {
     ProjectAccessResponse createProjectAccess(ProjectAccessRequest request);
     ProjectAccessResponse getProjectAccessById(String id);
     List<ProjectAccessResponse> getAccessesByProject(String projectId);
-    ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status);
+    ProjectAccessResponse updateInvitationStatus(String id, InvitationStatus status,String authToken);
     void deleteProjectAccess(String id);
 }

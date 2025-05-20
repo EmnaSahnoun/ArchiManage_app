@@ -3,6 +3,7 @@ package com.example.CommercialService.dto.request;
 import com.example.CommercialService.models.enums.Type;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,16 +11,26 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class CommercialDocumentRequest {
-    @NotNull
+    @NotBlank(message = "Company ID is required")
     private String companyId;
-    @NotNull
+    @NotBlank(message = "Client ID is required")
+    private String clientId;
+    @NotNull(message = "Document type is required")
     private Type documentType;
-    @DecimalMin("0.00")
+    @DecimalMin(value ="0.00", message = "Discount cannot be negative")
     private BigDecimal discount=BigDecimal.ZERO;
     private String notes;
-    @NotEmpty
+    @NotEmpty(message = "At least one document line is required")
     @Valid
     private List<CommercialDocumentLineRequest> lines;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
     public String getCompanyId() {
         return companyId;

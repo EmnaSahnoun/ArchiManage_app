@@ -41,8 +41,9 @@ public class ProjectAccessController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<ProjectAccessResponse> updateInvitationStatus(
             @PathVariable String id,
-            @RequestParam InvitationStatus status) {
-        ProjectAccessResponse response = projectAccessService.updateInvitationStatus(id, status);
+            @RequestParam InvitationStatus status,
+            @RequestHeader("Authorization") String authToken) {
+        ProjectAccessResponse response = projectAccessService.updateInvitationStatus(id, status,authToken);
         return ResponseEntity.ok(response);
     }
 

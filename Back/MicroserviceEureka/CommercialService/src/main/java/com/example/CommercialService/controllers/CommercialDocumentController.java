@@ -44,9 +44,9 @@ public class CommercialDocumentController {
          }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommercialDocumentResponse> getDocument(
+    public ResponseEntity<CommercialDocumentResponse> getDocumentById(
             @PathVariable String id) {
-        CommercialDocumentResponse response = commercialDocumentService.getDocument(id);
+        CommercialDocumentResponse response = commercialDocumentService.getDocumentById(id);
         return ResponseEntity.ok(response);
     }
 
@@ -56,5 +56,16 @@ public class CommercialDocumentController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<CommercialDocumentResponse>> getDocumentByIdCompany(
+            @PathVariable String companyId) {
+        return ResponseEntity.ok(commercialDocumentService.getDocumentByIdCompany(companyId));
+    }
+
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<CommercialDocumentResponse>> getByClient(
+            @PathVariable String clientId) {
+        return ResponseEntity.ok(commercialDocumentService.getDocumentByIdClient(clientId));
+    }
 
 }

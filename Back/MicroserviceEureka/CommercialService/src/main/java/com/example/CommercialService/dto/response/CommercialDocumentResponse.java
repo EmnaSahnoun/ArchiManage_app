@@ -1,5 +1,6 @@
 package com.example.CommercialService.dto.response;
 
+import com.example.CommercialService.models.Client;
 import com.example.CommercialService.models.Company;
 import com.example.CommercialService.models.enums.Status;
 import com.example.CommercialService.models.enums.Type;
@@ -11,6 +12,7 @@ import java.util.List;
 public class CommercialDocumentResponse {
     private String id;
     private Company company;
+    private Client client;
     private Type documentType;
     private String documentNumber;
     private Date createdAt;
@@ -22,6 +24,14 @@ public class CommercialDocumentResponse {
     private BigDecimal totalAmount;
     private String notes;
     private List<CommercialDocumentLineResponse> lines;
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public String getId() {
         return id;
