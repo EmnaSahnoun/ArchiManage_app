@@ -7,5 +7,7 @@ public interface IKeycloak {
     String getUserIdByUsername(String username, String authToken);
     String getGroupIdByName(String groupName, String authToken);
     String getRoleIdByName(String roleName, String authToken);
+    void deleteUser(String userId, String authToken);
+    void removeUserFromGroup(String userId, String groupName, String authToken);
 
 }

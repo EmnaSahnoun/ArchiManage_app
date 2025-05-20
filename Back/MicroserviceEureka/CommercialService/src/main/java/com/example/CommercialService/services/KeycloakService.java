@@ -136,4 +136,27 @@ public class KeycloakService implements IKeycloak {
         }
         throw new RuntimeException("Role not found in Keycloak: " + roleName);
     }
+
+    @Override
+    public void deleteUser(String userId, String authToken) {
+        String url = KEYCLOAK_BASE_URL + "/users/" + userId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(authToken.replace("Bearer ", ""));
+
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+        restTemplate.exchange(url, HttpMethod.DELETE, request, Void.class);
+    }
+
+    @Override
+    public void removeUserFromGroup(String userId, String groupName, String authToken) {
+        String groupId = getGroupIdByName(groupName, authToken);
+        String url = KEYCLOAK_BASE_URL + "/users/" + userId + "/groups/" + groupId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(authToken.replace("Bearer ", ""));
+
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+        restTemplate.exchange(url, HttpMethod.DELETE, request, Void.class);
+    }
 }

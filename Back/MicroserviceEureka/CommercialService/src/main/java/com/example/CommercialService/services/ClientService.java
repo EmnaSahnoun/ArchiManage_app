@@ -41,21 +41,34 @@ public class ClientService implements IClient {
     public Client updateClient(String id, Client client) {
         Client c = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException("Client not found with id: " + id));
-        c.setName(client.getName());
+        c.setName(c.getName());
         c.setAddress(client.getAddress());
         c.setPhone(client.getPhone());
-        c.setEmail(client.getEmail());
+        c.setEmail(c.getEmail());
         c.setIdCompany(client.getIdCompany());
         Client updatedClient = clientRepository.save(c);
         return updatedClient;
     }
 
     @Override
-    public void deleteClient(String id) {
-        if (!clientRepository.existsById(id)) {
-            throw new ClientNotFoundException("Client not found with id: " + id);
+    public void deleteClient(String id,String authToken) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client non trouvé"));
+
+        try {
+            String keycloakUserId = keycloakService.getUserIdByUsername(client.getName(), authToken);
+
+            // 1. Retirer l'utilisateur de son groupe
+            keycloakService.removeUserFromGroup(keycloakUserId, client.getCompanyName(), authToken);
+
+            // 2. Supprimer l'utilisateur de Keycloak
+            keycloakService.deleteUser(keycloakUserId, authToken);
+
+            // 3. Supprimer le client de MongoDB
+            clientRepository.delete(client);
+        } catch (Exception e) {
+            throw new RuntimeException("Échec de la suppression Keycloak: " + e.getMessage());
         }
-        clientRepository.deleteById(id);
     }
 
     @Override
