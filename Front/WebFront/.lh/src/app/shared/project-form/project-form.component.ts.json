@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 41,
             "patches": [
                 {
                     "date": 1746123785682,
@@ -132,6 +132,46 @@
                 {
                     "date": 1747691277801,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   ) {\r\n     this.projectForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       description: ['', Validators.maxLength(500)] ,\r\n-      \r\n+      address: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n   ngOnInit(): void { }\r\n@@ -59,8 +59,9 @@\n \r\n     const projectData = {\r\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n+      \r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n"
+                },
+                {
+                    "date": 1747764061295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,10 +59,11 @@\n \r\n     const projectData = {\r\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n+      address: this.address?.value,\r\n+      idCompany: idCompany,\r\n       \r\n-      idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n     this.projectService.createProject(projectData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747764079435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n-      \r\n+      CompanyName\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n     this.projectService.createProject(projectData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747764096431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,10 @@\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n-    const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n+    const idAdmin = localStorage.getItem(\"user_id\"); \r\n+    const\r\n     console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n@@ -61,9 +62,9 @@\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n-      CompanyName\r\n+      companyName:\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n     this.projectService.createProject(projectData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747764101533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n-    const\r\n+    const CompanyName=loc\r\n     console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747764107060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n-    const CompanyName=loc\r\n+    const CompanyName=localStorage\r\n     console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747764113652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n-    const CompanyName=localStorage\r\n+    const CompanyName=localStorage.getItem()\r\n     console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747764263602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n-    const CompanyName=localStorage.getItem()\r\n+    const CompanyName=localStorage.getItem(\"AgencyName\")\r\n     console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747764488815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,11 +49,11 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n-    const CompanyName=localStorage.getItem(\"AgencyName\")\r\n+    const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"iduser\",idAdmin)\r\n-    if (!idCompany || !idAdmin) {\r\n+    if (!idCompany || !idAdmin ) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n"
+                },
+                {
+                    "date": 1747764510415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); \r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"iduser\",idAdmin)\r\n-    if (!idCompany || !idAdmin ) {\r\n+    if (!idCompany || !idAdmin || !CompanyName) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n"
+                },
+                {
+                    "date": 1747764516934,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n-      companyName:\r\n+      companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n     this.projectService.createProject(projectData).subscribe({\r\n"
                 }
             ],
             "date": 1746123785682,

@@ -33,7 +33,8 @@ public class ProjectAccessEventProducer {
                     projectAccess.getIdUser(),
                     projectAccess.getEmailUser(),
                     projectAccess.getProject().getName(), // ou autre champ pour le nom
-                    projectAccess.getProject().getIdCompany()
+                    projectAccess.getProject().getIdCompany(),
+                    projectAccess.getProject().getCompanyName()
             );
             String jsonMessage = objectMapper.writeValueAsString(message);
             LOGGER.info(String.format("Json message sent -> %s", jsonMessage));

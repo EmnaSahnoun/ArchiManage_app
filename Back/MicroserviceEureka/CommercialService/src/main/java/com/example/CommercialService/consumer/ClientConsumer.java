@@ -41,6 +41,7 @@ public class ClientConsumer {
         client.setIdCompany(clientCreationMessage.getCompanyId());
         client.setPhone(""); // ou autre valeur par défaut
         client.setAddress("");
+        client.setCompanyName(clientCreationMessage.getCompanyName());
         clientService.createClient(client);
         logger.info("Client created {}",client.getId());
     }

@@ -49,9 +49,10 @@ export class ProjectFormComponent implements OnInit {
     this.errorMessage = null;
 
     const idCompany = localStorage.getItem("idAgence");
-    const idAdmin = localStorage.getItem("user_id"); // Obtenez l'ID de l'admin connecté
+    const idAdmin = localStorage.getItem("user_id"); 
+    const CompanyName=localStorage.getItem("AgencyName");
     console.log("iduser",idAdmin)
-    if (!idCompany || !idAdmin) {
+    if (!idCompany || !idAdmin || !CompanyName) {
       this.errorMessage = "Impossible de récupérer les informations nécessaires (Agence ou Administrateur).";
       this.isLoading = false;
       return;
@@ -62,6 +63,7 @@ export class ProjectFormComponent implements OnInit {
       description: this.description?.value,
       address: this.address?.value,
       idCompany: idCompany,
+      companyName:CompanyName,
       idAdmin: idAdmin
     };
     console.log("projet ajoutéé",projectData)

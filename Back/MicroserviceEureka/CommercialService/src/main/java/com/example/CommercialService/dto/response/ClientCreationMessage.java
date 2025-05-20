@@ -12,6 +12,7 @@ public class ClientCreationMessage {
     private String email;
     private String name;
     private String companyId;
+    private String companyName;
 
     public String getUserId() {
         return userId;
@@ -19,6 +20,14 @@ public class ClientCreationMessage {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {

@@ -11,6 +11,7 @@ import java.util.List;
 public class ProjectResponse {
     private String id;
     private String idCompany;
+    private String companyName;
     private String name;
     private String description;
     private String idAdmin;
@@ -19,6 +20,14 @@ public class ProjectResponse {
     private List<String> phaseIds;
     private Date createdAt;
     private String address;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getAddress() {
         return address;

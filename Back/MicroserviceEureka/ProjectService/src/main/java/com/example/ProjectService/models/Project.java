@@ -15,6 +15,7 @@ public class Project {
     @Id
     private String id;
     private String idCompany;
+    private String companyName;
     private String name;
     private String description;
     private String idAdmin;
@@ -29,6 +30,13 @@ public class Project {
     @DBRef
     private List<Phase> phases;
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getAddress() {
         return address;

@@ -30,10 +30,11 @@ public class ProjectService implements IProject {
         Project project = new Project();
         project.setName(request.getName());
         project.setDescription(request.getDescription());
-        project.setIdCompany(request.getIdCompany()); // Correction ici
+        project.setIdCompany(request.getIdCompany());
         project.setIdAdmin(request.getIdAdmin());
         project.setDeleted(false);
         project.setAddress(request.getAddress());
+        project.setCompanyName(request.getCompanyName());
         Project savedProject = projectRepository.save(project);
         return mapToProjectResponse(savedProject);
     }
@@ -112,7 +113,7 @@ public class ProjectService implements IProject {
         response.setDeleted(project.isDeleted());
         response.setCreatedAt(project.getCreatedAt());
         response.setAddress(project.getAddress());
-
+        response.setCompanyName(project.getCompanyName());
         // Map project accesses IDs
         if (project.getProjectAccesses() != null) {
             response.setProjectAccessIds(project.getProjectAccesses()
