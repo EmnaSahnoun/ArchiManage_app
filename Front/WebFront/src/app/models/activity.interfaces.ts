@@ -19,6 +19,7 @@ export interface TaskHistory {
   oldValue: string | null;
   newValue: string | null;
   createdAt: string;
+  historyType:string
 }
 
 

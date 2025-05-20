@@ -32,6 +32,7 @@ export class ProjectDetailsComponent implements OnInit {
     id: '67c8306029b4bfa9328a19b4',
     name: 'Projet Exemple',
     description: 'Description du projet',
+    address:"",
     createdAt: '2025-01-01T00:00:00.000Z',
     progress: 60,
     members: [
@@ -185,7 +186,7 @@ export class ProjectDetailsComponent implements OnInit {
   cancelEdit(): void {
     this.isEditing = false;
     // Réinitialiser les données éditées (optionnel, mais propre)
-    this.editedProjectData = { name: '', description: '' };
+    this.editedProjectData = { name: '', description: '' ,address:''};
   }
   
   saveEdit(): void {
@@ -199,6 +200,7 @@ export class ProjectDetailsComponent implements OnInit {
         // Mettre à jour les données locales du projet avec la réponse
         this.projet.name = updatedProject.name; // Assurez-vous que l'API retourne le projet mis à jour
         this.projet.description = updatedProject.description;
+        this.projet.address = updatedProject.address;
         this.isEditing = false; // Sortir du mode édition
         this.snackBar.open('Projet mis à jour avec succès!', 'Fermer', {
           duration: 3000,
@@ -395,6 +397,7 @@ export class ProjectDetailsComponent implements OnInit {
     const phaseDataToSend = {
       name: this.editedPhaseData.name,
       description: this.editedPhaseData.description,
+      address: this.editedPhaseData.address,
       startDate: this.formatDateForApi(this.editedPhaseData.startDate), // Format YYYY-MM-DD ou ISO
       endDate: this.formatDateForApi(this.editedPhaseData.endDate),     // Format YYYY-MM-DD ou ISO
       projectId: this.projet.id // Assurez-vous que projectId est inclus

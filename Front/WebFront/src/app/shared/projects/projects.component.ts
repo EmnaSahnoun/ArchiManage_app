@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export interface Project {
   id: string; // Or number, depending on your backend
   name: string;
+  address:string;
   createdAt: string | Date;
   minStartDate: string | Date | null;
   maxEndDate: string | Date | null;
@@ -242,6 +243,7 @@ private authService:AuthService,
   
           console.log('Projet complet avec phases:', project);
           console.log('Dates pour le projet', project.name, ':');
+          console.log('localisation:', project.address);
           console.log('Début:', project.minStartDate);
           console.log('Fin:', project.maxEndDate);
         },

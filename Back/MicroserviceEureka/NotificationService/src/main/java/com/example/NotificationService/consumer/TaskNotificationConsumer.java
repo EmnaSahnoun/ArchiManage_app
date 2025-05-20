@@ -33,7 +33,7 @@ public class TaskNotificationConsumer {
 
             logger.info("Task  recu: {}", notification);
             // Modification selon le type si nécessaire
-            if ("ADD".equals(notification.getActionType())) {
+            if ("CREATE".equals(notification.getActionType())) {
                 notification.setMessage("Nouveau sous tâche ajouté à  " + notification.getMessage());
             } else if ("UPDATE".equals(notification.getActionType())) {
                 notification.setMessage("nouveaux modifications dans : " + notification.getMessage());

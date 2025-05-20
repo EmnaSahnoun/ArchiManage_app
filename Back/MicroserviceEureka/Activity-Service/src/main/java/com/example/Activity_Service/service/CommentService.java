@@ -75,7 +75,7 @@ public class CommentService implements IComment {
                         commentRequest.getContent(),
                         commentRequest.getUsername(),
 
-                        "ADD"
+                        "CREATE"
                 );
                 logger.info("Sending notification to RabbitMQ: {}", notification);
                 notificationProducer.sendNotification(notification);

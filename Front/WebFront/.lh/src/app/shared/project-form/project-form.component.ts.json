@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1746123785682,
@@ -120,6 +120,18 @@
                 {
                     "date": 1746446200175,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n \r\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n-  styleUrls: ['./project-form.component.scss']\r\n+  styleUrls: ['./project-form.component.scss'],\r\n+  \r\n \r\n })\r\n export class ProjectFormComponent implements OnInit {\r\n   projectForm: FormGroup;\r\n@@ -46,9 +47,9 @@\n     this.errorMessage = null;\r\n \r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const idAdmin = localStorage.getItem(\"user_id\"); // Obtenez l'ID de l'admin connecté\r\n-    console.log(\"iduser\",)\r\n+    console.log(\"iduser\",idAdmin)\r\n     if (!idCompany || !idAdmin) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1747691239379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n @Component({\r\n   selector: 'app-project-form',\r\n   templateUrl: './project-form.component.html',\r\n   styleUrls: ['./project-form.component.scss'],\r\n-  \r\n+  standalone: false\r\n \r\n })\r\n export class ProjectFormComponent implements OnInit {\r\n   projectForm: FormGroup;\r\n@@ -35,9 +35,9 @@\n   ngOnInit(): void { }\r\n \r\n   get name() { return this.projectForm.get('name'); }\r\n   get description() { return this.projectForm.get('description'); }\r\n-\r\n+  get address\r\n   saveProject(): void {\r\n     if (this.projectForm.invalid || this.isLoading) {\r\n       this.projectForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n       return;\r\n"
+                },
+                {
+                    "date": 1747691257804,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,17 +27,19 @@\n     // @Inject(MAT_DIALOG_DATA) public data: any // Injectez si vous passez des données à la modale\r\n   ) {\r\n     this.projectForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n-      description: ['', Validators.maxLength(500)] // Description optionnelle, max 500 caractères\r\n+      description: ['', Validators.maxLength(500)] ,\r\n+      \r\n     });\r\n   }\r\n \r\n   ngOnInit(): void { }\r\n \r\n   get name() { return this.projectForm.get('name'); }\r\n   get description() { return this.projectForm.get('description'); }\r\n-  get address\r\n+  get address() { return this.projectForm.get('address'); }\r\n+\r\n   saveProject(): void {\r\n     if (this.projectForm.invalid || this.isLoading) {\r\n       this.projectForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n       return;\r\n"
+                },
+                {
+                    "date": 1747691277801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n   ) {\r\n     this.projectForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       description: ['', Validators.maxLength(500)] ,\r\n-      \r\n+      address: ['', Validators.required]\r\n     });\r\n   }\r\n \r\n   ngOnInit(): void { }\r\n@@ -59,8 +59,9 @@\n \r\n     const projectData = {\r\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n+      \r\n       idCompany: idCompany,\r\n       idAdmin: idAdmin\r\n     };\r\n     console.log(\"projet ajoutéé\",projectData)\r\n"
                 }
             ],
             "date": 1746123785682,

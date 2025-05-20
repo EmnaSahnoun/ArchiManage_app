@@ -381,18 +381,30 @@ loadActivities(): void {
 
 generateActivityDescription(activity: TaskHistory): string {
   switch(activity.action) {
-    case 'COMMENT':
-      return `a ajouté un commentaire.`;
-    case 'DELETE':
-      if (activity.fieldChanged === 'comments') {
-        return `a supprimé un commentaire.`;
+    case 'CREATE':
+      if(activity.historyType==='commentaire'){
+        return `a ajouté un commentaire.`;
+      }
+      else if(activity.historyType==='tache'){
+        return `a ajouté une sous-tâche.`;
       }
       else{
-      return activity.subTaskId ? `a supprimé la sous-tâche.` : `a supprimé la tâche.`;}
-    case 'UPDATE':
-      if (activity.fieldChanged === 'comments') {
-        return `a modifié un commentaire.`;
+        return `a ajouté un document`;
       }
+    case 'DELETE':
+      if(activity.historyType==='commentaire'){
+        return `a supprimé un commentaire.`;
+      }
+      else if(activity.historyType==='tache'){
+        return `a supprimé une sous-tâche.`;
+      }
+      else{
+        return `a supprimé un document`;
+      }
+    case 'UPDATE':
+      if(activity.historyType==='commentaire'){
+        return `a modifié un commentaire.`;
+      }      
       if (activity.fieldChanged && activity.oldValue && activity.newValue) {
         return `a mis à jour le champ "${activity.fieldChanged}" de "${activity.oldValue}" à "${activity.newValue}".`;
     
@@ -400,9 +412,7 @@ generateActivityDescription(activity: TaskHistory): string {
      if (activity.fieldChanged) {
          return `a mis à jour le champ "${activity.fieldChanged}".`;
       }
-      return `a effectué une mise à jour.`;
-    case 'CREATE': // Assurez-vous que cette action est envoyée par le backend
-        return `a créé la tâche.`;
+      return `a effectué une mise à jour.`;   
     default:
        return `a effectué l'action : ${activity.action}.`;
   }

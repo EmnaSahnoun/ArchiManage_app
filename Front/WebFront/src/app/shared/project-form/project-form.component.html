@@ -29,7 +29,18 @@
          </div>
       </div>
     </div>
-
+<!-- Champ Localisation -->
+    <div class="form-group">
+      <label for="projectAddress">Address </label>
+      <!-- Utilisation d'un textarea standard -->
+      <textarea id="projectAddress" formControlName="address" placeholder="Décrivez brièvement le projet..." rows="2"></textarea>
+      <!-- Affichage des erreurs spécifiques -->
+      <div *ngIf="address?.touched && address?.invalid" class="error-message">
+         <div *ngIf="address?.hasError('maxlength')">
+           La description ne doit pas dépasser 500 caractères.
+         </div>
+      </div>
+    </div>
     <!-- Affichage des erreurs générales (si nécessaire) -->
     <div *ngIf="errorMessage" class="error-message general-error-display"> <!-- Classe spécifique pour erreur générale si besoin -->
       {{ errorMessage }}

@@ -85,7 +85,7 @@ public class DocumentConsumer {
                         null,
                         documentDTO.getUsername(),
 
-                        "ADD"
+                        "CREATE"
                 );
                 logger.info("Sending notification to RabbitMQ: {}", notification);
                 notificationProducer.sendNotification(notification);}

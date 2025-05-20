@@ -47,6 +47,7 @@
               <!-- Use mat-header-cell if using Material Table, otherwise th -->
               <th>Nom du Projet</th>
               <th>Date Création</th>
+              <th>Localisation</th>
               <th>Dates (Début-Fin)</th>
               <th>Progression</th>
               <th>Statut</th>
@@ -66,6 +67,10 @@
               <!-- Created At (Read-only example) -->
               <td>
                 {{ project.createdAt | date:'dd/MM/yyyy' }}
+              </td>
+              <td>
+                <span *ngIf="editingProjectId !== project.id">{{ project.address }}</span>
+                <input *ngIf="editingProjectId === project.id" type="text" [(ngModel)]="editedProjectData.address" class="inline-edit-input" (click)="$event.stopPropagation()" />
               </td>
               <!-- Dates (Read-only example) -->
               <td>

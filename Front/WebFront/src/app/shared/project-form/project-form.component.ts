@@ -28,7 +28,8 @@ export class ProjectFormComponent implements OnInit {
   ) {
     this.projectForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', Validators.maxLength(500)] // Description optionnelle, max 500 caractères
+      description: ['', Validators.maxLength(500)] ,
+      address: ['', Validators.required]
     });
   }
 
@@ -36,6 +37,7 @@ export class ProjectFormComponent implements OnInit {
 
   get name() { return this.projectForm.get('name'); }
   get description() { return this.projectForm.get('description'); }
+  get address() { return this.projectForm.get('address'); }
 
   saveProject(): void {
     if (this.projectForm.invalid || this.isLoading) {
@@ -58,6 +60,7 @@ export class ProjectFormComponent implements OnInit {
     const projectData = {
       name: this.name?.value,
       description: this.description?.value,
+      address: this.address?.value,
       idCompany: idCompany,
       idAdmin: idAdmin
     };

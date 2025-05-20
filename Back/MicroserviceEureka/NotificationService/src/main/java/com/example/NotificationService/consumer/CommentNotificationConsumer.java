@@ -33,7 +33,7 @@ public class CommentNotificationConsumer {
 
             logger.info("Notification recu: {}", notification);
             // Modification selon le type si nécessaire
-            if ("ADD".equals(notification.getActionType())) {
+            if ("CREATE".equals(notification.getActionType())) {
                 notification.setMessage("Nouveau commentaire: " + notification.getMessage());
             } else if ("UPDATE".equals(notification.getActionType())) {
                 notification.setMessage("Commentaire modifié: " + notification.getMessage());

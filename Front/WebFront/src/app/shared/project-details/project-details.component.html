@@ -16,6 +16,7 @@
         <div *ngIf="!isEditing">
           <p><strong>Nom :</strong> {{ projet?.name }}</p>
           <p><strong>Description :</strong> {{ projet?.description || 'Pas de description' }}</p>
+          <p><strong>Localisation :</strong> {{ projet?.address || "Pas d'address'" }}</p>
           <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>
           <button class="edit-btn" (click)="startEdit()">Modifier</button>
         </div>
@@ -28,6 +29,10 @@
           <div class="form-group mb-3">
             <label for="projectDescription"><strong>Description :</strong></label>
             <textarea id="projectDescription" class="form-control" rows="3" [(ngModel)]="editedProjectData.description"></textarea>
+          </div>
+          <div class="form-group mb-3">
+            <label for="projectAddress"><strong>Localisation :</strong></label>
+            <textarea id="projectAddress" class="form-control"  [(ngModel)]="editedProjectData.address"></textarea>
           </div>
           <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p> <!-- Date non modifiable -->
           <button class="save-btn me-2" (click)="saveEdit()" [disabled]="isLoading">Enregistrer</button>

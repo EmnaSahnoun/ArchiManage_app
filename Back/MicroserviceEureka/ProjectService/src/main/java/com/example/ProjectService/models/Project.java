@@ -20,7 +20,7 @@ public class Project {
     private String idAdmin;
     private boolean isDeleted = false;
     private Date createdAt = new Date();
-
+    private String address;
 
 
     @DBRef
@@ -28,6 +28,15 @@ public class Project {
 
     @DBRef
     private List<Phase> phases;
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

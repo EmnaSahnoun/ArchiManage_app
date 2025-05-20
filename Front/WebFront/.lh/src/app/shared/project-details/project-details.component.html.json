@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 121,
+            "activePatchIndex": 124,
             "patches": [
                 {
                     "date": 1744707748545,
@@ -492,6 +492,18 @@
                 {
                     "date": 1746489910498,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,19 +39,28 @@\n     <div class=\"right-panel\">\r\n       <div class=\"card\">\r\n         <h2>Statistiques</h2>\r\n         <div class=\"progress-container\">\r\n-          <svg width=\"100\" height=\"100\">\r\n+          <svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\">\r\n+            <!-- Cercle de fond -->\r\n             <circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"#ddd\" stroke-width=\"8\" fill=\"none\"></circle>\r\n-            <circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"#41B3A3\" stroke-width=\"8\" fill=\"none\"\r\n-                    stroke-dasharray=\"251.2\" attr.stroke-dashoffset=\"{{ progressOffset }}\"></circle>\r\n+            \r\n+            <!-- Cercle de progression -->\r\n+            <circle \r\n+              cx=\"50\" \r\n+              cy=\"50\" \r\n+              r=\"40\" \r\n+              stroke=\"#41B3A3\" \r\n+              stroke-width=\"8\" \r\n+              fill=\"none\"\r\n+              stroke-dasharray=\"251.2\"\r\n+              [attr.stroke-dashoffset]=\"getProgressOffset()\"\r\n+              transform=\"rotate(-90 50 50)\">\r\n+            </circle>\r\n           </svg>\r\n           <div class=\"progress-text\">\r\n-            \r\n-            <span >{{ (projet?.progress || 0) | number:'1.0-0' }}%</span>\r\n-                <span *ngIf=\"(projet?.progress)==='NaN'\">0%</span>\r\n-          </div> <!-- Use projet?.progress -->\r\n-  \r\n+            {{ getDisplayProgress() }}\r\n+          </div>\r\n         </div>\r\n       </div>\r\n \r\n       <div class=\"card\">\r\n"
+                },
+                {
+                    "date": 1747690781227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n         <h2>Détails du projet</h2>\r\n         <div *ngIf=\"!isEditing\">\r\n           <p><strong>Nom :</strong> {{ projet?.name }}</p>\r\n           <p><strong>Description :</strong> {{ projet?.description || 'Pas de description' }}</p>\r\n+          \r\n           <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>\r\n           <button class=\"edit-btn\" (click)=\"startEdit()\">Modifier</button>\r\n         </div>\r\n         <!-- Mode édition -->\r\n"
+                },
+                {
+                    "date": 1747690787733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n         <h2>Détails du projet</h2>\r\n         <div *ngIf=\"!isEditing\">\r\n           <p><strong>Nom :</strong> {{ projet?.name }}</p>\r\n           <p><strong>Description :</strong> {{ projet?.description || 'Pas de description' }}</p>\r\n-          \r\n+          <p><strong>Localisation :</strong> {{ projet?.description || 'Pas de description' }}</p>\r\n           <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>\r\n           <button class=\"edit-btn\" (click)=\"startEdit()\">Modifier</button>\r\n         </div>\r\n         <!-- Mode édition -->\r\n"
+                },
+                {
+                    "date": 1747690793566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n         <h2>Détails du projet</h2>\r\n         <div *ngIf=\"!isEditing\">\r\n           <p><strong>Nom :</strong> {{ projet?.name }}</p>\r\n           <p><strong>Description :</strong> {{ projet?.description || 'Pas de description' }}</p>\r\n-          <p><strong>Localisation :</strong> {{ projet?.adr || 'Pas de description' }}</p>\r\n+          <p><strong>Localisation :</strong> {{ projet?.ad || 'Pas de description' }}</p>\r\n           <p><strong>Date de création :</strong> {{ projet.createdAt | date:'dd/MM/yyyy à HH:mm' }}</p>\r\n           <button class=\"edit-btn\" (click)=\"startEdit()\">Modifier</button>\r\n         </div>\r\n         <!-- Mode édition -->\r\n"
                 }
             ],
             "date": 1744707748545,

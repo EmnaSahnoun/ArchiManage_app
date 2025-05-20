@@ -18,6 +18,15 @@ public class ProjectResponse {
     private List<String> projectAccessIds;
     private List<String> phaseIds;
     private Date createdAt;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Date getCreatedAt() {
         return createdAt;
