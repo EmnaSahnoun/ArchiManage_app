@@ -16,12 +16,13 @@ public class ClientService implements IClient {
     private  KeycloakService keycloakService;
     @Override
     public Client createClient(Client client, String authToken) {
-        Client savedClient = clientRepository.save(client);
+        Client savedClient;
         try {
             // 2. Créer l'utilisateur dans Keycloak
 
             String keycloakUserId = keycloakService.createUser(client.getName(), client.getEmail(), authToken);
-
+            client.setId(keycloakUserId);
+            savedClient=clientRepository.save(client);
             // 3. Assigner le rôle USER
             keycloakService.assignRoleToUser(keycloakUserId, "USER", authToken);
 
@@ -29,8 +30,8 @@ public class ClientService implements IClient {
             keycloakService.addUserToGroup(keycloakUserId, client.getCompanyName(), authToken);
 
         } catch (Exception e) {
-            // En cas d'erreur avec Keycloak, annuler la création du client
-            clientRepository.delete(savedClient);
+
+
             throw new RuntimeException("Failed to create Keycloak user: " + e.getMessage());
         }
 
