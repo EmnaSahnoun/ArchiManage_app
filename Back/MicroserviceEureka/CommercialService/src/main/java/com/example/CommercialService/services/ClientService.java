@@ -38,6 +38,11 @@ public class ClientService implements IClient {
     }
 
     @Override
+    public Client createClient(Client client) {
+        return clientRepository.save(client);
+    }
+
+    @Override
     public Client updateClient(String id, Client client) {
         Client c = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException("Client not found with id: " + id));

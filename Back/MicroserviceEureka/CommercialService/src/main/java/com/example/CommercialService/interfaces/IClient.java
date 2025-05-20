@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IClient {
     Client createClient(Client client , String authToken);
+    Client createClient(Client client);
     Client updateClient(String id, Client client);
     void deleteClient(String id,String authToken);
     Client getClientById(String id);

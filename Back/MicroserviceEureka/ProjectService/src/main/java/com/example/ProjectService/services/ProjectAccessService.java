@@ -8,6 +8,8 @@ import com.example.ProjectService.models.PhaseAccess;
 import com.example.ProjectService.models.Project;
 import com.example.ProjectService.models.ProjectAccess;
 import com.example.ProjectService.models.enums.InvitationStatus;
+import com.example.ProjectService.publisher.ProjectAccessEventProducer;
+import com.example.ProjectService.publisher.ProjectServiceEventProducer;
 import com.example.ProjectService.repositories.PhaseAccessRepository;
 import com.example.ProjectService.repositories.PhaseRepository;
 import com.example.ProjectService.repositories.ProjectAccessRepository;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 
 public class ProjectAccessService implements IProjectAccess {
-
+    private final ProjectAccessEventProducer eventProducer;
     private final ProjectAccessRepository projectAccessRepository;
     private  final ProjectRepository projectRepository;
     private  final PhaseRepository phaseRepository;
@@ -30,12 +32,14 @@ public class ProjectAccessService implements IProjectAccess {
     public ProjectAccessService(ProjectAccessRepository projectAccessRepository,
                                 ProjectRepository projectRepository,
                                 PhaseRepository phaseRepository,
-                                PhaseAccessRepository phaseAccessRepository
+                                PhaseAccessRepository phaseAccessRepository,
+                                ProjectAccessEventProducer eventProducer
                                 ) {
         this.projectAccessRepository = projectAccessRepository;
         this.projectRepository = projectRepository;
         this.phaseRepository = phaseRepository;
         this.phaseAccessRepository = phaseAccessRepository;
+        this.eventProducer = eventProducer;
     }
     @Override
     public ProjectAccessResponse createProjectAccess(ProjectAccessRequest request) {
@@ -78,6 +82,7 @@ public class ProjectAccessService implements IProjectAccess {
         // Si l'invitation est acceptée, créer les PhaseAccess pour toutes les phases existantes
         if (status == InvitationStatus.ACCEPTED) {
             createPhaseAccessesForAllPhases(updatedAccess);
+            eventProducer.sendClientCreationMessage(updatedAccess);
         }
         return mapToProjectAccessResponse(updatedAccess);
     }
