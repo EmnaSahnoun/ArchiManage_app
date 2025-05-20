@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectAccessEventProducer {
-    @Value("${rabbitmq.exchange3.name}")
+    @Value("${rabbitmq.exchange4.name}")
     private String exchange;
-    @Value("${rabbitmq.routing.json.key3.name}")
+    @Value("${rabbitmq.routing.json.key4.name}")
     private String routingKeyJson;
     private RabbitTemplate rabbitTemplate;
 

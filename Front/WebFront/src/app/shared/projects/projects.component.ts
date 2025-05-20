@@ -112,7 +112,8 @@ private authService:AuthService,
                     console.log("projectAccess.idUser ===idUser",projectAccess.idUser ===idUser)
                     console.log("projectAccess.invitationStatus===",projectAccess.invitationStatus==="ACCEPTED")
                     if (projectAccess.idUser ===idUser && projectAccess.invitationStatus==="ACCEPTED" ){
-                      this.projects.push(projet);                      
+                      this.projects.push(projet); 
+                      console.log("les projets de user",this.projects);                     
                     }
                   });
                   
@@ -129,6 +130,7 @@ private authService:AuthService,
             });
           } 
           else if(this.isAdmin){
+            console.log("les projets de user",projects)
             this.projects = projects.filter(p => p.deleted !== true);
             this.projects.forEach((projet:any) => {
               this.getProgress(projet);
@@ -174,10 +176,9 @@ private authService:AuthService,
                         if(t.status==="COMPLETED"){
                           this.completed++;
                         }
-                        console.log("this.completed",this.completed)
-                        console.log("this.nbTasks",this.nbTasks)
+                        
                         project.progress=(this.completed/this.nbTasks)*100
-                        console.log("le progress",project.progress)
+                        
                       },
                       error: (err) => {
                         console.error('Erreur lors de la récupération des projets:', err);
@@ -195,10 +196,9 @@ private authService:AuthService,
                 }
               });
             })
-            console.log("this.completed",this.completed)
-            console.log("this.nbTasks",this.nbTasks)
+            
             project.progress=this.completed/this.nbTasks
-            console.log("le progress",project.progress)
+            
           },
           error: (err) => {
             console.error('Erreur lors de la récupération des projets:', err);
@@ -241,11 +241,6 @@ private authService:AuthService,
             }
           });
   
-          console.log('Projet complet avec phases:', project);
-          console.log('Dates pour le projet', project.name, ':');
-          console.log('localisation:', project.address);
-          console.log('Début:', project.minStartDate);
-          console.log('Fin:', project.maxEndDate);
         },
         error: (err) => {
           console.error('Erreur lors de la récupération des phases:', err);
