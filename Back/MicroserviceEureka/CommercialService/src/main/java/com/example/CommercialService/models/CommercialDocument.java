@@ -33,7 +33,8 @@ public class CommercialDocument {
     private BigDecimal totalAmount; // Total TTC
 
     private String notes; // Notes supplémentaires
-
+    @DBRef
+    private Client client;
     @Field("lines")
     private List<CommercialDocumentLine> lines = new ArrayList<>();
     // Méthodes utilitaires
@@ -56,6 +57,14 @@ public class CommercialDocument {
 
         // Calculer le total
         this.totalAmount = subTotal.subtract(discount).add(taxAmount);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getId() {

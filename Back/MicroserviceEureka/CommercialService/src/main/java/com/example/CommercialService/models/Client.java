@@ -14,7 +14,17 @@ public class Client {
     private String address;
     private String email;
     private String phone;
-    private Date createdAt = new Date(); // Initialisé avec la date actuelle par défaut
+    private Date createdAt = new Date();
+    private String idCompany;
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getId() {
         return id;
@@ -22,6 +32,14 @@ public class Client {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(String idCompany) {
+        this.idCompany = idCompany;
     }
 
     public String getName() {
