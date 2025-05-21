@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1747785703590,
@@ -60,6 +60,14 @@
                 {
                     "date": 1747787699229,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,16 @@\n                   <button class=\"delete-btn\" (click)=\"deleteClient(client.id, $event)\" title=\"Supprimer\" > <!-- Updated method, added $event.stopPropagation() -->\r\n                     <i class=\"bi bi-trash\"></i>\r\n                   </button>\r\n                 </ng-container>\r\n-                 <!-- Vous pouvez ajouter des boutons sauvegarder/annuler ici si l'édition en ligne est plus complexe -->\r\n+                <ng-container *ngIf=\"editingClientId === client.id\">\r\n+                  <button class=\"save-btn\" (click)=\"saveEdit(client.id, $event)\" title=\"Sauvegarder\">\r\n+                    <i class=\"bi bi-check-lg\"></i>\r\n+                  </button>\r\n+                  <button class=\"cancel-btn\" (click)=\"cancelEdit($event)\" title=\"Annuler\">\r\n+                    <i class=\"bi bi-x-lg\"></i>\r\n+                  </button>\r\n+                </ng-container>\r\n               </td>\r\n             </tr>\r\n           </tbody>\r\n         </table>\r\n"
+                },
+                {
+                    "date": 1747847811856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n               <th>Actions</th>\r\n             </tr>\r\n           </thead>\r\n           <tbody>\r\n-            <tr *ngFor=\"let client of filteredClients\" (click)=\"goToClientDetails(client)\" [class.editing-row]=\"editingClientId === client.id\"> <!-- Updated iteration and variables -->\r\n+            <tr *ngFor=\"let client of filteredClients\"  [class.editing-row]=\"editingClientId === client.id\"> <!-- Updated iteration and variables -->\r\n               <!-- Name Column -->\r\n               <td>\r\n                 <span>{{ client.name }}</span> <!-- Name is not editable as per request -->\r\n               </td>\r\n"
+                },
+                {
+                    "date": 1747848541791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n       </div>\r\n \r\n       <!-- Card View -->\r\n       <div *ngIf=\"viewMode === 'card'\" class=\"client-cards-grid\"> <!-- Renamed class from project-cards-grid -->\r\n-        <div class=\"client-card\" *ngFor=\"let client of filteredClients\" (click)=\"goToClientDetails(client)\"> <!-- Updated iteration and class from project-card -->\r\n+        <div class=\"client-card\" *ngFor=\"let client of filteredClients\" \"> <!-- Updated iteration and class from project-card -->\r\n           <div class=\"card-header\">\r\n             <h3>{{ client.name }}</h3>\r\n             <div class=\"card-creation-date\">Créé le: {{ client.createdAt | date:'dd/MM/yyyy' }}</div> <!-- Adapted from card-dates -->\r\n           </div>\r\n"
                 }
             ],
             "date": 1747785703590,

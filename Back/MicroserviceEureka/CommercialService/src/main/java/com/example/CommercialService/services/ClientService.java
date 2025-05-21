@@ -53,7 +53,8 @@ public class ClientService implements IClient {
         c.setAddress(client.getAddress());
         c.setPhone(client.getPhone());
         c.setEmail(c.getEmail());
-        c.setIdCompany(client.getIdCompany());
+        c.setIdCompany(c.getIdCompany());
+        c.setCompanyName(c.getCompanyName());
         Client updatedClient = clientRepository.save(c);
         return updatedClient;
     }

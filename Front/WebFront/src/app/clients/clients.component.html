@@ -43,7 +43,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let client of filteredClients" (click)="goToClientDetails(client)" [class.editing-row]="editingClientId === client.id"> <!-- Updated iteration and variables -->
+            <tr *ngFor="let client of filteredClients"  [class.editing-row]="editingClientId === client.id"> <!-- Updated iteration and variables -->
               <!-- Name Column -->
               <td>
                 <span>{{ client.name }}</span> <!-- Name is not editable as per request -->
@@ -96,7 +96,7 @@
 
       <!-- Card View -->
       <div *ngIf="viewMode === 'card'" class="client-cards-grid"> <!-- Renamed class from project-cards-grid -->
-        <div class="client-card" *ngFor="let client of filteredClients" (click)="goToClientDetails(client)"> <!-- Updated iteration and class from project-card -->
+        <div class="client-card" *ngFor="let client of filteredClients" > <!-- Updated iteration and class from project-card -->
           <div class="card-header">
             <h3>{{ client.name }}</h3>
             <div class="card-creation-date">Créé le: {{ client.createdAt | date:'dd/MM/yyyy' }}</div> <!-- Adapted from card-dates -->

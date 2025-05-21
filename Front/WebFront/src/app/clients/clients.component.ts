@@ -115,15 +115,7 @@ export class ClientsComponent implements OnInit {
         );
   }
 
-  goToClientDetails(client: Client): void {
-    // Si l'édition est active sur cette ligne, ne pas naviguer
-    if (this.editingClientId === client.id) {
-      return;
-    }
-    console.log('Naviguer vers les détails du client:', client.id);
-    // Exemple: this.router.navigate(['/clients', client.id]);
-  }
-
+  
 
   deleteClient(clientId: string, event: MouseEvent): void {
     event.stopPropagation(); // Empêche le clic de se propager à la ligne (goToClientDetails)
@@ -150,39 +142,32 @@ export class ClientsComponent implements OnInit {
     event.stopPropagation();
     if (!this.editedClientData || this.editingClientId !== clientId) return;
 
-    // Préparez les données à envoyer (uniquement les champs modifiés si nécessaire, ou l'objet entier)
-    const updatePayload: Partial<Client> = {
+    const updatePayload = {
       address: this.editedClientData.address,
-      phone: this.editedClientData.phone
+      phone: this.editedClientData.phone,
+
     };
-
-    // Assurez-vous que votre CommercialService a une méthode updateClient
-    // Exemple: this.commercialService.updateClient(clientId, updatePayload).subscribe({
-    //   next: (updatedClientFromServer) => {
-    //     const index = this.clients.findIndex(c => c.id === clientId);
-    //     if (index !== -1) {
-    //       // Mettre à jour avec les données du serveur ou les données locales si le serveur ne renvoie pas tout
-    //       this.clients[index] = { ...this.clients[index], ...updatePayload }; // Ou ...updatedClientFromServer
-    //       this.applyFilter(); // Rafraîchir la liste filtrée
-    //     }
-    //     this.cancelEdit(); // Sortir du mode édition
-    //     console.log('Client mis à jour avec succès', updatedClientFromServer);
-    //   },
-    //   error: (err) => {
-    //     console.error('Erreur lors de la mise à jour du client', err);
-    //     // Peut-être afficher un message d'erreur à l'utilisateur
-    //   }
-    // });
-
-    // Simulation de la sauvegarde
-    console.log('Sauvegarde des modifications pour le client:', clientId, this.editedClientData);
-    const index = this.clients.findIndex(c => c.id === clientId);
-    if (index !== -1) {
-        this.clients[index] = { ...this.clients[index], ...this.editedClientData };
-        this.applyFilter();
-    }
-    this.cancelEdit(); // Quitte le mode édition après la simulation
-  }
+ this.commercialService.updateClient(clientId, updatePayload).subscribe({
+      next: (updatedClient) => {
+        console.log('Client mis à jour avec succès:', updatedClient);
+        // Mettre à jour le client dans la liste locale
+        const index = this.clients.findIndex(c => c.id === clientId);
+        if (index !== -1) {
+    
+          this.clients[index] = { ...this.clients[index], ...updatedClient };
+        
+        }
+        this.applyFilter(); // Mettre à jour la liste filtrée
+        this.cancelEdit(); // Quitter le mode édition
+      },
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour du client:', err);
+        // Afficher un message d'erreur à l'utilisateur si nécessaire
+        // Par exemple, en utilisant une variable pour un message d'erreur dans le template
+        // this.errorMessage = "La mise à jour a échoué. Veuillez réessayer.";
+        // Optionnellement, ne pas quitter le mode édition pour permettre à l'utilisateur de réessayer
+      }
+    }); }
 
   cancelEdit(event?: Event): void {
     if(event) event.stopPropagation();
