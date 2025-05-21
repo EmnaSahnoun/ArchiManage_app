@@ -43,12 +43,12 @@
       "^/notification": "/NotificationService"
     }
   },
-  "/invoice": {
+  "/commercial": {
     "target": "https://e1.systeo.tn",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/invoice": "/CommercialService"
+      "^/commercial": "/CommercialService"
     }
   },
   

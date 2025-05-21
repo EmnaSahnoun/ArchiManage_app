@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Invoice, InvoiceStatus } from '../models/invoice';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InvoiceService } from '../services/invoice.service';
+import { CommercialService } from '../services/commercial.service'; 
 
 @Component({
   selector: 'app-invoice-list',
@@ -16,7 +16,7 @@ export class InvoiceListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private invoiceService: InvoiceService
+    private commercialService: CommercialService
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class InvoiceListComponent implements OnInit {
   loadInvoices(): void {
     this.isLoading = true;
     this.errorMessage = null;
-    this.invoiceService.getInvoices().subscribe({
+    this.commercialService.getInvoices().subscribe({
       next: (data) => {
         console.log("les factures",data)
         this.invoices = data;
@@ -61,7 +61,7 @@ export class InvoiceListComponent implements OnInit {
   }
 
   deleteInvoice(id: string): void {
-    this.invoiceService.deleteInvoice(id).subscribe({
+    this.commercialService.deleteInvoice(id).subscribe({
       next: () => {
         this.invoices = this.invoices.filter(inv => inv.id !== id);
         // Optionally, show a success message

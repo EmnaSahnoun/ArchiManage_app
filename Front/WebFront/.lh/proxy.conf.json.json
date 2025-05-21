@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 39,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -164,6 +164,10 @@
                 {
                     "date": 1747613496418,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,15 +50,15 @@\n     \"pathRewrite\": {\r\n       \"^/invoice\": \"/CommercialService\"\r\n     }\r\n   },\r\n-  DocumentService\r\n+  \r\n \"/document\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/invoice\": \"/CommercialService\"\r\n+      \"^/document\": \"/DocumentService\"\r\n     }\r\n   }\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1747786127020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,14 +42,14 @@\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n-  \"/invoice\": {\r\n+  \"/commercial\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/invoice\": \"/CommercialService\"\r\n+      \"^/commercial\": \"/CommercialService\"\r\n     }\r\n   },\r\n   \r\n \"/document\": {\r\n"
                 }
             ],
             "date": 1745069337198,

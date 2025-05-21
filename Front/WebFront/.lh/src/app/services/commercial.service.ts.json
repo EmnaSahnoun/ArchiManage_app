@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/app/services/commercial.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1747786030456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747786108469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n })\r\n export class CommercialService {\r\n   // Adjust the baseUrl to your actual API endpoint\r\n \r\n- private apiUrl = '/invoice';\r\n+ private apiUrl = '/commercial';\r\n   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   getInvoices(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n"
+                },
+                {
+                    "date": 1747786144565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,8 +51,16 @@\n         }).pipe(\r\n             catchError(this.handleError));\r\n   }\r\n \r\n+  getInvoices(): Observable<any[]> {\r\n+    return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n+            headers: this.getApiHeaders()\r\n+        }).pipe(\r\n+            catchError(this.handleError)\r\n+        );    \r\n+  }\r\n+\r\n    private getApiHeaders(): HttpHeaders {\r\n          const token = this.authService.getAccessToken();\r\n          return new HttpHeaders({\r\n            'Content-Type': 'application/json',\r\n"
+                },
+                {
+                    "date": 1747786151009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n         }).pipe(\r\n             catchError(this.handleError));\r\n   }\r\n \r\n-  getInvoices(): Observable<any[]> {\r\n+  getClients(): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n"
+                },
+                {
+                    "date": 1747786169570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   getClients(): Observable<any[]> {\r\n-    return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n+    return this.http.get<any[]>(`${this.apiUrl}//client`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n"
+                },
+                {
+                    "date": 1747786189186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n             catchError(this.handleError));\r\n   }\r\n \r\n   getClients(): Observable<any[]> {\r\n-    return this.http.get<any[]>(`${this.apiUrl}//client`, { \r\n+    return this.http.get<any[]>(`${this.apiUrl}/client/company/`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n         );    \r\n"
+                },
+                {
+                    "date": 1747786195603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n         }).pipe(\r\n             catchError(this.handleError));\r\n   }\r\n \r\n-  getClients(id): Observable<any[]> {\r\n+  getClients(idCompany): Observable<any[]> {\r\n     return this.http.get<any[]>(`${this.apiUrl}/client/company/`, { \r\n             headers: this.getApiHeaders()\r\n         }).pipe(\r\n             catchError(this.handleError)\r\n"
+                }
+            ],
+            "date": 1747786030456,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\nimport { catchError, Observable, throwError } from 'rxjs';\r\nimport { Invoice } from '../models/invoice';\r\nimport { AuthService } from './auth.service';\r\nimport { UserService } from './UserService';\r\n\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class CommercialService {\r\n  // Adjust the baseUrl to your actual API endpoint\r\n\r\n private apiUrl = '/invoice';\r\n  constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n\r\n  getInvoices(): Observable<any[]> {\r\n    return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { \r\n            headers: this.getApiHeaders()\r\n        }).pipe(\r\n            catchError(this.handleError)\r\n        );    \r\n  }\r\n\r\n  getInvoice(id: string): Observable<Invoice> {\r\n    return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments${id}`, { \r\n            headers: this.getApiHeaders()\r\n        }).pipe(\r\n            catchError(this.handleError));\r\n  }\r\n\r\n  createInvoice(invoicePayload: any): Observable<Invoice> {\r\n    const url = `${this.apiUrl}/commercialdocuments`;\r\n    return this.http.post<Invoice>(this.apiUrl, invoicePayload, { \r\n            headers: this.getApiHeaders()\r\n        }).pipe(\r\n            catchError(this.handleError));\r\n  }\r\n\r\n  updateInvoice(id: string, invoicePayload: any): Observable<Invoice> {\r\n    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload, { \r\n            headers: this.getApiHeaders()\r\n        }).pipe(\r\n            catchError(this.handleError));\r\n  }\r\n\r\n  deleteInvoice(id: string): Observable<void> {\r\n    return this.http.delete<void>(`${this.apiUrl}/${id}`, { \r\n            headers: this.getApiHeaders()\r\n        }).pipe(\r\n            catchError(this.handleError));\r\n  }\r\n\r\n   private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n           'Authorization': `Bearer ${token}`\r\n         });\r\n       }\r\n       \r\n         private handleError(error: HttpErrorResponse): Observable<never> {\r\n           console.error('API Error Details:', error);\r\n           \r\n           let errorMessage = 'Une erreur est survenue';\r\n           if (error.status === 401) {\r\n             errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n             this.authService.logout();\r\n           } else if (error.error?.message) {\r\n             errorMessage = error.error.message;\r\n           } else if (error.status === 500) {\r\n             errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n           }\r\n       \r\n           return throwError(() => new Error(errorMessage));\r\n         }\r\n}\r\n"
+        }
+    ]
+}

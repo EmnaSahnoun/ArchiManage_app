@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
+        allowedHeaders = "*",
+        allowCredentials = "true")
 
 @RestController
 @RequestMapping("/client")

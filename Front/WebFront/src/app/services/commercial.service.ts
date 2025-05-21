@@ -9,10 +9,10 @@ import { UserService } from './UserService';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceService {
+export class CommercialService {
   // Adjust the baseUrl to your actual API endpoint
 
- private apiUrl = '/invoice';
+ private apiUrl = '/commercial';
   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
 
   getInvoices(): Observable<any[]> {
@@ -50,6 +50,14 @@ export class InvoiceService {
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
+  }
+
+  getClients(idCompany:string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/client/company/${idCompany}`, { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError)
+        );    
   }
 
    private getApiHeaders(): HttpHeaders {
