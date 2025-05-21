@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1747785647591,
@@ -12,6 +12,22 @@
                 {
                     "date": 1747785782288,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -211,9 +211,9 @@\n       border: none;\r\n       color: $primary-color;\r\n       cursor: pointer;\r\n       padding: 4px 8px;\r\n-      border-radius: $border-radius / 2;\r\n+      border-radius: 8px / 2;\r\n       display: inline-flex;\r\n       align-items: center;\r\n       gap: 4px;\r\n       transition: background-color 0.2s ease, color 0.2s ease;\r\n"
+                },
+                {
+                    "date": 1747821002953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   font-family: 'Poppins', sans-serif;\r\n   padding: 24px;\r\n   background-color: $background-color;\r\n   color: $text-color-primary;\r\n-  min-height: calc(100vh - 64px); // Adjust 64px based on your header height\r\n+  min-height: calc(120vh - 64px); // Adjust 64px based on your header height\r\n }\r\n \r\n // --- Client Header ---\r\n .client-header {\r\n"
+                },
+                {
+                    "date": 1747821028327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   font-family: 'Poppins', sans-serif;\r\n   padding: 24px;\r\n   background-color: $background-color;\r\n   color: $text-color-primary;\r\n-  min-height: calc(120vh - 64px); // Adjust 64px based on your header height\r\n+  min-height: calc(115vh - 64px); // Adjust 64px based on your header height\r\n }\r\n \r\n // --- Client Header ---\r\n .client-header {\r\n"
+                },
+                {
+                    "date": 1747821038284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   font-family: 'Poppins', sans-serif;\r\n   padding: 24px;\r\n   background-color: $background-color;\r\n   color: $text-color-primary;\r\n-  min-height: calc(115vh - 64px); // Adjust 64px based on your header height\r\n+  min-height: calc(105vh - 64px); // Adjust 64px based on your header height\r\n }\r\n \r\n // --- Client Header ---\r\n .client-header {\r\n"
+                },
+                {
+                    "date": 1747821047694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   font-family: 'Poppins', sans-serif;\r\n   padding: 24px;\r\n   background-color: $background-color;\r\n   color: $text-color-primary;\r\n-  min-height: calc(105vh - 64px); // Adjust 64px based on your header height\r\n+  min-height: calc(110vh - 64px); // Adjust 64px based on your header height\r\n }\r\n \r\n // --- Client Header ---\r\n .client-header {\r\n"
                 }
             ],
             "date": 1747785647591,

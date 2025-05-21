@@ -22,7 +22,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
   background-color: $background-color;
   color: $text-color-primary;
-  min-height: calc(100vh - 64px); // Adjust 64px based on your header height
+  min-height: calc(110vh - 64px); // Adjust 64px based on your header height
 }
 
 // --- Project Header (Adapted from .section-header) ---

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http'; // Assuming you might use HttpClient directly or in a service
 import { CommercialService } from '../services/commercial.service';
 import { AuthService } from '../services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClientFormComponent } from '../client-form/client-form.component';
 // import { ClientService } from './client.service'; // Supposons que vous ayez un service pour les clients
 // import { AuthService } from '../auth/auth.service'; // Supposons que vous ayez un service d'authentification
 
@@ -31,14 +33,16 @@ export class ClientsComponent implements OnInit {
   viewMode: 'list' | 'card' = 'list'; // Default view mode
 
   editingClientId: string | null = null;
-  editedClientData: Partial<Client> = {}; // Pour l'édition en ligne
+  editedClientData: { address?: string; phone?: string } = {}; // Pour l'édition en ligne (adresse et téléphone uniquement)
+
 
   // Simulez votre AuthService et ClientService ici ou injectez-les
   constructor(
      private commercialService: CommercialService,
      private authService: AuthService,
      private router: Router,
-     private http: HttpClient 
+     private http: HttpClient ,
+     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -55,13 +59,14 @@ export class ClientsComponent implements OnInit {
       next: (data) => {
         console.log("les clients",data)
         this.clients=data;
+        this.applyFilter();
       },
       error: (err) => {
         console.error('Error fetching invoices:', err);
         
       }
     });
-    this.applyFilter();
+    
   }
 
   applyFilter(): void {
@@ -78,14 +83,36 @@ export class ClientsComponent implements OnInit {
     }
   }
 
-  toggleViewMode(mode: 'list' | 'card'): void {
-    this.viewMode = mode;
-  }
+  
 
   addClient(): void {
-    console.log('Ouvrir le formulaire/modal pour ajouter un nouveau client');
-    // Exemple: this.router.navigate(['/clients/nouveau']);
-    // Ou ouvrir un dialogue modal
+    const modalRef = this.modalService.open(ClientFormComponent, {
+          size: 'mg',
+          centered: true,
+          backdrop: 'static',
+          keyboard: false 
+        });
+    
+        modalRef.result.then(
+          (result) => {
+             console.log('La modale a été fermée avec succès');
+            if (result) {
+              console.log('Nouveau client ajouté:', result);
+              const idCompany=localStorage.getItem('idAgence');
+              if(idCompany){
+                this.loadClients(idCompany);
+              }
+            
+              
+            } else {
+              console.log('La modale a été fermée avec succès mais sans résultat.');
+            
+            }
+          },
+          (reason) => {
+            console.log(`La modale a été annulée/fermée (${reason})`);
+          }
+        );
   }
 
   goToClientDetails(client: Client): void {
@@ -108,5 +135,58 @@ export class ClientsComponent implements OnInit {
       this.applyFilter();
       console.log('Client supprimé (simulation):', clientId);
     }
+  }
+  startEdit(client: Client, event: MouseEvent): void {
+    event.stopPropagation(); // Empêche goToClientDetails d'être appelé
+    this.editingClientId = client.id;
+    // Copier uniquement les champs modifiables
+    this.editedClientData = {
+      address: client.address,
+      phone: client.phone
+    };
+  }
+
+  saveEdit(clientId: string, event: Event): void {
+    event.stopPropagation();
+    if (!this.editedClientData || this.editingClientId !== clientId) return;
+
+    // Préparez les données à envoyer (uniquement les champs modifiés si nécessaire, ou l'objet entier)
+    const updatePayload: Partial<Client> = {
+      address: this.editedClientData.address,
+      phone: this.editedClientData.phone
+    };
+
+    // Assurez-vous que votre CommercialService a une méthode updateClient
+    // Exemple: this.commercialService.updateClient(clientId, updatePayload).subscribe({
+    //   next: (updatedClientFromServer) => {
+    //     const index = this.clients.findIndex(c => c.id === clientId);
+    //     if (index !== -1) {
+    //       // Mettre à jour avec les données du serveur ou les données locales si le serveur ne renvoie pas tout
+    //       this.clients[index] = { ...this.clients[index], ...updatePayload }; // Ou ...updatedClientFromServer
+    //       this.applyFilter(); // Rafraîchir la liste filtrée
+    //     }
+    //     this.cancelEdit(); // Sortir du mode édition
+    //     console.log('Client mis à jour avec succès', updatedClientFromServer);
+    //   },
+    //   error: (err) => {
+    //     console.error('Erreur lors de la mise à jour du client', err);
+    //     // Peut-être afficher un message d'erreur à l'utilisateur
+    //   }
+    // });
+
+    // Simulation de la sauvegarde
+    console.log('Sauvegarde des modifications pour le client:', clientId, this.editedClientData);
+    const index = this.clients.findIndex(c => c.id === clientId);
+    if (index !== -1) {
+        this.clients[index] = { ...this.clients[index], ...this.editedClientData };
+        this.applyFilter();
+    }
+    this.cancelEdit(); // Quitte le mode édition après la simulation
+  }
+
+  cancelEdit(event?: Event): void {
+    if(event) event.stopPropagation();
+    this.editingClientId = null;
+    this.editedClientData = {};
   }
 }

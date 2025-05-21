@@ -80,7 +80,6 @@ private authService:AuthService,
       const lowerCaseQuery = this.searchQuery.toLowerCase();
       this.filteredProjects = this.projects.filter(project =>
         project.name.toLowerCase().includes(lowerCaseQuery)
-        // You could add more fields to search here, e.g., project.status.toLowerCase().includes(lowerCaseQuery)
       );
     }
    }
@@ -145,16 +144,14 @@ private authService:AuthService,
             })
             this.applyFilter();
           }        
-           // Appliquer le filtre une fois les projets chargés
           console.log("les projets",this.projects);
-          // Pour chaque projet, récupérer les détails des phases
         
           
         },
         error: (err) => {
           console.error('Erreur lors de la récupération des projets:', err);
-          this.projects = []; // Vider en cas d'erreur
-          this.applyFilter(); // Appliquer le filtre même en cas d'erreur (liste vide)
+          this.projects = []; 
+          this.applyFilter(); 
         }
       });
     };
@@ -182,7 +179,7 @@ private authService:AuthService,
                       },
                       error: (err) => {
                         console.error('Erreur lors de la récupération des projets:', err);
-                        this.projects = []; // Vider en cas d'erreur
+                        this.projects = []; 
                         
                       }
                     });
@@ -191,7 +188,7 @@ private authService:AuthService,
                 },
                 error: (err) => {
                   console.error('Erreur lors de la récupération des projets:', err);
-                  this.projects = []; // Vider en cas d'erreur
+                  this.projects = [];
                   
                 }
               });
@@ -202,7 +199,7 @@ private authService:AuthService,
           },
           error: (err) => {
             console.error('Erreur lors de la récupération des projets:', err);
-            this.projects = []; // Vider en cas d'erreur
+            this.projects = []; 
             
           }
         });
@@ -213,10 +210,9 @@ private authService:AuthService,
   getDates(project: any) {
     project.minStartDate = null;
     project.maxEndDate = null;
-    project.phases = []; // Initialiser le tableau des phases
+    project.phases = []; 
   
     if (project.phaseIds && project.phaseIds.length > 0) {
-      // Créer un tableau d'observables pour toutes les phases avec le type spécifié
       const phaseRequests = project.phaseIds.map((phaseId: string) => 
         this.projectService.getphaseById(phaseId)
       );
@@ -224,7 +220,6 @@ private authService:AuthService,
       // Spécifier le type générique pour forkJoin
       forkJoin<Phase[]>(phaseRequests).subscribe({
         next: (phases) => {
-          // Ajouter toutes les phases au projet
           project.phases = phases;
           
           // Calculer les dates min/max
@@ -309,7 +304,7 @@ async checkPhaseStatus(phase: any): Promise<string> {
       }
     });
   }
-  // Add project action
+
   addProject(): void {
     const modalRef = this.modalService.open(ProjectFormComponent, {
       size: 'lg',
@@ -318,28 +313,24 @@ async checkPhaseStatus(phase: any): Promise<string> {
       keyboard: false // Empêche la fermeture avec la touche Echap si backdrop='static'
     });
 
-    // Utiliser modalRef.result qui est une promesse
     modalRef.result.then(
       (result) => {
-        // Ce bloc est exécuté quand la modale est fermée avec succès (ex: via modal.close(result))
         console.log('La modale a été fermée avec succès');
         if (result) {
           console.log('Nouveau projet ajouté:', result);
-          this.getProjects(); // Recharger la liste des projets
+          this.getProjects(); 
         } else {
           console.log('La modale a été fermée avec succès mais sans résultat.');
         
         }
       },
       (reason) => {
-        // Ce bloc est exécuté quand la modale est annulée (ex: clic hors modale, touche Echap, ou via modal.dismiss(reason))
         console.log(`La modale a été annulée/fermée (${reason})`);
-        // Pas besoin de recharger les projets si l'action a été annulée
       }
     );
   }
   openMembersModal(project: any, event: MouseEvent): void {
-    event.stopPropagation(); // Très important: Empêche le clic de déclencher aussi goToProjectDetails
+    event.stopPropagation(); 
 
     const modalRef = this.modalService.open(ProjectMembersComponent, {
       size: 'lg', 

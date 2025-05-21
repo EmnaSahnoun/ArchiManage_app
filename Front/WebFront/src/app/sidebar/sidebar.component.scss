@@ -31,7 +31,7 @@ mat-sidenav-content {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire
+  //overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire
   margin-left: 250px;
 }
 
@@ -55,7 +55,7 @@ ul.nav-links { // Cibler plus spécifiquement
   list-style-type: none;
   // **** AJOUT IMPORTANT ****
   flex-grow: 1; // Permet à cette section de prendre l'espace vertical disponible
-  overflow-y: auto; // Permet le scroll SEULEMENT pour la liste si elle est trop longue
+ 
   // **** FIN AJOUT IMPORTANT ****
 
   li.nav-item { // Cibler plus spécifiquement

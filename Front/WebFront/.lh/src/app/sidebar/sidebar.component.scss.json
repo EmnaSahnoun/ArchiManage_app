@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 131,
+            "activePatchIndex": 135,
             "patches": [
                 {
                     "date": 1741609891837,
@@ -532,6 +532,22 @@
                 {
                     "date": 1745623248201,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -171,11 +171,17 @@\n @media (max-width: 768px) {\r\n   .sidenav {\r\n     width: 200px;\r\n   }\r\n+  mat-sidenav-content {\r\n+    margin-left: 200px; // Ajuster le décalage\r\n+  }\r\n }\r\n \r\n @media (max-width: 480px) {\r\n   .sidenav {\r\n     width: 180px;\r\n   }\r\n+  mat-sidenav-content {\r\n+    margin-left: 180px; // Ajuster le décalage\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1747820655781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   flex: 1;\r\n   display: flex;\r\n   flex-direction: column;\r\n   height: 100vh;\r\n-  overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire\r\n+\r\n   margin-left: 250px;\r\n }\r\n \r\n /* Logo centré */\r\n"
+                },
+                {
+                    "date": 1747820817875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   flex: 1;\r\n   display: flex;\r\n   flex-direction: column;\r\n   height: 100vh;\r\n-\r\n+  overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire\r\n   margin-left: 250px;\r\n }\r\n \r\n /* Logo centré */\r\n"
+                },
+                {
+                    "date": 1747820827888,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n   margin: 0;\r\n   list-style-type: none;\r\n   // **** AJOUT IMPORTANT ****\r\n   flex-grow: 1; // Permet à cette section de prendre l'espace vertical disponible\r\n-  overflow-y: auto; // Permet le scroll SEULEMENT pour la liste si elle est trop longue\r\n+ \r\n   // **** FIN AJOUT IMPORTANT ****\r\n \r\n   li.nav-item { // Cibler plus spécifiquement\r\n     cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1747820845732,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n   flex: 1;\r\n   display: flex;\r\n   flex-direction: column;\r\n   height: 100vh;\r\n-  overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire\r\n+  //overflow-y: auto; // Permettre le scroll du contenu principal si nécessaire\r\n   margin-left: 250px;\r\n }\r\n \r\n /* Logo centré */\r\n"
                 }
             ],
             "date": 1741609891837,

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -45,6 +45,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InvitationsComponent } from './invitations/invitations.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+import { ClientFormComponent } from './client-form/client-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +66,7 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
     ConfirmationDialogComponent,
     InvitationsComponent,
     InvoiceListComponent,
+    ClientFormComponent,
 
   ],
   imports: [
@@ -103,7 +106,7 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
     MatIconModule,
     MatProgressBarModule,
     MatTooltipModule,
-    
+    ReactiveFormsModule,
   ],
   providers: [
     DatePipe,

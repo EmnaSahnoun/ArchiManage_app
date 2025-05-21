@@ -1,0 +1,58 @@
+{
+    "sourceFile": "src/app/models/client.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1747822024247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747822096745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,15 @@\n-export interface Notification {\r\n+export interface Client {\r\n   id: string; // Ou number, selon votre backend\r\n   message: string;\r\n   read: boolean;\r\n   timestamp?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n\\ No newline at end of file\n-}\n+}\r\n+\"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n+    \"name\": \"Client\",\r\n+    \"address\": \"123 Rue Test\",\r\n+    \"email\": \"client@example.com\",\r\n+    \"phone\": \"123456789\",\r\n+    \"createdAt\": 1747822084097,\r\n+    \"idCompany\": \"680657ad26cbca08d31f221c\",\r\n+    \"companyName\": \"Archi Concept Tunisie\"\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747822105690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n export interface Client {\r\n   id: string; // Ou number, selon votre backend\r\n-  message: string;\r\n-  read: boolean;\r\n+  name: string;\r\n+  address: boolean;\r\n   timestamp?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n }\r\n \"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n"
+                },
+                {
+                    "date": 1747822112731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,12 @@\n export interface Client {\r\n   id: string; // Ou number, selon votre backend\r\n   name: string;\r\n-  address: boolean;\r\n+  address: string;\r\n+  email: string;\r\n+  phone: string;\r\n+  createdAt: number;\r\n+  idCompany: boolean;\r\n   timestamp?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n }\r\n \"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n"
+                },
+                {
+                    "date": 1747822122988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   address: string;\r\n   email: string;\r\n   phone: string;\r\n   createdAt: number;\r\n-  idCompany: boolean;\r\n+  idCompany: s;\r\n   timestamp?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n }\r\n \"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n"
+                },
+                {
+                    "date": 1747822129453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,10 @@\n   address: string;\r\n   email: string;\r\n   phone: string;\r\n   createdAt: number;\r\n-  idCompany: s;\r\n-  timestamp?: string; // Optionnel, si votre backend l'inclut\r\n+  idCompany: string;\r\n+  compa?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n }\r\n \"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n     \"name\": \"Client\",\r\n"
+                },
+                {
+                    "date": 1747822137478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,15 +5,7 @@\n   email: string;\r\n   phone: string;\r\n   createdAt: number;\r\n   idCompany: string;\r\n-  compa?: string; // Optionnel, si votre backend l'inclut\r\n+  companyName?: string; // Optionnel, si votre backend l'inclut\r\n   // Ajoutez d'autres propriétés si nécessaire\r\n }\r\n-\"id\": \"5fa0a3fb-f8fc-417a-88ce-d7fd6431357c\",\r\n-    \"name\": \"Client\",\r\n-    \"address\": \"123 Rue Test\",\r\n-    \"email\": \"client@example.com\",\r\n-    \"phone\": \"123456789\",\r\n-    \"createdAt\": 1747822084097,\r\n-    \"idCompany\": \"680657ad26cbca08d31f221c\",\r\n\\ No newline at end of file\n-    \"companyName\": \"Archi Concept Tunisie\"\n"
+                },
+                {
+                    "date": 1747822144276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,7 +5,6 @@\n   email: string;\r\n   phone: string;\r\n   createdAt: number;\r\n   idCompany: string;\r\n-  companyName?: string; // Optionnel, si votre backend l'inclut\r\n-  // Ajoutez d'autres propriétés si nécessaire\r\n-}\r\n+  companyName: string; \r\n+  /\r\n"
+                },
+                {
+                    "date": 1747826411850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   id: string; // Ou number, selon votre backend\r\n   name: string;\r\n   address: string;\r\n   email: string;\r\n-  phone: string;\r\n+  phone?: string;\r\n   createdAt: number;\r\n   idCompany: string;\r\n   companyName: string; \r\n-  /\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747826502999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n export interface Client {\r\n-  id: string; // Ou number, selon votre backend\r\n+  id?: string; // Ou number, selon votre backend\r\n   name: string;\r\n-  address: string;\r\n+  address?: string;\r\n   email: string;\r\n   phone?: string;\r\n   createdAt: number;\r\n   idCompany: string;\r\n"
+                },
+                {
+                    "date": 1747826573801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,8 @@\n   name: string;\r\n   address?: string;\r\n   email: string;\r\n   phone?: string;\r\n-  createdAt: number;\r\n+  createdAt?: number;\r\n   idCompany: string;\r\n   companyName: string; \r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1747822024247,
+            "name": "Commit-0",
+            "content": "export interface Notification {\r\n  id: string; // Ou number, selon votre backend\r\n  message: string;\r\n  read: boolean;\r\n  timestamp?: string; // Optionnel, si votre backend l'inclut\r\n  // Ajoutez d'autres propriétés si nécessaire\r\n}"
+        }
+    ]
+}

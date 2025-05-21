@@ -4,6 +4,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { Invoice } from '../models/invoice';
 import { AuthService } from './auth.service';
 import { UserService } from './UserService';
+import { Client } from '../clients/clients.component';
 
 
 @Injectable({
@@ -13,7 +14,9 @@ export class CommercialService {
   // Adjust the baseUrl to your actual API endpoint
 
  private apiUrl = '/commercial';
-  constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
+  constructor(private http: HttpClient, 
+    private authService: AuthService, 
+    private userService:UserService) { }
 
   getInvoices(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments`, { 
@@ -53,13 +56,41 @@ export class CommercialService {
   }
 
   getClients(idCompany:string): Observable<any[]> {
+    console.log("headezrrs",this.getApiHeaders())
     return this.http.get<any[]>(`${this.apiUrl}/client/company/${idCompany}`, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError)
         );    
   }
-
+  createClient(clientData: any): Observable<any> {
+    console.log("headezrrs",this.getApiHeaders())
+    return this.http.post<any>(`${this.apiUrl}/client`, clientData, { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError));
+  }
+getClientById(idClient:string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/client/${idClient}`, { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError)
+        );    
+  }
+  updateClient(idClient: string, clientData: any): Observable<any> {
+    
+    return this.http.put<any>(`${this.apiUrl}/client/${idClient}`, clientData,  { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError)
+        );    
+  }
+   deleteClient(idClient: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/client/${idClient}`, { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError));
+  }
    private getApiHeaders(): HttpHeaders {
          const token = this.authService.getAccessToken();
          return new HttpHeaders({

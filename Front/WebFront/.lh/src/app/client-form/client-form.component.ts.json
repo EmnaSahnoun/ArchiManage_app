@@ -1,0 +1,278 @@
+{
+    "sourceFile": "src/app/client-form/client-form.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 65,
+            "patches": [
+                {
+                    "date": 1747821975398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1747822158201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component } from '@angular/core';\r\n+import { Client } from '../clients/clients.component';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n"
+                },
+                {
+                    "date": 1747822170051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,7 +16,7 @@\n handleCancellation() {\r\n   console.log('Création du client annulée.');\r\n   // Logique pour gérer l'annulation\r\n }\r\n-// ...\r\n+onCancel()\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1747822332889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,9 @@\n import { Component } from '@angular/core';\r\n import { Client } from '../clients/clients.component';\r\n+import { Component, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n@@ -16,7 +19,7 @@\n handleCancellation() {\r\n   console.log('Création du client annulée.');\r\n   // Logique pour gérer l'annulation\r\n }\r\n-onCancel()\r\n+onCancel(){}\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1747822337991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-import { Component } from '@angular/core';\r\n import { Client } from '../clients/clients.component';\r\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n"
+                },
+                {
+                    "date": 1747822361701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,12 @@\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n })\r\n-export class ClientFormComponent {\r\n+export class ClientFormComponent implements OnInit {\r\n+  clientForm: FormGroup;\r\n+  isLoading = false;\r\n+  errorMessage: string | null = null;\r\n // ...\r\n handleClientSubmission(clientData: Client) {\r\n   console.log('Nouveau client reçu du formulaire:', clientData);\r\n   // Logique pour traiter le client soumis\r\n"
+                },
+                {
+                    "date": 1747822377593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,7 @@\n   clientForm: FormGroup;\r\n   isLoading = false;\r\n   errorMessage: string | null = null;\r\n // ...\r\n-handleClientSubmission(clientData: Client) {\r\n-  console.log('Nouveau client reçu du formulaire:', clientData);\r\n-  // Logique pour traiter le client soumis\r\n-}\r\n \r\n-handleCancellation() {\r\n-  console.log('Création du client annulée.');\r\n-  // Logique pour gérer l'annulation\r\n-}\r\n-onCancel(){}\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1747822391729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,7 +12,82 @@\n   clientForm: FormGroup;\r\n   isLoading = false;\r\n   errorMessage: string | null = null;\r\n // ...\r\n+ private defaultIdCompany = '680657ad26cbca08d31f221c';\r\n+  private defaultCompanyName = 'Archi Concept Tunisie';\r\n \r\n+  constructor(\r\n+    private fb: FormBuilder,\r\n+    public activeModal: NgbActiveModal,\r\n+    // private clientService: ClientService, // Décommentez pour injecter votre service client\r\n+  ) {\r\n+    this.clientForm = this.fb.group({\r\n+      name: ['', [Validators.required, Validators.minLength(3)]],\r\n+      email: ['', [Validators.required, Validators.email]],\r\n+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Validation simple pour numéros\r\n+      companyName: [this.defaultCompanyName, Validators.required],\r\n+      address: ['', Validators.required],\r\n+      idCompany: [this.defaultIdCompany, Validators.required]\r\n+    });\r\n+  }\r\n \r\n+  ngOnInit(): void {\r\n+    // Si vous avez besoin de charger des données ou de modifier les valeurs par défaut\r\n+    // par exemple, à partir de localStorage :\r\n+    // const storedIdCompany = localStorage.getItem('idAgence'); // Exemple\r\n+    // const storedCompanyName = localStorage.getItem('AgencyName'); // Exemple\r\n+    // if (storedIdCompany && storedCompanyName) {\r\n+    //   this.clientForm.patchValue({\r\n+    //     idCompany: storedIdCompany,\r\n+    //     companyName: storedCompanyName\r\n+    //   });\r\n+    // }\r\n+  }\r\n+\r\n+  // Getters pour un accès facile aux contrôles de formulaire dans le template\r\n+  get name() { return this.clientForm.get('name'); }\r\n+  get email() { return this.clientForm.get('email'); }\r\n+  get phone() { return this.clientForm.get('phone'); }\r\n+  get companyName() { return this.clientForm.get('companyName'); }\r\n+  get address() { return this.clientForm.get('address'); }\r\n+  get idCompany() { return this.clientForm.get('idCompany'); }\r\n+\r\n+  saveClient(): void {\r\n+    if (this.clientForm.invalid || this.isLoading) {\r\n+      this.clientForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n+      return;\r\n+    }\r\n+\r\n+    this.isLoading = true;\r\n+    this.errorMessage = null;\r\n+\r\n+    const clientData: Client = this.clientForm.value;\r\n+    console.log(\"Client data to submit:\", clientData);\r\n+\r\n+    // Décommentez et utilisez votre service client ici\r\n+    // this.clientService.createClient(clientData).subscribe({\r\n+    //   next: (newClient) => {\r\n+    //     this.isLoading = false;\r\n+    //     console.log('Client créé:', newClient);\r\n+    //     this.activeModal.close(newClient);\r\n+    //   },\r\n+    //   error: (err) => {\r\n+    //     this.isLoading = false;\r\n+    //     this.errorMessage = err.message || 'Une erreur est survenue lors de la création du client.';\r\n+    //     console.error('Erreur création client:', err);\r\n+    //   }\r\n+    // });\r\n+\r\n+    // Pour l'instant, simulons une réussite et fermons la modale (à remplacer par l'appel au service)\r\n+    setTimeout(() => { // Simule un appel asynchrone\r\n+      this.isLoading = false;\r\n+      console.log('Client (simulé) créé:', clientData);\r\n+      this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n+    }, 1000);\r\n+  }\r\n+\r\n+  cancel(): void {\r\n+    this.activeModal.dismiss('cancel click');\r\n+  }\r\n+\r\n }\r\n"
+                },
+                {
+                    "date": 1747822412223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,23 +63,8 @@\n \r\n     const clientData: Client = this.clientForm.value;\r\n     console.log(\"Client data to submit:\", clientData);\r\n \r\n-    // Décommentez et utilisez votre service client ici\r\n-    // this.clientService.createClient(clientData).subscribe({\r\n-    //   next: (newClient) => {\r\n-    //     this.isLoading = false;\r\n-    //     console.log('Client créé:', newClient);\r\n-    //     this.activeModal.close(newClient);\r\n-    //   },\r\n-    //   error: (err) => {\r\n-    //     this.isLoading = false;\r\n-    //     this.errorMessage = err.message || 'Une erreur est survenue lors de la création du client.';\r\n-    //     console.error('Erreur création client:', err);\r\n-    //   }\r\n-    // });\r\n-\r\n-    // Pour l'instant, simulons une réussite et fermons la modale (à remplacer par l'appel au service)\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n       this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n"
+                },
+                {
+                    "date": 1747822421742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,18 +31,9 @@\n     });\r\n   }\r\n \r\n   ngOnInit(): void {\r\n-    // Si vous avez besoin de charger des données ou de modifier les valeurs par défaut\r\n-    // par exemple, à partir de localStorage :\r\n-    // const storedIdCompany = localStorage.getItem('idAgence'); // Exemple\r\n-    // const storedCompanyName = localStorage.getItem('AgencyName'); // Exemple\r\n-    // if (storedIdCompany && storedCompanyName) {\r\n-    //   this.clientForm.patchValue({\r\n-    //     idCompany: storedIdCompany,\r\n-    //     companyName: storedCompanyName\r\n-    //   });\r\n-    // }\r\n+    \r\n   }\r\n \r\n   // Getters pour un accès facile aux contrôles de formulaire dans le template\r\n   get name() { return this.clientForm.get('name'); }\r\n"
+                },
+                {
+                    "date": 1747822429415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n   ) {\r\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n-      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Validation simple pour numéros\r\n+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n       companyName: [this.defaultCompanyName, Validators.required],\r\n       address: ['', Validators.required],\r\n       idCompany: [this.defaultIdCompany, Validators.required]\r\n     });\r\n"
+                },
+                {
+                    "date": 1747822434678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     public activeModal: NgbActiveModal,\r\n-    // private clientService: ClientService, // Décommentez pour injecter votre service client\r\n+    private clientService: ClientService, // Décommentez pour injecter votre service client\r\n   ) {\r\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1747822444984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     public activeModal: NgbActiveModal,\r\n-    private clientService: ClientService, // Décommentez pour injecter votre service client\r\n+    private clientService: CommercialService, // Décommentez pour injecter votre service client\r\n   ) {\r\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1747822454941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Client } from '../clients/clients.component';\r\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { CommercialService } from '../services/commercial.service';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n@@ -18,9 +19,9 @@\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     public activeModal: NgbActiveModal,\r\n-    private clientService: CommercialService, // Décommentez pour injecter votre service client\r\n+    private commercialService: CommercialService, // Décommentez pour injecter votre service client\r\n   ) {\r\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1747822594826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n-\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n"
+                },
+                {
+                    "date": 1747822619587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n-import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+\r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n@@ -31,11 +31,9 @@\n       idCompany: [this.defaultIdCompany, Validators.required]\r\n     });\r\n   }\r\n \r\n-  ngOnInit(): void {\r\n-    \r\n-  }\r\n+  ngOnInit(): void {}\r\n \r\n   // Getters pour un accès facile aux contrôles de formulaire dans le template\r\n   get name() { return this.clientForm.get('name'); }\r\n   get email() { return this.clientForm.get('email'); }\r\n"
+                },
+                {
+                    "date": 1747822718979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n   get idCompany() { return this.clientForm.get('idCompany'); }\r\n \r\n   saveClient(): void {\r\n     if (this.clientForm.invalid || this.isLoading) {\r\n-      this.clientForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n+      this.clientForm.markAllAsTouched(); rreurs\r\n       return;\r\n     }\r\n \r\n     this.isLoading = true;\r\n"
+                },
+                {
+                    "date": 1747822733139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,15 +43,15 @@\n   get idCompany() { return this.clientForm.get('idCompany'); }\r\n \r\n   saveClient(): void {\r\n     if (this.clientForm.invalid || this.isLoading) {\r\n-      this.clientForm.markAllAsTouched(); rreurs\r\n+      this.clientForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n       return;\r\n     }\r\n \r\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n-\r\n+ const idCompany = localStorage.getItem(\"idAgence\");\r\n     const clientData: Client = this.clientForm.value;\r\n     console.log(\"Client data to submit:\", clientData);\r\n \r\n     setTimeout(() => { // Simule un appel asynchrone\r\n"
+                },
+                {
+                    "date": 1747822742490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,10 +49,11 @@\n     }\r\n \r\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n- const idCompany = localStorage.getItem(\"idAgence\");\r\n+    const idCompany = localStorage.getItem(\"idAgence\");\r\n     const clientData: Client = this.clientForm.value;\r\n+    const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"Client data to submit:\", clientData);\r\n \r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747822755556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,13 @@\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const clientData: Client = this.clientForm.value;\r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"Client data to submit:\", clientData);\r\n-\r\n+if (!idCompany || !idAdmin || !CompanyName) {\r\n+      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n+      this.isLoading = false;\r\n+      return;\r\n+    }\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n       this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n"
+                },
+                {
+                    "date": 1747822765356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     const clientData: Client = this.clientForm.value;\r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"Client data to submit:\", clientData);\r\n-if (!idCompany || !idAdmin || !CompanyName) {\r\n+    if (!idCompany || !CompanyName) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n"
+                },
+                {
+                    "date": 1747822773980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n     const clientData: Client = this.clientForm.value;\r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"Client data to submit:\", clientData);\r\n     if (!idCompany || !CompanyName) {\r\n-      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence ou Administrateur).\";\r\n+      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n"
+                },
+                {
+                    "date": 1747822781200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n+    const\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n       this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n"
+                },
+                {
+                    "date": 1747822786656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,8 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n       this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n"
+                },
+                {
+                    "date": 1747822793637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,16 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n+    const projectData = {\r\n+      name: this.name?.value,\r\n+      description: this.description?.value,\r\n+      address: this.address?.value,\r\n+      idCompany: idCompany,\r\n+      companyName:CompanyName,\r\n+      idAdmin: idAdmin\r\n+    };\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n       this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n"
+                },
+                {
+                    "date": 1747822802111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const projectData = {\r\n+    const clientData = {\r\n       name: this.name?.value,\r\n       description: this.description?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n"
+                },
+                {
+                    "date": 1747822815135,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n \r\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n-    const clientData: Client = this.clientForm.value;\r\n+    \r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n     console.log(\"Client data to submit:\", clientData);\r\n     if (!idCompany || !CompanyName) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n"
+                },
+                {
+                    "date": 1747822902651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n       return;\r\n     }\r\n     const clientData = {\r\n       name: this.name?.value,\r\n-      description: this.description?.value,\r\n+      ad: this.description?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n"
+                },
+                {
+                    "date": 1747822911508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n       return;\r\n     }\r\n     const clientData = {\r\n       name: this.name?.value,\r\n-      ad: this.description?.value,\r\n+      this.address: this.adress?.value,\r\n       address: this.address?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n"
+                },
+                {
+                    "date": 1747822929253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,81 @@\n+import { Client } from '../clients/clients.component';\r\n+import { Component, OnInit } from '@angular/core';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n+import { CommercialService } from '../services/commercial.service';\r\n+\r\n+@Component({\r\n+  selector: 'app-client-form',\r\n+  templateUrl: './client-form.component.html',\r\n+  styleUrl: './client-form.component.scss'\r\n+})\r\n+export class ClientFormComponent implements OnInit {\r\n+  clientForm: FormGroup;\r\n+  isLoading = false;\r\n+  errorMessage: string | null = null;\r\n+// ...\r\n+ private defaultIdCompany = '680657ad26cbca08d31f221c';\r\n+  private defaultCompanyName = 'Archi Concept Tunisie';\r\n+\r\n+  constructor(\r\n+    private fb: FormBuilder,\r\n+    public activeModal: NgbActiveModal,\r\n+    private commercialService: CommercialService, // Décommentez pour injecter votre service client\r\n+  ) {\r\n+    this.clientForm = this.fb.group({\r\n+      name: ['', [Validators.required, Validators.minLength(3)]],\r\n+      email: ['', [Validators.required, Validators.email]],\r\n+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n+      companyName: [this.defaultCompanyName, Validators.required],\r\n+      address: ['', Validators.required],\r\n+      idCompany: [this.defaultIdCompany, Validators.required]\r\n+    });\r\n+  }\r\n+\r\n+  ngOnInit(): void {}\r\n+\r\n+  // Getters pour un accès facile aux contrôles de formulaire dans le template\r\n+  get name() { return this.clientForm.get('name'); }\r\n+  get email() { return this.clientForm.get('email'); }\r\n+  get phone() { return this.clientForm.get('phone'); }\r\n+  get companyName() { return this.clientForm.get('companyName'); }\r\n+  get address() { return this.clientForm.get('address'); }\r\n+  get idCompany() { return this.clientForm.get('idCompany'); }\r\n+\r\n+  saveClient(): void {\r\n+    if (this.clientForm.invalid || this.isLoading) {\r\n+      this.clientForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n+      return;\r\n+    }\r\n+\r\n+    this.isLoading = true;\r\n+    this.errorMessage = null;\r\n+    const idCompany = localStorage.getItem(\"idAgence\");\r\n+    \r\n+    const CompanyName=localStorage.getItem(\"AgencyName\");\r\n+    console.log(\"Client data to submit:\", clientData);\r\n+    if (!idCompany || !CompanyName) {\r\n+      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n+      this.isLoading = false;\r\n+      return;\r\n+    }\r\n+    const clientData = {\r\n+      name: this.name?.value,\r\n+      address: this.address?.value,\r\n+      address: this.address?.value,\r\n+      idCompany: idCompany,\r\n+      companyName:CompanyName,\r\n+      idAdmin: idAdmin\r\n+    };\r\n+    setTimeout(() => { // Simule un appel asynchrone\r\n+      this.isLoading = false;\r\n+      console.log('Client (simulé) créé:', clientData);\r\n+      this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n+    }, 1000);\r\n+  }\r\n+\r\n+  cancel(): void {\r\n+    this.activeModal.dismiss('cancel click');\r\n+  }\r\n+\r\n+}\r\n"
+                },
+                {
+                    "date": 1747822935122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n     }\r\n     const clientData = {\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n-      address: this.address?.value,\r\n+      email: this.address?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n     };\r\n@@ -78,85 +78,4 @@\n     this.activeModal.dismiss('cancel click');\r\n   }\r\n \r\n }\r\n-import { Client } from '../clients/clients.component';\r\n-import { Component, OnInit } from '@angular/core';\r\n-import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n-import { CommercialService } from '../services/commercial.service';\r\n-\r\n-@Component({\r\n-  selector: 'app-client-form',\r\n-  templateUrl: './client-form.component.html',\r\n-  styleUrl: './client-form.component.scss'\r\n-})\r\n-export class ClientFormComponent implements OnInit {\r\n-  clientForm: FormGroup;\r\n-  isLoading = false;\r\n-  errorMessage: string | null = null;\r\n-// ...\r\n- private defaultIdCompany = '680657ad26cbca08d31f221c';\r\n-  private defaultCompanyName = 'Archi Concept Tunisie';\r\n-\r\n-  constructor(\r\n-    private fb: FormBuilder,\r\n-    public activeModal: NgbActiveModal,\r\n-    private commercialService: CommercialService, // Décommentez pour injecter votre service client\r\n-  ) {\r\n-    this.clientForm = this.fb.group({\r\n-      name: ['', [Validators.required, Validators.minLength(3)]],\r\n-      email: ['', [Validators.required, Validators.email]],\r\n-      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n-      companyName: [this.defaultCompanyName, Validators.required],\r\n-      address: ['', Validators.required],\r\n-      idCompany: [this.defaultIdCompany, Validators.required]\r\n-    });\r\n-  }\r\n-\r\n-  ngOnInit(): void {}\r\n-\r\n-  // Getters pour un accès facile aux contrôles de formulaire dans le template\r\n-  get name() { return this.clientForm.get('name'); }\r\n-  get email() { return this.clientForm.get('email'); }\r\n-  get phone() { return this.clientForm.get('phone'); }\r\n-  get companyName() { return this.clientForm.get('companyName'); }\r\n-  get address() { return this.clientForm.get('address'); }\r\n-  get idCompany() { return this.clientForm.get('idCompany'); }\r\n-\r\n-  saveClient(): void {\r\n-    if (this.clientForm.invalid || this.isLoading) {\r\n-      this.clientForm.markAllAsTouched(); // Marque tous les champs comme touchés pour afficher les erreurs\r\n-      return;\r\n-    }\r\n-\r\n-    this.isLoading = true;\r\n-    this.errorMessage = null;\r\n-    const idCompany = localStorage.getItem(\"idAgence\");\r\n-    \r\n-    const CompanyName=localStorage.getItem(\"AgencyName\");\r\n-    console.log(\"Client data to submit:\", clientData);\r\n-    if (!idCompany || !CompanyName) {\r\n-      this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n-      this.isLoading = false;\r\n-      return;\r\n-    }\r\n-    const clientData = {\r\n-      name: this.name?.value,\r\n-      this.address: this.adress?.value,\r\n-      address: this.address?.value,\r\n-      idCompany: idCompany,\r\n-      companyName:CompanyName,\r\n-      idAdmin: idAdmin\r\n-    };\r\n-    setTimeout(() => { // Simule un appel asynchrone\r\n-      this.isLoading = false;\r\n-      console.log('Client (simulé) créé:', clientData);\r\n-      this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n-    }, 1000);\r\n-  }\r\n-\r\n-  cancel(): void {\r\n-    this.activeModal.dismiss('cancel click');\r\n-  }\r\n-\r\n-}\r\n"
+                },
+                {
+                    "date": 1747822944875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,10 @@\n     }\r\n     const clientData = {\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n-      email: this.address?.value,\r\n+      email: this.email?.value,\r\n+      phone:\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n     };\r\n"
+                },
+                {
+                    "date": 1747822954220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     const clientData = {\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n-      phone:\r\n+      phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n       idAdmin: idAdmin\r\n     };\r\n"
+                },
+                {
+                    "date": 1747822973855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     this.errorMessage = null;\r\n     const idCompany = localStorage.getItem(\"idAgence\");\r\n     \r\n     const CompanyName=localStorage.getItem(\"AgencyName\");\r\n-    console.log(\"Client data to submit:\", clientData);\r\n+    \r\n     if (!idCompany || !CompanyName) {\r\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1747822982855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName,\r\n-      idAdmin: idAdmin\r\n+      \r\n     };\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n       console.log('Client (simulé) créé:', clientData);\r\n"
+                },
+                {
+                    "date": 1747822999717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n-      companyName:CompanyName,\r\n+      companyName:CompanyName\r\n       \r\n     };\r\n     setTimeout(() => { // Simule un appel asynchrone\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747823033020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,16 +64,11 @@\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n-      companyName:CompanyName\r\n-      \r\n+      companyName:CompanyName      \r\n     };\r\n-    setTimeout(() => { // Simule un appel asynchrone\r\n-      this.isLoading = false;\r\n-      console.log('Client (simulé) créé:', clientData);\r\n-      this.activeModal.close(clientData); // Renvoyer les données du formulaire\r\n-    }, 1000);\r\n+    \r\n   }\r\n \r\n   cancel(): void {\r\n     this.activeModal.dismiss('cancel click');\r\n"
+                },
+                {
+                    "date": 1747823039233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,20 @@\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    \r\n+    this.commercialService.createProject(projectData).subscribe({\r\n+      next: (newProject) => {\r\n+        this.isLoading = false;\r\n+        console.log('Projet créé:', newProject);\r\n+        this.activeModal.close(newProject); \r\n+      },\r\n+      error: (err) => {\r\n+        this.isLoading = false;\r\n+        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n+        console.error('Erreur création projet:', err);\r\n+      }\r\n+    });\r\n   }\r\n \r\n   cancel(): void {\r\n     this.activeModal.dismiss('cancel click');\r\n"
+                },
+                {
+                    "date": 1747823046048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    this.commercialService.createProject(projectData).subscribe({\r\n+    this.commercialService.createClient(clientData)projectData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n         this.activeModal.close(newProject); \r\n"
+                },
+                {
+                    "date": 1747823052375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n       phone:this.phone?.value,\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    this.commercialService.createClient(clientData)projectData).subscribe({\r\n+    this.commercialService.createClient(clientData).subscribe({\r\n       next: (newProject) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n         this.activeModal.close(newProject); \r\n"
+                },
+                {
+                    "date": 1747823057983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n-      next: (newProject) => {\r\n+      next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Projet créé:', newProject);\r\n         this.activeModal.close(newProject); \r\n       },\r\n"
+                },
+                {
+                    "date": 1747823066155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n-        console.log('Projet créé:', newProject);\r\n+        console.log('Pcrojet créé:', newProject);\r\n         this.activeModal.close(newProject); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747823075849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n-        console.log('Pcrojet créé:', newProject);\r\n+        console.log('Client créé:', newClient);\r\n         this.activeModal.close(newProject); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1747823083838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n-        this.activeModal.close(newProject); \r\n+        this.activeModal.close(newClient); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n         this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n"
+                },
+                {
+                    "date": 1747823096127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,10 +74,10 @@\n         this.activeModal.close(newClient); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n-        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du projet.';\r\n-        console.error('Erreur création projet:', err);\r\n+        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du clie.';\r\n+        console.error('Erreur création client:', err);\r\n       }\r\n     });\r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1747823476260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n         this.activeModal.close(newClient); \r\n       },\r\n       error: (err) => {\r\n         this.isLoading = false;\r\n-        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du clie.';\r\n+        this.errorMessage = err.message || 'Une erreur est survenue lors de la création du client.';\r\n         console.error('Erreur création client:', err);\r\n       }\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1747823505363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Important pour les formulaires\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n"
+                },
+                {
+                    "date": 1747823952529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,12 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Important pour les formulaires\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n-  templateUrl: './client-form.component.html',\r\n+  templateUrls: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n })\r\n export class ClientFormComponent implements OnInit {\r\n   clientForm: FormGroup;\r\n"
+                },
+                {
+                    "date": 1747823961460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n import { CommercialService } from '../services/commercial.service';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n-  templateUrls: './client-form.component.html',\r\n+  templateUrls:[ './client-form.component.html'],\r\n   styleUrl: './client-form.component.scss'\r\n })\r\n export class ClientFormComponent implements OnInit {\r\n   clientForm: FormGroup;\r\n"
+                },
+                {
+                    "date": 1747823971028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n import { CommercialService } from '../services/commercial.service';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n-  templateUrls:[ './client-form.component.html'],\r\n+  templateUrls: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n })\r\n export class ClientFormComponent implements OnInit {\r\n   clientForm: FormGroup;\r\n"
+                },
+                {
+                    "date": 1747826346241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n import { CommercialService } from '../services/commercial.service';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n-  templateUrls: './client-form.component.html',\r\n+  templateUrl: './client-form.component.html',\r\n   styleUrl: './client-form.component.scss'\r\n })\r\n export class ClientFormComponent implements OnInit {\r\n   clientForm: FormGroup;\r\n@@ -58,9 +58,9 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const clientData = {\r\n+    Cli clientData = {\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n"
+                },
+                {
+                    "date": 1747826443466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,10 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    Cli clientData = {\r\n+    Client clientData: Client = {\r\n+\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n"
+                },
+                {
+                    "date": 1747826454452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    Client clientData: Client = {\r\n+    const clientData!: Client = {\r\n \r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n"
+                },
+                {
+                    "date": 1747826601290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n       this.isLoading = false;\r\n       return;\r\n     }\r\n     const clientData!: Client = {\r\n-\r\n+      id: '',\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n"
+                },
+                {
+                    "date": 1747826624849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,8 +64,9 @@\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n+      createdAt?: number;\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747826630321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n-      createdAt?: number;\r\n+      createdAt?: ;\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747826639076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n-      createdAt?: ;\r\n+      createdAt: Date.now()\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747826659633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,15 +58,15 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const clientData!: Client = {\r\n+    const clientData: Client = {\r\n       id: '',\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n-      createdAt: Date.now()\r\n+      createdAt: Date.now(),\r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747826735385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const clientData: Client = {\r\n+    const clientData= = {\r\n       id: '',\r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n"
+                },
+                {
+                    "date": 1747826742292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,15 +58,15 @@\n       this.errorMessage = \"Impossible de récupérer les informations nécessaires (Agence).\";\r\n       this.isLoading = false;\r\n       return;\r\n     }\r\n-    const clientData= = {\r\n-      id: '',\r\n+    const clientData = {\r\n+      \r\n       name: this.name?.value,\r\n       address: this.address?.value,\r\n       email: this.email?.value,\r\n       phone:this.phone?.value,\r\n-      createdAt: Date.now(),\r\n+      \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n     this.commercialService.createClient(clientData).subscribe({\r\n"
+                },
+                {
+                    "date": 1747828228865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,8 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n+    console\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747828234100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console\r\n+    console.log(\"\")\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747828239842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console.log(\"\")\r\n+    console.log(\"cleint data\")\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747828246041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console.log(\"cleint data\")\r\n+    console.log(\"cleint data\",this.)\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747828251430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console.log(\"cleint data\",this.)\r\n+    console.log(\"cleint data\",this.clientData)\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747828257392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console.log(\"cleint data\",this.clientData)\r\n+    console.log(\"cleint data\",clientData)\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                }
+            ],
+            "date": 1747821975398,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-client-form',\r\n  templateUrl: './client-form.component.html',\r\n  styleUrl: './client-form.component.scss'\r\n})\r\nexport class ClientFormComponent {\r\n// ...\r\nhandleClientSubmission(clientData: Client) {\r\n  console.log('Nouveau client reçu du formulaire:', clientData);\r\n  // Logique pour traiter le client soumis\r\n}\r\n\r\nhandleCancellation() {\r\n  console.log('Création du client annulée.');\r\n  // Logique pour gérer l'annulation\r\n}\r\n// ...\r\n\r\n}\r\n"
+        }
+    ]
+}

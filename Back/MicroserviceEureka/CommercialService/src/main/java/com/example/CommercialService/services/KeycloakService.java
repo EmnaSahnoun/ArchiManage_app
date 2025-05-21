@@ -1,6 +1,9 @@
 package com.example.CommercialService.services;
 
+import com.example.CommercialService.consumer.ClientConsumer;
 import com.example.CommercialService.interfaces.IKeycloak;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
@@ -12,6 +15,7 @@ import java.util.Map;
 
 @Service
 public class KeycloakService implements IKeycloak {
+    private static final Logger logger = LoggerFactory.getLogger(KeycloakService.class);
 
     @Autowired
     private  RestTemplate restTemplate;
@@ -20,6 +24,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public String createUser(String username, String email, String authToken) {
+        logger.info("le token recu {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/users";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -44,6 +49,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public void assignRoleToUser(String userId, String roleName, String authToken) {
+        logger.info("le token recu {} dasn role ", authToken);
         String roleId = getRoleIdByName(roleName, authToken);
         String url = KEYCLOAK_BASE_URL + "/users/" + userId + "/role-mappings/realm";
 
@@ -62,6 +68,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public void addUserToGroup(String userId, String groupName, String authToken) {
+        logger.info("le token recu dns grp {}", authToken);
         String groupId = getGroupIdByName(groupName, authToken);
         String url = KEYCLOAK_BASE_URL + "/users/" + userId + "/groups/" + groupId;
 
@@ -75,6 +82,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public String getUserIdByUsername(String username, String authToken) {
+        logger.info("le token recu dans userid {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/users?username=" + username;
 
         HttpHeaders headers = new HttpHeaders();
@@ -95,6 +103,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public String getUsernameById(String id, String authToken) {
+        logger.info("le token recu username {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/users/" + id;
 
         HttpHeaders headers = new HttpHeaders();
@@ -122,6 +131,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public String getGroupIdByName(String groupName, String authToken) {
+        logger.info("le token recu grpid {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/groups?search=" + groupName;
 
         HttpHeaders headers = new HttpHeaders();
@@ -146,6 +156,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public String getRoleIdByName(String roleName, String authToken) {
+        logger.info("le token recu roleid {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/roles/" + roleName;
 
         HttpHeaders headers = new HttpHeaders();
@@ -166,6 +177,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public void deleteUser(String userId, String authToken) {
+        logger.info("le token recu deleteuser {}", authToken);
         String url = KEYCLOAK_BASE_URL + "/users/" + userId;
 
         HttpHeaders headers = new HttpHeaders();
@@ -177,6 +189,7 @@ public class KeycloakService implements IKeycloak {
 
     @Override
     public void removeUserFromGroup(String userId, String groupName, String authToken) {
+        logger.info("le token recu remove removeUserFromGroup {}", authToken);
         String groupId = getGroupIdByName(groupName, authToken);
         String url = KEYCLOAK_BASE_URL + "/users/" + userId + "/groups/" + groupId;
 

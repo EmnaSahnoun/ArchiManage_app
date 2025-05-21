@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1746443772343,
@@ -88,6 +88,26 @@
                 {
                     "date": 1746452246893,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n             &:hover:not(:disabled) { \r\n                 background-color: darken($primary-color, 10%); } }\r\n         &.refuse-btn { \r\n             border-radius: 18px;\r\n-            background-color: $warn-color; color: $text-color-light; &:hover:not(:disabled) { background-color: darken($warn-color, 10%); } }\r\n+            background-color: $accent-color; color: $text-color-light; &:hover:not(:disabled) { background-color: darken($warn-color, 10%); } }\r\n \r\n         &:disabled { opacity: 0.6; cursor: not-allowed; }\r\n       }\r\n     }\r\n"
+                },
+                {
+                    "date": 1747787026033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -128,5 +128,6 @@\n         &:disabled { opacity: 0.6; cursor: not-allowed; }\r\n       }\r\n     }\r\n   }\r\n-}\n\\ No newline at end of file\n+}\r\n+.\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747787032574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -129,5 +129,5 @@\n       }\r\n     }\r\n   }\r\n }\r\n-.\n\\ No newline at end of file\n+.empty\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747787038812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -129,5 +129,7 @@\n       }\r\n     }\r\n   }\r\n }\r\n-.empty\n\\ No newline at end of file\n+.empty-state{\r\n+  \r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747787047010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,6 +130,11 @@\n     }\r\n   }\r\n }\r\n .empty-state{\r\n+  display: flex;\r\n+  flex-direction: column;\r\n+  align-items: center;\r\n+  justify-content: center;\r\n+\r\n   \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747821073340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n   font-family: 'Poppins', sans-serif;\r\n   padding: 24px;\r\n   background-color: $background-color;\r\n   color: $text-color-primary;\r\n-  min-height: calc(100vh - 64px); // Ajuster selon la hauteur du header principal\r\n+  min-height: calc(110vh - 64px); // Ajuster selon la hauteur du header principal\r\n }\r\n \r\n // --- En-tête (similaire à .project-header mais simplifié) ---\r\n .invitation-header {\r\n"
                 }
             ],
             "date": 1746443772343,
