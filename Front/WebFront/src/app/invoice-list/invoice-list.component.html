@@ -1,66 +1,116 @@
 <div class="invoice-list-container">
-  <div class="page-header">
-    <h1>Liste des Factures</h1>
-    <button (click)="navigateToCreateInvoice()" class="btn btn-primary">
-      <i class="bi bi-plus-circle"></i> Créer une Facture
-    </button>
+  <app-header [title]="'Liste des Factures'"></app-header>
+
+  <!-- Header Section -->
+  <div class="invoice-list-header">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text"
+             placeholder="Rechercher une facture..."
+             [(ngModel)]="searchQuery"
+             (input)="applyFilter()" />
+    </div>
+
+    <!-- Actions: Add Invoice -->
+    <div class="actions-container">
+      <button class="add-invoice-button action-button"
+              (click)="navigateToCreateInvoice()">
+        <mat-icon>add</mat-icon>
+        <span>Nouvelle Facture</span>
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="isLoading" class="loading-indicator">
-    Chargement des factures...
-  </div>
+  <!-- Invoice Display Area -->
+  <div class="invoice-display">
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Chargement des factures...</p>
+    </div>
 
-  <div *ngIf="errorMessage" class="error-message">
-    <p>{{ errorMessage }}</p>
-    <button (click)="loadInvoices()" class="btn btn-secondary">Réessayer</button>
-  </div>
+    <!-- Error state -->
+    <div *ngIf="errorMessage && !isLoading" class="error-state">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+      <button mat-stroked-button (click)="loadInvoices()">Réessayer</button>
+    </div>
 
-  <div *ngIf="!isLoading && !errorMessage && invoices.length === 0" class="no-data">
-    <p>Aucune facture trouvée. Commencez par <a (click)="navigateToCreateInvoice()">en créer une nouvelle</a>.</p>
-  </div>
+    <!-- Empty state -->
+    <div *ngIf="!isLoading && !errorMessage && (!filteredInvoices || filteredInvoices.length === 0)" class="empty-state">
+      <mat-icon>receipt_long</mat-icon>
+      <p>Aucune facture trouvée. Commencez par en créer une !</p>
+    </div>
 
-  <div *ngIf="!isLoading && !errorMessage && invoices.length > 0" class="invoices-table-container">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Numéro</th>
-          <th>Client</th>
-          <th>Date de Création</th>
-          <th>Montant Total</th>
-          <th>Statut</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let invoice of invoices">
-          <td>{{ invoice.documentNumber }}</td>
-          <td>{{ invoice.company?.name || 'N/A' }}</td>
-          <td>{{ formatDate(invoice.createdAt) }}</td> <!-- Or use Angular DatePipe: {{ invoice.createdAt | date:'dd/MM/yyyy' }} -->
-          <td class="text-right">{{ formatCurrency(invoice.totalAmount) }}</td> <!-- Or use Angular CurrencyPipe: {{ invoice.totalAmount | currency:'TND':'symbol':'1.2-2':'fr' }} -->
-          <td>
+    <!-- Invoice table -->
+    <div *ngIf="!isLoading && !errorMessage && filteredInvoices && filteredInvoices.length > 0" class="invoice-table-card">
+      <table mat-table [dataSource]="filteredInvoices" class="data-table">
+        <!-- Document Number Column -->
+        <ng-container matColumnDef="documentNumber">
+          <th mat-header-cell *matHeaderCellDef>N° Document</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice.documentNumber }}</td>
+        </ng-container>
+
+        <!-- Client Column -->
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef>Client</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice.client.name || 'N/A' }}</td>
+        </ng-container>
+
+        <!-- Creation Date Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Date Création</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice.createdAt | date:'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="totalAmount">
+          <th mat-header-cell *matHeaderCellDef>Montant Total</th>
+          <td mat-cell *matCellDef="let invoice">
+            {{ invoice.totalAmount | currency:'TND':'symbol':'1.2-2':'fr' }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Statut</th>
+          <td mat-cell *matCellDef="let invoice">
             <span class="status-badge" [ngClass]="getStatusClass(invoice.status)">
-              {{ invoice.status }}
+              {{ invoice.status | lowercase }}
             </span>
           </td>
-          <td>
-            <button (click)="viewInvoice(invoice.id)" class="btn btn-sm btn-info" title="Voir">
-              <i class="bi bi-eye"></i>
-            </button>
-            <button (click)="editInvoice(invoice.id)" class="btn btn-sm btn-warning" title="Modifier">
-              <i class="bi bi-pencil-square"></i>
-            </button>
-            <button (click)="confirmDelete(invoice)" class="btn btn-sm btn-danger" title="Supprimer">
-              <i class="bi bi-trash"></i>
-            </button>
-            <!-- Add print button if needed here or on detail page -->
-            <!-- <button (click)="printInvoice(invoice.id)" class="btn btn-sm btn-secondary" title="Imprimer">
-              <i class="bi bi-printer"></i>
-            </button> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-</div>
-  </div>
+        </ng-container>
 
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let invoice" class="actions-cell">
+            <button mat-icon-button
+                    class="view-btn"
+                    (click)="viewInvoice(invoice.id)"
+                    title="Voir détails">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button
+                    class="edit-btn"
+                    (click)="editInvoice(invoice.id)"
+                    title="Modifier">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button
+                    class="delete-btn"
+                    (click)="confirmDelete(invoice)"
+                    title="Supprimer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewInvoice(row.id)" class="invoice-row"></tr>
+      </table>
+    </div>
+  </div>
+</div>

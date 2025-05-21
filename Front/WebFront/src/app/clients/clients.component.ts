@@ -5,6 +5,7 @@ import { CommercialService } from '../services/commercial.service';
 import { AuthService } from '../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientFormComponent } from '../client-form/client-form.component';
+import { ConfirmationDialogComponent } from '../super-admin/confirmation-dialog/confirmation-dialog.component';
 // import { ClientService } from './client.service'; // Supposons que vous ayez un service pour les clients
 // import { AuthService } from '../auth/auth.service'; // Supposons que vous ayez un service d'authentification
 
@@ -116,18 +117,34 @@ export class ClientsComponent implements OnInit {
   }
 
   
+deleteClient(clientId: string, event: MouseEvent): void {
+    event.stopPropagation();
+    
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+        centered: true,
+        windowClass: 'confirmation-modal'
+    });
 
-  deleteClient(clientId: string, event: MouseEvent): void {
-    event.stopPropagation(); // Empêche le clic de se propager à la ligne (goToClientDetails)
-
-  
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce client ?')) {
-   
-      this.clients = this.clients.filter(c => c.id !== clientId);
-      this.applyFilter();
-      console.log('Client supprimé (simulation):', clientId);
-    }
-  }
+    modalRef.componentInstance.message = `Voulez-vous vraiment supprimer ce client`;
+    
+    modalRef.result.then((confirm) => {
+        if (confirm) {
+            this.commercialService.deleteClient(clientId).subscribe({
+                next: () => {
+                    console.log('Client supprimé avec succès:', clientId);
+                    this.clients = this.clients.filter(c => c.id !== clientId);
+                    this.applyFilter();
+                },
+                error: (err) => {
+                    console.error('Erreur lors de la suppression du client:', err);
+                              }
+            });
+        }
+    }).catch(() => {
+        console.log('Suppression annulée');
+       
+    });
+}
   startEdit(client: Client, event: MouseEvent): void {
     event.stopPropagation(); // Empêche goToClientDetails d'être appelé
     this.editingClientId = client.id;

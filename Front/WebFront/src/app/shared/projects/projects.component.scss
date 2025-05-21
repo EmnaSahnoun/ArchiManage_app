@@ -232,7 +232,8 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 // --- Card View ---
 .project-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); // Responsive grid
+  grid-template-columns: repeat(3, 1fr); // Affiche 3 cartes par ligne
+ 
   gap: 20px;
 
   .project-card { // Style individual cards like section-card
@@ -260,13 +261,56 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         font-weight: 600;
         margin: 0;
         color: $text-color-primary;
+        margin-right: 10px; // Ajoute un peu d'espace si le titre est long
+        flex-grow: 1;
       }
+      .card-header-actions {
+        display: flex;
+        align-items: center; // Aligne la date et le bouton verticalement
+        gap: 8px; // Espace entre la date et le bouton de suppression
+
+        .card-creation-date {
+          font-size: 0.75em;
+          color: $text-color-secondary;
+          white-space: nowrap; // Empêche la date de passer à la ligne
+        }
+
+        .delete-btn-card {
+          // Styles similaires aux boutons d'action de la liste
+           background: none;
+          border: none;
+          cursor: pointer;
+          padding: 4px;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 8px;
+          transition: background-color 0.2s ease, color 0.2s ease;
+
+          // --- Application de la couleur compatible ---
+          color: $warn-color; // Utilise la couleur d'avertissement (rouge)
+
+          i.bi-trash {
+            font-size: 16px;
+          }
+
+          &:hover {
+            background-color: rgba($warn-color, 0.1); // Fond léger avec la couleur d'avertissement au survol
+            color: darken($warn-color, 10%); // Assombrit légèrement l'icône au survol
+          }}}
       .card-dates {
         font-size: 12px;
         color: $text-color-secondary;
         text-align: right;
         white-space: nowrap;
       }
+      .card-creation-date { // Style pour la date de création en haut à droite
+      font-size: 0.75em;
+      color: $text-color-secondary;
+    }
     }
 
     .card-body {
@@ -282,15 +326,96 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         overflow: hidden;
         .progress-bar-fill {
           height: 100%;
-          background-color: $primary-color; // Use theme color
+          background-color: $pending-color; // Use theme color
           border-radius: 4px;
           transition: width 0.3s ease;
         }
       }
       .card-status { margin-bottom: 10px; }
-    }
+      .card-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 0.85em; // Taille de police légèrement réduite pour les détails
+      border-bottom: 1px solid lighten($border-color, 5%);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        display: flex;
+        align-items: center;
+        color: $text-color-primary;
+        font-weight: 600;
+        font-size: 1.3em;
+        mat-icon {
+          font-size: 18px; // Taille des icônes dans les lignes d'info
+          margin-right: 8px;
+          color: $primary-color; // Couleur des icônes
+        }
+      }
+
+      .info-value {
+        color: $text-color-primary;
+        text-align: right;
+
+        &.status-badge {
+          padding: 3px 8px;
+          border-radius: $border-radius / 2;
+          font-size: 0.8em;
+          font-weight: 500;
+          color: $text-color-light;
+          // Styles spécifiques par statut (à adapter selon vos statuts)
+          &.status-en_cours { background-color: $primary-color; }
+          &.status-terminé { background-color: $success-color; }
+          &.status-en_attente { background-color: $pending-color; }
+          &.status-annulé { background-color: $warn-color; }
+          // Ajoutez d'autres statuts si nécessaire
+        }
+      }
+    } .progress-bar-container { // Styles existants, juste pour le contexte
+      margin-top: 8px; // Un peu d'espace après les infos et avant la barre
+      // ...
+    }}
 
     .card-footer {
+      .members-list {
+      display: flex;
+      align-items: center;
+      margin-top: 10px; // Espace avant la liste des membres
+      .info-label { // Style pour le label "Membres:"
+        display: flex;
+        align-items: center;
+        color: $text-color-secondary;
+        font-weight: 500;
+        font-size: 0.85em;
+        margin-right: 8px;
+        mat-icon {
+          font-size: 16px;
+          margin-right: 6px;
+          color: $primary-color;
+        }
+      }
+      .members-action-button-card { // Style pour le bouton d'action des membres dans la carte
+        background: transparent;
+        border: none;
+        color: $pending-color;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 8px; // Espace après les avatars
+        transition: background-color 0.2s ease;
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+        }
+        mat-icon {
+          font-size: 20px;
+        }}}
       margin-top: 15px;
       .members-list img { // Reuse table cell style
         width: 30px;
@@ -325,7 +450,11 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   .project-cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Adjust min size
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Pour les petits écrans, on garde le mode auto-fill
+    // Si vous voulez 2 cartes sur tablette et 1 sur mobile, vous pouvez ajouter des media queries spécifiques :
+    // @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
+    // @media (max-width: 576px) { grid-template-columns: 1fr; }
+
   }
 }
 .members-action-button {

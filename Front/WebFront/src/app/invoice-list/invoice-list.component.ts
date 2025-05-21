@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Invoice, InvoiceStatus } from '../models/invoice';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommercialService } from '../services/commercial.service'; 
+import { Component, OnInit } from '@angular/core';import { ActivatedRoute, Router } from '@angular/router';
+import { CommercialService } from '../services/commercial.service';
+import { Invoice, InvoiceStatus } from '../models/invoice'; // Assurez-vous que ce chemin est correct
+import { ConfirmationDialogComponent } from '../super-admin/confirmation-dialog/confirmation-dialog.component'; // Assurez-vous que ce chemin est correct
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-invoice-list',
@@ -9,14 +10,29 @@ import { CommercialService } from '../services/commercial.service';
   styleUrl: './invoice-list.component.scss'
 })
 export class InvoiceListComponent implements OnInit {
-   invoices: any[] = [];
+  invoices: any[] = [];
+  filteredInvoices: any[] = [];
+  searchQuery: string = '';
+  
+  // viewMode: 'list' | 'card' = 'list'; // Si vous prévoyez un mode carte plus tard
   isLoading = true;
   errorMessage: string | null = null;
 
+displayedColumns: string[] = [
+    'documentNumber',
+    'clientName',
+    'createdAt',
+    'dueDate',
+    'totalAmount',
+    'status',
+    'actions'
+  ];
+
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, // Peut être utilisé pour lire des paramètres de route si nécessaire
     private router: Router,
-    private commercialService: CommercialService
+    private commercialService: CommercialService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -28,64 +44,91 @@ export class InvoiceListComponent implements OnInit {
     this.errorMessage = null;
     this.commercialService.getInvoices().subscribe({
       next: (data) => {
-        console.log("les factures",data)
-        this.invoices = data;
+        // Assurez-vous que les données correspondent à l'interface Invoice
+        // Des transformations peuvent être nécessaires ici si le backend renvoie un format différent
+        this.invoices = data as any[];
+        console.log('Factures chargées avec succès :', this.invoices);
+        this.filteredInvoices = [...this.invoices];
+        this.applyFilter();
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error fetching invoices:', err);
-        this.errorMessage = 'Failed to load invoices. Please try again later.';
+        console.error('Erreur lors du chargement des factures :', err);
+        this.errorMessage = `Erreur de chargement des factures. ${err.message || 'Veuillez réessayer.'}`;
         this.isLoading = false;
       }
     });
   }
 
-  navigateToCreateInvoice(): void {
-    this.router.navigate(['/invoices/new']); // Adjust route as needed
-  }
-
-  viewInvoice(id: string): void {
-    this.router.navigate(['/invoices', id]); // Adjust route as needed
-  }
-
-  editInvoice(id: string): void {
-    this.router.navigate(['/invoices', id, 'edit']); // Adjust route as needed
-  }
-
-  confirmDelete(invoice: Invoice): void {
-    // Implement a confirmation dialog (e.g., using MatDialog or a simple confirm)
-    const confirmation = confirm(`Are you sure you want to delete invoice ${invoice.documentNumber}?`);
-    if (confirmation) {
-      this.deleteInvoice(invoice.id);
+  applyFilter(): void {
+    const query = this.searchQuery.toLowerCase().trim();
+    if (!query) {
+      this.filteredInvoices = [...this.invoices];
+    } else {
+      this.filteredInvoices = this.invoices.filter(invoice =>
+        invoice.documentNumber.toLowerCase().includes(query) ||
+        (invoice.clientName && invoice.clientName.toLowerCase().includes(query)) ||
+        invoice.status.toLowerCase().includes(query)
+        // Vous pouvez ajouter d'autres champs au filtre si nécessaire
+      );
     }
   }
 
-  deleteInvoice(id: string): void {
+  navigateToCreateInvoice(): void {
+    this.router.navigate(['/invoices/new']); // Ajustez la route si nécessaire
+  }
+
+  viewInvoice(id: string): void {
+    // Naviguer vers la page de détails de la facture
+    this.router.navigate(['/invoices', id]); // Ajustez la route si nécessaire
+    console.log('Voir détails facture ID:', id);
+  }
+
+  editInvoice(id: string): void {
+    // Naviguer vers la page d'édition de la facture
+    this.router.navigate(['/invoices', id, 'edit']); // Ajustez la route si nécessaire
+    console.log('Modifier facture ID:', id);
+  }
+
+  confirmDelete(invoice: any): void {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+      centered: true,
+      windowClass: 'confirmation-modal' // Assurez-vous que cette classe est stylée
+    });
+    modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la facture N° ${invoice.documentNumber} ?`;
+
+    modalRef.result.then((confirmed) => {
+      if (confirmed) {
+        this.deleteInvoice(invoice.id);
+      }
+    }).catch(() => {
+      console.log('Suppression annulée par l\'utilisateur.');
+    });
+  }
+
+  private deleteInvoice(id: string): void {
+    this.isLoading = true; // Optionnel: indiquer un chargement pendant la suppression
     this.commercialService.deleteInvoice(id).subscribe({
       next: () => {
+        console.log('Facture supprimée avec succès :', id);
+        // Recharger la liste ou filtrer la facture supprimée de la liste actuelle
         this.invoices = this.invoices.filter(inv => inv.id !== id);
-        // Optionally, show a success message
+        this.applyFilter(); // Mettre à jour filteredInvoices
+        this.isLoading = false;
+        // Afficher un message de succès (par exemple avec un service de notification/snackbar)
       },
       error: (err) => {
-        console.error('Error deleting invoice:', err);
-        this.errorMessage = `Failed to delete invoice. ${err.error?.message || ''}`;
-        // Optionally, show an error message to the user
+        console.error('Erreur lors de la suppression de la facture :', err);
+        this.errorMessage = `Erreur lors de la suppression de la facture. ${err.message || 'Veuillez réessayer.'}`;
+        this.isLoading = false;
+        // Afficher un message d'erreur à l'utilisateur
       }
     });
   }
 
-  // Helper for formatting, or use Angular Pipes in the template
-  formatDate(timestamp: number): string {
-    if (!timestamp) return 'N/A';
-    return new Date(timestamp).toLocaleDateString();
-  }
-
-  formatCurrency(amount: number): string {
-    if (amount === null || amount === undefined) return 'N/A';
-    return amount.toLocaleString('fr-FR', { style: 'currency', currency: 'TND' }); // Adjust currency as needed
-  }
-
-  getStatusClass(status: InvoiceStatus): string {
-    return status ? status.toLowerCase() : 'default';
+  getStatusClass(status: any | string): string {
+    // Gérer le cas où status pourrait être une chaîne si le backend ne respecte pas strictement l'enum
+    const statusString = (status as string)?.toLowerCase() || 'default';
+    return `status-${statusString}`;
   }
 }

@@ -24,7 +24,8 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre standard pour les cartes
   font-family: 'Poppins', sans-serif;
   padding: 24px;
   background-color: $background-color; // Utiliser variable
-  color: $text-color-primary; // Utiliser variable
+  color: $text-color-primary; 
+  min-height: calc(110vh - 64px);
 }
 
 // --- En-tête commun pour les sections ---

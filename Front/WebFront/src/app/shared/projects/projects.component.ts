@@ -34,7 +34,7 @@ export interface Project {
 export class ProjectsComponent implements OnInit{
   currentDate: string;
   searchQuery: string = '';
-  viewMode: 'list' | 'card' = 'list'; // Default view mode is list
+  viewMode: 'list' | 'card' = 'card'; // Default view mode is list
   projects: any[] = [];
   filteredProjects: any[] = [];
   members: any[] = [];

@@ -324,53 +324,40 @@ tr.editing-row {
 
 .actions {
   button {
-    margin: 0 4px;
-    min-width: 30px;
+
     border: none;
     background: none;
     cursor: pointer;
     font-size: 1.2rem;
     padding: 6px;
     border-radius: 50%;
-    width: 34px; height: 34px; display: inline-flex;
-    align-items: center; justify-content: center;
-    margin-left: 5px; transition: all 0.2s ease;
+width: 36px; // Légère augmentation pour un meilleur espacement interne de l'icône
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3px; // Espacement ajusté
+    transition: background-color 0.2s ease, color 0.2s ease;
     vertical-align: middle;
-    &.delete-btn { color: #F44336; &:hover:not(:disabled) { background-color: rgba(#F44336, 0.1); } }
-  }
+   &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    // Application des couleurs via les classes spécifiques et variables SCSS
+    &.edit-btn { color: $primary-color; &:hover:not(:disabled) { background-color: rgba($primary-color, 0.1); } }
+    &.delete-btn { color: $warn-color; &:hover:not(:disabled) { background-color: rgba($warn-color, 0.1); } }
+    &.save-btn { color: $success-color; &:hover:not(:disabled) { background-color: rgba($success-color, 0.1); } }
+    &.cancel-btn { color: $cancel-color; &:hover:not(:disabled) { background-color: rgba($cancel-color, 0.1); } }
+
+    i { // S'assurer que les icônes sont bien alignées si ce n'est pas déjà le cas
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }  }
   .spinner-border-sm {
     width: 1em;
     height: 1em;
     border-width: .2em;
   }
 }
-
-.save-btn {
-  color: var(--success-color, #28a745);
-  background: none;
-  border: none;
-  cursor: pointer;
-  &:hover { color: darken(#28a745, 10%); }
-  &:disabled { color: #ccc; cursor: not-allowed; }
-}
-
-.cancel-btn {
-  color: var(--secondary-color, #6c757d);
-  background: none;
-  border: none;
-  cursor: pointer;
-  &:hover { color: darken(#6c757d, 10%); }
-  &:disabled { color: #ccc; cursor: not-allowed; }
-}
-
-.edit-btn {
-  color: var(--primary-color, #007bff);
-}
-
-.delete-btn {
-   color: var(--danger-color, #dc3545);
-}
-
-// Note: The duplicate .members-action-button from the original file is not included here,
-// assuming the one within .data-table is the intended one.
-// If it was intentional, it can be added back.

@@ -120,17 +120,50 @@
         <div class="project-card" *ngFor="let project of filteredProjects" (click)="goToProjectDetails(project)">
           <div class="card-header">
             <h3>{{ project.name }}</h3>
-            <div class="card-dates">{{ project.startDate | date:'dd/MM/yy' }} - {{ project.endDate | date:'dd/MM/yy' }}</div>
-          </div>
-          <div class="card-body">
-            <div class="progress-bar-container" matTooltip="{{project.progress}}%">
-              <div class="progress-bar-fill" [style.width]="project.progress + '%'"></div>
+            <div class="card-header-actions">
+              <div class="card-creation-date">Créé le: {{ project.createdAt | date:'dd/MM/yyyy' }}</div>
+              <button class="delete-btn-card" (click)="deleteProject(project.id); $event.stopPropagation()" matTooltip="Supprimer le projet">
+                <i class="bi bi-trash"></i>
+              </button>
             </div>
-            <div class="card-status">Statut: {{ project.status }}</div> <!-- Add status badge later -->
+               </div>
+          <div class="card-body">
+            <div class="card-info-row">
+              <span class="info-label"><mat-icon>location_on</mat-icon> Localisation:</span>
+              <span class="info-value">{{ project.address || 'N/A' }}</span>
+            </div>
+            <div class="card-info-row">
+              <span class="info-label"><mat-icon>date_range</mat-icon> Dates (Début-Fin):</span>
+              <span class="info-value">{{ project.minStartDate | date:'dd/MM/yy' }} - {{ project.maxEndDate | date:'dd/MM/yy' }}</span>
+            </div>
+            <div class="card-info-row">
+              <span class="info-label"><mat-icon>trending_up</mat-icon> Progression:</span>
+              <span class="info-value">{{ (project.progress || 0) | number:'1.0-0' }}%</span>
+            </div>
+
+           <!-- Condition pour afficher la barre de progression uniquement si project.progress > 0 -->
+            <div class="progress-bar-container"
+                 *ngIf="project.progress > 0"
+                 [matTooltip]="(project.progress || 0) + '%'">
+              <div class="progress-bar-fill" [style.width]="(project.progress || 0) + '%'"></div>
+               </div>
+           <div class="card-info-row">
+              <span class="info-label"><mat-icon>flag</mat-icon> Statut:</span>
+              <span class="info-value status-badge status-{{project.status | lowercase}}">{{ project.status }}</span>
+            </div>
+            <div class="card-info-row">
+              <span class="info-label"><mat-icon>layers</mat-icon> Phases:</span>
+              <span class="info-value">{{ project.phases?.length || 0 }}</span>
+            </div>
           </div>
           <div class="card-footer">
             <div class="members-list">
-              <img *ngFor="let member of project.members" [src]="member.image || 'assets/images/default-avatar.png'" alt="Membre" matTooltip="{{member.name}}"/> <!-- Added default image and tooltip -->
+               <span class="info-label"><mat-icon>group</mat-icon> Membres:</span>
+            
+
+            <button class="members-action-button-card" (click)="openMembersModal(project, $event); $event.stopPropagation()" matTooltip="Voir/Gérer les membres">
+                <mat-icon>visibility</mat-icon> <!-- Ou une autre icône appropriée -->
+              </button>
             </div>
           </div>
         </div>
