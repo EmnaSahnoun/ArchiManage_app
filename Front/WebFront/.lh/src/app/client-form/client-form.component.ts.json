@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 65,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1747821975398,
@@ -268,6 +268,22 @@
                 {
                     "date": 1747828257392,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \r\n       idCompany: idCompany,\r\n       companyName:CompanyName      \r\n     };\r\n-    console.log(\"cleint data\",this.clientData)\r\n+    console.log(\"cleint data\",clientData)\r\n     this.commercialService.createClient(clientData).subscribe({\r\n       next: (newClient) => {\r\n         this.isLoading = false;\r\n         console.log('Client créé:', newClient);\r\n"
+                },
+                {
+                    "date": 1747834688932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n-      companyName: [this.defaultCompanyName, Validators.required],\r\n+      \r\n       address: ['', Validators.required],\r\n       idCompany: [this.defaultIdCompany, Validators.required]\r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1747834695188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,9 @@\n   clientForm: FormGroup;\r\n   isLoading = false;\r\n   errorMessage: string | null = null;\r\n // ...\r\n- private defaultIdCompany = '680657ad26cbca08d31f221c';\r\n-  private defaultCompanyName = 'Archi Concept Tunisie';\r\n+ \r\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     public activeModal: NgbActiveModal,\r\n"
+                },
+                {
+                    "date": 1747834700752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,8 @@\n export class ClientFormComponent implements OnInit {\r\n   clientForm: FormGroup;\r\n   isLoading = false;\r\n   errorMessage: string | null = null;\r\n-// ...\r\n- \r\n \r\n   constructor(\r\n     private fb: FormBuilder,\r\n     public activeModal: NgbActiveModal,\r\n@@ -26,9 +24,9 @@\n       email: ['', [Validators.required, Validators.email]],\r\n       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n       \r\n       address: ['', Validators.required],\r\n-      idCompany: [this.defaultIdCompany, Validators.required]\r\n+\r\n     });\r\n   }\r\n \r\n   ngOnInit(): void {}\r\n"
+                },
+                {
+                    "date": 1747834736915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n-      \r\n       address: ['', Validators.required],\r\n \r\n     });\r\n   }\r\n"
                 }
             ],
             "date": 1747821975398,

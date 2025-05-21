@@ -16,18 +16,20 @@ public class ClientService implements IClient {
     private  KeycloakService keycloakService;
     @Override
     public Client createClient(Client client, String authToken) {
+        String adminToken = keycloakService.getAdminToken();
         Client savedClient;
         try {
+
             // 2. Créer l'utilisateur dans Keycloak
 
-            String keycloakUserId = keycloakService.createUser(client.getName(), client.getEmail(), authToken);
+            String keycloakUserId = keycloakService.createUser(client.getName(), client.getEmail(), adminToken);
             client.setId(keycloakUserId);
             savedClient=clientRepository.save(client);
             // 3. Assigner le rôle USER
-            keycloakService.assignRoleToUser(keycloakUserId, "USER", authToken);
+            keycloakService.assignRoleToUser(keycloakUserId, "USER", adminToken);
 
             // 4. Ajouter l'utilisateur au groupe correspondant à la company
-            keycloakService.addUserToGroup(keycloakUserId, client.getCompanyName(), authToken);
+            keycloakService.addUserToGroup(keycloakUserId, client.getCompanyName(), adminToken);
 
         } catch (Exception e) {
 
@@ -58,17 +60,18 @@ public class ClientService implements IClient {
 
     @Override
     public void deleteClient(String id,String authToken) {
+        String adminToken = keycloakService.getAdminToken();
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client non trouvé"));
 
         try {
-            String keycloakUserId = keycloakService.getUserIdByUsername(client.getName(), authToken);
+            String keycloakUserId = keycloakService.getUserIdByUsername(client.getName(), adminToken);
 
             // 1. Retirer l'utilisateur de son groupe
-            keycloakService.removeUserFromGroup(keycloakUserId, client.getCompanyName(), authToken);
+            keycloakService.removeUserFromGroup(keycloakUserId, client.getCompanyName(), adminToken);
 
             // 2. Supprimer l'utilisateur de Keycloak
-            keycloakService.deleteUser(keycloakUserId, authToken);
+            keycloakService.deleteUser(keycloakUserId, adminToken);
 
             // 3. Supprimer le client de MongoDB
             clientRepository.delete(client);

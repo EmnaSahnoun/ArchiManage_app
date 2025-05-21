@@ -95,7 +95,8 @@ getClientById(idClient:string): Observable<any> {
          const token = this.authService.getAccessToken();
          return new HttpHeaders({
            'Content-Type': 'application/json',
-           'Authorization': `Bearer ${token}`
+           'Authorization': `Bearer ${token}`,
+           'Scope': 'roles'
          });
        }
        

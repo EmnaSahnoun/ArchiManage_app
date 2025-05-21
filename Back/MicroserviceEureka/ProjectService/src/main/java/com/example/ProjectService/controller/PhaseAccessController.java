@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
         allowedHeaders = "*",
-        allowCredentials = "true")
+        allowCredentials = "true²²")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/phase-accesses")

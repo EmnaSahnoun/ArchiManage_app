@@ -5,9 +5,12 @@ import com.example.CommercialService.interfaces.IKeycloak;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -16,11 +19,35 @@ import java.util.Map;
 @Service
 public class KeycloakService implements IKeycloak {
     private static final Logger logger = LoggerFactory.getLogger(KeycloakService.class);
+    @Value("${keycloak.auth-server-url}")
+    private String authServerUrl;
 
+    @Value("systeodigital")
+    private String realm;
+
+    @Value("${keycloak.client-id}")
+    private String clientId;
+
+    @Value("${keycloak.client-secret}")
+    private String clientSecret;
     @Autowired
     private  RestTemplate restTemplate;
     private static final String KEYCLOAK_BASE_URL = "https://esmm.systeo.tn/admin/realms/systeodigital";
+    public String getAdminToken() {
+        String url = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("client_id", clientId);
+        body.add("client_secret", clientSecret);
+        body.add("grant_type", "client_credentials");
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, new HttpEntity<>(body, headers), Map.class);
+
+        return "Bearer " + response.getBody().get("access_token");
+    }
 
     @Override
     public String createUser(String username, String email, String authToken) {

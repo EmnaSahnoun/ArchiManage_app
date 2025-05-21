@@ -13,9 +13,6 @@ export class ClientFormComponent implements OnInit {
   clientForm: FormGroup;
   isLoading = false;
   errorMessage: string | null = null;
-// ...
- private defaultIdCompany = '680657ad26cbca08d31f221c';
-  private defaultCompanyName = 'Archi Concept Tunisie';
 
   constructor(
     private fb: FormBuilder,
@@ -26,9 +23,8 @@ export class ClientFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
-      companyName: [this.defaultCompanyName, Validators.required],
       address: ['', Validators.required],
-      idCompany: [this.defaultIdCompany, Validators.required]
+
     });
   }
 
