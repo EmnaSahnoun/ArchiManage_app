@@ -221,22 +221,52 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 // --- Status Badges ---
-.status-badge {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: $text-color-light;
-  text-transform: capitalize;
-  display: inline-block;
-  text-align: center;
-  min-width: 80px;
+.invoice-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px; /* Adjusted padding for a slightly more spacious look */
+  border-radius: 16px; /* Rounded corners like dashboard badges */
+  font-size: 0.85em;
+  font-weight: 600; /* Slightly bolder text */
+  border: 1px solid transparent;
+  text-transform: capitalize; /* Or none, if translated text is already capitalized */
 
-  &.status-pending { background-color: $pending-color; }
-  &.status-paid { background-color: $paid-color; }
-  &.status-overdue { background-color: $overdue-color; }
-  &.status-draft { background-color: $draft-color; } // Utilisation de la variable draft-color
-  &.status-default { background-color: $text-color-secondary; } // Renommé pour clarté
+  i { /* Style for the icon within the badge */
+    margin-right: 7px; /* Space between icon and text */
+    font-size: 1.1em;  /* Slightly larger icon */
+    line-height: 1; /* Ensure icon aligns well vertically */
+  }
+}
+
+/* Specific status styles */
+.status-unpaid {
+  background-color: #ffebee; /* Light red background */
+  color: #c62828;           /* Darker red text/icon */
+  border-color: #e57373;    /* Slightly lighter red border */
+}
+
+.status-paid {
+  background-color: #e8f5e9; /* Light green background */
+  color: #2e7d32;           /* Darker green text/icon */
+  border-color: #81c784;    /* Slightly lighter green border */
+}
+
+.status-draft {
+  background-color: #f5f5f5; /* Light grey background */
+  color: #757575;           /* Darker grey text/icon */
+  border-color: #bdbdbd;    /* Slightly lighter grey border */
+}
+
+.status-overdue {
+  background-color: #fff3e0; /* Light orange/yellow background */
+  color: #ef6c00;           /* Darker orange text/icon */
+  border-color: #ffb74d;    /* Slightly lighter orange border */
+}
+
+.status-default { /* Fallback style for unknown statuses */
+  background-color: #e9ecef; /* Neutral light grey */
+  color: #495057;           /* Neutral dark grey text/icon */
+  border-color: #ced4da;    /* Neutral grey border */
 }
 
 

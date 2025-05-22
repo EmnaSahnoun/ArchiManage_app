@@ -1,5 +1,6 @@
 package com.example.CommercialService.dto.request;
 
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 
@@ -13,6 +14,16 @@ public class CommercialDocumentLineRequest {
 
     @DecimalMin("0.00")
     private BigDecimal unitPrice = BigDecimal.ZERO;
+    @DecimalMin("0.00")
+    private BigDecimal taxRate = BigDecimal.ZERO;
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
 
     public String getDescription() {
         return description;

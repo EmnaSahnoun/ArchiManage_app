@@ -34,8 +34,8 @@ export class CommercialService {
   }
 
   createInvoice(invoicePayload: any): Observable<Invoice> {
-    const url = `${this.apiUrl}/commercialdocuments`;
-    return this.http.post<Invoice>(this.apiUrl, invoicePayload, { 
+   
+    return this.http.post<Invoice>(`${this.apiUrl}/commercialdocuments`, invoicePayload, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));

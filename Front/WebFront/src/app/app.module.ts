@@ -46,6 +46,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InvitationsComponent } from './invitations/invitations.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { ClientFormComponent } from './client-form/client-form.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize
 
 @NgModule({
   declarations: [
@@ -67,6 +72,7 @@ import { ClientFormComponent } from './client-form/client-form.component';
     InvitationsComponent,
     InvoiceListComponent,
     ClientFormComponent,
+    InvoiceComponent,
 
   ],
   imports: [
@@ -107,6 +113,10 @@ import { ClientFormComponent } from './client-form/client-form.component';
     MatProgressBarModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    TextFieldModule
   ],
   providers: [
     DatePipe,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 117,
+            "activePatchIndex": 121,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -476,6 +476,22 @@
                 {
                     "date": 1747823576153,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { BrowserModule } from '@angular/platform-browser';\r\n \r\n import { AppRoutingModule } from './app-routing.module';\r\n import { AppComponent } from './app.component';\r\n-import { FormsModule } from '@angular/forms';\r\n+import { FormsModule , ReactiveFormsModule} from '@angular/forms';\r\n import { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\n import { MatSidenavModule } from '@angular/material/sidenav';\r\n import { MatToolbarModule } from '@angular/material/toolbar';\r\n import { MatIconModule } from '@angular/material/icon';\r\n@@ -106,9 +106,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n-    ReactiveFormsModule\r\n+    ReactiveFormsModule,\r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1747865622533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,16 @@\n import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientFormComponent } from './client-form/client-form.component';\r\n-import { ReactiveFormsModule } from '@angular/forms'; // Important pour les formulaires\r\n+import { InvoiceComponent } from './invoice/invoice.component';\r\n+import { MatCardModule } from '@angular/material/card';\r\n+import { MatFormFieldModule } from '@angular/material/form-field';\r\n+import { MatInputModule } from '@angular/material/input';\r\n+import { MatSelectModule } from '@angular/material/select';\r\n+import { MatButtonModule } from '@angular/material/button';\r\n+import { MatIconModule } from '@angular/material/icon';\r\n+import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -67,8 +74,9 @@\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n     InvoiceListComponent,\r\n     ClientFormComponent,\r\n+    InvoiceComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1747865628787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,13 +46,11 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientFormComponent } from './client-form/client-form.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n-import { MatCardModule } from '@angular/material/card';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { MatSelectModule } from '@angular/material/select';\r\n-import { MatButtonModule } from '@angular/material/button';\r\n import { MatIconModule } from '@angular/material/icon';\r\n import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize\r\n \r\n @NgModule({\r\n"
+                },
+                {
+                    "date": 1747865642808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,8 @@\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { MatSelectModule } from '@angular/material/select';\r\n-import { MatIconModule } from '@angular/material/icon';\r\n import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize\r\n \r\n @NgModule({\r\n   declarations: [\r\n"
+                },
+                {
+                    "date": 1747865670293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -112,8 +112,9 @@\n     MatIconModule,\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n     ReactiveFormsModule,\r\n+    \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
                 }
             ],
             "date": 1741609977833,

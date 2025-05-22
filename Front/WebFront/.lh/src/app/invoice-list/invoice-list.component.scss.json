@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1747603715984,
@@ -48,6 +48,14 @@
                 {
                     "date": 1747858521296,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -266,11 +266,9 @@\n }\r\n \r\n .error-state {\r\n   mat-icon { color: $warn-color; }\r\n-  button {\r\n-    // Styles pour le bouton \"Réessayer\" si nécessaire\r\n-  }\r\n+  \r\n }\r\n \r\n // --- Responsive Design ---\r\n @media (max-width: 768px) {\r\n"
+                },
+                {
+                    "date": 1747864642351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,25 +220,9 @@\n   }\r\n }\r\n \r\n // --- Status Badges ---\r\n-.status-badge {\r\n-  padding: 4px 10px;\r\n-  border-radius: 12px;\r\n-  font-size: 12px;\r\n-  font-weight: 500;\r\n-  color: $text-color-light;\r\n-  text-transform: capitalize;\r\n-  display: inline-block;\r\n-  text-align: center;\r\n-  min-width: 80px;\r\n \r\n-  &.status-pending { background-color: $pending-color; }\r\n-  &.status-paid { background-color: $paid-color; }\r\n-  &.status-overdue { background-color: $overdue-color; }\r\n-  &.status-draft { background-color: $draft-color; } // Utilisation de la variable draft-color\r\n-  &.status-default { background-color: $text-color-secondary; } // Renommé pour clarté\r\n-}\r\n \r\n \r\n // --- Loading, Error, Empty States (Similaire à clients.component.scss) ---\r\n .loading-state, .error-state, .empty-state {\r\n"
+                },
+                {
+                    "date": 1747864657547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,11 +220,57 @@\n   }\r\n }\r\n \r\n // --- Status Badges ---\r\n+.invoice-status-badge {\r\n+  display: inline-flex;\r\n+  align-items: center;\r\n+  padding: 5px 12px; /* Adjusted padding for a slightly more spacious look */\r\n+  border-radius: 16px; /* Rounded corners like dashboard badges */\r\n+  font-size: 0.85em;\r\n+  font-weight: 600; /* Slightly bolder text */\r\n+  border: 1px solid transparent;\r\n+  text-transform: capitalize; /* Or none, if translated text is already capitalized */\r\n \r\n+  i { /* Style for the icon within the badge */\r\n+    margin-right: 7px; /* Space between icon and text */\r\n+    font-size: 1.1em;  /* Slightly larger icon */\r\n+    line-height: 1; /* Ensure icon aligns well vertically */\r\n+  }\r\n+}\r\n \r\n+/* Specific status styles */\r\n+.status-unpaid {\r\n+  background-color: #ffebee; /* Light red background */\r\n+  color: #c62828;           /* Darker red text/icon */\r\n+  border-color: #e57373;    /* Slightly lighter red border */\r\n+}\r\n \r\n+.status-paid {\r\n+  background-color: #e8f5e9; /* Light green background */\r\n+  color: #2e7d32;           /* Darker green text/icon */\r\n+  border-color: #81c784;    /* Slightly lighter green border */\r\n+}\r\n+\r\n+.status-draft {\r\n+  background-color: #f5f5f5; /* Light grey background */\r\n+  color: #757575;           /* Darker grey text/icon */\r\n+  border-color: #bdbdbd;    /* Slightly lighter grey border */\r\n+}\r\n+\r\n+.status-overdue {\r\n+  background-color: #fff3e0; /* Light orange/yellow background */\r\n+  color: #ef6c00;           /* Darker orange text/icon */\r\n+  border-color: #ffb74d;    /* Slightly lighter orange border */\r\n+}\r\n+\r\n+.status-default { /* Fallback style for unknown statuses */\r\n+  background-color: #e9ecef; /* Neutral light grey */\r\n+  color: #495057;           /* Neutral dark grey text/icon */\r\n+  border-color: #ced4da;    /* Neutral grey border */\r\n+}\r\n+\r\n+\r\n // --- Loading, Error, Empty States (Similaire à clients.component.scss) ---\r\n .loading-state, .error-state, .empty-state {\r\n   display: flex;\r\n   flex-direction: column;\r\n"
                 }
             ],
             "date": 1747603715984,

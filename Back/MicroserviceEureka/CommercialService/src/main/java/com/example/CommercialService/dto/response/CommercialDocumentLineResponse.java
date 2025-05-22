@@ -7,7 +7,34 @@ public class CommercialDocumentLineResponse {
     private String description;
     private BigDecimal quantity;
     private BigDecimal unitPrice;
+    private BigDecimal taxRate;
+    private BigDecimal taxAmount;
+    private BigDecimal totalBeforeTax;
     private BigDecimal total;
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public BigDecimal getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(BigDecimal taxAmount) {
+        this.taxAmount = taxAmount;
+    }
+
+    public BigDecimal getTotalBeforeTax() {
+        return totalBeforeTax;
+    }
+
+    public void setTotalBeforeTax(BigDecimal totalBeforeTax) {
+        this.totalBeforeTax = totalBeforeTax;
+    }
 
     public String getId() {
         return id;

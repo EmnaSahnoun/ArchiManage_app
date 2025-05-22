@@ -13,6 +13,9 @@ public class CommercialDocumentLine {
     private String description;
     private BigDecimal quantity = BigDecimal.ONE;
     private BigDecimal unitPrice = BigDecimal.ZERO;
+    private BigDecimal taxRate = BigDecimal.ZERO; // Nouveau champ: taux de TVA (ex: 0.20 pour 20%)
+    private BigDecimal taxAmount = BigDecimal.ZERO; // Nouveau champ: montant de la TVA
+    private BigDecimal totalBeforeTax = BigDecimal.ZERO; // Nouveau champ: total HT
     private BigDecimal total = BigDecimal.ZERO;
     private String commercialDocumentId;
 
@@ -23,8 +26,39 @@ public class CommercialDocumentLine {
         if (this.quantity == null) {
             this.quantity = BigDecimal.ONE;
         }
-        this.total = unitPrice.multiply(quantity);
+        if (this.taxRate == null) {
+            this.taxRate = BigDecimal.ZERO;
+        }
+
+        this.totalBeforeTax = unitPrice.multiply(quantity);
+        this.taxAmount = totalBeforeTax.multiply(taxRate);
+        this.total = totalBeforeTax.add(taxAmount);
     }
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public BigDecimal getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(BigDecimal taxAmount) {
+        this.taxAmount = taxAmount;
+    }
+
+    public BigDecimal getTotalBeforeTax() {
+        return totalBeforeTax;
+    }
+
+    public void setTotalBeforeTax(BigDecimal totalBeforeTax) {
+        this.totalBeforeTax = totalBeforeTax;
+    }
+
     public String getId() {
         return id;
     }

@@ -37,7 +37,7 @@ public class CommercialDocument {
     private Client client;
     @Field("lines")
     private List<CommercialDocumentLine> lines = new ArrayList<>();
-    // Méthodes utilitaires
+
     public void calculateTotals() {
         // Initialiser les valeurs BigDecimal si elles sont null
         if (this.subTotal == null) {
@@ -50,15 +50,18 @@ public class CommercialDocument {
             this.taxAmount = BigDecimal.ZERO;
         }
 
-        // Calculer le sous-total
+        // Calculer le sous-total HT et le montant total des taxes
         this.subTotal = lines.stream()
-                .map(line -> line.getTotal() != null ? line.getTotal() : BigDecimal.ZERO)
+                .map(line -> line.getTotalBeforeTax() != null ? line.getTotalBeforeTax() : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Calculer le total
+        this.taxAmount = lines.stream()
+                .map(line -> line.getTaxAmount() != null ? line.getTaxAmount() : BigDecimal.ZERO)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Calculer le total TTC
         this.totalAmount = subTotal.subtract(discount).add(taxAmount);
     }
-
     public Client getClient() {
         return client;
     }

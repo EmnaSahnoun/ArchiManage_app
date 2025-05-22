@@ -1,0 +1,119 @@
+<!-- facture.component.html -->
+<div class="invoice-container">
+  <div class="invoice-header">
+    <div class="logo-box">
+      <div class="logo-placeholder">+ Ajoutez votre logo</div>
+    </div>
+    <div class="invoice-title">
+      <h2>{{ getDocumentTitle() }}</h2>
+      <div class="invoice-meta">
+        <div class="invoice-number">
+          <label for="invoiceNumber">#</label>
+          <input id="invoiceNumber" type="number" [(ngModel)]="invoice.number" />
+        </div>
+        <div>
+          <label for="documentTypeSelect">Type:</label>
+          <select id="documentTypeSelect" [(ngModel)]="invoice.documentType" (ngModelChange)="calculateTotals()">
+            <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="invoice-details">
+    <div class="left">
+      <h4>Votre Agence</h4>
+      <label for="companyName">Nom de l'entreprise:</label>
+      <input id="companyName" [(ngModel)]="company.name" />
+
+
+        <label for="companyAddress">Adresse:</label>
+      <input id="companyAddress" [(ngModel)]="company.address" />
+
+
+      <label for="companyPhone">Téléphone:</label>
+      <input id="companyPhone" [(ngModel)]="company.phone" />
+
+      <label for="companyEmail">Email:</label>
+      <input id="companyEmail" [(ngModel)]="company.email" />
+ 
+    </div>
+
+    <div class="right">
+      <h4>Client</h4>
+      <label for="clientSelect">Choisir un client:</label>
+      <select id="clientSelect" name="selectedClient" [(ngModel)]="invoice.selectedClientId" (ngModelChange)="onClientSelected()">
+        <option [ngValue]="null" disabled>-- Sélectionnez un client --</option>
+        <option *ngFor="let client of clients" [ngValue]="client.id">{{ client.name }}</option>
+      </select>
+
+
+       <label for="clientName">Nom du client:</label>
+      <input id="clientName" [(ngModel)]="invoice.clientName" readonly />
+
+
+       <label for="clientAddress">Adresse du client:</label>
+      <input id="clientAddress" [(ngModel)]="invoice.clientAddress" readonly />
+
+ <label for="clientPhone">Téléphone du client:</label>
+      <input id="clientPhone" [(ngModel)]="invoice.clientPhone" readonly />
+
+      <label for="clientEmail">Email du client:</label>
+      <input id="clientEmail" [(ngModel)]="invoice.clientEmail" readonly />
+  
+    </div>
+  </div>
+
+  <table class="invoice-table">
+    <thead>
+      <tr>
+        <th>Objet</th>
+         <th class="text-right">Quantité</th>
+        <th class="text-right">Prix unitaire</th>
+       
+        <th>Montant</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoice.items; let i = index">
+      
+        <td><input [(ngModel)]="item.description" /></td>
+        <td><input type="number" [(ngModel)]="item.quantity" (input)="calculateTotals()" /></td>
+        <td><input type="number" [(ngModel)]="item.unitPrice" (input)="calculateTotals()" /></td>
+       <td>{{ (item.quantity * item.unitPrice) || 0  }}</td>
+        <td class="action-cell">
+          <button class="delete-item-btn" (click)="removeItem(i)" [disabled]="invoice.items.length <= 1" title="Supprimer la ligne">
+            -
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-item" (click)="addItem()">+ Élément de campagne</button>
+
+  <div class="notes-terms">
+    <div>
+      <label>Remarques</label>
+      <textarea [(ngModel)]="invoice.notes"></textarea>
+    </div>
+    
+  </div>
+
+  <div class="invoice-summary right">
+    <div>Sous-total: {{ subtotal | currency:'TND' }}</div>
+    <div>
+      Impôt:
+      <input type="number" [(ngModel)]="invoice.taxRate" (input)="calculateTotals()" />%
+    </div>
+    <div *ngIf="invoice.discount">- Rabais: {{ invoice.discount | currency:'TND' }}</div>
+    <div *ngIf="invoice.shipping">+ Expédition: {{ invoice.shipping | currency:'TND' }}</div>
+    <div>Total: {{ total | currency:'TND' }}</div>
+    <div><strong>Solde à payer: {{ balance | currency:'TND' }}</strong></div>
+  </div>
+  <div class="invoice-actions">
+    <button class="btn btn-primary" (click)="saveInvoice()">Enregistrer {{ getDocumentTitle() }}</button>
+    <!-- Autres actions possibles ici -->
+  </div>
+</div>

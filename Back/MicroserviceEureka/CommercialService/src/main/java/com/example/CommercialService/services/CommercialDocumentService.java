@@ -202,6 +202,7 @@ public class CommercialDocumentService implements ICommercialDocument {
         line.setDescription(lineRequest.getDescription());
         line.setQuantity(lineRequest.getQuantity());
         line.setUnitPrice(lineRequest.getUnitPrice());
+        line.setTaxRate(lineRequest.getTaxRate());
         line.calculateTotal();
         return line;
     }
@@ -268,6 +269,9 @@ public class CommercialDocumentService implements ICommercialDocument {
                     lineResponse.setDescription(line.getDescription());
                     lineResponse.setQuantity(line.getQuantity());
                     lineResponse.setUnitPrice(line.getUnitPrice());
+                    lineResponse.setTaxRate(line.getTaxRate());
+                    lineResponse.setTaxAmount(line.getTaxAmount());
+                    lineResponse.setTotalBeforeTax(line.getTotalBeforeTax());
                     lineResponse.setTotal(line.getTotal());
                     return lineResponse;
                 })

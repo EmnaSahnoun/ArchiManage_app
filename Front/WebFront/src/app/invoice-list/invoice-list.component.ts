@@ -22,7 +22,7 @@ displayedColumns: string[] = [
     'documentNumber',
     'clientName',
     'createdAt',
-    'dueDate',
+
     'totalAmount',
     'status',
     'actions'
@@ -64,6 +64,7 @@ displayedColumns: string[] = [
     const query = this.searchQuery.toLowerCase().trim();
     if (!query) {
       this.filteredInvoices = [...this.invoices];
+      console.log("this.filteredInvoices", this.filteredInvoices);
     } else {
       this.filteredInvoices = this.invoices.filter(invoice =>
         invoice.documentNumber.toLowerCase().includes(query) ||
