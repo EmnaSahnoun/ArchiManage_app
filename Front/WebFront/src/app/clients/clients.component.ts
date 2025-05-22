@@ -6,10 +6,10 @@ import { AuthService } from '../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { ConfirmationDialogComponent } from '../super-admin/confirmation-dialog/confirmation-dialog.component';
-// import { ClientService } from './client.service'; // Supposons que vous ayez un service pour les clients
-// import { AuthService } from '../auth/auth.service'; // Supposons que vous ayez un service d'authentification
+import { forkJoin, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
+import { SetPasswordComponent } from '../set-password/set-password.component';
 
-// Définition de l'interface Client (vous pouvez la placer dans un fichier séparé, ex: client.model.ts)
 export interface Client {
   id: string;
   name: string;
@@ -18,7 +18,10 @@ export interface Client {
   phone: string;
   createdAt: number; // Ou Date, selon comment vous le gérez
   idCompany?: string; // Optionnel si non utilisé directement dans le template
-  companyName?: string; // Optionnel si non utilisé directement dans le template
+  companyName?: string;
+  hasPassword?: boolean | undefined; // true, false, or undefined if not checked/error
+  isLoadingCredentials?: boolean; // To show a loading spinner per row
+
 }
 
 @Component({
@@ -56,14 +59,43 @@ export class ClientsComponent implements OnInit {
 
 
   loadClients(idCompany: string): void {
-    this.commercialService.getClients(idCompany).subscribe({
-      next: (data) => {
-        console.log("les clients",data)
-        this.clients=data;
+    this.commercialService.getClients(idCompany).pipe(
+      switchMap(clients => {
+        if (!clients || clients.length === 0) {
+          return of([]);
+        }
+        // For each client, check Keycloak credentials
+        const clientCredentialChecks$ = clients.map(client => {
+          const typedClient = client as Client; 
+           typedClient.isLoadingCredentials = true; 
+   
+          return this.commercialService.checkKeycloakCredentials(typedClient.id).pipe(
+            map(hasPassword => {
+              typedClient.hasPassword = hasPassword;
+              typedClient.isLoadingCredentials = false;
+              return typedClient;
+            }),
+            catchError(err => {
+              console.error(`Error checking credentials for client ${typedClient.id}:`, err);
+              typedClient.hasPassword = undefined; // Indicate error or unknown state
+              typedClient.isLoadingCredentials = false;
+              return of(typedClient); // Return the client even if credential check fails
+            })
+          );
+        });
+        return forkJoin(clientCredentialChecks$);
+      })
+    ).subscribe({
+      next: (clientsWithPasswordStatus) => {
+        console.log("Les clients avec statut mot de passe:", clientsWithPasswordStatus);
+        this.clients = clientsWithPasswordStatus as Client[];
+ 
         this.applyFilter();
       },
       error: (err) => {
-        console.error('Error fetching invoices:', err);
+      console.error('Error fetching clients or their credentials:', err);
+        this.clients = []; // Clear clients on error
+        this.applyFilter();
         
       }
     });
@@ -190,5 +222,35 @@ deleteClient(clientId: string, event: MouseEvent): void {
     if(event) event.stopPropagation();
     this.editingClientId = null;
     this.editedClientData = {};
+  }
+  openSetPasswordModal(client: Client, event: MouseEvent): void {
+    event.stopPropagation();
+    const modalRef = this.modalService.open(SetPasswordComponent, {
+          size: 'md',
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+modalRef.componentInstance.clientId = client.id;
+    modalRef.componentInstance.clientName = client.name; // Passer le nom du client pour l'affichage
+
+    modalRef.result.then(
+      (result) => {
+        if (result === 'success') {
+          console.log('Password set successfully for client:', client.id);
+          // Re-vérifier le statut ou simplement le mettre à jour localement
+          const foundClient = this.clients.find(c => c.id === client.id);
+          if (foundClient) {
+            foundClient.hasPassword = true;
+          }
+          this.applyFilter(); // Rafraîchir la vue
+      
+        }
+      },
+      (reason) => {
+        console.log(`Set password modal dismissed/cancelled: ${reason}`);
+      }
+    ).catch(() => console.log('Modal dismissed with error or backdrop click'));
+    
   }
 }

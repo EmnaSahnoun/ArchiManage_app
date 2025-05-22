@@ -46,7 +46,9 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'invoices', component: InvoiceListComponent },
-  { path: 'invoices/new', component: InvoiceComponent }, 
+  { path: 'invoice', component: InvoiceComponent }, // Pour créer une nouvelle facture
+  { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante
+  
   
    { path: 'clients', component: ClientsComponent },
  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

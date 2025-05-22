@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1747603613897,
@@ -48,6 +48,10 @@
                 {
                     "date": 1747604979745,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     this.isLoading = true;\r\n     this.errorMessage = null;\r\n     this.invoiceService.getInvoices().subscribe({\r\n       next: (data) => {\r\n-        con\r\n+        cons\r\n         this.invoices = data;\r\n         this.isLoading = false;\r\n       },\r\n       error: (err) => {\r\n"
+                },
+                {
+                    "date": 1747952865036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,10 +49,9 @@\n     this.errorMessage = null;\r\n     this.commercialService.getInvoices().subscribe({\r\n       next: (data:any[]) => {\r\n         this.invoices = data ;\r\n-        console.log('Factures chargées avec succès :', this.invoices);\r\n-        this.filteredInvoices = [...this.invoices];\r\n+        \r\n         this.applyFilter();\r\n         this.isLoading = false;\r\n       },\r\n       error: (err) => {\r\n"
                 }
             ],
             "date": 1747603613897,

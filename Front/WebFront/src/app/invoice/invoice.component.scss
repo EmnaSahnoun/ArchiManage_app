@@ -44,6 +44,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
       h2 {
         margin: 0;
+        text-align: center;
       }
 
       .invoice-meta {
@@ -101,7 +102,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     margin-top: 2rem;
     border-collapse: collapse;
 th.text-right, td.text-right {
-      text-align: right;
+      text-align: center;
     }
     th {
       background-color: $primary-color;
@@ -117,6 +118,9 @@ th.text-right, td.text-right {
         width: 100%;
         border: none;
         background: none;
+         &.text-right { // Pour l'input de TVA
+          text-align: center;
+        }
           }
       &.action-cell { // Cibler spécifiquement la cellule d'action
         display: flex;
@@ -174,7 +178,7 @@ th.text-right, td.text-right {
   .invoice-summary {
     margin-top: 2rem;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 0.5rem;
 
     input {
@@ -206,4 +210,38 @@ th.text-right, td.text-right {
     }
   }
 
+}
+/* invoice.component.scss */
+.invoice-totals {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  width: 40%; // Ajustez la largeur selon votre design
+  margin-left: auto; // Pour pousser le bloc des totaux à droite
+
+  p {
+    display: flex;
+    justify-content: space-between; // Label à gauche, montant à droite
+    margin-bottom: 8px;
+    font-size: 0.95em;
+
+    span:first-child { // Le label
+      color: #555;
+    }
+
+    span.amount { // Le montant
+      font-weight: bold;
+      text-align: right; // Assure l'alignement à droite du texte dans le span
+    }
+  }
+
+  .total-highlight {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+
+    span.amount {
+      color: #000; // Ou la couleur de votre thème pour le total
+    }
+  }
 }

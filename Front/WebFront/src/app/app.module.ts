@@ -50,7 +50,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { SetPasswordComponent } from './set-password/set-password.component'; // For CdkTextareaAutosize
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAut
     InvoiceListComponent,
     ClientFormComponent,
     InvoiceComponent,
+    SetPasswordComponent,
 
   ],
   imports: [

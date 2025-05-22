@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 69,
+            "activePatchIndex": 71,
             "patches": [
                 {
                     "date": 1747821975398,
@@ -284,6 +284,14 @@
                 {
                     "date": 1747834736915,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     this.clientForm = this.fb.group({\r\n       name: ['', [Validators.required, Validators.minLength(3)]],\r\n       email: ['', [Validators.required, Validators.email]],\r\n       phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], \r\n-      \r\n       address: ['', Validators.required],\r\n \r\n     });\r\n   }\r\n"
+                },
+                {
+                    "date": 1747956663291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,10 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n+import { forkJoin, of } from 'rxjs';\r\n+import { switchMap, map, catchError } from 'rxjs/operators';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n"
+                },
+                {
+                    "date": 1747956681951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,8 @@\n import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';\r\n import { CommercialService } from '../services/commercial.service';\r\n-import { forkJoin, of } from 'rxjs';\r\n-import { switchMap, map, catchError } from 'rxjs/operators';\r\n \r\n @Component({\r\n   selector: 'app-client-form',\r\n   templateUrl: './client-form.component.html',\r\n"
                 }
             ],
             "date": 1747821975398,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 100,
+            "activePatchIndex": 102,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -408,6 +408,14 @@
                 {
                     "date": 1747865829444,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n import { UserFormComponent } from './super-admin/user-form/user-form.component';\r\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n+import { InvoiceComponent } from './invoice/invoice.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -44,9 +45,9 @@\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n   { path: 'invoices', component: InvoiceListComponent },\r\n-  { path: 'invoices/new', component: InvoiceComponent }, // <--- C'est la route importante pour l'ajout\r\n+  { path: 'invoices/new', component: InvoiceComponent }, \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n"
+                },
+                {
+                    "date": 1747920219055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n   { path: 'invoices', component: InvoiceListComponent },\r\n-  { path: 'invoices/new', component: InvoiceComponent }, \r\n+  { path: 'invoices', component: InvoiceComponent }, \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n"
+                },
+                {
+                    "date": 1747921123837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,12 @@\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n   { path: 'invoices', component: InvoiceListComponent },\r\n-  { path: 'invoices', component: InvoiceComponent }, \r\n+  { path: 'invoice', component: InvoiceComponent }, // Pour créer une nouvelle facture\r\n+  { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n+  \r\n    { path: 'clients', component: ClientsComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
                 }
             ],
             "date": 1741609914429,

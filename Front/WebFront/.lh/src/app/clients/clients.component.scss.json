@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1747785647591,
@@ -48,6 +48,10 @@
                 {
                     "date": 1747851237956,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -360,34 +360,4 @@\n     height: 1em;\r\n     border-width: .2em;\r\n   }\r\n }\r\n-\r\n-.save-btn {\r\n-  color: var(--success-color, #28a745);\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  &:hover { color: darken(#28a745, 10%); }\r\n-  &:disabled { color: #ccc; cursor: not-allowed; }\r\n-}\r\n-\r\n-.cancel-btn {\r\n-  color: var(--secondary-color, #6c757d);\r\n-  background: none;\r\n-  border: none;\r\n-  cursor: pointer;\r\n-  &:hover { color: darken(#6c757d, 10%); }\r\n-  &:disabled { color: #ccc; cursor: not-allowed; }\r\n-}\r\n-\r\n-.edit-btn {\r\n-  color: var(--primary-color, #007bff);\r\n-}\r\n-\r\n-.delete-btn {\r\n-   color: var(--danger-color, #dc3545);\r\n-}\r\n-\r\n-// Note: The duplicate .members-action-button from the original file is not included here,\r\n-// assuming the one within .data-table is the intended one.\r\n-// If it was intentional, it can be added back.\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1747956858439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -360,4 +360,48 @@\n     height: 1em;\r\n     border-width: .2em;\r\n   }\r\n }\r\n+.badge {\r\n+  display: inline-block;\r\n+  padding: .4em .65em; // Slightly more padding for better appearance\r\n+  font-size: .78em;    // Slightly larger font\r\n+  font-weight: 600;   // Semi-bold\r\n+  line-height: 1;\r\n+  color: $text-color-light;\r\n+  text-align: center;\r\n+  white-space: nowrap;\r\n+  vertical-align: baseline;\r\n+  border-radius: .3rem; // Slightly larger border-radius\r\n+\r\n+  &.bg-success {\r\n+    background-color: $success-color;\r\n+  }\r\n+  &.bg-warning {\r\n+    background-color: $pending-color; // Using pending as a warning-like color\r\n+    color: $text-color-primary; // Darker text for lighter background if $pending-color is light\r\n+  }\r\n+  &.bg-secondary {\r\n+    background-color: $cancel-color;\r\n+  }\r\n+}\r\n+\r\n+// Style for the \"Définir MDP\" button\r\n+.btn-set-password {\r\n+  background-color: transparent;\r\n+  border: none;\r\n+  color: $primary-color;\r\n+  cursor: pointer;\r\n+  padding: 2px 6px;\r\n+  border-radius: 4px;\r\n+  font-size: 0.85rem;\r\n+  vertical-align: middle;\r\n+  transition: background-color 0.2s ease, color 0.2s ease;\r\n+\r\n+  i {\r\n+    margin-right: 4px;\r\n+  }\r\n+\r\n+  &:hover {\r\n+    background-color: rgba($primary-color, 0.1);\r\n+  }\r\n+}\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1747785647591,

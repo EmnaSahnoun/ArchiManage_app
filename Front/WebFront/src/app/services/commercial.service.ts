@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Invoice } from '../models/invoice';
 import { AuthService } from './auth.service';
 import { UserService } from './UserService';
@@ -14,6 +14,7 @@ export class CommercialService {
   // Adjust the baseUrl to your actual API endpoint
 
  private apiUrl = '/commercial';
+ private apiKeycloak="/api"
   constructor(private http: HttpClient, 
     private authService: AuthService, 
     private userService:UserService) { }
@@ -26,8 +27,8 @@ export class CommercialService {
         );    
   }
 
-  getInvoice(id: string): Observable<Invoice> {
-    return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments${id}`, { 
+  getInvoiceById(id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments/${id}`, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
@@ -41,15 +42,15 @@ export class CommercialService {
             catchError(this.handleError));
   }
 
-  updateInvoice(id: string, invoicePayload: any): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoicePayload, { 
+  updateInvoice(id: any, invoicePayload: any): Observable<Invoice> {
+    return this.http.put<Invoice>(`${this.apiUrl}/commercialdocuments/${id}`, invoicePayload, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
   }
 
   deleteInvoice(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { 
+    return this.http.delete<void>(`${this.apiUrl}/commercialdocuments/${id}`, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
@@ -91,6 +92,41 @@ getClientById(idClient:string): Observable<any> {
         }).pipe(
             catchError(this.handleError));
   }
+
+  checkKeycloakCredentials(idUser: string): Observable<boolean> {
+    const credentialsUrl =`${this.apiKeycloak}/admin/realms/systeodigital/users/${idUser}/credentials`;
+  return this.http.get<any[]>(credentialsUrl
+    ,
+    { headers: this.getApiHeaders() }
+  ).pipe(
+    map(credentials => {
+      return credentials && credentials.length > 0;
+    }),
+    catchError(err => {
+      console.error('Erreur lors de la récupération des credentials', err);
+      return of(false); // En cas d'erreur, on suppose qu’il n’y a pas de mot de passe
+    })
+  );
+}
+
+setKeycloakPassword(userId: string, passwordDetails: any): Observable<void> {
+   const resetPasswordUrl = `${this.apiKeycloak}/admin/realms/systeodigital/users/${userId}/reset-password`;
+return this.http.put<void>(resetPasswordUrl, passwordDetails, { headers: this.getApiHeaders() }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(`Error setting Keycloak password for user ${userId}:`, error);
+        // Vous pouvez personnaliser la gestion des erreurs ici.
+        // Par exemple, extraire un message d'erreur plus spécifique de la réponse de Keycloak si disponible.
+        let errorMessage = 'An unknown error occurred while setting the password.';
+        if (error.error && typeof error.error.errorMessage === 'string') {
+          errorMessage = error.error.errorMessage;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        return throwError(() => new Error(errorMessage)); // Propage l'erreur pour que le composant appelant puisse la gérer
+      })
+    );
+  }
+
    private getApiHeaders(): HttpHeaders {
          const token = this.authService.getAccessToken();
          return new HttpHeaders({

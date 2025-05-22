@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1747785703590,
@@ -80,6 +80,22 @@
                 {
                     "date": 1747851332748,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,8 @@\n       <!-- Actions: Filter, View Mode, Add Client -->\r\n       <div class=\"actions-container\">\r\n         \r\n \r\n-        \r\n-\r\n         <!-- Add Client Button -->\r\n         <button class=\"add-client-button\" (click)=\"addClient()\"> <!-- Renamed class and method from add-project-button -->\r\n           <mat-icon>add</mat-icon>\r\n           <span>Nouveau Client</span> <!-- Updated text -->\r\n"
+                },
+                {
+                    "date": 1747940070834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n \r\n       <!-- Actions: Filter, View Mode, Add Client -->\r\n       <div class=\"actions-container\">\r\n         \r\n-\r\n         <!-- Add Client Button -->\r\n         <button class=\"add-client-button\" (click)=\"addClient()\"> <!-- Renamed class and method from add-project-button -->\r\n           <mat-icon>add</mat-icon>\r\n           <span>Nouveau Client</span> <!-- Updated text -->\r\n@@ -32,8 +31,9 @@\n               <th>Date Création</th>\r\n               <th>Adresse</th>\r\n               <th>Email</th>\r\n               <th>Téléphone</th>\r\n+              \r\n               <th>Actions</th>\r\n             </tr>\r\n           </thead>\r\n           <tbody>\r\n"
+                },
+                {
+                    "date": 1747956880980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,10 @@\n               <th>Date Création</th>\r\n               <th>Adresse</th>\r\n               <th>Email</th>\r\n               <th>Téléphone</th>\r\n-              \r\n+              <th>Statut MDP</th>\r\n+             \r\n               <th>Actions</th>\r\n             </tr>\r\n           </thead>\r\n           <tbody>\r\n"
+                },
+                {
+                    "date": 1747956886584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,8 @@\n               <th>Adresse</th>\r\n               <th>Email</th>\r\n               <th>Téléphone</th>\r\n               <th>Statut MDP</th>\r\n-             \r\n               <th>Actions</th>\r\n             </tr>\r\n           </thead>\r\n           <tbody>\r\n"
+                },
+                {
+                    "date": 1747956904036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,8 +61,25 @@\n                <span *ngIf=\"editingClientId !== client.id\">{{ client.phone || 'N/A' }}</span>\r\n                <input *ngIf=\"editingClientId === client.id\" type=\"text\" [(ngModel)]=\"editedClientData.phone\" class=\"inline-edit-input\" (click)=\"$event.stopPropagation()\" (keydown.enter)=\"saveEdit(client.id, $event)\" (keydown.escape)=\"cancelEdit($event)\" />\r\n              \r\n               </td>\r\n+              <!-- Statut Mot de Passe Keycloak -->\r\n+              <td>\r\n+                <ng-container *ngIf=\"client.isLoadingCredentials\">\r\n+                  <span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>\r\n+                </ng-container>\r\n+                <ng-container *ngIf=\"!client.isLoadingCredentials\">\r\n+                  <span *ngIf=\"client.hasPassword === true\" class=\"badge bg-success\">Défini</span>\r\n+                  <span *ngIf=\"client.hasPassword === false\" class=\"badge bg-warning\">Non défini</span>\r\n+                  <span *ngIf=\"client.hasPassword === undefined\" class=\"badge bg-secondary\">Inconnu</span>\r\n+                  <button *ngIf=\"client.hasPassword === false\"\r\n+                          class=\"btn-set-password ms-2\"\r\n+                          (click)=\"openSetPasswordModal(client, $event)\"\r\n+                          title=\"Définir le mot de passe\">\r\n+                    <i class=\"bi bi-key-fill\"></i> Définir\r\n+                  </button>\r\n+                </ng-container>\r\n+              </td>\r\n                <td class=\"actions\">\r\n   <ng-container *ngIf=\"editingClientId !== client.id\">\r\n     <button class=\"edit-btn\" (click)=\"startEdit(client, $event)\" title=\"Modifier\">\r\n       <i class=\"bi bi-pencil\"></i>\r\n"
                 }
             ],
             "date": 1747785703590,

@@ -361,3 +361,47 @@ width: 36px; // Légère augmentation pour un meilleur espacement interne de l'i
     border-width: .2em;
   }
 }
+.badge {
+  display: inline-block;
+  padding: .4em .65em; // Slightly more padding for better appearance
+  font-size: .78em;    // Slightly larger font
+  font-weight: 600;   // Semi-bold
+  line-height: 1;
+  color: $text-color-light;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .3rem; // Slightly larger border-radius
+
+  &.bg-success {
+    background-color: $success-color;
+  }
+  &.bg-warning {
+    background-color: $pending-color; // Using pending as a warning-like color
+    color: $text-color-primary; // Darker text for lighter background if $pending-color is light
+  }
+  &.bg-secondary {
+    background-color: $cancel-color;
+  }
+}
+
+// Style for the "Définir MDP" button
+.btn-set-password {
+  background-color: transparent;
+  border: none;
+  color: $primary-color;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  vertical-align: middle;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  i {
+    margin-right: 4px;
+  }
+
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+  }
+}

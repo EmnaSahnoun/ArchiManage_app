@@ -32,6 +32,7 @@
               <th>Adresse</th>
               <th>Email</th>
               <th>Téléphone</th>
+              <th>Statut MDP</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -60,6 +61,23 @@
                <span *ngIf="editingClientId !== client.id">{{ client.phone || 'N/A' }}</span>
                <input *ngIf="editingClientId === client.id" type="text" [(ngModel)]="editedClientData.phone" class="inline-edit-input" (click)="$event.stopPropagation()" (keydown.enter)="saveEdit(client.id, $event)" (keydown.escape)="cancelEdit($event)" />
              
+              </td>
+              <!-- Statut Mot de Passe Keycloak -->
+              <td>
+                <ng-container *ngIf="client.isLoadingCredentials">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </ng-container>
+                <ng-container *ngIf="!client.isLoadingCredentials">
+                  <span *ngIf="client.hasPassword === true" class="badge bg-success">Défini</span>
+                  <span *ngIf="client.hasPassword === false" class="badge bg-warning">Non défini</span>
+                  <span *ngIf="client.hasPassword === undefined" class="badge bg-secondary">Inconnu</span>
+                  <button *ngIf="client.hasPassword === false"
+                          class="btn-set-password ms-2"
+                          (click)="openSetPasswordModal(client, $event)"
+                          title="Définir le mot de passe">
+                    <i class="bi bi-key-fill"></i> Définir
+                  </button>
+                </ng-container>
               </td>
                <td class="actions">
   <ng-container *ngIf="editingClientId !== client.id">

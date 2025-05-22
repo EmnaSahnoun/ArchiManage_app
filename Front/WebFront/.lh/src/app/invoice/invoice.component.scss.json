@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1747865150067,
@@ -152,6 +152,46 @@
                 {
                     "date": 1747913669597,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,9 @@\n       .delete-item-btn {\r\n         background: none;\r\n         border: none;\r\n         color: $warn-color;\r\n-        text-align: center;\r\n+        \r\n         cursor: pointer;\r\n         font-size: 1.2rem; // Rendre le \"-\" un peu plus grand\r\n         padding: 0.2rem 0.5rem;\r\n         line-height: 1;\r\n"
+                },
+                {
+                    "date": 1747917174694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,8 +116,11 @@\n       input {\r\n         width: 100%;\r\n         border: none;\r\n         background: none;\r\n+         &.text-right { // Pour l'input de TVA\r\n+          text-align: right;\r\n+        }\r\n           }\r\n       &.action-cell { // Cibler spécifiquement la cellule d'action\r\n         display: flex;\r\n         align-items: center;\r\n"
+                },
+                {
+                    "date": 1747917326711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n         width: 100%;\r\n         border: none;\r\n         background: none;\r\n          &.text-right { // Pour l'input de TVA\r\n-          text-align: right;\r\n+          text-align: center;\r\n         }\r\n           }\r\n       &.action-cell { // Cibler spécifiquement la cellule d'action\r\n         display: flex;\r\n"
+                },
+                {
+                    "date": 1747917332678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n       input {\r\n         width: 100%;\r\n         border: none;\r\n         background: none;\r\n-         &.text-right { // Pour l'input de TVA\r\n+         &.text-center { // Pour l'input de TVA\r\n           text-align: center;\r\n         }\r\n           }\r\n       &.action-cell { // Cibler spécifiquement la cellule d'action\r\n"
+                },
+                {
+                    "date": 1747917340424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n       input {\r\n         width: 100%;\r\n         border: none;\r\n         background: none;\r\n-         &.text-center { // Pour l'input de TVA\r\n+         &.text-right { // Pour l'input de TVA\r\n           text-align: center;\r\n         }\r\n           }\r\n       &.action-cell { // Cibler spécifiquement la cellule d'action\r\n"
+                },
+                {
+                    "date": 1747917352968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,9 @@\n     width: 100%;\r\n     margin-top: 2rem;\r\n     border-collapse: collapse;\r\n th.text-right, td.text-right {\r\n-      text-align: right;\r\n+      text-align: cen;\r\n     }\r\n     th {\r\n       background-color: $primary-color;\r\n       color: $text-color-light;\r\n"
+                },
+                {
+                    "date": 1747923724032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,9 @@\n     width: 100%;\r\n     margin-top: 2rem;\r\n     border-collapse: collapse;\r\n th.text-right, td.text-right {\r\n-      text-align: cen;\r\n+      text-align: center;\r\n     }\r\n     th {\r\n       background-color: $primary-color;\r\n       color: $text-color-light;\r\n@@ -176,9 +176,9 @@\n \r\n   .invoice-summary {\r\n     margin-top: 2rem;\r\n     display: flex;\r\n-    flex-direction: column-reverse;\r\n+    flex-direction: column;\r\n     gap: 0.5rem;\r\n \r\n     input {\r\n       width: 80px;\r\n"
+                },
+                {
+                    "date": 1747950962903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n       color: $text-color-secondary;\r\n     }\r\n \r\n     .invoice-title {\r\n-      text-align: right;\r\n+      text-align: center;\r\n \r\n       h2 {\r\n         margin: 0;\r\n       }\r\n"
+                },
+                {
+                    "date": 1747951002190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n       text-align: center;\r\n \r\n       h2 {\r\n         margin: 0;\r\n+        tex\r\n       }\r\n \r\n       .invoice-meta {\r\n         display: flex;\r\n"
+                },
+                {
+                    "date": 1747951025523,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,13 +39,13 @@\n       color: $text-color-secondary;\r\n     }\r\n \r\n     .invoice-title {\r\n-      text-align: center;\r\n+      text-align: right;\r\n \r\n       h2 {\r\n         margin: 0;\r\n-        tex\r\n+        text-align: center;\r\n       }\r\n \r\n       .invoice-meta {\r\n         display: flex;\r\n"
+                },
+                {
+                    "date": 1747951290796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,4 +210,38 @@\n     }\r\n   }\r\n \r\n }\r\n+/* invoice.component.scss */\r\n+.invoice-totals {\r\n+  margin-top: 20px;\r\n+  padding-top: 10px;\r\n+  border-top: 1px solid #eee;\r\n+  width: 40%; // Ajustez la largeur selon votre design\r\n+  margin-left: auto; // Pour pousser le bloc des totaux à droite\r\n+\r\n+  p {\r\n+    display: flex;\r\n+    justify-content: space-between; // Label à gauche, montant à droite\r\n+    margin-bottom: 8px;\r\n+    font-size: 0.95em;\r\n+\r\n+    span:first-child { // Le label\r\n+      color: #555;\r\n+    }\r\n+\r\n+    span.amount { // Le montant\r\n+      font-weight: bold;\r\n+      text-align: right; // Assure l'alignement à droite du texte dans le span\r\n+    }\r\n+  }\r\n+\r\n+  .total-highlight {\r\n+    font-size: 1.1em;\r\n+    font-weight: bold;\r\n+    color: #333;\r\n+\r\n+    span.amount {\r\n+      color: #000; // Ou la couleur de votre thème pour le total\r\n+    }\r\n+  }\r\n+}\r\n"
                 }
             ],
             "date": 1747865150067,

@@ -123,6 +123,79 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 }
 
+// --- Filter Bar ---
+.filter-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; // Allow items to wrap on smaller screens
+  gap: 16px; // Space between label, button group, and clear button
+  padding: 12px 16px;
+  background-color: $container-background; // Use existing variable
+  border-radius: $border-radius; // Use existing variable
+  box-shadow: $card-shadow; // Use existing variable
+  margin-bottom: 24px; // Space below the filter bar
+
+  .filter-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-color-secondary;
+    margin-right: 8px; // Space after the label
+  }
+
+  .filter-buttons-group {
+    display: flex;
+    gap: 8px; // Space between filter buttons
+    flex-wrap: wrap;
+  }
+
+  .filter-button {
+    border: 1px solid $border-color;
+    background-color: #fff;
+    color: $text-color-primary;
+    border-radius: $border-radius;
+    padding: 8px 12px; // Adjusted padding
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex; // To align icon and text
+    align-items: center;
+    gap: 6px; // Space between icon and text
+
+    mat-icon {
+      font-size: 18px; // Match other icon sizes
+      height: 18px;
+      width: 18px;
+    }
+
+    &:hover {
+      border-color: darken($border-color, 10%);
+      background-color: lighten($background-color, 2%);
+    }
+
+    &.active {
+      background-color: $primary-color;
+      color: $text-color-light;
+      border-color: $primary-color;
+      font-weight: 600;
+
+      &:hover {
+        background-color: darken($primary-color, 8%);
+      }
+    }
+  }
+
+  .clear-filters-button { // Uses .action-button styles by class, specific overrides here
+    margin-left: auto; // Pushes it to the right
+    background-color: $cancel-color; // A distinct color for clearing
+    color: $text-color-light;
+    border-radius: 8px; // Assurez-vous que cela correspond à .action-button si hérité
+    &:hover:not(:disabled) {
+      background-color: darken($cancel-color, 8%);
+    }
+  }
+}
+
 // --- Invoice Display Area ---
 .invoice-display {
   margin-top: 24px; // Espace sous l'en-tête
@@ -314,6 +387,19 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       .action-button, .add-invoice-button { // Assurez-vous que tous les boutons d'action sont ciblés
         width: 100%;
       }
+    }
+     }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch; // Make items take full width
+
+    .filter-buttons-group {
+      justify-content: flex-start; // Align buttons to the start
+    }
+    .clear-filters-button {
+      margin-left: 0; // Reset margin for stacked layout
+      margin-top: 10px; // Add some space if it stacks below buttons
     }
   }
 
