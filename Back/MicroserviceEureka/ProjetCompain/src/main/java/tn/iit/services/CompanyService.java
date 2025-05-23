@@ -2,7 +2,7 @@ package tn.iit.services;
 
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
-import tn.iit.clients.ProjectClient;
+
 import tn.iit.dto.request.CompanyRequest;
 import tn.iit.dto.response.CompanyResponse;
 import tn.iit.dto.response.ProjectResponse;
@@ -176,10 +176,6 @@ public class CompanyService implements ICompanyService {
     }
 
 
-        private final ProjectClient projectClient;
 
-        public List<ProjectResponse> getProjectsByCompany(String companyId) {
-            return projectClient.getProjectsByCompany(companyId);
-        }
 
 }

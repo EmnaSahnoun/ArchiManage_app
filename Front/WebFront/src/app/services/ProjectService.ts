@@ -14,7 +14,7 @@ export class ProjectService {
 
     getAllProjects(idCompany:string): Observable<any[]> {
         
-        return this.http.get<any[]>(`${this.apiUrl}/${idCompany}/projects`, { 
+        return this.http.get<any[]>(`${this.projetUrl}/project/company/${idCompany}`, { 
           headers: this.getApiHeaders()
         }).pipe(
           catchError(this.handleError)

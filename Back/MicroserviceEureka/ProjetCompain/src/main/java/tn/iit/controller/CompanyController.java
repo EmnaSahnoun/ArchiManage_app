@@ -25,7 +25,6 @@ import tn.iit.exception.CompanyNotFoundException;
 import tn.iit.services.CompanyService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import tn.iit.services.ProjectService;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
            allowedHeaders = "*",
@@ -35,7 +34,7 @@ import tn.iit.services.ProjectService;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private  ProjectService projectService;
+
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/all")
@@ -92,11 +91,6 @@ public CompanyResponse updateCompany(@PathVariable String id,
 
 
 
-    @GetMapping("/{companyId}/projects")
-    public ResponseEntity<List<ProjectResponse>> getCompanyProjects(@PathVariable String companyId) {
-        List<ProjectResponse> projects = projectService.getProjectsByCompany(companyId);
-        return ResponseEntity.ok(projects);
-    }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<?> getCompanyByName(@PathVariable String name) {
