@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 74,
+            "activePatchIndex": 75,
             "patches": [
                 {
                     "date": 1746257287810,
@@ -304,6 +304,10 @@
                 {
                     "date": 1746358233206,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -266,11 +266,11 @@\n     }\r\n   }\r\n   .inline-edit-textarea {\r\n     resize: vertical; // Permet le redimensionnement vertical\r\n-    min-height: auto // Hauteur minimale basée sur la ligne\r\n+    min-height: auto; // Hauteur minimale basée sur la ligne\r\n     overflow: auto; // Ajoute une barre de défilement si nécessaire\r\n- \r\n+    height: auto;\r\n   }\r\n   .inline-edit-dates {\r\n     display: flex;\r\n     gap: 5px;\r\n"
+                },
+                {
+                    "date": 1748219408798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n     padding: 20px;\r\n     font-family: 'Poppins', sans-serif;\r\n     padding: 20px;\r\n     background: #F1F1F1;\r\n-  height: 95vh;\r\n+  height: 9vh;\r\n     \r\n   }\r\n   \r\n   .tabs {\r\n"
                 }
             ],
             "date": 1746257287810,

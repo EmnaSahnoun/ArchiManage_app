@@ -36,59 +36,102 @@
           <p class="task-description">{{ task?.description }}</p>
         </div>
         <div class="task-section">
-          <h3>Subtasks</h3>
+          <div class="subtasks-header">
+            <h3>Subtasks</h3>
+            <button mat-icon-button class="add-subtask-btn" (click)="toggleAddSubtaskForm()" [matTooltip]="isAddingSubtask ? 'Annuler l\'ajout' : 'Ajouter une sous-tâche'">
+              <i class="bi" [ngClass]="isAddingSubtask ? 'bi-x-circle' : 'bi-plus-circle-dotted'"></i>
+            </button>
+          </div>
           <div *ngIf="isLoadingSubtasks" class="loading-indicator">Loading subtasks...</div>
           <div *ngIf="!isLoadingSubtasks">
             <div class="subtasks-list detailed-subtasks">
-              <div class="subtask-item" *ngFor="let subtask of subtasks" [class.editing]="editingSubtaskId === subtask.id">
-                <!-- Display Mode -->
-                <div class="subtask-info-display" *ngIf="editingSubtaskId !== subtask.id">
-                  <span class="subtask-name" [matTooltip]="subtask.name">{{ subtask.name }}</span>
-                  <span class="subtask-dates">{{ subtask.startDate | date:'dd/MM/yy' }} - {{ subtask.endDate | date:'dd/MM/yy' }}</span>
-                  <span class="subtask-priority-badge" [ngClass]="subtask.priority?.toLowerCase()">{{ subtask.priority }}</span>
-                  <span class="subtask-status-badge" [ngClass]="subtask.status?.replace('_', '-').toLowerCase()">{{ subtask.status }}</span>
-                   <div class="subtask-actions">
-                    <button mat-icon-button class="edit-btn-subtask" (click)="startEditSubtask(subtask); $event.stopPropagation()" matTooltip="Modifier la sous-tâche">
-                      <i class="bi bi-pencil icon"></i>
-                 
-                    </button>
-                    <button mat-icon-button class="delete-btn-subtask" (click)="deleteSubtask(subtask.id, subtask.name); $event.stopPropagation()" matTooltip="Supprimer la sous-tâche">
-                      <i class="bi bi-trash icon"></i>
-                    </button>
+<!-- Formulaire d'ajout de sous-tâche -->
+              <div class="subtask-item add-new-subtask-form" *ngIf="isAddingSubtask">
+                <div class="subtask-info-edit"> <!-- Réutilise la classe pour la structure en colonne -->
+                  <div class="subtask-edit-row subtask-edit-row-top"> <!-- Première ligne -->
+                    <input type="text" [(ngModel)]="newSubtaskData.name" placeholder="Nom de la nouvelle sous-tâche" class="form-control form-control-sm subtask-edit-name">
+                    <div class="subtask-edit-dates">
+                      <input type="date" [(ngModel)]="newSubtaskData.startDate" class="form-control form-control-sm">
+                      <span>-</span>
+                      <input type="date" [(ngModel)]="newSubtaskData.endDate" class="form-control form-control-sm">
+                    </div>
                   </div>
-   </div>
-               <!-- Edit Mode -->
-                <div class="subtask-info-edit" *ngIf="editingSubtaskId === subtask.id">
-                 <input type="text" [(ngModel)]="editedSubtaskData.name" placeholder="Nom de la sous-tâche" class="form-control form-control-sm subtask-edit-name">
-                   <div class="subtask-edit-dates">
-                    <input type="date" [(ngModel)]="editedSubtaskData.startDate" class="form-control form-control-sm">
-                    <span>-</span>
-                    <input type="date" [(ngModel)]="editedSubtaskData.endDate" class="form-control form-control-sm">
+                  <div class="subtask-edit-row subtask-edit-row-bottom"> <!-- Deuxième ligne -->
+                    <div class="subtask-edit-selects">
+                      <select [(ngModel)]="newSubtaskData.priority" class="form-select form-select-sm subtask-edit-priority">
+                        <option *ngFor="let p of taskPriorityOptions" [value]="p">{{p}}</option>
+                      </select>
+                      <select [(ngModel)]="newSubtaskData.status" class="form-select form-select-sm subtask-edit-status">
+                        <option *ngFor="let s of taskStatusOptions" [value]="s">{{s}}</option>
+                      </select>
+                    </div>
+                    <div class="subtask-actions-edit">
+                      <button mat-icon-button class="save-btn-subtask" (click)="saveNewSubtask()" matTooltip="Enregistrer la nouvelle sous-tâche">
+                        <i class="bi bi-check-lg icon"></i>
+                      </button>
+                      <button mat-icon-button class="cancel-btn-subtask" (click)="toggleAddSubtaskForm()" matTooltip="Annuler l'ajout">
+                        <i class="bi bi-x-lg icon"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div class="subtask-edit-selects">
-                   <select [(ngModel)]="editedSubtaskData.priority" class="form-select form-select-sm subtask-edit-priority">
-                       <option *ngFor="let p of taskPriorityOptions" [value]="p">{{p}}</option>
-                              </select>
-                    <select [(ngModel)]="editedSubtaskData.status" class="form-select form-select-sm subtask-edit-status">
-                              <option *ngFor="let s of taskStatusOptions" [value]="s">{{s}}</option>
-                         </select>
-                  </div>
-                  <div class="subtask-actions-edit">
-                     <button mat-icon-button class="save-btn-subtask" (click)="saveSubtaskEdit()" matTooltip="Enregistrer">
-                      <i class="bi bi-check-lg icon"></i>
-                  
-                    </button>
-                    <button mat-icon-button class="cancel-btn-subtask" (click)="cancelSubtaskEdit()" matTooltip="Annuler">
-                      <i class="bi bi-x-lg icon"></i>
-                   </button>
-                  </div>
-
                 </div>
               </div>
-              <div *ngIf="!subtasks || subtasks.length === 0" class="no-comments">
-              
-                Aucune sous-tâche assignée.
+              <!-- Liste des sous-tâches existantes -->
+           
 
+              <div class="subtask-item" *ngFor="let subtask of subtasks" [class.editing]="editingSubtaskId === subtask.id">
+                <!-- Display Mode -->
+                <ng-container *ngIf="editingSubtaskId !== subtask.id">
+                  <div class="subtask-info-display">
+                    <span class="subtask-name" [matTooltip]="subtask.name">{{ subtask.name }}</span>
+                    <span class="subtask-dates">{{ subtask.startDate | date:'dd/MM/yy' }} - {{ subtask.endDate | date:'dd/MM/yy' }}</span>
+                    <span class="subtask-priority-badge" [ngClass]="subtask.priority?.toLowerCase()">{{ subtask.priority }}</span>
+                    <span class="subtask-status-badge" [ngClass]="subtask.status?.replace('_', '-').toLowerCase()">{{ subtask.status }}</span>
+                    <div class="subtask-actions">
+                      <button mat-icon-button class="edit-btn-subtask" (click)="startEditSubtask(subtask); $event.stopPropagation()" matTooltip="Modifier la sous-tâche">
+                        <i class="bi bi-pencil icon"></i>
+                      </button>
+                      <button mat-icon-button class="delete-btn-subtask" (click)="deleteSubtask(subtask.id, subtask.name); $event.stopPropagation()" matTooltip="Supprimer la sous-tâche">
+                        <i class="bi bi-trash icon"></i>
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+
+               <!-- Edit Mode -->
+                <ng-container *ngIf="editingSubtaskId === subtask.id">
+                  <div class="subtask-info-edit"> <!-- Ce div sera maintenant display:flex; flex-direction: column -->
+                    <div class="subtask-edit-row subtask-edit-row-top"> <!-- Première ligne -->
+                      <input type="text" [(ngModel)]="editedSubtaskData.name" placeholder="Nom de la sous-tâche" class="form-control form-control-sm subtask-edit-name">
+                      <div class="subtask-edit-dates">
+                        <input type="date" [(ngModel)]="editedSubtaskData.startDate" class="form-control form-control-sm">
+                        <span>-</span>
+                        <input type="date" [(ngModel)]="editedSubtaskData.endDate" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                    <div class="subtask-edit-row subtask-edit-row-bottom"> <!-- Deuxième ligne -->
+                      <div class="subtask-edit-selects">
+                        <select [(ngModel)]="editedSubtaskData.priority" class="form-select form-select-sm subtask-edit-priority">
+                          <option *ngFor="let p of taskPriorityOptions" [value]="p">{{p}}</option>
+                        </select>
+                        <select [(ngModel)]="editedSubtaskData.status" class="form-select form-select-sm subtask-edit-status">
+                          <option *ngFor="let s of taskStatusOptions" [value]="s">{{s}}</option>
+                        </select>
+                      </div>
+                      <div class="subtask-actions-edit">
+                        <button mat-icon-button class="save-btn-subtask" (click)="saveSubtaskEdit()" matTooltip="Enregistrer">
+                          <i class="bi bi-check-lg icon"></i>
+                        </button>
+                        <button mat-icon-button class="cancel-btn-subtask" (click)="cancelSubtaskEdit()" matTooltip="Annuler">
+                          <i class="bi bi-x-lg icon"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+               <div *ngIf="!subtasks || subtasks.length === 0" class="no-subtasks">
+               Aucune sous-tâche assignée.
               </div>
             </div>
           </div>

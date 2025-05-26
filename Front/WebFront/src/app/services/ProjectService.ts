@@ -183,6 +183,14 @@ export class ProjectService {
         catchError(this.handleError)
       );
     }
+    addSubTask(parentId: string, taskData: any): Observable<any> {
+    const url = `${this.projetUrl}/task/${parentId}/subtasks`; // Endpoint basé sur la convention RESTful
+    const headers = this.getApiHeaders();
+  
+    return this.http.post(url, taskData, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
     updateTask(idTask: string, taskData: any): Observable<any> {
       const data = {
           ...taskData,

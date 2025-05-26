@@ -73,7 +73,7 @@ try{
                     history.setOldValue(change.getOldValue());
                     history.setNewValue(change.getNewValue());
                     history.setCreatedAt(LocalDateTime.now());
-
+                    history.setHistoryType("tache");
                     taskHistoryService.recordHistory(history);
                     LOGGER.info("Recorded change for task {}: {} from {} to {}",
                             taskEventDTO.getTaskId(),
@@ -106,7 +106,7 @@ try{
                 history.setAction(taskEventDTO.getAction());
 
                 history.setCreatedAt(LocalDateTime.now());
-
+                history.setHistoryType("tache");
                 taskHistoryService.recordHistory(history);
                 LOGGER.info("Recorded change for task {}: {} from {} to {}",
                         taskEventDTO.getTaskId());

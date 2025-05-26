@@ -67,11 +67,12 @@ body { // Apply base font to body if not already set globally
   border-radius: $border-radius-lg;
   padding: $spacing-unit * 3; // 24px
   box-shadow: $shadow-lg;
-  max-height: 90vh;
+  max-height: 110vh;
   overflow: hidden; // Important for child scrolling
   font-family: $font-family-sans-serif;
   max-width: 1200px; // Optional: constrain max width on very large screens
   margin: auto; // Center if max-width is applied
+  
 }
 
 // --- Task Header ---
@@ -248,7 +249,27 @@ body { // Apply base font to body if not already set globally
     }
   }
 }
+.subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-unit * 0.5; // Réduire la marge si h3 l'a déjà
 
+  h3 {
+    margin-bottom: $spacing-unit; // Ajuster la marge de h3 pour qu'elle s'aligne bien
+  }
+
+  .add-subtask-btn {
+    color: $primary-color;
+    i.bi {
+      font-size: 1.3rem; // Taille de l'icône
+    }
+    &:hover {
+      color: darken($primary-color, 10%);
+      background-color: rgba($primary-color, 0.08);
+    }
+  }
+}
 // --- Task Description ---
 .task-description {
   line-height: $line-height-base;
@@ -256,8 +277,17 @@ body { // Apply base font to body if not already set globally
   font-size: $font-size-sm;
   overflow-wrap: break-word;
   margin-bottom: $spacing-unit * 2;
-}
+  
 
+    &.add-new-subtask-form {
+      background-color: lighten($primary-color, 48%); // Légèrement différent de l'édition
+      border: 1px dashed lighten($primary-color, 30%);
+      border-radius: $border-radius;
+      padding: $spacing-unit * 1.5;
+      margin-bottom: $spacing-unit * 2; // Espace avant la liste des sous-tâches
+ 
+}
+}
 // --- Subtasks List ---
 .subtasks-list.detailed-subtasks {
   .subtask-item {
@@ -276,16 +306,23 @@ body { // Apply base font to body if not already set globally
     }
 
     &.editing {
+      
       background-color: lighten($primary-color, 45%);
       border-radius: $border-radius;
       padding: $spacing-unit * 1.5;
       margin: ($spacing-unit * 0.5) (-$spacing-unit * 1.5); // Negative margin to align with non-editing items if padding is added
     }
 
-    .subtask-info-display, .subtask-info-edit {
+    .subtask-info-display{
       display: flex;
       align-items: center;
       gap: $spacing-unit * 1.5; // 10px -> 12px
+        width: 100%; // Ceci assure que .subtask-info-edit prend toute la largeur de sa ligne
+    }
+      .subtask-info-edit { // Container for the two edit rows
+      display: flex;
+      flex-direction: column; // Stack the two rows vertically
+      gap: $spacing-unit * 1.5; // Vertical gap between the two rows
       width: 100%;
     }
 
@@ -326,8 +363,30 @@ body { // Apply base font to body if not already set globally
       }
     }
 
-    .subtask-info-edit {
-      gap: $spacing-unit;
+    // Styles for each row within the edit form
+    .subtask-edit-row {
+      display: flex;
+      align-items: center;
+      gap: $spacing-unit * 1.5; // Horizontal gap between items in a row
+      width: 100%;
+
+      // Specific flex distribution for items in each row
+      &.subtask-edit-row-top {
+        .subtask-edit-name { flex: 2 1 45%; } // Name takes more space
+        .subtask-edit-dates { flex: 3 1 55%; } // Dates take remaining space
+      }
+
+      &.subtask-edit-row-bottom {
+        .subtask-edit-selects { flex: 1 1 auto; } // Selects take available space
+        .subtask-actions-edit {
+          flex: 0 0 auto; // Actions take their content size
+          margin-left: auto; // Push actions to the right
+        }
+      }
+    }
+
+    // Styles for form elements, now children of .subtask-edit-row
+     
       .form-control-sm, .form-select-sm { // General styling for small form controls
         font-size: $font-size-xs;
         padding: ($spacing-unit * 0.5) ($spacing-unit); // 4px 8px
@@ -341,21 +400,21 @@ body { // Apply base font to body if not already set globally
           outline: 0;
         }
       }
-      .subtask-edit-name { flex: 2 1 180px; }
+     
       .subtask-edit-dates {
-        flex: 1 1 230px;
+   
         display: flex;
         align-items: center;
         gap: $spacing-unit * 0.5;
         input[type="date"] { flex: 1; min-width: 100px; }
       }
       .subtask-edit-selects {
-        flex: 1 1 200px;
+      
         display: flex;
         gap: $spacing-unit * 0.75;
         select { flex: 1; min-width: 90px; }
       }
-    }
+    
 
     .subtask-actions, .subtask-actions-edit {
       flex: 0 0 auto;
@@ -392,6 +451,7 @@ body { // Apply base font to body if not already set globally
         &.delete-btn-subtask .icon, &.delete-btn-subtask i.bi { color: $warn-color; }
       }
     }
+   
   }
 }
 
@@ -461,13 +521,13 @@ body { // Apply base font to body if not already set globally
 
     input[type="file"].form-control-sm { // Style file input
       font-size: $font-size-sm;
-      padding: $input-padding-y $input-padding-x;
+      padding: 4px 8px;
       border: 1px solid $input-border-color;
       border-radius: $border-radius;
       &::file-selector-button { // Style the button part of file input
-          padding: $input-padding-y $input-padding-x;
-          margin: -$input-padding-y 0 -$input-padding-y -$input-padding-x;
-          margin-inline-end: $input-padding-x;
+          padding: 4px 8px;
+          margin: -4px 0 -4px -8px;
+          margin-inline-end: 8px;
           color: $primary-color;
           background-color: lighten($primary-color, 40%);
           border: 0;
@@ -481,7 +541,7 @@ body { // Apply base font to body if not already set globally
     }
     textarea.form-control-sm { // Style textarea
       font-size: $font-size-sm;
-      padding: $input-padding-y $input-padding-x;
+      padding: 4px 8px;
       border: 1px solid $input-border-color;
       border-radius: $border-radius;
       resize: vertical;
@@ -556,7 +616,7 @@ body { // Apply base font to body if not already set globally
 // --- Comments Section ---
 %comment-form-textarea-base {
   width: 100%;
-  padding: $input-padding-y $input-padding-x;
+  padding: 4px 8px;
   border: 1px solid $input-border-color;
   border-radius: $border-radius;
   min-height: 80px;

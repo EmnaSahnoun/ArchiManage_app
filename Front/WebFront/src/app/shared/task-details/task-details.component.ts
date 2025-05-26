@@ -40,6 +40,8 @@ export class TaskDetailsComponent implements OnInit {
   // Options pour les select des sous-tâches
   taskStatusOptions = ['TODO', 'IN_PROGRESS', 'COMPLETED']; // Adaptez selon vos statuts
   taskPriorityOptions = ['LOW', 'MEDIUM', 'HIGH']; // Adaptez selon vos priorités
+isAddingSubtask = false;
+  newSubtaskData: any = {};
 
 name:string="";
   constructor(
@@ -63,14 +65,17 @@ name:string="";
     if (!this.task.activities) {
       this.task.activities = [];
     }
-    
+    if (!this.subtasks) { // Initialiser subtasks si ce n'est pas déjà fait
+      this.subtasks = [];
+    }
 
     if (this.task?.id) {
       this.loadDocuments();
       this.loadComments();
       this.loadActivities(); // Charger l'historique (activités)
-    } 
-    if (this.task?.subTaskIds?.length > 0) {
+    }
+    if (this.task?.subTaskIds?.length > 0 && this.task.id) { // Assurez-vous que task.id existe aussi
+
       this.getSubtasks(this.task.subTaskIds);
     }
    
@@ -202,7 +207,7 @@ this.isUploading = true;
 
     this.documentService.uploadFile(
       this.selectedFile,
-      this.fileDescription,
+      this.fileDescription ,
       this.task.id as string,
       this.task.projectId || null, // Ensure projectId is passed or null
       this.task.phaseId || null,   // Ensure phaseId is passed or null
@@ -380,6 +385,7 @@ loadActivities(): void {
 }
 
 generateActivityDescription(activity: TaskHistory): string {
+  console.log(activity.historyType)
   switch(activity.action) {
     case 'CREATE':
       if(activity.historyType==='commentaire'){
@@ -594,6 +600,65 @@ deleteSubtask(subtaskId: string, subtaskName: string): void {
       console.log('Subtask deletion cancelled');
     });
   }
+
+toggleAddSubtaskForm(): void {
+    this.isAddingSubtask = !this.isAddingSubtask;
+    if (this.isAddingSubtask) {
+      // S'assurer que l'ID de la phase de la tâche parente est disponible
+      if (!this.task.phaseId) {
+        console.error("L'ID de la phase de la tâche parente est manquant. Impossible d'initialiser le formulaire d'ajout de sous-tâche.");
+        alert("Erreur : L'ID de la phase parente est manquant.");
+        this.isAddingSubtask = false; // Empêcher l'ouverture du formulaire
+        return;
+      }
+      this.newSubtaskData = {
+        name: '',
+        description: '', // Optionnel, mais votre backend pourrait le gérer
+        startDate: this.formatDateForInput(new Date()), // Date d'aujourd'hui par défaut
+        endDate: '',
+        status: 'TODO', // Valeur par défaut
+        priority: 'MEDIUM', // Valeur par défaut
+        phaseId: this.task.phaseId // Crucial pour le backend
+      };
+      this.cancelSubtaskEdit(); // Annuler toute édition en cours
+    } else {
+      this.newSubtaskData = {}; // Réinitialiser si on ferme
+    }
+  }
+
+  saveNewSubtask(): void {
+    if (!this.newSubtaskData.name || !this.newSubtaskData.startDate || !this.newSubtaskData.endDate) {
+      alert('Veuillez remplir le nom, la date de début et la date de fin pour la nouvelle sous-tâche.');
+      return;
+    }
+
+    const payload = {
+      ...this.newSubtaskData,
+      startDate: this.formatDateForApi(this.newSubtaskData.startDate),
+      endDate: this.formatDateForApi(this.newSubtaskData.endDate),
+    };
+
+    this.projectService.addSubTask(this.task.id, payload).subscribe({
+      next: (createdSubtask) => {
+        this.subtasks = [createdSubtask, ...this.subtasks];
+
+        this.newSubtaskData = {}; // Réinitialiser le formulaire
+        this.isAddingSubtask = false;
+        
+        this.loadActivities(); // Recharger l'historique
+      },
+      error: (err) => {
+        console.error('Error creating subtask:', err);
+        alert(`Failed to create subtask: ${err.message || 'Unknown error'}`);
+      }
+    });
+  }
+
+  cancelAddSubtask(): void {
+    this.isAddingSubtask = false;
+    this.newSubtaskData = {};
+  }
+
   private formatDateForInput(dateSource: string | Date | null): string {
     if (!dateSource) return '';
     try {
