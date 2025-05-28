@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 207,
+            "activePatchIndex": 208,
             "patches": [
                 {
                     "date": 1746377030998,
@@ -836,6 +836,10 @@
                 {
                     "date": 1747030927126,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n       overflow-y: auto;\r\n       overflow-x: hidden;\r\n       min-height: 0;\r\n    padding-right: 15px;\r\n-   \r\n+   w\r\n     }\r\n   }\r\n \r\n   .task-section {\r\n"
+                },
+                {
+                    "date": 1748269694932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n   background: $container-background;\r\n   border-radius: $border-radius-lg;\r\n   padding: $spacing-unit * 3; // 24px\r\n   box-shadow: $shadow-lg;\r\n-  min-height: 110;\r\n+  min-height: 110v;\r\n   max-height: 110vh;\r\n   overflow: hidden; // Important for child scrolling\r\n   font-family: $font-family-sans-serif;\r\n   max-width: 1200px; // Optional: constrain max width on very large screens\r\n"
                 }
             ],
             "date": 1746377030998,

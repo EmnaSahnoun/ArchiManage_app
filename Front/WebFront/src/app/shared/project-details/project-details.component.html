@@ -80,7 +80,7 @@
   <div *ngIf="selectedTab === 'phases'" class="tab-content">
     <div class="header">
       <h2>Phases</h2>
-      <button mat-button class="add-phase" (click)="addPhase()">
+      <button mat-button class="add-phase" (click)="addPhase()" *ngIf="isAdmin||isSuperAdmin">
         <i class="bi bi-plus"></i> Ajouter une phase
       </button>
     </div>

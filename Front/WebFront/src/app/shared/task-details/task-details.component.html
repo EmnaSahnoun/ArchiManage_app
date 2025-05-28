@@ -18,23 +18,7 @@
       <!-- Left Column -->
      <div class="task-column task-main-details-column">
        
-        <div class="task-section">
-          
-          <div class="date-range">
-            <div class="date-item">
-              <label>Start Date</label>
-              <p>{{ task?.startDate | date:'mediumDate' }}</p>
-            </div>
-            <div class="date-item">
-              <label>End Date</label>
-              <p>{{ task?.endDate | date:'mediumDate' }}</p>
-            </div>
-          </div>
-        </div>
-  <div class="task-section">
-          <h3><i class="bi bi-text-left"></i> Description</h3>
-          <p class="task-description">{{ task?.description }}</p>
-        </div>
+        
         <div class="task-section">
           <div class="subtasks-header">
             <h3>Subtasks</h3>
@@ -82,18 +66,24 @@
               <div class="subtask-item" *ngFor="let subtask of subtasks" [class.editing]="editingSubtaskId === subtask.id">
                 <!-- Display Mode -->
                 <ng-container *ngIf="editingSubtaskId !== subtask.id">
-                  <div class="subtask-info-display">
-                    <span class="subtask-name" [matTooltip]="subtask.name">{{ subtask.name }}</span>
-                    <span class="subtask-dates">{{ subtask.startDate | date:'dd/MM/yy' }} - {{ subtask.endDate | date:'dd/MM/yy' }}</span>
-                    <span class="subtask-priority-badge" [ngClass]="subtask.priority?.toLowerCase()">{{ subtask.priority }}</span>
-                    <span class="subtask-status-badge" [ngClass]="subtask.status?.replace('_', '-').toLowerCase()">{{ subtask.status }}</span>
-                    <div class="subtask-actions">
-                      <button mat-icon-button class="edit-btn-subtask" (click)="startEditSubtask(subtask); $event.stopPropagation()" matTooltip="Modifier la sous-tâche">
-                        <i class="bi bi-pencil icon"></i>
-                      </button>
-                      <button mat-icon-button class="delete-btn-subtask" (click)="deleteSubtask(subtask.id, subtask.name); $event.stopPropagation()" matTooltip="Supprimer la sous-tâche">
-                        <i class="bi bi-trash icon"></i>
-                      </button>
+                 <div class="subtask-info-display"> <!-- Container principal pour les deux lignes -->
+                    <div class="subtask-display-row subtask-display-row-top"> <!-- Première ligne -->
+                      <span class="subtask-name" [matTooltip]="subtask.name">{{ subtask.name }}</span>
+                      <span class="subtask-dates">{{ subtask.startDate | date:'dd/MM/yy' }} - {{ subtask.endDate | date:'dd/MM/yy' }}</span>
+                    </div>
+                    <div class="subtask-display-row subtask-display-row-bottom"> <!-- Deuxième ligne -->
+                      <div class="subtask-attributes">
+                        <span class="subtask-priority-badge" [ngClass]="subtask.priority?.toLowerCase()">{{ subtask.priority }}</span>
+                        <span class="subtask-status-badge" [ngClass]="subtask.status?.replace('_', '-').toLowerCase()">{{ subtask.status }}</span>
+                      </div>
+                      <div class="subtask-actions">
+                        <button mat-icon-button class="edit-btn-subtask" (click)="startEditSubtask(subtask); $event.stopPropagation()" matTooltip="Modifier la sous-tâche">
+                          <i class="bi bi-pencil icon"></i>
+                        </button>
+                        <button mat-icon-button class="delete-btn-subtask" (click)="deleteSubtask(subtask.id, subtask.name); $event.stopPropagation()" matTooltip="Supprimer la sous-tâche">
+                          <i class="bi bi-trash icon"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </ng-container>
@@ -138,7 +128,30 @@
         </div>
   
         <div class="task-section">
-           <h3><i class="bi bi-folder2-open"></i> Documents</h3>
+            <div class="documents-header">
+            <h3><i class="bi bi-folder2-open"></i> Documents</h3>
+            <button mat-icon-button class="add-document-btn" (click)="toggleAddDocumentForm()" [matTooltip]="isAddingDocument ? 'Annuler l\'ajout de document' : 'Ajouter un document'">
+              <i class="bi" [ngClass]="isAddingDocument ? 'bi-x-circle' : 'bi-plus-circle-dotted'"></i>
+            </button>
+          </div>
+
+          <!-- Upload Document Section - Conditionnellement affiché -->
+          <div class="upload-document-section" *ngIf="isAddingDocument">
+            <h4>Téléverser un nouveau document</h4>
+            <div class="upload-form">
+              <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" class="form-control form-control-sm mb-2">
+              <textarea [(ngModel)]="fileDescription" placeholder="Description du document (optionnel)..." class="form-control form-control-sm mb-2" rows="2"></textarea>
+              <button mat-raised-button color="primary" (click)="uploadDocument()" [disabled]="!selectedFile || isUploading">
+                <i class="bi bi-upload"></i> {{ isUploading ? 'Téléversement (' + (uploadProgress !== null ? uploadProgress + '%' : '') + ')...' : 'Téléverser le fichier' }}
+              </button>
+              <div *ngIf="isUploading && uploadProgress !== null" class="progress mt-2" style="height: 10px;">
+                <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress" aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div *ngIf="selectedFile && !isUploading" class="selected-file-info mt-2">
+                Sélectionné : {{ selectedFile.name }} ({{ selectedFile.size | number }} octets)
+              </div>
+            </div>
+          </div>
           <div *ngIf="isLoadingDocuments" class="loading-indicator">Loading documents...</div>
           <div *ngIf="!isLoadingDocuments">
             <div class="documents-list">
@@ -171,20 +184,7 @@
             </div>
           </div>
 
-          <!-- Upload Document Section -->
-          <div class="upload-document-section task-section">
-            <h4>Upload New Document</h4>
-            <div class="upload-form">
-              <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" class="form-control form-control-sm mb-2">
-              <textarea [(ngModel)]="fileDescription" placeholder="Optional: Document description..." class="form-control form-control-sm mb-2" rows="2"></textarea>
-              <button mat-raised-button color="primary" (click)="uploadDocument()" [disabled]="!selectedFile">
-                <i class="bi bi-upload"></i> Upload File
-              </button>
-              <div *ngIf="selectedFile" class="selected-file-info mt-2">
-                Selected: {{ selectedFile.name }} ({{ selectedFile.size | number }} bytes)
-              </div>
-            </div>
-          </div>
+          
         </div>
         <div class="task-section">
           <h3>Historiques</h3>
@@ -224,7 +224,25 @@
       <!-- Middle Column: Comments -->
      
       <!-- Right Column: Activity History -->
-      <div class="task-column task-activity-column">
+       <div class="task-column task-activity-column">        
+       
+        <div class="task-section">
+          
+          <div class="date-range">
+            <div class="date-item">
+              <label>Start Date</label>
+              <p>{{ task?.startDate | date:'mediumDate' }}</p>
+            </div>
+            <div class="date-item">
+              <label>End Date</label>
+              <p>{{ task?.endDate | date:'mediumDate' }}</p>
+            </div>
+          </div>
+        </div>
+  <div class="task-section">
+          <h3><i class="bi bi-text-left"></i> Description</h3>
+          <p class="task-description">{{ task?.description }}</p>
+        </div>
          <div class="task-section">
           <h3>Comments</h3>
           <div *ngIf="isLoadingComments" class="loading-indicator">Loading comments...</div>

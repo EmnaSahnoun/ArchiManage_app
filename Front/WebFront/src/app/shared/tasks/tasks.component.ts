@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dialog/confirmation-dialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-tasks',
@@ -25,17 +26,22 @@ export class TasksComponent implements OnInit {
   done: any[] = [];
   phase:any;
   projet:any;
+    isAdmin:boolean=false;
+  isSuperAdmin:boolean=false;
   constructor(private router: Router, private route: ActivatedRoute, 
     private projectService:ProjectService,
      public dialog: MatDialog ,
-     private modalService: NgbModal
+     private modalService: NgbModal,
+     private authService:AuthService
+
   ) {}
 
   ngOnInit(): void {
     this.phase = history.state.phaseData;
     this.projet = history.state.projectData;
     console.log("phase dans task",this.phase)
-     // Assurez-vous que this.phase et this.phase.id existent avant de charger
+    this.isSuperAdmin=this.authService.isSuperAdmin();
+  this.isAdmin=this.authService.isAdmin();
      if (this.phase?.id) {
       this.loadTasks();
     }

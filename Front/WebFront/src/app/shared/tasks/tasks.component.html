@@ -14,7 +14,7 @@
       </p>
     </div>
     
-    <button class="add-task-btn" (click)="addTask()">
+    <button class="add-task-btn" (click)="addTask()" *ngIf="isAdmin||isSuperAdmin">
       <i class="bi bi-plus"></i> Ajouter une tâche
     </button>
   </div>

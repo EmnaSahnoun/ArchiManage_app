@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1744707614675,
@@ -124,6 +124,10 @@
                 {
                     "date": 1746387451692,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n-              <button mat-icon-button (click)=\"deleteTask(task, 'inProgress'); $event.stopPropagation()\">\r\n+              <button mat-icon-button (click)=\"deleteTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n  \r\n"
+                },
+                {
+                    "date": 1748270134393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n         {{ phase?.startDate | date:'dd/MM/yyyy' }} - {{ phase?.endDate | date:'dd/MM/yyyy' }}\r\n       </p>\r\n     </div>\r\n     \r\n-    <button class=\"add-task-btn\" (click)=\"addTask()\">\r\n+    <button class=\"add-task-btn\" (click)=\"addTask()\" *ngIf=\"isAdmin||isSuperAdmin\">\r\n       <i class=\"bi bi-plus\"></i> Ajouter une tâche\r\n     </button>\r\n   </div>\r\n \r\n@@ -113,9 +113,9 @@\n             <div class=\"task-actions\">\r\n               <button mat-icon-button (click)=\"editTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-pencil\"></i>\r\n               </button>\r\n-              <button mat-icon-button (click)=\"deleteTask(task, 'done'); $event.stopPropagation()\">\r\n+              <button mat-icon-button (click)=\"deleteTask(task); $event.stopPropagation()\">\r\n                 <i class=\"bi bi-trash\"></i>\r\n               </button>\r\n             </div>\r\n           \r\n"
                 }
             ],
             "date": 1744707614675,

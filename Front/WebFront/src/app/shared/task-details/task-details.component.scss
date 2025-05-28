@@ -67,7 +67,8 @@ body { // Apply base font to body if not already set globally
   border-radius: $border-radius-lg;
   padding: $spacing-unit * 3; // 24px
   box-shadow: $shadow-lg;
-  max-height: 110vh;
+  min-height: 110vh;
+  
   overflow: hidden; // Important for child scrolling
   font-family: $font-family-sans-serif;
   max-width: 1200px; // Optional: constrain max width on very large screens
@@ -507,12 +508,37 @@ body { // Apply base font to body if not already set globally
     }
   }
 }
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-unit * 0.5;
 
+  h3 {
+    margin-bottom: $spacing-unit; // Match subtasks-header h3
+  }
+
+  .add-document-btn {
+    color: $primary-color;
+    i.bi {
+      font-size: 1.3rem;
+    }
+    &:hover {
+      color: darken($primary-color, 10%);
+      background-color: rgba($primary-color, 0.08);
+    }
+  }
+}
 // --- Upload Document Section ---
 .upload-document-section {
-  margin-top: $spacing-unit * 2.5; // 20px
-  padding-top: $spacing-unit * 2.5;
-  border-top: 1px solid $border-color;
+  border: 1px dashed lighten($primary-color, 30%);
+  background-color: lighten($primary-color, 48%); // Slightly different from subtask editing
+  padding: $spacing-unit * 2;
+  margin-top: $spacing-unit * 1.5; // Space from the header or list
+  margin-bottom: $spacing-unit * 2; // Space before the documents list
+  border-radius: $border-radius;
+
+
 
   .upload-form {
     display: flex;
@@ -560,6 +586,14 @@ body { // Apply base font to body if not already set globally
       font-size: $font-size-xs;
       color: $text-color-secondary;
       margin-top: $spacing-unit * 0.5;
+      }
+    .progress { // Basic styling for the progress bar
+      height: 10px;
+      border-radius: $border-radius-sm;
+      .progress-bar {
+        background-color: $primary-color;
+        transition: width .3s ease;
+      }
     }
   }
 }
@@ -786,3 +820,122 @@ body { // Apply base font to body if not already set globally
   }
 }
 
+.detailed-subtasks {
+  .subtask-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef; // Ligne de séparation
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Styles pour le mode affichage des sous-tâches
+    .subtask-info-display {
+      display: flex;
+      flex-direction: column; // Organise les lignes verticalement
+      gap: 8px; // Espace entre la première et la deuxième ligne
+
+      .subtask-display-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; // Éléments espacés dans chaque ligne
+        width: 100%;
+
+        &.subtask-display-row-top {
+          .subtask-name {
+            font-weight: 500;
+       
+            margin-right: 16px; // Espace avant les dates
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.95rem;
+          }
+          .subtask-dates {
+            font-size: 0.85em;
+            color: #555;
+            white-space: nowrap; 
+            margin-left: auto; // Pousse cet élément complètement à droite.
+            flex-shrink: 0; // Empêche les dates de rétrécir si l'espace est limité.
+       
+          }
+        }
+
+        &.subtask-display-row-bottom {
+          .subtask-attributes {
+            display: flex;
+            align-items: center;
+            gap: 10px; // Espace entre le badge de priorité et de statut
+          }
+          // .subtask-actions seront à droite grâce à justify-content: space-between sur le parent
+        }
+      }
+    }
+
+    // Styles pour les badges (vous avez peut-être déjà des styles similaires)
+    .subtask-priority-badge, .subtask-status-badge {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-transform: capitalize; // Ou uppercase selon votre préférence
+      // Assurez-vous que les classes de couleur (low, medium, high, todo, in-progress, completed) sont définies
+      // Exemple :
+      // &.low { background-color: #28a745; color: white; }
+      // &.medium { background-color: #ffc107; color: #212529; }
+      // &.high { background-color: #dc3545; color: white; }
+      // &.todo { background-color: #6c757d; color: white; }
+      // &.in-progress { background-color: #007bff; color: white; } // Nom de classe généré par .replace('_', '-')
+      // &.completed { background-color: #17a2b8; color: white; }
+    }
+
+    // Styles pour les boutons d'action (vous avez peut-être déjà des styles similaires)
+    .subtask-actions {
+      .mat-icon-button { // Si vous utilisez Angular Material
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        .icon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    // Les styles pour .subtask-info-edit (mode édition) et .add-new-subtask-form (ajout)
+    // devraient déjà bien fonctionner avec leur structure à deux .subtask-edit-row.
+    // Vous pouvez ajuster leur 'gap' ou espacement si nécessaire.
+    .subtask-info-edit {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; // Espace entre les lignes du formulaire d'édition/ajout
+
+      .subtask-edit-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &.subtask-edit-row-top {
+          .subtask-edit-name {
+            flex-grow: 1;
+          }
+          .subtask-edit-dates {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+        }
+
+        &.subtask-edit-row-bottom {
+          .subtask-edit-selects {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+            select {
+              flex-grow: 1; // Pour que les selects prennent une largeur égale si souhaité
+            }
+          }
+        }
+      }
+    }
+  }
+}

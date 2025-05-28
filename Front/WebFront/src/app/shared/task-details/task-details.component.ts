@@ -10,7 +10,7 @@ import { ConfirmationDialogComponent } from '../../super-admin/confirmation-dial
 import { DocumentService } from '../../services/document.service';
 import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { MediaFileResponse } from '../../models/mediaFile';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -40,9 +40,11 @@ export class TaskDetailsComponent implements OnInit {
   // Options pour les select des sous-tâches
   taskStatusOptions = ['TODO', 'IN_PROGRESS', 'COMPLETED']; // Adaptez selon vos statuts
   taskPriorityOptions = ['LOW', 'MEDIUM', 'HIGH']; // Adaptez selon vos priorités
+  isAddingDocument = false; // Pour contrôler la visibilité du formulaire d'upload
+
 isAddingSubtask = false;
   newSubtaskData: any = {};
-
+ private originalPathForModal!: string;
 name:string="";
   constructor(
     public activeModal: NgbActiveModal,
@@ -50,13 +52,16 @@ name:string="";
     private activityService:ActivityService,
     private projectService: ProjectService,
     private modalService: NgbModal,
-    private documentService:DocumentService
+    private documentService:DocumentService,
+    private location: Location
 
   ) {
     
   }
 
   ngOnInit(): void {
+     this.originalPathForModal = this.location.path();
+
     console.log('Task details:', this.task);
     // Initialiser les tableaux pour éviter les erreurs dans le template
     if (!this.task.documents) { // Changed from attachments to documents
@@ -79,14 +84,61 @@ name:string="";
       this.getSubtasks(this.task.subTaskIds);
     }
    
-    
-    
+    if (this.task?.id) {
+      const newPath = `${this.originalPathForModal}/${this.task.id}`;
+      // Use replaceState to change the URL without adding to browser history,
+      // and to avoid issues if the path already ends with the task ID.
+      if (this.location.path() !== newPath && !this.location.path().endsWith(`/${this.task.id}`)) {
+        this.location.replaceState(newPath);
+      }
+    }
+    }
+
+  private arrayToDate(createdAtValue: any): Date | null {
+    if (createdAtValue instanceof Date) {
+      return createdAtValue; // Already a Date object
+    }
+    // Attempt to parse if it's a string or number (e.g., ISO string or timestamp)
+    if (typeof createdAtValue === 'string' || typeof createdAtValue === 'number') {
+      const d = new Date(createdAtValue);
+      if (!isNaN(d.getTime())) {
+        return d;
+      }
+    }
+
+    if (!Array.isArray(createdAtValue) || createdAtValue.length < 6) {
+      console.warn('createdAt is not a valid array or already processed:', createdAtValue);
+      return null; 
+    }
+
+    // Assuming array is [year, month, day, hour, minute, second, nanoseconds (optional)]
+    const year = createdAtValue[0];
+    const month = createdAtValue[1] - 1; // JS Date month is 0-indexed (0 for Jan, 1 for Feb, etc.)
+    const day = createdAtValue[2];
+    const hour = createdAtValue[3];
+    const minute = createdAtValue[4];
+    const second = createdAtValue[5];
+    const milliseconds = createdAtValue.length > 6 && typeof createdAtValue[6] === 'number' 
+                       ? Math.floor(createdAtValue[6] / 1000000) 
+                       : 0;
+
+    const newDate = new Date(year, month, day, hour, minute, second, milliseconds);
+
+    if (isNaN(newDate.getTime())) {
+      console.error('Failed to convert array to Date:', createdAtValue);
+      return null;
+    }
+    return newDate;
   }
 loadComments(): void {
     this.isLoadingComments = true;
     this.activityService.getCommentsByTaskId(this.task.id).subscribe({
       next: (comments) => {
-        this.task.comments = comments;
+        this.task.comments = comments.map(comment => ({
+          ...comment,
+             createdAt: this.arrayToDate(comment.createdAt) ?? new Date() // Fallback if null
+    
+        }));
         this.isLoadingComments = false;
         console.log('Comments loaded:', this.task.comments);
       },
@@ -236,6 +288,8 @@ this.isUploading = true;
             if (fileInput) {
               fileInput.value = ''; // Reset file input
             }
+             this.isAddingDocument = false; // Cacher le formulaire après succès
+          
             this.loadActivities(); // Reload activities if uploads are logged
             alert('File uploaded successfully!');
           }
@@ -247,6 +301,21 @@ this.isUploading = true;
             this.uploadProgress = null;
         }
     });
+  }
+ toggleAddDocumentForm(): void {
+    this.isAddingDocument = !this.isAddingDocument;
+    if (this.isAddingDocument) {
+      // Réinitialiser les champs lorsque le formulaire est affiché
+      this.selectedFile = null;
+      this.fileDescription = '';
+      this.uploadProgress = null;
+      this.isUploading = false; // S'assurer que l'état de chargement est réinitialisé
+      // Réinitialiser l'input de fichier
+      const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+    }
   }
 
  downloadDocument(doc: MediaFileResponse): void {
@@ -323,18 +392,23 @@ this.isUploading = true;
                 if (!this.task.comments) {
                     this.task.comments = [];
                 }
+                const transformedCreatedAt = this.arrayToDate(backendResponse.createdAt);
+
                const newCommentForUI: CommentResponse = {
                     ...backendResponse, // Contient généralement id, createdAt générés par le backend
-                    taskId: this.task.id, // Connu
-                    idUser: currentUserId, // Connu
-                    username: currentUsername, // Connu et crucial ici
-                    content: this.newCommentText.trim() // Connu
+                     taskId: backendResponse.taskId || this.task.id,
+                    idUser: backendResponse.idUser || currentUserId,
+                    username: backendResponse.username || currentUsername,
+                    content: backendResponse.content || this.newCommentText.trim(),
+                      createdAt: transformedCreatedAt ?? new Date() // Fallback if null
+         
+       
                 };
 
                 this.task.comments.unshift(newCommentForUI);
                 this.newCommentText = '';
                 this.loadActivities(); // Recharger les activités pour refléter le nouveau commentaire si nécessaire
-                this.loadComments();
+               
             },
             error: (err) => {
                 console.error('Error adding comment:', err);
@@ -351,16 +425,24 @@ loadActivities(): void {
       if (!activities || activities.length === 0) {
         return of([]); // Return empty array if no activities
       }
+       console.log('Raw activities from backend:', JSON.parse(JSON.stringify(activities)));
+     
       const userRequests: Observable<TaskHistory>[] = activities.map(activity => {
-        console.log('Processing activity:', activity);
+ console.log('Processing activity for user fetch:', JSON.parse(JSON.stringify(activity)));
+      
         if (activity.idUser) { // Check if idUser exists
           return this.agenceService.getUserById(activity.idUser).pipe(
             map(user => {
+               console.log(`User fetched for idUser ${activity.idUser} (Activity ID: ${activity.id}):`, JSON.parse(JSON.stringify(user)));
               return { ...activity, username: user.username }; // Assign username to activity object
             }),
             catchError(err => {
-              console.error(`Error fetching user ${activity.idUser} for activity:`, err);
-              return of({ ...activity, username: 'User N/A' }); // Fallback username
+               console.error(`Error fetching user ${activity.idUser} for activity (ID: ${activity.id}). Original activity.username: '${activity.username}'. Error:`, err);
+              // If fetching user details fails, use the username already present in the activity if it exists and is not an empty string,
+              // otherwise fallback to 'User N/A'.
+              const fallbackUsername = (activity.username && activity.username.trim() !== '') ? activity.username : 'User N/A';
+              return of({ ...activity, username: fallbackUsername });
+              
             })
           );
         } else {
@@ -385,7 +467,7 @@ loadActivities(): void {
 }
 
 generateActivityDescription(activity: TaskHistory): string {
-  console.log(activity.historyType)
+  
   switch(activity.action) {
     case 'CREATE':
       if(activity.historyType==='commentaire'){
@@ -418,7 +500,13 @@ generateActivityDescription(activity: TaskHistory): string {
      if (activity.fieldChanged) {
          return `a mis à jour le champ "${activity.fieldChanged}".`;
       }
-      return `a effectué une mise à jour.`;   
+      else{return `a effectué une mise à jour.`;}
+      case 'COMMENT':
+      if(activity.historyType==='commentaire'){
+        return `a ajouté un commentaire.`;
+      }
+      return `a effectué une mise à jour.`;
+      
     default:
        return `a effectué l'action : ${activity.action}.`;
   }
@@ -458,12 +546,19 @@ generateActivityDescription(activity: TaskHistory): string {
       content: updatedContent
     };
     this.activityService.updateComment(this.editingCommentId, commentUpdatePayload).subscribe({
-      next: (updatedComment) => {
+         next: (updatedCommentFromBackend) => {
+  
         // Mettre à jour le commentaire dans la liste this.task.comments
         const index = this.task.comments.findIndex((c: CommentResponse) => c.id === this.editingCommentId);
         if (index > -1) {
-          this.task.comments[index] = { ...this.task.comments[index], ...updatedComment, content: updatedContent }; // Assurez-vous que updatedComment contient toutes les infos
-        }
+          const transformedCreatedAt = this.arrayToDate(updatedCommentFromBackend.createdAt);
+          this.task.comments[index] = {
+             ...this.task.comments[index], // Conserver l'état existant côté client
+             ...updatedCommentFromBackend, // Étaler les propriétés de la réponse backend
+             content: updatedContent, // S'assurer que le contenu local est utilisé
+             createdAt: transformedCreatedAt ?? new Date() // Fallback to current date if transformation fails
+       
+            };   }
         this.cancelEditComment();
         this.loadActivities(); // Recharger l'historique si la modification de commentaire y est tracée
       },
@@ -576,7 +671,7 @@ deleteSubtask(subtaskId: string, subtaskName: string): void {
       windowClass: 'confirmation-modal'
     });
 
-    modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la sous-tâche "${subtaskName}" ?`;
+    modalRef.componentInstance.message = `Voulez-vous vraiment supprimer la sous-tâche "${subtaskName}"`;
 
     modalRef.result.then((confirm) => {
       if (confirm) {
@@ -681,6 +776,9 @@ toggleAddSubtaskForm(): void {
   }
 
   closeModal(): void {
+    if (this.originalPathForModal && this.location.path() !== this.originalPathForModal) {
+      this.location.replaceState(this.originalPathForModal);
+    }
     this.activeModal.close();
   }
 

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 121,
+            "activePatchIndex": 123,
             "patches": [
                 {
                     "date": 1741609885165,
@@ -492,6 +492,14 @@
                 {
                     "date": 1747604827171,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,10 @@\n       </li>\r\n       <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n-      <li mat-list-item routerLink=\"/invoice\" routerLinkActive=\"active\" *ngIf=\"isAdmin\"><a (click)=\"changeTitle('Factures')\">\r\n-        <i class=\"bi bi-briefcase\"></i> Factures</a>\r\n+      <li mat-list-item routerLink=\"/invoices\" routerLinkActive=\"active\" *ngIf=\"isAdmin\"><a (click)=\"changeTitle('Factures')\">\r\n+     <i class=\"bi bi-briefcase\"></i> Factures</a>\r\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n"
+                },
+                {
+                    "date": 1748301622672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n       <li mat-list-item routerLink=\"/invoices\" routerLinkActive=\"active\" *ngIf=\"isAdmin\"><a (click)=\"changeTitle('Factures')\">\r\n-     <i class=\"bi bi-briefcase\"></i> Factures</a>\r\n+     <i class=\"bi bi-briefcase\"></i> Documents Comerciaus</a>\r\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n"
+                },
+                {
+                    "date": 1748301628738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n       <li mat-list-item routerLink=\"/messages\" routerLinkActive=\"active\" *ngIf=\"isUser || isAdmin\">\r\n         <i class=\"bi bi-chat-dots\"></i> Messages\r\n       </li>\r\n       <li mat-list-item routerLink=\"/invoices\" routerLinkActive=\"active\" *ngIf=\"isAdmin\"><a (click)=\"changeTitle('Factures')\">\r\n-     <i class=\"bi bi-briefcase\"></i> Documents Comerciaus</a>\r\n+     <i class=\"bi bi-briefcase\"></i> Documents Commerciaux</a>\r\n       </li>\r\n       <li mat-list-item routerLink=\"/settings\" routerLinkActive=\"active\">\r\n         <i class=\"bi bi-gear\"></i> Settings\r\n       </li>\r\n"
                 }
             ],
             "date": 1741609885165,
