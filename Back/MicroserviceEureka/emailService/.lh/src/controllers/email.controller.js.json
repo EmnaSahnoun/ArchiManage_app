@@ -1,0 +1,114 @@
+{
+    "sourceFile": "src/controllers/email.controller.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 24,
+            "patches": [
+                {
+                    "date": 1748478248898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748478271947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { google } = require('googleapis');\r\n-const oAuth2Client = require('../config/auth');\r\n+const oAuth2Client = require('../config/auth.config');\r\n \r\n exports.sendEmail = async (req, res) => {\r\n   try {\r\n     const { accessToken, emailData } = req.body;\r\n"
+                },
+                {
+                    "date": 1748478818128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,5 +80,44 @@\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n };\r\n \r\n+app.delete('/emails/:emailId', async (req, res) => {\r\n+  try {\r\n+    const { accessToken, permanent = false } = req.query;\r\n+    const { emailId } = req.params;\r\n+    \r\n+    if (!accessToken || !emailId) {\r\n+      return res.status(400).json({ error: 'Paramètres manquants' });\r\n+    }\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    if (permanent === 'true') {\r\n+      // Suppression définitive (corbeille bypassée)\r\n+      await gmail.users.messages.delete({\r\n+        userId: 'me',\r\n+        id: emailId\r\n+      });\r\n+    } else {\r\n+      // Déplacement vers la corbeille\r\n+      await gmail.users.messages.trash({\r\n+        userId: 'me',\r\n+        id: emailId\r\n+      });\r\n+    }\r\n+\r\n+    res.json({ \r\n+      success: true, \r\n+      message: permanent ? 'Email supprimé définitivement' : 'Email déplacé vers la corbeille'\r\n+    });\r\n+  } catch (error) {\r\n+    console.error('Error deleting email:', error);\r\n+    res.status(500).json({ \r\n+      success: false, \r\n+      error: error.message,\r\n+      details: error.response?.data\r\n+    });\r\n+  }\r\n+});\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478832601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,9 +80,9 @@\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n };\r\n \r\n-app.delete('/emails/:emailId', async (req, res) => {\r\n+expo('/emails/:emailId', async (req, res) => {\r\n   try {\r\n     const { accessToken, permanent = false } = req.query;\r\n     const { emailId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478842049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,9 +80,9 @@\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n };\r\n \r\n-expo('/emails/:emailId', async (req, res) => {\r\n+exports.deleteEmail = async(req, res) => {\r\n   try {\r\n     const { accessToken, permanent = false } = req.query;\r\n     const { emailId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478850532,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,6 +118,8 @@\n       error: error.message,\r\n       details: error.response?.data\r\n     });\r\n   }\r\n-});\r\n+};\r\n+\r\n+\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478868639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,6 +120,6 @@\n     });\r\n   }\r\n };\r\n \r\n-\r\n+expo\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478874692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,6 +120,6 @@\n     });\r\n   }\r\n };\r\n \r\n-expo\r\n+exports.re\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478882362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,6 +120,24 @@\n     });\r\n   }\r\n };\r\n \r\n-exports.re\r\n+expo('/emails/:emailId/restore', async (req, res) => {\r\n+  try {\r\n+    const { accessToken } = req.query;\r\n+    const { emailId } = req.params;\r\n+    \r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    await gmail.users.messages.untrash({\r\n+      userId: 'me',\r\n+      id: emailId\r\n+    });\r\n+\r\n+    res.json({ success: true, message: 'Email restauré depuis la corbeille' });\r\n+  } catch (error) {\r\n+    console.error('Error restoring email:', error);\r\n+    res.status(500).json({ success: false, error: error.message });\r\n+  }\r\n+});\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478888190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,9 +120,9 @@\n     });\r\n   }\r\n };\r\n \r\n-expo('/emails/:emailId/restore', async (req, res) => {\r\n+exports.res('/emails/:emailId/restore', async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478897337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,9 +120,9 @@\n     });\r\n   }\r\n };\r\n \r\n-exports.res('/emails/:emailId/restore', async (req, res) => {\r\n+exports.restoreEmail = async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478926000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -138,6 +138,54 @@\n   } catch (error) {\r\n     console.error('Error restoring email:', error);\r\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n+};\r\n+\r\n+// Récupérer les emails entrants avec statut de lecture\r\n+app.get('/inbox-emails', async (req, res) => {\r\n+  try {\r\n+    const { accessToken, maxResults = 20 } = req.query;\r\n+    if (!accessToken) return res.status(400).json({ error: 'Access token requis' });\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    // Récupère les emails de la boîte de réception\r\n+    const response = await gmail.users.messages.list({\r\n+      userId: 'me',\r\n+      labelIds: ['INBOX'],\r\n+      maxResults: parseInt(maxResults)\r\n+    });\r\n+\r\n+    // Traitement détaillé de chaque email\r\n+    const emails = await Promise.all(\r\n+      response.data.messages.map(async (message) => {\r\n+        const msg = await gmail.users.messages.get({\r\n+          userId: 'me',\r\n+          id: message.id,\r\n+          format: 'metadata',\r\n+          metadataHeaders: ['From', 'To', 'Subject', 'Date']\r\n+        });\r\n+\r\n+        return {\r\n+          id: msg.data.id,\r\n+          from: msg.data.payload.headers.find(h => h.name === 'From').value,\r\n+          subject: msg.data.payload.headers.find(h => h.name === 'Subject').value,\r\n+          date: msg.data.payload.headers.find(h => h.name === 'Date').value,\r\n+          isRead: !msg.data.labelIds.includes('UNREAD'), // Statut de lecture\r\n+          labels: msg.data.labelIds\r\n+        };\r\n+      })\r\n+    );\r\n+\r\n+    res.json({ success: true, data: emails });\r\n+  } catch (error) {\r\n+    console.error('Error fetching inbox:', error);\r\n+    res.status(500).json({ \r\n+      success: false, \r\n+      error: error.message,\r\n+      details: error.response?.data\r\n+    });\r\n+  }\r\n });\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478932931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,9 +141,9 @@\n   }\r\n };\r\n \r\n // Récupérer les emails entrants avec statut de lecture\r\n-app.get('/inbox-emails', async (req, res) => {\r\n+exports('/inbox-emails', async (req, res) => {\r\n   try {\r\n     const { accessToken, maxResults = 20 } = req.query;\r\n     if (!accessToken) return res.status(400).json({ error: 'Access token requis' });\r\n \r\n"
+                },
+                {
+                    "date": 1748478940906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,9 +141,9 @@\n   }\r\n };\r\n \r\n // Récupérer les emails entrants avec statut de lecture\r\n-exports('/inbox-emails', async (req, res) => {\r\n+exports.getInboxEmails = async(req, res) => {\r\n   try {\r\n     const { accessToken, maxResults = 20 } = req.query;\r\n     if (!accessToken) return res.status(400).json({ error: 'Access token requis' });\r\n \r\n"
+                },
+                {
+                    "date": 1748478958615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,6 +186,32 @@\n       error: error.message,\r\n       details: error.response?.data\r\n     });\r\n   }\r\n+};\r\n+\r\n+//marquer un email comme lu\r\n+app.post('/mark-as-read', async (req, res) => {\r\n+  try {\r\n+    const { accessToken, emailId } = req.body;\r\n+    if (!accessToken || !emailId) {\r\n+      return res.status(400).json({ error: 'Paramètres manquants' });\r\n+    }\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    await gmail.users.messages.modify({\r\n+      userId: 'me',\r\n+      id: emailId,\r\n+      requestBody: {\r\n+        removeLabelIds: ['UNREAD']\r\n+      }\r\n+    });\r\n+\r\n+    res.json({ success: true });\r\n+  } catch (error) {\r\n+    console.error('Error marking as read:', error);\r\n+    res.status(500).json({ success: false, error: error.message });\r\n+  }\r\n });\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478964808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,9 +189,9 @@\n   }\r\n };\r\n \r\n //marquer un email comme lu\r\n-app.post('/mark-as-read', async (req, res) => {\r\n+expo('/mark-as-read', async (req, res) => {\r\n   try {\r\n     const { accessToken, emailId } = req.body;\r\n     if (!accessToken || !emailId) {\r\n       return res.status(400).json({ error: 'Paramètres manquants' });\r\n"
+                },
+                {
+                    "date": 1748478972972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,9 +189,9 @@\n   }\r\n };\r\n \r\n //marquer un email comme lu\r\n-expo('/mark-as-read', async (req, res) => {\r\n+exports.markAsRead = async (req, res) => {\r\n   try {\r\n     const { accessToken, emailId } = req.body;\r\n     if (!accessToken || !emailId) {\r\n       return res.status(400).json({ error: 'Paramètres manquants' });\r\n"
+                },
+                {
+                    "date": 1748479010513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,6 +212,40 @@\n   } catch (error) {\r\n     console.error('Error marking as read:', error);\r\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n+};\r\n+\r\n+// Vérifier si un email a été lu\r\n+app.get('/check-email-read/:emailId', async (req, res) => {\r\n+  try {\r\n+    const { accessToken } = req.query;\r\n+    const { emailId } = req.params;\r\n+    if (!accessToken || !emailId) {\r\n+      return res.status(400).send('Paramètres manquants');\r\n+    }\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    const response = await gmail.users.messages.get({\r\n+      userId: 'me',\r\n+      id: emailId,\r\n+      format: 'metadata',\r\n+      metadataHeaders: ['From', 'To', 'Subject']\r\n+    });\r\n+\r\n+    const isRead = !response.data.labelIds.includes('UNREAD');\r\n+    res.json({ \r\n+      success: true, \r\n+      data: {\r\n+        isRead,\r\n+        labels: response.data.labelIds,\r\n+        snippet: response.data.snippet\r\n+      }\r\n+    });\r\n+  } catch (error) {\r\n+    console.error('Error checking email status:', error);\r\n+    res.status(500).json({ success: false, error: error.message });\r\n+  }\r\n });\r\n // ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748479015835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n   }\r\n };\r\n \r\n // Vérifier si un email a été lu\r\n-app.get('/check-email-read/:emailId', async (req, res) => {\r\n+exports.('/check-email-read/:emailId', async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n     if (!accessToken || !emailId) {\r\n"
+                },
+                {
+                    "date": 1748479021634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n   }\r\n };\r\n \r\n // Vérifier si un email a été lu\r\n-exports.('/check-email-read/:emailId', async (req, res) => {\r\n+exports('/check-email-read/:emailId', async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n     if (!accessToken || !emailId) {\r\n"
+                },
+                {
+                    "date": 1748479030175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n   }\r\n };\r\n \r\n // Vérifier si un email a été lu\r\n-exports('/check-email-read/:emailId', async (req, res) => {\r\n+exports.checkEmailStatus = async(req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n     if (!accessToken || !emailId) {\r\n"
+                },
+                {
+                    "date": 1748479038828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -246,6 +246,5 @@\n   } catch (error) {\r\n     console.error('Error checking email status:', error);\r\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n-});\r\n-// ... (autres fonctions du contrôleur email)\n\\ No newline at end of file\n+};\r\n"
+                },
+                {
+                    "date": 1748479076142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,9 @@\n       details: error.response?.data\r\n     });\r\n   }\r\n };\r\n-\r\n+//Restaurer un email depuis la corbeille\r\n exports.restoreEmail = async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n"
+                },
+                {
+                    "date": 1748479131452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,8 +68,9 @@\n           snippet: msg.data.snippet,\r\n           payload: msg.data.payload,\r\n           internalDate: msg.data.internalDate,\r\n           labelIds: msg.data.labelIds,\r\n+          // Vérifier si l'email a été lu\r\n           isRead: !msg.data.labelIds.includes('UNREAD')\r\n         };\r\n       })\r\n     );\r\n"
+                },
+                {
+                    "date": 1748480992244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { google } = require('googleapis');\r\n-const oAuth2Client = require('../config/auth.config');\r\n+const oAuth2Client = require('../config/googleAuth');\r\n \r\n exports.sendEmail = async (req, res) => {\r\n   try {\r\n     const { accessToken, emailData } = req.body;\r\n"
+                }
+            ],
+            "date": 1748478248898,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\nconst oAuth2Client = require('../config/auth');\r\n\r\nexports.sendEmail = async (req, res) => {\r\n  try {\r\n    const { accessToken, emailData } = req.body;\r\n    if (!accessToken || !emailData) {\r\n      return res.status(400).send('Paramètres manquants');\r\n    }\r\n\r\n    oAuth2Client.setCredentials({ access_token: accessToken });\r\n    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n\r\n    const message = [\r\n      `From: ${emailData.from}`,\r\n      `To: ${emailData.to}`,\r\n      'Content-Type: text/html; charset=utf-8',\r\n      `Subject: ${emailData.subject}`,\r\n      '',\r\n      emailData.body\r\n    ].join('\\n');\r\n\r\n    const encodedMessage = Buffer.from(message)\r\n      .toString('base64')\r\n      .replace(/\\+/g, '-')\r\n      .replace(/\\//g, '_')\r\n      .replace(/=+$/, '');\r\n\r\n    const response = await gmail.users.messages.send({\r\n      userId: 'me',\r\n      requestBody: { raw: encodedMessage }\r\n    });\r\n\r\n    res.json({ success: true, data: response.data });\r\n  } catch (error) {\r\n    console.error('Error sending email:', error);\r\n    res.status(500).json({ \r\n      success: false, \r\n      error: error.message,\r\n      details: error.response?.data\r\n    });\r\n  }\r\n};\r\n\r\nexports.getSentEmails = async (req, res) => {\r\n  try {\r\n    const { accessToken, maxResults = 10 } = req.query;\r\n    if (!accessToken) return res.status(400).send('Access token requis');\r\n\r\n    oAuth2Client.setCredentials({ access_token: accessToken });\r\n    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n\r\n    const response = await gmail.users.messages.list({\r\n      userId: 'me',\r\n      labelIds: ['SENT'],\r\n      maxResults: parseInt(maxResults)\r\n    });\r\n\r\n    const messages = await Promise.all(\r\n      response.data.messages.map(async (message) => {\r\n        const msg = await gmail.users.messages.get({\r\n          userId: 'me',\r\n          id: message.id,\r\n          format: 'full'\r\n        });\r\n        return {\r\n          id: msg.data.id,\r\n          snippet: msg.data.snippet,\r\n          payload: msg.data.payload,\r\n          internalDate: msg.data.internalDate,\r\n          labelIds: msg.data.labelIds,\r\n          isRead: !msg.data.labelIds.includes('UNREAD')\r\n        };\r\n      })\r\n    );\r\n\r\n    res.json({ success: true, data: messages });\r\n  } catch (error) {\r\n    console.error('Error retrieving sent emails:', error);\r\n    res.status(500).json({ success: false, error: error.message });\r\n  }\r\n};\r\n\r\n// ... (autres fonctions du contrôleur email)"
+        }
+    ]
+}

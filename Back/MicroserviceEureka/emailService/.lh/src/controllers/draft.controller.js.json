@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/controllers/draft.controller.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1748478286134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748478293494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,2 +1,37 @@\n const { google } = require('googleapis');\r\n const oAuth2Client = require('../config/auth.config');\r\n+exports.getDrafts = async (req, res) => {\r\n+  try {\r\n+    const { accessToken, maxResults = 10 } = req.query;\r\n+    if (!accessToken) return res.status(400).send('Access token requis');\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    const response = await gmail.users.drafts.list({\r\n+      userId: 'me',\r\n+      maxResults: parseInt(maxResults)\r\n+    });\r\n+\r\n+    const drafts = await Promise.all(\r\n+      response.data.drafts.map(async (draft) => {\r\n+        const draftDetails = await gmail.users.drafts.get({\r\n+          userId: 'me',\r\n+          id: draft.id,\r\n+          format: 'full'\r\n+        });\r\n+        return {\r\n+          id: draft.id,\r\n+          message: draftDetails.data.message\r\n+        };\r\n+      })\r\n+    );\r\n+\r\n+    res.json({ success: true, data: drafts });\r\n+  } catch (error) {\r\n+    console.error('Error retrieving drafts:', error);\r\n+    res.status(500).json({ success: false, error: error.message });\r\n+  }\r\n+};\r\n+\r\n+// ... (autres fonctions du contrôleur draft)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478723391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,5 +33,33 @@\n     res.status(500).json({ success: false, error: error.message });\r\n   }\r\n };\r\n \r\n+\r\n+app.delete('/drafts/:draftId', async (req, res) => {\r\n+  try {\r\n+    const { accessToken } = req.query;\r\n+    const { draftId } = req.params;\r\n+    \r\n+    if (!accessToken || !draftId) {\r\n+      return res.status(400).json({ error: 'Paramètres manquants' });\r\n+    }\r\n+\r\n+    oAuth2Client.setCredentials({ access_token: accessToken });\r\n+    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n+\r\n+    await gmail.users.drafts.delete({\r\n+      userId: 'me',\r\n+      id: draftId\r\n+    });\r\n+\r\n+    res.json({ success: true, message: 'Brouillon supprimé avec succès' });\r\n+  } catch (error) {\r\n+    console.error('Error deleting draft:', error);\r\n+    res.status(500).json({ \r\n+      success: false, \r\n+      error: error.message,\r\n+      details: error.response?.data\r\n+    });\r\n+  }\r\n+});\r\n // ... (autres fonctions du contrôleur draft)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748478740154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n };\r\n \r\n \r\n-app.delete('/drafts/:draftId', async (req, res) => {\r\n+expo('/drafts/:draftId', async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { draftId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478755727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   }\r\n };\r\n \r\n \r\n-expo('/drafts/:draftId', async (req, res) => {\r\n+exports.deleteDraft = async(req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { draftId } = req.params;\r\n     \r\n"
+                },
+                {
+                    "date": 1748478762042,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,6 +60,5 @@\n       error: error.message,\r\n       details: error.response?.data\r\n     });\r\n   }\r\n-});\r\n-// ... (autres fonctions du contrôleur draft)\n\\ No newline at end of file\n+};\r\n"
+                },
+                {
+                    "date": 1748480992240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { google } = require('googleapis');\r\n-const oAuth2Client = require('../config/auth.config');\r\n+const oAuth2Client = require('../config/googleAuth');\r\n exports.getDrafts = async (req, res) => {\r\n   try {\r\n     const { accessToken, maxResults = 10 } = req.query;\r\n     if (!accessToken) return res.status(400).send('Access token requis');\r\n"
+                },
+                {
+                    "date": 1748481053200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,64 +1,50 @@\n-const { google } = require('googleapis');\r\n-const oAuth2Client = require('../config/googleAuth');\r\n-exports.getDrafts = async (req, res) => {\r\n+const gmailService = require(\"../services/gmailService\");\r\n+\r\n+// Récupérer les brouillons\r\n+const getDraftsHandler = async (req, res) => {\r\n   try {\r\n+    // Idem pour accessToken, préférer header/session\r\n     const { accessToken, maxResults = 10 } = req.query;\r\n-    if (!accessToken) return res.status(400).send('Access token requis');\r\n+    if (!accessToken) {\r\n+      return res.status(400).json({ success: false, error: \"Access token requis.\" });\r\n+    }\r\n \r\n-    oAuth2Client.setCredentials({ access_token: accessToken });\r\n-    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n-\r\n-    const response = await gmail.users.drafts.list({\r\n-      userId: 'me',\r\n-      maxResults: parseInt(maxResults)\r\n-    });\r\n-\r\n-    const drafts = await Promise.all(\r\n-      response.data.drafts.map(async (draft) => {\r\n-        const draftDetails = await gmail.users.drafts.get({\r\n-          userId: 'me',\r\n-          id: draft.id,\r\n-          format: 'full'\r\n-        });\r\n-        return {\r\n-          id: draft.id,\r\n-          message: draftDetails.data.message\r\n-        };\r\n-      })\r\n-    );\r\n-\r\n+    const drafts = await gmailService.getDrafts(accessToken, maxResults);\r\n     res.json({ success: true, data: drafts });\r\n   } catch (error) {\r\n-    console.error('Error retrieving drafts:', error);\r\n-    res.status(500).json({ success: false, error: error.message });\r\n+    console.error(\"Erreur lors de la récupération des brouillons:\", error);\r\n+    res.status(error.response?.status || 500).json({ \r\n+        success: false, \r\n+        error: \"Erreur lors de la récupération des brouillons.\",\r\n+        details: error.response?.data || error.message \r\n+    });\r\n   }\r\n };\r\n \r\n-\r\n-exports.deleteDraft = async(req, res) => {\r\n+// Supprimer un brouillon\r\n+const deleteDraftHandler = async (req, res) => {\r\n   try {\r\n+    // Idem pour accessToken\r\n     const { accessToken } = req.query;\r\n     const { draftId } = req.params;\r\n-    \r\n+\r\n     if (!accessToken || !draftId) {\r\n-      return res.status(400).json({ error: 'Paramètres manquants' });\r\n+      return res.status(400).json({ success: false, error: \"Paramètres manquants (accessToken, draftId)\" });\r\n     }\r\n \r\n-    oAuth2Client.setCredentials({ access_token: accessToken });\r\n-    const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n-\r\n-    await gmail.users.drafts.delete({\r\n-      userId: 'me',\r\n-      id: draftId\r\n-    });\r\n-\r\n-    res.json({ success: true, message: 'Brouillon supprimé avec succès' });\r\n+    await gmailService.deleteDraft(accessToken, draftId);\r\n+    res.json({ success: true, message: \"Brouillon supprimé avec succès\" });\r\n   } catch (error) {\r\n-    console.error('Error deleting draft:', error);\r\n-    res.status(500).json({ \r\n-      success: false, \r\n-      error: error.message,\r\n-      details: error.response?.data\r\n+    console.error(\"Erreur lors de la suppression du brouillon:\", error);\r\n+    res.status(error.response?.status || 500).json({ \r\n+        success: false, \r\n+        error: \"Erreur lors de la suppression du brouillon.\",\r\n+        details: error.response?.data || error.message \r\n     });\r\n   }\r\n };\r\n+\r\n+module.exports = {\r\n+  getDraftsHandler,\r\n+  deleteDraftHandler,\r\n+};\r\n"
+                }
+            ],
+            "date": 1748478286134,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\nconst oAuth2Client = require('../config/auth.config');\r\n"
+        }
+    ]
+}

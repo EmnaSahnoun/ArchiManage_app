@@ -1,0 +1,22 @@
+{
+    "sourceFile": "utils/gmail.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748453088256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748477299769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { google } = require('googleapis');\r\n-const { oauth2Client } = require('../config/oauth2');\r\n+const { oauth2Client } = require('../config/gmail.config');\r\n \r\n // Configurer Gmail API\r\n const gmail = google.gmail({ version: 'v1', auth: oauth2Client });\r\n \r\n"
+                }
+            ],
+            "date": 1748453088256,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\nconst { oauth2Client } = require('../config/oauth2');\r\n\r\n// Configurer Gmail API\r\nconst gmail = google.gmail({ version: 'v1', auth: oauth2Client });\r\n\r\n// Envoyer un email\r\nconst sendEmail = async (accessToken, from, to, subject, message) => {\r\n  try {\r\n    oauth2Client.setCredentials({ access_token: accessToken });\r\n    \r\n    const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;\r\n    const messageParts = [\r\n      `From: ${from}`,\r\n      `To: ${to}`,\r\n      `Subject: ${utf8Subject}`,\r\n      'MIME-Version: 1.0',\r\n      'Content-Type: text/html; charset=utf-8',\r\n      '',\r\n      message\r\n    ];\r\n    \r\n    const messageEncoded = Buffer.from(messageParts.join('\\n'))\r\n      .toString('base64')\r\n      .replace(/\\+/g, '-')\r\n      .replace(/\\//g, '_')\r\n      .replace(/=+$/, '');\r\n    \r\n    const response = await gmail.users.messages.send({\r\n      userId: 'me',\r\n      requestBody: {\r\n        raw: messageEncoded\r\n      }\r\n    });\r\n    \r\n    return response.data;\r\n  } catch (error) {\r\n    console.error('Error sending email:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\n// Lire les emails\r\nconst getEmails = async (accessToken, maxResults = 10) => {\r\n  try {\r\n    oauth2Client.setCredentials({ access_token: accessToken });\r\n    \r\n    const response = await gmail.users.messages.list({\r\n      userId: 'me',\r\n      maxResults\r\n    });\r\n    \r\n    const messages = response.data.messages || [];\r\n    const emails = [];\r\n    \r\n    for (const message of messages) {\r\n      const email = await gmail.users.messages.get({\r\n        userId: 'me',\r\n        id: message.id,\r\n        format: 'full'\r\n      });\r\n      emails.push(email.data);\r\n    }\r\n    \r\n    return emails;\r\n  } catch (error) {\r\n    console.error('Error fetching emails:', error);\r\n    throw error;\r\n  }\r\n};\r\n\r\nmodule.exports = { sendEmail, getEmails };"
+        }
+    ]
+}

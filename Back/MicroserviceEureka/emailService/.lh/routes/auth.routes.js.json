@@ -1,0 +1,18 @@
+{
+    "sourceFile": "routes/auth.routes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748477816155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748477816155,
+            "name": "Commit-0",
+            "content": "const express = require('express');\r\nconst router = express.Router();\r\nconst { authorizationUrl, oauth2Client } = require('../src/config/gmail.config');\r\nconst axios = require('axios');\r\n\r\n// Initier le flux OAuth\r\nrouter.get('/google', (req, res) => {\r\n  res.redirect(authorizationUrl);\r\n});\r\n\r\n// Callback après autorisation\r\nrouter.get('/google/callback', async (req, res) => {\r\n  const { code } = req.query;\r\n  \r\n  try {\r\n    const { tokens } = await oauth2Client.getToken(code);\r\n    oauth2Client.setCredentials(tokens);\r\n    \r\n    // Renvoyer les tokens au frontend (à adapter selon votre besoin de sécurité)\r\n    res.redirect(`${process.env.FRONTEND_URL}?access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}`);\r\n  } catch (error) {\r\n    console.error('Error getting tokens:', error);\r\n    res.status(500).send('Authentication failed');\r\n  }\r\n});\r\n\r\n// Rafraîchir le token\r\nrouter.post('/refresh-token', async (req, res) => {\r\n  const { refresh_token } = req.body;\r\n  \r\n  try {\r\n    const response = await axios.post('https://oauth2.googleapis.com/token', {\r\n      client_id: process.env.CLIENT_ID,\r\n      client_secret: process.env.CLIENT_SECRET,\r\n      refresh_token,\r\n      grant_type: 'refresh_token'\r\n    });\r\n    \r\n    res.json({\r\n      access_token: response.data.access_token,\r\n      expires_in: response.data.expires_in\r\n    });\r\n  } catch (error) {\r\n    console.error('Error refreshing token:', error);\r\n    res.status(500).send('Token refresh failed');\r\n  }\r\n});\r\n\r\nmodule.exports = router;"
+        }
+    ]
+}

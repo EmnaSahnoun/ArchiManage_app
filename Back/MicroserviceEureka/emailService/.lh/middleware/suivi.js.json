@@ -1,0 +1,22 @@
+{
+    "sourceFile": "middleware/suivi.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748476598259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748476609815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,5 +36,6 @@\n     'X-RateLimit-Reset': Math.floor((rateLimitStore.lastReset + timeWindow) / 1000)\r\n   });\r\n \r\n   next();\r\n-});\n\\ No newline at end of file\n+});\r\n+\r\n"
+                }
+            ],
+            "date": 1748476598259,
+            "name": "Commit-0",
+            "content": "const rateLimitStore = {\r\n  count: 0,\r\n  lastReset: Date.now(),\r\n  quota: 250 // 250 requêtes/minute\r\n};\r\n\r\n// Middleware à ajouter avant vos routes Gmail\r\napp.use('/gmail-api', (req, res, next) => {\r\n  const now = Date.now();\r\n  const timeWindow = 60 * 1000; // 1 minute\r\n  \r\n  // Réinitialisation du compteur si la fenêtre de temps est écoulée\r\n  if (now - rateLimitStore.lastReset > timeWindow) {\r\n    rateLimitStore.count = 0;\r\n    rateLimitStore.lastReset = now;\r\n  }\r\n\r\n  // Vérification du quota\r\n  if (rateLimitStore.count >= rateLimitStore.quota) {\r\n    const waitTime = Math.ceil((rateLimitStore.lastReset + timeWindow - now) / 1000);\r\n    return res.status(429).json({\r\n      error: `Quota dépassé. Attendez ${waitTime} secondes.`,\r\n      limits: {\r\n        used: rateLimitStore.count,\r\n        remaining: 0,\r\n        reset: new Date(rateLimitStore.lastReset + timeWindow)\r\n      }\r\n    });\r\n  }\r\n\r\n  // Incrémentation et ajout des headers\r\n  rateLimitStore.count++;\r\n  res.set({\r\n    'X-RateLimit-Limit': rateLimitStore.quota,\r\n    'X-RateLimit-Remaining': rateLimitStore.quota - rateLimitStore.count,\r\n    'X-RateLimit-Reset': Math.floor((rateLimitStore.lastReset + timeWindow) / 1000)\r\n  });\r\n\r\n  next();\r\n});"
+        }
+    ]
+}

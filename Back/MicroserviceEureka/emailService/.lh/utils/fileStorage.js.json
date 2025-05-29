@@ -1,0 +1,18 @@
+{
+    "sourceFile": "utils/fileStorage.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748525035711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748525035711,
+            "name": "Commit-0",
+            "content": "const fs = require('fs');\r\nconst path = require('path');\r\nconst DATA_DIR = path.join(__dirname, '../../data/users');\r\n\r\n// Créer le dossier utilisateur s'il n'existe pas\r\nconst ensureUserDir = (userId) => {\r\n  const userDir = path.join(DATA_DIR, userId);\r\n  const draftsDir = path.join(userDir, 'drafts');\r\n  \r\n  if (!fs.existsSync(userDir)) {\r\n    fs.mkdirSync(userDir, { recursive: true });\r\n    fs.mkdirSync(draftsDir);\r\n    fs.writeFileSync(path.join(userDir, 'emails.json'), '[]');\r\n  }\r\n  \r\n  return { userDir, draftsDir };\r\n};\r\n\r\n// Sauvegarder les emails\r\nconst saveEmails = (userId, emails) => {\r\n  const { userDir } = ensureUserDir(userId);\r\n  const filePath = path.join(userDir, 'emails.json');\r\n  fs.writeFileSync(filePath, JSON.stringify(emails, null, 2));\r\n};\r\n\r\n// Charger les emails\r\nconst loadEmails = (userId) => {\r\n  const { userDir } = ensureUserDir(userId);\r\n  const filePath = path.join(userDir, 'emails.json');\r\n  return JSON.parse(fs.readFileSync(filePath));\r\n};\r\n\r\n// Sauvegarder un brouillon\r\nconst saveDraft = (userId, draftId, draftData) => {\r\n  const { draftsDir } = ensureUserDir(userId);\r\n  const filePath = path.join(draftsDir, `${draftId}.json`);\r\n  fs.writeFileSync(filePath, JSON.stringify(draftData, null, 2));\r\n};\r\n\r\n// Charger un brouillon\r\nconst loadDraft = (userId, draftId) => {\r\n  const { draftsDir } = ensureUserDir(userId);\r\n  const filePath = path.join(draftsDir, `${draftId}.json`);\r\n  return JSON.parse(fs.readFileSync(filePath));\r\n};\r\n\r\n// Supprimer un brouillon\r\nconst deleteDraftFile = (userId, draftId) => {\r\n  const { draftsDir } = ensureUserDir(userId);\r\n  const filePath = path.join(draftsDir, `${draftId}.json`);\r\n  if (fs.existsSync(filePath)) {\r\n    fs.unlinkSync(filePath);\r\n  }\r\n};\r\n\r\n// Supprimer un email de la liste\r\nconst deleteEmailFromFile = (userId, emailId) => {\r\n  const emails = loadEmails(userId);\r\n  const updatedEmails = emails.filter(email => email.id !== emailId);\r\n  saveEmails(userId, updatedEmails);\r\n};\r\n\r\nmodule.exports = {\r\n  saveEmails,\r\n  loadEmails,\r\n  saveDraft,\r\n  loadDraft,\r\n  deleteDraftFile,\r\n  deleteEmailFromFile\r\n};"
+        }
+    ]
+}

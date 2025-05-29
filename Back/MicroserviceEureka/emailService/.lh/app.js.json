@@ -1,0 +1,26 @@
+{
+    "sourceFile": "app.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748478604298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748479236490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n const express = require('express');\r\n const cors = require('cors');\r\n-const apiRouter = require('./routes/api');\r\n+const authRoutes = require('./src/routes/auth.routes');\r\n+const emailRoutes = require('./src/routes/email.routes');\r\n+const draftRoutes = require('./src/routes/draft.routes');\r\n+const tokenRoutes = require('./src/routes/token.routes');\r\n \r\n const app = express();\r\n \r\n // Middleware\r\n"
+                },
+                {
+                    "date": 1748479255634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,10 @@\n app.use(cors());\r\n app.use(express.json());\r\n \r\n // Routes\r\n-app.use('/', apiRouter);\r\n+app.use('/auth', authRoutes);\r\n+app.use('/emails', emailRoutes);\r\n+app.use('/drafts', draftRoutes);\r\n+app.use('/token', tokenRoutes);\r\n \r\n module.exports = app;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1748478604298,
+            "name": "Commit-0",
+            "content": "const express = require('express');\r\nconst cors = require('cors');\r\nconst apiRouter = require('./routes/api');\r\n\r\nconst app = express();\r\n\r\n// Middleware\r\napp.use(cors());\r\napp.use(express.json());\r\n\r\n// Routes\r\napp.use('/', apiRouter);\r\n\r\nmodule.exports = app;"
+        }
+    ]
+}

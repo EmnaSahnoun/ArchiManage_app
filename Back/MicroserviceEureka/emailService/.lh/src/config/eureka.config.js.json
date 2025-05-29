@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/config/eureka.config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1748545828244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748550040738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,11 @@\n   instance: {\r\n     app: process.env.APP_NAME,\r\n     instanceId: `${process.env.APP_NAME}:${process.env.PORT}`,\r\n     hostName: process.env.EUREKA_INSTANCE_HOSTNAME,\r\n-    ipAddr: '127.0.0.1',\r\n-    statusPageUrl: `http://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/info`,\r\n-    healthCheckUrl: `http://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/health`,\r\n+    ipAddr: process.env.EUREKA_INSTANCE_HOSTNAME, // Important: utiliser le même hostname\r\n+    statusPageUrl: `https://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/info`,\r\n+    healthCheckUrl: `https://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/health`,\r\n     port: {\r\n       '$': parseInt(process.env.PORT),\r\n       '@enabled': true\r\n     },\r\n@@ -17,14 +17,16 @@\n       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n       name: 'MyOwn'\r\n     },\r\n     registerWithEureka: true,\r\n-    preferIpAddress: process.env.EUREKA_PREFER_IP_ADDRESS === 'true'\r\n+    preferIpAddress: false // Doit correspondre à la config Spring Boot\r\n   },\r\n   eureka: {\r\n-    host: new URL(process.env.EUREKA_SERVICE_URL).hostname,\r\n-    port: 443,\r\n-    servicePath: '/eureka/apps/',\r\n+    host: 'eureka.systeo.tn', // Le hostname seulement\r\n+    port: 443, // HTTPS standard\r\n+    servicePath: '/eureka/apps/', // Chemin spécifique\r\n     maxRetries: 10,\r\n-    requestRetryDelay: 2000\r\n+    requestRetryDelay: 2000,\r\n+    fetchRegistry: true,\r\n+    heartbeatInterval: 30000\r\n   }\r\n });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748550438997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,32 +1,31 @@\n-const Eureka = require('eureka-js-client').Eureka;\r\n-\r\n-module.exports = new Eureka({\r\n+const eurekaClient = new Eureka({\r\n   instance: {\r\n     app: process.env.APP_NAME,\r\n     instanceId: `${process.env.APP_NAME}:${process.env.PORT}`,\r\n     hostName: process.env.EUREKA_INSTANCE_HOSTNAME,\r\n-    ipAddr: process.env.EUREKA_INSTANCE_HOSTNAME, // Important: utiliser le même hostname\r\n+    ipAddr: process.env.EUREKA_INSTANCE_HOSTNAME,\r\n     statusPageUrl: `https://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/info`,\r\n     healthCheckUrl: `https://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/health`,\r\n+    securePort: 443,  // Explicit HTTPS port\r\n+    securePortEnabled: true,  // Enable HTTPS\r\n     port: {\r\n       '$': parseInt(process.env.PORT),\r\n-      '@enabled': true\r\n+      '@enabled': false  // Disable HTTP port\r\n     },\r\n     vipAddress: process.env.APP_NAME,\r\n     dataCenterInfo: {\r\n       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n       name: 'MyOwn'\r\n-    },\r\n-    registerWithEureka: true,\r\n-    preferIpAddress: false // Doit correspondre à la config Spring Boot\r\n+    }\r\n   },\r\n   eureka: {\r\n-    host: 'eureka.systeo.tn', // Le hostname seulement\r\n-    port: 443, // HTTPS standard\r\n-    servicePath: '/eureka/apps/', // Chemin spécifique\r\n+    host: 'eureka.systeo.tn',\r\n+    port: 443,  // HTTPS port\r\n+    servicePath: '/eureka/apps/',\r\n     maxRetries: 10,\r\n     requestRetryDelay: 2000,\r\n     fetchRegistry: true,\r\n-    heartbeatInterval: 30000\r\n+    heartbeatInterval: 30000,\r\n+    https: true  // Force HTTPS requests\r\n   }\r\n });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748550466895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,6 +26,13 @@\n     requestRetryDelay: 2000,\r\n     fetchRegistry: true,\r\n     heartbeatInterval: 30000,\r\n     https: true  // Force HTTPS requests\r\n-  }\r\n+  },\r\n+  requestMiddleware: {\r\n+    request(request, done) {\r\n+      request.protocol = 'https:';\r\n+      request.host = 'eureka.systeo.tn';\r\n+      request.port = 443;\r\n+      done(request);\r\n+    }\r\n });\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1748545828244,
+            "name": "Commit-0",
+            "content": "const Eureka = require('eureka-js-client').Eureka;\r\n\r\nmodule.exports = new Eureka({\r\n  instance: {\r\n    app: process.env.APP_NAME,\r\n    instanceId: `${process.env.APP_NAME}:${process.env.PORT}`,\r\n    hostName: process.env.EUREKA_INSTANCE_HOSTNAME,\r\n    ipAddr: '127.0.0.1',\r\n    statusPageUrl: `http://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/info`,\r\n    healthCheckUrl: `http://${process.env.EUREKA_INSTANCE_HOSTNAME}:${process.env.PORT}/health`,\r\n    port: {\r\n      '$': parseInt(process.env.PORT),\r\n      '@enabled': true\r\n    },\r\n    vipAddress: process.env.APP_NAME,\r\n    dataCenterInfo: {\r\n      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n      name: 'MyOwn'\r\n    },\r\n    registerWithEureka: true,\r\n    preferIpAddress: process.env.EUREKA_PREFER_IP_ADDRESS === 'true'\r\n  },\r\n  eureka: {\r\n    host: new URL(process.env.EUREKA_SERVICE_URL).hostname,\r\n    port: 443,\r\n    servicePath: '/eureka/apps/',\r\n    maxRetries: 10,\r\n    requestRetryDelay: 2000\r\n  }\r\n});"
+        }
+    ]
+}

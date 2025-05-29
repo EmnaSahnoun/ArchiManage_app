@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/config/googleAuth.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748481008380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748481008380,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\nrequire('dotenv').config(); // Assurez-vous que dotenv est chargé pour accéder aux variables d'environnement\r\n\r\nconst oAuth2Client = new google.auth.OAuth2(\r\n  process.env.CLIENT_ID,\r\n  process.env.CLIENT_SECRET,\r\n  process.env.REDIRECT_URI\r\n);\r\n\r\nmodule.exports = oAuth2Client;\r\n"
+        }
+    ]
+}

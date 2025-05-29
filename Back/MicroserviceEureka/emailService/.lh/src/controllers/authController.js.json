@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/controllers/authController.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1748522538228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748522544400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n       \"https://www.googleapis.com/auth/gmail.readonly\",\r\n       \"https://www.googleapis.com/auth/gmail.modify\",\r\n-      'https://www.googleapis.com/auth/gmail.modify', // Ajoutez ce scope\r\n-  'https://www.googleapis.com/auth/gmail.compose'\r\n+    // Ajoutez ce scope\r\n+  'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n     prompt: \"consent\", // Force l'affichage de l'écran de consentement\r\n   });\r\n"
+                },
+                {
+                    "date": 1748522551223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n       \"https://www.googleapis.com/auth/gmail.readonly\",\r\n       \"https://www.googleapis.com/auth/gmail.modify\",\r\n-    // Ajoutez ce scope\r\n-  'https://www.googleapis.com/auth/gmail.compose',\r\n+     'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n     prompt: \"consent\", // Force l'affichage de l'écran de consentement\r\n   });\r\n"
+                },
+                {
+                    "date": 1748523270161,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,12 +7,13 @@\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n       \"https://www.googleapis.com/auth/gmail.readonly\",\r\n       \"https://www.googleapis.com/auth/gmail.modify\",\r\n-     'https://www.googleapis.com/auth/gmail.compose',\r\n+      'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n-    prompt: \"consent\", // Force l'affichage de l'écran de consentement\r\n+    prompt: \"consent\",\r\n+  \r\n   });\r\n   res.redirect(url);\r\n };\r\n \r\n"
+                }
+            ],
+            "date": 1748522538228,
+            "name": "Commit-0",
+            "content": "const oAuth2Client = require(\"../config/googleAuth\");\r\n\r\n// Démarrer le flux d'authentification Google\r\nconst googleAuth = (req, res) => {\r\n  const url = oAuth2Client.generateAuthUrl({\r\n    access_type: \"offline\",\r\n    scope: [\r\n      \"https://www.googleapis.com/auth/gmail.send\",\r\n      \"https://www.googleapis.com/auth/gmail.readonly\",\r\n      \"https://www.googleapis.com/auth/gmail.modify\",\r\n      'https://www.googleapis.com/auth/gmail.modify', // Ajoutez ce scope\r\n  'https://www.googleapis.com/auth/gmail.compose'\r\n      \"https://mail.google.com/\",\r\n    ],\r\n    prompt: \"consent\", // Force l'affichage de l'écran de consentement\r\n  });\r\n  res.redirect(url);\r\n};\r\n\r\n// Gérer le callback après l'authentification Google\r\nconst googleAuthCallback = async (req, res) => {\r\n  try {\r\n    const { code } = req.query;\r\n    if (!code) {\r\n      return res.status(400).send(\"Code d'autorisation manquant.\");\r\n    }\r\n    const { tokens } = await oAuth2Client.getToken(code);\r\n    // Il est recommandé de ne pas afficher les tokens directement dans la réponse\r\n    // mais de les stocker de manière sécurisée côté serveur ou de les renvoyer au client\r\n    // via un mécanisme sécurisé pour qu'il les stocke (ex: localStorage, sessionStorage).\r\n    // Pour cet exemple, nous les affichons, mais ce n'est PAS une bonne pratique en production.\r\n    res.send(`Authentification réussie !<br>\r\n              Access Token: ${tokens.access_token}<br>\r\n              ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}\r\n              Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);\r\n\r\n  } catch (error) {\r\n    console.error(\"Erreur lors de l'échange du code d'autorisation:\", error);\r\n    res.status(500).send(\"Erreur d'authentification Google.\");\r\n  }\r\n};\r\n\r\n// Rafraîchir le token d'accès\r\nconst refreshToken = async (req, res) => {\r\n  try {\r\n    const { refreshToken } = req.body;\r\n    if (!refreshToken) {\r\n      return res.status(400).json({ success: false, error: \"Refresh token requis.\" });\r\n    }\r\n\r\n    // Créer une nouvelle instance ou cloner pour éviter les effets de bord\r\n    const tempClient = new google.auth.OAuth2(\r\n        oAuth2Client.clientId_,\r\n        oAuth2Client.clientSecret_,\r\n        oAuth2Client.redirectUri_\r\n    );\r\n    tempClient.setCredentials({ refresh_token: refreshToken });\r\n\r\n    const { credentials } = await tempClient.refreshAccessToken();\r\n    res.json({\r\n      success: true,\r\n      access_token: credentials.access_token,\r\n      expiry_date: credentials.expiry_date,\r\n    });\r\n  } catch (error) {\r\n    console.error(\"Erreur lors du rafraîchissement du token:\", error);\r\n    // Fournir plus de détails si l'erreur vient de l'API Google\r\n    const errorMessage = error.response?.data?.error_description || error.message;\r\n    res.status(error.response?.status || 500).json({ success: false, error: \"Impossible de rafraîchir le token.\", details: errorMessage });\r\n  }\r\n};\r\n\r\nmodule.exports = {\r\n  googleAuth,\r\n  googleAuthCallback,\r\n  refreshToken,\r\n};\r\n"
+        }
+    ]
+}

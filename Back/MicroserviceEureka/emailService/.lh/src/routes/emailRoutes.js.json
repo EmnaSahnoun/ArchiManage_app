@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/routes/emailRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1748481166361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748514912419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,6 +23,9 @@\n \r\n // Restaurer un email depuis la corbeille\r\n router.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n \r\n+router.get('/emails/:emailId/full', getFullEmailHandler);\r\n+router.get('/emails/with-attachments', getEmailsWithAttachmentsHandler);\r\n \r\n+\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748514920954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \r\n // Restaurer un email depuis la corbeille\r\n router.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n \r\n-router.get('/emails/:emailId/full', getFullEmailHandler);\r\n+router.get('/:emailId/full', getFullEmailHandler);\r\n router.get('/emails/with-attachments', getEmailsWithAttachmentsHandler);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748514926662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \r\n // Restaurer un email depuis la corbeille\r\n router.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n \r\n-router.get('/:emailId/full', getFullEmailHandler);\r\n+router.get('/:emailId/full', emailController.getFullEmailHandler);\r\n router.get('/emails/with-attachments', getEmailsWithAttachmentsHandler);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748514941308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,8 @@\n // Restaurer un email depuis la corbeille\r\n router.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n \r\n router.get('/:emailId/full', emailController.getFullEmailHandler);\r\n-router.get('/with-attachments', emailController);\r\n+router.get('/with-attachments', emailController.);\r\n \r\n \r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748519416095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,36 @@\n+const express = require(\"express\");\r\n+const emailController = require(\"../controllers/emailController\");\r\n+\r\n+const router = express.Router();\r\n+\r\n+// Envoyer un email\r\n+router.post(\"/send\", upload.any(), emailController.sendEmail);\r\n+router.get('/:emailId', emailController.getEmail);\r\n+router.get('/inbox/list', emailController.getInbox);\r\n+router.get('/sent/list', emailController.getSent);\r\n+router.delete('/:emailId', emailController.deleteEmail);\r\n+router.post('/:emailId/read', emailController.markAsRead);\r\n+\r\n+// Récupérer les emails envoyés\r\n+router.get(\"/sent\", emailController.getSentEmailsHandler);\r\n+\r\n+// Récupérer les emails entrants (boîte de réception)\r\n+router.get(\"/inbox\", emailController.getInboxEmailsHandler);\r\n+\r\n+// Marquer un email comme lu\r\n+router.post(\"/mark-as-read\", emailController.markAsReadHandler);\r\n+\r\n+// Vérifier si un email spécifique a été lu\r\n+router.get(\"/check-read/:emailId\", emailController.checkEmailReadStatusHandler);\r\n+\r\n+// Supprimer un email spécifique (vers corbeille ou définitivement)\r\n+router.delete(\"/:emailId\", emailController.deleteEmailHandler);\r\n+\r\n+// Restaurer un email depuis la corbeille\r\n+router.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n+\r\n+router.get('/:emailId/full', emailController.getFullEmailHandler);\r\n+router.get('/with-attachments', emailController.getEmailsWithAttachmentsHandler);\r\n+\r\n+\r\n+module.exports = router;\r\n"
+                }
+            ],
+            "date": 1748481166361,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst emailController = require(\"../controllers/emailController\");\r\n\r\nconst router = express.Router();\r\n\r\n// Envoyer un email\r\nrouter.post(\"/send\", emailController.sendEmailHandler);\r\n\r\n// Récupérer les emails envoyés\r\nrouter.get(\"/sent\", emailController.getSentEmailsHandler);\r\n\r\n// Récupérer les emails entrants (boîte de réception)\r\nrouter.get(\"/inbox\", emailController.getInboxEmailsHandler);\r\n\r\n// Marquer un email comme lu\r\nrouter.post(\"/mark-as-read\", emailController.markAsReadHandler);\r\n\r\n// Vérifier si un email spécifique a été lu\r\nrouter.get(\"/check-read/:emailId\", emailController.checkEmailReadStatusHandler);\r\n\r\n// Supprimer un email spécifique (vers corbeille ou définitivement)\r\nrouter.delete(\"/:emailId\", emailController.deleteEmailHandler);\r\n\r\n// Restaurer un email depuis la corbeille\r\nrouter.post(\"/:emailId/restore\", emailController.restoreEmailHandler);\r\n\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}

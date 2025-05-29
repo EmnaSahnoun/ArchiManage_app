@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/routes/authRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748481123606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748481123606,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst authController = require(\"../controllers/authController\");\r\n\r\nconst router = express.Router();\r\n\r\n// Route pour démarrer l'authentification Google\r\nrouter.get(\"/google\", authController.googleAuth);\r\n\r\n// Route pour le callback Google après authentification\r\nrouter.get(\"/google/callback\", authController.googleAuthCallback);\r\n\r\n// Route pour rafraîchir le token d'accès\r\nrouter.post(\"/refresh-token\", authController.refreshToken);\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/routes/draftRoutes.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1748481142896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748519442194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,10 @@\n const draftController = require(\"../controllers/draftController\");\r\n \r\n const router = express.Router();\r\n \r\n-// Récupérer les brouillons\r\n-router.get(\"/\", draftController.getDraftsHandler);\r\n+router.post('/drafts/create', emailController.createDraft);\r\n+router.get('/drafts/list', emailController.getDraftsList);\r\n+router.delete('/drafts/:draftId', emailController.deleteDraft);\r\n+router.post('/drafts/:draftId/send', emailController.sendDraft);\r\n \r\n-// Supprimer un brouillon spécifique\r\n-router.delete(\"/:draftId\", draftController.deleteDraftHandler);\r\n-\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748519449052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,10 +2,16 @@\n const draftController = require(\"../controllers/draftController\");\r\n \r\n const router = express.Router();\r\n \r\n+// Récupérer les brouillons\r\n+router.get(\"/\", draftController.getDraftsHandler);\r\n+\r\n+// Supprimer un brouillon spécifique\r\n+router.delete(\"/:draftId\", draftController.deleteDraftHandler);\r\n+\r\n+\r\n router.post('/drafts/create', emailController.createDraft);\r\n router.get('/drafts/list', emailController.getDraftsList);\r\n router.delete('/drafts/:draftId', emailController.deleteDraft);\r\n router.post('/drafts/:draftId/send', emailController.sendDraft);\r\n-\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748519458685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n // Supprimer un brouillon spécifique\r\n router.delete(\"/:draftId\", draftController.deleteDraftHandler);\r\n \r\n \r\n-router.post('/drafts/create', emailController.createDraft);\r\n-router.get('/drafts/list', emailController.getDraftsList);\r\n-router.delete('/drafts/:draftId', emailController.deleteDraft);\r\n-router.post('/drafts/:draftId/send', emailController.sendDraft);\r\n+router.post('/drafts/create', draftController.createDraft);\r\n+router.get('/drafts/list', draftController.getDraftsList);\r\n+router.delete('/drafts/:draftId', draftController.deleteDraft);\r\n+router.post('/drafts/:draftId/send', draftController.sendDraft);\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748519465186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,16 +2,10 @@\n const draftController = require(\"../controllers/draftController\");\r\n \r\n const router = express.Router();\r\n \r\n-// Récupérer les brouillons\r\n-router.get(\"/\", draftController.getDraftsHandler);\r\n-\r\n-// Supprimer un brouillon spécifique\r\n-router.delete(\"/:draftId\", draftController.deleteDraftHandler);\r\n-\r\n-\r\n router.post('/drafts/create', draftController.createDraft);\r\n router.get('/drafts/list', draftController.getDraftsList);\r\n router.delete('/drafts/:draftId', draftController.deleteDraft);\r\n router.post('/drafts/:draftId/send', draftController.sendDraft);\r\n+\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1748522762595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const draftController = require(\"../controllers/draftController\");\r\n \r\n const router = express.Router();\r\n \r\n-router.post('/drafts/create', draftController.createDraft);\r\n+router.post('/create', draftController.createDraft);\r\n router.get('/drafts/list', draftController.getDraftsList);\r\n router.delete('/drafts/:draftId', draftController.deleteDraft);\r\n router.post('/drafts/:draftId/send', draftController.sendDraft);\r\n \r\n"
+                }
+            ],
+            "date": 1748481142896,
+            "name": "Commit-0",
+            "content": "const express = require(\"express\");\r\nconst draftController = require(\"../controllers/draftController\");\r\n\r\nconst router = express.Router();\r\n\r\n// Récupérer les brouillons\r\nrouter.get(\"/\", draftController.getDraftsHandler);\r\n\r\n// Supprimer un brouillon spécifique\r\nrouter.delete(\"/:draftId\", draftController.deleteDraftHandler);\r\n\r\nmodule.exports = router;\r\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/services/gmail.service.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748478007342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748480992238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { google } = require('googleapis');\r\n-const oAuth2Client = require('../config/auth.config');\r\n+const oAuth2Client = require('../config/googleAuth');\r\n \r\n class GmailService {\r\n   constructor(accessToken) {\r\n     oAuth2Client.setCredentials({ access_token: accessToken });\r\n"
+                }
+            ],
+            "date": 1748478007342,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\nconst oAuth2Client = require('../config/auth.config');\r\n\r\nclass GmailService {\r\n  constructor(accessToken) {\r\n    oAuth2Client.setCredentials({ access_token: accessToken });\r\n    this.gmail = google.gmail({ version: 'v1', auth: oAuth2Client });\r\n  }\r\n\r\n  async sendEmail(emailData) {\r\n    const message = [\r\n      `From: ${emailData.from}`,\r\n      `To: ${emailData.to}`,\r\n      'Content-Type: text/html; charset=utf-8',\r\n      `Subject: ${emailData.subject}`,\r\n      '',\r\n      emailData.body\r\n    ].join('\\n');\r\n\r\n    const encodedMessage = Buffer.from(message)\r\n      .toString('base64')\r\n      .replace(/\\+/g, '-')\r\n      .replace(/\\//g, '_')\r\n      .replace(/=+$/, '');\r\n\r\n    return this.gmail.users.messages.send({\r\n      userId: 'me',\r\n      requestBody: { raw: encodedMessage }\r\n    });\r\n  }\r\n\r\n  // Autres méthodes...\r\n}\r\n\r\nmodule.exports = GmailService;"
+        }
+    ]
+}

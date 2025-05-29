@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/controllers/token.controller.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748478303707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748478312624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,19 @@\n const oAuth2Client = require('../config/auth.config');\r\n+exports.refreshToken = async (req, res) => {\r\n+  try {\r\n+    const { refreshToken } = req.body;\r\n+    if (!refreshToken) return res.status(400).send('Refresh token requis');\r\n+\r\n+    oAuth2Client.setCredentials({ refresh_token: refreshToken });\r\n+    const { credentials } = await oAuth2Client.refreshAccessToken();\r\n+    \r\n+    res.json({ \r\n+      success: true, \r\n+      access_token: credentials.access_token,\r\n+      expiry_date: credentials.expiry_date\r\n+    });\r\n+  } catch (error) {\r\n+    console.error('Error refreshing token:', error);\r\n+    res.status(500).json({ success: false, error: error.message });\r\n+  }\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748480992155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const oAuth2Client = require('../config/auth.config');\r\n+const oAuth2Client = require('../config/googleAuth');\r\n exports.refreshToken = async (req, res) => {\r\n   try {\r\n     const { refreshToken } = req.body;\r\n     if (!refreshToken) return res.status(400).send('Refresh token requis');\r\n"
+                }
+            ],
+            "date": 1748478303707,
+            "name": "Commit-0",
+            "content": "const oAuth2Client = require('../config/auth.config');\r\n"
+        }
+    ]
+}

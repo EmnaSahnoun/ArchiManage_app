@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/config/auth.config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748477957406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748478134270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n const { google } = require('googleapis');\r\n+require('dotenv').config();\r\n \r\n const oAuth2Client = new google.auth.OAuth2(\r\n   process.env.CLIENT_ID,\r\n   process.env.CLIENT_SECRET,\r\n"
+                },
+                {
+                    "date": 1748478203137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n const { google } = require('googleapis');\r\n-require('dotenv').config();\r\n \r\n const oAuth2Client = new google.auth.OAuth2(\r\n   process.env.CLIENT_ID,\r\n   process.env.CLIENT_SECRET,\r\n"
+                }
+            ],
+            "date": 1748477957406,
+            "name": "Commit-0",
+            "content": "const { google } = require('googleapis');\r\n\r\nconst oAuth2Client = new google.auth.OAuth2(\r\n  process.env.CLIENT_ID,\r\n  process.env.CLIENT_SECRET,\r\n  process.env.REDIRECT_URI\r\n);\r\n\r\nmodule.exports = oAuth2Client;"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/config/config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1748543017838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748543034466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,2 +1,30 @@\n const Eureka = require('eureka-js-client').Eureka;\r\n-const config = require('./config');\n\\ No newline at end of file\n+const config = require('./config');\r\n+const eurekaClient = new Eureka({\r\n+  instance: {\r\n+    app: config.server.name,\r\n+    hostName: config.server.host,\r\n+    ipAddr: '127.0.0.1',\r\n+    statusPageUrl: `http://${config.server.host}:${config.server.port}/info`,\r\n+    healthCheckUrl: `http://${config.server.host}:${config.server.port}/health`,\r\n+    port: {\r\n+      '$': config.server.port,\r\n+      '@enabled': 'true',\r\n+    },\r\n+    vipAddress: config.server.name,\r\n+    dataCenterInfo: {\r\n+      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n+      name: 'MyOwn',\r\n+    },\r\n+  },\r\n+  eureka: {\r\n+    host: config.eureka.host,\r\n+    port: config.eureka.port,\r\n+    servicePath: config.eureka.servicePath,\r\n+    heartbeatInterval: config.eureka.heartbeatInterval,\r\n+    registryFetchInterval: config.eureka.registryFetchInterval,\r\n+    maxRetries: config.eureka.maxRetries,\r\n+  },\r\n+});\r\n+\r\n+module.exports = eurekaClient;\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748543076291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,30 +1,15 @@\n-const Eureka = require('eureka-js-client').Eureka;\r\n-const config = require('./config');\r\n-const eurekaClient = new Eureka({\r\n-  instance: {\r\n-    app: config.server.name,\r\n-    hostName: config.server.host,\r\n-    ipAddr: '127.0.0.1',\r\n-    statusPageUrl: `http://${config.server.host}:${config.server.port}/info`,\r\n-    healthCheckUrl: `http://${config.server.host}:${config.server.port}/health`,\r\n-    port: {\r\n-      '$': config.server.port,\r\n-      '@enabled': 'true',\r\n-    },\r\n-    vipAddress: config.server.name,\r\n-    dataCenterInfo: {\r\n-      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n-      name: 'MyOwn',\r\n-    },\r\n+module.exports = {\r\n+  server: {\r\n+    port: process.env.PORT || 3000,\r\n+    name: 'mon-microservice',\r\n+    host: 'localhost'\r\n   },\r\n   eureka: {\r\n-    host: config.eureka.host,\r\n-    port: config.eureka.port,\r\n-    servicePath: config.eureka.servicePath,\r\n-    heartbeatInterval: config.eureka.heartbeatInterval,\r\n-    registryFetchInterval: config.eureka.registryFetchInterval,\r\n\\ No newline at end of file\n-    maxRetries: config.eureka.maxRetries,\r\n-  },\r\n-});\r\n-\r\n-module.exports = eurekaClient;\n+    host: 'localhost',\r\n+    port: 8761,\r\n+    servicePath: '/eureka/apps/',\r\n+    heartbeatInterval: 30000,\r\n+    registryFetchInterval: 30000,\r\n+    maxRetries: 3\r\n+  }\r\n+};\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748543091502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n module.exports = {\r\n   server: {\r\n-    port: process.env.PORT || 3000,\r\n+    port: process.env.PORT || 8079,\r\n     name: 'mon-microservice',\r\n     host: 'localhost'\r\n   },\r\n   eureka: {\r\n"
+                },
+                {
+                    "date": 1748543132328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n module.exports = {\r\n   server: {\r\n     port: process.env.PORT || 8079,\r\n-    name: 'mon-microservice',\r\n+    name: '',\r\n     host: 'localhost'\r\n   },\r\n   eureka: {\r\n     host: 'localhost',\r\n"
+                },
+                {
+                    "date": 1748544472660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,18 @@\n+// config.js\r\n module.exports = {\r\n-  server: {\r\n-    port: process.env.PORT || 8079,\r\n-    name: '',\r\n-    host: 'localhost'\r\n+  app: {\r\n+    name: 'EmailService',\r\n+    port: 8079\r\n   },\r\n   eureka: {\r\n-    host: 'localhost',\r\n-    port: 8761,\r\n-    servicePath: '/eureka/apps/',\r\n-    heartbeatInterval: 30000,\r\n-    registryFetchInterval: 30000,\r\n-    maxRetries: 3\r\n+    host: 'e8.systeo.tn',\r\n+    preferIpAddress: false,\r\n+    serviceUrl: 'https://eureka.systeo.tn/eureka/'\r\n+  },\r\n+  mvc: {\r\n+    hiddenMethodFilter: false\r\n+  },\r\n+  cloudConfig: {\r\n+    enabled: false\r\n   }\r\n };\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1748543017838,
+            "name": "Commit-0",
+            "content": "const Eureka = require('eureka-js-client').Eureka;\r\nconst config = require('./config');"
+        }
+    ]
+}

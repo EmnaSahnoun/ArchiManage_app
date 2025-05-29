@@ -1,0 +1,22 @@
+{
+    "sourceFile": "controllers/auth.controller.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748477434421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748477816171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const oAuth2Client = require('../config/gmail.config');\r\n+const oAuth2Client = require('../src/config/gmail.config');\r\n \r\n exports.getAuthUrl = (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: 'offline',\r\n"
+                }
+            ],
+            "date": 1748477434421,
+            "name": "Commit-0",
+            "content": "const oAuth2Client = require('../config/gmail.config');\r\n\r\nexports.getAuthUrl = (req, res) => {\r\n  const url = oAuth2Client.generateAuthUrl({\r\n    access_type: 'offline',\r\n    scope: [\r\n      'https://www.googleapis.com/auth/gmail.send',\r\n      'https://www.googleapis.com/auth/gmail.readonly',\r\n      'https://www.googleapis.com/auth/gmail.modify',\r\n      'https://mail.google.com/'\r\n    ],\r\n    prompt: 'consent'\r\n  });\r\n  res.redirect(url);\r\n};\r\n\r\nexports.handleCallback = async (req, res) => {\r\n  // Code existant du callback\r\n};"
+        }
+    ]
+}
