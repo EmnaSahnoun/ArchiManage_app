@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1748522538228,
@@ -28,6 +28,22 @@
                 {
                     "date": 1748596749749,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,14 +29,15 @@\n       success: true,\r\n       access_token: tokens.access_token,\r\n       refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci\r\n       expiry_date: tokens.expiry_date\r\n-    });  res.send(`Authentification réussie !<br>\r\n+    });\r\n+     /*  res.send(`Authentification réussie !<br>\r\n               Access Token: ${tokens.access_token}<br>\r\n               ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}\r\n               Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);\r\n \r\n-  } catch (error) {\r\n+ */  } catch (error) {\r\n     console.error(\"Erreur lors de l'échange du code d'autorisation:\", error);\r\n     res.status(500).send(\"Erreur d'authentification Google.\");\r\n   }\r\n };\r\n"
+                },
+                {
+                    "date": 1748623321553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,26 +23,24 @@\n     const { code } = req.query;\r\n     if (!code) {\r\n       return res.status(400).send(\"Code d'autorisation manquant.\");\r\n     }\r\n+    \r\n+    // Échange le code contre les tokens\r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n-    res.json({\r\n-      success: true,\r\n-      access_token: tokens.access_token,\r\n-      refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci\r\n-      expiry_date: tokens.expiry_date\r\n-    });\r\n-     /*  res.send(`Authentification réussie !<br>\r\n-              Access Token: ${tokens.access_token}<br>\r\n-              ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}\r\n-              Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);\r\n-\r\n- */  } catch (error) {\r\n-    console.error(\"Erreur lors de l'échange du code d'autorisation:\", error);\r\n-    res.status(500).send(\"Erreur d'authentification Google.\");\r\n+    \r\n+    // IMPORTANT: Renvoyez les tokens au frontend\r\n+    res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback?` + \r\n+      new URLSearchParams({\r\n+        access_token: tokens.access_token,\r\n+        refresh_token: tokens.refresh_token, // Assurez-vous que ce token est bien reçu\r\n+        expiry_date: tokens.expiry_date\r\n+      }));\r\n+  } catch (error) {\r\n+    console.error(\"Erreur lors de l'échange du code:\", error);\r\n+    res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);\r\n   }\r\n };\r\n-\r\n // Rafraîchir le token d'accès\r\n const refreshToken = async (req, res) => {\r\n   try {\r\n     const { refreshToken } = req.body;\r\n"
+                },
+                {
+                    "date": 1748623332184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const oAuth2Client = require(\"../config/googleAuth\");\r\n-\r\n+const \r\n // Démarrer le flux d'authentification Google\r\n const googleAuth = (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: \"offline\",\r\n"
+                },
+                {
+                    "date": 1748623337327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const oAuth2Client = require(\"../config/googleAuth\");\r\n-const \r\n+\r\n // Démarrer le flux d'authentification Google\r\n const googleAuth = (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: \"offline\",\r\n"
+                },
+                {
+                    "date": 1748623354213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const oAuth2Client = require(\"../config/googleAuth\");\r\n-\r\n+require(\"dotenv\").config();\r\n // Démarrer le flux d'authentification Google\r\n const googleAuth = (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: \"offline\",\r\n"
                 }
             ],
             "date": 1748522538228,

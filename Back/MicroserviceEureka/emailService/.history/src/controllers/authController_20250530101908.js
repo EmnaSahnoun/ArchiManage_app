@@ -1,5 +1,5 @@
 const oAuth2Client = require("../config/googleAuth");
-require("dotenv").config();
+
 // Démarrer le flux d'authentification Google
 const googleAuth = (req, res) => {
   const url = oAuth2Client.generateAuthUrl({
@@ -24,22 +24,24 @@ const googleAuthCallback = async (req, res) => {
     if (!code) {
       return res.status(400).send("Code d'autorisation manquant.");
     }
-    
-    // Échange le code contre les tokens
     const { tokens } = await oAuth2Client.getToken(code);
-    
-    // IMPORTANT: Renvoyez les tokens au frontend
-    res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback?` + 
-      new URLSearchParams({
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token, // Assurez-vous que ce token est bien reçu
-        expiry_date: tokens.expiry_date
-      }));
-  } catch (error) {
-    console.error("Erreur lors de l'échange du code:", error);
-    res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);
+    res.json({
+      success: true,
+      access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci
+      expiry_date: tokens.expiry_date
+    });
+     /*  res.send(`Authentification réussie !<br>
+              Access Token: ${tokens.access_token}<br>
+              ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}
+              Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);
+
+ */  } catch (error) {
+    console.error("Erreur lors de l'échange du code d'autorisation:", error);
+    res.status(500).send("Erreur d'authentification Google.");
   }
 };
+
 // Rafraîchir le token d'accès
 const refreshToken = async (req, res) => {
   try {
