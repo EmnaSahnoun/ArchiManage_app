@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 121,
+            "activePatchIndex": 125,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -492,6 +492,22 @@
                 {
                     "date": 1747865670293,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -112,8 +112,9 @@\n     MatIconModule,\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n     ReactiveFormsModule,\r\n+    \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1748562876526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,12 @@\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { MatFormFieldModule } from '@angular/material/form-field';\r\n import { MatInputModule } from '@angular/material/input';\r\n import { MatSelectModule } from '@angular/material/select';\r\n-import { TextFieldModule } from '@angular/cdk/text-field'; // For CdkTextareaAutosize\r\n+import { TextFieldModule } from '@angular/cdk/text-field';\r\n+import { SetPasswordComponent } from './set-password/set-password.component';\r\n+import { EmailsComponentComponent } from './emails-component/emails-component.component'; // For CdkTextareaAutosize\r\n+import { MatTabsModule } from '@angular/material/tabs'; // Ajout pour les onglets\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -72,8 +75,10 @@\n     InvitationsComponent,\r\n     InvoiceListComponent,\r\n     ClientFormComponent,\r\n     InvoiceComponent,\r\n+    SetPasswordComponent,\r\n+    EmailsComponentComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n@@ -112,9 +117,12 @@\n     MatIconModule,\r\n     MatProgressBarModule,\r\n     MatTooltipModule,\r\n     ReactiveFormsModule,\r\n-    \r\n+    MatFormFieldModule,\r\n+    MatInputModule,\r\n+    MatSelectModule,\r\n+    TextFieldModule\r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1748562969959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,8 +121,9 @@\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatSelectModule,\r\n     TextFieldModule\r\n+    \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1748563447828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,10 +51,10 @@\n import { MatInputModule } from '@angular/material/input';\r\n import { MatSelectModule } from '@angular/material/select';\r\n import { TextFieldModule } from '@angular/cdk/text-field';\r\n import { SetPasswordComponent } from './set-password/set-password.component';\r\n-import { EmailsComponentComponent } from './emails-component/emails-component.component'; // For CdkTextareaAutosize\r\n-import { MatTabsModule } from '@angular/material/tabs'; // Ajout pour les onglets\r\n+import { MatTabsModule } from '@angular/material/tabs';\r\n+import { EmailsComponent } from './emails/emails.component'; // Ajout pour les onglets\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -77,8 +77,9 @@\n     ClientFormComponent,\r\n     InvoiceComponent,\r\n     SetPasswordComponent,\r\n     EmailsComponentComponent,\r\n+    EmailsComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n@@ -120,10 +121,11 @@\n     ReactiveFormsModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatSelectModule,\r\n-    TextFieldModule\r\n-    \r\n+    TextFieldModule,\r\n+    MatTabsModule\r\n+\r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n"
+                },
+                {
+                    "date": 1748563455973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,8 @@\n     InvoiceListComponent,\r\n     ClientFormComponent,\r\n     InvoiceComponent,\r\n     SetPasswordComponent,\r\n-    EmailsComponentComponent,\r\n     EmailsComponent,\r\n \r\n   ],\r\n   imports: [\r\n"
                 }
             ],
             "date": 1741609977833,

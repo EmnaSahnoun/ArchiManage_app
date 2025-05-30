@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/emails-component/emails-component.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748562749726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748562755612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,16 +4,8 @@\n   selector: 'app-emails-component',\r\n   templateUrl: './emails-component.component.html',\r\n   styleUrl: './emails-component.component.scss'\r\n })\r\n-interface Email {\r\n-  id: number;\r\n-  from?: string;\r\n-  to?: string;\r\n-  subject: string;\r\n-  bodySnippet: string;\r\n-  date: Date;\r\n-  read?: boolean; // Pour les emails reçus\r\n-}\r\n+\r\n export class EmailsComponentComponent {\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1748562769527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,64 @@\n import { Component } from '@angular/core';\r\n-\r\n+interface Email {\r\n+  id: number;\r\n+  from?: string;\r\n+  to?: string;\r\n+  subject: string;\r\n+  bodySnippet: string;\r\n+  date: Date;\r\n+  read?: boolean; // Pour les emails reçus\r\n+}\r\n @Component({\r\n   selector: 'app-emails-component',\r\n   templateUrl: './emails-component.component.html',\r\n   styleUrl: './emails-component.component.scss'\r\n })\r\n \r\n export class EmailsComponentComponent {\r\n+receivedEmails: Email[] = [];\r\n+  sentEmails: Email[] = [];\r\n+  draftEmails: Email[] = [];\r\n \r\n+  // Indique l'onglet actif, 0 pour \"Emails Reçus\" par défaut\r\n+  selectedTabIndex: number = 0;\r\n+\r\n+  constructor() { }\r\n+\r\n+  ngOnInit(): void {\r\n+    // Simuler la récupération de données\r\n+    this.loadMockEmails();\r\n+  }\r\n+\r\n+  loadMockEmails(): void {\r\n+    this.receivedEmails = [\r\n+      { id: 1, from: 'alice@example.com', subject: 'Invitation à la réunion de projet', bodySnippet: 'Bonjour, vous êtes cordialement invité à notre réunion...', date: new Date(Date.now() - 86400000), read: false },\r\n+      { id: 2, from: 'newsletter@info.com', subject: 'Votre résumé hebdomadaire ArchiManage', bodySnippet: 'Découvrez les dernières fonctionnalités et actualités...', date: new Date(Date.now() - 172800000), read: true },\r\n+      { id: 3, from: 'bob-construct@example.com', subject: 'Question concernant le plan B-102', bodySnippet: 'J\\'aurais une question sur les spécifications du plan...', date: new Date(Date.now() - 259200000), read: false },\r\n+    ];\r\n+\r\n+    this.sentEmails = [\r\n+      { id: 4, to: 'client.final@example.com', subject: 'RE: Validation des plans finaux', bodySnippet: 'Merci pour votre retour. Les modifications ont été apportées.', date: new Date(Date.now() - 345600000) },\r\n+      { id: 5, to: 'team@archimanage.com', subject: 'Compte rendu de la réunion client du 15/03', bodySnippet: 'Ci-joint le compte rendu de notre dernière réunion...', date: new Date(Date.now() - 432000000) },\r\n+    ];\r\n+\r\n+    this.draftEmails = [\r\n+      { id: 6, to: 'fournisseur-materiaux@example.com', subject: 'Demande de devis pour projet Alpha', bodySnippet: 'Bonjour, pourriez-vous nous fournir un devis pour les matériaux listés...', date: new Date() },\r\n+    ];\r\n+  }\r\n+\r\n+  selectEmail(email: Email, tabName: 'received' | 'sent' | 'draft'): void {\r\n+    console.log(`Email sélectionné depuis l'onglet ${tabName}:`, email);\r\n+    // Ici, vous pourriez implémenter la logique pour afficher l'email complet,\r\n+    // par exemple dans un modal ou une vue de détail.\r\n+    if (tabName === 'received' && email.read === false) {\r\n+      email.read = true; // Marquer comme lu\r\n+    }\r\n+  }\r\n+\r\n+  // Optionnel: si vous avez besoin de réagir au changement d'onglet programmatiquement\r\n+  onTabChanged(event: any): void {\r\n+    this.selectedTabIndex = event.index;\r\n+    console.log('Onglet changé vers index:', this.selectedTabIndex);\r\n+    // Vous pouvez charger des données spécifiques à l'onglet ici si nécessaire\r\n+  }\r\n }\r\n"
+                }
+            ],
+            "date": 1748562749726,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-emails-component',\r\n  templateUrl: './emails-component.component.html',\r\n  styleUrl: './emails-component.component.scss'\r\n})\r\ninterface Email {\r\n  id: number;\r\n  from?: string;\r\n  to?: string;\r\n  subject: string;\r\n  bodySnippet: string;\r\n  date: Date;\r\n  read?: boolean; // Pour les emails reçus\r\n}\r\nexport class EmailsComponentComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

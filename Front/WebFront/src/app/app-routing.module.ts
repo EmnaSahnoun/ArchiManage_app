@@ -11,6 +11,7 @@ import { InvitationsComponent } from './invitations/invitations.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { ClientsComponent } from './clients/clients.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { EmailsComponent } from './emails/emails.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,6 +52,8 @@ const routes: Routes = [
   
   
    { path: 'clients', component: ClientsComponent },
+    { path: 'emails', component: EmailsComponent},
+ 
  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   //{ path: '**', redirectTo: '/dashboard' } 
   

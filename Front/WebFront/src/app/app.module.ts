@@ -51,7 +51,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { SetPasswordComponent } from './set-password/set-password.component'; // For CdkTextareaAutosize
+import { SetPasswordComponent } from './set-password/set-password.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { EmailsComponent } from './emails/emails.component'; // Ajout pour les onglets
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { SetPasswordComponent } from './set-password/set-password.component'; //
     ClientFormComponent,
     InvoiceComponent,
     SetPasswordComponent,
+    EmailsComponent,
 
   ],
   imports: [
@@ -118,7 +121,9 @@ import { SetPasswordComponent } from './set-password/set-password.component'; //
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    TextFieldModule
+    TextFieldModule,
+    MatTabsModule
+
   ],
   providers: [
     DatePipe,

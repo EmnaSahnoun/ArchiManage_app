@@ -1,0 +1,101 @@
+{
+  "id": "194dfdf498bad9bc",
+  "threadId": "194dfdf31b5f7914",
+  "labelIds": [
+    "DRAFT"
+  ],
+  "snippet": "",
+  "internalDate": "2025-02-07T10:05:39.000Z",
+  "headers": {
+    "mime-version": "1.0",
+    "date": "Fri, 7 Feb 2025 11:05:39 +0100",
+    "message-id": "<CAFRGOo+_8P92R3HV2S_hUUj3Tfz9+mzvARM+Ns_dWzk0gX5F1w@mail.gmail.com>",
+    "subject": "bac.pdf",
+    "from": "emna sahnoun <sahnounemna22@gmail.com>",
+    "to": "sahnounemna03@gmail.com",
+    "content-type": "multipart/alternative; boundary=\"000000000000318058062d8a802f\""
+  },
+  "parts": [
+    {
+      "mimeType": "text/plain",
+      "filename": null,
+      "size": 2,
+      "isAttachment": false,
+      "content": {
+        "type": "Buffer",
+        "data": [
+          13,
+          10
+        ]
+      },
+      "headers": {
+        "content-type": "text/plain; charset=\"UTF-8\""
+      },
+      "text": "\r\n"
+    },
+    {
+      "mimeType": "text/html",
+      "filename": null,
+      "size": 47,
+      "isAttachment": false,
+      "content": {
+        "type": "Buffer",
+        "data": [
+          60,
+          100,
+          105,
+          118,
+          32,
+          100,
+          105,
+          114,
+          61,
+          34,
+          108,
+          116,
+          114,
+          34,
+          62,
+          60,
+          100,
+          105,
+          118,
+          32,
+          100,
+          105,
+          114,
+          61,
+          34,
+          97,
+          117,
+          116,
+          111,
+          34,
+          62,
+          60,
+          47,
+          100,
+          105,
+          118,
+          62,
+          13,
+          10,
+          60,
+          47,
+          100,
+          105,
+          118,
+          62,
+          13,
+          10
+        ]
+      },
+      "headers": {
+        "content-type": "text/html; charset=\"UTF-8\""
+      },
+      "html": "<div dir=\"ltr\"><div dir=\"auto\"></div>\r\n</div>\r\n"
+    }
+  ],
+  "attachments": [],
+  "isRead": true
+}

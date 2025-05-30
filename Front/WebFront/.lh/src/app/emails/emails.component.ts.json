@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/emails/emails.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748563144880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748563150714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   bodySnippet: string;\r\n   date: Date;\r\n   read?: boolean; // Pour les emails reçus\r\n }\r\n-\r\n+type ActiveEmailTab = 'received' | 'sent' | 'draft';\r\n @Component({\r\n   selector: 'app-emails',\r\n   templateUrl: './emails.component.html',\r\n   styleUrl: './emails.component.scss'\r\n"
+                },
+                {
+                    "date": 1748563160587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,49 @@\n   selector: 'app-emails',\r\n   templateUrl: './emails.component.html',\r\n   styleUrl: './emails.component.scss'\r\n })\r\n-export class EmailsComponent {\r\n+export class EmailsComponent implements OnInit { // Nom de classe mis à jour\r\n+  receivedEmails: Email[] = [];\r\n+  sentEmails: Email[] = [];\r\n+  draftEmails: Email[] = [];\r\n \r\n+  activeTab: ActiveEmailTab = 'received'; // Onglet actif par défaut\r\n+\r\n+  constructor() { }\r\n+\r\n+  ngOnInit(): void {\r\n+    this.loadMockEmails();\r\n+  }\r\n+\r\n+  loadMockEmails(): void {\r\n+    this.receivedEmails = [\r\n+      { id: 1, from: 'alice@example.com', subject: 'Invitation à la réunion de projet', bodySnippet: 'Bonjour, vous êtes cordialement invité à notre réunion...', date: new Date(Date.now() - 86400000), read: false },\r\n+      { id: 2, from: 'newsletter@info.com', subject: 'Votre résumé hebdomadaire ArchiManage', bodySnippet: 'Découvrez les dernières fonctionnalités et actualités...', date: new Date(Date.now() - 172800000), read: true },\r\n+      { id: 3, from: 'bob-construct@example.com', subject: 'Question concernant le plan B-102', bodySnippet: 'J\\'aurais une question sur les spécifications du plan...', date: new Date(Date.now() - 259200000), read: false },\r\n+    ];\r\n+\r\n+    this.sentEmails = [\r\n+      { id: 4, to: 'client.final@example.com', subject: 'RE: Validation des plans finaux', bodySnippet: 'Merci pour votre retour. Les modifications ont été apportées.', date: new Date(Date.now() - 345600000) },\r\n+      { id: 5, to: 'team@archimanage.com', subject: 'Compte rendu de la réunion client du 15/03', bodySnippet: 'Ci-joint le compte rendu de notre dernière réunion...', date: new Date(Date.now() - 432000000) },\r\n+    ];\r\n+\r\n+    this.draftEmails = [\r\n+      { id: 6, to: 'fournisseur-materiaux@example.com', subject: 'Demande de devis pour projet Alpha', bodySnippet: 'Bonjour, pourriez-vous nous fournir un devis pour les matériaux listés...', date: new Date() },\r\n+    ];\r\n+  }\r\n+\r\n+  setActiveTab(tab: ActiveEmailTab): void {\r\n+    this.activeTab = tab;\r\n+    console.log('Onglet changé vers:', this.activeTab);\r\n+    // Vous pouvez charger des données spécifiques à l'onglet ici si nécessaire\r\n+  }\r\n+\r\n+  selectEmail(email: Email, tabName: ActiveEmailTab): void {\r\n+    console.log(`Email sélectionné depuis l'onglet ${tabName}:`, email);\r\n+    // Ici, vous pourriez implémenter la logique pour afficher l'email complet,\r\n+    // par exemple dans un modal ou une vue de détail.\r\n+    if (tabName === 'received' && email.read === false) {\r\n+      email.read = true; // Marquer comme lu\r\n+    }\r\n+  }\r\n }\r\n"
+                }
+            ],
+            "date": 1748563144880,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\ninterface Email {\r\n  id: number;\r\n  from?: string;\r\n  to?: string;\r\n  subject: string;\r\n  bodySnippet: string;\r\n  date: Date;\r\n  read?: boolean; // Pour les emails reçus\r\n}\r\n\r\n@Component({\r\n  selector: 'app-emails',\r\n  templateUrl: './emails.component.html',\r\n  styleUrl: './emails.component.scss'\r\n})\r\nexport class EmailsComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

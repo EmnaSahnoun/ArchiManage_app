@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 102,
+            "activePatchIndex": 108,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -416,6 +416,30 @@
                 {
                     "date": 1747921123837,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,12 @@\n     loadChildren: () => import('./super-admin/super-admin.module').then(m => m.SuperAdminModule),\r\n     canActivate: [AuthGuard]\r\n   },\r\n   { path: 'invoices', component: InvoiceListComponent },\r\n-  { path: 'invoices', component: InvoiceComponent }, \r\n+  { path: 'invoice', component: InvoiceComponent }, // Pour créer une nouvelle facture\r\n+  { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n+  \r\n    { path: 'clients', component: ClientsComponent },\r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748562814461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,8 +50,10 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n+    { path: 'emails', component: EmailsComponent, canActivate: [AuthGuard] },\r\n+ \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n"
+                },
+                {
+                    "date": 1748562819570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n+import { EmailsComponentComponent } from './emails-component/emails-component.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -50,9 +51,9 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-    { path: 'emails', component: EmailsComponent, canActivate: [AuthGuard] },\r\n+    { path: 'emails', component: EmailsComponentComponent, canActivate: [AuthGuard] },\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748562827041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-    { path: 'emails', component: EmailsComponentComponent, canActivate: [AuthGuard] },\r\n+    { path: 'emails', component: EmailsComponentComponent},\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748563430128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,11 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-    { path: 'emails', component: EmailsComponentComponent},\r\n+    { path: 'emails', component: EmailsComponentComponen\r\n+      \r\n+    },\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748563435730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,11 +51,9 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-    { path: 'emails', component: EmailsComponentComponen\r\n-      \r\n-    },\r\n+    { path: 'emails', component: EmailsComponent},\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748563442075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n-import { EmailsComponentComponent } from './emails-component/emails-component.component';\r\n+import { EmailsComponent } from './emails/emails.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n"
                 }
             ],
             "date": 1741609914429,

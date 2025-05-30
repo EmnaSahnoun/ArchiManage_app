@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/emails-component/emails-component.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748562780523,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748562780523,
+            "name": "Commit-0",
+            "content": "<div class=\"emails-page-container\">\r\n  <header class=\"emails-header\">\r\n    <h1>Boîte de réception</h1>\r\n    <!-- Potentiellement un bouton \"Nouvel Email\" ici -->\r\n    <!-- <button mat-raised-button color=\"primary\">Nouvel Email</button> -->\r\n  </header>\r\n\r\n  <mat-tab-group [(selectedIndex)]=\"selectedTabIndex\" (selectedIndexChange)=\"onTabChanged($event)\" animationDuration=\"0ms\">\r\n    <mat-tab label=\"Emails Reçus\">\r\n      <ng-template matTabContent>\r\n        <div class=\"email-list-container\">\r\n          <ul class=\"email-list\">\r\n            <li *ngIf=\"receivedEmails.length === 0\" class=\"empty-list-message\">\r\n              Aucun email dans la boîte de réception.\r\n            </li>\r\n            <li *ngFor=\"let email of receivedEmails\" (click)=\"selectEmail(email, 'received')\" [ngClass]=\"{'unread': !email.read}\">\r\n              <div class=\"email-item-sender\">{{ email.from }}</div>\r\n              <div class=\"email-item-subject\">{{ email.subject }}</div>\r\n              <div class=\"email-item-snippet\">{{ email.bodySnippet }}</div>\r\n              <div class=\"email-item-date\">{{ email.date | date:'dd/MM/yyyy HH:mm' }}</div>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </ng-template>\r\n    </mat-tab>\r\n\r\n    <mat-tab label=\"Emails Envoyés\">\r\n      <ng-template matTabContent>\r\n        <div class=\"email-list-container\">\r\n          <ul class=\"email-list\">\r\n            <li *ngIf=\"sentEmails.length === 0\" class=\"empty-list-message\">\r\n              Aucun email dans les éléments envoyés.\r\n            </li>\r\n            <li *ngFor=\"let email of sentEmails\" (click)=\"selectEmail(email, 'sent')\">\r\n              <div class=\"email-item-recipient\">À: {{ email.to }}</div>\r\n              <div class=\"email-item-subject\">{{ email.subject }}</div>\r\n              <div class=\"email-item-snippet\">{{ email.bodySnippet }}</div>\r\n              <div class=\"email-item-date\">{{ email.date | date:'dd/MM/yyyy HH:mm' }}</div>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </ng-template>\r\n    </mat-tab>\r\n\r\n    <mat-tab label=\"Brouillons\">\r\n      <ng-template matTabContent>\r\n        <div class=\"email-list-container\">\r\n          <ul class=\"email-list\">\r\n            <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n              Aucun brouillon.\r\n            </li>\r\n            <li *ngFor=\"let email of draftEmails\" (click)=\"selectEmail(email, 'draft')\">\r\n              <div class=\"email-item-recipient\">À: {{ email.to }}</div>\r\n              <div class=\"email-item-subject\">{{ email.subject }}</div>\r\n              <div class=\"email-item-snippet\">{{ email.bodySnippet }}</div>\r\n              <div class=\"email-item-date\">Dernière modif: {{ email.date | date:'dd/MM/yyyy HH:mm' }}</div>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </ng-template>\r\n    </mat-tab>\r\n  </mat-tab-group>\r\n</div>\r\n"
+        }
+    ]
+}
