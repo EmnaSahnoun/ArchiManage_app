@@ -25,18 +25,16 @@ const googleAuthCallback = async (req, res) => {
       return res.status(400).send("Code d'autorisation manquant.");
     }
     const { tokens } = await oAuth2Client.getToken(code);
-    res.json({
-      success: true,
-      access_token: tokens.access_token,
-      refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci
-      expiry_date: tokens.expiry_date
-    });
-     /*  res.send(`Authentification réussie !<br>
+    // Il est recommandé de ne pas afficher les tokens directement dans la réponse
+    // mais de les stocker de manière sécurisée côté serveur ou de les renvoyer au client
+    // via un mécanisme sécurisé pour qu'il les stocke (ex: localStorage, sessionStorage).
+    // Pour cet exemple, nous les affichons, mais ce n'est PAS une bonne pratique en production.
+    res.send(`Authentification réussie !<br>
               Access Token: ${tokens.access_token}<br>
               ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}
               Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);
 
- */  } catch (error) {
+  } catch (error) {
     console.error("Erreur lors de l'échange du code d'autorisation:", error);
     res.status(500).send("Erreur d'authentification Google.");
   }

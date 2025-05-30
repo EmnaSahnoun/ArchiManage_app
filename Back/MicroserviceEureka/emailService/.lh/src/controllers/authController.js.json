@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1748522538228,
@@ -20,6 +20,14 @@
                 {
                     "date": 1748523270161,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,12 +7,13 @@\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n       \"https://www.googleapis.com/auth/gmail.readonly\",\r\n       \"https://www.googleapis.com/auth/gmail.modify\",\r\n-     'https://www.googleapis.com/auth/gmail.compose',\r\n+      'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n-    prompt: \"consent\", // Force l'affichage de l'écran de consentement\r\n+    prompt: \"consent\",\r\n+  \r\n   });\r\n   res.redirect(url);\r\n };\r\n \r\n"
+                },
+                {
+                    "date": 1748596740220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n     prompt: \"consent\",\r\n-  \r\n+  include_granted_scopes: \"true\"\r\n   });\r\n   res.redirect(url);\r\n };\r\n \r\n@@ -24,13 +24,14 @@\n     if (!code) {\r\n       return res.status(400).send(\"Code d'autorisation manquant.\");\r\n     }\r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n-    // Il est recommandé de ne pas afficher les tokens directement dans la réponse\r\n-    // mais de les stocker de manière sécurisée côté serveur ou de les renvoyer au client\r\n-    // via un mécanisme sécurisé pour qu'il les stocke (ex: localStorage, sessionStorage).\r\n-    // Pour cet exemple, nous les affichons, mais ce n'est PAS une bonne pratique en production.\r\n-    res.send(`Authentification réussie !<br>\r\n+    res.json({\r\n+      success: true,\r\n+      access_token: tokens.access_token,\r\n+      refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci\r\n+      expiry_date: tokens.expiry_date\r\n+    });  res.send(`Authentification réussie !<br>\r\n               Access Token: ${tokens.access_token}<br>\r\n               ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}\r\n               Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);\r\n \r\n"
+                },
+                {
+                    "date": 1748596749749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,14 +29,15 @@\n       success: true,\r\n       access_token: tokens.access_token,\r\n       refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci\r\n       expiry_date: tokens.expiry_date\r\n-    });  res.send(`Authentification réussie !<br>\r\n+    });\r\n+     /*  res.send(`Authentification réussie !<br>\r\n               Access Token: ${tokens.access_token}<br>\r\n               ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}\r\n               Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);\r\n \r\n-  } catch (error) {\r\n+ */  } catch (error) {\r\n     console.error(\"Erreur lors de l'échange du code d'autorisation:\", error);\r\n     res.status(500).send(\"Erreur d'authentification Google.\");\r\n   }\r\n };\r\n"
                 }
             ],
             "date": 1748522538228,

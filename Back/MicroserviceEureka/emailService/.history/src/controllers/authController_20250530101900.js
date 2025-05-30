@@ -31,12 +31,12 @@ const googleAuthCallback = async (req, res) => {
       refresh_token: tokens.refresh_token, // Maintenant vous devriez recevoir ceci
       expiry_date: tokens.expiry_date
     });
-     /*  res.send(`Authentification réussie !<br>
+      res.send(`Authentification réussie !<br>
               Access Token: ${tokens.access_token}<br>
               ${tokens.refresh_token ? `Refresh Token: ${tokens.refresh_token}<br>` : ''}
               Expiry Date: ${new Date(tokens.expiry_date).toLocaleString()}`);
 
- */  } catch (error) {
+  } catch (error) {
     console.error("Erreur lors de l'échange du code d'autorisation:", error);
     res.status(500).send("Erreur d'authentification Google.");
   }
