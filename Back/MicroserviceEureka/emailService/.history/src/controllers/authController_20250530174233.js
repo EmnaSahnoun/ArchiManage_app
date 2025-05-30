@@ -1,7 +1,5 @@
 const oAuth2Client = require("../config/googleAuth");
 require("dotenv").config();
-const express = require('express');
-const router = express.Router();
 // Démarrer le flux d'authentification Google
 const googleAuth = (req, res) => {
   const url = oAuth2Client.generateAuthUrl({
@@ -23,7 +21,6 @@ const googleAuth = (req, res) => {
 const googleAuthCallback = async (req, res) => {
   try {
     const { code } = req.query;
-    console.error("Code d'autorisation:", code);
     if (!code) {
       return res.status(400).send("Code d'autorisation manquant.");
     }
@@ -31,11 +28,13 @@ const googleAuthCallback = async (req, res) => {
     // Échange le code contre les tokens
     const { tokens } = await oAuth2Client.getToken(code);
     
-    res.json({
-  access_token: tokens.access_token,
-  refresh_token: tokens.refresh_token,
-  expiry_date: tokens.expiry_date
-});
+    // IMPORTANT: Renvoyez les tokens au frontend
+    res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback?` + 
+      new URLSearchParams({
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token, // Assurez-vous que ce token est bien reçu
+        expiry_date: tokens.expiry_date
+      }));
   } catch (error) {
     console.error("Erreur lors de l'échange du code:", error);
     res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);

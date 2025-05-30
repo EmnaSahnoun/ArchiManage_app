@@ -1,7 +1,5 @@
 const oAuth2Client = require("../config/googleAuth");
 require("dotenv").config();
-const express = require('express');
-const router = express.Router();
 // Démarrer le flux d'authentification Google
 const googleAuth = (req, res) => {
   const url = oAuth2Client.generateAuthUrl({
@@ -23,7 +21,6 @@ const googleAuth = (req, res) => {
 const googleAuthCallback = async (req, res) => {
   try {
     const { code } = req.query;
-    console.error("Code d'autorisation:", code);
     if (!code) {
       return res.status(400).send("Code d'autorisation manquant.");
     }

@@ -1,6 +1,5 @@
 const oAuth2Client = require("../config/googleAuth");
 require("dotenv").config();
-const express = require('express');
 const router = express.Router();
 // Démarrer le flux d'authentification Google
 const googleAuth = (req, res) => {
