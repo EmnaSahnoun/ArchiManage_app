@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 84,
+            "activePatchIndex": 85,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -344,6 +344,10 @@
                 {
                     "date": 1748550756847,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n-    hostName: 'e5.systeo.tn', // ou l'hôte où votre service est accessible\r\n+    hostName: 'e8.systeo.tn', // ou l'hôte où votre service est accessible\r\n     ipAddr: '161.97.88.195', // l'adresse IP de votre serveur\r\n     port: {\r\n       '$': PORT,\r\n       '@enabled': 'true',\r\n"
+                },
+                {
+                    "date": 1748565256723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,10 +16,11 @@\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n-    hostName: 'e8.systeo.tn', // ou l'hôte où votre service est accessible\r\n-    ipAddr: '161.97.88.195', // l'adresse IP de votre serveur\r\n+    instanceId: `e8.systeo.tn:emailService:${PORT}`, // Ajoutez ceci\r\n+    hostName: 'e8.systeo.tn',\r\n+    ipAddr: '161.97.88.195',\r\n     port: {\r\n       '$': PORT,\r\n       '@enabled': 'true',\r\n     },\r\n@@ -27,14 +28,20 @@\n     dataCenterInfo: {\r\n       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n       name: 'MyOwn',\r\n     },\r\n+    // Ajoutez ces métadonnées si nécessaire\r\n+    metadata: {\r\n+      'management.port': PORT,\r\n+      'securePort': 443,\r\n+      'securePortEnabled': 'true'\r\n+    }\r\n   },\r\n   eureka: {\r\n     host: 'eureka.systeo.tn',\r\n-    port: 443, // ou le port de votre Eureka (80 pour HTTP, 443 pour HTTPS)\r\n+    port: 443,\r\n     servicePath: '/eureka/apps/',\r\n-    ssl: true, // si vous utilisez HTTPS\r\n+    ssl: true,\r\n   },\r\n });\r\n \r\n // Démarrer le client Eureka\r\n"
                 }
             ],
             "date": 1748453070534,

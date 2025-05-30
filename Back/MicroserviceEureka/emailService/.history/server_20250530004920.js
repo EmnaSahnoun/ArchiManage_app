@@ -17,9 +17,8 @@ const PORT = process.env.PORT || 8079;
 const client = new Eureka({
   instance: {
     app: 'emailService',
-    instanceId: `e8.systeo.tn:emailService:${PORT}`, // Ajoutez ceci
-    hostName: 'e8.systeo.tn',
-    ipAddr: '161.97.88.195',
+    hostName: 'e8.systeo.tn', // ou l'hôte où votre service est accessible
+    ipAddr: '161.97.88.195', // l'adresse IP de votre serveur
     port: {
       '$': PORT,
       '@enabled': 'true',
@@ -29,18 +28,12 @@ const client = new Eureka({
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
     },
-    // Ajoutez ces métadonnées si nécessaire
-    metadata: {
-      'management.port': PORT,
-      'securePort': 443,
-      'securePortEnabled': 'true'
-    }
   },
   eureka: {
     host: 'eureka.systeo.tn',
-    port: 443,
+    port: 443, // ou le port de votre Eureka (80 pour HTTP, 443 pour HTTPS)
     servicePath: '/eureka/apps/',
-    ssl: true,
+    ssl: true, // si vous utilisez HTTPS
   },
 });
 
