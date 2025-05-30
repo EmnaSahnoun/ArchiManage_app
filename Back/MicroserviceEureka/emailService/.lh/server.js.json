@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 85,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -348,6 +348,22 @@
                 {
                     "date": 1748565256723,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,10 +16,11 @@\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n-    hostName: 'e8.systeo.tn', // ou l'hôte où votre service est accessible\r\n-    ipAddr: '161.97.88.195', // l'adresse IP de votre serveur\r\n+    instanceId: `e8.systeo.tn:emailService:${PORT}`, // Ajoutez ceci\r\n+    hostName: 'e8.systeo.tn',\r\n+    ipAddr: '161.97.88.195',\r\n     port: {\r\n       '$': PORT,\r\n       '@enabled': 'true',\r\n     },\r\n@@ -27,14 +28,20 @@\n     dataCenterInfo: {\r\n       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',\r\n       name: 'MyOwn',\r\n     },\r\n+    // Ajoutez ces métadonnées si nécessaire\r\n+    metadata: {\r\n+      'management.port': PORT,\r\n+      'securePort': 443,\r\n+      'securePortEnabled': 'true'\r\n+    }\r\n   },\r\n   eureka: {\r\n     host: 'eureka.systeo.tn',\r\n-    port: 443, // ou le port de votre Eureka (80 pour HTTP, 443 pour HTTPS)\r\n+    port: 443,\r\n     servicePath: '/eureka/apps/',\r\n-    ssl: true, // si vous utilisez HTTPS\r\n+    ssl: true,\r\n   },\r\n });\r\n \r\n // Démarrer le client Eureka\r\n"
+                },
+                {
+                    "date": 1748631210124,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,12 @@\n \r\n const app = express();\r\n \r\n // Middlewares\r\n-app.use(cors()); // Activer CORS pour toutes les origines (à ajuster en production)\r\n+app.use(cors({\r\n+  origin: ['http://localhost:4200', 'https://e8.systeo.tn'],\r\n+  methods: 'GET,POST'\r\n+})); // Activer CORS pour toutes les origines (à ajuster en production)\r\n app.use(express.json()); // Pour parser le JSON des requêtes entrantes\r\n \r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n"
+                },
+                {
+                    "date": 1748631216912,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,9 @@\n \r\n // Middlewares\r\n app.use(cors({\r\n   origin: ['http://localhost:4200', 'https://e8.systeo.tn'],\r\n-  methods: 'GET,POST'\r\n-})); // Activer CORS pour toutes les origines (à ajuster en production)\r\n+  methods: 'GET,POST'})); \r\n app.use(express.json()); // Pour parser le JSON des requêtes entrantes\r\n \r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n"
+                },
+                {
+                    "date": 1748631222380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,11 +9,9 @@\n \r\n const app = express();\r\n \r\n // Middlewares\r\n-app.use(cors({\r\n-  origin: ['http://localhost:4200', 'https://e8.systeo.tn'],\r\n-  methods: 'GET,POST'})); \r\n+app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: 'GET,POST'})); \r\n app.use(express.json()); // Pour parser le JSON des requêtes entrantes\r\n \r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n"
+                },
+                {
+                    "date": 1748631250931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,9 @@\n const app = express();\r\n \r\n // Middlewares\r\n app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: 'GET,POST'})); \r\n-app.use(express.json()); // Pour parser le JSON des requêtes entrantes\r\n-\r\n+app.use(express.json());\r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n"
                 }
             ],
             "date": 1748453070534,
