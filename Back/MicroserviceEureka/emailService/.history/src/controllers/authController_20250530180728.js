@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 // Démarrer le flux d'authentification Google
 const googleAuth = (req, res) => {
-  const state = req.query.returnUrl || '/';
   const url = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: [
@@ -15,8 +14,7 @@ const googleAuth = (req, res) => {
       "https://mail.google.com/",
     ],
     prompt: "consent",
-    include_granted_scopes: true,
-    state: state // Stocker l'URL de retour
+  include_granted_scopes: "true"
   });
   res.redirect(url);
 };
@@ -24,23 +22,20 @@ const googleAuth = (req, res) => {
 // Gérer le callback après l'authentification Google
 const googleAuthCallback = async (req, res) => {
   try {
-    const { code, state } = req.query;
-    
+    const { code } = req.query;
+    console.error("Code d'autorisation:", code);
     if (!code) {
       return res.status(400).send("Code d'autorisation manquant.");
     }
     
+    // Échange le code contre les tokens
     const { tokens } = await oAuth2Client.getToken(code);
-    oAuth2Client.setCredentials(tokens);
     
-    // Rediriger vers le frontend avec les tokens
-    const redirectUrl = `${process.env.FRONTEND_URL}/auth/google/callback?` +
-      `access_token=${tokens.access_token}&` +
-      `refresh_token=${tokens.refresh_token}&` +
-      `expires_in=${tokens.expiry_date}&` +
-      `state=${state || '/'}`;
-    
-    res.redirect(redirectUrl);
+    res.json({
+  access_token: tokens.access_token,
+  refresh_token: tokens.refresh_token,
+  expiry_date: tokens.expiry_date
+});
   } catch (error) {
     console.error("Erreur lors de l'échange du code:", error);
     res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);

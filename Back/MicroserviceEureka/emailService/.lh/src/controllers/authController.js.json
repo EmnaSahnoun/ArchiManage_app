@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1748522538228,
@@ -64,6 +64,14 @@
                 {
                     "date": 1748624849557,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n const oAuth2Client = require(\"../config/googleAuth\");\r\n require(\"dotenv\").config();\r\n+const express = require('express');\r\n const router = express.Router();\r\n // Démarrer le flux d'authentification Google\r\n const googleAuth = (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n"
+                },
+                {
+                    "date": 1748635960836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n const express = require('express');\r\n const router = express.Router();\r\n // Démarrer le flux d'authentification Google\r\n const googleAuth = (req, res) => {\r\n+  const state = req.query.returnUrl || '/';\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: \"offline\",\r\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n@@ -13,9 +14,10 @@\n       'https://www.googleapis.com/auth/gmail.compose',\r\n       \"https://mail.google.com/\",\r\n     ],\r\n     prompt: \"consent\",\r\n-  include_granted_scopes: \"true\"\r\n+    include_granted_scopes: true,\r\n+    state: state // Stocker l'URL de retour\r\n   });\r\n   res.redirect(url);\r\n };\r\n \r\n"
+                },
+                {
+                    "date": 1748635982796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,22 +23,25 @@\n \r\n // Gérer le callback après l'authentification Google\r\n const googleAuthCallback = async (req, res) => {\r\n   try {\r\n-    const { code } = req.query;\r\n-    console.error(\"Code d'autorisation:\", code);\r\n+    const { code, state } = req.query;\r\n+    \r\n     if (!code) {\r\n       return res.status(400).send(\"Code d'autorisation manquant.\");\r\n     }\r\n     \r\n-    // Échange le code contre les tokens\r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n+    oAuth2Client.setCredentials(tokens);\r\n     \r\n-    res.json({\r\n-  access_token: tokens.access_token,\r\n-  refresh_token: tokens.refresh_token,\r\n-  expiry_date: tokens.expiry_date\r\n-});\r\n+    // Rediriger vers le frontend avec les tokens\r\n+    const redirectUrl = `${process.env.FRONTEND_URL}/auth/google/callback?` +\r\n+      `access_token=${tokens.access_token}&` +\r\n+      `refresh_token=${tokens.refresh_token}&` +\r\n+      `expires_in=${tokens.expiry_date}&` +\r\n+      `state=${state || '/'}`;\r\n+    \r\n+    res.redirect(redirectUrl);\r\n   } catch (error) {\r\n     console.error(\"Erreur lors de l'échange du code:\", error);\r\n     res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);\r\n   }\r\n"
                 }
             ],
             "date": 1748522538228,
