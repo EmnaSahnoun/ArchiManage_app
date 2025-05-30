@@ -31,16 +31,15 @@ const googleAuthCallback = async (req, res) => {
     }
     
     const { tokens } = await oAuth2Client.getToken(code);
+    oAuth2Client.setCredentials(tokens);
     
-    // Construire l'URL de redirection avec les tokens
-    const frontendUrl = process.env.FRONTEND_URL;
-    const redirectUrl = `${frontendUrl}/auth/google/callback?` +
+    // Rediriger vers le frontend avec les tokens
+    const redirectUrl = `${process.env.FRONTEND_URL}/auth/google/callback?` +
       `access_token=${tokens.access_token}&` +
       `refresh_token=${tokens.refresh_token}&` +
-      `expires_in=${Math.floor((tokens.expiry_date - Date.now()) / 1000)}&` +
+      `expires_in=${tokens.expiry_date}&` +
       `state=${state || '/'}`;
     
-    console.log("Redirection vers:", redirectUrl); // Pour débogage
     res.redirect(redirectUrl);
   } catch (error) {
     console.error("Erreur lors de l'échange du code:", error);

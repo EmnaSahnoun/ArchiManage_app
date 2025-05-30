@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1748522538228,
@@ -72,6 +72,10 @@
                 {
                     "date": 1748635982796,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,22 +23,25 @@\n \r\n // Gérer le callback après l'authentification Google\r\n const googleAuthCallback = async (req, res) => {\r\n   try {\r\n-    const { code } = req.query;\r\n-    console.error(\"Code d'autorisation:\", code);\r\n+    const { code, state } = req.query;\r\n+    \r\n     if (!code) {\r\n       return res.status(400).send(\"Code d'autorisation manquant.\");\r\n     }\r\n     \r\n-    // Échange le code contre les tokens\r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n+    oAuth2Client.setCredentials(tokens);\r\n     \r\n-    res.json({\r\n-  access_token: tokens.access_token,\r\n-  refresh_token: tokens.refresh_token,\r\n-  expiry_date: tokens.expiry_date\r\n-});\r\n+    // Rediriger vers le frontend avec les tokens\r\n+    const redirectUrl = `${process.env.FRONTEND_URL}/auth/google/callback?` +\r\n+      `access_token=${tokens.access_token}&` +\r\n+      `refresh_token=${tokens.refresh_token}&` +\r\n+      `expires_in=${tokens.expiry_date}&` +\r\n+      `state=${state || '/'}`;\r\n+    \r\n+    res.redirect(redirectUrl);\r\n   } catch (error) {\r\n     console.error(\"Erreur lors de l'échange du code:\", error);\r\n     res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);\r\n   }\r\n"
+                },
+                {
+                    "date": 1748638560734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,17 +30,18 @@\n       return res.status(400).send(\"Code d'autorisation manquant.\");\r\n     }\r\n     \r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n-    oAuth2Client.setCredentials(tokens);\r\n     \r\n-    // Rediriger vers le frontend avec les tokens\r\n-    const redirectUrl = `${process.env.FRONTEND_URL}/auth/google/callback?` +\r\n+    // Construire l'URL de redirection avec les tokens\r\n+    const frontendUrl = process.env.FRONTEND_URL;\r\n+    const redirectUrl = `${frontendUrl}/auth/google/callback?` +\r\n       `access_token=${tokens.access_token}&` +\r\n       `refresh_token=${tokens.refresh_token}&` +\r\n-      `expires_in=${tokens.expiry_date}&` +\r\n+      `expires_in=${Math.floor((tokens.expiry_date - Date.now()) / 1000)}&` +\r\n       `state=${state || '/'}`;\r\n     \r\n+    console.log(\"Redirection vers:\", redirectUrl); // Pour débogage\r\n     res.redirect(redirectUrl);\r\n   } catch (error) {\r\n     console.error(\"Erreur lors de l'échange du code:\", error);\r\n     res.redirect(`${process.env.FRONTEND_URL}/error?message=auth_failed`);\r\n"
                 }
             ],
             "date": 1748522538228,
