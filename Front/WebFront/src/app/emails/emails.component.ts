@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { GoogleAuthService } from '../services/googleAuthSerivce';
 import { Router } from '@angular/router';
-import { catchError, finalize, forkJoin, map, Observable, of, Subscription, tap } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, Subject, Subscription, takeUntil, tap, throwError } from 'rxjs';
 import { GmailService } from '../services/gmailService';
 
 type ActiveEmailTab = 'received' | 'sent' | 'draft';
@@ -11,7 +11,7 @@ type ActiveEmailTab = 'received' | 'sent' | 'draft';
   templateUrl: './emails.component.html',
   styleUrl: './emails.component.scss'
 })
-export class EmailsComponent implements OnInit  {
+export class EmailsComponent implements OnInit,OnDestroy    {
  receivedEmails: any[] = [];
   sentEmails: any[] = [];
   draftEmails: any[] = [];
@@ -19,28 +19,30 @@ export class EmailsComponent implements OnInit  {
   isLoading = false;
   error: string | null = null;
   currentUserEmail: string = '';
-
+private destroy$ = new Subject<void>();
   constructor(
     private googleAuthService: GoogleAuthService,
     private router: Router,
     private gmailService: GmailService,
     private authService: AuthService
   ) {}
-
   ngOnInit(): void {
     this.checkAuthAndLoadEmails();
   }
-
+ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   private checkAuthAndLoadEmails(): void {
     const googleToken = this.googleAuthService.getAccessToken();
     const userProfile = this.authService.getDecodedToken();
     console.log("Profil utilisateur:", userProfile);
     console.log("Token Google:", googleToken);
 
-    this.currentUserEmail = userProfile?.email || '';
-    console.log("Email utilisateur:", this.currentUserEmail);
 
     if (!googleToken) {
+       this.currentUserEmail = userProfile?.email || ''; // Set it here as well
+
       const currentUrl = this.router.url;
       this.googleAuthService.initGoogleAuth(currentUrl);
       return;
@@ -48,7 +50,12 @@ export class EmailsComponent implements OnInit  {
 
     this.loadAllEmails();
   }
-
+private setCurrentUserEmail(): boolean {
+    const userProfile = this.authService.getDecodedToken();
+    this.currentUserEmail = userProfile?.email || '';
+    console.log("Email utilisateur actuel:", this.currentUserEmail);
+    return !!this.currentUserEmail;
+  }
    loadAllEmails(): void {
     this.isLoading = true;
     this.error = null;
@@ -58,6 +65,7 @@ export class EmailsComponent implements OnInit  {
       this.loadSentEmails(),
       this.loadDrafts()
     ]).pipe(
+      takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
     ).subscribe({
       error: (err) => {
@@ -79,24 +87,11 @@ export class EmailsComponent implements OnInit  {
       return of(void 0);
     }
 
-    // 2. Récupération du profil utilisateur avec sécurité
-    try {
-      const userProfileString = localStorage.getItem("user_profile");
-      
-      if (!userProfileString) {
-        console.warn('Aucun profil utilisateur trouvé dans le localStorage');
-        return of(void 0);
-      }
-
-      const userProfile = JSON.parse(userProfileString);
-      this.currentUserEmail = userProfile?.email;
-
-      if (!this.currentUserEmail) {
-        console.warn('Aucun email utilisateur dans le profil');
-        return of(void 0);
-      }
-
-      // 3. Appel du service avec gestion d'erreur complète
+    if (!this.currentUserEmail && !this.setCurrentUserEmail()) {
+      console.warn('Email utilisateur non disponible pour charger les emails reçus.');
+      this.error = 'Impossible de récupérer les informations utilisateur pour charger les emails.';
+      return of(void 0);
+    }
     return this.gmailService.getInboxEmails(googleToken, 100, this.currentUserEmail).pipe(
        tap((response: any) => {
     console.log("Réponse complète:", response);
@@ -106,6 +101,8 @@ export class EmailsComponent implements OnInit  {
         } else {
           console.warn('Structure de réponse inattendue:', response);
           this.receivedEmails = [];
+          this.error = 'Format de données incorrect pour les emails reçus.';
+
         }
       }),
       map(() => void 0),
@@ -115,10 +112,7 @@ export class EmailsComponent implements OnInit  {
         return of(void 0);
       })
     );
-  } catch (error) {
-    console.error('Erreur lors de la lecture du profil:', error);
-    return of(void 0);
-  }
+ 
   }
 
   private loadSentEmails(): Observable<void> {
@@ -126,6 +120,7 @@ export class EmailsComponent implements OnInit  {
     if (!token) return of(void 0);
 
     return this.gmailService.getSentEmails(token, this.currentUserEmail).pipe(
+      takeUntil(this.destroy$),
       tap(response => {
         console.log("emails dans sent",response)
         if (response && response.success && Array.isArray(response.data)) {
@@ -133,6 +128,8 @@ export class EmailsComponent implements OnInit  {
           console.log('Emails chargés:', this.sentEmails.length, this.sentEmails);
         } else {
           console.warn('Structure de réponse inattendue:', response);
+          this.error = 'Format de données incorrect pour les emails envoyés.';
+
           this.sentEmails = [];
         }
       }),
@@ -140,6 +137,7 @@ export class EmailsComponent implements OnInit  {
       catchError(err => {
         console.error('Erreur chargement emails envoyés:', err);
         return of(void 0);
+        
       })
     );
   }
@@ -149,6 +147,7 @@ export class EmailsComponent implements OnInit  {
     if (!token) return of(void 0);
 
     return this.gmailService.getDrafts(token, this.currentUserEmail).pipe(
+      takeUntil(this.destroy$),
       tap(response => {
        
         console.log("la reponse",response)
@@ -185,6 +184,7 @@ extractEmailAddress(fullString: string): string {
     
     if (refreshToken) {
       this.googleAuthService.refreshToken()
+      
         .then(() => this.loadAllEmails())
         .catch(() => this.router.navigate(['/login']));
     } else {
@@ -208,7 +208,10 @@ extractEmailAddress(fullString: string): string {
     const token = this.googleAuthService.getAccessToken();
     if (!token) return;
 
-    this.gmailService.markAsRead(token, emailId, this.currentUserEmail).subscribe({
+   this.gmailService.markAsRead(token, emailId, this.currentUserEmail)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+
       next: () => {
         const email = this.receivedEmails.find(e => e.id === emailId);
         if (email) {
@@ -221,24 +224,22 @@ extractEmailAddress(fullString: string): string {
 
   onDeleteEmail(emailId: string, tab: ActiveEmailTab): void {
     const token = this.googleAuthService.getAccessToken();
-    const userProfileString = localStorage.getItem("user_profile");
-      
-      if (!userProfileString) {
-        console.warn('Aucun profil utilisateur trouvé dans le localStorage');
-        return ;
-      }
+    if (!token) {
+      console.warn('Aucun token Google disponible pour supprimer l\'email.');
+      this.error = 'Session Google expirée. Veuillez rafraîchir ou vous reconnecter.';
+      // this.handleTokenExpired(); // Optionally trigger re-auth
+      return;
+    }
 
-      const userProfile = JSON.parse(userProfileString);
-      this.currentUserEmail = userProfile?.email;
+    if (!this.currentUserEmail && !this.setCurrentUserEmail()) {
+      console.warn('Email utilisateur non disponible pour la suppression.');
+      this.error = 'Impossible de vérifier l\'utilisateur pour cette action.';
+      return;
+    }
 
-      if (!this.currentUserEmail) {
-        console.warn('Aucun email utilisateur dans le profil');
-        return ;
-      }
-
-    if (!token) return;
-
-    this.gmailService.deleteEmail(token, emailId, this.currentUserEmail).subscribe({
+    this.gmailService.deleteEmail(token, emailId, this.currentUserEmail)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
       next: () => {
         if (tab === 'received') {
           this.receivedEmails = this.receivedEmails.filter(e => e.id !== emailId);
@@ -248,7 +249,13 @@ extractEmailAddress(fullString: string): string {
           this.draftEmails = this.draftEmails.filter(e => e.id !== emailId);
         }
       },
-      error: (err) => console.error('Erreur suppression:', err)
+     error: (err) => {
+        console.error('Erreur suppression:', err);
+        this.error = `Erreur lors de la suppression: ${err.message || 'Veuillez réessayer.'}`;
+        if (err.status === 401) {
+          this.handleTokenExpired();
+        }
+      }
     });
   }
 }

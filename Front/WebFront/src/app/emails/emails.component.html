@@ -38,17 +38,21 @@
           <li *ngIf="receivedEmails.length === 0" class="empty-list-message">
             Aucun email dans la boîte de réception.
           </li>
-          <li *ngFor="let email of receivedEmails" 
-              (click)="selectEmail(email, 'received')" 
+           <li *ngFor="let email of receivedEmails"
+              (click)="selectEmail(email, 'received')"
               [class.unread]="!email.isRead">
-            <div class="email-item-header">
-              <span class="email-item-sender">{{ email.headers.from }}</span>
-              <span class="email-item-date">{{ email.headers.date | date:'dd/MM/yyyy HH:mm' }}</span>
+            <div class="email-details">
+              <div class="email-item-header">
+                <span class="email-item-sender">{{ email.headers?.from }}</span>
+                <span class="email-item-date">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              <div class="email-item-subject">{{ email.headers?.subject }}</div>
+              <div class="email-item-snippet">{{ email.snippet }}</div>
             </div>
-            <div class="email-item-subject">{{ email.headers.subject }}</div>
-            <div class="email-item-snippet">{{ email.snippet }}</div>
-            <button mat-icon-button class="delete-button" 
-                    (click)="onDeleteEmail(email.id, 'received'); $event.stopPropagation()">
+            <button mat-icon-button class="delete-button"
+                    [attr.aria-label]="'Supprimer cet email avec sujet ' + (email.headers?.subject || 'sans sujet')"
+                  (click)="onDeleteEmail(email.id, 'received'); $event.stopPropagation()">
+           
               <mat-icon>delete</mat-icon>
             </button>
           </li>
@@ -65,14 +69,19 @@
           </li>
           <li *ngFor="let email of sentEmails" 
               (click)="selectEmail(email, 'sent')">
-            <div class="email-item-header">
-              <span class="email-item-recipient">À: {{ extractEmailAddress(email.headers?.to) }}</span>
-              <span class="email-item-date">{{ email.headers.date | date:'dd/MM/yyyy HH:mm' }}</span>
+            <div class="email-details">
+              <div class="email-item-header">
+                <span class="email-item-recipient">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>
+                <span class="email-item-date">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              <div class="email-item-subject">{{ email.headers?.subject }}</div>
+              <div class="email-item-snippet">{{ email.snippet }}</div>
             </div>
-            <div class="email-item-subject">{{ email.headers.subject }}</div>
-            <div class="email-item-snippet">{{ email.snippet }}</div>
-            <button mat-icon-button class="delete-button" 
+            <button mat-icon-button class="delete-button"
+       
+                    [attr.aria-label]="'Supprimer cet email avec sujet ' + (email.headers?.subject || 'sans sujet')"
                     (click)="onDeleteEmail(email.id, 'sent'); $event.stopPropagation()">
+       
               <mat-icon>delete</mat-icon>
             </button>
           </li>
@@ -89,15 +98,18 @@
           </li>
           <li *ngFor="let email of draftEmails" 
               (click)="selectEmail(email, 'draft')">
-            <div class="email-item-header">
-              <span class="email-item-recipient">À: {{ email.headers.to }}</span>
-              <span class="email-item-date">{{ email.headers.date | date:'dd/MM/yyyy HH:mm' }}</span>
+            <div class="email-details">
+              <div class="email-item-header">
+                <span class="email-item-recipient">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>
+                <span class="email-item-date">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              <div class="email-item-subject">{{ email.headers?.subject }}</div>
+              <div class="email-item-snippet">{{ email.snippet }}</div>
             </div>
-            <div class="email-item-subject">{{ email.headers.subject }}</div>
-            <div class="email-item-snippet">{{ email.snippet }}</div>
-            <button mat-icon-button class="delete-button" 
-                    (click)="onDeleteEmail(email.id, 'draft'); $event.stopPropagation()">
-              <mat-icon>delete</mat-icon>
+            <button mat-icon-button class="delete-button"
+                    [attr.aria-label]="'Supprimer le brouillon avec sujet ' + (email.headers?.subject || 'sans sujet')"
+                      (click)="onDeleteEmail(email.id, 'draft'); $event.stopPropagation()">
+                            <mat-icon>delete</mat-icon>
             </button>
           </li>
         </ul>

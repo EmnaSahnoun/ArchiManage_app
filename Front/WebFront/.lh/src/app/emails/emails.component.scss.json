@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1748563350619,
@@ -24,6 +24,122 @@
                 {
                     "date": 1748563587192,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n .emails-page-container {\r\n   padding: 20px;\r\n   background-color: #f9f9f9;\r\n-  min-height: calc(100vh - 64px); // Adjust 64px based on your header/toolbar height\r\n+  min-height: calc(120vh - 64px); // Adjust 64px based on your header/toolbar height\r\n }\r\n \r\n .emails-header {\r\n   display: flex;\r\n@@ -31,9 +31,22 @@\n   border: none;\r\n   background-color: transparent;\r\n   font-size: 16px;\r\n   font-weight: 500;\r\n-  \r\n+  color: #555;\r\n+  margin-right: 5px; // Espace entre les boutons\r\n+  border-bottom: 3px solid transparent; // Pour l'indicateur actif\r\n+  transition: color 0.3s ease, border-bottom-color 0.3s ease;\r\n+\r\n+  &:hover {\r\n+    color: #007bff;\r\n+  }\r\n+\r\n+  &.active {\r\n+    color: #007bff;\r\n+    border-bottom-color: #007bff;\r\n+    font-weight: bold;\r\n+  }\r\n }\r\n \r\n .email-list-container {\r\n   background-color: #fff;\r\n"
+                },
+                {
+                    "date": 1748707492829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,7 @@\n+\r\n+\r\n+\r\n .emails-page-container {\r\n   padding: 20px;\r\n   background-color: #f9f9f9;\r\n   min-height: calc(120vh - 64px); // Adjust 64px based on your header/toolbar height\r\n"
+                },
+                {
+                    "date": 1748707509371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,44 @@\n+// Color Palette\r\n+$primary-color: #007bff;\r\n+$secondary-color: #2c3e50;\r\n+$light-gray-bg: #f9f9f9;\r\n+$medium-gray-border: #e0e0e0;\r\n+$dark-text-color: #333;\r\n+$text-color: #555;\r\n+$text-muted-color: #777;\r\n+$unread-bg-color: #eef7ff;\r\n+$hover-bg-color: #f5f5f5;\r\n+$item-border-color: #f0f0f0;\r\n+$box-shadow-color: rgba(0, 0, 0, 0.1);\r\n+$error-color: #dc3545; // Example error color\r\n \r\n+// Spacing\r\n+$spacing-unit: 5px; // Base unit for margins/paddings if needed\r\n+$padding-large: 20px;\r\n+$padding-medium: 15px;\r\n+$padding-small: 10px;\r\n+$margin-large: 20px;\r\n \r\n+// Font\r\n+$font-size-base: 16px;\r\n+$font-size-large: 24px;\r\n+$font-size-small: 0.95em;\r\n+$font-size-xsmall: 0.85em;\r\n+$font-size-xxsmall: 0.75em;\r\n \r\n+$font-weight-normal: 400;\r\n+$font-weight-medium: 500;\r\n+$font-weight-bold: bold;\r\n+\r\n+// Header (adjust if you have a global variable for this)\r\n+$header-height: 64px;\r\n+\r\n+\r\n .emails-page-container {\r\n-  padding: 20px;\r\n-  background-color: #f9f9f9;\r\n-  min-height: calc(120vh - 64px); // Adjust 64px based on your header/toolbar height\r\n-}\r\n+   padding: $padding-large;\r\n+  background-color: $light-gray-bg;\r\n+  min-height: calc(100vh - #{$header-height});}\r\n \r\n .emails-header {\r\n   display: flex;\r\n   justify-content: space-between;\r\n"
+                },
+                {
+                    "date": 1748707524178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,17 +36,18 @@\n \r\n .emails-page-container {\r\n    padding: $padding-large;\r\n   background-color: $light-gray-bg;\r\n-  min-height: calc(100vh - #{$header-height});}\r\n+  min-height: calc(100vh - #{$header-height});\r\n+}\r\n \r\n .emails-header {\r\n   display: flex;\r\n   justify-content: space-between;\r\n   align-items: center;\r\n-  margin-bottom: 20px;\r\n-  padding-bottom: 15px;\r\n-  border-bottom: 1px solid #e0e0e0;\r\n+  margin-bottom: $margin-large;\r\n+  padding-bottom: $padding-medium;\r\n+  border-bottom: 1px solid $medium-gray-border;\r\n \r\n   h1 {\r\n     margin: 0;\r\n     font-size: 24px;\r\n"
+                },
+                {
+                    "date": 1748707535037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,10 +49,10 @@\n   border-bottom: 1px solid $medium-gray-border;\r\n \r\n   h1 {\r\n     margin: 0;\r\n-    font-size: 24px;\r\n-    color: #333;\r\n+    font-size: $font-size-large;\r\n+    color: $dark-text-color;\r\n   }\r\n }\r\n \r\n // Styles pour la navigation des onglets personnalisés\r\n"
+                },
+                {
+                    "date": 1748707552169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,10 @@\n \r\n // Styles pour la navigation des onglets personnalisés\r\n .custom-tabs-nav {\r\n   display: flex;\r\n-  border-bottom: 2px solid #e0e0e0;\r\n+  border-bottom: 2px solid $medium-gray-border;\r\n+  margin-bottom: $margin-large;border-bottom: 2px solid #e0e0e0;\r\n    margin-bottom: 20px;\r\n }\r\n .custom-tab-button {\r\n   padding: 10px 20px;\r\n"
+                },
+                {
+                    "date": 1748707562126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n   margin-bottom: $margin-large;border-bottom: 2px solid #e0e0e0;\r\n    margin-bottom: 20px;\r\n }\r\n .custom-tab-button {\r\n-  padding: 10px 20px;\r\n+   padding: $padding-small $padding-large;\r\n   cursor: pointer;\r\n   border: none;\r\n   background-color: transparent;\r\n   font-size: 16px;\r\n"
+                },
+                {
+                    "date": 1748707575822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,12 +66,12 @@\n    padding: $padding-small $padding-large;\r\n   cursor: pointer;\r\n   border: none;\r\n   background-color: transparent;\r\n-  font-size: 16px;\r\n-  font-weight: 500;\r\n-  color: #555;\r\n-  margin-right: 5px; // Espace entre les boutons\r\n+  font-size: $font-size-base;\r\n+  font-weight: $font-weight-medium;\r\n+  color: $text-color;\r\n+  margin-right: $spacing-unit; // Espace entre les boutons\r\n   border-bottom: 3px solid transparent; // Pour l'indicateur actif\r\n   transition: color 0.3s ease, border-bottom-color 0.3s ease;\r\n \r\n   &:hover {\r\n"
+                },
+                {
+                    "date": 1748707584817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n   border-bottom: 3px solid transparent; // Pour l'indicateur actif\r\n   transition: color 0.3s ease, border-bottom-color 0.3s ease;\r\n \r\n   &:hover {\r\n-    color: #007bff;\r\n+    color: $primary-color;\r\n   }\r\n \r\n   &.active {\r\n     color: #007bff;\r\n"
+                },
+                {
+                    "date": 1748707596416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,11 +78,11 @@\n     color: $primary-color;\r\n   }\r\n \r\n   &.active {\r\n-    color: #007bff;\r\n-    border-bottom-color: #007bff;\r\n-    font-weight: bold;\r\n+   color: $primary-color;\r\n+    border-bottom-color: $primary-color;\r\n+    font-weight: $font-weight-bold;\r\n   }\r\n }\r\n \r\n .email-list-container {\r\n"
+                },
+                {
+                    "date": 1748707609587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n \r\n .email-list-container {\r\n   background-color: #fff;\r\n   border-radius: 8px;\r\n-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n+  box-shadow: 0 2px 4px $box-shadow-color;\r\n   overflow: hidden;\r\n }\r\n \r\n .email-list {\r\n"
+                },
+                {
+                    "date": 1748707626030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,10 +97,10 @@\n   padding: 0;\r\n   margin: 0;\r\n \r\n   li {\r\n-    padding: 15px 20px;\r\n-    border-bottom: 1px solid #f0f0f0;\r\n+   padding: $padding-medium $padding-large;\r\n+    border-bottom: 1px solid $item-border-color;\r\n     cursor: pointer;\r\n     transition: background-color 0.2s ease;\r\n \r\n     &:last-child {\r\n"
+                },
+                {
+                    "date": 1748707645161,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,9 +107,9 @@\n       border-bottom: none;\r\n     }\r\n \r\n     &:hover {\r\n-      background-color: #f5f5f5;\r\n+     background-color: $hover-bg-color;\r\n     }\r\n \r\n     &.unread {\r\n       background-color: #eef7ff;\r\n"
+                },
+                {
+                    "date": 1748707653989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -111,9 +111,9 @@\n      background-color: $hover-bg-color;\r\n     }\r\n \r\n     &.unread {\r\n-      background-color: #eef7ff;\r\n+      background-color: $unread-bg-color;\r\n       .email-item-sender, .email-item-subject {\r\n         font-weight: bold;\r\n         color: #2c3e50;\r\n       }\r\n"
+                },
+                {
+                    "date": 1748707665773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,10 +113,10 @@\n \r\n     &.unread {\r\n       background-color: $unread-bg-color;\r\n       .email-item-sender, .email-item-subject {\r\n-        font-weight: bold;\r\n-        color: #2c3e50;\r\n+       font-weight: $font-weight-bold;\r\n+        color: $secondary-color;\r\n       }\r\n     }\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1748707675244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,14 @@\n       }\r\n     }\r\n   }\r\n }\r\n-\r\n+.email-item-header {\r\n+  display: flex;\r\n+  justify-content: space-between;\r\n+  align-items: center;\r\n+  margin-bottom: $spacing-unit * 0.8; // 4px\r\n+}\r\n .email-item-sender,\r\n .email-item-recipient {\r\n   font-size: 1em;\r\n   color: #333;\r\n"
+                },
+                {
+                    "date": 1748707684766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -128,10 +128,9 @@\n }\r\n .email-item-sender,\r\n .email-item-recipient {\r\n   font-size: 1em;\r\n-  color: #333;\r\n-  margin-bottom: 4px;\r\n+  color: $dark-text-color;\r\n }\r\n \r\n .email-item-subject {\r\n   font-size: 0.95em;\r\n"
+                },
+                {
+                    "date": 1748707698889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -132,11 +132,11 @@\n   color: $dark-text-color;\r\n }\r\n \r\n .email-item-subject {\r\n-  font-size: 0.95em;\r\n-  color: #555;\r\n-  margin-bottom: 6px;\r\n+  font-size: $font-size-small;\r\n+  color: $text-color;\r\n+  margin-bottom: $spacing-unit * 1.2; // 6px\r\n   white-space: nowrap;\r\n   overflow: hidden;\r\n   text-overflow: ellipsis;\r\n }\r\n"
+                },
+                {
+                    "date": 1748707713174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -134,18 +134,18 @@\n \r\n .email-item-subject {\r\n   font-size: $font-size-small;\r\n   color: $text-color;\r\n-  margin-bottom: $spacing-unit * 1.2; // 6px\r\n+  margin-bottom: $spacing-unit * 1.2; \r\n   white-space: nowrap;\r\n   overflow: hidden;\r\n   text-overflow: ellipsis;\r\n }\r\n \r\n .email-item-snippet {\r\n-  font-size: 0.85em;\r\n-  color: #777;\r\n-  margin-bottom: 8px;\r\n+  font-size: $font-size-xsmall;\r\n+  color: $text-muted-color;\r\n+  margin-bottom: $spacing-unit * 1.6;\r\n   white-space: nowrap;\r\n   overflow: hidden;\r\n   text-overflow: ellipsis;\r\n   max-width: 95%;\r\n"
+                },
+                {
+                    "date": 1748707724639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -151,9 +151,9 @@\n   max-width: 95%;\r\n }\r\n \r\n .email-item-date {\r\n-  font-size: 0.75em;\r\n+   font-size: $font-size-xxsmall;\r\n   color: #999;\r\n   text-align: right;\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1748707730737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -161,9 +161,9 @@\n   padding: 30px 20px;\r\n   text-align: center;\r\n   color: #888;\r\n   font-style: italic;\r\n-  cursor: default !important;\r\n+  cursor: default ;\r\n   &:hover {\r\n     background-color: transparent !important;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1748707738280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -163,7 +163,7 @@\n   color: #888;\r\n   font-style: italic;\r\n   cursor: default ;\r\n   &:hover {\r\n-    background-color: transparent !important;\r\n+    background-color: transparent ;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1748707748964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -166,4 +166,22 @@\n   &:hover {\r\n     background-color: transparent ;\r\n   }\r\n }\r\n+.loading-spinner {\r\n+  display: flex;\r\n+  justify-content: center;\r\n+  align-items: center;\r\n+  padding: $padding-large;\r\n+}\r\n+\r\n+.error-message {\r\n+  color: $error-color;\r\n+  padding: $padding-medium;\r\n+  border: 1px solid $error-color;\r\n+  background-color: lighten($error-color, 35%);\r\n+  border-radius: 4px;\r\n+  margin-bottom: $margin-large;\r\n+  display: flex;\r\n+  justify-content: space-between;\r\n+  align-items: center;\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748709681172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,11 +57,10 @@\n \r\n // Styles pour la navigation des onglets personnalisés\r\n .custom-tabs-nav {\r\n   display: flex;\r\n-  border-bottom: 2px solid $medium-gray-border;\r\n-  margin-bottom: $margin-large;border-bottom: 2px solid #e0e0e0;\r\n-   margin-bottom: 20px;\r\n+   border-bottom: 2px solid $medium-gray-border; // Variable used\r\n+  margin-bottom: $margin-large;\r\n }\r\n .custom-tab-button {\r\n    padding: $padding-small $padding-large;\r\n   cursor: pointer;\r\n"
+                },
+                {
+                    "date": 1748709704271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,8 +100,11 @@\n    padding: $padding-medium $padding-large;\r\n     border-bottom: 1px solid $item-border-color;\r\n     cursor: pointer;\r\n     transition: background-color 0.2s ease;\r\n+ display: flex; // Added for layout control\r\n+    align-items: center; // Vertically center content and button\r\n+    justify-content: space-between; // Push button to the end\r\n \r\n     &:last-child {\r\n       border-bottom: none;\r\n     }\r\n"
+                },
+                {
+                    "date": 1748709721437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,8 +119,11 @@\n        font-weight: $font-weight-bold;\r\n         color: $secondary-color;\r\n       }\r\n     }\r\n+\r\n+\r\n+    \r\n   }\r\n }\r\n .email-item-header {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1748709727495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,10 +120,26 @@\n         color: $secondary-color;\r\n       }\r\n     }\r\n \r\n+.email-details { // Wrapper for email text content\r\n+      flex-grow: 1; // Allows this section to take available width\r\n+      margin-right: $padding-small; // Space between text and delete button\r\n+      min-width: 0; // Important for flex items that contain text that might overflow\r\n+    }\r\n \r\n-    \r\n+    // Styles for the delete button\r\n+    .delete-button {\r\n+      color: $text-muted-color; // Default color for the icon - subtle\r\n+      background-color: transparent; // Ensure no default mat-icon-button background interferes\r\n+      flex-shrink: 0; // Prevent the button from shrinking\r\n+\r\n+      &:hover, &:focus {\r\n+        color: $error-color; // Error color on hover for emphasis\r\n+        background-color: rgba($error-color, 0.1); // Slight background tint on hover\r\n+      }\r\n+    }\r\n+\r\n   }\r\n }\r\n .email-item-header {\r\n   display: flex;\r\n"
+                },
+                {
+                    "date": 1748709741291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -149,8 +149,13 @@\n }\r\n .email-item-sender,\r\n .email-item-recipient {\r\n   font-size: 1em;\r\n+    white-space: nowrap;\r\n+  overflow: hidden;\r\n+  text-overflow: ellipsis;\r\n+  max-width: 250px; // Adjust as needed, or use a percentage\r\n+\r\n   color: $dark-text-color;\r\n }\r\n \r\n .email-item-subject {\r\n"
+                },
+                {
+                    "date": 1748709759963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -178,9 +178,9 @@\n }\r\n \r\n .email-item-date {\r\n    font-size: $font-size-xxsmall;\r\n-  color: #999;\r\n+  color: $text-muted-color;\r\n   text-align: right;\r\n }\r\n \r\n .empty-list-message {\r\n"
+                },
+                {
+                    "date": 1748709767624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -180,8 +180,9 @@\n .email-item-date {\r\n    font-size: $font-size-xxsmall;\r\n   color: $text-muted-color;\r\n   text-align: right;\r\n+   white-space: nowrap;\r\n }\r\n \r\n .empty-list-message {\r\n   padding: 30px 20px;\r\n"
                 }
             ],
             "date": 1748563350619,
