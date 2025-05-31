@@ -2,7 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Eureka = require('eureka-js-client').Eureka;
-
+// Importer les routes
+const authRoutes = require("./src/routes/authRoutes");
+const emailRoutes = require("./src/routes/emailRoutes");
+const draftRoutes = require("./src/routes/draftRoutes");
 
 const app = express();
 
@@ -27,11 +30,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-
-// Importer les routes
-const authRoutes = require("./src/routes/authRoutes");
-const emailRoutes = require("./src/routes/emailRoutes");
-const draftRoutes = require("./src/routes/draftRoutes");
+// 3. Handler OPTIONS spécifique
+app.options('*', cors(corsOptions));
 const PORT = process.env.PORT || 8079;
 const client = new Eureka({
   instance: {

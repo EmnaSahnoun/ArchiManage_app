@@ -27,6 +27,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// 3. Handler OPTIONS spécifique
+app.options('*', cors(corsOptions));
 
 // Importer les routes
 const authRoutes = require("./src/routes/authRoutes");

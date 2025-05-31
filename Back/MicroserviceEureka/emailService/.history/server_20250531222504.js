@@ -2,36 +2,25 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Eureka = require('eureka-js-client').Eureka;
-
-
-const app = express();
-
-// Middlewares
-// 1. Configuration CORS améliorée
-const corsOptions = {
-  origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:4200', 'https://e8.systeo.tn'];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-// 2. Middlewares dans le bon ordre
-app.use(cors(corsOptions));
-app.use(express.json());
-
-
 // Importer les routes
 const authRoutes = require("./src/routes/authRoutes");
 const emailRoutes = require("./src/routes/emailRoutes");
 const draftRoutes = require("./src/routes/draftRoutes");
+
+const app = express();
+
+// Middlewares
+app.use(cors({
+  origin: true, // Autorise toutes les origines (pour le dev)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
+
+app.use(express.json());
 const PORT = process.env.PORT || 8079;
 const client = new Eureka({
   instance: {
