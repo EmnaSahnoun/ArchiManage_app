@@ -37,7 +37,7 @@ const googleAuthCallback = async (req, res) => {
     const redirectUrl = `${frontendUrl}/auth/google/callback?` +
       `access_token=${tokens.access_token}&` +
       `refresh_token=${tokens.refresh_token}&` +
-      `expires_in=${tokens.expires_in}&` +
+      `expires_in=${Math.floor((tokens.expires_date - Date.now()) / 1000)}&` +
       `state=${state || '/'}`;
     
     console.log("Redirection vers:", redirectUrl); // Pour débogage

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/loading/loading.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748649442369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748649450519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,12 @@\n   selector: 'app-loading',\r\n   template: `<p>Redirection en cours...</p>`\r\n })\r\n export class LoadingComponent {\r\n+ constructor(private router: Router) {}\r\n \r\n+  ngOnInit() {\r\n+    setTimeout(() => {\r\n+      this.router.navigate(['/']);\r\n+    }, 2000);\r\n+  }\r\n }\r\n"
+                }
+            ],
+            "date": 1748649442369,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-loading',\r\n  template: `<p>Redirection en cours...</p>`\r\n})\r\nexport class LoadingComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}
