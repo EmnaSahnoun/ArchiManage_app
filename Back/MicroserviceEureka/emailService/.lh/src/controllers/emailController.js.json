@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 66,
             "patches": [
                 {
                     "date": 1748481092181,
@@ -256,6 +256,22 @@
                 {
                     "date": 1748538635034,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n };\r\n // Delete email\r\n const deleteEmail = async (req, res) => {\r\n   try {\r\n-    const { accessToken, permanent } = req.query;\r\n+    const { accessToken, permanent,userId } = req.query;\r\n     const { emailId } = req.params;\r\n  \r\n     await gmailService.deleteEmail(accessToken, emailId, permanent === 'true',userId);\r\n     res.json({ success: true });\r\n@@ -120,9 +120,9 @@\n const markAsRead = async (req, res) => {\r\n   try {\r\n     const { accessToken } = req.query;\r\n     const { emailId } = req.params;\r\n-    const userId = getUserId(req);\r\n+   \r\n     await gmailService.markAsRead(accessToken, emailId);\r\n     const folders = ['inbox', 'sent', 'drafts'];\r\n     for (const folder of folders) {\r\n       const email = gmailService.getEmailFromStorage(userId, emailId, folder);\r\n"
+                },
+                {
+                    "date": 1748706984258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,8 +74,10 @@\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n+   \r\n+   \r\n     res.json({ success: true, data: emails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n@@ -118,9 +120,9 @@\n };\r\n // Mark as read\r\n const markAsRead = async (req, res) => {\r\n   try {\r\n-    const { accessToken } = req.query;\r\n+    const { accessToken,userId } = req.query;\r\n     const { emailId } = req.params;\r\n    \r\n     await gmailService.markAsRead(accessToken, emailId);\r\n     const folders = ['inbox', 'sent', 'drafts'];\r\n"
+                },
+                {
+                    "date": 1748706996333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n    \r\n-   \r\n+   const filteredEmails = emails.filter(email => email !== null);\r\n     res.json({ success: true, data: emails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n"
+                },
+                {
+                    "date": 1748707004875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n    \r\n     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n    \r\n    const filteredEmails = emails.filter(email => email !== null);\r\n-    res.json({ success: true, data: emails });\r\n+    res.json({ success: true, data: filteredEmails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n       error: \"Failed to get inbox emails\",\r\n"
+                },
+                {
+                    "date": 1748707063776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,10 +74,9 @@\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n-   \r\n-   const filteredEmails = emails.filter(email => email !== null);\r\n+\r\n     res.json({ success: true, data: filteredEmails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n"
                 }
             ],
             "date": 1748481092181,

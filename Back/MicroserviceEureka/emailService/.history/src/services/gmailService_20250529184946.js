@@ -120,10 +120,7 @@ const getFullEmail = async (accessToken, emailId, includeAttachmentData = false,
     id: emailId,
     format: "full"
   });
-// Skip if it's a social email
-  if (response.data.labelIds?.includes('CATEGORY_SOCIAL')||response.data.labelIds?.includes('CATEGORY_PROMOTIONS')) {
-    return null;
-  }
+
   const email = {
     id: response.data.id,
     threadId: response.data.threadId,
@@ -194,15 +191,13 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
   const gmail = getGmailClient(accessToken);
   
   // First get emails from storage
-  const storedEmails = fileStorage.getEmailsFromFolder(userId, 'inbox')
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'));
+  const storedEmails = fileStorage.getEmailsFromFolder(userId, 'inbox');
   
   // Then get from Gmail API to check for new emails
   const response = await gmail.users.messages.list({
     userId: "me",
     labelIds: ["INBOX"],
-    maxResults: parseInt(maxResults),
-    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS " 
+    maxResults: parseInt(maxResults)
   });
 
   if (!response.data.messages) return storedEmails;
@@ -225,9 +220,7 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
     ...(await Promise.all(
       newEmails.map(message => getFullEmail(accessToken, message.id, false, userId)))
     )
-  ]
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'))
-  .sort((a, b) => new Date(b.internalDate) - new Date(a.internalDate));
+  ].sort((a, b) => new Date(b.internalDate) - new Date(a.internalDate));
 
   return allEmails.slice(0, maxResults);
 };
@@ -236,13 +229,12 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
 const getSentEmails = async (accessToken, maxResults = 20, userId) => {
   const gmail = getGmailClient(accessToken);
   
-  const storedEmails = fileStorage.getEmailsFromFolder(userId, 'sent')
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'));
+  const storedEmails = fileStorage.getEmailsFromFolder(userId, 'sent');
+  
   const response = await gmail.users.messages.list({
     userId: "me",
     labelIds: ["SENT"],
-    maxResults: parseInt(maxResults),
-    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS"
+    maxResults: parseInt(maxResults)
   });
 
   if (!response.data.messages) return storedEmails;

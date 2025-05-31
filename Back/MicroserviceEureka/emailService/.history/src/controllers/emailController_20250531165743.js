@@ -76,7 +76,7 @@ const getInbox = async (req, res) => {
    
     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);
 
-    res.json({ success: true, data: emails });
+    res.json({ success: true, data: filteredEmails });
   } catch (error) {
     res.status(500).json({
       success: false,

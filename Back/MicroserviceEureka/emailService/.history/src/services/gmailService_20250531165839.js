@@ -202,7 +202,7 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
     userId: "me",
     labelIds: ["INBOX"],
     maxResults: parseInt(maxResults),
-    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS " 
+    q: "-label:CATEGORY_SOCIAL" 
   });
 
   if (!response.data.messages) return storedEmails;
@@ -226,7 +226,7 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
       newEmails.map(message => getFullEmail(accessToken, message.id, false, userId)))
     )
   ]
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'))
+  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'))
   .sort((a, b) => new Date(b.internalDate) - new Date(a.internalDate));
 
   return allEmails.slice(0, maxResults);
@@ -237,7 +237,7 @@ const getSentEmails = async (accessToken, maxResults = 20, userId) => {
   const gmail = getGmailClient(accessToken);
   
   const storedEmails = fileStorage.getEmailsFromFolder(userId, 'sent')
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'));
+  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'));
   const response = await gmail.users.messages.list({
     userId: "me",
     labelIds: ["SENT"],

@@ -237,7 +237,7 @@ const getSentEmails = async (accessToken, maxResults = 20, userId) => {
   const gmail = getGmailClient(accessToken);
   
   const storedEmails = fileStorage.getEmailsFromFolder(userId, 'sent')
-  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'));
+  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||));
   const response = await gmail.users.messages.list({
     userId: "me",
     labelIds: ["SENT"],
