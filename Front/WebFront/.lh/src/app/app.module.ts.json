@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 125,
+            "activePatchIndex": 129,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -508,6 +508,22 @@
                 {
                     "date": 1748563455973,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,8 @@\n     InvoiceListComponent,\r\n     ClientFormComponent,\r\n     InvoiceComponent,\r\n     SetPasswordComponent,\r\n-    EmailsComponentComponent,\r\n     EmailsComponent,\r\n \r\n   ],\r\n   imports: [\r\n"
+                },
+                {
+                    "date": 1748598656812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,10 @@\n import { MatSelectModule } from '@angular/material/select';\r\n import { TextFieldModule } from '@angular/cdk/text-field';\r\n import { SetPasswordComponent } from './set-password/set-password.component';\r\n import { MatTabsModule } from '@angular/material/tabs';\r\n-import { EmailsComponent } from './emails/emails.component'; // Ajout pour les onglets\r\n+import { EmailsComponent } from './emails/emails.component';\r\n+import { GoogleCallbackComponent } from './google-callback/google-callback.component'; // Ajout pour les onglets\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -77,8 +78,9 @@\n     ClientFormComponent,\r\n     InvoiceComponent,\r\n     SetPasswordComponent,\r\n     EmailsComponent,\r\n+    GoogleCallbackComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n@@ -126,9 +128,10 @@\n \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n-  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }\r\n+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\r\n+  \r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1748598666768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -129,9 +129,13 @@\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\r\n-  \r\n+   {\r\n+      provide: HTTP_INTERCEPTORS,\r\n+      useClass: GoogleAuthIntercepto,\r\n+      multi: true\r\n+    }\r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1748599278461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,8 +54,9 @@\n import { SetPasswordComponent } from './set-password/set-password.component';\r\n import { MatTabsModule } from '@angular/material/tabs';\r\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component'; // Ajout pour les onglets\r\n+import { GoogleAuthInterceptor } from './core/interceptors/google-auth.interceptor';\r\n \r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n@@ -129,13 +130,14 @@\n   ],\r\n   providers: [\r\n     DatePipe,\r\n   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\r\n-   {\r\n+    {\r\n       provide: HTTP_INTERCEPTORS,\r\n-      useClass: GoogleAuthIntercepto,\r\n+      useClass: GoogleAuthInterceptor,\r\n       multi: true\r\n-    }\r\n+    },\r\n+    GoogleAuthService\r\n   ],\r\n   bootstrap: [AppComponent]\r\n })\r\n export class AppModule { }\r\n"
+                },
+                {
+                    "date": 1748638699719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,10 @@\n import { MatTabsModule } from '@angular/material/tabs';\r\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component'; // Ajout pour les onglets\r\n import { GoogleAuthInterceptor } from './core/interceptors/google-auth.interceptor';\r\n-\r\n+import { GoogleAuthService } from './services/googleAuthSerivce';\r\n+import { enableProdMode } from '@angular/core';\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n"
                 }
             ],
             "date": 1741609977833,

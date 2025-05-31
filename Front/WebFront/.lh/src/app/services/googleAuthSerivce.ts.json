@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/services/googleAuthSerivce.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1748598990406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748599087312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,46 @@\n   getGoogleAccessToken(): string | null {\r\n     return localStorage.getItem('google_access_token');\r\n   }\r\n \r\n-  // ... autres méthodes spécifiques à Google\r\n-}\n\\ No newline at end of file\n+  //google cloud\r\n+      initGoogleAuth(): void {\r\n+    const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' +\r\n+      'client_id=272700212454-9s5a11um6udgkmpgiin3j0mngvbua4pa.apps.googleusercontent.com&' +\r\n+      'redirect_uri=http://localhost:4200/auth/google/callback&' +\r\n+      'response_type=code&' +\r\n+      'scope=https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.modify https://mail.google.com/&' +\r\n+      'access_type=offline&' +\r\n+      'prompt=consent';\r\n+\r\n+    window.location.href = googleAuthUrl;\r\n+  }\r\n+  // Stocker le token Google\r\n+  setGoogleAccessToken(token: string): void {\r\n+    this.googleAccessToken.next(token);\r\n+    localStorage.setItem('google_access_token', token);\r\n+  }\r\n+\r\n+  // Récupérer le token Google\r\n+  getGoogleAccessToken(): string | null {\r\n+    return localStorage.getItem('google_access_token');\r\n+  }\r\n+\r\n+  // Rafraîchir le token Google\r\n+  async refreshGoogleToken(refreshToken: string): Promise<string> {\r\n+    const response = await fetch('https://oauth2.googleapis.com/token', {\r\n+      method: 'POST',\r\n+      headers: {\r\n+        'Content-Type': 'application/x-www-form-urlencoded',\r\n+      },\r\n+      body: new URLSearchParams({\r\n+        client_id: '272700212454-9s5a11um6udgkmpgiin3j0mngvbua4pa.apps.googleusercontent.com',\r\n+        client_secret: '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',\r\n+        grant_type: 'refresh_token',\r\n+        refresh_token: refreshToken\r\n+      })\r\n+    });\r\n+\r\n+    const data = await response.json();\r\n+    this.setGoogleAccessToken(data.access_token);\r\n+    return data.access_token;\r\n+  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748599104780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,20 +28,10 @@\n       'access_type=offline&' +\r\n       'prompt=consent';\r\n \r\n     window.location.href = googleAuthUrl;\r\n-  }\r\n-  // Stocker le token Google\r\n-  setGoogleAccessToken(token: string): void {\r\n-    this.googleAccessToken.next(token);\r\n-    localStorage.setItem('google_access_token', token);\r\n-  }\r\n+        }\r\n \r\n-  // Récupérer le token Google\r\n-  getGoogleAccessToken(): string | null {\r\n-    return localStorage.getItem('google_access_token');\r\n-  }\r\n-\r\n   // Rafraîchir le token Google\r\n   async refreshGoogleToken(refreshToken: string): Promise<string> {\r\n     const response = await fetch('https://oauth2.googleapis.com/token', {\r\n       method: 'POST',\r\n"
+                },
+                {
+                    "date": 1748599111004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,5 +49,5 @@\n     const data = await response.json();\r\n     this.setGoogleAccessToken(data.access_token);\r\n     return data.access_token;\r\n   }\r\n-  \n\\ No newline at end of file\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748632592855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -82,9 +82,9 @@\n     this.setGoogleAccessToken(data.access_token, data.refresh_token);\r\n     return data.access_token;\r\n   }\r\n   exchangeCodeForToken(code: string): Observable<{ access_token: string, refresh_token: string }> {\r\n-  return this.http.post<any>('https://e8.systeo./auth/google/callback', { code }).pipe(\r\n+  return this.http.post<any>('https://e8.systeo.tn/auth/google/callback', { code }).pipe(\r\n     tap({\r\n       next: (response) => {\r\n         if (!response.access_token) {\r\n           throw new Error('Token non reçu dans la réponse');\r\n"
+                }
+            ],
+            "date": 1748598990406,
+            "name": "Commit-0",
+            "content": "// google-auth.service.ts\r\nimport { Injectable } from '@angular/core';\r\nimport { BehaviorSubject } from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class GoogleAuthService {\r\n  private googleAccessToken = new BehaviorSubject<string | null>(null);\r\n  googleAccessToken$ = this.googleAccessToken.asObservable();\r\n\r\n  setGoogleAccessToken(token: string): void {\r\n    this.googleAccessToken.next(token);\r\n    localStorage.setItem('google_access_token', token);\r\n  }\r\n\r\n  getGoogleAccessToken(): string | null {\r\n    return localStorage.getItem('google_access_token');\r\n  }\r\n\r\n  // ... autres méthodes spécifiques à Google\r\n}"
+        }
+    ]
+}

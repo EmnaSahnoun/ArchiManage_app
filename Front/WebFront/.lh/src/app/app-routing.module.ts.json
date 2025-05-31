@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 108,
+            "activePatchIndex": 116,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -440,6 +440,38 @@
                 {
                     "date": 1748563442075,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import { InvitationsComponent } from './invitations/invitations.component';\r\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n-import { EmailsComponentComponent } from './emails-component/emails-component.component';\r\n+import { EmailsComponent } from './emails/emails.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n"
+                },
+                {
+                    "date": 1748602811067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,13 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-    { path: 'emails', component: EmailsComponent},\r\n+   {\r\n+    path: 'emails',\r\n+    component: EmailsComponent,\r\n+    canActivate: [GoogleAuthGuard]\r\n+  },\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748602820444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n import { InvoiceListComponent } from './invoice-list/invoice-list.component';\r\n import { ClientsComponent } from './clients/clients.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { EmailsComponent } from './emails/emails.component';\r\n+import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -55,9 +56,12 @@\n    {\r\n     path: 'emails',\r\n     component: EmailsComponent,\r\n     canActivate: [GoogleAuthGuard]\r\n-  },\r\n+  },{\r\n+    path: 'auth/google/callback',\r\n+    component: GoogleCallbackComponent\r\n+  }\r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748615149339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n import { ClientsComponent } from './clients/clients.component';\r\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n+import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -54,14 +55,14 @@\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n    {\r\n     path: 'emails',\r\n-    component: EmailsComponent,\r\n-    canActivate: [GoogleAuthGuard]\r\n+    component: EmailsComponent\r\n   },{\r\n     path: 'auth/google/callback',\r\n     component: GoogleCallbackComponent\r\n-  }\r\n+  },\r\n+  \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n"
+                },
+                {
+                    "date": 1748629217498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,10 @@\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n    {\r\n     path: 'emails',\r\n-    component: EmailsComponent\r\n+    component: EmailsComponent,\r\n+    canActivate: [GoogleAuthGuard]\r\n   },{\r\n     path: 'auth/google/callback',\r\n     component: GoogleCallbackComponent\r\n   },\r\n"
+                },
+                {
+                    "date": 1748641128736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,10 @@\n    { path: 'clients', component: ClientsComponent },\r\n    {\r\n     path: 'emails',\r\n     component: EmailsComponent,\r\n-    canActivate: [GoogleAuthGuard]\r\n+    canActivate: [AuthGuard],\r\n+    data: { requiresGoogle: true } // Optionnel pour marquer les routes nécessitant Google\r\n   },{\r\n     path: 'auth/google/callback',\r\n     component: GoogleCallbackComponent\r\n   },\r\n"
+                },
+                {
+                    "date": 1748641531447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,10 +56,9 @@\n    { path: 'clients', component: ClientsComponent },\r\n    {\r\n     path: 'emails',\r\n     component: EmailsComponent,\r\n-    canActivate: [AuthGuard],\r\n-    data: { requiresGoogle: true } // Optionnel pour marquer les routes nécessitant Google\r\n+    canActivate: [GoogleAuthGuard]\r\n   },{\r\n     path: 'auth/google/callback',\r\n     component: GoogleCallbackComponent\r\n   },\r\n"
+                },
+                {
+                    "date": 1748649426205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,16 +53,21 @@\n   { path: 'invoice/:id', component: InvoiceComponent }, // Pour voir/modifier une facture existante\r\n   \r\n   \r\n    { path: 'clients', component: ClientsComponent },\r\n-   {\r\n+  {\r\n+    path: 'auth/google/callback',\r\n+    component: GoogleCallbackComponent\r\n+  },\r\n+  {\r\n+    path: 'loading',\r\n+    component: LoadingComponent\r\n+  },\r\n+  {\r\n     path: 'emails',\r\n     component: EmailsComponent,\r\n     canActivate: [GoogleAuthGuard]\r\n-  },{\r\n-    path: 'auth/google/callback',\r\n-    component: GoogleCallbackComponent\r\n-  },\r\n+  }\r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n"
+                },
+                {
+                    "date": 1748649970235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n+import { LoadingComponent } from './loading/loading.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -63,10 +64,9 @@\n     component: LoadingComponent\r\n   },\r\n   {\r\n     path: 'emails',\r\n-    component: EmailsComponent,\r\n-    canActivate: [GoogleAuthGuard]\r\n+    component: EmailsComponent\r\n   }\r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
                 }
             ],
             "date": 1741609914429,

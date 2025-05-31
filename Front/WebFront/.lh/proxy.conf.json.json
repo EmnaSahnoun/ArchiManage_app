@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 52,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -168,6 +168,54 @@
                 {
                     "date": 1747786127020,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,14 +42,14 @@\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n-  \"/invoice\": {\r\n+  \"/commercial\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/invoice\": \"/CommercialService\"\r\n+      \"^/commercial\": \"/CommercialService\"\r\n     }\r\n   },\r\n   \r\n \"/document\": {\r\n"
+                },
+                {
+                    "date": 1748604456928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,7 +59,15 @@\n     \"pathRewrite\": {\r\n       \"^/document\": \"/DocumentService\"\r\n     }\r\n   }\r\n+   \"/agence\": {\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/agence\": \"/projectcompany\"\r\n+    }\r\n+  },\r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1748604464716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,16 +58,17 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/document\": \"/DocumentService\"\r\n     }\r\n-  }\r\n+  },\r\n    \"/agence\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   },\r\n+  \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1748604471226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n     \"pathRewrite\": {\r\n       \"^/document\": \"/DocumentService\"\r\n     }\r\n   },\r\n-   \"/agence\": {\r\n+   \"/email\": {\r\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1748604478410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,13 +60,13 @@\n       \"^/document\": \"/DocumentService\"\r\n     }\r\n   },\r\n    \"/email\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/agence\": \"/projectcompany\"\r\n+      \"^/email\": \"/projectcompany\"\r\n     }\r\n   },\r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1748604504929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n     \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/email\": \"/projectcompany\"\r\n+      \"^/email\": \"/auth\"\r\n     }\r\n   },\r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1748604510997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/email\": \"/auth\"\r\n     }\r\n-  },\r\n+  }\r\n   \r\n \r\n }\r\n     \r\n"
+                },
+                {
+                    "date": 1748604787676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n     \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/email\": \"/auth\"\r\n+      \"^/email\": \"\"\r\n     }\r\n   }\r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1748650314820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,8 +66,16 @@\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/email\": \"\"\r\n     }\r\n+  },\r\n+  \"/email\": {\r\n+    \"target\": \"https://e8.systeo.tn\",\r\n+    \"secure\": false,\r\n+    \"changeOrigin\": true,\r\n+    \"pathRewrite\": {\r\n+      \"^/email\": \"\"\r\n+    }\r\n   }\r\n   \r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1748650320529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n     \"pathRewrite\": {\r\n       \"^/email\": \"\"\r\n     }\r\n   },\r\n-  \"/email\": {\r\n+  \"/emailService\": {\r\n     \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n"
+                },
+                {
+                    "date": 1748650349894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n     \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/email\": \"\"\r\n+      \"^/emailService\": \"/EmailService\"\r\n     }\r\n   }\r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1748653172503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n       \"^/email\": \"\"\r\n     }\r\n   },\r\n   \"/emailService\": {\r\n-    \"target\": \"https://e8.systeo.tn\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/emailService\": \"/EmailService\"\r\n"
+                },
+                {
+                    "date": 1748694173301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/emailService\": \"/EmailService\"\r\n+      \"^/emailService\": \"\"\r\n     }\r\n   }\r\n   \r\n \r\n"
                 }
             ],
             "date": 1745069337198,

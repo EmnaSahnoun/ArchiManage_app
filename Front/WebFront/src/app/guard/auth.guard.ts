@@ -23,7 +23,9 @@ canActivate(
   //console.log('URL demandée:', state.url);
   //console.log('Token présent:', !!this.authService.getAccessToken());
   //console.log('Token valide:', this.authService.isAuthenticated());
-  
+  if (state.url.includes('/emails')) {
+      return of(true); // Laisser GoogleAuthGuard gérer ça
+    }
   if (this.authService.isAuthenticated()) {
     //console.log('Accès autorisé à', state.url);
     return of(true);

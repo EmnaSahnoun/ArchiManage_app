@@ -3,7 +3,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../config/auth.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
 
@@ -12,10 +12,12 @@ import { jwtDecode } from "jwt-decode";
   providedIn: 'root'
 })
 export class AuthService {
-
+private googleAccessToken = new BehaviorSubject<string | null>(null);
+  googleAccessToken$ = this.googleAccessToken.asObservable();
     constructor(
         private oauthService: OAuthService,
-        private router: Router
+        private router: Router,
+    private http: HttpClient
       ) {
         this.configureAuth();
       }
@@ -152,5 +154,8 @@ export class AuthService {
     
         return false; 
       }
-     
+ 
+      
+
+      
 }

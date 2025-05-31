@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 90,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -364,6 +364,10 @@
                 {
                     "date": 1748631250931,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,9 @@\n const app = express();\r\n \r\n // Middlewares\r\n app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: 'GET,POST'})); \r\n-app.use(express.json()); // Pour parser le JSON des requêtes entrantes\r\n-\r\n+app.use(express.json());\r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n"
+                },
+                {
+                    "date": 1748706080512,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n const app = express();\r\n \r\n // Middlewares\r\n-app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: 'GET,POST'})); \r\n+app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']})); \r\n app.use(express.json());\r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n"
                 }
             ],
             "date": 1748453070534,

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/services/GoogleAuthService .ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748597396282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748597446919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { Injectable } from '@angular/core';\r\n import { HttpClient } from '@angular/common/http';\r\n-import { BehaviorSubject, Observable } from 'rxjs';\r\n+import { BehaviorSubject, Observable, tap } from 'rxjs';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n"
+                }
+            ],
+            "date": 1748597396282,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\r\nimport { HttpClient } from '@angular/common/http';\r\nimport { BehaviorSubject, Observable } from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class GoogleAuthService {\r\n  private googleAccessTokenSubject = new BehaviorSubject<string | null>(null);\r\n  private googleRefreshTokenSubject = new BehaviorSubject<string | null>(null);\r\n\r\n  constructor(private http: HttpClient) {\r\n    // Charger les tokens depuis le stockage local au démarrage\r\n    const savedAccessToken = localStorage.getItem('google_access_token');\r\n    const savedRefreshToken = localStorage.getItem('google_refresh_token');\r\n    \r\n    if (savedAccessToken) {\r\n      this.googleAccessTokenSubject.next(savedAccessToken);\r\n    }\r\n    if (savedRefreshToken) {\r\n      this.googleRefreshTokenSubject.next(savedRefreshToken);\r\n    }\r\n  }\r\n\r\n  get googleAccessToken$(): Observable<string | null> {\r\n    return this.googleAccessTokenSubject.asObservable();\r\n  }\r\n\r\n  get currentGoogleAccessToken(): string | null {\r\n    return this.googleAccessTokenSubject.value;\r\n  }\r\n\r\n  get currentGoogleRefreshToken(): string | null {\r\n    return this.googleRefreshTokenSubject.value;\r\n  }\r\n\r\n  initiateGoogleAuth(): void {\r\n    // Rediriger vers votre endpoint backend qui initie le flux OAuth2\r\n    window.location.href = 'https://e8.systeo.tn/auth/google';\r\n  }\r\n\r\n  handleGoogleCallback(code: string): Observable<any> {\r\n    return this.http.post('https://e8.systeo.tn/auth/google/callback', { code }).pipe(\r\n      tap((response: any) => {\r\n        this.storeGoogleTokens(response.access_token, response.refresh_token);\r\n      })\r\n    );\r\n  }\r\n\r\n  refreshGoogleToken(): Observable<any> {\r\n    const refreshToken = this.currentGoogleRefreshToken;\r\n    if (!refreshToken) {\r\n      throw new Error('No refresh token available');\r\n    }\r\n\r\n    return this.http.post('https://e8.systeo.tn/auth/refresh-token', { refreshToken }).pipe(\r\n      tap((response: any) => {\r\n        this.storeGoogleTokens(response.access_token, this.currentGoogleRefreshToken);\r\n      })\r\n    );\r\n  }\r\n\r\n  private storeGoogleTokens(accessToken: string, refreshToken?: string): void {\r\n    localStorage.setItem('google_access_token', accessToken);\r\n    this.googleAccessTokenSubject.next(accessToken);\r\n    \r\n    if (refreshToken) {\r\n      localStorage.setItem('google_refresh_token', refreshToken);\r\n      this.googleRefreshTokenSubject.next(refreshToken);\r\n    }\r\n  }\r\n\r\n  logoutGoogle(): void {\r\n    localStorage.removeItem('google_access_token');\r\n    localStorage.removeItem('google_refresh_token');\r\n    this.googleAccessTokenSubject.next(null);\r\n    this.googleRefreshTokenSubject.next(null);\r\n  }\r\n}"
+        }
+    ]
+}

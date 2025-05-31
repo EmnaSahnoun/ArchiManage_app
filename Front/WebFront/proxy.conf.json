@@ -59,7 +59,24 @@
     "pathRewrite": {
       "^/document": "/DocumentService"
     }
+  },
+   "/email": {
+    "target": "https://e8.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/email": ""
+    }
+  },
+  "/emailService": {
+    "target": "https://e8.systeo.tn",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/emailService": ""
+    }
   }
+  
 
 }
     

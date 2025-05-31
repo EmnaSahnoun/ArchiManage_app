@@ -53,8 +53,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { SetPasswordComponent } from './set-password/set-password.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { EmailsComponent } from './emails/emails.component'; // Ajout pour les onglets
-
+import { EmailsComponent } from './emails/emails.component';
+import { GoogleCallbackComponent } from './google-callback/google-callback.component'; // Ajout pour les onglets
+import { GoogleAuthInterceptor } from './core/interceptors/google-auth.interceptor';
+import { GoogleAuthService } from './services/googleAuthSerivce';
+import { enableProdMode } from '@angular/core';
+import { LoadingComponent } from './loading/loading.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +82,8 @@ import { EmailsComponent } from './emails/emails.component'; // Ajout pour les o
     InvoiceComponent,
     SetPasswordComponent,
     EmailsComponent,
+    GoogleCallbackComponent,
+    LoadingComponent,
 
   ],
   imports: [
@@ -127,7 +133,13 @@ import { EmailsComponent } from './emails/emails.component'; // Ajout pour les o
   ],
   providers: [
     DatePipe,
-  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GoogleAuthInterceptor,
+      multi: true
+    },
+    GoogleAuthService
   ],
   bootstrap: [AppComponent]
 })

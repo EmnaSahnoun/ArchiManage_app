@@ -12,6 +12,9 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { ClientsComponent } from './clients/clients.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { EmailsComponent } from './emails/emails.component';
+import { GoogleAuthGuard } from './guard/google-auth.guard';
+import { GoogleCallbackComponent } from './google-callback/google-callback.component';
+import { LoadingComponent } from './loading/loading.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,7 +55,19 @@ const routes: Routes = [
   
   
    { path: 'clients', component: ClientsComponent },
-    { path: 'emails', component: EmailsComponent},
+  {
+    path: 'auth/google/callback',
+    component: GoogleCallbackComponent
+  },
+  {
+    path: 'loading',
+    component: LoadingComponent
+  },
+  {
+    path: 'emails',
+    component: EmailsComponent
+  }
+  
  
  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   //{ path: '**', redirectTo: '/dashboard' } 
