@@ -122,11 +122,7 @@ const getFullEmail = async (accessToken, emailId, includeAttachmentData = false,
   });
 // Skip if it's a social email
   if (response.data.labelIds?.includes('CATEGORY_SOCIAL')||response.data.labelIds?.includes('CATEGORY_PROMOTIONS')) {
-    return {
-      id: emailId,
-        labelIds: ['CATEGORY_SOCIAL'],
-        skipped: true 
-    }
+    return null;
   }
   const email = {
     id: response.data.id,
@@ -206,7 +202,7 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
     userId: "me",
     labelIds: ["INBOX"],
     maxResults: parseInt(maxResults),
-    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS" // Exclude social emails at API level
+    q: "-label:CATEGORY_SOCIAL" // Exclude social emails at API level
   });
 
   if (!response.data.messages) return storedEmails;
@@ -223,7 +219,7 @@ const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
 
   // Filter out null emails and social emails (double check)
   const validNewEmails = fetchedEmails.filter(
-    email => email && !email.labelIds?.includes('CATEGORY_SOCIAL') && !email.labelIds?.includes('CATEGORY_PROMOTIONS')
+    email => email && !email.labelIds?.includes('CATEGORY_SOCIAL')
   );
 
   // Store valid emails

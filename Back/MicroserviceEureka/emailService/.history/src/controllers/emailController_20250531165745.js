@@ -74,8 +74,8 @@ const getInbox = async (req, res) => {
   try {
     const { accessToken, maxResults,userId } = req.query;
    
-    let emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);
-emails = emails.filter(email => email && !email.skipped);
+    const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);
+
     res.json({ success: true, data: emails });
   } catch (error) {
     res.status(500).json({

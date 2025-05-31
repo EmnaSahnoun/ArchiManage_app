@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 66,
+            "activePatchIndex": 68,
             "patches": [
                 {
                     "date": 1748481092181,
@@ -272,6 +272,14 @@
                 {
                     "date": 1748707063776,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,10 +74,9 @@\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n-   \r\n-   const filteredEmails = emails.filter(email => email !== null);\r\n+\r\n     res.json({ success: true, data: filteredEmails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n"
+                },
+                {
+                    "date": 1748708559194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,11 +73,11 @@\n const getInbox = async (req, res) => {\r\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n-    const emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n+    let emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n \r\n-    res.json({ success: true, data: filteredEmails });\r\n+    res.json({ success: true, data: emails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n       error: \"Failed to get inbox emails\",\r\n"
+                },
+                {
+                    "date": 1748708566293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     let emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n-\r\n+emails = emails.filter(email => email && !email.skipped);\r\n     res.json({ success: true, data: emails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n"
                 }
             ],
             "date": 1748481092181,

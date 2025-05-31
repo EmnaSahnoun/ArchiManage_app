@@ -114,83 +114,30 @@ const sendEmail = async (accessToken, emailData, userId) => {
 
 // 2. Get Full Email with All Details
 const getFullEmail = async (accessToken, emailId, includeAttachmentData = false, userId) => {
-  const gmail = getGmailClient(accessToken);
-  const response = await gmail.users.messages.get({
-    userId: "me",
-    id: emailId,
-    format: "full"
-  });
-// Skip if it's a social email
-  if (response.data.labelIds?.includes('CATEGORY_SOCIAL')||response.data.labelIds?.includes('CATEGORY_PROMOTIONS')) {
-    return {
+  try {
+    const gmail = getGmailClient(accessToken);
+    const response = await gmail.users.messages.get({
+      userId: "me",
       id: emailId,
-        labelIds: ['CATEGORY_SOCIAL'],
-        skipped: true 
-    }
-  }
-  const email = {
-    id: response.data.id,
-    threadId: response.data.threadId,
-    labelIds: response.data.labelIds,
-    snippet: response.data.snippet,
-    internalDate: new Date(parseInt(response.data.internalDate)),
-    headers: {},
-    parts: [],
-    attachments: [],
-    isRead: !response.data.labelIds.includes("UNREAD")
-  };
-
-  // Process headers
-  response.data.payload.headers.forEach(header => {
-    email.headers[header.name.toLowerCase()] = header.value;
-  });
-
-  // Process email parts
-  const processParts = (parts) => {
-    parts.forEach(part => {
-      const processedPart = processEmailPart(part);
-      if (processedPart.isAttachment) {
-        email.attachments.push(processedPart);
-      } else {
-        email.parts.push(processedPart);
-      }
+      format: "full"
     });
-  };
 
-  if (response.data.payload.parts) {
-    processParts(response.data.payload.parts);
-  } else {
-    processParts([response.data.payload]);
+    // Skip social emails (but return a minimal object instead of null)
+    if (response.data.labelIds?.includes('CATEGORY_SOCIAL')) {
+      return {
+        id: emailId,
+        labelIds: ['CATEGORY_SOCIAL'],
+        skipped: true // Add flag to identify skipped emails
+      };
+    }
+
+    // ... rest of your existing processing logic ...
+
+    return processedEmail; // Your normal email object
+  } catch (error) {
+    console.error(`Failed to get email ${emailId}:`, error);
+    return null; // Or a minimal error object
   }
-
-  // Get full attachment data if requested
-  if (includeAttachmentData) {
-    await Promise.all(email.attachments.map(async (attachment) => {
-      if (attachment.body.attachmentId) {
-        const attachmentRes = await gmail.users.messages.attachments.get({
-          userId: "me",
-          messageId: emailId,
-          id: attachment.body.attachmentId
-        });
-        attachment.content = Buffer.from(attachmentRes.data.data, 'base64');
-      }
-    }));
-  }
-
-  // Determine folder based on labels
-  let folder = 'inbox';
-  if (response.data.labelIds.includes('SENT')) {
-    folder = 'sent';
-  } else if (response.data.labelIds.includes('DRAFT')) {
-    folder = 'drafts';
-  }
-
-  // Save to storage
-  if (userId) {
-    fileStorage.saveEmail(userId, email, folder);
-  }
-
-  return email;
 };
 
 // 3. Get Received Emails

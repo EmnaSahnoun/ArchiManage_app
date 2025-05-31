@@ -122,11 +122,7 @@ const getFullEmail = async (accessToken, emailId, includeAttachmentData = false,
   });
 // Skip if it's a social email
   if (response.data.labelIds?.includes('CATEGORY_SOCIAL')||response.data.labelIds?.includes('CATEGORY_PROMOTIONS')) {
-    return {
-      id: emailId,
-        labelIds: ['CATEGORY_SOCIAL'],
-        skipped: true 
-    }
+    return null;
   }
   const email = {
     id: response.data.id,
@@ -197,44 +193,41 @@ const getFullEmail = async (accessToken, emailId, includeAttachmentData = false,
 const getInboxEmails = async (accessToken, maxResults = 20, userId) => {
   const gmail = getGmailClient(accessToken);
   
-  // Get emails from storage (skip if null/undefined and filter social)
+  // First get emails from storage
   const storedEmails = fileStorage.getEmailsFromFolder(userId, 'inbox')
-    .filter(email => email && !email.labelIds?.includes('CATEGORY_SOCIAL||CATEGORY_PROMOTIONS'));
+  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'));
   
-  // Get from Gmail API (exclude social emails directly in the query)
+  // Then get from Gmail API to check for new emails
   const response = await gmail.users.messages.list({
     userId: "me",
     labelIds: ["INBOX"],
     maxResults: parseInt(maxResults),
-    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS" // Exclude social emails at API level
+    q: "-label:CATEGORY_SOCIAL -label:CATEGORY_PROMOTIONS " 
   });
 
   if (!response.data.messages) return storedEmails;
 
-  // Get only new emails not in storage
+  // Get only new emails that aren't in storage
   const newEmails = response.data.messages.filter(
     message => !storedEmails.some(e => e.id === message.id)
   );
 
-  // Fetch and store new emails (skip if getFullEmail returns null)
-  const fetchedEmails = await Promise.all(
-    newEmails.map(message => getFullEmail(accessToken, message.id, false, userId))
-  );
-
-  // Filter out null emails and social emails (double check)
-  const validNewEmails = fetchedEmails.filter(
-    email => email && !email.labelIds?.includes('CATEGORY_SOCIAL') && !email.labelIds?.includes('CATEGORY_PROMOTIONS')
-  );
-
-  // Store valid emails
+  // Fetch and store new emails
   await Promise.all(
-    validNewEmails.map(email => fileStorage.saveEmail(userId, email, 'inbox'))
+    newEmails.map(async (message) => {
+      await getFullEmail(accessToken, message.id, false, userId);
+    })
   );
 
-  // Combine and sort (all emails are guaranteed non-null and non-social)
-  const allEmails = [...storedEmails, ...validNewEmails].sort(
-    (a, b) => new Date(b.internalDate) - new Date(a.internalDate)
-  );
+  // Return combined list (sorted by date)
+  const allEmails = [
+    ...storedEmails,
+    ...(await Promise.all(
+      newEmails.map(message => getFullEmail(accessToken, message.id, false, userId)))
+    )
+  ]
+  .filter(email => !email.labelIds?.includes('CATEGORY_SOCIAL'||'CATEGORY_PROMOTIONS'))
+  .sort((a, b) => new Date(b.internalDate) - new Date(a.internalDate));
 
   return allEmails.slice(0, maxResults);
 };
