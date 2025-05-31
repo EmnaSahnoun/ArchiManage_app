@@ -25,13 +25,12 @@ const corsOptions = {
   optionsSuccessStatus: 200 // Pour les anciens navigateurs
 };
 
-// Appliquez CORS globalement
+// Middlewares
 app.use(cors({
-  ...corsOptions,
-  debug: true // Active les logs CORS
-}));
-
-// Gestion spécifique pour les requêtes OPTIONS (preflight)
+  origin: ['http://localhost:4200', 'https://e8.systeo.tn','http://e1.systeo.tn'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+   credentials: true
+})); 
 app.options('*', cors(corsOptions));
 app.use(express.json());
 const PORT = process.env.PORT || 8079;

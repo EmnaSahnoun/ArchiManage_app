@@ -26,10 +26,7 @@ const corsOptions = {
 };
 
 // Appliquez CORS globalement
-app.use(cors({
-  ...corsOptions,
-  debug: true // Active les logs CORS
-}));
+app.use(cors(corsOptions));
 
 // Gestion spécifique pour les requêtes OPTIONS (preflight)
 app.options('*', cors(corsOptions));
