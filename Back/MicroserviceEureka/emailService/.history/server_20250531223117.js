@@ -9,13 +9,21 @@ const app = express();
 // Middlewares
 // 1. Configuration CORS améliorée
 const corsOptions = {
-  origin: ['http://localhost:4200', 'https://e8.systeo.tn'],
+  origin: (origin, callback) => {
+    const allowedOrigins = ['http://localhost:4200', 'https://e8.systeo.tn'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 200
 };
 
+// 2. Middlewares dans le bon ordre
 app.use(cors(corsOptions));
 app.use(express.json());
 

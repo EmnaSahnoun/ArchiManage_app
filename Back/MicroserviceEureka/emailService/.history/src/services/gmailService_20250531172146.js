@@ -123,7 +123,9 @@ const getFullEmail = async (accessToken, emailId, includeAttachmentData = false,
 // Skip if it's a social email
   if (response.data.labelIds?.includes('CATEGORY_SOCIAL')||response.data.labelIds?.includes('CATEGORY_PROMOTIONS')) {
     return {
-      
+      id: emailId,
+        labelIds: ['CATEGORY_SOCIAL'],
+        skipped: true 
     }
   }
   const email = {
