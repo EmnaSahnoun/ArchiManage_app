@@ -59,19 +59,28 @@ const sendEmail = async (accessToken, emailData, userId) => {
     `Content-Type: multipart/mixed; boundary="mixed_boundary"`,
     "",
     "--mixed_boundary",
+    `Content-Type: multipart/alternative; boundary="alt_boundary"`,
+    "",
+    "--alt_boundary",
     "Content-Type: text/plain; charset=utf-8",
-    "Content-Transfer-Encoding: quoted-printable",
     "",
     emailData.text || "",
-    ""
+    "",
+    "--alt_boundary",
+    "Content-Type: text/html; charset=utf-8",
+    "",
+    emailData.html || "",
+    "",
+    "--alt_boundary--"
   ];
 
   // Add attachments if any
   if (emailData.attachments && emailData.attachments.length > 0) {
     emailData.attachments.forEach(attachment => {
+      // Vérification cruciale du contenu de l'attachment
       if (!attachment.content) {
         console.error('Attachment content is missing:', attachment);
-        return;
+        return; // Skip this attachment
       }
       
       try {
@@ -96,7 +105,6 @@ const sendEmail = async (accessToken, emailData, userId) => {
 
   messageParts.push("--mixed_boundary--");
   
-  // Encodage du message
   const rawMessage = messageParts.join("\n");
   const encodedMessage = Buffer.from(rawMessage)
     .toString("base64")
@@ -104,13 +112,12 @@ const sendEmail = async (accessToken, emailData, userId) => {
     .replace(/\//g, "_")
     .replace(/=+$/, "");
 
-  // Envoi du message
   const response = await gmail.users.messages.send({
     userId: "me",
     requestBody: { raw: encodedMessage }
   });
 
-  // Sauvegarde de l'email envoyé
+  // Get the full sent email and save to storage
   if (userId) {
     const sentEmail = await getFullEmail(accessToken, response.data.id, false, userId);
     fileStorage.saveEmail(userId, sentEmail, 'sent');

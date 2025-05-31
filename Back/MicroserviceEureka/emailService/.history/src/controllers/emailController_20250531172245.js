@@ -7,32 +7,35 @@ const getUserId = (req) => {
 
 // Envoyer un email
 const sendEmail = async (req, res) => {
- try {
-    const { accessToken, from, to, subject, text, attachments: emailAttachments = [] } = req.body;
-    const userId = from;
+  try {
+    const { accessToken, ...emailData } = req.body;
+    const userId = emailData.from; // Utilisez l'email de l'expéditeur comme userId
     
     console.log("userId", userId);
-    
-    // Gestion des fichiers uploadés
-    const fileAttachments = req.files?.map(file => ({
-      filename: file.originalname,
-      mimeType: file.mimetype,
-      content: file.buffer
-    })) || [];
+    const attachments = [];
+    if (req.files && req.files.length > 0) {
+      attachments.push(...req.files.map(file => ({
+        filename: file.originalname,
+        mimeType: file.mimetype,
+        content: file.buffer
+      })));
+    }
 
-    // Envoi de l'email
+    // S'assurer que emailData.attachments est un tableau
+    const emailAttachments = Array.isArray(emailData.attachments) 
+      ? emailData.attachments 
+      : [];
+
     const result = await gmailService.sendEmail(
       accessToken, 
       {
-        from,
-        to,
-        subject,
-        text,
-        attachments: [...emailAttachments, ...fileAttachments]
+        ...emailData,
+        attachments: [...emailAttachments, ...attachments]
       },
       userId
     );
 
+    
     res.json({ success: true, data: result });
   } catch (error) {
     console.error("Erreur détaillée:", error);
