@@ -11,9 +11,9 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: true,
+  origin: ['http://localhost:4200', 'https://e8.systeo.tn','http://e1.systeo.tn'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true
+   credentials: true
 })); 
 
 app.use(express.json());
