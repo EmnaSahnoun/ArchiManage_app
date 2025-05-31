@@ -12,10 +12,8 @@ const app = express();
 // Middlewares
 app.use(cors({
   origin: ['http://localhost:4200', 'https://e8.systeo.tn','http://e1.systeo.tn'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-   credentials: true
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 })); 
-app.options('*', cors(corsOptions));
 app.use(express.json());
 const PORT = process.env.PORT || 8079;
 const client = new Eureka({
