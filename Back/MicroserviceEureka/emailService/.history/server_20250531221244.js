@@ -8,14 +8,30 @@ const emailRoutes = require("./src/routes/emailRoutes");
 const draftRoutes = require("./src/routes/draftRoutes");
 
 const app = express();
-
-// Middlewares
-app.use(cors({
-  origin: ['http://localhost:4200', 'https://e8.systeo.tn','http://e1.systeo.tn'],
+const corsOptions = {
+  origin: [
+    'http://localhost:4200', 
+    'https://e8.systeo.tn',
+    'http://e1.systeo.tn'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-   credentials: true
-})); 
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization',
+    'X-Requested-With',
+    'Accept'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200 // Pour les anciens navigateurs
+};
 
+// Appliquez CORS globalement
+app.use(cors({corsOptions,
+
+}));
+
+// Gestion spécifique pour les requêtes OPTIONS (preflight)
+app.options('*', cors(corsOptions));
 app.use(express.json());
 const PORT = process.env.PORT || 8079;
 const client = new Eureka({
