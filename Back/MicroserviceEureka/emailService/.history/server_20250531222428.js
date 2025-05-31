@@ -11,11 +11,16 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: true,
+  origin: true, // Autorise toutes les origines (pour le dev)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true
-})); 
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
 
+// Ajouter ce handler OPTIONS global
+app.options('*', cors());
 app.use(express.json());
 const PORT = process.env.PORT || 8079;
 const client = new Eureka({
