@@ -321,7 +321,7 @@ const markAsRead = async (accessToken, emailId) => {
 };
 
 // 7. Draft Management
-const createDraft = async (accessToken, draftData, userId) => {  // Ajoutez userId comme paramètre
+const createDraft = async (accessToken, draftData) => {
   const gmail = getGmailClient(accessToken);
   
   const messageParts = [
@@ -346,7 +346,6 @@ const createDraft = async (accessToken, draftData, userId) => {  // Ajoutez user
       message: { raw: encodedMessage }
     }
   });
-  
   if (userId) {
     const draftEmail = await getFullEmail(accessToken, response.data.message.id, false, userId);
     fileStorage.saveEmail(userId, draftEmail, 'drafts');
