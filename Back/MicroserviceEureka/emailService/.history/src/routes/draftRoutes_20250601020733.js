@@ -4,7 +4,6 @@ const draftController = require("../controllers/draftController");
 const router = express.Router();
 const multer = require('multer');
 const upload = multer();
-
 router.post('/create', upload.any(), draftController.createDraft);
 router.get('/list', draftController.getDraftsList);
 router.delete('/:draftId', draftController.deleteDraft);

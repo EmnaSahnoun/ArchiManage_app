@@ -6,40 +6,9 @@ const getUserId = (req) => {
 // Draft management
 const createDraft = async (req, res) => {
   try {
-    console.log('Request headers:', req.headers);
-    console.log('Request body:', req.body);
-    console.log('Request files:', req.files);
-
-    // Vérification basique du corps de la requête
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: "Request body is empty or missing",
-        details: "Please provide all required fields in JSON format"
-      });
-    }
-
-    // Extraction des données avec des valeurs par défaut
-    const {
-      accessToken = null,
-      from = null,
-      to = null,
-      subject = '',
-      body = '',
-      attachments: draftAttachments = []
-    } = req.body;
-
+    const { accessToken, from, to, subject, body, attachments: draftAttachments = [] } = req.body;
     const userId = from;
-
-    // Validation des champs obligatoires
-    if (!accessToken || !from || !to) {
-      return res.status(400).json({
-        success: false,
-        error: "Missing required fields",
-        details: "accessToken, from and to are required"
-      });
-    }
-
+    
     // Gestion des fichiers uploadés
     const fileAttachments = req.files?.map(file => ({
       filename: file.originalname,
