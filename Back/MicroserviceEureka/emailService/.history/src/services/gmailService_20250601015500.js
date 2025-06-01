@@ -321,55 +321,18 @@ const markAsRead = async (accessToken, emailId) => {
 };
 
 // 7. Draft Management
-const createDraft = async (accessToken, draftData, userId) => {
+const createDraft = async (accessToken, draftData, userId) => {  // Ajoutez userId comme paramètre
   const gmail = getGmailClient(accessToken);
   
-  // Construction des parties principales du message
   const messageParts = [
     `From: ${draftData.from}`,
     `To: ${draftData.to}`,
     `Subject: ${draftData.subject}`,
-    `Content-Type: multipart/mixed; boundary="mixed_boundary"`,
+    "Content-Type: text/html; charset=utf-8",
     "",
-    "--mixed_boundary",
-    "Content-Type: text/plain; charset=utf-8",
-    "Content-Transfer-Encoding: quoted-printable",
-    "",
-    draftData.body || "",
-    ""
+    draftData.body
   ];
 
-  // Ajout des pièces jointes si elles existent
-  if (draftData.attachments && draftData.attachments.length > 0) {
-    draftData.attachments.forEach(attachment => {
-      if (!attachment.content) {
-        console.error('Attachment content is missing:', attachment);
-        return;
-      }
-      
-      try {
-        const contentBase64 = Buffer.isBuffer(attachment.content) 
-          ? attachment.content.toString('base64')
-          : Buffer.from(attachment.content).toString('base64');
-          
-        messageParts.push(
-          "--mixed_boundary",
-          `Content-Type: ${attachment.mimeType || 'application/octet-stream'}`,
-          `Content-Disposition: attachment; filename="${attachment.filename}"`,
-          "Content-Transfer-Encoding: base64",
-          "",
-          contentBase64,
-          ""
-        );
-      } catch (error) {
-        console.error('Error processing attachment:', error);
-      }
-    });
-  }
-
-  messageParts.push("--mixed_boundary--");
-  
-  // Encodage du message
   const rawMessage = messageParts.join("\n");
   const encodedMessage = Buffer.from(rawMessage)
     .toString("base64")
@@ -377,15 +340,13 @@ const createDraft = async (accessToken, draftData, userId) => {
     .replace(/\//g, "_")
     .replace(/=+$/, "");
 
-  // Création du brouillon
   const response = await gmail.users.drafts.create({
     userId: "me",
     requestBody: {
       message: { raw: encodedMessage }
     }
   });
-
-  // Sauvegarde du brouillon
+  
   if (userId) {
     const draftEmail = await getFullEmail(accessToken, response.data.message.id, false, userId);
     fileStorage.saveEmail(userId, draftEmail, 'drafts');

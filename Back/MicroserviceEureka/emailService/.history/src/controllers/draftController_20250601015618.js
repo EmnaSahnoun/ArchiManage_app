@@ -6,37 +6,19 @@ const getUserId = (req) => {
 // Draft management
 const createDraft = async (req, res) => {
   try {
-    const { accessToken, from, to, subject, body, attachments: draftAttachments = [] } = req.body;
-    const userId = from;
+    console.log("Received body:", req.body); // Ajoutez ce log pour débogage
+    const { accessToken, draftData, userId } = req.body;
     
-    // Gestion des fichiers uploadés
-    const fileAttachments = req.files?.map(file => ({
-      filename: file.originalname,
-      mimeType: file.mimetype,
-      content: file.buffer
-    })) || [];
-
-    // Création du brouillon
-    const draft = await gmailService.createDraft(
-      accessToken,
-      {
-        from,
-        to,
-        subject,
-        body,
-        attachments: [...draftAttachments, ...fileAttachments]
-      },
-      userId
-    );
-
+    // Ajoutez userId comme troisième paramètre
+    const draft = await gmailService.createDraft(accessToken, draftData, userId);
+    
     res.json({ success: true, data: draft });
   } catch (error) {
     console.error("Error in createDraft:", error);
     res.status(500).json({
       success: false,
       error: "Failed to create draft",
-      details: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      details: error.message
     });
   }
 };
