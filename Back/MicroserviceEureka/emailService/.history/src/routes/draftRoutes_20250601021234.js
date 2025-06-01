@@ -3,14 +3,7 @@ const draftController = require("../controllers/draftController");
 
 const router = express.Router();
 const multer = require('multer');
-const storage = multer.memoryStorage(); // Stockage en mémoire
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 10 * 1024 * 1024 // Limite de 10MB
-  }
-});
-
+const upload = multer();
 
 router.post('/create', upload.array('attachments'), draftController.createDraft);
 router.get('/list', draftController.getDraftsList);

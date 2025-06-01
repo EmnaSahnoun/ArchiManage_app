@@ -10,22 +10,23 @@ const createDraft = async (req, res) => {
     console.log('Request body:', req.body);
     console.log('Request files:', req.files);
 
-    // Vérifiez que le Content-Type est correct
-    if (!req.is('multipart/form-data')) {
+    // Vérification basique du corps de la requête
+    if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({
         success: false,
-        error: "Invalid content type",
-        details: "Expected multipart/form-data"
+        error: "Request body is empty or missing",
+        details: "Please provide all required fields in JSON format"
       });
     }
 
-    // Extraction des champs texte
+    // Extraction des données avec des valeurs par défaut
     const {
-      accessToken,
-      from,
-      to,
-      subject,
-      body
+      accessToken = null,
+      from = null,
+      to = null,
+      subject = '',
+      body = '',
+      attachments: draftAttachments = []
     } = req.body;
 
     const userId = from;
@@ -54,7 +55,7 @@ const createDraft = async (req, res) => {
         to,
         subject,
         body,
-        attachments: fileAttachments
+        attachments: [...draftAttachments, ...fileAttachments]
       },
       userId
     );

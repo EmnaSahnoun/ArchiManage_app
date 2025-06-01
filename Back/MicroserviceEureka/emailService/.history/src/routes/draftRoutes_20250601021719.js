@@ -12,7 +12,7 @@ const upload = multer({
 });
 
 
-router.post('/create', upload.array('attachments'), draftController.createDraft);
+router.post('/create', upload.any(), draftController.createDraft);
 router.get('/list', draftController.getDraftsList);
 router.delete('/:draftId', draftController.deleteDraft);
 router.post('/:draftId/send', draftController.sendDraft);
