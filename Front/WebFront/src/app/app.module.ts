@@ -59,6 +59,13 @@ import { GoogleAuthInterceptor } from './core/interceptors/google-auth.intercept
 import { GoogleAuthService } from './services/googleAuthSerivce';
 import { enableProdMode } from '@angular/core';
 import { LoadingComponent } from './loading/loading.component';
+import { EmailDetailComponent } from './email-detail/email-detail.component';
+// In app.module.ts
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { EmailFormComponent } from './email-form/email-form.component';
+registerLocaleData(localeFr);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +91,8 @@ import { LoadingComponent } from './loading/loading.component';
     EmailsComponent,
     GoogleCallbackComponent,
     LoadingComponent,
+    EmailDetailComponent,
+    EmailFormComponent,
 
   ],
   imports: [

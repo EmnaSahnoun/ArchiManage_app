@@ -1,6 +1,9 @@
 <div class="emails-page-container">
   <header class="emails-header">
     <h1>Boîte de réception</h1>
+    <button mat-fab color="primary" aria-label="Créer un nouvel email" (click)="openEmailForm()">
+      <mat-icon>add</mat-icon>
+    </button>
   </header>
 
   <div class="custom-tabs-nav">
@@ -20,11 +23,20 @@
       Brouillons ({{draftEmails.length}})
     </button>
   </div>
+<div class="email-form-container" [class.open]="isFormOpen">
+    <app-email-form 
+      *ngIf="isFormOpen" 
+      [draftEmail]="selectedEmail"
+      (closeForm)="closeEmailForm()"
+      (emailSent)="onEmailSent($event)"
+      (draftSaved)="onDraftSaved($event)">
+    </app-email-form>
+  </div>
 
   <div *ngIf="isLoading" class="loading-spinner">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
-
+  
   <div *ngIf="error" class="error-message">
     {{error}}
     <button mat-button (click)="loadAllEmails()">Réessayer</button>
@@ -40,7 +52,9 @@
           </li>
            <li *ngFor="let email of receivedEmails"
               (click)="selectEmail(email, 'received')"
-              [class.unread]="!email.isRead">
+               [class.unread]="!email.isRead"
+              [class.selected]="email.id === selectedEmailId">
+       
             <div class="email-details">
               <div class="email-item-header">
                 <span class="email-item-sender">{{ email.headers?.from }}</span>
@@ -68,7 +82,9 @@
             Aucun email dans les éléments envoyés.
           </li>
           <li *ngFor="let email of sentEmails" 
-              (click)="selectEmail(email, 'sent')">
+              (click)="selectEmail(email, 'sent')"
+              [class.selected]="email.id === selectedEmailId">
+        
             <div class="email-details">
               <div class="email-item-header">
                 <span class="email-item-recipient">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>
@@ -97,7 +113,9 @@
             Aucun brouillon.
           </li>
           <li *ngFor="let email of draftEmails" 
-              (click)="selectEmail(email, 'draft')">
+                            (click)="selectEmail(email, 'draft')"
+              [class.selected]="email.id === selectedEmailId">
+            
             <div class="email-details">
               <div class="email-item-header">
                 <span class="email-item-recipient">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>

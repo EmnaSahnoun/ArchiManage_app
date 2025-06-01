@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 156,
+            "activePatchIndex": 162,
             "patches": [
                 {
                     "date": 1748563144880,
@@ -632,6 +632,30 @@
                 {
                     "date": 1748710259115,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -253,9 +253,9 @@\n         console.error('Erreur suppression:', err);\r\n         this.error = `Erreur lors de la suppression: ${err.message || 'Veuillez réessayer.'}`;\r\n         if (err.status === 401) {\r\n           this.handleTokenExpired();\r\n-+        }}}\r\n-+      }\r\n+        }\r\n+      }\r\n     });\r\n   }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748712185921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n   activeTab: ActiveEmailTab = 'received';\r\n   isLoading = false;\r\n   error: string | null = null;\r\n   currentUserEmail: string = '';\r\n+    selectedEmailId: string | null = null; // Pour suivre l'email sélectionné\r\n+\r\n private destroy$ = new Subject<void>();\r\n   constructor(\r\n     private googleAuthService: GoogleAuthService,\r\n     private router: Router,\r\n"
+                },
+                {
+                    "date": 1748712199981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -199,8 +199,9 @@\n   }\r\n \r\n   selectEmail(email: any, tab: ActiveEmailTab): void {\r\n     if (tab === 'received' && !email.isRead) {\r\n+       this.selectedEmailId = email.id;\r\n       this.markAsRead(email.id);\r\n     }\r\n     // Implémenter la vue détaillée ici\r\n     console.log('Email sélectionné:', email);\r\n"
+                },
+                {
+                    "date": 1748712223213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -198,14 +198,16 @@\n     this.activeTab = tab;\r\n   }\r\n \r\n   selectEmail(email: any, tab: ActiveEmailTab): void {\r\n+     this.selectedEmailId = email.id;\r\n     if (tab === 'received' && !email.isRead) {\r\n-       this.selectedEmailId = email.id;\r\n+      \r\n       this.markAsRead(email.id);\r\n     }\r\n-    // Implémenter la vue détaillée ici\r\n-    console.log('Email sélectionné:', email);\r\n+   this.router.navigate(['/emails/view', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n+    console.log('Navigation vers le détail de l\\'email:', email.id);\r\n+\r\n   }\r\n \r\n   private markAsRead(emailId: string): void {\r\n     const token = this.googleAuthService.getAccessToken();\r\n"
+                },
+                {
+                    "date": 1748712342389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,9 +203,9 @@\n     if (tab === 'received' && !email.isRead) {\r\n       \r\n       this.markAsRead(email.id);\r\n     }\r\n-   this.router.navigate(['/emails/view', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n+   this.router.navigate(['/emails/details', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n     console.log('Navigation vers le détail de l\\'email:', email.id);\r\n \r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1748712349847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,9 +203,9 @@\n     if (tab === 'received' && !email.isRead) {\r\n       \r\n       this.markAsRead(email.id);\r\n     }\r\n-   this.router.navigate(['/emails/details', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n+   this.router.navigate(['/emails/', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n     console.log('Navigation vers le détail de l\\'email:', email.id);\r\n \r\n   }\r\n \r\n"
+                },
+                {
+                    "date": 1748712358411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,9 +203,9 @@\n     if (tab === 'received' && !email.isRead) {\r\n       \r\n       this.markAsRead(email.id);\r\n     }\r\n-   this.router.navigate(['/emails/', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n+   this.router.navigate(['/emails/:id', email.id], { state: { emailData: email, userEmail: this.currentUserEmail, activeTabContext: tab } });\r\n     console.log('Navigation vers le détail de l\\'email:', email.id);\r\n \r\n   }\r\n \r\n"
                 }
             ],
             "date": 1748563144880,

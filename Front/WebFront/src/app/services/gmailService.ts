@@ -13,26 +13,42 @@ export class GmailService {
     
     constructor(private http: HttpClient, private authService: AuthService) { }
 
-sendEmail(accessToken: string, emailData: any, userId: string): Observable<any> {
-    const headers = this.getApiHeaders()
+// gmail.service.ts
+/* sendEmail(emailData: any): Observable<any> {
+    const headers = this.getApiHeaders();
+   
 
+            return this.http.post(`${this.apiUrl}/emails/send`, emailData, {
+            headers,
+            withCredentials: true // Keep if your backend requires cookies/session info
+        }).pipe(
+            catchError(this.handleError) // Use the existing centralized error handler
+        );
+    } */
+
+
+         sendEmail(
+    accessToken: string,
+    from: string,
+    to: string,
+    subject: string,
+    text: string,
+    attachments: File[] = []
+  ): Observable<any> {
     const formData = new FormData();
-    formData.append('accessToken', accessToken);
-    formData.append('from', emailData.from);
-    formData.append('to', emailData.to);
-    formData.append('subject', emailData.subject);
     
-    if (emailData.text) formData.append('text', emailData.text);
-    if (emailData.html) formData.append('html', emailData.html);
+    formData.append('accessToken', accessToken);
+    formData.append('from', from);
+    formData.append('to', to);
+    formData.append('subject', subject);
+    formData.append('text', text);
 
-    if (emailData.attachments) {
-      emailData.attachments.forEach((attachment:any, index:any) => {
-        const blob = new Blob([attachment.content], { type: attachment.mimeType });
-        formData.append(`attachments`, blob, attachment.filename);
-      });
-    }
+    // Ajouter les fichiers joints
+    attachments.forEach((file, index) => {
+      formData.append(`file${index}`, file, file.name);
+    });
 
-    return this.http.post(`${this.apiUrl}/emails/send`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/emails/send`, formData);
   }
 
 getEmail(accessToken: string, emailId: string, userId: string, includeAttachments = true): Observable<any> {

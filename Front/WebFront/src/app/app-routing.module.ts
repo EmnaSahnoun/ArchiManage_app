@@ -15,6 +15,7 @@ import { EmailsComponent } from './emails/emails.component';
 import { GoogleAuthGuard } from './guard/google-auth.guard';
 import { GoogleCallbackComponent } from './google-callback/google-callback.component';
 import { LoadingComponent } from './loading/loading.component';
+import { EmailDetailComponent } from './email-detail/email-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -66,7 +67,9 @@ const routes: Routes = [
   {
     path: 'emails',
     component: EmailsComponent
-  }
+  },
+   { path: 'emails/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails
+
   
  
  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

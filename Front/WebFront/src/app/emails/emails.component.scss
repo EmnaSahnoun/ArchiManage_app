@@ -112,7 +112,10 @@ $header-height: 64px;
     &:hover {
      background-color: $hover-bg-color;
     }
-
+&.selected {
+      background-color: darken($hover-bg-color, 5%); // Légèrement plus sombre que le survol
+      border-left: 3px solid $primary-color; // Indicateur visuel sur le côté
+    }
     &.unread {
       background-color: $unread-bg-color;
       .email-item-sender, .email-item-subject {
@@ -211,4 +214,39 @@ $header-height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.email-form-container {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start hidden */
+  width: 40%; /* Adjust width as needed */
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000; /* Ensure it's on top */
+  overflow-y: auto; /* Allow scrolling */
+  padding: 20px;
+
+  &.open {
+    right: 0; /* Slide in */
+  }
+
+  /* Optional: Style the content within the form container */
+  app-email-form {
+    display: block;
+    width: 100%;
+    /* Add more styles if needed to control form appearance */
+  }
+
+  /* Close button (adjust styling as needed) */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    padding: 5px;
+    /* Style your close button */
+  }
 }

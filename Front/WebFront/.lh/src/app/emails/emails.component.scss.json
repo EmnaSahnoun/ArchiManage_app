@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1748563350619,
@@ -140,6 +140,10 @@
                 {
                     "date": 1748709767624,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -180,8 +180,9 @@\n .email-item-date {\r\n    font-size: $font-size-xxsmall;\r\n   color: $text-muted-color;\r\n   text-align: right;\r\n+   white-space: nowrap;\r\n }\r\n \r\n .empty-list-message {\r\n   padding: 30px 20px;\r\n"
+                },
+                {
+                    "date": 1748712292482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -111,9 +111,12 @@\n \r\n     &:hover {\r\n      background-color: $hover-bg-color;\r\n     }\r\n-\r\n+&.selected {\r\n+      background-color: darken($hover-bg-color, 5%); // Légèrement plus sombre que le survol\r\n+      border-left: 3px solid $primary-color; // Indicateur visuel sur le côté\r\n+    }\r\n     &.unread {\r\n       background-color: $unread-bg-color;\r\n       .email-item-sender, .email-item-subject {\r\n        font-weight: $font-weight-bold;\r\n"
                 }
             ],
             "date": 1748563350619,

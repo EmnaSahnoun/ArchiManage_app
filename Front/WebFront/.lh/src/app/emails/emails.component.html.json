@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1748563197087,
@@ -156,6 +156,18 @@
                 {
                     "date": 1748709655305,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,18 +97,19 @@\n             Aucun brouillon.\r\n           </li>\r\n           <li *ngFor=\"let email of draftEmails\" \r\n               (click)=\"selectEmail(email, 'draft')\">\r\n-            <div class=\"email-item-header\">\r\n-                        <span class=\"email-item-recipient\">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>\r\n-              <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n-               </div>\r\n-                        <div class=\"email-item-subject\">{{ email.headers?.subject }}</div>\r\n-\r\n-            <div class=\"email-item-snippet\">{{ email.snippet }}</div>\r\n-            <button mat-icon-button class=\"delete-button\" \r\n-[attr.aria-label]=\"'Supprimer le brouillon avec sujet ' + (email.headers?.subject || 'sans sujet')\"\r\n-                    (click)=\"onDeleteEmail(email.id, 'draft'); $event.stopPropagation()\">\r\n+            <div class=\"email-details\">\r\n+              <div class=\"email-item-header\">\r\n+                <span class=\"email-item-recipient\">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>\r\n+                <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n+              </div>\r\n+              <div class=\"email-item-subject\">{{ email.headers?.subject }}</div>\r\n+              <div class=\"email-item-snippet\">{{ email.snippet }}</div>\r\n+            </div>\r\n+            <button mat-icon-button class=\"delete-button\"\r\n+                    [attr.aria-label]=\"'Supprimer le brouillon avec sujet ' + (email.headers?.subject || 'sans sujet')\"\r\n+                      (click)=\"onDeleteEmail(email.id, 'draft'); $event.stopPropagation()\">\r\n                             <mat-icon>delete</mat-icon>\r\n             </button>\r\n           </li>\r\n         </ul>\r\n"
+                },
+                {
+                    "date": 1748712246198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,11 @@\n             Aucun email dans la boîte de réception.\r\n           </li>\r\n            <li *ngFor=\"let email of receivedEmails\"\r\n               (click)=\"selectEmail(email, 'received')\"\r\n-              [class.unread]=\"!email.isRead\">\r\n+               [class.unread]=\"!email.isRead\"\r\n+              [class.selected]=\"email.id === selectedEmailId\">\r\n+       \r\n             <div class=\"email-details\">\r\n               <div class=\"email-item-header\">\r\n                 <span class=\"email-item-sender\">{{ email.headers?.from }}</span>\r\n                 <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n"
+                },
+                {
+                    "date": 1748712263144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,11 @@\n           <li *ngIf=\"sentEmails.length === 0\" class=\"empty-list-message\">\r\n             Aucun email dans les éléments envoyés.\r\n           </li>\r\n           <li *ngFor=\"let email of sentEmails\" \r\n-              (click)=\"selectEmail(email, 'sent')\">\r\n+              (click)=\"selectEmail(email, 'sent')\"\r\n+              [class.selected]=\"email.id === selectedEmailId\">\r\n+        \r\n             <div class=\"email-details\">\r\n               <div class=\"email-item-header\">\r\n                 <span class=\"email-item-recipient\">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>\r\n                 <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n"
+                },
+                {
+                    "date": 1748712277312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,11 @@\n           <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n             Aucun brouillon.\r\n           </li>\r\n           <li *ngFor=\"let email of draftEmails\" \r\n-              (click)=\"selectEmail(email, 'draft')\">\r\n+                            (click)=\"selectEmail(email, 'draft')\"\r\n+              [class.selected]=\"email.id === selectedEmailId\">\r\n+            \r\n             <div class=\"email-details\">\r\n               <div class=\"email-item-header\">\r\n                 <span class=\"email-item-recipient\">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>\r\n                 <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n"
                 }
             ],
             "date": 1748563197087,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 116,
+            "activePatchIndex": 118,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -472,6 +472,14 @@
                 {
                     "date": 1748649970235,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n import { InvoiceComponent } from './invoice/invoice.component';\r\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n+import { LoadingComponent } from './loading/loading.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -63,10 +64,9 @@\n     component: LoadingComponent\r\n   },\r\n   {\r\n     path: 'emails',\r\n-    component: EmailsComponent,\r\n-    canActivate: [GoogleAuthGuard]\r\n+    component: EmailsComponent\r\n   }\r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
+                },
+                {
+                    "date": 1748712379527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,11 @@\n   },\r\n   {\r\n     path: 'emails',\r\n     component: EmailsComponent\r\n-  }\r\n+  },\r\n+   { path: 'emails/view/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n+\r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n"
+                },
+                {
+                    "date": 1748712384688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n import { LoadingComponent } from './loading/loading.component';\r\n+import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -66,9 +67,9 @@\n   {\r\n     path: 'emails',\r\n     component: EmailsComponent\r\n   },\r\n-   { path: 'emails/view/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n+   { path: 'emails/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n \r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
                 }
             ],
             "date": 1741609914429,

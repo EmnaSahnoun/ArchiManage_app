@@ -4,7 +4,9 @@ import { GoogleAuthService } from '../services/googleAuthSerivce';
 import { Router } from '@angular/router';
 import { catchError, finalize, forkJoin, map, Observable, of, Subject, Subscription, takeUntil, tap, throwError } from 'rxjs';
 import { GmailService } from '../services/gmailService';
-
+import { MatDialog } from '@angular/material/dialog';
+import { EmailDetailComponent } from '../email-detail/email-detail.component';
+import { EmailFormComponent } from '../email-form/email-form.component';
 type ActiveEmailTab = 'received' | 'sent' | 'draft';
 @Component({
   selector: 'app-emails',
@@ -19,12 +21,17 @@ export class EmailsComponent implements OnInit,OnDestroy    {
   isLoading = false;
   error: string | null = null;
   currentUserEmail: string = '';
+    selectedEmailId: string | null = null; // Pour suivre l'email sélectionné
+isFormOpen = false;
+  selectedEmail: any = null;
+  
 private destroy$ = new Subject<void>();
   constructor(
     private googleAuthService: GoogleAuthService,
     private router: Router,
     private gmailService: GmailService,
-    private authService: AuthService
+    private authService: AuthService,
+        public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.checkAuthAndLoadEmails();
@@ -197,11 +204,51 @@ extractEmailAddress(fullString: string): string {
   }
 
   selectEmail(email: any, tab: ActiveEmailTab): void {
+     this.selectedEmailId = email.id;
     if (tab === 'received' && !email.isRead) {
+      
       this.markAsRead(email.id);
     }
-    // Implémenter la vue détaillée ici
-    console.log('Email sélectionné:', email);
+    if (tab === 'draft') {
+      this.selectedEmail = email; // Set the full draft object for the form
+      this.isFormOpen = true;    // Open the email form to edit this draft
+    } 
+    else {
+      // For 'received' or 'sent' tabs, navigate to the detail view
+      this.isFormOpen = false;       // Ensure the email form is closed if it was open
+      this.selectedEmail = null;   // Clear any draft that might have been selected for editing
+      
+      // Navigate to EmailDetailComponent
+      this.router.navigate(['/emails', email.id], { // Ensure '/emails/:id' is your route for email detail
+        state: {
+          emailData: email,
+          userEmail: this.currentUserEmail, // Make sure currentUserEmail is populated
+          activeTabContext: tab
+        }
+      });
+    }
+  }
+ openEmailForm(): void {
+    this.selectedEmail = null; // Préparer les données pour le formulaire
+    this.isFormOpen = true;
+  }
+
+  closeEmailForm(): void {
+    this.isFormOpen = false;
+    this.selectedEmail = null;
+  }
+  onEmailSent(email: any): void {
+    console.log("Email sent:", email);
+    // Mettre à jour la liste des emails envoyés si nécessaire
+    this.loadSentEmails();
+    this.closeEmailForm();
+  }
+
+  onDraftSaved(email: any): void {
+    console.log("Draft saved:", email);
+    // Mettre à jour la liste des brouillons si nécessaire
+    this.loadDrafts();
+    this.closeEmailForm();
   }
 
   private markAsRead(emailId: string): void {
