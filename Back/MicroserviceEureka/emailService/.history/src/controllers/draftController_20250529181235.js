@@ -6,22 +6,11 @@ const getUserId = (req) => {
 // Draft management
 const createDraft = async (req, res) => {
   try {
-    console.log("Received body:", req.body); // Ajoutez ce log pour débogage
+    const { accessToken, draftData,userId } = req.body;
     
-    if (!req.body || !req.body.accessToken || !req.body.draftData) {
-      return res.status(400).json({
-        success: false,
-        error: "Bad request - missing required fields",
-        details: "Request must include accessToken and draftData"
-      });
-    }
-
-    const { accessToken, draftData, userId } = req.body;
-    
-    const draft = await gmailService.createDraft(accessToken, draftData, userId);
+    const draft = await gmailService.createDraft(accessToken, draftData,userId);
     res.json({ success: true, data: draft });
   } catch (error) {
-    console.error("Error in createDraft:", error);
     res.status(500).json({
       success: false,
       error: "Failed to create draft",
