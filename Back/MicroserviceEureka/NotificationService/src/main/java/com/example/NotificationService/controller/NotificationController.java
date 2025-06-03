@@ -28,26 +28,26 @@ public class NotificationController {
     public Flux<ServerSentEvent<NotificationDto>> streamNotifications(
             @RequestHeader("X-User-ID") String userId) {
 
-        logger.info("New SSE connection from user: {}", userId);
+        // Créer un sink dédié pour cette connexion
+        Sinks.Many<NotificationDto> personalSink = Sinks.many().unicast().onBackpressureBuffer();
 
-        // Flux des notifications en direct avec filtrage par userId
-        Flux<NotificationDto> liveNotifications = sink.asFlux()
+        // S'abonner au sink global et filtrer
+        sink.asFlux()
                 .filter(notif -> notif.getUserIdsToNotify().contains(userId))
-                .doOnNext(notif -> logger.debug("Sending live notification: {}", notif));
+                .subscribe(personalSink::tryEmitNext);
 
-        // Flux des notifications en attente
-        Flux<NotificationDto> pendingNotifications = Flux.fromIterable(
-                        sseNotificationService.getPendingNotifications(userId))
-                .doOnComplete(() -> sseNotificationService.clearPendingNotifications(userId));
+        // Envoyer les notifications en attente
+        sseNotificationService.getPendingNotifications(userId)
+                .forEach(personalSink::tryEmitNext);
+        sseNotificationService.clearPendingNotifications(userId);
 
-        // Combiner les deux flux + heartbeat
-        return Flux.merge(
-                        pendingNotifications,
-                        liveNotifications
-                )
+        return personalSink.asFlux()
                 .map(this::toSseEvent)
                 .mergeWith(heartbeat())
-                .doOnCancel(() -> logger.info("Client disconnected: {}", userId));
+                .doOnCancel(() -> {
+                    logger.info("Client disconnected: {}", userId);
+                    personalSink.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
+                });
     }
 
     private ServerSentEvent<NotificationDto> toSseEvent(NotificationDto notification) {
