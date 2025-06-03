@@ -9,7 +9,7 @@ import reactor.core.publisher.Sinks;
 public class NotificationSinkConfig {
 
     @Bean
-    public Sinks.Many<String> notificationSink() {
+    public Sinks.Many<NotificationDto> notificationSink() {
         return Sinks.many().multicast().onBackpressureBuffer();
     }
 }
