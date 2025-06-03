@@ -17,11 +17,11 @@
             (click)="setActiveTab('sent')">
       Emails Envoyés ({{sentEmails.length}})
     </button>
-    <button class="custom-tab-button"
+    <!-- <button class="custom-tab-button"
             [class.active]="activeTab === 'draft'"
             (click)="setActiveTab('draft')">
       Brouillons ({{draftEmails.length}})
-    </button>
+    </button> -->
   </div>
 <div class="email-form-container" [class.open]="isFormOpen">
     <app-email-form 
@@ -29,7 +29,7 @@
       [draftEmail]="selectedEmail"
       (closeForm)="closeEmailForm()"
       (emailSent)="onEmailSent($event)"
-      (draftSaved)="onDraftSaved($event)">
+      >
     </app-email-form>
   </div>
 
@@ -104,8 +104,8 @@
         </ul>
       </div>
     </div>
-
-    <!-- Drafts -->
+<!-- Drafts -->
+    <!-- 
     <div *ngIf="activeTab === 'draft'">
       <div class="email-list-container">
         <ul class="email-list">
@@ -132,6 +132,6 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -1,0 +1,34 @@
+{
+    "sourceFile": "Dockerfile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1748781448709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748781555424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-FROM node:16\r\n+FROM node:20\r\n \r\n # Définir le répertoire de travail\r\n WORKDIR /app\r\n \r\n"
+                },
+                {
+                    "date": 1748781703122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # Définir le répertoire de travail\r\n WORKDIR /app\r\n \r\n # Installer Angular CLI globalement\r\n-RUN npm install -g @angular/cli\r\n+RUN npm install -g @angular/cli@18\r\n \r\n # Copier les fichiers nécessaires pour l'installation des dépendances\r\n COPY package.json package-lock.json ./\r\n \r\n"
+                },
+                {
+                    "date": 1748781719518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n RUN npm install -g @angular/cli@18\r\n \r\n # Copier les fichiers nécessaires pour l'installation des dépendances\r\n COPY package.json package-lock.json ./\r\n-\r\n+COPY proxy.conf.json ./\r\n # Configurer NPM et installer les dépendances avec des délais étendus\r\n RUN npm config set registry https://registry.npmjs.org/ && \\\r\n     npm install --legacy-peer-deps --timeout=60000\r\n \r\n"
+                },
+                {
+                    "date": 1748781732061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,5 @@\n # Exposer le port utilisé par Angular\r\n EXPOSE 4200\r\n \r\n # Commande pour démarrer l'application Angular\r\n-CMD [\"ng\", \"serve\", \"--host\", \"0.0.0.0\"]\n\\ No newline at end of file\n+CMD [\"ng\", \"serve\", \"--host\", \"0.0.0.0\", \"--disable-host-check\", \"--proxy-config\", \"proxy.conf.json\"]\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1748781448709,
+            "name": "Commit-0",
+            "content": "FROM node:16\r\n\r\n# Définir le répertoire de travail\r\nWORKDIR /app\r\n\r\n# Installer Angular CLI globalement\r\nRUN npm install -g @angular/cli\r\n\r\n# Copier les fichiers nécessaires pour l'installation des dépendances\r\nCOPY package.json package-lock.json ./\r\n\r\n# Configurer NPM et installer les dépendances avec des délais étendus\r\nRUN npm config set registry https://registry.npmjs.org/ && \\\r\n    npm install --legacy-peer-deps --timeout=60000\r\n\r\n# Copier le reste des fichiers\r\nCOPY . .\r\n\r\n# Exposer le port utilisé par Angular\r\nEXPOSE 4200\r\n\r\n# Commande pour démarrer l'application Angular\r\nCMD [\"ng\", \"serve\", \"--host\", \"0.0.0.0\"]"
+        }
+    ]
+}

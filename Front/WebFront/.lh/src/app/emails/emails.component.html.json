@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1748563197087,
@@ -168,6 +168,26 @@
                 {
                     "date": 1748712277312,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,11 @@\n           <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n             Aucun brouillon.\r\n           </li>\r\n           <li *ngFor=\"let email of draftEmails\" \r\n-              (click)=\"selectEmail(email, 'draft')\">\r\n+                            (click)=\"selectEmail(email, 'draft')\"\r\n+              [class.selected]=\"email.id === selectedEmailId\">\r\n+            \r\n             <div class=\"email-details\">\r\n               <div class=\"email-item-header\">\r\n                 <span class=\"email-item-recipient\">À: {{ extractEmailAddress(email.headers?.to || '') }}</span>\r\n                 <span class=\"email-item-date\">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm' }}</span>\r\n"
+                },
+                {
+                    "date": 1748909811475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n <div class=\"emails-page-container\">\r\n   <header class=\"emails-header\">\r\n     <h1>Boîte de réception</h1>\r\n+    <button mat-fab color=\"primary\" aria-label=\"Créer un nouvel email\" (click)=\"openEmailForm()\">\r\n+      <mat-icon>add</mat-icon>\r\n+    </button>\r\n   </header>\r\n \r\n   <div class=\"custom-tabs-nav\">\r\n     <button class=\"custom-tab-button\" \r\n@@ -19,13 +22,22 @@\n             (click)=\"setActiveTab('draft')\">\r\n       Brouillons ({{draftEmails.length}})\r\n     </button>\r\n   </div>\r\n+<div class=\"email-form-container\" [class.open]=\"isFormOpen\">\r\n+    <app-email-form \r\n+      *ngIf=\"isFormOpen\" \r\n+      [draftEmail]=\"selectedEmail\"\r\n+      (closeForm)=\"closeEmailForm()\"\r\n+      (emailSent)=\"onEmailSent($event)\"\r\n+      >\r\n+    </app-email-form>\r\n+  </div>\r\n \r\n   <div *ngIf=\"isLoading\" class=\"loading-spinner\">\r\n     <mat-spinner diameter=\"40\"></mat-spinner>\r\n   </div>\r\n-\r\n+  \r\n   <div *ngIf=\"error\" class=\"error-message\">\r\n     {{error}}\r\n     <button mat-button (click)=\"loadAllEmails()\">Réessayer</button>\r\n   </div>\r\n"
+                },
+                {
+                    "date": 1748909822614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n         </ul>\r\n       </div>\r\n     </div>\r\n \r\n-    <!-- Drafts -->\r\n+    <!-- <!-- Drafts -->\r\n     <div *ngIf=\"activeTab === 'draft'\">\r\n       <div class=\"email-list-container\">\r\n         <ul class=\"email-list\">\r\n           <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n@@ -131,7 +131,7 @@\n             </button>\r\n           </li>\r\n         </ul>\r\n       </div>\r\n-    </div>\r\n+    </div> -->\r\n   </div>\r\n </div>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1748909828003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n         </ul>\r\n       </div>\r\n     </div>\r\n \r\n-    <!-- <!-- Drafts -->\r\n+    <!-- <!-- Drafts\r\n     <div *ngIf=\"activeTab === 'draft'\">\r\n       <div class=\"email-list-container\">\r\n         <ul class=\"email-list\">\r\n           <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n"
+                },
+                {
+                    "date": 1748909839093,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -103,10 +103,10 @@\n           </li>\r\n         </ul>\r\n       </div>\r\n     </div>\r\n-\r\n-    <!-- <!-- Drafts\r\n+<!-- Drafts -->\r\n+    <!-- \r\n     <div *ngIf=\"activeTab === 'draft'\">\r\n       <div class=\"email-list-container\">\r\n         <ul class=\"email-list\">\r\n           <li *ngIf=\"draftEmails.length === 0\" class=\"empty-list-message\">\r\n"
+                },
+                {
+                    "date": 1748909859326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,13 +16,13 @@\n             [class.active]=\"activeTab === 'sent'\"\r\n             (click)=\"setActiveTab('sent')\">\r\n       Emails Envoyés ({{sentEmails.length}})\r\n     </button>\r\n-    <button class=\"custom-tab-button\"\r\n+    <!-- <button class=\"custom-tab-button\"\r\n             [class.active]=\"activeTab === 'draft'\"\r\n             (click)=\"setActiveTab('draft')\">\r\n       Brouillons ({{draftEmails.length}})\r\n-    </button>\r\n+    </button> -->\r\n   </div>\r\n <div class=\"email-form-container\" [class.open]=\"isFormOpen\">\r\n     <app-email-form \r\n       *ngIf=\"isFormOpen\" \r\n"
                 }
             ],
             "date": 1748563197087,
