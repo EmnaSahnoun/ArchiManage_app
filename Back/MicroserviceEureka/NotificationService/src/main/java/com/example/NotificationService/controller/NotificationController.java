@@ -30,23 +30,24 @@ public class NotificationController {
 
         logger.info("New SSE connection from user: {}", userId);
 
-        // 1. Envoyer d'abord les notifications en attente
-        List<NotificationDto> pending = sseNotificationService.getPendingNotifications(userId);
-        Flux<ServerSentEvent<NotificationDto>> pendingFlux = Flux.fromIterable(pending)
-                .map(notif -> toSseEvent(notif));
-
-        // 2. S'abonner aux nouvelles notifications
-        Flux<ServerSentEvent<NotificationDto>> liveFlux = sink.asFlux()
+        // Flux des notifications en direct avec filtrage par userId
+        Flux<NotificationDto> liveNotifications = sink.asFlux()
                 .filter(notif -> notif.getUserIdsToNotify().contains(userId))
-                .map(this::toSseEvent);
+                .doOnNext(notif -> logger.debug("Sending live notification: {}", notif));
 
-        // 3. Combiner les deux et nettoyer les notifications en attente
-        return Flux.concat(pendingFlux, liveFlux)
-                .doOnComplete(() -> {
-                    sseNotificationService.clearPendingNotifications(userId);
-                    logger.info("SSE completed for user: {}", userId);
-                })
-                .mergeWith(heartbeat());
+        // Flux des notifications en attente
+        Flux<NotificationDto> pendingNotifications = Flux.fromIterable(
+                        sseNotificationService.getPendingNotifications(userId))
+                .doOnComplete(() -> sseNotificationService.clearPendingNotifications(userId));
+
+        // Combiner les deux flux + heartbeat
+        return Flux.merge(
+                        pendingNotifications,
+                        liveNotifications
+                )
+                .map(this::toSseEvent)
+                .mergeWith(heartbeat())
+                .doOnCancel(() -> logger.info("Client disconnected: {}", userId));
     }
 
     private ServerSentEvent<NotificationDto> toSseEvent(NotificationDto notification) {
@@ -60,7 +61,8 @@ public class NotificationController {
         return Flux.interval(Duration.ofSeconds(15))
                 .map(seq -> ServerSentEvent.<NotificationDto>builder()
                         .comment("heartbeat")
-                        .build());
+                        .build())
+                .doOnNext(hb -> logger.trace("Sending heartbeat"));
     }
 }
 
