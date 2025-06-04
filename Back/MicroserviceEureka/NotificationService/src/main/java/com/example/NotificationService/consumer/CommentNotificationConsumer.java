@@ -43,6 +43,9 @@ public class CommentNotificationConsumer {
                     logger.warn("Échec d'émission (non sérialisé)");
                 } else if (emitResult == Sinks.EmitResult.FAIL_OVERFLOW) {
                     logger.warn("Échec d'émission (overflow)");
+                    notification.getUserIdsToNotify().forEach(userId -> {
+                        sseNotificationService.addPendingNotification(userId, notification);
+                    });
                 }
                 return true; // Retry
             });

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1747613269038,
@@ -88,6 +88,10 @@
                 {
                     "date": 1747614067446,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n      \r\n      \r\n      private getApiHeaders(): HttpHeaders {\r\n         const token = this.authService.getAccessToken();\r\n-        const use\r\n+        const user\r\n         return new HttpHeaders({\r\n           'Content-Type': 'application/json',\r\n           'Authorization': `Bearer ${token}`\r\n         });\r\n"
+                },
+                {
+                    "date": 1749047238829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n   }\r\n \r\n   // Get all media files for a task\r\n   getFilesByTask(taskId: string): Observable<any[]> {\r\n-  return this.http.get<any[]>(`${this.apiUrl}//task/${taskId}`, { \r\n+  return this.http.get<any[]>(`${this.apiUrl}/m/task/${taskId}`, { \r\n     headers: this.getApiHeaders()\r\n   }).pipe(\r\n     catchError(this.handleError)\r\n   );\r\n"
                 }
             ],
             "date": 1747613269038,

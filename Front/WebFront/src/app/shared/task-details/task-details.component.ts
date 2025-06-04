@@ -200,14 +200,19 @@ loadComments(): void {
 loadDocuments(): void {
     if (!this.task?.id) return;
     this.isLoadingDocuments = true;
-    // Assuming projectService has a method to get documents by task ID
-    // And it needs to resolve uploader usernames similar to loadActivities
     this.documentService.getFilesByTask(this.task.id as string).pipe(
-      switchMap((documents: MediaFileResponse[]) => {
+      switchMap((documents: any[]) => {
         if (!documents || documents.length === 0) {
           return of([]);
         }
-        const userRequests: Observable<MediaFileResponse>[] = documents.map(doc => {
+
+        const processedDocs = documents.map(doc => {
+        return {
+          ...doc,
+          downloadUrl: doc.fileUrl || `/DocumentService/media/files/${doc.storageFilename}`
+        };
+      });
+        const userRequests: Observable<any>[] = documents.map(doc => {
         
           if (doc.uploadedBy) {
             return this.agenceService.getUserById(doc.uploadedBy).pipe(
@@ -221,7 +226,7 @@ loadDocuments(): void {
       })
     ).subscribe({
       next: (processedDocuments) => {
-         this.task.documents = processedDocuments as MediaFileResponse[];
+         this.task.documents = processedDocuments as any[];
                this.isLoadingDocuments = false;
         console.log('Documents loaded:', this.task.documents);
       },

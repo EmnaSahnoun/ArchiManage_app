@@ -64,6 +64,7 @@ import { EmailDetailComponent } from './email-detail/email-detail.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { EmailFormComponent } from './email-form/email-form.component';
+import { FileSizePipe } from './shared/pipes/file-size.pipe';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -79,7 +80,7 @@ registerLocaleData(localeFr);
     ProjectDetailsComponent,
     AddMemberComponent,
     LoginComponent,
-   
+   FileSizePipe,
     TasksComponent,
     TaskDetailsComponent,
     ConfirmationDialogComponent,

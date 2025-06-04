@@ -157,29 +157,33 @@
             <div class="documents-list">
               <div class="document-item" *ngFor="let doc of task?.documents">
                 <div class="document-icon">
-                  <i *ngIf="doc.mediaType === 'IMAGE'" class="bi bi-file-earmark-image"></i>
-                  <i *ngIf="doc.mediaType === 'VIDEO'" class="bi bi-file-earmark-play"></i>
-                  <i *ngIf="doc.mediaType === 'DOCUMENT' || (doc.mediaType !== 'IMAGE' && doc.mediaType !== 'VIDEO')" class="bi bi-file-earmark-text"></i>
-                </div>
+                  <i [ngClass]="{
+                        'bi-file-earmark-image': doc.mediaType === 'IMAGE',
+                        'bi-file-earmark-play': doc.mediaType === 'VIDEO',
+                        'bi-file-earmark-pdf': doc.contentType === 'application/pdf',
+                        'bi-file-earmark-text': doc.mediaType !== 'IMAGE' && doc.mediaType !== 'VIDEO'
+      }" class="bi"></i> </div>
                 <div class="document-info">
-                  <strong class="document-filename" (click)="downloadDocument(doc)" matTooltip="Download {{doc.filename}}">{{ doc.filename }}</strong>
+                  <strong class="document-filename" (click)="downloadDocument(doc)" matTooltip="Télécharger {{doc.filename}}">{{ doc.filename }}</strong>
                   <small class="document-description" *ngIf="doc.description">{{ doc.description }}</small>
                   <small class="document-meta">
-                    Size: {{ doc.size | number }} bytes | Uploaded: {{ doc.uploadDate | date:'shortDate' }} by {{ doc.uploaderUsername || doc.uploadedBy }}
+                    Taille: {{ doc.size | fileSize }} | 
+                    Ajouté le: {{ doc.uploadDate | date:'dd/MM/yyyy' }} | 
+                    Par: {{ doc.uploaderUsername || doc.uploadedBy }}
                   </small>
                 </div>
                 <div class="document-actions">
-                  <button mat-icon-button (click)="downloadDocument(doc)" matTooltip="Download document">
+                  <button mat-icon-button (click)="downloadDocument(doc)" matTooltip="Télécharger">
                     <i class="bi bi-download"></i>
                   </button>
                   <!-- Add condition for delete, e.g., based on user role or if user is uploader -->
-                  <button mat-icon-button color="warn" (click)="deleteDocument(doc.id)" matTooltip="Delete document">
+                  <button mat-icon-button color="warn" (click)="deleteDocument(doc.id)" matTooltip="Supprimer">
                     <i class="bi bi-trash3"></i>
                   </button>
                 </div>
               </div>
               <div *ngIf="(!task?.documents || task?.documents?.length === 0) && !isLoadingDocuments" class="no-comments">
-                No documents attached to this task yet.
+                Aucun document attaché à cette tâche.
               </div>
             </div>
           </div>

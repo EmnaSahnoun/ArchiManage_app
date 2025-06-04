@@ -46,22 +46,22 @@ export class DocumentService {
 
   // Download a media file
   downloadFile(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/media/${id}`, {
-      headers: this.getApiHeaders(),
-      responseType: 'blob'
-    }).pipe(
-      catchError(this.handleError)
-    );
-  }
+  return this.http.get(`${this.apiUrl}/media/${id}`, {
+    headers: this.getApiHeaders(),
+    responseType: 'blob'
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
 
   // Get all media files for a task
   getFilesByTask(taskId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/media/task/${taskId}`, { 
-      headers: this.getApiHeaders()
-    }).pipe(
-      catchError(this.handleError)
-    );
-  }
+  return this.http.get<any[]>(`${this.apiUrl}/media/task/${taskId}`, { 
+    headers: this.getApiHeaders()
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
 
   // Delete a media file
   deleteFile(id: string): Observable<void> {

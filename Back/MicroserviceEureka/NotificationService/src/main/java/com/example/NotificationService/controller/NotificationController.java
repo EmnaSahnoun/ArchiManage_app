@@ -24,20 +24,28 @@ public class NotificationController {
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<NotificationDto> streamNotifications(@RequestHeader("X-User-ID") String userId) {
         // 1. Envoyer d'abord les notifications en attente
-        List<NotificationDto> pending = sseNotificationService.getPendingNotifications(userId);
-        Flux<NotificationDto> pendingFlux = Flux.fromIterable(pending);
+        Flux<NotificationDto> pendingFlux = Flux.fromIterable(sseNotificationService.getPendingNotifications(userId))
+                .doOnNext(notif -> logger.info("Envoi notification en attente pour {}", userId));
 
-        // 2. S'abonner aux nouvelles notifications
+        // 2. S'abonner aux nouvelles notifications avec un filtre correct
         Flux<NotificationDto> liveFlux = sink.asFlux()
-                .filter(notif -> notif.getUserIdsToNotify().contains(userId));
+                .filter(notif -> {
+                    boolean shouldNotify = notif.getUserIdsToNotify().contains(userId);
+                    if (shouldNotify) {
+                        logger.info("Envoi notification en temps réel pour {}", userId);
+                    }
+                    return shouldNotify;
+                });
 
         // 3. Combiner les deux et nettoyer les notifications en attente
         return Flux.concat(pendingFlux, liveFlux)
-                .doOnComplete(() -> sseNotificationService.clearPendingNotifications(userId))
-                .doOnCancel(() -> logger.info("Client déconnecté: {}", userId));
-
+                .doOnComplete(() -> {
+                    sseNotificationService.clearPendingNotifications(userId);
+                    logger.info("Connexion SSE terminée pour {}", userId);
+                })
+                .doOnCancel(() -> logger.info("Client déconnecté: {}", userId))
+                .doOnSubscribe(sub -> logger.info("Nouvelle souscription SSE pour {}", userId));
     }
-
     @GetMapping("/pending")
     public ResponseEntity<List<NotificationDto>> getPendingNotifications(@RequestHeader("X-User-ID") String userId) {
         return ResponseEntity.ok(sseNotificationService.getPendingNotifications(userId));

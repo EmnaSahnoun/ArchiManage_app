@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 130,
+            "activePatchIndex": 133,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -528,6 +528,18 @@
                 {
                     "date": 1748713005001,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,8 +57,15 @@\n import { GoogleCallbackComponent } from './google-callback/google-callback.component'; // Ajout pour les onglets\r\n import { GoogleAuthInterceptor } from './core/interceptors/google-auth.interceptor';\r\n import { GoogleAuthService } from './services/googleAuthSerivce';\r\n import { enableProdMode } from '@angular/core';\r\n+import { LoadingComponent } from './loading/loading.component';\r\n+import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n+// In app.module.ts\r\n+import { registerLocaleData } from '@angular/common';\r\n+import localeFr from '@angular/common/locales/fr';\r\n+registerLocaleData(localeFr);\r\n+\r\n @NgModule({\r\n   declarations: [\r\n     AppComponent,\r\n     SidebarComponent,\r\n@@ -81,8 +88,10 @@\n     InvoiceComponent,\r\n     SetPasswordComponent,\r\n     EmailsComponent,\r\n     GoogleCallbackComponent,\r\n+    LoadingComponent,\r\n+    EmailDetailComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1749048374806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,8 +62,9 @@\n import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n // In app.module.ts\r\n import { registerLocaleData } from '@angular/common';\r\n import localeFr from '@angular/common/locales/fr';\r\n+import { EmailFormComponent } from './email-form/email-form.component';\r\n registerLocaleData(localeFr);\r\n \r\n @NgModule({\r\n   declarations: [\r\n@@ -77,9 +78,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-   \r\n+   FileSizePipe\r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n@@ -90,8 +91,9 @@\n     EmailsComponent,\r\n     GoogleCallbackComponent,\r\n     LoadingComponent,\r\n     EmailDetailComponent,\r\n+    EmailFormComponent,\r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1749048397111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,8 +63,9 @@\n // In app.module.ts\r\n import { registerLocaleData } from '@angular/common';\r\n import localeFr from '@angular/common/locales/fr';\r\n import { EmailFormComponent } from './email-form/email-form.component';\r\n+import { FileSizePipe } from './shared/pipes/file-size.pipe';\r\n registerLocaleData(localeFr);\r\n \r\n @NgModule({\r\n   declarations: [\r\n"
+                },
+                {
+                    "date": 1749048432427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-   FileSizePipe\r\n+   FileSizePipe,\r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n"
                 }
             ],
             "date": 1741609977833,

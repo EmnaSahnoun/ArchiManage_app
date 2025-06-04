@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 67,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1743940149215,
@@ -276,6 +276,18 @@
                 {
                     "date": 1746445751552,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,17 +25,10 @@\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n \r\n @NgModule({\r\n-  declarations: [ ],\r\n-  imports: [\r\n-    ProjectFormComponent, \r\n-    ProjectMembersComponent, \r\n-    PhaseFormComponent,  \r\n-    PhaseAccessComponent, \r\n-    TaskFormComponent,\r\n-    HeaderComponent,\r\n-    CommonModule,\r\n+  declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n+  imports: [CommonModule,\r\n     MatDialogModule,\r\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatButtonModule,\r\n@@ -66,12 +59,7 @@\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n-  exports: [HeaderComponent,\r\n-    ProjectFormComponent,\r\n-    ProjectMembersComponent,\r\n-    PhaseFormComponent,\r\n-    PhaseAccessComponent,\r\n-    TaskFormComponent]\r\n+  exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749048405009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n-    \r\n+    FileSizePipe\r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n"
+                },
+                {
+                    "date": 1749048416654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n+import { FileSizePipe } from './pipes/file-size.pipe';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n@@ -34,9 +35,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n-    FileSizePipe\r\n+    FileSizePipe,\r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n@@ -59,7 +60,7 @@\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n-  exports: [HeaderComponent]\r\n+  exports: [HeaderComponent,FileSizePipe]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749048423565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,8 @@\n import { NgbModule } from '@ng-bootstrap/ng-bootstrap';\r\n import { PhaseFormComponent } from './phase-form/phase-form.component';\r\n import { PhaseAccessComponent } from './phase-access/phase-access.component';\r\n import { TaskFormComponent } from './task-form/task-form.component';\r\n-import { FileSizePipe } from './pipes/file-size.pipe';\r\n \r\n @NgModule({\r\n   declarations: [HeaderComponent, ProjectFormComponent, ProjectMembersComponent, PhaseFormComponent,  PhaseAccessComponent, TaskFormComponent],\r\n   imports: [CommonModule,\r\n@@ -35,9 +34,9 @@\n     MatButtonModule,\r\n     MatIconModule,\r\n     ReactiveFormsModule,\r\n     FormsModule,\r\n-    FileSizePipe,\r\n+    \r\n     MatSnackBarModule,\r\n         MatIconModule,\r\n         ReactiveFormsModule,\r\n         MatToolbarModule,\r\n@@ -60,7 +59,7 @@\n     MatSnackBarModule,\r\n     MatProgressBarModule,\r\n     NgbModule\r\n   ],\r\n-  exports: [HeaderComponent,FileSizePipe]\r\n+  exports: [HeaderComponent]\r\n })\r\n export class SharedModule { }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1743940149215,
