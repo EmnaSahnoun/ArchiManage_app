@@ -11,6 +11,6 @@ public class NotificationSinkConfig {
     @Bean
     public Sinks.Many<NotificationDto> notificationSink() {
         // Multicast pour diffuser à plusieurs abonnés
-        return Sinks.many().multicast().onBackpressureBuffer(1000, false);
+        return Sinks.many().multicast().onBackpressureBuffer();
     }
 }
