@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -52,6 +53,10 @@ public class MediaFileController {
                 .orElseThrow(() -> new RuntimeException("File not found"));
 
         Path filePath = Paths.get(mediaFileService.getStorageDirectory(), filename);
+        System.out.println("Trying to access file at: " + filePath.toAbsolutePath());
+        if (!Files.exists(filePath)) {
+            throw new RuntimeException("Physical file not found at: " + filePath);
+        }
         InputStream inputStream = new FileInputStream(filePath.toFile());
 
         return ResponseEntity.ok()

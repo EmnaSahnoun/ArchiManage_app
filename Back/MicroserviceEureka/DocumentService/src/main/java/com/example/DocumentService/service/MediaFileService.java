@@ -74,7 +74,7 @@ public class MediaFileService {
         mediaFile.setSize(file.getSize());
         mediaFile.setUploadedBy(request.getUploadedBy());
         mediaFile.setUploadDate(new Date());
-        mediaFile.setFileUrl("/media/files/" + uniqueFilename); // URL to access the file
+        mediaFile.setFileUrl("/DocumentService/media/files/" + uniqueFilename); // URL to access the file
         mediaFile.setAction("CREATE");
 
         MediaFile savedMediaFile = mediaFileRepository.save(mediaFile);
@@ -110,16 +110,16 @@ public class MediaFileService {
         }
     }
 
-    public List<MediaFile> getFilesByTask(String taskId) {
-        return mediaFileRepository.findByTaskId(taskId);
-    }
-
     public MediaFile getMediaFileById(String id) {
         return mediaFileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("File not found with id: " + id));
     }
     public Optional<MediaFile> findByStorageFilename(String filename) {
         return mediaFileRepository.findByStorageFilename(filename);
+    }
+
+    public List<MediaFile> getFilesByTask(String taskId) {
+        return mediaFileRepository.findByTaskId(taskId);
     }
 
     public String getStorageDirectory() {
