@@ -12,12 +12,12 @@ import java.util.Map;
 public class MediaFile {
     @Id
     private String id;
-
     private String taskId;
     private String projectId;
     private String phaseId;
 
     private String filename;
+    private String storageFilename;   // Unique filename on disk
     private String description;
     private String mediaType; // "IMAGE", "VIDEO", "DOCUMENT", etc.
     private String contentType;
@@ -25,8 +25,8 @@ public class MediaFile {
 
     private String uploadedBy;
     private Date uploadDate;
-    // Référence au fichier dans GridFS
-    private String gridFsId;
+
+    private String fileUrl;
     @Transient
     private String action;
 
@@ -68,6 +68,14 @@ public class MediaFile {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getStorageFilename() {
+        return storageFilename;
+    }
+
+    public void setStorageFilename(String storageFilename) {
+        this.storageFilename = storageFilename;
     }
 
     public String getDescription() {
@@ -118,12 +126,12 @@ public class MediaFile {
         this.uploadDate = uploadDate;
     }
 
-    public String getGridFsId() {
-        return gridFsId;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setGridFsId(String gridFsId) {
-        this.gridFsId = gridFsId;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public String getAction() {

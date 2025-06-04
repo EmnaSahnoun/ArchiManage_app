@@ -10,8 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -39,8 +42,22 @@ public class MediaFileController {
         request.setProjectId(projectId);
         request.setPhaseId(phaseId);
         request.setUploadedBy(uploadedBy);
-        MediaFile mediaFile = mediaFileService.uploadFile(request,authToken);
+        MediaFile mediaFile = mediaFileService.uploadFile(request, authToken);
         return ResponseEntity.ok(mapToResponse(mediaFile));
+    }
+
+    @GetMapping("/files/{filename}")
+    public ResponseEntity<InputStreamResource> serveFile(@PathVariable String filename) throws IOException {
+        MediaFile mediaFile = mediaFileService.findByStorageFilename(filename)
+                .orElseThrow(() -> new RuntimeException("File not found"));
+
+        Path filePath = Paths.get(mediaFileService.getStorageDirectory(), filename);
+        InputStream inputStream = new FileInputStream(filePath.toFile());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mediaFile.getContentType()))
+                .header("Content-Disposition", "inline; filename=\"" + mediaFile.getFilename() + "\"")
+                .body(new InputStreamResource(inputStream));
     }
 
     @GetMapping("/{id}")
@@ -62,8 +79,8 @@ public class MediaFileController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFile(@PathVariable String id,@RequestHeader("Authorization") String authToken) {
-        mediaFileService.deleteFile(id,authToken);
+    public ResponseEntity<Void> deleteFile(@PathVariable String id, @RequestHeader("Authorization") String authToken) {
+        mediaFileService.deleteFile(id, authToken);
         return ResponseEntity.noContent().build();
     }
 
@@ -80,7 +97,7 @@ public class MediaFileController {
         response.setSize(mediaFile.getSize());
         response.setUploadedBy(mediaFile.getUploadedBy());
         response.setUploadDate(mediaFile.getUploadDate());
-        response.setDownloadUrl("https://e1.systeo.tn/DocumentService/media" + mediaFile.getId());
+        response.setDownloadUrl(mediaFile.getFileUrl());
         return response;
     }
 }

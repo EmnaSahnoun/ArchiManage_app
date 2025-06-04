@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MediaFileRepository extends MongoRepository<MediaFile, String> {
+    Optional<MediaFile> findByStorageFilename(String storageFilename);
     List<MediaFile> findByTaskId(String taskId);
-    List<MediaFile> findByProjectId(String projectId);
-    List<MediaFile> findByPhaseId(String phaseId);
 }
