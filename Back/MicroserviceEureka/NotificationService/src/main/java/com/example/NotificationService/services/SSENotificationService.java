@@ -100,11 +100,9 @@ public class SSENotificationService {
     public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
         userIds.forEach(userId -> {
             try {
-                // Sauvegarde immédiate dans le stockage
                 StoredNotification storedNotif = new StoredNotification(userId, notification);
-                storageService.saveNotification(storedNotif);
+                storageService.saveNotification(storedNotif); // Cette ligne doit être exécutée
 
-                // Envoi en temps réel
                 SseEmitter emitter = emitters.get(userId);
                 if (emitter != null) {
                     try {
@@ -121,7 +119,5 @@ public class SSENotificationService {
             }
         });
     }
-
-
 
 }
