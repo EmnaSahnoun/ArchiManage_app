@@ -6,17 +6,30 @@
         <span class="user-name">{{username}}</span>
         <i class="bi bi-chat-dots icon"></i>
         <!-- Notification icon - click to toggle dropdown -->
-        <i class="bi bi-bell icon" ></i>
+     <div class="notification-icon" (click)="toggleNotifications()">
+            <i class="bi bi-bell icon"></i>
+            <span *ngIf="notifications.length > 0" class="badge">{{notifications.length}}</span>
+        </div>
 
         <!-- Notification Dropdown -->
         <div *ngIf="showNotifications" class="notification-dropdown">
-            <h3>Notifications</h3>
-            <div *ngIf="notifications.length > 0; else noNotifications">
-                <ul>
-                    <li *ngFor="let notification of notifications">{{ notification.message }}</li>
-                </ul>
+            <div class="dropdown-header">
+                <h3>Notifications ({{notifications.length}})</h3>
+                <button class="clear-btn" (click)="notifications = []">Clear All</button>
             </div>
-            <ng-template #noNotifications><p>No new notifications.</p></ng-template>
+            
+            <div *ngIf="notifications.length > 0; else noNotifications" class="notification-list">
+                <div *ngFor="let notification of notifications" class="notification-item">
+                    <div class="notification-content">
+                        <p class="message">{{notification.message}}</p>
+                        <small class="date">{{formatDate(notification.commentDate)}}</small>
+                    </div>
+                </div>
+            </div>
+            
+            <ng-template #noNotifications>
+                <p class="empty-message">No new notifications.</p>
+            </ng-template>
         </div>
     </div>
 </div>

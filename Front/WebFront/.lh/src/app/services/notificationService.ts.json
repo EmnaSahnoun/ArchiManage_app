@@ -1,0 +1,98 @@
+{
+    "sourceFile": "src/app/services/notificationService.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 20,
+            "patches": [
+                {
+                    "date": 1749120737771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749120837517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n \r\n   constructor() {}\r\n-\r\n+    url=\r\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n"
+                },
+                {
+                    "date": 1749120864986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n \r\n   constructor() {}\r\n-    url=\r\n+    url=\"/notification\"\r\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n"
+                },
+                {
+                    "date": 1749120872768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n     // Créer une nouvelle connexion SSE\r\n-    const url = `https://e5.systeo.tn/notifications/stream?X-User-ID=${userId}`;\r\n+    const url = `//notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n       try {\r\n"
+                },
+                {
+                    "date": 1749120917440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n     // Créer une nouvelle connexion SSE\r\n-    const url = `//notifications/stream?X-User-ID=${userId}`;\r\n+    const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n       try {\r\n@@ -55,5 +55,28 @@\n     this.destroy$.next();\r\n     this.destroy$.complete();\r\n     this.disconnect();\r\n   }\r\n+   private getApiHeaders(): HttpHeaders {\r\n+          const token = this.authService.getAccessToken();\r\n+          return new HttpHeaders({\r\n+            'Content-Type': 'application/json',\r\n+            'Authorization': `Bearer ${token}`\r\n+          });\r\n+        }\r\n+        \r\n+          private handleError(error: HttpErrorResponse): Observable<never> {\r\n+            console.error('API Error Details:', error);\r\n+            \r\n+            let errorMessage = 'Une erreur est survenue';\r\n+            if (error.status === 401) {\r\n+              errorMessage = 'Session expirée - veuillez vous reconnecter';\r\n+              this.authService.logout();\r\n+            } else if (error.error?.message) {\r\n+              errorMessage = error.error.message;\r\n+            } else if (error.status === 500) {\r\n+              errorMessage = `Erreur serveur (${error.status}) - ${error.error?.error || 'Veuillez contacter l\\'administrateur'}`;\r\n+            }\r\n+        \r\n+            return throwError(() => new Error(errorMessage));\r\n+          }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749120923087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+import { HttpErrorResponse } from '@angular/common/http';\r\n import { Injectable, OnDestroy } from '@angular/core';\r\n import { Observable, Subject, takeUntil } from 'rxjs';\r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1749120929175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { HttpErrorResponse } from '@angular/common/http';\r\n+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Injectable, OnDestroy } from '@angular/core';\r\n import { Observable, Subject, takeUntil } from 'rxjs';\r\n \r\n @Injectable({\r\n"
+                },
+                {
+                    "date": 1749121006225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Injectable, OnDestroy } from '@angular/core';\r\n-import { Observable, Subject, takeUntil } from 'rxjs';\r\n+import { Observable, Subject, takeUntil, throwError } from 'rxjs';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n"
+                },
+                {
+                    "date": 1749121024988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n export class NotificationService implements OnDestroy {\r\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n+constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   constructor() {}\r\n     url=\"/notification\"\r\n   connect(userId: string): Observable<any> {\r\n"
+                },
+                {
+                    "date": 1749121030652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,13 @@\n })\r\n export class NotificationService implements OnDestroy {\r\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n-  private destroy$ = new Subject<void>();\r\n+  private destroy$ = new Subject<void>(); url=\"/notification\"\r\n constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n   constructor() {}\r\n-    url=\"/notification\"\r\n+   \r\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n"
+                },
+                {
+                    "date": 1749121038001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,11 @@\n })\r\n export class NotificationService implements OnDestroy {\r\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n-  private destroy$ = new Subject<void>(); url=\"/notification\"\r\n-constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+  private destroy$ = new Subject<void>();\r\n+   url=\"/notification\"\r\n+constructor() { }\r\n \r\n   constructor() {}\r\n    \r\n   connect(userId: string): Observable<any> {\r\n"
+                },
+                {
+                    "date": 1749121045602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,11 +9,11 @@\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n    url=\"/notification\"\r\n-constructor() { }\r\n+constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n \r\n-  constructor() {}\r\n+  \r\n    \r\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n"
+                },
+                {
+                    "date": 1749121050883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Injectable, OnDestroy } from '@angular/core';\r\n import { Observable, Subject, takeUntil, throwError } from 'rxjs';\r\n+import { AuthService } from './auth.service';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n"
+                },
+                {
+                    "date": 1749121063601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';\r\n import { Injectable, OnDestroy } from '@angular/core';\r\n import { Observable, Subject, takeUntil, throwError } from 'rxjs';\r\n import { AuthService } from './auth.service';\r\n+import { UserService } from './UserService';\r\n \r\n @Injectable({\r\n   providedIn: 'root'\r\n })\r\n@@ -10,9 +11,9 @@\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n    url=\"/notification\"\r\n-constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }\r\n+constructor(private http: HttpClient, private authService: AuthService) { }\r\n \r\n   \r\n    \r\n   connect(userId: string): Observable<any> {\r\n"
+                },
+                {
+                    "date": 1749121103621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    // Créer une nouvelle connexion SSE\r\n+    `${this.projetUrl}/project/company/${idCompany}`\r\n     const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n"
+                },
+                {
+                    "date": 1749121109103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    `${this.projetUrl}/project/company/${idCompany}`\r\n+    const url`${this.projetUrl}/project/company/${idCompany}`\r\n     const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n"
+                },
+                {
+                    "date": 1749121118023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n export class NotificationService implements OnDestroy {\r\n   private notificationSubject = new Subject<any>();\r\n   private eventSource!: EventSource;\r\n   private destroy$ = new Subject<void>();\r\n-   url=\"/notification\"\r\n+   urlNotif=\"/notification\"\r\n constructor(private http: HttpClient, private authService: AuthService) { }\r\n \r\n   \r\n    \r\n"
+                },
+                {
+                    "date": 1749121128681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    const url`${this.projetUrl}/project/company/${idCompany}`\r\n+    const url=`${this.urlNotif}/project/company/${idCompany}`\r\n     const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n"
+                },
+                {
+                    "date": 1749121138274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    const url=`${this.urlNotif}/project/company/${idCompany}`\r\n+    const url=`${this.urlNotif}/notifications/stream?X-User-ID=${userId}`\r\n     const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n"
+                },
+                {
+                    "date": 1749121299883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    const url=`${this.urlNotif}/notifications/stream?X-User-ID=${userId}`\r\n-    const url = `/notification/notifications/stream?X-User-ID=${userId}`;\r\n+    const url=`https:///notifications/stream?X-User-ID=${userId}`\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n       try {\r\n"
+                },
+                {
+                    "date": 1749121311192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   connect(userId: string): Observable<any> {\r\n     // Fermer la connexion existante si elle existe\r\n     this.disconnect();\r\n \r\n-    const url=`https:///notifications/stream?X-User-ID=${userId}`\r\n+    const url=`https://e5.systeo.tn/notifications/stream?X-User-ID=${userId}`\r\n     this.eventSource = new EventSource(url);\r\n \r\n     this.eventSource.onmessage = (event) => {\r\n       try {\r\n"
+                }
+            ],
+            "date": 1749120737771,
+            "name": "Commit-0",
+            "content": "import { Injectable, OnDestroy } from '@angular/core';\r\nimport { Observable, Subject, takeUntil } from 'rxjs';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class NotificationService implements OnDestroy {\r\n  private notificationSubject = new Subject<any>();\r\n  private eventSource!: EventSource;\r\n  private destroy$ = new Subject<void>();\r\n\r\n  constructor() {}\r\n\r\n  connect(userId: string): Observable<any> {\r\n    // Fermer la connexion existante si elle existe\r\n    this.disconnect();\r\n\r\n    // Créer une nouvelle connexion SSE\r\n    const url = `https://e5.systeo.tn/notifications/stream?X-User-ID=${userId}`;\r\n    this.eventSource = new EventSource(url);\r\n\r\n    this.eventSource.onmessage = (event) => {\r\n      try {\r\n        const notification = JSON.parse(event.data);\r\n        this.notificationSubject.next(notification);\r\n      } catch (error) {\r\n        console.error('Error parsing notification:', error);\r\n      }\r\n    };\r\n\r\n    this.eventSource.onerror = (error) => {\r\n      console.error('SSE Error:', error);\r\n      // Tentative de reconnexion après un délai\r\n      setTimeout(() => this.connect(userId), 5000);\r\n    };\r\n\r\n    return this.notificationSubject.asObservable().pipe(\r\n      takeUntil(this.destroy$)\r\n    );\r\n  }\r\n\r\n  disconnect(): void {\r\n    if (this.eventSource) {\r\n      this.eventSource.close();\r\n    }\r\n  }\r\n\r\n  getPendingNotifications(userId: string): Observable<any[]> {\r\n    // Implémentez une requête HTTP pour récupérer les notifications en attente\r\n    // return this.http.get<any[]>(`/api/notifications/pending?userId=${userId}`);\r\n    return new Observable(observer => observer.next([])); // Stub pour l'exemple\r\n  }\r\n\r\n  ngOnDestroy(): void {\r\n    this.destroy$.next();\r\n    this.destroy$.complete();\r\n    this.disconnect();\r\n  }\r\n}"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 68,
+            "activePatchIndex": 84,
             "patches": [
                 {
                     "date": 1741687617491,
@@ -280,6 +280,70 @@
                 {
                     "date": 1747327125144,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   templateUrl: './header.component.html',\r\n   styleUrl: './header.component.scss',\r\n   standalone: false\r\n })\r\n-export class HeaderComponent implements  OnDestroy {\r\n+export class HeaderComponent implements OnInit, OnDestroy {\r\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n"
+                },
+                {
+                    "date": 1749121153446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n import { Component, Input, OnDestroy, OnInit } from '@angular/core';\r\n import { Subscription } from 'rxjs';\r\n-import { NotificationService } from '../services/notification.service';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n"
+                },
+                {
+                    "date": 1749121384551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n   notifications: any[] = [];\r\n   private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n+    \r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121393819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,12 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel\r\n+  private userId :string; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n-    \r\n+\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121403052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,12 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  private userId :string; // À remplacer par l'ID réel\r\n+  private userId !:string; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n-\r\n+    this.userId\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121408664,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n   notifications: any[] = [];\r\n   private userId !:string; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n-    this.userId\r\n+    this.userId=\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121422244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n   notifications: any[] = [];\r\n   private userId !:string; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n-    this.userId=\r\n+    this.userId=localStorage.getItem(\"\")\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121435335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,12 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  private userId !:string; // À remplacer par l'ID réel\r\n+  private userId !:string!null; // À remplacer par l'ID réel\r\n   \r\n   ngOnInit(): void {\r\n-    this.userId=localStorage.getItem(\"\")\r\n+    this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749121468853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,10 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  private userId !:string!null; // À remplacer par l'ID réel\r\n-  \r\n+  private userId !:string|null; // À remplacer par l'ID réel\r\n+  private subscriptions = new Subscription();\r\n   ngOnInit(): void {\r\n     this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n"
+                },
+                {
+                    "date": 1749121487425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n   private userId !:string|null; // À remplacer par l'ID réel\r\n   private subscriptions = new Subscription();\r\n+   constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n     this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n"
+                },
+                {
+                    "date": 1749121506820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component, Input, OnDestroy, OnInit } from '@angular/core';\r\n import { Subscription } from 'rxjs';\r\n+import { NotificationService } from '../services/notificationService';\r\n \r\n @Component({\r\n   selector: 'app-header',\r\n   templateUrl: './header.component.html',\r\n@@ -37,9 +38,13 @@\n     }\r\n   }\r\n   toggleNotifications(): void {\r\n     this.showNotifications = !this.showNotifications;\r\n+    if (this.showNotifications && this.notifications.length > 0) {\r\n+      // Marquer les notifications comme lues si nécessaire\r\n+    }\r\n   }\r\n+\r\n   ngOnDestroy(): void {\r\n     \r\n   }\r\n   private loadPendingNotifications(): void {\r\n"
+                },
+                {
+                    "date": 1749121525510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,20 +42,37 @@\n     if (this.showNotifications && this.notifications.length > 0) {\r\n       // Marquer les notifications comme lues si nécessaire\r\n     }\r\n   }\r\n-\r\n-  ngOnDestroy(): void {\r\n-    \r\n+private loadPendingNotifications(): void {\r\n+    this.subscriptions.add(\r\n+      this.notificationService.getPendingNotifications(this.userId)\r\n+        .subscribe(notifications => {\r\n+          this.notifications = notifications;\r\n+        })\r\n+    );\r\n   }\r\n-  private loadPendingNotifications(): void {\r\n-    \r\n-  }\r\n \r\n   private setupRealTimeNotifications(): void {\r\n-    \r\n+    this.subscriptions.add(\r\n+      this.notificationService.connect(this.userId)\r\n+        .subscribe(notification => {\r\n+          this.notifications.unshift(notification); // Ajoute en tête de liste\r\n+          // Optionnel: Jouer un son ou afficher un toast\r\n+          this.playNotificationSound();\r\n+        })\r\n+    );\r\n   }\r\n \r\n+  private playNotificationSound(): void {\r\n+    const audio = new Audio('assets/sounds/notification.mp3');\r\n+    audio.play().catch(e => console.error('Audio play failed:', e));\r\n+  }\r\n+\r\n   formatDate(dateString: string): string {\r\n     return new Date(dateString).toLocaleString();\r\n   }\r\n+\r\n+  ngOnDestroy(): void {\r\n+    this.subscriptions.unsubscribe();\r\n+  }\r\n }\r\n"
+                },
+                {
+                    "date": 1749121541723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n   @Input() title: string = 'Tableau de bord';\r\n   username: string | null = null;\r\n   showNotifications: boolean = false;\r\n   notifications: any[] = [];\r\n-  private userId !:string|null; // À remplacer par l'ID réel\r\n+  private userId !:string; // À remplacer par l'ID réel\r\n   private subscriptions = new Subscription();\r\n    constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n     this.userId=localStorage.getItem(\"user_id\");\r\n"
+                },
+                {
+                    "date": 1749121548608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n   private userId !:string; // À remplacer par l'ID réel\r\n   private subscriptions = new Subscription();\r\n    constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n+    const \r\n     this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n"
+                },
+                {
+                    "date": 1749121558657,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   private userId !:string; // À remplacer par l'ID réel\r\n   private subscriptions = new Subscription();\r\n    constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n-    const \r\n+    const id=localStorage.getItem(\"user_id\");\r\n     this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n"
+                },
+                {
+                    "date": 1749121565901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   private subscriptions = new Subscription();\r\n    constructor(private notificationService: NotificationService) {}\r\n   ngOnInit(): void {\r\n     const id=localStorage.getItem(\"user_id\");\r\n-    if \r\n+    if (id)\r\n     this.userId=localStorage.getItem(\"user_id\");\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n"
+                },
+                {
+                    "date": 1749121577275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     const id=localStorage.getItem(\"user_id\");\r\n     if (id){\r\n       this.userId=id;\r\n     }\r\n-    this.userId=localStorage.getItem(\"user_id\");\r\n+\r\n     this.loadUserProfile();   \r\n      this.loadPendingNotifications();\r\n     this.setupRealTimeNotifications();\r\n   }\r\n"
                 }
             ],
             "date": 1741687617491,

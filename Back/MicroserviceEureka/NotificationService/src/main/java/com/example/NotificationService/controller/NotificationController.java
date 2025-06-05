@@ -2,6 +2,7 @@ package com.example.NotificationService.controller;
 
 import com.example.NotificationService.dto.NotificationDto;
 import com.example.NotificationService.services.SSENotificationService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.util.List;
+
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
+        allowedHeaders = "*",
+        allowCredentials = "true")
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor

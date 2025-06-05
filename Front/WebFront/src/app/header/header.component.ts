@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../services/notificationService';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +13,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   username: string | null = null;
   showNotifications: boolean = false;
   notifications: any[] = [];
-  private userId = '50da8c53-f1bb-47cb-9d06-b31e55706ed8'; // À remplacer par l'ID réel
-  
+  private userId !:string; // À remplacer par l'ID réel
+  private subscriptions = new Subscription();
+   constructor(private notificationService: NotificationService) {}
   ngOnInit(): void {
+    const id=localStorage.getItem("user_id");
+    if (id){
+      this.userId=id;
+    }
+
     this.loadUserProfile();   
      this.loadPendingNotifications();
     this.setupRealTimeNotifications();
@@ -37,19 +43,40 @@ const userProfileString = localStorage.getItem("user_profile");
   }
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
+    if (this.showNotifications && this.notifications.length > 0) {
+      // Marquer les notifications comme lues si nécessaire
+    }
   }
-  ngOnDestroy(): void {
-    
-  }
-  private loadPendingNotifications(): void {
-    
+private loadPendingNotifications(): void {
+    this.subscriptions.add(
+      this.notificationService.getPendingNotifications(this.userId)
+        .subscribe(notifications => {
+          this.notifications = notifications;
+        })
+    );
   }
 
   private setupRealTimeNotifications(): void {
-    
+    this.subscriptions.add(
+      this.notificationService.connect(this.userId)
+        .subscribe(notification => {
+          this.notifications.unshift(notification); // Ajoute en tête de liste
+          // Optionnel: Jouer un son ou afficher un toast
+          this.playNotificationSound();
+        })
+    );
+  }
+
+  private playNotificationSound(): void {
+    const audio = new Audio('assets/sounds/notification.mp3');
+    audio.play().catch(e => console.error('Audio play failed:', e));
   }
 
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleString();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
