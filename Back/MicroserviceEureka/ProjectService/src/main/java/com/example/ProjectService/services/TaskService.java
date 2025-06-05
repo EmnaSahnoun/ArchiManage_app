@@ -246,6 +246,12 @@ public class TaskService implements ITask {
                     .map(PhaseAccess::getIdUser)
                     .distinct()
                     .collect(Collectors.toList());
+
+            // Ajouter l'admin du projet à la liste si non présent
+            if (project.getIdAdmin() != null && !userIds.contains(project.getIdAdmin())) {
+                userIds.add(project.getIdAdmin());
+            }
+
             dto.setUserIdsToNotify(userIds);
         }
 

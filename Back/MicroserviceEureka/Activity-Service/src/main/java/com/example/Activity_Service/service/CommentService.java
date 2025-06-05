@@ -27,6 +27,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,7 +61,10 @@ public class CommentService implements IComment {
                 logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
-
+                // Filtrer la liste des userIds pour exclure l'auteur du commentaire
+                List<String> userIdsToNotify = notificationInfo.getUserIdsToNotify().stream()
+                        .filter(userId -> !userId.equals(commentRequest.getIdUser()))
+                        .collect(Collectors.toList());
                 NotificationDto notification = new NotificationDto(
 
                         commentRequest.getTaskId(),
@@ -71,7 +75,7 @@ public class CommentService implements IComment {
                                 +" (Phase "+notificationInfo.getPhaseName() +") Projet "+ notificationInfo.getProjectName(),
                         LocalDateTime.now(),
                         "commentaire",
-                        notificationInfo.getUserIdsToNotify(),
+                        userIdsToNotify,
                         commentRequest.getContent(),
                         commentRequest.getUsername(),
 

@@ -15,7 +15,7 @@ public class MediaFile {
     private String taskId;
     private String projectId;
     private String phaseId;
-
+    private String idUser;
     private String filename;
     private String storageFilename;   // Unique filename on disk
     private String description;
@@ -29,6 +29,14 @@ public class MediaFile {
     private String fileUrl;
     @Transient
     private String action;
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public String getId() {
         return id;

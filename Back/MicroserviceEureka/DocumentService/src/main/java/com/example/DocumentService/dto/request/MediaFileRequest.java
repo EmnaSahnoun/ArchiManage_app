@@ -13,6 +13,17 @@ public class MediaFileRequest {
     private String phaseId;
     @NotNull
     private String uploadedBy;
+    @NotNull
+    private String idUser;
+
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public String getProjectId() {
         return projectId;

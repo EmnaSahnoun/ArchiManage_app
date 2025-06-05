@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -71,6 +73,9 @@ public class DocumentConsumer {
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
                 if ("CREATE".equals(documentDTO.getAction())){
+                    List<String> userIdsToNotify = notificationInfo.getUserIdsToNotify().stream()
+                            .filter(userId -> !userId.equals(documentDTO.getIdUser()))
+                            .collect(Collectors.toList());
                 NotificationDto notification = new NotificationDto(
 
                         documentDTO.getTaskId(),
@@ -81,7 +86,7 @@ public class DocumentConsumer {
                                 +" (Phase "+notificationInfo.getPhaseName() +") du  Projet "+ notificationInfo.getProjectName(),
                         LocalDateTime.now(),
                         "document",
-                        notificationInfo.getUserIdsToNotify(),
+                        userIdsToNotify,
                         null,
                         documentDTO.getUsername(),
 

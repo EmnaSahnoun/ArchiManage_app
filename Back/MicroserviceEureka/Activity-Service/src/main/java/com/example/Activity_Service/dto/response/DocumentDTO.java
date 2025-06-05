@@ -5,7 +5,7 @@ import java.util.Date;
 public class DocumentDTO {
     private String taskId;
     private String filename;
-
+    private String idUser;
     private String username;
     private Date timestamp;
     private String action;
@@ -56,5 +56,13 @@ public class DocumentDTO {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

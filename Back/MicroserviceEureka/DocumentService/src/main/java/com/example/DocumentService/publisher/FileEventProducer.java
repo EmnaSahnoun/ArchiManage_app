@@ -31,6 +31,7 @@ public class FileEventProducer {
             DocumentDTO event = new DocumentDTO();
             event.setTaskId(file.getTaskId());
             event.setUsername(file.getUploadedBy());
+            event.setIdUser(file.getIdUser());
             event.setAction(file.getAction());
             event.setTimestamp(file.getUploadDate());
             event.setFilename(file.getFilename());

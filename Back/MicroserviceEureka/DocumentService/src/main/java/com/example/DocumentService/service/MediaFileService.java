@@ -73,6 +73,7 @@ public class MediaFileService {
         mediaFile.setContentType(file.getContentType());
         mediaFile.setSize(file.getSize());
         mediaFile.setUploadedBy(request.getUploadedBy());
+        mediaFile.setIdUser(request.getIdUser());
         mediaFile.setUploadDate(new Date());
         mediaFile.setFileUrl("/DocumentService/media/files/" + uniqueFilename); // URL to access the file
         mediaFile.setAction("CREATE");

@@ -70,7 +70,7 @@ try{
             task.getPhase().getProject().getName(),
             task.getPhase().getName(),
               task.getName()
-                    +" (Phase ["+task.getPhase().getName() +"], Projet ["+ task.getPhase().getProject().getName()+"])",
+                    +" (Phase "+task.getPhase().getName() +") du Projet "+ task.getPhase().getProject().getName(),
             LocalDateTime.now(),
             "tache",
             notificationInfo.getUserIdsToNotify(),
