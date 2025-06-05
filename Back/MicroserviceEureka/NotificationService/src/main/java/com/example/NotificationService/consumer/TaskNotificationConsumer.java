@@ -43,11 +43,6 @@ public class TaskNotificationConsumer {
             Sinks.EmitResult result = sink.tryEmitNext(notification);
 
             if (result.isFailure()) {
-                logger.warn("Échec d'émission: {}", result);
-                notification.getUserIdsToNotify().forEach(userId -> {
-                    sseNotificationService.addPendingNotification(userId, notification);
-                });
-            } else {
                 notification.getUserIdsToNotify().forEach(userId -> {
                     sseNotificationService.addPendingNotification(userId, notification);
                 });

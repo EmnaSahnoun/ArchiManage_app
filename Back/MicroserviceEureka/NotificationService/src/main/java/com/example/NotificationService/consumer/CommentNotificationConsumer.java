@@ -26,31 +26,21 @@ public class CommentNotificationConsumer {
     @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
     public void consumeComment(String message) {
         try {
-            logger.info("Raw JSON received: {}", message);
             NotificationDto notification = objectMapper.readValue(message, NotificationDto.class);
-            logger.info("Notification recu: {}", notification);
+            logger.info("Notification reçue: {}", notification);
 
-            // Modification selon le type si nécessaire
-            if ("CREATE".equals(notification.getActionType())||"UPDATE".equals(notification.getActionType())) {
-                notification.setMessage(notification.getMessage());
+            // Un seul traitement
+            if ("CREATE".equals(notification.getActionType()) || "UPDATE".equals(notification.getActionType())) {
+                // Émettre la notification une seule fois
+                Sinks.EmitResult result = sink.tryEmitNext(notification);
+
+                // Stocker pour les utilisateurs non connectés seulement si échec
+                if (result.isFailure()) {
+                    notification.getUserIdsToNotify().forEach(userId -> {
+                        sseNotificationService.addPendingNotification(userId, notification);
+                    });
+                }
             }
-
-            // Un seul appel à emitNext avec gestion d'erreur complète
-            Sinks.EmitResult result = sink.tryEmitNext(notification);
-
-            if (result.isFailure()) {
-                logger.warn("Échec d'émission: {}", result);
-                // Stocker pour les utilisateurs non connectés en cas d'échec
-                notification.getUserIdsToNotify().forEach(userId -> {
-                    sseNotificationService.addPendingNotification(userId, notification);
-                });
-            } else {
-                // Si l'émission réussit, stocker aussi pour les utilisateurs non connectés
-                notification.getUserIdsToNotify().forEach(userId -> {
-                    sseNotificationService.addPendingNotification(userId, notification);
-                });
-            }
-
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
             throw new AmqpRejectAndDontRequeueException("Failed to process message", e);

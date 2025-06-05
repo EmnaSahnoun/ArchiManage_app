@@ -81,31 +81,7 @@ public class SSENotificationService {
         return emitter;
     }
 
-    public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
-        userIds.forEach(userId -> {
-            SseEmitter emitter = emitters.get(userId);
-            if (emitter != null) {
-                try {
-                    emitter.send(SseEmitter.event()
-                            .id(UUID.randomUUID().toString())
-                            .name("comment-notification")
-                            .data(notification)
-                            .reconnectTime(5000L));
-                } catch (Exception e) {
-                    logger.error("Failed to send notification to user: " + userId, e);
-                    emitters.remove(userId);
-                    // Stocker la notification pour plus tard
-                    pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
-
-                }
-            } else {
-                // Stocker la notification si l'utilisateur n'est pas connecté
-                pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
-            }
-
-        });
-    }
-    public List<NotificationDto> getPendingNotifications(String userId) {
+     public List<NotificationDto> getPendingNotifications(String userId) {
         return pendingNotifications.getOrDefault(userId, Collections.emptyList());
     }
 
@@ -114,5 +90,30 @@ public class SSENotificationService {
     }
     public void addPendingNotification(String userId, NotificationDto notification) {
         pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+    }
+    private final Map<String, Set<String>> deliveredNotifications = new ConcurrentHashMap<>();
+
+    public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
+        String notificationId = UUID.randomUUID().toString(); // ou utilisez un ID unique de la notification
+
+        userIds.forEach(userId -> {
+            // Vérifier si la notification a déjà été envoyée
+            if (!deliveredNotifications.computeIfAbsent(userId, k -> new HashSet<>()).contains(notificationId)) {
+                SseEmitter emitter = emitters.get(userId);
+                if (emitter != null) {
+                    try {
+                        emitter.send(SseEmitter.event()
+                                .id(notificationId)
+                                .data(notification));
+                        deliveredNotifications.get(userId).add(notificationId);
+                    } catch (Exception e) {
+                        logger.error("Failed to send notification", e);
+                        pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+                    }
+                } else {
+                    pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+                }
+            }
+        });
     }
 }
