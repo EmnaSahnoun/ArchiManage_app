@@ -52,6 +52,7 @@ private loadPendingNotifications(): void {
       this.notificationService.getPendingNotifications(this.userId)
         .subscribe(notifications => {
           this.notifications = notifications;
+          console.log("les notifications",this.notifications)
         })
     );
   }

@@ -78,7 +78,7 @@ public class DocumentConsumer {
                         notificationInfo.getProjectName(),
                         notificationInfo.getPhaseName(),
                         documentDTO.getUsername()+ " a ajouté un document à la tâche" + notificationInfo.getTaskName()
-                                +" (Phase ["+notificationInfo.getPhaseName() +"], Projet ["+ notificationInfo.getProjectName()+"])",
+                                +" (Phase "+notificationInfo.getPhaseName() +") du  Projet "+ notificationInfo.getProjectName(),
                         LocalDateTime.now(),
                         "document",
                         notificationInfo.getUserIdsToNotify(),
