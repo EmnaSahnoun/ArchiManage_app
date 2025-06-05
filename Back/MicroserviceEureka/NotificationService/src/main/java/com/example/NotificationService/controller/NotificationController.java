@@ -27,7 +27,14 @@ public class NotificationController {
     private final SSENotificationService sseNotificationService;
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<NotificationDto> streamNotifications(@RequestHeader("X-User-ID") String userId) {
+    public Flux<NotificationDto> streamNotifications(
+            @RequestHeader(value = "X-User-ID", required = false) String userIdHeader,
+            @RequestParam(value = "userId", required = false) String userIdParam) {
+
+        String userId = userIdHeader != null ? userIdHeader : userIdParam;
+        if (userId == null) {
+            return Flux.error(new IllegalArgumentException("User ID is required"));
+        }
         // 1. Envoyer d'abord les notifications en attente
         Flux<NotificationDto> pendingFlux = Flux.fromIterable(sseNotificationService.getPendingNotifications(userId))
                 .doOnNext(notif -> logger.info("Envoi notification en attente pour {}", userId));
