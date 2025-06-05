@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { distinct, filter, Subscription } from 'rxjs';
 import { NotificationService } from '../services/notificationService';
 
 @Component({
@@ -58,15 +58,22 @@ private loadPendingNotifications(): void {
   }
 
   private setupRealTimeNotifications(): void {
-    this.subscriptions.add(
-      this.notificationService.connect(this.userId)
-        .subscribe(notification => {
-          this.notifications.unshift(notification); // Ajoute en tête de liste
-          // Optionnel: Jouer un son ou afficher un toast
+  this.subscriptions.add(
+    this.notificationService.connect(this.userId)
+      .pipe(
+        distinct(notification => notification.message), // Éviter les doublons
+        filter(notification => 
+          !this.notifications.some(n => n.message === notification.message)) // Vérifier si déjà présente
+      )
+      .subscribe({
+        next: notification => {
+          this.notifications = [notification, ...this.notifications]; // Ajouter au début
           this.playNotificationSound();
-        })
-    );
-  }
+        },
+        error: err => console.error('Notification error:', err)
+      })
+  );
+}
 
   private playNotificationSound(): void {
     const audio = new Audio('assets/sounds/notification.mp3');

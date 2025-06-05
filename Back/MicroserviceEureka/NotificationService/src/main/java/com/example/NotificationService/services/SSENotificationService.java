@@ -1,11 +1,13 @@
 package com.example.NotificationService.services;
 
 import com.example.NotificationService.dto.NotificationDto;
+import com.example.NotificationService.model.StoredNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -18,7 +20,10 @@ public class SSENotificationService {
     private static final Logger logger = LoggerFactory.getLogger(SSENotificationService.class);
     // Gardez une trace des notifications pour les utilisateurs non connectés
     private final Map<String, List<NotificationDto>> pendingNotifications = new ConcurrentHashMap<>();
-
+    private final NotificationStorageService storageService;
+    public SSENotificationService(NotificationStorageService storageService) {
+        this.storageService = storageService;
+    }
     public SseEmitter subscribe(String userId) {
         // Nettoyer les anciens emitters s'ils existent
         if (emitters.containsKey(userId)) {
@@ -94,24 +99,28 @@ public class SSENotificationService {
     private final Map<String, Set<String>> deliveredNotifications = new ConcurrentHashMap<>();
 
     public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
-        String notificationId = UUID.randomUUID().toString(); // ou utilisez un ID unique de la notification
+        String notificationId = UUID.randomUUID().toString();
 
         userIds.forEach(userId -> {
-            // Vérifier si la notification a déjà été envoyée
             if (!deliveredNotifications.computeIfAbsent(userId, k -> new HashSet<>()).contains(notificationId)) {
-                SseEmitter emitter = emitters.get(userId);
-                if (emitter != null) {
-                    try {
-                        emitter.send(SseEmitter.event()
-                                .id(notificationId)
-                                .data(notification));
-                        deliveredNotifications.get(userId).add(notificationId);
-                    } catch (Exception e) {
-                        logger.error("Failed to send notification", e);
-                        pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+                try {
+                    // Sauvegarder la notification
+                    StoredNotification storedNotif = new StoredNotification(userId, notification);
+                    storageService.saveNotification(storedNotif);
+
+                    SseEmitter emitter = emitters.get(userId);
+                    if (emitter != null) {
+                        try {
+                            emitter.send(SseEmitter.event()
+                                    .id(notificationId)
+                                    .data(notification));
+                            deliveredNotifications.get(userId).add(notificationId);
+                        } catch (Exception e) {
+                            logger.error("Failed to send notification", e);
+                        }
                     }
-                } else {
-                    pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
+                } catch (IOException e) {
+                    logger.error("Failed to save notification", e);
                 }
             }
         });

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subject, takeUntil, throwError } from 'rxjs';
+import { distinct, Observable, Subject, takeUntil, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserService } from './UserService';
 
@@ -16,31 +16,40 @@ constructor(private http: HttpClient, private authService: AuthService) { }
 
   
    
-  connect(userId: string): Observable<any> {
+ connect(userId: string): Observable<any> {
   this.disconnect();
 
-  // Utilisez userId comme paramètre de requête au lieu d'un header
   const url = `https://e5.systeo.tn/notifications/stream?userId=${encodeURIComponent(userId)}`;
   
-  this.eventSource = new EventSource(url);
+  return new Observable(observer => {
+    this.eventSource = new EventSource(url);
 
-  this.eventSource.onmessage = (event) => {
-    try {
-      const notification = JSON.parse(event.data);
-      this.notificationSubject.next(notification);
-    } catch (error) {
-      console.error('Error parsing notification:', error);
-    }
-  };
+    const messageHandler = (event: MessageEvent) => {
+      try {
+        const notification = JSON.parse(event.data);
+        observer.next(notification);
+      } catch (error) {
+        console.error('Error parsing notification:', error);
+      }
+    };
 
-  this.eventSource.onerror = (error) => {
-    console.error('SSE Error:', error);
-    // Tentative de reconnexion après un délai
-    setTimeout(() => this.connect(userId), 5000);
-  };
+    const errorHandler = (error: Event) => {
+      console.error('SSE Error:', error);
+      this.disconnect();
+      setTimeout(() => this.connect(userId).subscribe(observer), 5000);
+    };
 
-  return this.notificationSubject.asObservable().pipe(
-    takeUntil(this.destroy$)
+    this.eventSource.onmessage = messageHandler;
+    this.eventSource.onerror = errorHandler;
+
+    return () => {
+      this.eventSource.removeEventListener('message', messageHandler);
+      this.eventSource.removeEventListener('error', errorHandler);
+      this.disconnect();
+    };
+  }).pipe(
+    takeUntil(this.destroy$),
+    distinct((n: any) => n.message) // Éviter les doublons
   );
 }
 

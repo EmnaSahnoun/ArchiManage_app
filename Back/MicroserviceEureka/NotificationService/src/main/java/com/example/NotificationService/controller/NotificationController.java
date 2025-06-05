@@ -1,17 +1,21 @@
 package com.example.NotificationService.controller;
 
 import com.example.NotificationService.dto.NotificationDto;
+import com.example.NotificationService.model.StoredNotification;
+import com.example.NotificationService.services.NotificationStorageService;
 import com.example.NotificationService.services.SSENotificationService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
@@ -25,7 +29,7 @@ public class NotificationController {
     private final Sinks.Many<NotificationDto> sink;
 
     private final SSENotificationService sseNotificationService;
-
+    private final NotificationStorageService storageService;
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<NotificationDto> streamNotifications(
             @RequestHeader(value = "X-User-ID", required = false) String userIdHeader,
@@ -66,4 +70,43 @@ public class NotificationController {
 
         return ResponseEntity.ok("Notification envoyée");
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<StoredNotification>> getAllNotifications(
+            @RequestHeader("X-User-ID") String userId) {
+        return ResponseEntity.ok(storageService.getUserNotifications(userId));
+    }
+
+    @GetMapping("/unread")
+    public ResponseEntity<List<StoredNotification>> getUnreadNotifications(
+            @RequestHeader("X-User-ID") String userId) {
+        return ResponseEntity.ok(storageService.getUnreadNotifications(userId));
+    }
+
+    @PostMapping("/mark-as-read/{notificationId}")
+    public ResponseEntity<Void> markAsRead(
+            @RequestHeader("X-User-ID") String userId,
+            @PathVariable String notificationId) {
+        try {
+            storageService.markAsRead(userId, notificationId);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/mark-all-as-read")
+    public ResponseEntity<Void> markAllAsRead(
+            @RequestHeader("X-User-ID") String userId) {
+        List<StoredNotification> unread = storageService.getUnreadNotifications(userId);
+        unread.forEach(notif -> {
+            try {
+                storageService.markAsRead(userId, notif.getId());
+            } catch (IOException e) {
+                logger.error("Failed to mark notification as read", e);
+            }
+        });
+        return ResponseEntity.ok().build();
+    }
+
 }
