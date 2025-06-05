@@ -17,31 +17,32 @@ constructor(private http: HttpClient, private authService: AuthService) { }
   
    
   connect(userId: string): Observable<any> {
-    // Fermer la connexion existante si elle existe
-    this.disconnect();
+  this.disconnect();
 
-    const url=`https://e5.systeo.tn/notifications/stream?X-User-ID=${userId}`
-    this.eventSource = new EventSource(url);
+  // Utilisez userId comme paramètre de requête au lieu d'un header
+  const url = `https://e5.systeo.tn/notifications/stream?userId=${encodeURIComponent(userId)}`;
+  
+  this.eventSource = new EventSource(url);
 
-    this.eventSource.onmessage = (event) => {
-      try {
-        const notification = JSON.parse(event.data);
-        this.notificationSubject.next(notification);
-      } catch (error) {
-        console.error('Error parsing notification:', error);
-      }
-    };
+  this.eventSource.onmessage = (event) => {
+    try {
+      const notification = JSON.parse(event.data);
+      this.notificationSubject.next(notification);
+    } catch (error) {
+      console.error('Error parsing notification:', error);
+    }
+  };
 
-    this.eventSource.onerror = (error) => {
-      console.error('SSE Error:', error);
-      // Tentative de reconnexion après un délai
-      setTimeout(() => this.connect(userId), 5000);
-    };
+  this.eventSource.onerror = (error) => {
+    console.error('SSE Error:', error);
+    // Tentative de reconnexion après un délai
+    setTimeout(() => this.connect(userId), 5000);
+  };
 
-    return this.notificationSubject.asObservable().pipe(
-      takeUntil(this.destroy$)
-    );
-  }
+  return this.notificationSubject.asObservable().pipe(
+    takeUntil(this.destroy$)
+  );
+}
 
   disconnect(): void {
     if (this.eventSource) {

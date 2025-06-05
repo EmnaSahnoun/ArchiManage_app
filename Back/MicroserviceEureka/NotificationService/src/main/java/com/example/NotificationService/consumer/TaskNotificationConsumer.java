@@ -27,44 +27,31 @@ public class TaskNotificationConsumer {
     public void consumeTask(String message) {
         try {
             logger.info("Raw JSON received: {}", message);
-
-            // Conversion du JSON en DTO
             NotificationDto notification = objectMapper.readValue(message, NotificationDto.class);
+            logger.info("Task recu: {}", notification);
 
-            logger.info("Task  recu: {}", notification);
             // Modification selon le type si nécessaire
             if ("CREATE".equals(notification.getActionType())) {
-                notification.setMessage("Nouveau sous tâche ajouté à  " + notification.getMessage());
+                notification.setMessage("Nouveau sous tâche ajouté à " + notification.getMessage());
             } else if ("UPDATE".equals(notification.getActionType())) {
                 notification.setMessage("nouveaux modifications dans : " + notification.getMessage());
-            }
-            else{
+            } else {
                 return;
             }
-            sink.emitNext(notification, (signalType, emitResult) -> {
-                if (emitResult == Sinks.EmitResult.FAIL_NON_SERIALIZED) {
-                    logger.warn("Échec d'émission (non sérialisé)");
-                } else if (emitResult == Sinks.EmitResult.FAIL_OVERFLOW) {
-                    logger.warn("Échec d'émission (overflow)");
-                    notification.getUserIdsToNotify().forEach(userId -> {
-                        sseNotificationService.addPendingNotification(userId, notification);
-                    });
-                }
-                return true; // Retry
-            });
 
+            // Un seul appel à emitNext
+            Sinks.EmitResult result = sink.tryEmitNext(notification);
 
-            // 1. Envoyer via le sink pour les clients SSE connectés
-            sink.emitNext(notification, Sinks.EmitFailureHandler.FAIL_FAST);
-            // 2. Stocker pour les utilisateurs non connectés
-            notification.getUserIdsToNotify().forEach(userId -> {
-                sseNotificationService.addPendingNotification(userId, notification);
-            });
-// 1. Envoyer via le sink pour les clients SSE
-            //logger.info("Processed notification: {}", notification);
-            //sink.tryEmitNext(notification);
-            // 2. Envoyer directement aux utilisateurs concernés
-            //sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
+            if (result.isFailure()) {
+                logger.warn("Échec d'émission: {}", result);
+                notification.getUserIdsToNotify().forEach(userId -> {
+                    sseNotificationService.addPendingNotification(userId, notification);
+                });
+            } else {
+                notification.getUserIdsToNotify().forEach(userId -> {
+                    sseNotificationService.addPendingNotification(userId, notification);
+                });
+            }
 
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
