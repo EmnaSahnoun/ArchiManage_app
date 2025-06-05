@@ -39,7 +39,14 @@ public class TaskNotificationConsumer {
                 return;
             }
 
-            sink.tryEmitNext(notification);
+            // Un seul appel à emitNext
+            Sinks.EmitResult result = sink.tryEmitNext(notification);
+
+            if (result.isFailure()) {
+                notification.getUserIdsToNotify().forEach(userId -> {
+                    sseNotificationService.addPendingNotification(userId, notification);
+                });
+            }
 
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);

@@ -32,7 +32,14 @@ public class CommentNotificationConsumer {
             // Un seul traitement
             if ("CREATE".equals(notification.getActionType()) || "UPDATE".equals(notification.getActionType())) {
                 // Émettre la notification une seule fois
-                sink.tryEmitNext(notification);
+                Sinks.EmitResult result = sink.tryEmitNext(notification);
+
+                // Stocker pour les utilisateurs non connectés seulement si échec
+                if (result.isFailure()) {
+                    notification.getUserIdsToNotify().forEach(userId -> {
+                        sseNotificationService.addPendingNotification(userId, notification);
+                    });
+                }
             }
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
