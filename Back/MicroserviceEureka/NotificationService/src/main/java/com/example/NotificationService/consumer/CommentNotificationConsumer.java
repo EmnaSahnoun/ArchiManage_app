@@ -39,8 +39,8 @@ public class CommentNotificationConsumer {
                     notification.getUserIdsToNotify().forEach(userId -> {
                         sseNotificationService.addPendingNotification(userId, notification);
                     });
-                }
-            }
+                }}
+
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
             throw new AmqpRejectAndDontRequeueException("Failed to process message", e);
