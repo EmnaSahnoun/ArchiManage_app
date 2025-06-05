@@ -1,6 +1,7 @@
 package com.example.NotificationService.consumer;
 
 import com.example.NotificationService.dto.NotificationDto;
+import com.example.NotificationService.services.NotificationStorageService;
 import com.example.NotificationService.services.SSENotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class TaskNotificationConsumer {
     private final Sinks.Many<NotificationDto> sink;
 
     private final SSENotificationService sseNotificationService;
+    private final NotificationStorageService notificationStorageService;
 
     @RabbitListener(queues = "${rabbitmq.queueJson3.name}")
     public void consumeTask(String message) {
@@ -38,7 +40,9 @@ public class TaskNotificationConsumer {
             } else {
                 return;
             }
-
+            notification.getUserIdsToNotify().forEach(userId -> {
+                notificationStorageService.saveNotification(userId, notification);
+            });
             Sinks.EmitResult result = sink.tryEmitNext(notification);
 
             if (result.isFailure()) {

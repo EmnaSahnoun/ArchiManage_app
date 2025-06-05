@@ -17,6 +17,7 @@ import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
@@ -30,6 +31,8 @@ public class NotificationController {
     private final Sinks.Many<NotificationDto> sink;
 
     private final SSENotificationService sseNotificationService;
+    private final NotificationStorageService notificationStorageService;
+
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<NotificationDto> streamNotifications(
@@ -69,5 +72,26 @@ public class NotificationController {
         sseNotificationService.sendNotificationToUsers(notification.getUserIdsToNotify(), notification);
 
         return ResponseEntity.ok("Notification envoyée");
+    }
+
+
+    @GetMapping("/history")
+    public ResponseEntity<List<Map<String, Object>>> getNotificationHistory(
+            @RequestHeader("X-User-ID") String userId) {
+        return ResponseEntity.ok(notificationStorageService.getUserNotifications(userId));
+    }
+
+    @GetMapping("/unread-count")
+    public ResponseEntity<Long> getUnreadCount(
+            @RequestHeader("X-User-ID") String userId) {
+        return ResponseEntity.ok(notificationStorageService.getUnreadCount(userId));
+    }
+
+    @PostMapping("/mark-as-read/{notificationId}")
+    public ResponseEntity<Void> markAsRead(
+            @RequestHeader("X-User-ID") String userId,
+            @PathVariable String notificationId) {
+        notificationStorageService.markNotificationAsRead(userId, notificationId);
+        return ResponseEntity.ok().build();
     }
 }

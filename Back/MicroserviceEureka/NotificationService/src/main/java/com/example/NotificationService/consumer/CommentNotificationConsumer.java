@@ -1,6 +1,7 @@
 package com.example.NotificationService.consumer;
 
 import com.example.NotificationService.dto.NotificationDto;
+import com.example.NotificationService.services.NotificationStorageService;
 import com.example.NotificationService.services.SSENotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,29 +23,31 @@ public class CommentNotificationConsumer {
     private final Sinks.Many<NotificationDto> sink;
 
     private final SSENotificationService sseNotificationService;
-
+    private final NotificationStorageService notificationStorageService;
     @RabbitListener(queues = "${rabbitmq.queueJson2.name}")
     public void consumeComment(String message) {
         try {
             NotificationDto notification = objectMapper.readValue(message, NotificationDto.class);
             logger.info("Notification reçue: {}", notification);
 
-            // Un seul traitement
             if ("CREATE".equals(notification.getActionType()) || "UPDATE".equals(notification.getActionType())) {
-                // Émettre la notification une seule fois
+                // Sauvegarde pour tous les utilisateurs concernés
+                notification.getUserIdsToNotify().forEach(userId -> {
+                    notificationStorageService.saveNotification(userId, notification);
+                });
+
+                // Envoi en temps réel
                 Sinks.EmitResult result = sink.tryEmitNext(notification);
 
-                // Stocker pour les utilisateurs non connectés seulement si échec
                 if (result.isFailure()) {
                     notification.getUserIdsToNotify().forEach(userId -> {
                         sseNotificationService.addPendingNotification(userId, notification);
                     });
-                }}
-
+                }
+            }
         } catch (Exception e) {
             logger.error("Error processing message: {}", message, e);
             throw new AmqpRejectAndDontRequeueException("Failed to process message", e);
         }
     }
 }
-
