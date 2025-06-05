@@ -11,6 +11,6 @@ public class NotificationSinkConfig {
     @Bean
     public Sinks.Many<NotificationDto> notificationSink() {
         return Sinks.many().multicast()
-                .onBackpressureBuffer(1000, false); 
+                .onBackpressureBuffer(1000, false);
     }
 }

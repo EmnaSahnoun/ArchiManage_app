@@ -57,6 +57,7 @@ $input-focus-box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
 body { // Apply base font to body if not already set globally
   font-family: $font-family-sans-serif;
   color: $text-color-primary;
+  min-height: 110vh;
 }
 
 // --- Main Container ---
