@@ -33,6 +33,8 @@ public class NotificationStorageService {
     @PostConstruct
     public void init() throws IOException {
         Path path = Paths.get(storagePath);
+        logger.info("Notification storage path: {}", path.toAbsolutePath());
+
         if (!Files.exists(path)) {
             Files.createDirectories(path);
         }
@@ -41,14 +43,20 @@ public class NotificationStorageService {
 
     private void loadNotifications() throws IOException {
         File folder = new File(storagePath);
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                try {
-                    StoredNotification notification = objectMapper.readValue(file, StoredNotification.class);
-                    userNotifications.computeIfAbsent(notification.getUserId(), k -> new ArrayList<>()).add(notification);
-                } catch (IOException e) {
-                    // Gérer l'erreur de lecture
+        File[] userDirs = folder.listFiles(File::isDirectory);
+        if (userDirs != null) {
+            for (File userDir : userDirs) {
+                File[] notificationFiles = userDir.listFiles((dir, name) -> name.endsWith(".json"));
+                if (notificationFiles != null) {
+                    for (File file : notificationFiles) {
+                        try {
+                            StoredNotification notification = objectMapper.readValue(file, StoredNotification.class);
+                            userNotifications.computeIfAbsent(notification.getUserId(), k -> new ArrayList<>())
+                                    .add(notification);
+                        } catch (IOException e) {
+                            logger.error("Error reading notification file: " + file.getPath(), e);
+                        }
+                    }
                 }
             }
         }
@@ -62,6 +70,10 @@ public class NotificationStorageService {
         // Sauvegarder dans un fichier JSON
         Path filePath = userDir.resolve(notification.getId() + ".json");
         objectMapper.writeValue(filePath.toFile(), notification);
+
+        // Mettre à jour la Map en mémoire
+        userNotifications.computeIfAbsent(notification.getUserId(), k -> new ArrayList<>())
+                .add(notification);
     }
     public void markAsRead(String userId, String notificationId) throws IOException {
         List<StoredNotification> notifications = userNotifications.getOrDefault(userId, Collections.emptyList());
