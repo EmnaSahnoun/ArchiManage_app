@@ -86,7 +86,7 @@ public class SSENotificationService {
         return emitter;
     }
 
-     public List<NotificationDto> getPendingNotifications(String userId) {
+    public List<NotificationDto> getPendingNotifications(String userId) {
         return pendingNotifications.getOrDefault(userId, Collections.emptyList());
     }
 
@@ -100,29 +100,18 @@ public class SSENotificationService {
     public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
         userIds.forEach(userId -> {
             try {
-                // Vérifier si la notification existe déjà
-                boolean alreadyExists = storageService.getUserNotifications(userId, false).stream()
-                        .anyMatch(n -> Objects.equals(n.getNotification().getTaskId(), notification.getTaskId())
-                                && Objects.equals(n.getNotification().getMessage(), notification.getMessage()));
+                StoredNotification storedNotif = new StoredNotification(userId, notification);
+                storageService.saveNotification(storedNotif); // Cette ligne doit être exécutée
 
-                if (!alreadyExists) {
-                    StoredNotification storedNotif = new StoredNotification(userId, notification);
-                    storageService.saveNotification(storedNotif);
-
-                    SseEmitter emitter = emitters.get(userId);
-                    if (emitter != null) {
-                        try {
-                            emitter.send(SseEmitter.event()
-                                    .id(storedNotif.getId())
-                                    .name("notification")
-                                    .data(notification)
-                                    .reconnectTime(1000L));
-                        } catch (Exception e) {
-                            logger.error("Failed to send real-time notification", e);
-                        }
-                    } else {
-                        // Si l'utilisateur n'est pas connecté, stocker en attente
-                        addPendingNotification(userId, notification);
+                SseEmitter emitter = emitters.get(userId);
+                if (emitter != null) {
+                    try {
+                        emitter.send(SseEmitter.event()
+                                .id(storedNotif.getId())
+                                .data(notification)
+                                .reconnectTime(1000L));
+                    } catch (Exception e) {
+                        logger.error("Failed to send real-time notification", e);
                     }
                 }
             } catch (IOException e) {
@@ -130,4 +119,5 @@ public class SSENotificationService {
             }
         });
     }
+
 }

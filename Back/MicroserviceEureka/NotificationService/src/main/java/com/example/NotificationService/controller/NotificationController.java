@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
-        allowedHeaders = "*",
-        allowCredentials = "true")
+allowedHeaders = "*",
+allowCredentials = "true")
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
@@ -100,28 +100,6 @@ public class NotificationController {
         try {
             storageService.markAsRead(userId, id);
             return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            return ResponseEntity.status(500).build();
-        }
-
-    }
-    @GetMapping("/unread-count")
-    public ResponseEntity<Long> getUnreadCount(@RequestHeader("X-User-ID") String userId) {
-        try {
-            long count = storageService.getUserNotifications(userId, true).size();
-            return ResponseEntity.ok(count);
-        } catch (IOException e) {
-            return ResponseEntity.status(500).build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNotification(
-            @RequestHeader("X-User-ID") String userId,
-            @PathVariable String id) {
-        try {
-            storageService.deleteNotification(userId, id);
-            return ResponseEntity.noContent().build();
         } catch (IOException e) {
             return ResponseEntity.status(500).build();
         }

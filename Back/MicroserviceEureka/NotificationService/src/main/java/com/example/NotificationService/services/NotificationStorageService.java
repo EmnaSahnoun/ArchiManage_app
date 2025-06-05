@@ -80,12 +80,13 @@ public class NotificationStorageService {
         for (StoredNotification notification : notifications) {
             if (notification.getId().equals(notificationId)) {
                 notification.markAsRead();
-                Path filePath = Paths.get(storagePath, userId, notification.getId() + ".json"); // Correction ici
+                Path filePath = Paths.get(storagePath, notification.getId() + ".json");
                 objectMapper.writeValue(filePath.toFile(), notification);
                 break;
             }
         }
     }
+
     public List<StoredNotification> loadUserNotifications(String userId) throws IOException {
         Path userDir = Paths.get(storagePath, userId);
         if (!Files.exists(userDir)) {
@@ -112,22 +113,5 @@ public class NotificationStorageService {
                 .filter(n -> !n.isRead())
                 .sorted(Comparator.comparing(StoredNotification::getReceivedAt).reversed())
                 .collect(Collectors.toList());
-    }
-    public List<StoredNotification> getUserNotifications(String userId, boolean unreadOnly) throws IOException {
-        List<StoredNotification> notifications = loadUserNotifications(userId);
-
-        if (unreadOnly) {
-            return notifications.stream()
-                    .filter(n -> !n.isRead())
-                    .collect(Collectors.toList());
-        }
-        return notifications;
-    }
-
-    public void deleteNotification(String userId, String notificationId) throws IOException {
-        Path filePath = Paths.get(storagePath, userId, notificationId + ".json");
-        Files.deleteIfExists(filePath);
-        userNotifications.computeIfPresent(userId, (k, v) ->
-                v.stream().filter(n -> !n.getId().equals(notificationId)).collect(Collectors.toList()));
     }
 }
