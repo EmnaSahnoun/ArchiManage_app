@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 public class SSENotificationService {
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(SSENotificationService.class);
-    // Gardez une trace des notifications pour les utilisateurs non connectés
     private final Map<String, List<NotificationDto>> pendingNotifications = new ConcurrentHashMap<>();
     private final NotificationStorageService storageService;
+    private final Map<String, Set<String>> deliveredNotifications = new ConcurrentHashMap<>();
     public SSENotificationService(NotificationStorageService storageService) {
         this.storageService = storageService;
     }
@@ -96,33 +96,32 @@ public class SSENotificationService {
     public void addPendingNotification(String userId, NotificationDto notification) {
         pendingNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(notification);
     }
-    private final Map<String, Set<String>> deliveredNotifications = new ConcurrentHashMap<>();
 
     public void sendNotificationToUsers(List<String> userIds, NotificationDto notification) {
-        String notificationId = UUID.randomUUID().toString();
-
         userIds.forEach(userId -> {
-            if (!deliveredNotifications.computeIfAbsent(userId, k -> new HashSet<>()).contains(notificationId)) {
-                try {
-                    // Sauvegarder la notification
-                    StoredNotification storedNotif = new StoredNotification(userId, notification);
-                    storageService.saveNotification(storedNotif);
+            try {
+                // Sauvegarde immédiate dans le stockage
+                StoredNotification storedNotif = new StoredNotification(userId, notification);
+                storageService.saveNotification(storedNotif);
 
-                    SseEmitter emitter = emitters.get(userId);
-                    if (emitter != null) {
-                        try {
-                            emitter.send(SseEmitter.event()
-                                    .id(notificationId)
-                                    .data(notification));
-                            deliveredNotifications.get(userId).add(notificationId);
-                        } catch (Exception e) {
-                            logger.error("Failed to send notification", e);
-                        }
+                // Envoi en temps réel
+                SseEmitter emitter = emitters.get(userId);
+                if (emitter != null) {
+                    try {
+                        emitter.send(SseEmitter.event()
+                                .id(storedNotif.getId())
+                                .data(notification)
+                                .reconnectTime(1000L));
+                    } catch (Exception e) {
+                        logger.error("Failed to send real-time notification", e);
                     }
-                } catch (IOException e) {
-                    logger.error("Failed to save notification", e);
                 }
+            } catch (IOException e) {
+                logger.error("Failed to save notification", e);
             }
         });
     }
+
+
+
 }

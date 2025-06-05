@@ -17,6 +17,7 @@ import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
         allowedHeaders = "*",
@@ -71,42 +72,36 @@ public class NotificationController {
         return ResponseEntity.ok("Notification envoyée");
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<StoredNotification>> getAllNotifications(
-            @RequestHeader("X-User-ID") String userId) {
-        return ResponseEntity.ok(storageService.getUserNotifications(userId));
-    }
-
-    @GetMapping("/unread")
-    public ResponseEntity<List<StoredNotification>> getUnreadNotifications(
-            @RequestHeader("X-User-ID") String userId) {
-        return ResponseEntity.ok(storageService.getUnreadNotifications(userId));
-    }
-
-    @PostMapping("/mark-as-read/{notificationId}")
-    public ResponseEntity<Void> markAsRead(
+    @GetMapping("/history")
+    public ResponseEntity<List<StoredNotification>> getNotificationHistory(
             @RequestHeader("X-User-ID") String userId,
-            @PathVariable String notificationId) {
+            @RequestParam(defaultValue = "false") boolean unreadOnly) {
+
         try {
-            storageService.markAsRead(userId, notificationId);
-            return ResponseEntity.ok().build();
+            List<StoredNotification> notifications = storageService.loadUserNotifications(userId);
+
+            if (unreadOnly) {
+                notifications = notifications.stream()
+                        .filter(n -> !n.isRead())
+                        .collect(Collectors.toList());
+            }
+
+            return ResponseEntity.ok(notifications);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(500).build();
         }
     }
 
-    @PostMapping("/mark-all-as-read")
-    public ResponseEntity<Void> markAllAsRead(
-            @RequestHeader("X-User-ID") String userId) {
-        List<StoredNotification> unread = storageService.getUnreadNotifications(userId);
-        unread.forEach(notif -> {
-            try {
-                storageService.markAsRead(userId, notif.getId());
-            } catch (IOException e) {
-                logger.error("Failed to mark notification as read", e);
-            }
-        });
-        return ResponseEntity.ok().build();
-    }
+    @PostMapping("/mark-read/{id}")
+    public ResponseEntity<Void> markAsRead(
+            @RequestHeader("X-User-ID") String userId,
+            @PathVariable String id) {
 
+        try {
+            storageService.markAsRead(userId, id);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 }

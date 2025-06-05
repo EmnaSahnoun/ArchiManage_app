@@ -3,6 +3,8 @@ package com.example.NotificationService.services;
 import com.example.NotificationService.model.StoredNotification;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class NotificationStorageService {
     @Value("${notification.storage.path:notifications}")
     private String storagePath;
+    private static final Logger logger = LoggerFactory.getLogger(SSENotificationService.class);
 
     private final ObjectMapper objectMapper;
     private final Map<String, List<StoredNotification>> userNotifications = new ConcurrentHashMap<>();
@@ -52,12 +55,14 @@ public class NotificationStorageService {
     }
 
     public void saveNotification(StoredNotification notification) throws IOException {
-        Path filePath = Paths.get(storagePath, notification.getId() + ".json");
+        // Créer un dossier par utilisateur
+        Path userDir = Paths.get(storagePath, notification.getUserId());
+        Files.createDirectories(userDir);
+
+        // Sauvegarder dans un fichier JSON
+        Path filePath = userDir.resolve(notification.getId() + ".json");
         objectMapper.writeValue(filePath.toFile(), notification);
-
-        userNotifications.computeIfAbsent(notification.getUserId(), k -> new ArrayList<>()).add(notification);
     }
-
     public void markAsRead(String userId, String notificationId) throws IOException {
         List<StoredNotification> notifications = userNotifications.getOrDefault(userId, Collections.emptyList());
         for (StoredNotification notification : notifications) {
@@ -70,13 +75,26 @@ public class NotificationStorageService {
         }
     }
 
-    public List<StoredNotification> getUserNotifications(String userId) {
-        return userNotifications.getOrDefault(userId, Collections.emptyList())
-                .stream()
+    public List<StoredNotification> loadUserNotifications(String userId) throws IOException {
+        Path userDir = Paths.get(storagePath, userId);
+        if (!Files.exists(userDir)) {
+            return Collections.emptyList();
+        }
+
+        return Files.list(userDir)
+                .filter(path -> path.toString().endsWith(".json"))
+                .map(path -> {
+                    try {
+                        return objectMapper.readValue(path.toFile(), StoredNotification.class);
+                    } catch (IOException e) {
+                        logger.error("Error reading notification file", e);
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .sorted(Comparator.comparing(StoredNotification::getReceivedAt).reversed())
                 .collect(Collectors.toList());
     }
-
     public List<StoredNotification> getUnreadNotifications(String userId) {
         return userNotifications.getOrDefault(userId, Collections.emptyList())
                 .stream()
