@@ -27,9 +27,12 @@ public class KeycloakService {
     @Value("${keycloak.client-secret}")
     private String clientSecret;
 
-    private RestTemplate restTemplate;
-
+    private final RestTemplate restTemplate;
     private static final String KEYCLOAK_BASE_URL = "https://esmm.systeo.tn/admin/realms/systeodigital";
+
+    public KeycloakService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
     public String getAdminToken() {
         String url = authServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
 
@@ -45,6 +48,7 @@ public class KeycloakService {
 
         return "Bearer " + response.getBody().get("access_token");
     }
+
     public String getUserEmailById(String userId, String authToken) {
         String url = KEYCLOAK_BASE_URL + "/users/" + userId;
 

@@ -152,7 +152,6 @@ public class NotificationStorageService {
                 })
                 .collect(Collectors.toList());
     }
-
     public List<String> getNotificationFilePathsOlderThan(String userId, long minutes) {
         long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
 

@@ -4,11 +4,13 @@ import com.example.NotificationService.dto.EmailNotificationDto;
 import com.example.NotificationService.dto.NotificationDto;
 import com.example.NotificationService.services.KeycloakService;
 import com.example.NotificationService.services.NotificationStorageService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +37,8 @@ public class EmailNotificationProducer {
     private final NotificationStorageService notificationStorageService;
     private final KeycloakService keycloakService;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    @Autowired
+    private ObjectMapper objectMapper;
     @Value("${rabbitmq.exchange5.name}")
     private String exchange;
 
@@ -51,43 +54,46 @@ public class EmailNotificationProducer {
 
     private void checkAndSendEmailNotifications() {
         try {
-            // Get admin token for Keycloak
-            String authToken = keycloakService.getAdminToken();
+            logger.info("Starting check for unread notifications...");
 
-            // Get all user directories
+            String authToken = keycloakService.getAdminToken();
+            logger.info("Successfully obtained Keycloak admin token");
+
             Path storagePath = Paths.get(notificationStorageService.getStorageDirectory());
-            if (!Files.exists(storagePath)) return;
+            if (!Files.exists(storagePath)) {
+                logger.info("Storage directory does not exist: {}", storagePath);
+                return;
+            }
 
             Files.list(storagePath)
                     .filter(Files::isDirectory)
                     .forEach(userDir -> {
                         String userId = userDir.getFileName().toString();
                         try {
-                            // Get unread notifications for this user
-                            List<Map<String, Object>> notifications = notificationStorageService.getUserNotifications(userId);
-                            long unreadCount = notifications.stream()
-                                    .filter(n -> !(Boolean) n.get("read"))
-                                    .count();
+                            List<Map<String, Object>> unreadNotifications =
+                                    notificationStorageService.getUnreadNotificationsOlderThan(userId, 5);
 
-                            if (unreadCount > 0) {
-                                // Get user email from Keycloak
-                                String email = getUserEmailFromKeycloak(userId, authToken);
-                                logger.info("l'email de user"+email);
-                                if (email != null) {
-                                    // Prepare email notification
-                                    NotificationDto latestNotification = (NotificationDto) notifications.get(0).get("notification");
-                                    sendEmailNotification(userId, email, latestNotification);
+                            if (!unreadNotifications.isEmpty()) {
+                                logger.info("Found {} unread notifications for user {}", unreadNotifications.size(), userId);
+
+                                String userEmail = keycloakService.getUserEmailById(userId, authToken);
+                                if (userEmail != null) {
+                                    NotificationDto latestNotification =
+                                            objectMapper.convertValue(unreadNotifications.get(0).get("notification"), NotificationDto.class);
+
+                                    sendEmailNotification(userId, userEmail, latestNotification);
+                                } else {
+                                    logger.warn("Could not find email for user {}", userId);
                                 }
                             }
                         } catch (Exception e) {
-                            logger.error("Error processing user notifications for {}", userId, e);
+                            logger.error("Error processing notifications for user {}", userId, e);
                         }
                     });
         } catch (Exception e) {
             logger.error("Error in scheduled email notification check", e);
         }
     }
-
     private String getUserEmailFromKeycloak(String userId, String authToken) {
         try {
             String url = "https://esmm.systeo.tn/admin/realms/systeodigital/users/" + userId;
