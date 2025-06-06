@@ -59,39 +59,7 @@ const client = new Eureka({
 client.start(error => {
   console.log(error || 'Client Eureka démarré avec succès');
 });
-Promise.all([
-  new Promise((resolve) => {
-    client.start(error => {
-      console.log(error || 'Client Eureka démarré avec succès');
-      resolve();
-    });
-  }),
-  rabbitmqService.connect().then(() => rabbitmqService.consumeEmailNotifications())
-])
-.then(() => {
-  app.listen(PORT, () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
-    // ... autres logs
-  });
-})
-.catch(error => {
-  console.error('Failed to start services:', error);
-  process.exit(1);
-});
 
-// Gestion de la fermeture propre
-process.on('SIGINT', async () => {
-  try {
-    await Promise.all([
-      client.stop(),
-      rabbitmqService.close()
-    ]);
-    process.exit();
-  } catch (error) {
-    console.error('Error during shutdown:', error);
-    process.exit(1);
-  }
-});
 // Gestion de la fermeture propre
 process.on('SIGINT', () => {
   client.stop();

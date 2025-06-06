@@ -10,17 +10,10 @@ const getGmailClient = (accessToken) => {
     oAuth2Client.clientSecret_,
     oAuth2Client.redirectUri_
   );
- if (accessToken === 'system') {
-    client.setCredentials({
-      access_token: SYSTEM_ACCESS_TOKEN,
-      refresh_token: SYSTEM_REFRESH_TOKEN
-    });
-  } else {
-    client.setCredentials({ access_token: accessToken });
-  }
-  
+  client.setCredentials({ access_token: accessToken });
   return google.gmail({ version: "v1", auth: client });
 };
+
 // Helper function to process email parts
 const processEmailPart = (part) => {
   const partData = {

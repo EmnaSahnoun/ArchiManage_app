@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 90,
+            "activePatchIndex": 93,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -368,6 +368,18 @@
                 {
                     "date": 1748706080512,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \r\n const app = express();\r\n \r\n // Middlewares\r\n-app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: 'GET,POST'})); \r\n+app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']})); \r\n app.use(express.json());\r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n"
+                },
+                {
+                    "date": 1749216776695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,30 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-// Importer les routes\r\n-const authRoutes = require(\"./src/routes/authRoutes\");\r\n-const emailRoutes = require(\"./src/routes/emailRoutes\");\r\n-const draftRoutes = require(\"./src/routes/draftRoutes\");\r\n+const rabbitmqService = require('./services/rabbitmqService');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n-app.use(cors({origin: ['http://localhost:4200', 'https://e8.systeo.tn'],methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']})); \r\n+// 1. Configuration CORS améliorée\r\n+const corsOptions = {\r\n+  origin: ['http://localhost:4200', 'https://e8.systeo.tn'],\r\n+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],\r\n+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],\r\n+  credentials: true,\r\n+  optionsSuccessStatus: 204\r\n+};\r\n+\r\n+app.use(cors(corsOptions));\r\n app.use(express.json());\r\n+\r\n+\r\n+// Importer les routes\r\n+const authRoutes = require(\"./src/routes/authRoutes\");\r\n+const emailRoutes = require(\"./src/routes/emailRoutes\");\r\n+const draftRoutes = require(\"./src/routes/draftRoutes\");\r\n const PORT = process.env.PORT || 8079;\r\n const client = new Eureka({\r\n   instance: {\r\n     app: 'emailService',\r\n"
+                },
+                {
+                    "date": 1749216782583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const rabbitmqService = require('./services/rabbitmqService');\r\n+const rabbitmqService = require('./serv');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n"
+                },
+                {
+                    "date": 1749216852210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const rabbitmqService = require('./serv');\r\n+const rabbitmqService = require('./services/rabbitmqService');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n@@ -58,10 +58,42 @@\n // Démarrer le client Eureka\r\n client.start(error => {\r\n   console.log(error || 'Client Eureka démarré avec succès');\r\n });\r\n+Promise.all([\r\n+  new Promise((resolve) => {\r\n+    client.start(error => {\r\n+      console.log(error || 'Client Eureka démarré avec succès');\r\n+      resolve();\r\n+    });\r\n+  }),\r\n+  rabbitmqService.connect().then(() => rabbitmqService.consumeEmailNotifications())\r\n+])\r\n+.then(() => {\r\n+  app.listen(PORT, () => {\r\n+    console.log(`Serveur démarré sur le port ${PORT}`);\r\n+    // ... autres logs\r\n+  });\r\n+})\r\n+.catch(error => {\r\n+  console.error('Failed to start services:', error);\r\n+  process.exit(1);\r\n+});\r\n \r\n // Gestion de la fermeture propre\r\n+process.on('SIGINT', async () => {\r\n+  try {\r\n+    await Promise.all([\r\n+      client.stop(),\r\n+      rabbitmqService.close()\r\n+    ]);\r\n+    process.exit();\r\n+  } catch (error) {\r\n+    console.error('Error during shutdown:', error);\r\n+    process.exit(1);\r\n+  }\r\n+});\r\n+// Gestion de la fermeture propre\r\n process.on('SIGINT', () => {\r\n   client.stop();\r\n   process.exit();\r\n });\r\n"
                 }
             ],
             "date": 1748453070534,

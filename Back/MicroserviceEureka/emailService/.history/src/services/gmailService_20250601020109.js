@@ -1,8 +1,6 @@
 const { google } = require("googleapis");
 const oAuth2Client = require("../config/googleAuth");
 const fileStorage = require('../utils/fileStorage');
-const SYSTEM_ACCESS_TOKEN = process.env.SYSTEM_ACCESS_TOKEN;
-const SYSTEM_REFRESH_TOKEN = process.env.SYSTEM_REFRESH_TOKEN;
 // Helper function to get authenticated Gmail client
 const getGmailClient = (accessToken) => {
   const client = new google.auth.OAuth2(
@@ -10,17 +8,10 @@ const getGmailClient = (accessToken) => {
     oAuth2Client.clientSecret_,
     oAuth2Client.redirectUri_
   );
- if (accessToken === 'system') {
-    client.setCredentials({
-      access_token: SYSTEM_ACCESS_TOKEN,
-      refresh_token: SYSTEM_REFRESH_TOKEN
-    });
-  } else {
-    client.setCredentials({ access_token: accessToken });
-  }
-  
+  client.setCredentials({ access_token: accessToken });
   return google.gmail({ version: "v1", auth: client });
 };
+
 // Helper function to process email parts
 const processEmailPart = (part) => {
   const partData = {
