@@ -59,7 +59,9 @@ public class CommentService implements IComment {
                 logger.error("Bien reçu", notificationInfo.getTaskName());
                 logger.info("Nom Tâche: {}", notificationInfo.getTaskName());
                 logger.info("Nom Phase: {}", notificationInfo.getPhaseName());
+                logger.info("id Phase: {}", notificationInfo.getPhaseId());
                 logger.info("Nom Projet: {}", notificationInfo.getProjectName());
+                logger.info("id Projet: {}", notificationInfo.getProjectId());
                 logger.info("Utilisateurs à notifier: {}", notificationInfo.getUserIdsToNotify());
                 // Filtrer la liste des userIds pour exclure l'auteur du commentaire
                 List<String> userIdsToNotify = notificationInfo.getUserIdsToNotify().stream()
