@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/app/notification-toast/notification-toast.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1749169756239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749169765881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,26 @@\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n   styleUrl: './notification-toast.component.scss',\r\n-  \r\n+  animations: [\r\n+    trigger('toastAnimation', [\r\n+      state('void', style({\r\n+        transform: 'translateX(100%)',\r\n+        opacity: 0\r\n+      })),\r\n+      state('visible', style({\r\n+        transform: 'translateX(0)',\r\n+        opacity: 1\r\n+      })),\r\n+      state('closing', style({\r\n+        transform: 'translateX(100%)',\r\n+        opacity: 0\r\n+      })),\r\n+      transition('void => visible', animate('300ms ease-out')),\r\n+      transition('visible => closing', animate('300ms ease-in')),\r\n+    ])\r\n+  ]\r\n })\r\n export class NotificationToastComponent {\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1749169771631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+import { trigger } from '@angular/animations';\r\n import { Component } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n"
+                },
+                {
+                    "date": 1749169779762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { trigger } from '@angular/animations';\r\n+import { state, style, transition, trigger } from '@angular/animations';\r\n import { Component } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n"
+                },
+                {
+                    "date": 1749169795023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { state, style, transition, trigger } from '@angular/animations';\r\n+import { animate, state, style, transition, trigger } from '@angular/animations';\r\n import { Component } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n@@ -24,6 +24,48 @@\n     ])\r\n   ]\r\n })\r\n export class NotificationToastComponent {\r\n+  @Input() notification: any;\r\n+  @Output() closeToast = new EventEmitter<string>(); // Emits toastId\r\n \r\n+  @HostBinding('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n+\r\n+  private closeTimer: any;\r\n+\r\n+  constructor() { }\r\n+\r\n+  ngOnInit(): void {\r\n+    // Start timer to auto-close, can be overridden by HeaderComponent's main timer\r\n+    this.closeTimer = setTimeout(() => this.startClose(), 4700); // Slightly less than HeaderComponent's timer for animation\r\n+  }\r\n+\r\n+  formatDate(timestamp: any): string {\r\n+    if (!timestamp) return '';\r\n+    const date = new Date(timestamp);\r\n+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });\r\n+  }\r\n+\r\n+  manualClose(): void {\r\n+    clearTimeout(this.closeTimer); // Clear auto-close timer\r\n+    this.startClose();\r\n+  }\r\n+\r\n+  startClose(): void {\r\n+    this.animationState = 'closing';\r\n+  }\r\n+\r\n+  @HostListener('@toastAnimation.done', ['$event'])\r\n+  onAnimationDone(event: any): void {\r\n+    if (event.toState === 'closing') {\r\n+      this.closeToast.emit(this.notification.toastId);\r\n+    }\r\n+  }\r\n+\r\n+  onToastClick(): void {\r\n+    console.log('Toast clicked:', this.notification);\r\n+    // Potentially navigate or perform an action\r\n+    // For now, clicking the toast will also close it.\r\n+    this.manualClose();\r\n+  }\r\n+\r\n }\r\n"
+                },
+                {
+                    "date": 1749169812849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       transition('visible => closing', animate('300ms ease-in')),\r\n     ])\r\n   ]\r\n })\r\n-export class NotificationToastComponent {\r\n+export class NotificationToastComponent implements OnInit {\r\n   @Input() notification: any;\r\n   @Output() closeToast = new EventEmitter<string>(); // Emits toastId\r\n \r\n   @HostBinding('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n"
+                },
+                {
+                    "date": 1749169819771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { animate, state, style, transition, trigger } from '@angular/animations';\r\n-import { Component } from '@angular/core';\r\n+import { Component, EventEmitter, OnInit } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n@@ -27,9 +27,10 @@\n export class NotificationToastComponent implements OnInit {\r\n   @Input() notification: any;\r\n   @Output() closeToast = new EventEmitter<string>(); // Emits toastId\r\n \r\n-  @HostBinding('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n+  @HostBinding\r\n+  ('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n \r\n   private closeTimer: any;\r\n \r\n   constructor() { }\r\n"
+                },
+                {
+                    "date": 1749169828087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { animate, state, style, transition, trigger } from '@angular/animations';\r\n-import { Component, EventEmitter, OnInit } from '@angular/core';\r\n+import { Component, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n@@ -27,10 +27,9 @@\n export class NotificationToastComponent implements OnInit {\r\n   @Input() notification: any;\r\n   @Output() closeToast = new EventEmitter<string>(); // Emits toastId\r\n \r\n-  @HostBinding\r\n-  ('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n+  @HostBinding('@toastAnimation') animationState: 'visible' | 'closing' = 'visible';\r\n \r\n   private closeTimer: any;\r\n \r\n   constructor() { }\r\n"
+                },
+                {
+                    "date": 1749169834844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { animate, state, style, transition, trigger } from '@angular/animations';\r\n-import { Component, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';\r\n+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';\r\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n"
+                },
+                {
+                    "date": 1749170615421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n-  styleUrl: './notification-toast.component.scss',\r\n+  styleUrls: ['./notification-toast.component.scss'],\r\n   animations: [\r\n     trigger('toastAnimation', [\r\n       state('void', style({\r\n         transform: 'translateX(100%)',\r\n"
+                },
+                {
+                    "date": 1749171558668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   styleUrls: ['./notification-toast.component.scss'],\r\n   animations: [\r\n     trigger('toastAnimation', [\r\n       state('void', style({\r\n-        transform: 'translateX(100%)',\r\n+        transform: 'translateX(-100%)',\r\n         opacity: 0\r\n       })),\r\n       state('visible', style({\r\n         transform: 'translateX(0)',\r\n"
+                },
+                {
+                    "date": 1749171693648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n         transform: 'translateX(0)',\r\n         opacity: 1\r\n       })),\r\n       state('closing', style({\r\n-        transform: 'translateX(100%)',\r\n+        transform: 'translateX(-100%)',\r\n         opacity: 0\r\n       })),\r\n       transition('void => visible', animate('300ms ease-out')),\r\n       transition('visible => closing', animate('300ms ease-in')),\r\n"
+                },
+                {
+                    "date": 1749171706660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \r\n @Component({\r\n   selector: 'app-notification-toast',\r\n   templateUrl: './notification-toast.component.html',\r\n-  styleUrls: './notification-toast.component.scss'],\r\n+  styleUrls: './notification-toast.component.scss',\r\n   animations: [\r\n     trigger('toastAnimation', [\r\n       state('void', style({\r\n         transform: 'translateX(-100%)',\r\n"
+                }
+            ],
+            "date": 1749169756239,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-notification-toast',\r\n  templateUrl: './notification-toast.component.html',\r\n  styleUrl: './notification-toast.component.scss',\r\n  \r\n})\r\nexport class NotificationToastComponent {\r\n\r\n}\r\n"
+        }
+    ]
+}

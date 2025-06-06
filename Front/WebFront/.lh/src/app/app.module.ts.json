@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 133,
+            "activePatchIndex": 137,
             "patches": [
                 {
                     "date": 1741609977833,
@@ -540,6 +540,22 @@
                 {
                     "date": 1749048432427,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n     ProjectsComponent,\r\n     ProjectDetailsComponent,\r\n     AddMemberComponent,\r\n     LoginComponent,\r\n-   FileSizePipe\r\n+   FileSizePipe,\r\n     TasksComponent,\r\n     TaskDetailsComponent,\r\n     ConfirmationDialogComponent,\r\n     InvitationsComponent,\r\n"
+                },
+                {
+                    "date": 1749170019674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,8 +64,9 @@\n import { registerLocaleData } from '@angular/common';\r\n import localeFr from '@angular/common/locales/fr';\r\n import { EmailFormComponent } from './email-form/email-form.component';\r\n import { FileSizePipe } from './shared/pipes/file-size.pipe';\r\n+import { NotificationToastComponent } from './notification-toast/notification-toast.component';\r\n registerLocaleData(localeFr);\r\n \r\n @NgModule({\r\n   declarations: [\r\n@@ -93,8 +94,10 @@\n     GoogleCallbackComponent,\r\n     LoadingComponent,\r\n     EmailDetailComponent,\r\n     EmailFormComponent,\r\n+    NotificationToastComponent,\r\n+    NotificationToastComponent \r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n"
+                },
+                {
+                    "date": 1749170047591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n     LoadingComponent,\r\n     EmailDetailComponent,\r\n     EmailFormComponent,\r\n     NotificationToastComponent,\r\n-    NotificationToastComponent \r\n+    \r\n \r\n   ],\r\n   imports: [\r\n     BrowserModule,\r\n@@ -140,9 +140,12 @@\n     MatFormFieldModule,\r\n     MatInputModule,\r\n     MatSelectModule,\r\n     TextFieldModule,\r\n-    MatTabsModule\r\n+    MatTabsModule,\r\n+    BrowserModule,\r\n+    BrowserAnimationsModule, // Ajoutez ceci aux imports\r\n+    HttpClientModule,\r\n \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n"
+                },
+                {
+                    "date": 1749170065525,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -142,9 +142,8 @@\n     MatSelectModule,\r\n     TextFieldModule,\r\n     MatTabsModule,\r\n     BrowserModule,\r\n-    BrowserAnimationsModule, // Ajoutez ceci aux imports\r\n     HttpClientModule,\r\n \r\n   ],\r\n   providers: [\r\n"
+                },
+                {
+                    "date": 1749170072592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,10 +141,10 @@\n     MatInputModule,\r\n     MatSelectModule,\r\n     TextFieldModule,\r\n     MatTabsModule,\r\n-    BrowserModule,\r\n-    HttpClientModule,\r\n+    \r\n+    \r\n \r\n   ],\r\n   providers: [\r\n     DatePipe,\r\n"
                 }
             ],
             "date": 1741609977833,

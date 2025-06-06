@@ -236,9 +236,9 @@ public class TaskService implements ITask {
         if (task.getPhase() != null) {
             Phase phase = task.getPhase();
             dto.setPhaseName(phase.getName());
-
+            dto.setPhaseId(phase.getId());
             Project project = phase.getProject();
-
+            dto.setProjectId(project.getId());
             dto.setProjectName(project.getName());
 
             List<PhaseAccess> phaseAccesses = phaseAccessRepository.findByPhaseAndCanView(phase, true);

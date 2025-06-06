@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/notification-toast/notification-toast.component.scss",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1749169854818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1749169854818,
+            "name": "Commit-0",
+            "content": ":host {\r\n  display: block; // Required for animations on the host element\r\n  width: 320px;\r\n  margin-bottom: 0.5rem; // 8px\r\n}\r\n\r\n.toast-card {\r\n  background-color: #fff;\r\n  border: 1px solid #d1d1d1;\r\n  border-left: 4px solid #E27D60; // Accent color\r\n  border-radius: 0.375rem; // 6px\r\n  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);\r\n  cursor: pointer;\r\n  transition: background-color 0.2s ease;\r\n  overflow: hidden; // Ensure content respects border-radius\r\n\r\n  &:hover {\r\n    background-color: #f8f9fa;\r\n  }\r\n}\r\n\r\n.toast-header {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n  padding: 0.5rem 0.75rem; // 8px 12px\r\n  background-color: rgba(0,0,0,.03);\r\n  border-bottom: 1px solid rgba(0,0,0,.05);\r\n}\r\n\r\n.toast-title {\r\n  font-weight: 600;\r\n  font-size: 0.9em;\r\n  color: #333;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  margin-right: 8px;\r\n}\r\n\r\n.toast-time {\r\n  font-size: 0.75em;\r\n  color: #6c757d;\r\n  white-space: nowrap;\r\n}\r\n\r\n.toast-close-btn {\r\n  background: transparent;\r\n  border: none;\r\n  font-size: 1.25rem;\r\n  padding: 0.25rem 0.5rem;\r\n  margin-left: auto; // Push to the right\r\n  cursor: pointer;\r\n  color: #6c757d;\r\n  opacity: 0.7;\r\n\r\n  &:hover {\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.toast-body {\r\n  padding: 0.75rem; // 12px\r\n  font-size: 0.875em;\r\n  color: #212529;\r\n  word-wrap: break-word;\r\n  // Limit lines for preview\r\n  display: -webkit-box;\r\n  -webkit-line-clamp: 2;\r\n  -webkit-box-orient: vertical;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n}\r\n"
+        }
+    ]
+}

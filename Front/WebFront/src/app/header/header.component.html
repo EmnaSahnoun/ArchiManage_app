@@ -1,28 +1,38 @@
-<!-- header.component.html -->
 <div class="user-header">
     <h1>{{ title }}</h1>
-    <!-- User Info Section -->
     <div class="user-info">
         <span class="user-name">{{username}}</span>
-        <i class="bi bi-chat-dots icon"></i>
-        <!-- Notification icon - click to toggle dropdown -->
-     <div class="notification-icon" (click)="toggleNotifications()">
-            <i class="bi bi-bell icon"></i>
-            <span *ngIf="notifications.length > 0" class="badge">{{notifications.length}}</span>
+         <i class="bi bi-chat-dots icon" title="Chat"></i> 
+        
+        <div class="notification-icon" (click)="toggleNotifications()">
+             <i class="bi bi-bell icon" title="Notifications"></i> <!-- Added title for accessibility -->
+          
+            <span *ngIf="unreadCount > 0" class="badge">{{unreadCount}}</span>
         </div>
 
-        <!-- Notification Dropdown -->
-        <div *ngIf="showNotifications" class="notification-dropdown">
+       <div class="notification-dropdown" [class.show]="showNotifications">
+       
             <div class="dropdown-header">
                 <h3>Notifications ({{notifications.length}})</h3>
-                <button class="clear-btn" (click)="notifications = []">Clear All</button>
+                <button class="clear-btn" (click)="clearNotifications()">Clear All</button>
             </div>
             
             <div *ngIf="notifications.length > 0; else noNotifications" class="notification-list">
-                <div *ngFor="let notification of notifications" class="notification-item">
+                <div *ngFor="let notification of notifications" 
+     class="notification-item" 
+     [class.unread]="!notification.read"
+     (click)="onNotificationClick(notification)"> <!-- This line already calls the updated method -->
+  <!-- Handle click on individual notification -->
+                 
                     <div class="notification-content">
-                        <p class="message">{{notification.message}}</p>
-                        <small class="date">{{formatDate(notification.commentDate)}}</small>
+                        <p class="message">{{notification.notification?.message || 'No message content'}}</p>
+                        <div class="notification-details">
+                            <small class="date">{{formatDate(notification.timestamp)}}</small>
+                            <span *ngIf="notification.notification?.projectName" class="project">
+                               {{notification.notification?.projectName}}
+
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

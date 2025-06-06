@@ -65,6 +65,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { EmailFormComponent } from './email-form/email-form.component';
 import { FileSizePipe } from './shared/pipes/file-size.pipe';
+import { NotificationToastComponent } from './notification-toast/notification-toast.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -94,6 +95,8 @@ registerLocaleData(localeFr);
     LoadingComponent,
     EmailDetailComponent,
     EmailFormComponent,
+    NotificationToastComponent,
+    
 
   ],
   imports: [
@@ -138,7 +141,9 @@ registerLocaleData(localeFr);
     MatInputModule,
     MatSelectModule,
     TextFieldModule,
-    MatTabsModule
+    MatTabsModule,
+    
+    
 
   ],
   providers: [

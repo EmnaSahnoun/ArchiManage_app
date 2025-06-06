@@ -14,7 +14,9 @@ public class NotificationDto {
     private String taskId;
     private String taskName;
     private String projectName;
+    private String projectId;
     private String phaseName;
+    private String phaseId;
     private String message;
     private LocalDateTime commentDate;
     private String notificationType;
@@ -22,14 +24,6 @@ public class NotificationDto {
     private String commentContent;
     private String commentAuthor;
     private String actionType; // "COMMENT", "ADD", "UPDATE", "DELETE"
-
-    public String getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
 
     public String getTaskId() {
         return taskId;
@@ -55,12 +49,28 @@ public class NotificationDto {
         this.projectName = projectName;
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
     public String getPhaseName() {
         return phaseName;
     }
 
     public void setPhaseName(String phaseName) {
         this.phaseName = phaseName;
+    }
+
+    public String getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(String phaseId) {
+        this.phaseId = phaseId;
     }
 
     public String getMessage() {
@@ -77,6 +87,14 @@ public class NotificationDto {
 
     public void setCommentDate(LocalDateTime commentDate) {
         this.commentDate = commentDate;
+    }
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
     }
 
     public List<String> getUserIdsToNotify() {

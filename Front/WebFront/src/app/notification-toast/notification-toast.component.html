@@ -1,0 +1,12 @@
+<div class="toast-card" (click)="onToastClick()">
+  <div class="toast-header">
+    <strong class="toast-title">{{ notification.notification?.projectName || 'Notification' }}</strong>
+    <small class="toast-time">{{ formatDate(notification.timestamp) }}</small>
+    <button type="button" class="toast-close-btn" aria-label="Close" (click)="manualClose(); $event.stopPropagation();">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    {{ notification.notification?.message || 'Nouvelle mise à jour.' }}
+  </div>
+</div>

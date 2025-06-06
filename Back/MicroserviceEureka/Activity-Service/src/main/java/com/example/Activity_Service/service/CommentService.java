@@ -70,7 +70,9 @@ public class CommentService implements IComment {
                         commentRequest.getTaskId(),
                         notificationInfo.getTaskName(),
                         notificationInfo.getProjectName(),
+                        notificationInfo.getProjectId(),
                         notificationInfo.getPhaseName(),
+                        notificationInfo.getPhaseId(),
                         commentRequest.getUsername()+ " a ajouté un commentaire à la tâche" + notificationInfo.getTaskName()
                                 +" (Phase "+notificationInfo.getPhaseName() +") Projet "+ notificationInfo.getProjectName(),
                         LocalDateTime.now(),

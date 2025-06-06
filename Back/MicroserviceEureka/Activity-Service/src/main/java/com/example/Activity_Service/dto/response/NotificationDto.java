@@ -14,7 +14,9 @@ public class NotificationDto {
     private String taskId;
     private String taskName;
     private String projectName;
+    private String projectId;
     private String phaseName;
+    private String phaseId;
     private String message;
     private LocalDateTime commentDate;
     private String notificationType;
@@ -22,22 +24,6 @@ public class NotificationDto {
     private String commentContent;
     private String commentAuthor;
     private String actionType;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
 
     public String getTaskId() {
         return taskId;
@@ -63,6 +49,14 @@ public class NotificationDto {
         this.projectName = projectName;
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
     public String getPhaseName() {
         return phaseName;
     }
@@ -71,6 +65,21 @@ public class NotificationDto {
         this.phaseName = phaseName;
     }
 
+    public String getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(String phaseId) {
+        this.phaseId = phaseId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public LocalDateTime getCommentDate() {
         return commentDate;
@@ -80,20 +89,20 @@ public class NotificationDto {
         this.commentDate = commentDate;
     }
 
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
+
     public List<String> getUserIdsToNotify() {
         return userIdsToNotify;
     }
 
     public void setUserIdsToNotify(List<String> userIdsToNotify) {
         this.userIdsToNotify = userIdsToNotify;
-    }
-
-    public String getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
     }
 
     public String getCommentContent() {
@@ -110,5 +119,13 @@ public class NotificationDto {
 
     public void setCommentAuthor(String commentAuthor) {
         this.commentAuthor = commentAuthor;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 }

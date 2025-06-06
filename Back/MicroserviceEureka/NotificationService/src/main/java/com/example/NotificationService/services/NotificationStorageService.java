@@ -1,7 +1,6 @@
 package com.example.NotificationService.services;
 
 import com.example.NotificationService.dto.NotificationDto;
-import com.example.NotificationService.model.StoredNotification;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;

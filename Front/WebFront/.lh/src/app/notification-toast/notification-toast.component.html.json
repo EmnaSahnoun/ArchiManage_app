@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/app/notification-toast/notification-toast.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1749169846828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749171619814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,5 @@\n   </div>\r\n   <div class=\"toast-body\">\r\n     {{ notification.notification?.message || 'Nouvelle mise à jour.' }}\r\n   </div>\r\n-</div>\r\n+</div>\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1749169846828,
+            "name": "Commit-0",
+            "content": "<div class=\"toast-card\" (click)=\"onToastClick()\">\r\n  <div class=\"toast-header\">\r\n    <strong class=\"toast-title\">{{ notification.notification?.projectName || 'Notification' }}</strong>\r\n    <small class=\"toast-time\">{{ formatDate(notification.timestamp) }}</small>\r\n    <button type=\"button\" class=\"toast-close-btn\" aria-label=\"Close\" (click)=\"manualClose(); $event.stopPropagation();\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"toast-body\">\r\n    {{ notification.notification?.message || 'Nouvelle mise à jour.' }}\r\n  </div>\r\n</div>\r\n"
+        }
+    ]
+}

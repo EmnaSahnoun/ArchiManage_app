@@ -1,24 +1,19 @@
 package com.example.NotificationService.controller;
 
 import com.example.NotificationService.dto.NotificationDto;
-import com.example.NotificationService.model.StoredNotification;
 import com.example.NotificationService.services.NotificationStorageService;
 import com.example.NotificationService.services.SSENotificationService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
         allowedHeaders = "*",

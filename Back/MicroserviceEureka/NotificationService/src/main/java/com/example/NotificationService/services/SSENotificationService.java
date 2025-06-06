@@ -1,7 +1,6 @@
 package com.example.NotificationService.services;
 
 import com.example.NotificationService.dto.NotificationDto;
-import com.example.NotificationService.model.StoredNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
