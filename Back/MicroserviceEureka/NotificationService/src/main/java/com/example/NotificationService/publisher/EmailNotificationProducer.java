@@ -72,6 +72,7 @@ public class EmailNotificationProducer {
                             if (unreadCount > 0) {
                                 // Get user email from Keycloak
                                 String email = getUserEmailFromKeycloak(userId, authToken);
+                                logger.info("l'email de user"+email);
                                 if (email != null) {
                                     // Prepare email notification
                                     NotificationDto latestNotification = (NotificationDto) notifications.get(0).get("notification");
