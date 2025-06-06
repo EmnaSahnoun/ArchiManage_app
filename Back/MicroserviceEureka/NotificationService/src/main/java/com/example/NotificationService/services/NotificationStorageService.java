@@ -34,6 +34,9 @@ public class NotificationStorageService {
     }
 
 
+    public String getStorageDirectory() {
+        return storageDirectory;
+    }
     private void createStorageDirectoryIfNotExists() {
         try {
             Path path = Paths.get(storageDirectory);
@@ -137,4 +140,44 @@ public class NotificationStorageService {
                 .filter(notification -> !(Boolean) notification.get("read"))
                 .count();
     }
-}
+
+    public List<Map<String, Object>> getUnreadNotificationsOlderThan(String userId, long minutes) {
+        long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
+
+        return getUserNotifications(userId).stream()
+                .filter(notification -> !(Boolean) notification.get("read"))
+                .filter(notification -> {
+                    Long timestamp = getTimestamp(notification);
+                    return timestamp != null && timestamp < thresholdTime;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getNotificationFilePathsOlderThan(String userId, long minutes) {
+        long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
+
+        try {
+            Path userDir = Paths.get(storageDirectory, userId);
+            if (!Files.exists(userDir)) {
+                return Collections.emptyList();
+            }
+
+            return Files.list(userDir)
+                    .filter(path -> path.toString().endsWith(".json"))
+                    .filter(path -> {
+                        try {
+                            Map<String, Object> notification = objectMapper.readValue(path.toFile(), Map.class);
+                            return !(Boolean) notification.get("read") &&
+                                    getTimestamp(notification) < thresholdTime;
+                        } catch (IOException e) {
+                            logger.error("Failed to read notification file: " + path, e);
+                            return false;
+                        }
+                    })
+                    .map(path -> path.getFileName().toString())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            logger.error("Failed to read notifications for user: " + userId, e);
+            return Collections.emptyList();
+        }
+    }}

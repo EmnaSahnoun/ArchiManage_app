@@ -433,12 +433,10 @@ loadActivities(): void {
        console.log('Raw activities from backend:', JSON.parse(JSON.stringify(activities)));
      
       const userRequests: Observable<TaskHistory>[] = activities.map(activity => {
- console.log('Processing activity for user fetch:', JSON.parse(JSON.stringify(activity)));
       
         if (activity.idUser) { // Check if idUser exists
           return this.agenceService.getUserById(activity.idUser).pipe(
             map(user => {
-               console.log(`User fetched for idUser ${activity.idUser} (Activity ID: ${activity.id}):`, JSON.parse(JSON.stringify(user)));
               return { ...activity, username: user.username }; // Assign username to activity object
             }),
             catchError(err => {
