@@ -1,0 +1,54 @@
+{
+    "sourceFile": "src/consumer/emailNotificationConsumer.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1749218119229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749218131859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const { sendEmail } = require('./gmailService');\r\n+const { sendEmail } = require('../gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n \r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n"
+                },
+                {
+                    "date": 1749218139954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const { sendEmail } = require('../gmailService');\r\n+const { sendEmail } = require('..//gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n \r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n"
+                },
+                {
+                    "date": 1749219367286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n-const { sendEmail } = require('..//gmailService');\r\n+const { sendEmail } = require('../services/gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n-\r\n+D:\\satge pfe\\application\\ArchiManage\\Back\\MicroserviceEureka\\emailService\\src\\config\\rabbitmq.config.js\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                },
+                {
+                    "date": 1749219375893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const { sendEmail } = require('../services/gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n-D:\\satge pfe\\application\\ArchiManage\\Back\\MicroserviceEureka\\emailService\\src\\config\\rabbitmq.config.js\r\n+.\\src\\config\\rabbitmq.config.js\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                },
+                {
+                    "date": 1749219381200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const { sendEmail } = require('../services/gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n-.\\src\\config\\rabbitmq.config.js\r\n+./src/config\\rabbitmq.config.js\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                },
+                {
+                    "date": 1749219390433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const { sendEmail } = require('../services/gmailService');\r\n const { setupRabbitMQ } = require('../config/rabbitmq');\r\n-./src/config\\rabbitmq.config.js\r\n+./src/config/rabbitmq.config\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                },
+                {
+                    "date": 1749219395661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const { sendEmail } = require('../services/gmailService');\r\n-const { setupRabbitMQ } = require('../config/rabbitmq');\r\n-./src/config/rabbitmq.config\r\n+const { setupRabbitMQ } = require('./src/config/rabbitmq.config');\r\n+\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                },
+                {
+                    "date": 1749219408695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const { sendEmail } = require('../services/gmailService');\r\n-const { setupRabbitMQ } = require('./src/config/rabbitmq.config');\r\n+const { setupRabbitMQ } = require('./src/config/rabbitmq');\r\n \r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n"
+                },
+                {
+                    "date": 1749219631757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const { sendEmail } = require('../services/gmailService');\r\n+const { setupRabbitMQ } = require('../config/rabbitmq.config');\r\n \r\n-\r\n async function startEmailNotificationConsumer() {\r\n   try {\r\n     const { channel } = await setupRabbitMQ();\r\n \r\n"
+                }
+            ],
+            "date": 1749218119229,
+            "name": "Commit-0",
+            "content": "const { sendEmail } = require('./gmailService');\r\nconst { setupRabbitMQ } = require('../config/rabbitmq');\r\n\r\nasync function startEmailNotificationConsumer() {\r\n  try {\r\n    const { channel } = await setupRabbitMQ();\r\n\r\n    console.log('En attente de messages...');\r\n\r\n    channel.consume(QUEUE_NAME, async (msg) => {\r\n      if (msg !== null) {\r\n        try {\r\n          const notification = JSON.parse(msg.content.toString());\r\n          console.log('Notification reçue:', notification);\r\n\r\n          // Préparer l'email\r\n          const emailData = {\r\n            from: 'noreply@yourdomain.com',\r\n            to: notification.email,\r\n            subject: notification.subject,\r\n            text: notification.content\r\n          };\r\n\r\n          // Envoyer l'email\r\n          // Note: Vous aurez besoin d'un token d'accès valide ici\r\n          // Vous pourriez avoir besoin de stocker les tokens par utilisateur\r\n          const accessToken = await getAccessTokenForUser(notification.userId); // À implémenter\r\n          \r\n          await sendEmail(accessToken, emailData, notification.userId);\r\n          console.log('Email envoyé avec succès à:', notification.email);\r\n\r\n          // Ack le message\r\n          channel.ack(msg);\r\n        } catch (error) {\r\n          console.error('Erreur de traitement du message:', error);\r\n          // Vous pourriez vouloir mettre le message dans une DLQ (Dead Letter Queue)\r\n          channel.nack(msg, false, false);\r\n        }\r\n      }\r\n    });\r\n  } catch (error) {\r\n    console.error('Erreur du consumer RabbitMQ:', error);\r\n  }\r\n}\r\n\r\nmodule.exports = { startEmailNotificationConsumer };"
+        }
+    ]
+}

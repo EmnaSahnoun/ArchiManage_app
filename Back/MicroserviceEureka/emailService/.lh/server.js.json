@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 93,
+            "activePatchIndex": 103,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -380,6 +380,46 @@
                 {
                     "date": 1749216852210,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const rabbitmqService = require('./serv');\r\n+const rabbitmqService = require('./services/rabbitmqService');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n@@ -58,10 +58,42 @@\n // Démarrer le client Eureka\r\n client.start(error => {\r\n   console.log(error || 'Client Eureka démarré avec succès');\r\n });\r\n+Promise.all([\r\n+  new Promise((resolve) => {\r\n+    client.start(error => {\r\n+      console.log(error || 'Client Eureka démarré avec succès');\r\n+      resolve();\r\n+    });\r\n+  }),\r\n+  rabbitmqService.connect().then(() => rabbitmqService.consumeEmailNotifications())\r\n+])\r\n+.then(() => {\r\n+  app.listen(PORT, () => {\r\n+    console.log(`Serveur démarré sur le port ${PORT}`);\r\n+    // ... autres logs\r\n+  });\r\n+})\r\n+.catch(error => {\r\n+  console.error('Failed to start services:', error);\r\n+  process.exit(1);\r\n+});\r\n \r\n // Gestion de la fermeture propre\r\n+process.on('SIGINT', async () => {\r\n+  try {\r\n+    await Promise.all([\r\n+      client.stop(),\r\n+      rabbitmqService.close()\r\n+    ]);\r\n+    process.exit();\r\n+  } catch (error) {\r\n+    console.error('Error during shutdown:', error);\r\n+    process.exit(1);\r\n+  }\r\n+});\r\n+// Gestion de la fermeture propre\r\n process.on('SIGINT', () => {\r\n   client.stop();\r\n   process.exit();\r\n });\r\n"
+                },
+                {
+                    "date": 1749218155234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const rabbitmqService = require('./services/rabbitmqService');\r\n \r\n+\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n@@ -58,42 +58,10 @@\n // Démarrer le client Eureka\r\n client.start(error => {\r\n   console.log(error || 'Client Eureka démarré avec succès');\r\n });\r\n-Promise.all([\r\n-  new Promise((resolve) => {\r\n-    client.start(error => {\r\n-      console.log(error || 'Client Eureka démarré avec succès');\r\n-      resolve();\r\n-    });\r\n-  }),\r\n-  rabbitmqService.connect().then(() => rabbitmqService.consumeEmailNotifications())\r\n-])\r\n-.then(() => {\r\n-  app.listen(PORT, () => {\r\n-    console.log(`Serveur démarré sur le port ${PORT}`);\r\n-    // ... autres logs\r\n-  });\r\n-})\r\n-.catch(error => {\r\n-  console.error('Failed to start services:', error);\r\n-  process.exit(1);\r\n-});\r\n \r\n // Gestion de la fermeture propre\r\n-process.on('SIGINT', async () => {\r\n-  try {\r\n-    await Promise.all([\r\n-      client.stop(),\r\n-      rabbitmqService.close()\r\n-    ]);\r\n-    process.exit();\r\n-  } catch (error) {\r\n-    console.error('Error during shutdown:', error);\r\n-    process.exit(1);\r\n-  }\r\n-});\r\n-// Gestion de la fermeture propre\r\n process.on('SIGINT', () => {\r\n   client.stop();\r\n   process.exit();\r\n });\r\n"
+                },
+                {
+                    "date": 1749218161909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n+const { startEmailNotificationConsumer } = require('./services/emailNotificationConsumer');\r\n \r\n-\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
+                },
+                {
+                    "date": 1749218167335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const { startEmailNotificationConsumer } = require('./services/emailNotificationConsumer');\r\n+const { startEmailNotificationConsumer } = require('./consumer/emailNotificationConsumer');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n"
+                },
+                {
+                    "date": 1749218201753,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,6 +95,10 @@\n   console.log(`GET  /emails/check-read/:emailId`);\r\n   console.log(`DELETE /emails/:emailId`);\r\n   console.log(`POST /emails/:emailId/restore`);\r\n   console.log(`GET  /drafts`);\r\n-  console.log(`DELETE /drafts/:draftId`);\r\n-});\r\n+  console.log(`DELETE /drafts/:draftId`);try {\r\n+    await startEmailNotificationConsumer();\r\n+  } catch (error) {\r\n+    console.error('Erreur lors du démarrage du consumer RabbitMQ:', error);\r\n+  }\r\n+});\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749218217545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,9 @@\n   console.error(\"Erreur non gérée:\", err.stack);\r\n   res.status(500).json({ success: false, error: \"Erreur interne du serveur.\" });\r\n });\r\n \r\n-app.listen(PORT, () => {\r\n+app.listen(PORT, async () => {\r\n   console.log(`Serveur démarré sur le port ${PORT}`);\r\n   console.log(\"Endpoints disponibles:\");\r\n   console.log(`GET  /auth/google`);\r\n   console.log(`GET  /auth/google/callback`);\r\n"
+                },
+                {
+                    "date": 1749218233314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,9 @@\n   console.error(\"Erreur non gérée:\", err.stack);\r\n   res.status(500).json({ success: false, error: \"Erreur interne du serveur.\" });\r\n });\r\n \r\n-app.listen(PORT, async () => {\r\n+app.listen(PORT, () => {\r\n   console.log(`Serveur démarré sur le port ${PORT}`);\r\n   console.log(\"Endpoints disponibles:\");\r\n   console.log(`GET  /auth/google`);\r\n   console.log(`GET  /auth/google/callback`);\r\n"
+                },
+                {
+                    "date": 1749218238612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,9 @@\n   console.error(\"Erreur non gérée:\", err.stack);\r\n   res.status(500).json({ success: false, error: \"Erreur interne du serveur.\" });\r\n });\r\n \r\n-app.listen(PORT, () => {\r\n+app.listen(PORT, async () => {\r\n   console.log(`Serveur démarré sur le port ${PORT}`);\r\n   console.log(\"Endpoints disponibles:\");\r\n   console.log(`GET  /auth/google`);\r\n   console.log(`GET  /auth/google/callback`);\r\n"
+                },
+                {
+                    "date": 1749218247183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,10 @@\n   console.log(`GET  /emails/check-read/:emailId`);\r\n   console.log(`DELETE /emails/:emailId`);\r\n   console.log(`POST /emails/:emailId/restore`);\r\n   console.log(`GET  /drafts`);\r\n-  console.log(`DELETE /drafts/:draftId`);try {\r\n+  console.log(`DELETE /drafts/:draftId`);\r\n+  try {\r\n     await startEmailNotificationConsumer();\r\n   } catch (error) {\r\n     console.error('Erreur lors du démarrage du consumer RabbitMQ:', error);\r\n   }\r\n"
+                },
+                {
+                    "date": 1749219043989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n const { startEmailNotificationConsumer } = require('./consumer/emailNotificationConsumer');\r\n-\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
+                },
+                {
+                    "date": 1749219257476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const { startEmailNotificationConsumer } = require('./consumer/emailNotificationConsumer');\r\n+const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
                 }
             ],
             "date": 1748453070534,

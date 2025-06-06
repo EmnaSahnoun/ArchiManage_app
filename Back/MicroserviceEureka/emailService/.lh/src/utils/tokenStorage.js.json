@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/utils/tokenStorage.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1749218382971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749218393927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n-// services/tokenStorage.js\r\n const fs = require('fs');\r\n const path = require('path');\r\n \r\n-const TOKENS_DIR = path.join(__dirname, '../data/tokens');\r\n+const TOKENS_DIR = path.join(__dirname, '/../data/tokens');\r\n \r\n if (!fs.existsSync(TOKENS_DIR)) {\r\n   fs.mkdirSync(TOKENS_DIR, { recursive: true });\r\n }\r\n"
+                }
+            ],
+            "date": 1749218382971,
+            "name": "Commit-0",
+            "content": "// services/tokenStorage.js\r\nconst fs = require('fs');\r\nconst path = require('path');\r\n\r\nconst TOKENS_DIR = path.join(__dirname, '../data/tokens');\r\n\r\nif (!fs.existsSync(TOKENS_DIR)) {\r\n  fs.mkdirSync(TOKENS_DIR, { recursive: true });\r\n}\r\n\r\nfunction saveToken(userId, token) {\r\n  const filePath = path.join(TOKENS_DIR, `${userId}.json`);\r\n  fs.writeFileSync(filePath, JSON.stringify(token));\r\n}\r\n\r\nfunction getToken(userId) {\r\n  const filePath = path.join(TOKENS_DIR, `${userId}.json`);\r\n  if (fs.existsSync(filePath)) {\r\n    return JSON.parse(fs.readFileSync(filePath));\r\n  }\r\n  return null;\r\n}\r\n\r\nmodule.exports = { saveToken, getToken };"
+        }
+    ]
+}

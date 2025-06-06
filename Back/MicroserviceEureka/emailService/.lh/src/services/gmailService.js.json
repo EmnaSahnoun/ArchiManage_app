@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1748481188069,
@@ -256,6 +256,34 @@
                 {
                     "date": 1749216980837,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,19 @@\n     oAuth2Client.clientId_,\r\n     oAuth2Client.clientSecret_,\r\n     oAuth2Client.redirectUri_\r\n   );\r\n-  client.setCredentials({ access_token: accessToken });\r\n+ if (accessToken === 'system') {\r\n+    client.setCredentials({\r\n+      access_token: SYSTEM_ACCESS_TOKEN,\r\n+      refresh_token: SYSTEM_REFRESH_TOKEN\r\n+    });\r\n+  } else {\r\n+    client.setCredentials({ access_token: accessToken });\r\n+  }\r\n+  \r\n   return google.gmail({ version: \"v1\", auth: client });\r\n };\r\n-\r\n // Helper function to process email parts\r\n const processEmailPart = (part) => {\r\n   const partData = {\r\n     mimeType: part.mimeType,\r\n"
+                },
+                {
+                    "date": 1749218304702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,18 @@\n const { google } = require(\"googleapis\");\r\n const oAuth2Client = require(\"../config/googleAuth\");\r\n const fileStorage = require('../utils/fileStorage');\r\n-const SYSTEM_ACCESS_TOKEN = process.env.SYSTEM_ACCESS_TOKEN;\r\n-const SYSTEM_REFRESH_TOKEN = process.env.SYSTEM_REFRESH_TOKEN;\r\n // Helper function to get authenticated Gmail client\r\n const getGmailClient = (accessToken) => {\r\n   const client = new google.auth.OAuth2(\r\n     oAuth2Client.clientId_,\r\n     oAuth2Client.clientSecret_,\r\n     oAuth2Client.redirectUri_\r\n   );\r\n- if (accessToken === 'system') {\r\n-    client.setCredentials({\r\n-      access_token: SYSTEM_ACCESS_TOKEN,\r\n-      refresh_token: SYSTEM_REFRESH_TOKEN\r\n-    });\r\n-  } else {\r\n-    client.setCredentials({ access_token: accessToken });\r\n-  }\r\n-  \r\n+  client.setCredentials({ access_token: accessToken });\r\n   return google.gmail({ version: \"v1\", auth: client });\r\n };\r\n+\r\n // Helper function to process email parts\r\n const processEmailPart = (part) => {\r\n   const partData = {\r\n     mimeType: part.mimeType,\r\n"
+                },
+                {
+                    "date": 1749218410977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n const { google } = require(\"googleapis\");\r\n const oAuth2Client = require(\"../config/googleAuth\");\r\n const fileStorage = require('../utils/fileStorage');\r\n+const fileStorage = require('../utils/fileStorage');\r\n // Helper function to get authenticated Gmail client\r\n const getGmailClient = (accessToken) => {\r\n   const client = new google.auth.OAuth2(\r\n     oAuth2Client.clientId_,\r\n"
+                },
+                {
+                    "date": 1749218417806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const { google } = require(\"googleapis\");\r\n const oAuth2Client = require(\"../config/googleAuth\");\r\n const fileStorage = require('../utils/fileStorage');\r\n-const fileStorage = require('../utils/fileStorage');\r\n+const fileStorage = require('../utils/tokenStorage');\r\n // Helper function to get authenticated Gmail client\r\n const getGmailClient = (accessToken) => {\r\n   const client = new google.auth.OAuth2(\r\n     oAuth2Client.clientId_,\r\n"
+                },
+                {
+                    "date": 1749218461342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,16 @@\n   }\r\n \r\n   return partData;\r\n };\r\n-\r\n+const sendSystemEmail = async (userId, emailData) => {\r\n+  const token = await getToken(userId);\r\n+  if (!token) {\r\n+    throw new Error('Aucun token OAuth2 trouvé pour cet utilisateur');\r\n+  }\r\n+  \r\n+  return sendEmail(token.access_token, emailData, userId);\r\n+};\r\n // 1. Email Sending with Attachments\r\n const sendEmail = async (accessToken, emailData, userId) => {\r\n   const gmail = getGmailClient(accessToken);\r\n   \r\n"
+                },
+                {
+                    "date": 1749218473227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -521,6 +521,7 @@\n   createDraft,\r\n   getDrafts,\r\n   deleteDraft,\r\n   sendDraft,\r\n-  getEmailFromStorage\r\n+  getEmailFromStorage,\r\n+  sendSystemEmail\r\n };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749219219640,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const { google } = require(\"googleapis\");\r\n const oAuth2Client = require(\"../config/googleAuth\");\r\n const fileStorage = require('../utils/fileStorage');\r\n-const fileStorage = require('../utils/tokenStorage');\r\n+const token = require('../utils/tokenStorage');\r\n // Helper function to get authenticated Gmail client\r\n const getGmailClient = (accessToken) => {\r\n   const client = new google.auth.OAuth2(\r\n     oAuth2Client.clientId_,\r\n"
+                },
+                {
+                    "date": 1749219288556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n const { google } = require(\"googleapis\");\r\n const oAuth2Client = require(\"../config/googleAuth\");\r\n const fileStorage = require('../utils/fileStorage');\r\n-const token = require('../utils/tokenStorage');\r\n+const { saveToken, getToken } = require('../utils/tokenStorage');\r\n // Helper function to get authenticated Gmail client\r\n const getGmailClient = (accessToken) => {\r\n   const client = new google.auth.OAuth2(\r\n     oAuth2Client.clientId_,\r\n"
                 }
             ],
             "date": 1748481188069,

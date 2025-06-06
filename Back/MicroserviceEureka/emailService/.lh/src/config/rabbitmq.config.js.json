@@ -3,11 +3,39 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1749216554152,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749217893475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,32 @@\n-require('dotenv').config();\r\n+// Dans votre fichier server.js ou un nouveau fichier rabbitmq.js\r\n+const amqp = require('amqplib');\r\n \r\n-module.exports = {\r\n-  rabbitmq: {\r\n-    url: process.env.RABBITMQ_URL || 'amqp://localhost',\r\n-    exchange: process.env.RABBITMQ_EXCHANGE || 'exchange.NotificationService.sendEmail',\r\n-    queue: process.env.RABBITMQ_QUEUE || 'queue.EmailService.sendEmail',\r\n-    routingKey: process.env.RABBITMQ_ROUTING_KEY || 'NotificationService.envoye.EmailService'\r\n\\ No newline at end of file\n+// Configuration RabbitMQ\r\n+const RABBITMQ_HOST = '161.97.88.195';\r\n+const RABBITMQ_USER = 'admin';\r\n+const RABBITMQ_PASS = 'admin';\r\n+const EXCHANGE_NAME = 'exchange.NotificationService.sendEmail';\r\n+const QUEUE_NAME = 'queue.EmailService.sendEmail';\r\n+const ROUTING_KEY = 'NotificationService.envoye.EmailService';\r\n+\r\n+async function setupRabbitMQ() {\r\n+  try {\r\n+    // Connexion à RabbitMQ\r\n+    const connection = await amqp.connect(`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}`);\r\n+    const channel = await connection.createChannel();\r\n+\r\n+    // Déclaration de l'exchange et de la queue\r\n+    await channel.assertExchange(EXCHANGE_NAME, 'direct', { durable: true });\r\n+    await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n+    await channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);\r\n+\r\n+    console.log('RabbitMQ connecté et configuré avec succès');\r\n+\r\n+    return { connection, channel };\r\n+  } catch (error) {\r\n+    console.error('Erreur de configuration RabbitMQ:', error);\r\n+    throw error;\r\n   }\r\n-};\n+}\r\n+\r\n+module.exports = { setupRabbitMQ };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749220005877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,9 @@\n     const connection = await amqp.connect(`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}`);\r\n     const channel = await connection.createChannel();\r\n \r\n     // Déclaration de l'exchange et de la queue\r\n-    await channel.assertExchange(EXCHANGE_NAME, 'direct', { durable: true });\r\n-    await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n+await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });    await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n     await channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);\r\n \r\n     console.log('RabbitMQ connecté et configuré avec succès');\r\n \r\n"
+                },
+                {
+                    "date": 1749220011096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n     const connection = await amqp.connect(`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}`);\r\n     const channel = await connection.createChannel();\r\n \r\n     // Déclaration de l'exchange et de la queue\r\n-await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });    await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n+    await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });\r\n+    await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n     await channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);\r\n \r\n     console.log('RabbitMQ connecté et configuré avec succès');\r\n \r\n"
+                },
+                {
+                    "date": 1749220132310,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const RABBITMQ_HOST = '161.97.88.195';\r\n const RABBITMQ_USER = 'admin';\r\n const RABBITMQ_PASS = 'admin';\r\n const EXCHANGE_NAME = 'exchange.NotificationService.sendEmail';\r\n-const QUEUE_NAME = 'queue.EmailService.sendEmail';\r\n+const QUEUE_NAME = 'exchange.EmailService.sendEmail';\r\n const ROUTING_KEY = 'NotificationService.envoye.EmailService';\r\n \r\n async function setupRabbitMQ() {\r\n   try {\r\n"
+                },
+                {
+                    "date": 1749220139520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const RABBITMQ_HOST = '161.97.88.195';\r\n const RABBITMQ_USER = 'admin';\r\n const RABBITMQ_PASS = 'admin';\r\n const EXCHANGE_NAME = 'exchange.NotificationService.sendEmail';\r\n-const QUEUE_NAME = 'exchange.EmailService.sendEmail';\r\n+const QUEUE_NAME = 'queue.EmailService.sendEmail';\r\n const ROUTING_KEY = 'NotificationService.envoye.EmailService';\r\n \r\n async function setupRabbitMQ() {\r\n   try {\r\n"
+                },
+                {
+                    "date": 1749220213985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,19 +10,17 @@\n const ROUTING_KEY = 'NotificationService.envoye.EmailService';\r\n \r\n async function setupRabbitMQ() {\r\n   try {\r\n-    // Connexion à RabbitMQ\r\n     const connection = await amqp.connect(`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}`);\r\n     const channel = await connection.createChannel();\r\n \r\n-    // Déclaration de l'exchange et de la queue\r\n+    // Changement ici : 'topic' au lieu de 'direct'\r\n     await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });\r\n     await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n     await channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);\r\n \r\n     console.log('RabbitMQ connecté et configuré avec succès');\r\n-\r\n     return { connection, channel };\r\n   } catch (error) {\r\n     console.error('Erreur de configuration RabbitMQ:', error);\r\n     throw error;\r\n"
+                },
+                {
+                    "date": 1749220368285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-// Dans votre fichier server.js ou un nouveau fichier rabbitmq.js\r\n+// rabbitmq.config.js\r\n const amqp = require('amqplib');\r\n \r\n // Configuration RabbitMQ\r\n const RABBITMQ_HOST = '161.97.88.195';\r\n@@ -13,9 +13,8 @@\n   try {\r\n     const connection = await amqp.connect(`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}`);\r\n     const channel = await connection.createChannel();\r\n \r\n-    // Changement ici : 'topic' au lieu de 'direct'\r\n     await channel.assertExchange(EXCHANGE_NAME, 'topic', { durable: true });\r\n     await channel.assertQueue(QUEUE_NAME, { durable: true });\r\n     await channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);\r\n \r\n@@ -26,5 +25,13 @@\n     throw error;\r\n   }\r\n }\r\n \r\n-module.exports = { setupRabbitMQ };\n\\ No newline at end of file\n+module.exports = { \r\n+  setupRabbitMQ,\r\n+  RABBITMQ_HOST,\r\n+  RABBITMQ_USER,\r\n+  RABBITMQ_PASS,\r\n+  EXCHANGE_NAME,\r\n+  QUEUE_NAME,\r\n+  ROUTING_KEY\r\n+};\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1749216554152,
