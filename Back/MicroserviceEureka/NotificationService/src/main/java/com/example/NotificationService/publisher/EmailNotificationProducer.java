@@ -77,6 +77,7 @@ public class EmailNotificationProducer {
                                 logger.info("Found {} unread notifications for user {}", unreadNotifications.size(), userId);
 
                                 String userEmail = keycloakService.getUserEmailById(userId, authToken);
+                                logger.info("email user"+userEmail);
                                 if (userEmail != null) {
                                     NotificationDto latestNotification =
                                             objectMapper.convertValue(unreadNotifications.get(0).get("notification"), NotificationDto.class);
