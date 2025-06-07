@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 56,
             "patches": [
                 {
                     "date": 1745069337198,
@@ -216,6 +216,22 @@
                 {
                     "date": 1748694173301,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n     \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n-      \"^/emailService\": \"/EmailService\"\r\n+      \"^/emailService\": \"\"\r\n     }\r\n   }\r\n   \r\n \r\n"
+                },
+                {
+                    "date": 1749316317845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       }\r\n     },\r\n   \r\n   \"/agence\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n@@ -68,9 +68,9 @@\n       \"^/email\": \"\"\r\n     }\r\n   },\r\n   \"/emailService\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"https://e8.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/emailService\": \"\"\r\n"
+                },
+                {
+                    "date": 1749319314305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,50 +11,50 @@\n       }\r\n     },\r\n   \r\n   \"/agence\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   },\r\n   \"/projet\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/projet\": \"/ProjectService\"\r\n     }\r\n   },\r\n   \"/activity\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/activity\": \"/ActivityService\"\r\n     }\r\n   },\r\n   \"/notification\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n   \"/commercial\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/commercial\": \"/CommercialService\"\r\n     }\r\n   },\r\n   \r\n \"/document\": {\r\n-    \"target\": \"https://e1.systeo.tn\",\r\n+    \"target\": \"http://localhost:9091\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/document\": \"/DocumentService\"\r\n"
+                },
+                {
+                    "date": 1749319321607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       }\r\n     },\r\n   \r\n   \"/agence\": {\r\n-    \"target\": \"https://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/agence\": \"/projectcompany\"\r\n"
+                },
+                {
+                    "date": 1749319344433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,42 +19,42 @@\n       \"^/agence\": \"/projectcompany\"\r\n     }\r\n   },\r\n   \"/projet\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/projet\": \"/ProjectService\"\r\n     }\r\n   },\r\n   \"/activity\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/activity\": \"/ActivityService\"\r\n     }\r\n   },\r\n   \"/notification\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/notification\": \"/NotificationService\"\r\n     }\r\n   },\r\n   \"/commercial\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/commercial\": \"/CommercialService\"\r\n     }\r\n   },\r\n   \r\n \"/document\": {\r\n-    \"target\": \"http://localhost:9091\",\r\n+    \"target\": \"https://e1.systeo.tn\",\r\n     \"secure\": false,\r\n     \"changeOrigin\": true,\r\n     \"pathRewrite\": {\r\n       \"^/document\": \"/DocumentService\"\r\n"
                 }
             ],
             "date": 1745069337198,
