@@ -325,7 +325,8 @@ loadDocuments(): void {
 
   getSubtasks(subTaskIds: string[]): void {
     this.isLoadingSubtasks = true;
-    
+    //
+
     // Créer un tableau de requêtes pour toutes les sous-tâches
     const requests = subTaskIds.map(id => 
       this.projectService.getTaskByid(id)
