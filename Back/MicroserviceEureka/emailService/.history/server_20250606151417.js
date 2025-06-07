@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const Eureka = require('eureka-js-client').Eureka;
 const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');
+
 const app = express();
 
 // Middlewares

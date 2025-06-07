@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/services/systemAuthService.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1749296432361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749296437676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-// src/services/systemAuthService.js\r\n+\r\n const { google } = require('googleapis');\r\n const oAuth2Client = require('../config/googleAuth');\r\n const { saveToken } = require('../utils/tokenStorage');\r\n \r\n"
+                },
+                {
+                    "date": 1749297181254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n async function initializeSystemAuth() {\r\n   try {\r\n     // Utilisez un refresh token permanent pour le compte système\r\n-    const refreshToken = 'votre_refresh_token_permanent'; // À obtenir une fois via le flux OAuth\r\n+    const refreshToken = '1//09oB7A4YVsXO1CgYIARAAGAkSNwF-L9IrWlUOUnaPEybbg8OGHXVmdVTqr70WiFMoMSK-8xP349d9rFBJtifwTSXogpc-DILO35M'; // À obtenir une fois via le flux OAuth\r\n     \r\n     oAuth2Client.setCredentials({\r\n       refresh_token: refreshToken\r\n     });\r\n"
+                },
+                {
+                    "date": 1749303076264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n async function initializeSystemAuth() {\r\n   try {\r\n     // Utilisez un refresh token permanent pour le compte système\r\n-    const refreshToken = '1//09oB7A4YVsXO1CgYIARAAGAkSNwF-L9IrWlUOUnaPEybbg8OGHXVmdVTqr70WiFMoMSK-8xP349d9rFBJtifwTSXogpc-DILO35M'; // À obtenir une fois via le flux OAuth\r\n+    const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN; '1//09oB7A4YVsXO1CgYIARAAGAkSNwF-L9IrWlUOUnaPEybbg8OGHXVmdVTqr70WiFMoMSK-8xP349d9rFBJtifwTSXogpc-DILO35M'; // À obtenir une fois via le flux OAuth\r\n     \r\n     oAuth2Client.setCredentials({\r\n       refresh_token: refreshToken\r\n     });\r\n"
+                },
+                {
+                    "date": 1749303093582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n async function initializeSystemAuth() {\r\n   try {\r\n     // Utilisez un refresh token permanent pour le compte système\r\n-    const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN; '1//09oB7A4YVsXO1CgYIARAAGAkSNwF-L9IrWlUOUnaPEybbg8OGHXVmdVTqr70WiFMoMSK-8xP349d9rFBJtifwTSXogpc-DILO35M'; // À obtenir une fois via le flux OAuth\r\n+    const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN; ; // À obtenir une fois via le flux OAuth\r\n     \r\n     oAuth2Client.setCredentials({\r\n       refresh_token: refreshToken\r\n     });\r\n"
+                },
+                {
+                    "date": 1749303100708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n async function initializeSystemAuth() {\r\n   try {\r\n     // Utilisez un refresh token permanent pour le compte système\r\n-    const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN; ; // À obtenir une fois via le flux OAuth\r\n+    const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN;\r\n     \r\n     oAuth2Client.setCredentials({\r\n       refresh_token: refreshToken\r\n     });\r\n"
+                },
+                {
+                    "date": 1749303176395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n \r\n const { google } = require('googleapis');\r\n const oAuth2Client = require('../config/googleAuth');\r\n const { saveToken } = require('../utils/tokenStorage');\r\n-\r\n+require(\"dotenv\").config();\r\n // ID unique pour le compte système\r\n const SYSTEM_USER_ID = 'system-account';\r\n \r\n async function initializeSystemAuth() {\r\n"
+                }
+            ],
+            "date": 1749296432361,
+            "name": "Commit-0",
+            "content": "// src/services/systemAuthService.js\r\nconst { google } = require('googleapis');\r\nconst oAuth2Client = require('../config/googleAuth');\r\nconst { saveToken } = require('../utils/tokenStorage');\r\n\r\n// ID unique pour le compte système\r\nconst SYSTEM_USER_ID = 'system-account';\r\n\r\nasync function initializeSystemAuth() {\r\n  try {\r\n    // Utilisez un refresh token permanent pour le compte système\r\n    const refreshToken = 'votre_refresh_token_permanent'; // À obtenir une fois via le flux OAuth\r\n    \r\n    oAuth2Client.setCredentials({\r\n      refresh_token: refreshToken\r\n    });\r\n\r\n    // Rafraîchir le token d'accès\r\n    const { credentials } = await oAuth2Client.refreshAccessToken();\r\n    \r\n    // Sauvegarder le token pour le compte système\r\n    await saveToken(SYSTEM_USER_ID, {\r\n      access_token: credentials.access_token,\r\n      refresh_token: credentials.refresh_token,\r\n      expiry_date: credentials.expiry_date\r\n    });\r\n\r\n    console.log('Authentification système initialisée avec succès');\r\n  } catch (error) {\r\n    console.error('Erreur lors de l\\'initialisation de l\\'authentification système:', error);\r\n    throw error;\r\n  }\r\n}\r\n\r\nmodule.exports = {\r\n  SYSTEM_USER_ID,\r\n  initializeSystemAuth\r\n};"
+        }
+    ]
+}

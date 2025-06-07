@@ -3,11 +3,35 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1748481123606,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749292398073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,34 @@\n router.get(\"/google/callback\", authController.googleAuthCallback);\r\n \r\n // Route pour rafraîchir le token d'accès\r\n router.post(\"/refresh-token\", authController.refreshToken);\r\n+// Dans authRoutes.js\r\n+router.get('/auth/system-init', async (req, res) => {\r\n+  const url = oAuth2Client.generateAuthUrl({\r\n+    access_type: \"offline\",\r\n+    scope: [\r\n+      \"https://www.googleapis.com/auth/gmail.send\",\r\n+      \"https://www.googleapis.com/auth/userinfo.email\"\r\n+    ],\r\n+    prompt: \"consent\",\r\n+    login_hint: \"archimanage.systeo@gmail.com\" // Force ce compte\r\n+  });\r\n+  res.redirect(url);\r\n+});\r\n \r\n+// Callback spécial pour le compte système\r\n+router.get('/auth/system-callback', async (req, res) => {\r\n+  try {\r\n+    const { code } = req.query;\r\n+    const { tokens } = await oAuth2Client.getToken(code);\r\n+    \r\n+    // Sauvegarder les tokens pour le compte système\r\n+    await saveToken('system-account', tokens);\r\n+    \r\n+    res.send('Compte système configuré avec succès!');\r\n+  } catch (error) {\r\n+    console.error(\"Erreur configuration système:\", error);\r\n+    res.status(500).send(\"Erreur lors de la configuration du compte système\");\r\n+  }\r\n+});\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1749292798282,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \r\n // Route pour rafraîchir le token d'accès\r\n router.post(\"/refresh-token\", authController.refreshToken);\r\n // Dans authRoutes.js\r\n-router.get('/auth/system-init', async (req, res) => {\r\n+router.get('/system-init', async (req, res) => {\r\n   const url = oAuth2Client.generateAuthUrl({\r\n     access_type: \"offline\",\r\n     scope: [\r\n       \"https://www.googleapis.com/auth/gmail.send\",\r\n"
+                },
+                {
+                    "date": 1749292988190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n const express = require(\"express\");\r\n const authController = require(\"../controllers/authController\");\r\n-\r\n+const { google } = require('googleapis');\r\n+const oAuth2Client = require('../config/googleAuth');\r\n const router = express.Router();\r\n \r\n // Route pour démarrer l'authentification Google\r\n router.get(\"/google\", authController.googleAuth);\r\n@@ -25,9 +26,9 @@\n   res.redirect(url);\r\n });\r\n \r\n // Callback spécial pour le compte système\r\n-router.get('/auth/system-callback', async (req, res) => {\r\n+router.get('/system-callback', async (req, res) => {\r\n   try {\r\n     const { code } = req.query;\r\n     const { tokens } = await oAuth2Client.getToken(code);\r\n     \r\n"
+                },
+                {
+                    "date": 1749292998343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n const express = require(\"express\");\r\n const authController = require(\"../controllers/authController\");\r\n-const { google } = require('googleapis');\r\n const oAuth2Client = require('../config/googleAuth');\r\n const router = express.Router();\r\n \r\n // Route pour démarrer l'authentification Google\r\n"
+                },
+                {
+                    "date": 1749293019233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const express = require(\"express\");\r\n const authController = require(\"../controllers/authController\");\r\n-const oAuth2Client = require('../config/googleAuth');\r\n+const oAuth2Client = require(\"../config/googleAuth\");\r\n const router = express.Router();\r\n \r\n // Route pour démarrer l'authentification Google\r\n router.get(\"/google\", authController.googleAuth);\r\n"
+                },
+                {
+                    "date": 1749293110726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,19 +11,16 @@\n \r\n // Route pour rafraîchir le token d'accès\r\n router.post(\"/refresh-token\", authController.refreshToken);\r\n // Dans authRoutes.js\r\n-router.get('/system-init', async (req, res) => {\r\n-  const url = oAuth2Client.generateAuthUrl({\r\n-    access_type: \"offline\",\r\n-    scope: [\r\n-      \"https://www.googleapis.com/auth/gmail.send\",\r\n-      \"https://www.googleapis.com/auth/userinfo.email\"\r\n-    ],\r\n-    prompt: \"consent\",\r\n-    login_hint: \"archimanage.systeo@gmail.com\" // Force ce compte\r\n-  });\r\n-  res.redirect(url);\r\n+router.get('/system-init', (req, res) => {\r\n+    const url = oAuth2Client.generateAuthUrl({\r\n+        access_type: \"offline\",\r\n+        scope: [\"https://www.googleapis.com/auth/gmail.send\"],\r\n+        prompt: \"consent\",\r\n+        login_hint: \"archimanage.systeo@gmail.com\"\r\n+    });\r\n+    res.redirect(url);\r\n });\r\n \r\n // Callback spécial pour le compte système\r\n router.get('/system-callback', async (req, res) => {\r\n"
                 }
             ],
             "date": 1748481123606,

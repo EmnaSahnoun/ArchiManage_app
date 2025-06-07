@@ -179,4 +179,35 @@ public class NotificationStorageService {
             logger.error("Failed to read notifications for user: " + userId, e);
             return Collections.emptyList();
         }
-    }}
+    }
+
+    public List<Map<String, Object>> getAndMarkUnreadNotificationsOlderThan(String userId, long minutes) {
+        long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
+
+        List<Map<String, Object>> notifications = getUserNotifications(userId).stream()
+                .filter(notification -> !(Boolean) notification.get("read"))
+                .filter(notification -> {
+                    Long timestamp = getTimestamp(notification);
+                    return timestamp != null && timestamp < thresholdTime;
+                })
+                .collect(Collectors.toList());
+
+        // Marquer ces notifications comme étant en cours de traitement
+        notifications.forEach(notification -> {
+            notification.put("processing", true);
+            // Sauvegarder ce changement
+            String notificationId = (String) ((Map<String, Object>) notification.get("notification")).get("id");
+            if (notificationId != null) {
+                try {
+                    Path path = Paths.get(storageDirectory, userId, notificationId + ".json");
+                    Files.write(path, objectMapper.writeValueAsBytes(notification));
+                } catch (IOException e) {
+                    logger.error("Failed to mark notification as processing: " + notificationId, e);
+                }
+            }
+        });
+
+        return notifications;
+    }
+
+}

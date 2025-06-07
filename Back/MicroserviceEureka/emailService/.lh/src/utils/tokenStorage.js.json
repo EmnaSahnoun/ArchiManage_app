@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1749218382971,
@@ -12,6 +12,18 @@
                 {
                     "date": 1749218393927,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n-// services/tokenStorage.js\r\n const fs = require('fs');\r\n const path = require('path');\r\n \r\n-const TOKENS_DIR = path.join(__dirname, '../data/tokens');\r\n+const TOKENS_DIR = path.join(__dirname, '/../data/tokens');\r\n \r\n if (!fs.existsSync(TOKENS_DIR)) {\r\n   fs.mkdirSync(TOKENS_DIR, { recursive: true });\r\n }\r\n"
+                },
+                {
+                    "date": 1749292290666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n const fs = require('fs');\r\n const path = require('path');\r\n \r\n-const TOKENS_DIR = path.join(__dirname, '/../data/tokens');\r\n-\r\n+const TOKENS_DIR = path.join(__dirname, '../../data/tokens');\r\n+const SYSTEM_ACCOUNT_ID = 'system-account';\r\n if (!fs.existsSync(TOKENS_DIR)) {\r\n   fs.mkdirSync(TOKENS_DIR, { recursive: true });\r\n }\r\n \r\n"
+                },
+                {
+                    "date": 1749292303494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,16 @@\n   }\r\n   return null;\r\n }\r\n \r\n+async function initSystemAccountToken() {\r\n+  // Configurez ici les tokens d'accès pour le compte système\r\n+  const systemTokens = {\r\n+    access_token: 'VOTRE_ACCESS_TOKEN',\r\n+    refresh_token: 'VOTRE_REFRESH_TOKEN',\r\n+    expiry_date: Date.now() + 3600 * 1000 // 1 heure\r\n+  };\r\n+  \r\n+  await saveToken(SYSTEM_ACCOUNT_ID, systemTokens);\r\n+}\r\n+\r\n module.exports = { saveToken, getToken };\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749292310170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,5 +30,5 @@\n   \r\n   await saveToken(SYSTEM_ACCOUNT_ID, systemTokens);\r\n }\r\n \r\n-module.exports = { saveToken, getToken };\n\\ No newline at end of file\n+module.exports = { saveToken, getToken, initSystemAccountToken };\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1749218382971,

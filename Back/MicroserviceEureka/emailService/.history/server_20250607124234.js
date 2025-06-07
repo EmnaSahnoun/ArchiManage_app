@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const Eureka = require('eureka-js-client').Eureka;
 const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');
-
+const { initSystemAccountToken } = require('./src/utils/tokenStorage');
+const { initializeSystemAuth } = require('./src/services/systemAuthService');
 const app = express();
 
 // Middlewares
@@ -97,6 +98,15 @@ app.listen(PORT, async () => {
   console.log(`POST /emails/:emailId/restore`);
   console.log(`GET  /drafts`);
   console.log(`DELETE /drafts/:draftId`);
+  // Initialiser le compte système
+  try {
+    await initSystemAccountToken();
+    console.log('Compte système initialisé avec succès');
+  } catch (error) {
+    console.error('Erreur lors de l\'initialisation du compte système:', error);
+  }
+  
+  // Démarrer le consumer RabbitMQ
   try {
     await startEmailNotificationConsumer();
   } catch (error) {

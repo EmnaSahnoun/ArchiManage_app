@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 103,
+            "activePatchIndex": 109,
             "patches": [
                 {
                     "date": 1748453070534,
@@ -420,6 +420,30 @@
                 {
                     "date": 1749219257476,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n require(\"dotenv\").config();\r\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n-const { startEmailNotificationConsumer } = require('./consumer/emailNotificationConsumer');\r\n+const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
+                },
+                {
+                    "date": 1749292332756,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,10 @@\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');\r\n+const { initSystemAccountToken } = require('./utils/tokenStorage');\r\n+\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
+                },
+                {
+                    "date": 1749292370997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,18 @@\n   console.log(`DELETE /emails/:emailId`);\r\n   console.log(`POST /emails/:emailId/restore`);\r\n   console.log(`GET  /drafts`);\r\n   console.log(`DELETE /drafts/:draftId`);\r\n+  // Initialiser le compte système\r\n   try {\r\n+    await initSystemAccountToken();\r\n+    console.log('Compte système initialisé avec succès');\r\n+  } catch (error) {\r\n+    console.error('Erreur lors de l\\'initialisation du compte système:', error);\r\n+  }\r\n+  \r\n+  // Démarrer le consumer RabbitMQ\r\n+  try {\r\n     await startEmailNotificationConsumer();\r\n   } catch (error) {\r\n     console.error('Erreur lors du démarrage du consumer RabbitMQ:', error);\r\n   }\r\n"
+                },
+                {
+                    "date": 1749292528416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n const express = require(\"express\");\r\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');\r\n-const { initSystemAccountToken } = require('./utils/tokenStorage');\r\n+const { initSystemAccountToken } = require('./src/utils/tokenStorage');\r\n \r\n const app = express();\r\n \r\n // Middlewares\r\n"
+                },
+                {
+                    "date": 1749296555986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n const cors = require(\"cors\");\r\n const Eureka = require('eureka-js-client').Eureka;\r\n const { startEmailNotificationConsumer } = require('./src/consumer/emailNotificationConsumer');\r\n const { initSystemAccountToken } = require('./src/utils/tokenStorage');\r\n-\r\n+const { initializeSystemAuth } = require('./src/services/systemAuthService');\r\n const app = express();\r\n \r\n // Middlewares\r\n // 1. Configuration CORS améliorée\r\n"
+                },
+                {
+                    "date": 1749296612866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,12 +104,15 @@\n     console.log('Compte système initialisé avec succès');\r\n   } catch (error) {\r\n     console.error('Erreur lors de l\\'initialisation du compte système:', error);\r\n   }\r\n-  \r\n-  // Démarrer le consumer RabbitMQ\r\n   try {\r\n+    // Initialiser l'authentification système\r\n+    await initializeSystemAuth();\r\n+    \r\n+    // Démarrer le consumer RabbitMQ\r\n     await startEmailNotificationConsumer();\r\n   } catch (error) {\r\n-    console.error('Erreur lors du démarrage du consumer RabbitMQ:', error);\r\n+    console.error('Erreur lors de l\\'initialisation:', error);\r\n+    process.exit(1);\r\n   }\r\n });\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749296625359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,16 +97,9 @@\n   console.log(`DELETE /emails/:emailId`);\r\n   console.log(`POST /emails/:emailId/restore`);\r\n   console.log(`GET  /drafts`);\r\n   console.log(`DELETE /drafts/:draftId`);\r\n-  // Initialiser le compte système\r\n   try {\r\n-    await initSystemAccountToken();\r\n-    console.log('Compte système initialisé avec succès');\r\n-  } catch (error) {\r\n-    console.error('Erreur lors de l\\'initialisation du compte système:', error);\r\n-  }\r\n-  try {\r\n     // Initialiser l'authentification système\r\n     await initializeSystemAuth();\r\n     \r\n     // Démarrer le consumer RabbitMQ\r\n"
                 }
             ],
             "date": 1748453070534,

@@ -127,69 +127,88 @@
           </div>
         </div>
   
-        <div class="task-section">
-            <div class="documents-header">
-            <h3><i class="bi bi-folder2-open"></i> Documents</h3>
-            <button mat-icon-button class="add-document-btn" (click)="toggleAddDocumentForm()" [matTooltip]="isAddingDocument ? 'Annuler l\'ajout de document' : 'Ajouter un document'">
-              <i class="bi" [ngClass]="isAddingDocument ? 'bi-x-circle' : 'bi-plus-circle-dotted'"></i>
-            </button>
-          </div>
+       <div class="task-section">
+  <div class="documents-header">
+    <h3><i class="bi bi-folder2-open"></i> Documents</h3>
+    <button mat-icon-button class="add-document-btn" (click)="toggleAddDocumentForm()" 
+            [matTooltip]="isAddingDocument ? 'Annuler' : 'Ajouter un document'">
+      <i class="bi" [ngClass]="isAddingDocument ? 'bi-x-circle' : 'bi-plus-circle-dotted'"></i>
+    </button>
+  </div>
 
-          <!-- Upload Document Section - Conditionnellement affiché -->
-          <div class="upload-document-section" *ngIf="isAddingDocument">
-            <h4>Téléverser un nouveau document</h4>
-            <div class="upload-form">
-              <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" class="form-control form-control-sm mb-2">
-              <textarea [(ngModel)]="fileDescription" placeholder="Description du document (optionnel)..." class="form-control form-control-sm mb-2" rows="2"></textarea>
-              <button mat-raised-button color="primary" (click)="uploadDocument()" [disabled]="!selectedFile || isUploading">
-                <i class="bi bi-upload"></i> {{ isUploading ? 'Téléversement (' + (uploadProgress !== null ? uploadProgress + '%' : '') + ')...' : 'Téléverser le fichier' }}
-              </button>
-              <div *ngIf="isUploading && uploadProgress !== null" class="progress mt-2" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress" aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div *ngIf="selectedFile && !isUploading" class="selected-file-info mt-2">
-                Sélectionné : {{ selectedFile.name }} ({{ selectedFile.size | number }} octets)
-              </div>
-            </div>
-          </div>
-          <div *ngIf="isLoadingDocuments" class="loading-indicator">Loading documents...</div>
-          <div *ngIf="!isLoadingDocuments">
-            <div class="documents-list">
-              <div class="document-item" *ngFor="let doc of task?.documents">
-                <div class="document-icon">
-                  <i [ngClass]="{
-                        'bi-file-earmark-image': doc.mediaType === 'IMAGE',
-                        'bi-file-earmark-play': doc.mediaType === 'VIDEO',
-                        'bi-file-earmark-pdf': doc.contentType === 'application/pdf',
-                        'bi-file-earmark-text': doc.mediaType !== 'IMAGE' && doc.mediaType !== 'VIDEO'
-      }" class="bi"></i> </div>
-                <div class="document-info">
-                  <strong class="document-filename" (click)="downloadDocument(doc)" matTooltip="Télécharger {{doc.filename}}">{{ doc.filename }}</strong>
-                  <small class="document-description" *ngIf="doc.description">{{ doc.description }}</small>
-                  <small class="document-meta">
-                    Taille: {{ doc.size | fileSize }} | 
-                    Ajouté le: {{ doc.uploadDate | date:'dd/MM/yyyy' }} | 
-                    Par: {{ doc.uploaderUsername || doc.uploadedBy }}
-                  </small>
-                </div>
-                <div class="document-actions">
-                  <button mat-icon-button (click)="downloadDocument(doc)" matTooltip="Télécharger">
-                    <i class="bi bi-download"></i>
-                  </button>
-                  <!-- Add condition for delete, e.g., based on user role or if user is uploader -->
-                  <button mat-icon-button color="warn" (click)="deleteDocument(doc.id)" matTooltip="Supprimer">
-                    <i class="bi bi-trash3"></i>
-                  </button>
-                </div>
-              </div>
-              <div *ngIf="(!task?.documents || task?.documents?.length === 0) && !isLoadingDocuments" class="no-comments">
-                Aucun document attaché à cette tâche.
-              </div>
-            </div>
-          </div>
+  <!-- Formulaire d'upload -->
+  <div class="upload-document-section" *ngIf="isAddingDocument">
+    <h4>Ajouter un document</h4>
+    <div class="upload-form">
+      <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" 
+             class="form-control form-control-sm mb-2" accept="*/*">
+      
+      <textarea [(ngModel)]="fileDescription" placeholder="Description (optionnelle)..."
+                class="form-control form-control-sm mb-2" rows="2"></textarea>
+      
+      <button mat-raised-button color="primary" (click)="uploadDocument()" 
+              [disabled]="!selectedFile || isUploading">
+        <i class="bi bi-upload"></i> 
+        {{ isUploading ? 'Envoi en cours...' + (uploadProgress ? ' (' + uploadProgress + '%)' : '') : 'Envoyer' }}
+      </button>
+      
+      <div *ngIf="isUploading" class="progress mt-2">
+        <div class="progress-bar" role="progressbar" 
+             [style.width.%]="uploadProgress || 0"></div>
+      </div>
+      
+      <div *ngIf="selectedFile" class="selected-file-info mt-2">
+        Fichier sélectionné: {{ selectedFile.name }} ({{ selectedFile.size | fileSize }})
+      </div>
+    </div>
+  </div>
 
-          
+  <!-- Liste des documents -->
+  <div *ngIf="isLoadingDocuments" class="loading-indicator">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoadingDocuments">
+    <div class="documents-list">
+      <div class="document-item" *ngFor="let doc of task?.documents">
+        <div class="document-icon">
+          <i [ngClass]="{
+            'bi-file-earmark-image': doc.mediaType === 'IMAGE',
+            'bi-file-earmark-play': doc.mediaType === 'VIDEO',
+            'bi-file-earmark-pdf': doc.contentType === 'application/pdf',
+            'bi-file-earmark-text': doc.mediaType === 'DOCUMENT' || doc.mediaType === 'TEXT',
+            'bi-file-earmark': !['IMAGE', 'VIDEO', 'DOCUMENT', 'TEXT'].includes(doc.mediaType)
+          }"></i>
         </div>
+        
+        <div class="document-info">
+          <a href="javascript:void(0)" (click)="downloadDocument(doc)" class="document-filename">
+            {{ doc.filename }}
+          </a>
+          <small class="document-description" *ngIf="doc.description">{{ doc.description }}</small>
+          <small class="document-meta">
+            {{ doc.size | fileSize }} | 
+            {{ doc.uploadDate | date:'dd/MM/yyyy' }} | 
+            {{ doc.uploaderUsername || doc.uploadedBy }}
+          </small>
+        </div>
+        
+        <div class="document-actions">
+          <button mat-icon-button (click)="downloadDocument(doc)" matTooltip="Télécharger">
+            <i class="bi bi-download"></i>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteDocument(doc.id)" matTooltip="Supprimer">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div *ngIf="!task?.documents?.length" class="no-documents">
+        Aucun document attaché à cette tâche.
+      </div>
+    </div>
+  </div>
+</div>
         <div class="task-section">
           <h3>Historiques</h3>
           <div *ngIf="isLoadingActivities" class="loading-indicator">Loading activities...</div>

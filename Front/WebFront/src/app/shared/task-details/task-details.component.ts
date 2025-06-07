@@ -45,6 +45,7 @@ export class TaskDetailsComponent implements OnInit {
 isAddingSubtask = false;
   newSubtaskData: any = {};
  private originalPathForModal!: string;
+
 name:string="";
   constructor(
     public activeModal: NgbActiveModal,
@@ -199,36 +200,15 @@ loadComments(): void {
   }
 loadDocuments(): void {
     if (!this.task?.id) return;
+    
     this.isLoadingDocuments = true;
-    this.documentService.getFilesByTask(this.task.id as string).pipe(
-      switchMap((documents: any[]) => {
-        if (!documents || documents.length === 0) {
-          return of([]);
-        }
-
-        const processedDocs = documents.map(doc => {
-        return {
+    this.documentService.getFilesByTask(this.task.id).subscribe({
+      next: (documents: any[]) => {
+        this.task.documents = documents.map(doc => ({
           ...doc,
           downloadUrl: doc.fileUrl || `/DocumentService/media/files/${doc.storageFilename}`
-        };
-      });
-        const userRequests: Observable<any>[] = documents.map(doc => {
-        
-          if (doc.uploadedBy) {
-            return this.agenceService.getUserById(doc.uploadedBy).pipe(
-              map(user => ({ ...doc, uploaderUsername: user.username })),
-              catchError(() => of({ ...doc, uploaderUsername: 'N/A' }))
-            );
-          }
-          return of({ ...doc, uploaderUsername: 'System' });
-        });
-        return forkJoin(userRequests);
-      })
-    ).subscribe({
-      next: (processedDocuments) => {
-         this.task.documents = processedDocuments as any[];
-               this.isLoadingDocuments = false;
-        console.log('Documents loaded:', this.task.documents);
+        }));
+        this.isLoadingDocuments = false;
       },
       error: (err) => {
         console.error('Error loading documents:', err);
@@ -239,118 +219,108 @@ loadDocuments(): void {
   }
 
   onFileSelected(event: Event): void {
-    const element = event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
-    if (fileList && fileList.length > 0) {
-      this.selectedFile = fileList[0];
-    } else {
-      this.selectedFile = null;
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
     }
   }
 
   uploadDocument(): void {
     if (!this.selectedFile || !this.task?.id) {
-      alert('Please select a file and ensure task context is available.');
+      alert('Veuillez sélectionner un fichier');
       return;
     }
-    const currentUserId = localStorage.getItem("user_id");
-    if (!currentUserId) {
-      console.error('User not authenticated for file upload');
-      alert('You must be logged in to upload files.');
+
+    const currentUserId = localStorage.getItem('user_id');
+    const currentUsername = localStorage.getItem('username');
+    
+    if (!currentUserId || !currentUsername) {
+      alert('Vous devez être connecté pour uploader des fichiers');
       return;
     }
-this.isUploading = true;
+
+    this.isUploading = true;
     this.uploadProgress = 0;
 
     this.documentService.uploadFile(
       this.selectedFile,
-      this.fileDescription ,
-      this.task.id as string,
-      this.task.projectId || null, // Ensure projectId is passed or null
-      this.task.phaseId || null,   // Ensure phaseId is passed or null
+      this.fileDescription,
+      this.task.id,
+      this.task.projectId || null,
+      this.task.phaseId || null,
+      currentUsername,
       currentUserId
     ).subscribe({
-        next: (event: HttpEvent<any>) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            if (event.total) {
-              this.uploadProgress = Math.round(100 * event.loaded / event.total);
-            }
-          } else if (event instanceof HttpResponse) {
-            // Assuming the backend returns the MediaFile object in the body of the response
-            const newDocument = event.body as MediaFileResponse;
-            const currentUsername = localStorage.getItem("username") || 'You';
-            
-            if (!this.task.documents) {
-              this.task.documents = [];
-            }
-            this.task.documents.unshift({ ...newDocument, uploaderUsername: currentUsername });
-            
-            this.selectedFile = null;
-            this.fileDescription = '';
-            this.uploadProgress = null;
-            this.isUploading = false;
-            const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
-            if (fileInput) {
-              fileInput.value = ''; // Reset file input
-            }
-             this.isAddingDocument = false; // Cacher le formulaire après succès
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress = Math.round((100 * event.loaded) / event.total);
+        } else if (event instanceof HttpResponse) {
+          const newDoc = event.body;
+          this.task.documents = this.task.documents || [];
+          this.task.documents.unshift({
+            ...newDoc,
+            uploaderUsername: currentUsername
+          });
           
-            this.loadActivities(); // Reload activities if uploads are logged
-            alert('File uploaded successfully!');
-          }
-        },
-        error: (err) => {
-            console.error('Error uploading document:', err);
-            alert(`Failed to upload file: ${err.message || 'Unknown error'}`);
-            this.isUploading = false;
-            this.uploadProgress = null;
+          this.resetUploadForm();
+          this.isUploading = false;
         }
+      },
+      error: (err) => {
+        console.error('Upload error:', err);
+        alert(`Échec de l'upload: ${err.message}`);
+        this.isUploading = false;
+        this.uploadProgress = null;
+      }
     });
   }
- toggleAddDocumentForm(): void {
-    this.isAddingDocument = !this.isAddingDocument;
-    if (this.isAddingDocument) {
-      // Réinitialiser les champs lorsque le formulaire est affiché
-      this.selectedFile = null;
-      this.fileDescription = '';
-      this.uploadProgress = null;
-      this.isUploading = false; // S'assurer que l'état de chargement est réinitialisé
-      // Réinitialiser l'input de fichier
-      const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
-      if (fileInput) {
-        fileInput.value = '';
-      }
+
+  downloadDocument(doc: any): void {
+    if (doc.downloadUrl) {
+      // Pour les fichiers déjà disponibles via URL
+      window.open(doc.downloadUrl, '_blank');
+    } else {
+      // Pour les téléchargements via l'API
+      this.documentService.downloadFile(doc.id).subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = doc.filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      });
     }
   }
 
- downloadDocument(doc: MediaFileResponse): void {
-  
-    this.documentService.downloadFile(doc.id).subscribe(blob => {
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = doc.filename;
-      link.click();
-      window.URL.revokeObjectURL(link.href);
-    }, error => {
-      console.error('Error downloading file:', error);
-      alert('Failed to download file.');
-    });
+  deleteDocument(docId: string): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce document?')) {
+      this.documentService.deleteFile(docId).subscribe({
+        next: () => {
+          this.task.documents = this.task.documents.filter((d: MediaFileResponse) => d.id !== docId);
+        },
+        error: (err) => {
+          console.error('Delete error:', err);
+          alert('Échec de la suppression');
+        }
+      });
+    }
   }
 
-  deleteDocument(docId: string): void {
-    // Confirmation dialog can be added here similar to deleteComment
-    this.documentService.deleteFile(docId).subscribe({
-      next: () => {
-        this.task.documents = this.task.documents.filter((d: MediaFileResponse) => d.id !== docId);
-       
-        this.loadActivities(); // Reload activities if deletions are logged
-        alert('Document deleted successfully.');
-      },
-      error: (err) => {
-        console.error('Error deleting document:', err);
-        alert('Failed to delete document.');
-      }
-    });
+  toggleAddDocumentForm(): void {
+    this.isAddingDocument = !this.isAddingDocument;
+    if (!this.isAddingDocument) {
+      this.resetUploadForm();
+    }
+  }
+
+  private resetUploadForm(): void {
+    this.selectedFile = null;
+    this.fileDescription = '';
+    this.uploadProgress = null;
+    const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
   }
 
   getSubtasks(subTaskIds: string[]): void {
