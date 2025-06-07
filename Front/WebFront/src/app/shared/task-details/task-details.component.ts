@@ -203,20 +203,21 @@ loadDocuments(): void {
     
     this.isLoadingDocuments = true;
     this.documentService.getFilesByTask(this.task.id).subscribe({
-      next: (documents: any[]) => {
-        this.task.documents = documents.map(doc => ({
-          ...doc,
-          downloadUrl: doc.fileUrl || `/DocumentService/media/files/${doc.storageFilename}`
-        }));
-        this.isLoadingDocuments = false;
-      },
-      error: (err) => {
-        console.error('Error loading documents:', err);
-        this.task.documents = [];
-        this.isLoadingDocuments = false;
-      }
+        next: (documents: any[]) => {
+            this.task.documents = documents.map(doc => ({
+                ...doc,
+                downloadUrl: doc.fileUrl || `/DocumentService/media/files/${doc.storageFilename}`,
+                uploaderUsername: doc.uploadedBy // Conserve le nom de l'uploader
+            }));
+            this.isLoadingDocuments = false;
+        },
+        error: (err) => {
+            console.error('Error loading documents:', err);
+            this.task.documents = [];
+            this.isLoadingDocuments = false;
+        }
     });
-  }
+}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -227,86 +228,101 @@ loadDocuments(): void {
 
   uploadDocument(): void {
     if (!this.selectedFile || !this.task?.id) {
-      alert('Veuillez sélectionner un fichier');
-      return;
+        return;
     }
 
     const currentUserId = localStorage.getItem('user_id');
     const currentUsername = localStorage.getItem('username');
     
     if (!currentUserId || !currentUsername) {
-      alert('Vous devez être connecté pour uploader des fichiers');
-      return;
+        return;
     }
 
     this.isUploading = true;
     this.uploadProgress = 0;
 
     this.documentService.uploadFile(
-      this.selectedFile,
-      this.fileDescription,
-      this.task.id,
-      this.task.projectId || null,
-      this.task.phaseId || null,
-      currentUsername,
-      currentUserId
+        this.selectedFile,
+        this.fileDescription,
+        this.task.id,
+        this.task.projectId || null,
+        this.task.phaseId || null,
+        currentUsername,
+        currentUserId
     ).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress && event.total) {
-          this.uploadProgress = Math.round((100 * event.loaded) / event.total);
-        } else if (event instanceof HttpResponse) {
-          const newDoc = event.body;
-          this.task.documents = this.task.documents || [];
-          this.task.documents.unshift({
-            ...newDoc,
-            uploaderUsername: currentUsername
-          });
-          
-          this.resetUploadForm();
-          this.isUploading = false;
+        next: (event) => {
+            if (event.type === HttpEventType.UploadProgress && event.total) {
+                // Mise à jour de la progression
+                this.uploadProgress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+                // Upload terminé avec succès
+                const newDoc = event.body;
+                this.task.documents = this.task.documents || [];
+                this.task.documents.unshift({
+                    ...newDoc,
+                    uploaderUsername: currentUsername,
+                    downloadUrl: newDoc.fileUrl || `/DocumentService/media/files/${newDoc.storageFilename}`
+                });
+                
+                this.resetUploadForm();
+                this.isUploading = false;
+            }
+        },
+        error: (err) => {
+            console.error('Upload error:', err);
+            this.isUploading = false;
+            this.uploadProgress = null;
         }
-      },
-      error: (err) => {
-        console.error('Upload error:', err);
-        alert(`Échec de l'upload: ${err.message}`);
-        this.isUploading = false;
-        this.uploadProgress = null;
-      }
     });
-  }
+}
 
   downloadDocument(doc: any): void {
     if (doc.downloadUrl) {
-      // Pour les fichiers déjà disponibles via URL
-      window.open(doc.downloadUrl, '_blank');
-    } else {
-      // Pour les téléchargements via l'API
-      this.documentService.downloadFile(doc.id).subscribe(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = doc.filename;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      });
+        // Pour les fichiers directement accessibles via URL
+        window.open(doc.downloadUrl, '_blank');
+    } else if (doc.id) {
+        // Pour les téléchargements via l'API
+        this.documentService.downloadFile(doc.id).subscribe({
+            next: (blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = doc.filename || 'document';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            },
+            error: (err) => {
+                console.error('Download error:', err);
+            }
+        });
     }
-  }
+}
 
   deleteDocument(docId: string): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce document?')) {
-      this.documentService.deleteFile(docId).subscribe({
-        next: () => {
-          this.task.documents = this.task.documents.filter((d: MediaFileResponse) => d.id !== docId);
-        },
-        error: (err) => {
-          console.error('Delete error:', err);
-          alert('Échec de la suppression');
-        }
-      });
-    }
-  }
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {
+            centered: true,
+            windowClass: 'confirmation-modal'
+        });
+    
+        modalRef.componentInstance.message = `Voulez-vous vraiment supprimer ce document `;
+    
+        modalRef.result.then((confirm) => {
+            if (confirm) {
+              this.documentService.deleteFile(docId).subscribe({
+                next: () => {
+                    this.task.documents = this.task.documents.filter((d: any) => d.id !== docId);
+                },
+                error: (err) => {
+                    console.error('Delete error:', err);
+                }
+            });
+            }
+        }).catch(() => {
+            console.log('Suppression annulée');
+        });
+}
 
   toggleAddDocumentForm(): void {
     this.isAddingDocument = !this.isAddingDocument;
@@ -315,14 +331,20 @@ loadDocuments(): void {
     }
   }
 
-  private resetUploadForm(): void {
+   resetUploadForm(): void {
     this.selectedFile = null;
     this.fileDescription = '';
     this.uploadProgress = null;
     const fileInput = document.getElementById('fileUploadInput') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
   }
-
+getDocumentIcon(doc: any): string {
+    if (doc.mediaType === 'IMAGE') return 'bi bi-file-earmark-image';
+    if (doc.mediaType === 'VIDEO') return 'bi bi-file-earmark-play';
+    if (doc.contentType === 'application/pdf') return 'bi bi-file-earmark-pdf';
+    if (doc.mediaType === 'DOCUMENT' || doc.mediaType === 'TEXT') return 'bi bi-file-earmark-text';
+    return 'bi bi-file-earmark';
+}
   getSubtasks(subTaskIds: string[]): void {
     this.isLoadingSubtasks = true;
     //

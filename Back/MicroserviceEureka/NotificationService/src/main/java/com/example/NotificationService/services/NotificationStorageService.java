@@ -63,6 +63,7 @@ public class NotificationStorageService {
             Map<String, Object> notificationWithStatus = new HashMap<>();
             notificationWithStatus.put("notification", notification);
             notificationWithStatus.put("read", false);
+            notificationWithStatus.put("sentByEmail", false);
             notificationWithStatus.put("timestamp", System.currentTimeMillis());
 
             Files.write(filePath, objectMapper.writeValueAsBytes(notificationWithStatus));
@@ -141,17 +142,6 @@ public class NotificationStorageService {
                 .count();
     }
 
-    public List<Map<String, Object>> getUnreadNotificationsOlderThan(String userId, long minutes) {
-        long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
-
-        return getUserNotifications(userId).stream()
-                .filter(notification -> !(Boolean) notification.get("read"))
-                .filter(notification -> {
-                    Long timestamp = getTimestamp(notification);
-                    return timestamp != null && timestamp < thresholdTime;
-                })
-                .collect(Collectors.toList());
-    }
     public List<String> getNotificationFilePathsOlderThan(String userId, long minutes) {
         long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
 
@@ -181,33 +171,40 @@ public class NotificationStorageService {
         }
     }
 
-    public List<Map<String, Object>> getAndMarkUnreadNotificationsOlderThan(String userId, long minutes) {
+    public void markNotificationAsSentByEmail(String userId, String notificationId) {
+        try {
+            Path userDir = Paths.get(storageDirectory, userId);
+            if (!Files.exists(userDir)) {
+                return;
+            }
+
+            Files.list(userDir)
+                    .filter(path -> path.getFileName().toString().startsWith(notificationId))
+                    .findFirst()
+                    .ifPresent(path -> {
+                        try {
+                            Map<String, Object> notification = objectMapper.readValue(path.toFile(), Map.class);
+                            notification.put("sentByEmail", true);
+                            Files.write(path, objectMapper.writeValueAsBytes(notification));
+                        } catch (IOException e) {
+                            logger.error("Failed to mark notification as sent by email: " + path, e);
+                        }
+                    });
+        } catch (IOException e) {
+            logger.error("Failed to mark notification as sent by email for user: " + userId, e);
+        }
+    }
+
+    public List<Map<String, Object>> getUnreadNotificationsOlderThan(String userId, long minutes) {
         long thresholdTime = System.currentTimeMillis() - (minutes * 60 * 1000);
 
-        List<Map<String, Object>> notifications = getUserNotifications(userId).stream()
+        return getUserNotifications(userId).stream()
                 .filter(notification -> !(Boolean) notification.get("read"))
+                .filter(notification -> !Boolean.TRUE.equals(notification.get("sentByEmail"))) // Exclure déjà envoyées
                 .filter(notification -> {
                     Long timestamp = getTimestamp(notification);
                     return timestamp != null && timestamp < thresholdTime;
                 })
                 .collect(Collectors.toList());
-
-        // Marquer ces notifications comme étant en cours de traitement
-        notifications.forEach(notification -> {
-            notification.put("processing", true);
-            // Sauvegarder ce changement
-            String notificationId = (String) ((Map<String, Object>) notification.get("notification")).get("id");
-            if (notificationId != null) {
-                try {
-                    Path path = Paths.get(storageDirectory, userId, notificationId + ".json");
-                    Files.write(path, objectMapper.writeValueAsBytes(notification));
-                } catch (IOException e) {
-                    logger.error("Failed to mark notification as processing: " + notificationId, e);
-                }
-            }
-        });
-
-        return notifications;
     }
-
 }

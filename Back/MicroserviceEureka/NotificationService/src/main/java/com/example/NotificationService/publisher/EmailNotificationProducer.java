@@ -48,8 +48,7 @@ public class EmailNotificationProducer {
     @PostConstruct
     public void init() {
         // Schedule a task to check for unread notifications every minute
-        scheduler.scheduleAtFixedRate(this::checkAndSendEmailNotifications,
-                5, 5, TimeUnit.MINUTES);
+        scheduler.schedule(() -> checkAndSendEmailNotifications(), 5, TimeUnit.MINUTES);
     }
 
     private void checkAndSendEmailNotifications() {
@@ -77,12 +76,20 @@ public class EmailNotificationProducer {
                                 logger.info("Found {} unread notifications for user {}", unreadNotifications.size(), userId);
 
                                 String userEmail = keycloakService.getUserEmailById(userId, authToken);
-                                logger.info("email user {}",userEmail);
+                                logger.info("email user {}", userEmail);
                                 if (userEmail != null) {
                                     NotificationDto latestNotification =
                                             objectMapper.convertValue(unreadNotifications.get(0).get("notification"), NotificationDto.class);
                                     logger.info("Latest notification: {}", latestNotification);
+
+                                    // Envoyer l'email
                                     sendEmailNotification(userId, userEmail, latestNotification);
+
+                                    // Marquer comme envoyée
+                                    notificationStorageService.markNotificationAsSentByEmail(
+                                            userId,
+                                            latestNotification.getTaskId() // ou un autre ID unique
+                                    );
                                 } else {
                                     logger.warn("Could not find email for user {}", userId);
                                 }

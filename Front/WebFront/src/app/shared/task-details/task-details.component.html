@@ -127,7 +127,8 @@
           </div>
         </div>
   
-       <div class="task-section">
+      <div class="task-section">
+  <!-- En-tête et bouton d'ajout -->
   <div class="documents-header">
     <h3><i class="bi bi-folder2-open"></i> Documents</h3>
     <button mat-icon-button class="add-document-btn" (click)="toggleAddDocumentForm()" 
@@ -137,28 +138,37 @@
   </div>
 
   <!-- Formulaire d'upload -->
-  <div class="upload-document-section" *ngIf="isAddingDocument">
+  <div class="upload-document-section" *ngIf="isAddingDocument" @fadeInOut>
     <h4>Ajouter un document</h4>
     <div class="upload-form">
       <input id="fileUploadInput" type="file" (change)="onFileSelected($event)" 
-             class="form-control form-control-sm mb-2" accept="*/*">
+             class="form-control form-control-sm mb-2" accept="*/*" #fileInput>
       
       <textarea [(ngModel)]="fileDescription" placeholder="Description (optionnelle)..."
                 class="form-control form-control-sm mb-2" rows="2"></textarea>
       
-      <button mat-raised-button color="primary" (click)="uploadDocument()" 
-              [disabled]="!selectedFile || isUploading">
-        <i class="bi bi-upload"></i> 
-        {{ isUploading ? 'Envoi en cours...' + (uploadProgress ? ' (' + uploadProgress + '%)' : '') : 'Envoyer' }}
-      </button>
+      <div class="d-flex gap-2">
+        <button mat-raised-button color="primary" (click)="uploadDocument()" 
+                [disabled]="!selectedFile || isUploading">
+          <i class="bi bi-upload"></i> 
+          {{ isUploading ? 'Envoi en cours...' + (uploadProgress ? ' (' + uploadProgress + '%)' : '') : 'Envoyer' }}
+        </button>
+        
+        <button mat-stroked-button (click)="resetUploadForm(); fileInput.value = ''" 
+                [disabled]="isUploading">
+          <i class="bi bi-x-circle"></i> Annuler
+        </button>
+      </div>
       
       <div *ngIf="isUploading" class="progress mt-2">
-        <div class="progress-bar" role="progressbar" 
-             [style.width.%]="uploadProgress || 0"></div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+             [style.width.%]="uploadProgress || 0" [attr.aria-valuenow]="uploadProgress || 0">
+        </div>
       </div>
       
       <div *ngIf="selectedFile" class="selected-file-info mt-2">
-        Fichier sélectionné: {{ selectedFile.name }} ({{ selectedFile.size | fileSize }})
+        <i class="bi bi-file-earmark"></i> 
+        {{ selectedFile.name }} ({{ selectedFile.size | fileSize }})
       </div>
     </div>
   </div>
@@ -166,19 +176,14 @@
   <!-- Liste des documents -->
   <div *ngIf="isLoadingDocuments" class="loading-indicator">
     <mat-spinner diameter="30"></mat-spinner>
+    <span class="ms-2">Chargement des documents...</span>
   </div>
 
   <div *ngIf="!isLoadingDocuments">
     <div class="documents-list">
       <div class="document-item" *ngFor="let doc of task?.documents">
         <div class="document-icon">
-          <i [ngClass]="{
-            'bi-file-earmark-image': doc.mediaType === 'IMAGE',
-            'bi-file-earmark-play': doc.mediaType === 'VIDEO',
-            'bi-file-earmark-pdf': doc.contentType === 'application/pdf',
-            'bi-file-earmark-text': doc.mediaType === 'DOCUMENT' || doc.mediaType === 'TEXT',
-            'bi-file-earmark': !['IMAGE', 'VIDEO', 'DOCUMENT', 'TEXT'].includes(doc.mediaType)
-          }"></i>
+          <i [ngClass]="getDocumentIcon(doc)"></i>
         </div>
         
         <div class="document-info">
@@ -188,7 +193,7 @@
           <small class="document-description" *ngIf="doc.description">{{ doc.description }}</small>
           <small class="document-meta">
             {{ doc.size | fileSize }} | 
-            {{ doc.uploadDate | date:'dd/MM/yyyy' }} | 
+            {{ doc.uploadDate | date:'dd/MM/yyyy HH:mm' }} | 
             {{ doc.uploaderUsername || doc.uploadedBy }}
           </small>
         </div>
@@ -204,7 +209,7 @@
       </div>
       
       <div *ngIf="!task?.documents?.length" class="no-documents">
-        Aucun document attaché à cette tâche.
+        <i class="bi bi-folder-x"></i> Aucun document attaché à cette tâche.
       </div>
     </div>
   </div>

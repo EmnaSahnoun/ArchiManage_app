@@ -8,36 +8,37 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class DocumentService {
-     private apiUrl = '/document';
+     private apiUrl = '/document/media';
      constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
       
 uploadFile(
-    file: File,
-    description: string,
-    taskId: string,
-    projectId: string | null,
-    phaseId: string | null,
-    uploadedBy: string,
-    idUser: string
-  ): Observable<HttpEvent<any>> {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('description', description);
-    formData.append('taskId', taskId);
-    formData.append('uploadedBy', uploadedBy);
-    formData.append('idUser', idUser);
-    
-    if (projectId) formData.append('projectId', projectId);
-    if (phaseId) formData.append('phaseId', phaseId);
+        file: File,
+        description: string,
+        taskId: string,
+        projectId: string | null,
+        phaseId: string | null,
+        uploadedBy: string,
+        idUser: string
+    ): Observable<HttpEvent<any>> {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('description', description);
+        formData.append('taskId', taskId);
+        formData.append('uploadedBy', uploadedBy);
+        formData.append('idUser', idUser);
+        
+        if (projectId) formData.append('projectId', projectId);
+        if (phaseId) formData.append('phaseId', phaseId);
 
-    return this.http.post(`${this.apiUrl}`, formData, { 
-      headers: this.getApiHeaders(),
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(
-      catchError(this.handleError)
-    );
-  }
+        return this.http.post(`${this.apiUrl}`, formData, { 
+            headers: this.getApiHeaders(),
+            reportProgress: true,
+            observe: 'events'
+        }).pipe(
+            catchError(this.handleError)
+        );
+    }
+
 
   downloadFile(id: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${id}`, {
