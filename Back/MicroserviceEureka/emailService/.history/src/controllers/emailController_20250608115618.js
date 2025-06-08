@@ -143,13 +143,12 @@ const markAsRead = async (req, res) => {
 
 const sendSystemEmail = async (req, res) => {
   try {
-    console.log('Requête reçue pour sendSystemEmail:', req.body);
     // Utilisez le compte système pour envoyer l'email
     const result = await gmailService.sendSystemEmail(
       systemAuth.SYSTEM_USER_ID, // L'ID du compte système
       req.body
     );
-console.log('Email envoyé avec succès:', result);
+
     res.json({ 
       success: true, 
       message: 'Email envoyé avec succès',

@@ -93,6 +93,7 @@ export class UserFormComponent implements OnInit {
 }
 
 private sendWelcomeEmail(userEmail: string, username: string, agencyName: string): void {
+    console.log("Début de l'envoi d'email");
     const emailData = {
       to: userEmail,
       subject: `Bienvenue dans l'agence ${agencyName}`,
@@ -102,12 +103,19 @@ private sendWelcomeEmail(userEmail: string, username: string, agencyName: string
             `Note importante : Lors de votre première connexion, vous devrez définir un nouveau mot de passe.\n\n` +
             `Cordialement,\nL'équipe ArchiManage`
     };
-
+    console.log("Données email:", emailData);
     this.gmailService.sendSystemEmail(emailData).subscribe({
-      next: () => console.log('Email de bienvenue envoyé avec succès'),
-      error: (err) => console.error('Erreur lors de l\'envoi de l\'email', err)
-    });
-  }
+    next: (response) => {
+      console.log('Réponse complète:', response);
+      console.log('Email envoyé avec succès');
+    },
+    error: (err) => {
+      console.error('Erreur complète:', err);
+      console.error('Erreur lors de l\'envoi:', err.message);
+    },
+    complete: () => console.log('Processus d\'envoi terminé')
+  });
+}
 
 
   onCancel(): void {

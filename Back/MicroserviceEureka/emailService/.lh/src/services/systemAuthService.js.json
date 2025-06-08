@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1749296432361,
@@ -32,6 +32,14 @@
                 {
                     "date": 1749303176395,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n \r\n const { google } = require('googleapis');\r\n const oAuth2Client = require('../config/googleAuth');\r\n const { saveToken } = require('../utils/tokenStorage');\r\n-\r\n+require(\"dotenv\").config();\r\n // ID unique pour le compte système\r\n const SYSTEM_USER_ID = 'system-account';\r\n \r\n async function initializeSystemAuth() {\r\n"
+                },
+                {
+                    "date": 1749384866092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n async function initializeSystemAuth() {\r\n   try {\r\n     // Utilisez un refresh token permanent pour le compte système\r\n     const refreshToken = process.env.GOOGLE_SYSTEM_REFRESH_TOKEN;\r\n-    \r\n+    console.log('Initialisation avec refreshToken:', refreshToken ? 'présent' : 'absent');\r\n     oAuth2Client.setCredentials({\r\n       refresh_token: refreshToken\r\n     });\r\n \r\n"
+                },
+                {
+                    "date": 1749384877006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n     });\r\n \r\n     // Rafraîchir le token d'accès\r\n     const { credentials } = await oAuth2Client.refreshAccessToken();\r\n+     console.log('Nouveau access token obtenu:', credentials.access_token);\r\n     \r\n     // Sauvegarder le token pour le compte système\r\n     await saveToken(SYSTEM_USER_ID, {\r\n       access_token: credentials.access_token,\r\n"
                 }
             ],
             "date": 1749296432361,

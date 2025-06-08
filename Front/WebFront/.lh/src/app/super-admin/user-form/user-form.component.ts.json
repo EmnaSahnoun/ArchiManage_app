@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 68,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1744030117160,
@@ -280,6 +280,10 @@
                 {
                     "date": 1749379300580,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private userService:UserService,\r\n     private agenceService:AgenceService,\r\n-    private gmail\r\n+    private gmailService:GmailService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       username: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1749384314838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n             `Vous êtes maintenant membre de notre application. Vous pouvez y accéder en suivant ce lien : [URL_DE_VOTRE_APPLICATION]\\n\\n` +\r\n             `Note importante : Lors de votre première connexion, vous devrez définir un nouveau mot de passe.\\n\\n` +\r\n             `Cordialement,\\nL'équipe ArchiManage`\r\n     };\r\n-    console\r\n+    console.\r\n     this.gmailService.sendSystemEmail(emailData).subscribe({\r\n       next: () => console.log('Email de bienvenue envoyé avec succès'),\r\n       error: (err) => console.error('Erreur lors de l\\'envoi de l\\'email', err)\r\n     });\r\n"
                 }
             ],
             "date": 1744030117160,

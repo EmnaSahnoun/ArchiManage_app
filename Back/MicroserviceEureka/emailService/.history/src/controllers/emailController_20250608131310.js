@@ -149,7 +149,7 @@ const sendSystemEmail = async (req, res) => {
       systemAuth.SYSTEM_USER_ID, // L'ID du compte système
       req.body
     );
-console.log('Email envoyé avec succès:', result);
+
     res.json({ 
       success: true, 
       message: 'Email envoyé avec succès',

@@ -17,7 +17,6 @@ async function initializeSystemAuth() {
 
     // Rafraîchir le token d'accès
     const { credentials } = await oAuth2Client.refreshAccessToken();
-     console.log('Nouveau access token obtenu:', credentials.access_token);
     
     // Sauvegarder le token pour le compte système
     await saveToken(SYSTEM_USER_ID, {

@@ -139,9 +139,16 @@ const headers = this.getApiHeaders()
 const headers = this.getApiHeaders()
     return this.http.post(`${this.apiUrl}/drafts/${draftId}/send`, {}, {headers, params });
   }
-sendSystemEmail(emailData: any) {
-    return this.http.post(`${this.apiUrl}/emails/system`, emailData);
-  }
+sendSystemEmail(emailData: any): Observable<any> {
+  console.log('Envoi de l\'email système - Données:', emailData);
+  return this.http.post(`${this.apiUrl}/emails/system`, emailData).pipe(
+    tap(response => console.log('Réponse du serveur:', response)),
+    catchError(error => {
+      console.error('Erreur lors de l\'envoi:', error);
+      return throwError(() => error);
+    })
+  );
+}
     
       private getApiHeaders(): HttpHeaders {
          const token = this.authService.getAccessToken();
