@@ -141,10 +141,18 @@ const headers = this.getApiHeaders()
   }
 sendSystemEmail(emailData: any): Observable<any> {
   console.log('Envoi de l\'email système - Données:', emailData);
-  return this.http.post(`${this.apiUrl}/emails/system`, emailData).pipe(
-    tap(response => console.log('Réponse du serveur:', response)),
+  
+  // Ajoutez des headers si nécessaire
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.post(`${this.apiUrl}/emails/system`, emailData, { headers }).pipe(
     catchError(error => {
-      console.error('Erreur lors de l\'envoi:', error);
+      console.error('Erreur détaillée:', error);
+      console.error('Status:', error.status);
+      console.error('Message:', error.error?.message || error.message);
+      console.error('Détails:', error.error?.details);
       return throwError(() => error);
     })
   );

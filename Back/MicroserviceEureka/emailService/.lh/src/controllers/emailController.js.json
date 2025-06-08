@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 78,
+            "activePatchIndex": 79,
             "patches": [
                 {
                     "date": 1748481092181,
@@ -320,6 +320,10 @@
                 {
                     "date": 1749384800950,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n     const result = await gmailService.sendSystemEmail(\r\n       systemAuth.SYSTEM_USER_ID, // L'ID du compte système\r\n       req.body\r\n     );\r\n-\r\n+console.log('Email envoyé avec succès:', result);\r\n     res.json({ \r\n       success: true, \r\n       message: 'Email envoyé avec succès',\r\n       data: result\r\n"
+                },
+                {
+                    "date": 1749388068268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,8 +143,10 @@\n \r\n const sendSystemEmail = async (req, res) => {\r\n   try {\r\n     console.log('Requête reçue pour sendSystemEmail:', req.body);\r\n+    console.log('SYSTEM_USER_ID:', systemAuth.SYSTEM_USER_ID);\r\n+    console.log('Email data:', req.body);\r\n     // Utilisez le compte système pour envoyer l'email\r\n     const result = await gmailService.sendSystemEmail(\r\n       systemAuth.SYSTEM_USER_ID, // L'ID du compte système\r\n       req.body\r\n"
                 }
             ],
             "date": 1748481092181,

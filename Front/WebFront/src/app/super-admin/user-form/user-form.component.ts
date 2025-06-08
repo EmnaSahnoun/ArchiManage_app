@@ -103,17 +103,18 @@ private sendWelcomeEmail(userEmail: string, username: string, agencyName: string
             `Note importante : Lors de votre première connexion, vous devrez définir un nouveau mot de passe.\n\n` +
             `Cordialement,\nL'équipe ArchiManage`
     };
-    console.log("Données email:", emailData);
+     console.log('Données email envoyées:', JSON.stringify(emailData, null, 2));
     this.gmailService.sendSystemEmail(emailData).subscribe({
     next: (response) => {
-      console.log('Réponse complète:', response);
-      console.log('Email envoyé avec succès');
+      console.log('Email envoyé avec succès:', response);
     },
     error: (err) => {
-      console.error('Erreur complète:', err);
-      console.error('Erreur lors de l\'envoi:', err.message);
-    },
-    complete: () => console.log('Processus d\'envoi terminé')
+      console.error('Erreur lors de l\'envoi:', {
+        status: err.status,
+        message: err.message,
+        error: err.error
+      });
+    }
   });
 }
 
