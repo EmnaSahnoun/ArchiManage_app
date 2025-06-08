@@ -11,7 +11,6 @@ router.get('/inbox/list', emailController.getInbox);
 router.get('/sent/list', emailController.getSent);
 router.delete('/:emailId', emailController.deleteEmail);
 router.post('/:emailId/read', emailController.markAsRead);
-router.post('/system', emailController.sendSystemEmail);
 
 
 module.exports = router;

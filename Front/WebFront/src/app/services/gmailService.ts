@@ -139,7 +139,9 @@ const headers = this.getApiHeaders()
 const headers = this.getApiHeaders()
     return this.http.post(`${this.apiUrl}/drafts/${draftId}/send`, {}, {headers, params });
   }
-
+sendSystemEmail(emailData: any) {
+    return this.http.post(`${this.apiUrl}/emails/system`, emailData);
+  }
     
       private getApiHeaders(): HttpHeaders {
          const token = this.authService.getAccessToken();

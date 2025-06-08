@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/UserService';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AgenceService } from '../../services/agenceService';
+import { GmailService } from '../../services/gmailService';
 
 @Component({
   selector: 'app-user-form',
@@ -18,7 +19,8 @@ export class UserFormComponent implements OnInit {
     public activeModal: NgbActiveModal, // Injectez NgbActiveModal
     private fb: FormBuilder,
     private userService:UserService,
-    private agenceService:AgenceService
+    private agenceService:AgenceService,
+    private gmailService:GmailService
   ) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
@@ -56,7 +58,7 @@ export class UserFormComponent implements OnInit {
             credentials: [{
                 type: 'password',
                 value: formValue.password,
-                temporary: false
+                temporary: true
             }],
             groups: [this.agencyName] // Ajout direct du groupe dans la création
         };
@@ -69,6 +71,8 @@ export class UserFormComponent implements OnInit {
             this.agencyName
         ).subscribe({
             next: () => {
+              this.sendWelcomeEmail(formValue.email, formValue.username, this.agencyName);
+          
                 console.log('Utilisateur créé avec succès avec rôle et groupe');
                 this.isLoading = false;
                 this.activeModal.close({ success: true });
@@ -87,6 +91,24 @@ export class UserFormComponent implements OnInit {
         }
     }
 }
+
+private sendWelcomeEmail(userEmail: string, username: string, agencyName: string): void {
+    const emailData = {
+      to: userEmail,
+      subject: `Bienvenue dans l'agence ${agencyName}`,
+      text: `Bonjour ${username},\n\n` +
+            `Bienvenue dans l'agence ${agencyName} !\n\n` +
+            `Vous êtes maintenant membre de notre application. Vous pouvez y accéder en suivant ce lien : [URL_DE_VOTRE_APPLICATION]\n\n` +
+            `Note importante : Lors de votre première connexion, vous devrez définir un nouveau mot de passe.\n\n` +
+            `Cordialement,\nL'équipe ArchiManage`
+    };
+
+    this.gmailService.sendSystemEmail(emailData).subscribe({
+      next: () => console.log('Email de bienvenue envoyé avec succès'),
+      error: (err) => console.error('Erreur lors de l\'envoi de l\'email', err)
+    });
+  }
+
 
   onCancel(): void {
     this.activeModal.dismiss();

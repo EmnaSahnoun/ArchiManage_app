@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1748481123606,
@@ -32,6 +32,14 @@
                 {
                     "date": 1749293110726,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,19 +11,16 @@\n \r\n // Route pour rafraîchir le token d'accès\r\n router.post(\"/refresh-token\", authController.refreshToken);\r\n // Dans authRoutes.js\r\n-router.get('/system-init', async (req, res) => {\r\n-  const url = oAuth2Client.generateAuthUrl({\r\n-    access_type: \"offline\",\r\n-    scope: [\r\n-      \"https://www.googleapis.com/auth/gmail.send\",\r\n-      \"https://www.googleapis.com/auth/userinfo.email\"\r\n-    ],\r\n-    prompt: \"consent\",\r\n-    login_hint: \"archimanage.systeo@gmail.com\" // Force ce compte\r\n-  });\r\n-  res.redirect(url);\r\n+router.get('/system-init', (req, res) => {\r\n+    const url = oAuth2Client.generateAuthUrl({\r\n+        access_type: \"offline\",\r\n+        scope: [\"https://www.googleapis.com/auth/gmail.send\"],\r\n+        prompt: \"consent\",\r\n+        login_hint: \"archimanage.systeo@gmail.com\"\r\n+    });\r\n+    res.redirect(url);\r\n });\r\n \r\n // Callback spécial pour le compte système\r\n router.get('/system-callback', async (req, res) => {\r\n"
+                },
+                {
+                    "date": 1749379574490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,5 +36,6 @@\n     console.error(\"Erreur configuration système:\", error);\r\n     res.status(500).send(\"Erreur lors de la configuration du compte système\");\r\n   }\r\n });\r\n+router.post('/system', emailController.sendSystemEmail);\r\n module.exports = router;\r\n"
+                },
+                {
+                    "date": 1749379595198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,6 +36,5 @@\n     console.error(\"Erreur configuration système:\", error);\r\n     res.status(500).send(\"Erreur lors de la configuration du compte système\");\r\n   }\r\n });\r\n-router.post('/system', emailController.sendSystemEmail);\r\n module.exports = router;\r\n"
                 }
             ],
             "date": 1748481123606,

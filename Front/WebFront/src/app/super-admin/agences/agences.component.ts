@@ -47,6 +47,7 @@ export class AgencesComponent implements OnInit{
         this.agencies = agencies;
         this.filteredAgencies = [...this.agencies];
         console.log('Agences chargées:', this.agencies);
+        console.log("les agence filtreee", this.filteredAgencies)
         this.isLoading = false;
       },
       error: (err) => {

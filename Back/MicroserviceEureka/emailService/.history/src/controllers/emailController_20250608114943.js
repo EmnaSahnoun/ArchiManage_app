@@ -1,5 +1,5 @@
 const gmailService = require("../services/gmailService");
-//const { sendSystemEmail } = require('../services/gmailService');
+const { sendSystemEmail } = require('../services/gmailService');
 const systemAuth = require('../services/systemAuthService');
 const getUserId = (req) => {
   // Use the authenticated user's email or the from address
@@ -144,7 +144,7 @@ const markAsRead = async (req, res) => {
 const sendSystemEmail = async (req, res) => {
   try {
     // Utilisez le compte système pour envoyer l'email
-    const result = await gmailService.sendSystemEmail(
+    const result = await sendSystemEmail(
       systemAuth.SYSTEM_USER_ID, // L'ID du compte système
       req.body
     );
@@ -170,6 +170,5 @@ module.exports = {
   getInbox,
   getSent,
   deleteEmail,
-  markAsRead,
-  sendSystemEmail
+  markAsRead
 };

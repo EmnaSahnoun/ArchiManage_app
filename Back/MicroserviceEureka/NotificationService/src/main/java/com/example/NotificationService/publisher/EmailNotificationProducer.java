@@ -130,7 +130,7 @@ public class EmailNotificationProducer {
             EmailNotificationDto emailNotification = new EmailNotificationDto();
             emailNotification.setUserId(userId);
             emailNotification.setEmail(email);
-            emailNotification.setSubject("You have unread notifications");
+            emailNotification.setSubject("Vous avez des notifications non lues");
             emailNotification.setContent(buildEmailContent(notification));
             emailNotification.setOriginalNotification(notification);
 
@@ -143,14 +143,14 @@ public class EmailNotificationProducer {
 
     private String buildEmailContent(NotificationDto notification) {
         return String.format(
-                "You have unread notifications:\n\n" +
+                "Vous avez des notifications non lues:\n\n" +
                         "Project: %s\n" +
                         "Task: %s\n" +
-                        "Message: %s\n\n" +
-                        "Please login to view your notifications.",
+                        "Message: Nouvelles modifications ont été apportées à la tâche '%s' (Phase: %s) dans le projet '%s'.\n\n" +
+                        "Veuillez vous connecter pour voir vos notifications.",
                 notification.getProjectName(),
-                notification.getTaskName(),
-                notification.getMessage()
+                notification.getTaskName()
+
         );
     }
 }

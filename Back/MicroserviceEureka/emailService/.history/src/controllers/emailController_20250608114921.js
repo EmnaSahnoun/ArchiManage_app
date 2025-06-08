@@ -1,5 +1,5 @@
 const gmailService = require("../services/gmailService");
-//const { sendSystemEmail } = require('../services/gmailService');
+const { sendSystemEmail } = require('../services/gmailService');
 const systemAuth = require('../services/systemAuthService');
 const getUserId = (req) => {
   // Use the authenticated user's email or the from address
@@ -141,35 +141,12 @@ const markAsRead = async (req, res) => {
   }
 };
 
-const sendSystemEmail = async (req, res) => {
-  try {
-    // Utilisez le compte système pour envoyer l'email
-    const result = await gmailService.sendSystemEmail(
-      systemAuth.SYSTEM_USER_ID, // L'ID du compte système
-      req.body
-    );
-
-    res.json({ 
-      success: true, 
-      message: 'Email envoyé avec succès',
-      data: result
-    });
-  } catch (error) {
-    console.error("Erreur lors de l'envoi de l'email système:", error);
-    res.status(500).json({
-      success: false,
-      error: "Échec de l'envoi de l'email",
-      details: error.message
-    });
-  }
-};
-
+cons
 module.exports = {
   sendEmail,
   getEmail,
   getInbox,
   getSent,
   deleteEmail,
-  markAsRead,
-  sendSystemEmail
+  markAsRead
 };

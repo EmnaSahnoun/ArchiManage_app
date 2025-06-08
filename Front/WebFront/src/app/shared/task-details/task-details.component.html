@@ -1,6 +1,7 @@
 <div class="task-details-container">
     <div class="task-header">
       <h2>{{ task?.name }}</h2>
+      
       <div class="priority-badge" [class.high]="task?.priority === 'HIGH'"
                                     [class.medium]="task?.priority === 'MEDIUM'"
                                     [class.low]="task?.priority === 'LOW'">

@@ -144,7 +144,7 @@ const markAsRead = async (req, res) => {
 const sendSystemEmail = async (req, res) => {
   try {
     // Utilisez le compte système pour envoyer l'email
-    const result = await gmailService.sendSystemEmail(
+    const result = await sendSystemEmail(
       systemAuth.SYSTEM_USER_ID, // L'ID du compte système
       req.body
     );

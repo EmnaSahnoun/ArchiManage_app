@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 68,
+            "activePatchIndex": 76,
             "patches": [
                 {
                     "date": 1748481092181,
@@ -280,6 +280,38 @@
                 {
                     "date": 1748708566293,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n   try {\r\n     const { accessToken, maxResults,userId } = req.query;\r\n    \r\n     let emails = await gmailService.getInboxEmails(accessToken, maxResults,userId);\r\n-\r\n+emails = emails.filter(email => email && !email.skipped);\r\n     res.json({ success: true, data: emails });\r\n   } catch (error) {\r\n     res.status(500).json({\r\n       success: false,\r\n"
+                },
+                {
+                    "date": 1749379633759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,42 +1,40 @@\n const gmailService = require(\"../services/gmailService\");\r\n-\r\n+const { sendSystemEmail } = require('../services/gmailService');\r\n+const systemAuth = require('../utils/systemAuth');\r\n const getUserId = (req) => {\r\n   // Use the authenticated user's email or the from address\r\n   return req.user?.email || req.body.from || 'default-user';\r\n };\r\n \r\n // Envoyer un email\r\n const sendEmail = async (req, res) => {\r\n-  try {\r\n-    const { accessToken, ...emailData } = req.body;\r\n-    const userId = emailData.from; // Utilisez l'email de l'expéditeur comme userId\r\n+ try {\r\n+    const { accessToken, from, to, subject, text, attachments: emailAttachments = [] } = req.body;\r\n+    const userId = from;\r\n     \r\n     console.log(\"userId\", userId);\r\n-    const attachments = [];\r\n-    if (req.files && req.files.length > 0) {\r\n-      attachments.push(...req.files.map(file => ({\r\n-        filename: file.originalname,\r\n-        mimeType: file.mimetype,\r\n-        content: file.buffer\r\n-      })));\r\n-    }\r\n+    \r\n+    // Gestion des fichiers uploadés\r\n+    const fileAttachments = req.files?.map(file => ({\r\n+      filename: file.originalname,\r\n+      mimeType: file.mimetype,\r\n+      content: file.buffer\r\n+    })) || [];\r\n \r\n-    // S'assurer que emailData.attachments est un tableau\r\n-    const emailAttachments = Array.isArray(emailData.attachments) \r\n-      ? emailData.attachments \r\n-      : [];\r\n-\r\n+    // Envoi de l'email\r\n     const result = await gmailService.sendEmail(\r\n       accessToken, \r\n       {\r\n-        ...emailData,\r\n-        attachments: [...emailAttachments, ...attachments]\r\n+        from,\r\n+        to,\r\n+        subject,\r\n+        text,\r\n+        attachments: [...emailAttachments, ...fileAttachments]\r\n       },\r\n       userId\r\n     );\r\n \r\n-    \r\n     res.json({ success: true, data: result });\r\n   } catch (error) {\r\n     console.error(\"Erreur détaillée:\", error);\r\n     res.status(500).json({\r\n"
+                },
+                {
+                    "date": 1749379740647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const gmailService = require(\"../services/gmailService\");\r\n const { sendSystemEmail } = require('../services/gmailService');\r\n-const systemAuth = require('../utils/systemAuth');\r\n+const systemAuth = require('../services/systemAuth');\r\n const getUserId = (req) => {\r\n   // Use the authenticated user's email or the from address\r\n   return req.user?.email || req.body.from || 'default-user';\r\n };\r\n"
+                },
+                {
+                    "date": 1749379762772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n const gmailService = require(\"../services/gmailService\");\r\n const { sendSystemEmail } = require('../services/gmailService');\r\n-const systemAuth = require('../services/systemAuth');\r\n+const systemAuth = require('../services/systemAuthService');\r\n const getUserId = (req) => {\r\n   // Use the authenticated user's email or the from address\r\n   return req.user?.email || req.body.from || 'default-user';\r\n };\r\n@@ -140,9 +140,9 @@\n     });\r\n   }\r\n };\r\n \r\n-\r\n+cons\r\n module.exports = {\r\n   sendEmail,\r\n   getEmail,\r\n   getInbox,\r\n"
+                },
+                {
+                    "date": 1749379773585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -140,9 +140,10 @@\n     });\r\n   }\r\n };\r\n \r\n-cons\r\n+const sendSystemEmail = async (req, res) => {\r\n+\r\n module.exports = {\r\n   sendEmail,\r\n   getEmail,\r\n   getInbox,\r\n"
+                },
+                {
+                    "date": 1749379783564,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,9 +141,30 @@\n   }\r\n };\r\n \r\n const sendSystemEmail = async (req, res) => {\r\n+  try {\r\n+    // Utilisez le compte système pour envoyer l'email\r\n+    const result = await sendSystemEmail(\r\n+      systemAuth.SYSTEM_USER_ID, // L'ID du compte système\r\n+      req.body\r\n+    );\r\n \r\n+    res.json({ \r\n+      success: true, \r\n+      message: 'Email envoyé avec succès',\r\n+      data: result\r\n+    });\r\n+  } catch (error) {\r\n+    console.error(\"Erreur lors de l'envoi de l'email système:\", error);\r\n+    res.status(500).json({\r\n+      success: false,\r\n+      error: \"Échec de l'envoi de l'email\",\r\n+      details: error.message\r\n+    });\r\n+  }\r\n+};\r\n+\r\n module.exports = {\r\n   sendEmail,\r\n   getEmail,\r\n   getInbox,\r\n"
+                },
+                {
+                    "date": 1749379790911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,6 +169,7 @@\n   getEmail,\r\n   getInbox,\r\n   getSent,\r\n   deleteEmail,\r\n-  markAsRead\r\n+  markAsRead,\r\n+  \r\n };\r\n"
+                },
+                {
+                    "date": 1749380161687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n const gmailService = require(\"../services/gmailService\");\r\n-const { sendSystemEmail } = require('../services/gmailService');\r\n+//const { sendSystemEmail } = require('../services/gmailService');\r\n const systemAuth = require('../services/systemAuthService');\r\n const getUserId = (req) => {\r\n   // Use the authenticated user's email or the from address\r\n   return req.user?.email || req.body.from || 'default-user';\r\n@@ -170,6 +170,6 @@\n   getInbox,\r\n   getSent,\r\n   deleteEmail,\r\n   markAsRead,\r\n-  \r\n+  sendSystemEmail\r\n };\r\n"
+                },
+                {
+                    "date": 1749380179788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,9 +143,9 @@\n \r\n const sendSystemEmail = async (req, res) => {\r\n   try {\r\n     // Utilisez le compte système pour envoyer l'email\r\n-    const result = await sendSystemEmail(\r\n+    const result = await gmailService.sendSystemEmail(\r\n       systemAuth.SYSTEM_USER_ID, // L'ID du compte système\r\n       req.body\r\n     );\r\n \r\n"
                 }
             ],
             "date": 1748481092181,

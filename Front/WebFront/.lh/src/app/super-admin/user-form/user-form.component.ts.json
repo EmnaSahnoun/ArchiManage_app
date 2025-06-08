@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 65,
+            "activePatchIndex": 68,
             "patches": [
                 {
                     "date": 1744030117160,
@@ -268,6 +268,18 @@
                 {
                     "date": 1745361303909,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,40 +87,9 @@\n         }\r\n     }\r\n }\r\n \r\n-  private assignRoleToUser(username: string, roleName: string): void {\r\n-    // D'abord, trouver l'ID de l'utilisateur\r\n-    this.userService.getUsers().subscribe({\r\n-      next: (users) => {\r\n-        const user = users.find((u: any) => u.username === username);\r\n-        if (user) {\r\n-          // Ensuite, trouver le rôle\r\n-          this.userService.getRoles().subscribe({\r\n-            next: (roles) => {\r\n-              const role = roles.find((r: any) => r.name === roleName);\r\n-              if (role) {\r\n-                this.agenceService.assignRoleToUser(user.id, role).subscribe({\r\n-                  next: () => {\r\n-                    this.isLoading = false;\r\n-                    this.activeModal.close({ success: true });\r\n-                  },\r\n-                  error: (err) => {\r\n-                    console.error('Failed to assign role', err);\r\n-                    this.isLoading = false;\r\n-                  }\r\n-                });\r\n-              }\r\n-            }\r\n-          });\r\n-        }\r\n-      },\r\n-      error: (err) => {\r\n-        console.error('Failed to find user', err);\r\n-        this.isLoading = false;\r\n-      }\r\n-    });\r\n-  }\r\n+ \r\n \r\n   onCancel(): void {\r\n     this.activeModal.dismiss();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749378558798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n             enabled: true,\r\n             credentials: [{\r\n                 type: 'password',\r\n                 value: formValue.password,\r\n-                temporary: false\r\n+                temporary: true\r\n             }],\r\n             groups: [this.agencyName] // Ajout direct du groupe dans la création\r\n         };\r\n \r\n@@ -87,10 +87,8 @@\n         }\r\n     }\r\n }\r\n \r\n- \r\n-\r\n   onCancel(): void {\r\n     this.activeModal.dismiss();\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1749379294617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,10 @@\n   constructor(\r\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private userService:UserService,\r\n-    private agenceService:AgenceService\r\n+    private agenceService:AgenceService,\r\n+    private \r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       username: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
+                },
+                {
+                    "date": 1749379300580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     public activeModal: NgbActiveModal, // Injectez NgbActiveModal\r\n     private fb: FormBuilder,\r\n     private userService:UserService,\r\n     private agenceService:AgenceService,\r\n-    private gmail\r\n+    private gmailService:GmailService\r\n   ) {\r\n     this.userForm = this.fb.group({\r\n       username: ['', Validators.required],\r\n       email: ['', [Validators.required, Validators.email]],\r\n"
                 }
             ],
             "date": 1744030117160,
