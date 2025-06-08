@@ -30,7 +30,8 @@ export class AgencesComponent implements OnInit{
     private toastr: ToastrService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+     private location: Location
   ) { 
     this.currentDate = new Date().toLocaleDateString();
    

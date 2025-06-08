@@ -147,7 +147,7 @@ sendSystemEmail(emailData: any): Observable<any> {
     'Content-Type': 'application/json'
   });
 
-  return this.http.post(`${this.apiUrl}/emails/system`, emailData, { headers }).pipe(
+  return this.http.post(`http://localhost:8079/emails/system`, emailData, { headers }).pipe(
     catchError(error => {
       console.error('Erreur détaillée:', error);
       console.error('Status:', error.status);
