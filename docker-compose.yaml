@@ -111,3 +111,4 @@ services:
 networks:
   systeo-network:
     driver: bridge
+    
