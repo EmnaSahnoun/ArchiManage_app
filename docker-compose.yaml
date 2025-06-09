@@ -1,0 +1,114 @@
+pour dockercompose.yaml version: '3.8'
+
+services:
+  eureka-server:
+    image: emnasahnoun/eureka-server
+    container_name: eureka-server
+    hostname: eureka.systeo.tn
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    networks:
+      - systeo-network
+
+  gateway-service:
+    image: emnasahnoun/gateway-service
+    container_name: gateway-service
+    hostname: e1.systeo.tn
+    ports:
+      - "9091:9091"
+ 
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+
+  project-service:
+    image: emnasahnoun/project-service
+    container_name: project-service
+    hostname: e3.systeo.tn
+    ports:
+      - "8074:8074"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+
+  activity-service:
+    image: emnasahnoun/activity-service
+    container_name: activity-service
+    hostname: e4.systeo.tn
+    ports:
+      - "8075:8075"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+
+  document-service:
+    image: emnasahnoun/document-service
+    container_name: document-service
+    hostname: e6.systeo.tn
+    ports:
+      - "8077:8077"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+
+  notification-service:
+    image: emnasahnoun/notification-service
+    container_name: notification-service
+    hostname: e5.systeo.tn
+    ports:
+      - "8076:8076"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+
+  email-service:
+    image: emnasahnoun/email-service
+    container_name: email-service
+    hostname: e8.systeo.tn
+    ports:
+      - "8079:8079"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+   
+  angular-frontend:
+    image: emnasahnoun/angular-frontend
+    container_name: angular-frontend
+    ports:
+      - "4200:4200"
+    
+    depends_on:
+      - gateway-service
+    networks:
+      - systeo-network
+
+networks:
+  systeo-network:
+    driver: bridge
+    
