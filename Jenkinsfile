@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         jdk 'jdk-17'
-        nodejs 'node-18'
+        nodejs 'nodejs' // Ajout pour le service Node.js
     }
     
     environment {
