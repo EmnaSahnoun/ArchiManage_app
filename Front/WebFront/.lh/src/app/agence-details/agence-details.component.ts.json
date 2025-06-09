@@ -1,0 +1,90 @@
+{
+    "sourceFile": "src/app/agence-details/agence-details.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 18,
+            "patches": [
+                {
+                    "date": 1749418162720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749418170275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import { Component } from '@angular/core';\r\n+import { catchError, finalize, tap } from 'rxjs';\r\n \r\n @Component({\r\n   selector: 'app-agence-details',\r\n   templateUrl: './agence-details.component.html',\r\n"
+                },
+                {
+                    "date": 1749418177813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Component } from '@angular/core';\r\n-import { catchError, finalize, tap } from 'rxjs';\r\n+import { catchError, EMPTY, finalize, tap, throwError } from 'rxjs';\r\n \r\n @Component({\r\n   selector: 'app-agence-details',\r\n   templateUrl: './agence-details.component.html',\r\n"
+                },
+                {
+                    "date": 1749418192221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Component } from '@angular/core';\r\n-import { catchError, EMPTY, finalize, tap, throwError } from 'rxjs';\r\n+import { FormBuilder } from '@angular/forms';\r\n+import { catchError, EMPTY, finalize, switchMap, tap, throwError } from 'rxjs';\r\n \r\n @Component({\r\n   selector: 'app-agence-details',\r\n   templateUrl: './agence-details.component.html',\r\n"
+                },
+                {
+                    "date": 1749418198484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n import { Component } from '@angular/core';\r\n-import { FormBuilder } from '@angular/forms';\r\n+import { FormBuilder, Validators } from '@angular/forms';\r\n+import { MatSnackBar } from '@angular/material/snack-bar';\r\n import { catchError, EMPTY, finalize, switchMap, tap, throwError } from 'rxjs';\r\n+import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-agence-details',\r\n   templateUrl: './agence-details.component.html',\r\n"
+                },
+                {
+                    "date": 1749418206489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n import { Component } from '@angular/core';\r\n-import { FormBuilder, Validators } from '@angular/forms';\r\n+import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatSnackBar } from '@angular/material/snack-bar';\r\n import { catchError, EMPTY, finalize, switchMap, tap, throwError } from 'rxjs';\r\n import { AuthService } from '../services/auth.service';\r\n+import { AgenceService } from '../services/agenceService';\r\n \r\n @Component({\r\n   selector: 'app-agence-details',\r\n   templateUrl: './agence-details.component.html',\r\n"
+                },
+                {
+                    "date": 1749418212830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { Component } from '@angular/core';\r\n+import { Component, OnInit } from '@angular/core';\r\n import { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n import { MatSnackBar } from '@angular/material/snack-bar';\r\n import { catchError, EMPTY, finalize, switchMap, tap, throwError } from 'rxjs';\r\n import { AuthService } from '../services/auth.service';\r\n@@ -11,9 +11,9 @@\n   styleUrl: './agence-details.component.scss'\r\n })\r\n export class AgenceDetailsComponent implements OnInit {\r\n   agenceForm!: FormGroup;\r\n-  currentAgence: Agence | null = null;\r\n+  currentAgence: any | null = null;\r\n   isLoading = false;\r\n   isSaving = false;\r\n \r\n   constructor(\r\n"
+                },
+                {
+                    "date": 1749418224051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n   loadAgenceDetails(): void {\r\n     this.isLoading = true;\r\n     // Assurez-vous que votre AuthService expose une méthode pour obtenir l'ID de l'utilisateur connecté.\r\n     // Par exemple: this.authService.getCurrentUserId() ou this.authService.getUserProfile().id\r\n-    const userId = this.authService.getUserId(); // Remplacez par la méthode réelle\r\n+    const userId = \r\n \r\n     if (!userId) {\r\n       this.snackBar.open('Impossible de récupérer l\\'identifiant utilisateur.', 'Fermer', { duration: 3000 });\r\n       this.isLoading = false;\r\n"
+                },
+                {
+                    "date": 1749418231767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,12 +35,11 @@\n   }\r\n \r\n   loadAgenceDetails(): void {\r\n     this.isLoading = true;\r\n-    // Assurez-vous que votre AuthService expose une méthode pour obtenir l'ID de l'utilisateur connecté.\r\n-    // Par exemple: this.authService.getCurrentUserId() ou this.authService.getUserProfile().id\r\n-    const userId = \r\n+    const userId = localStorage.getItem('user_id');\r\n \r\n+\r\n     if (!userId) {\r\n       this.snackBar.open('Impossible de récupérer l\\'identifiant utilisateur.', 'Fermer', { duration: 3000 });\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1749418240901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,10 +36,8 @@\n \r\n   loadAgenceDetails(): void {\r\n     this.isLoading = true;\r\n     const userId = localStorage.getItem('user_id');\r\n-\r\n-\r\n     if (!userId) {\r\n       this.snackBar.open('Impossible de récupérer l\\'identifiant utilisateur.', 'Fermer', { duration: 3000 });\r\n       this.isLoading = false;\r\n       return;\r\n"
+                },
+                {
+                    "date": 1749431483350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private agenceService: AgenceService,\r\n     private authService: AuthService, // Supposons que authService.getUserId() existe\r\n-    private snackBar: MatSnackBar\r\n+    private snackBar: MatSnackBar,\r\n+    private location: Location\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.agenceForm = this.fb.group({\r\n@@ -47,10 +48,9 @@\n       switchMap(groups => {\r\n         if (!groups || groups.length === 0) {\r\n           return throwError(() => new Error('L\\'utilisateur n\\'est assigné à aucune agence (groupe Keycloak).'));\r\n         }\r\n-        // Supposons que la première agence/groupe est celle à gérer\r\n-        // Ou vous pourriez avoir une logique pour identifier le bon groupe\r\n+\r\n         const agenceGroup = groups[0];\r\n         if (!agenceGroup || !agenceGroup.name) {\r\n           return throwError(() => new Error('Nom de l\\'agence (groupe Keycloak) non trouvé.'));\r\n         }\r\n"
+                },
+                {
+                    "date": 1749431613902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n   constructor(\r\n     private fb: FormBuilder,\r\n     private agenceService: AgenceService,\r\n     private authService: AuthService, // Supposons que authService.getUserId() existe\r\n-    private snackBar: MatSnackBar,\r\n-    private location: Location\r\n+    private snackBar: MatSnackBar\r\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.agenceForm = this.fb.group({\r\n"
+                },
+                {
+                    "date": 1749457853260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,8 +57,9 @@\n       }),\r\n       tap(agenceDetails => {\r\n         if (agenceDetails) {\r\n           this.currentAgence = agenceDetails;\r\n+          console.log('Détails de l\\'agence:', agenceDetails)\r\n           this.agenceForm.patchValue(agenceDetails);\r\n         } else {\r\n           this.snackBar.open('Détails de l\\'agence non trouvés.', 'Fermer', { duration: 4000 });\r\n         }\r\n"
+                },
+                {
+                    "date": 1749460351459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n     this.agenceForm = this.fb.group({\r\n       nom: ['', Validators.required],\r\n       adresse: [''],\r\n       email: ['', [Validators.email]],\r\n-      telephone: ['']\r\n+      phone\r\n+: ['']\r\n       // Ajoutez d'autres champs ici correspondant à votre modèle Agence\r\n     });\r\n     this.loadAgenceDetails();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749460356706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,12 @@\n   ) {}\r\n \r\n   ngOnInit(): void {\r\n     this.agenceForm = this.fb.group({\r\n-      nom: ['', Validators.required],\r\n+      name: ['', Validators.required],\r\n       adresse: [''],\r\n       email: ['', [Validators.email]],\r\n-      phone\r\n-: ['']\r\n+      phone: ['']\r\n       // Ajoutez d'autres champs ici correspondant à votre modèle Agence\r\n     });\r\n     this.loadAgenceDetails();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749460362544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n \r\n   ngOnInit(): void {\r\n     this.agenceForm = this.fb.group({\r\n       name: ['', Validators.required],\r\n-      adresse: [''],\r\n+      address: [''],\r\n       email: ['', [Validators.email]],\r\n       phone: ['']\r\n       // Ajoutez d'autres champs ici correspondant à votre modèle Agence\r\n     });\r\n"
+                },
+                {
+                    "date": 1749460596420,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,14 @@\n       tap(agenceDetails => {\r\n         if (agenceDetails) {\r\n           this.currentAgence = agenceDetails;\r\n           console.log('Détails de l\\'agence:', agenceDetails)\r\n-          this.agenceForm.patchValue(agenceDetails);\r\n+          this.agenceForm.patchValue(\r\n+            name: agenceDetails.name,\r\n+      address: agenceDetails.address,\r\n+      email: agenceDetails.email,\r\n+      phone: agenceDetails.phone\r\n+          );\r\n         } else {\r\n           this.snackBar.open('Détails de l\\'agence non trouvés.', 'Fermer', { duration: 4000 });\r\n         }\r\n       }),\r\n"
+                },
+                {
+                    "date": 1749460623337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,14 +58,9 @@\n       tap(agenceDetails => {\r\n         if (agenceDetails) {\r\n           this.currentAgence = agenceDetails;\r\n           console.log('Détails de l\\'agence:', agenceDetails)\r\n-          this.agenceForm.patchValue(\r\n-            name: agenceDetails.name,\r\n-      address: agenceDetails.address,\r\n-      email: agenceDetails.email,\r\n-      phone: agenceDetails.phone\r\n-          );\r\n+          this.agenceForm.patchValue(agenceDetails);\r\n         } else {\r\n           this.snackBar.open('Détails de l\\'agence non trouvés.', 'Fermer', { duration: 4000 });\r\n         }\r\n       }),\r\n"
+                },
+                {
+                    "date": 1749460650156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,10 +79,15 @@\n       return;\r\n     }\r\n \r\n     this.isSaving = true;\r\n-    const updatedAgenceData = { ...this.currentAgence, ...this.agenceForm.value };\r\n-\r\n+const updatedAgenceData = { \r\n+  ...this.currentAgence, \r\n+  name: this.agenceForm.value.name,\r\n+  address: this.agenceForm.value.address,\r\n+  email: this.agenceForm.value.email,\r\n+  phone: this.agenceForm.value.phone\r\n+};\r\n     this.agenceService.updateAgence(this.currentAgence.id, updatedAgenceData).pipe(\r\n       tap(() => {\r\n         this.snackBar.open('Détails de l\\'agence mis à jour avec succès !', 'Fermer', { duration: 3000 });\r\n         this.currentAgence = updatedAgenceData; // Mettre à jour l'objet local\r\n"
+                }
+            ],
+            "date": 1749418162720,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-agence-details',\r\n  templateUrl: './agence-details.component.html',\r\n  styleUrl: './agence-details.component.scss'\r\n})\r\nexport class AgenceDetailsComponent implements OnInit {\r\n  agenceForm!: FormGroup;\r\n  currentAgence: Agence | null = null;\r\n  isLoading = false;\r\n  isSaving = false;\r\n\r\n  constructor(\r\n    private fb: FormBuilder,\r\n    private agenceService: AgenceService,\r\n    private authService: AuthService, // Supposons que authService.getUserId() existe\r\n    private snackBar: MatSnackBar\r\n  ) {}\r\n\r\n  ngOnInit(): void {\r\n    this.agenceForm = this.fb.group({\r\n      nom: ['', Validators.required],\r\n      adresse: [''],\r\n      email: ['', [Validators.email]],\r\n      telephone: ['']\r\n      // Ajoutez d'autres champs ici correspondant à votre modèle Agence\r\n    });\r\n    this.loadAgenceDetails();\r\n  }\r\n\r\n  loadAgenceDetails(): void {\r\n    this.isLoading = true;\r\n    // Assurez-vous que votre AuthService expose une méthode pour obtenir l'ID de l'utilisateur connecté.\r\n    // Par exemple: this.authService.getCurrentUserId() ou this.authService.getUserProfile().id\r\n    const userId = this.authService.getUserId(); // Remplacez par la méthode réelle\r\n\r\n    if (!userId) {\r\n      this.snackBar.open('Impossible de récupérer l\\'identifiant utilisateur.', 'Fermer', { duration: 3000 });\r\n      this.isLoading = false;\r\n      return;\r\n    }\r\n\r\n    this.agenceService.getAgenceByUser(userId).pipe(\r\n      switchMap(groups => {\r\n        if (!groups || groups.length === 0) {\r\n          return throwError(() => new Error('L\\'utilisateur n\\'est assigné à aucune agence (groupe Keycloak).'));\r\n        }\r\n        // Supposons que la première agence/groupe est celle à gérer\r\n        // Ou vous pourriez avoir une logique pour identifier le bon groupe\r\n        const agenceGroup = groups[0];\r\n        if (!agenceGroup || !agenceGroup.name) {\r\n          return throwError(() => new Error('Nom de l\\'agence (groupe Keycloak) non trouvé.'));\r\n        }\r\n        return this.agenceService.getAgenceByName(agenceGroup.name);\r\n      }),\r\n      tap(agenceDetails => {\r\n        if (agenceDetails) {\r\n          this.currentAgence = agenceDetails;\r\n          this.agenceForm.patchValue(agenceDetails);\r\n        } else {\r\n          this.snackBar.open('Détails de l\\'agence non trouvés.', 'Fermer', { duration: 4000 });\r\n        }\r\n      }),\r\n      catchError(err => {\r\n        console.error('Erreur lors du chargement des détails de l\\'agence:', err);\r\n        this.snackBar.open(err.message || 'Une erreur est survenue lors du chargement des détails.', 'Fermer', { duration: 5000 });\r\n        return EMPTY;\r\n      }),\r\n      finalize(() => this.isLoading = false)\r\n    ).subscribe();\r\n  }\r\n\r\n  onSubmit(): void {\r\n    if (this.agenceForm.invalid || !this.currentAgence) {\r\n      this.snackBar.open('Veuillez corriger les erreurs du formulaire.', 'Fermer', { duration: 3000 });\r\n      return;\r\n    }\r\n\r\n    this.isSaving = true;\r\n    const updatedAgenceData = { ...this.currentAgence, ...this.agenceForm.value };\r\n\r\n    this.agenceService.updateAgence(this.currentAgence.id, updatedAgenceData).pipe(\r\n      tap(() => {\r\n        this.snackBar.open('Détails de l\\'agence mis à jour avec succès !', 'Fermer', { duration: 3000 });\r\n        this.currentAgence = updatedAgenceData; // Mettre à jour l'objet local\r\n      }),\r\n      catchError(err => {\r\n        console.error('Erreur lors de la mise à jour de l\\'agence:', err);\r\n        this.snackBar.open(err.message || 'Échec de la mise à jour de l\\'agence.', 'Fermer', { duration: 5000 });\r\n        return EMPTY;\r\n      }),\r\n      finalize(() => this.isSaving = false)\r\n    ).subscribe();\r\n  }\r\n}\r\n"
+        }
+    ]
+}

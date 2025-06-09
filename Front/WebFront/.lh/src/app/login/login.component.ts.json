@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 56,
+            "activePatchIndex": 67,
             "patches": [
                 {
                     "date": 1742130408469,
@@ -232,6 +232,50 @@
                 {
                     "date": 1746446161567,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,10 @@\n import { AuthService } from '../services/auth.service';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n-  template: '<div>Redirection vers le portail d\\'authentification...</div>'\r\n+  template: '<div>Redirection vers le portail d\\'authentification...</div>',\r\n+  standalone: false\r\n \r\n })\r\n export class LoginComponent  {\r\n   constructor(private authService: AuthService , private router:Router) {\r\n"
+                },
+                {
+                    "date": 1749409575788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,12 @@\n   standalone: false\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService , private router:Router) {\r\n+  constructor(private authService: AuthService , private router:Router\r\n     \r\n+  ) {\r\n+    \r\n     this.authService.login();\r\n   }\r\n \r\n   \r\n"
+                },
+                {
+                    "date": 1749409588400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,12 @@\n   standalone: false\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(private authService: AuthService , private router:Router\r\n-    \r\n+  constructor(\r\n+    private authService: AuthService,\r\n+    private projectService: ProjectService,\r\n+    private router: Router\r\n   ) {\r\n     \r\n     this.authService.login();\r\n   }\r\n"
+                },
+                {
+                    "date": 1749409620621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { Component, OnInit } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n import { AuthService } from '../services/auth.service';\r\n+import { ProjectService } from '../services/ProjectService';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   template: '<div>Redirection vers le portail d\\'authentification...</div>',\r\n@@ -25,5 +26,6 @@\n    \r\n     this.authService.login();\r\n     \r\n   }\r\n+  \r\n }\r\n"
+                },
+                {
+                    "date": 1749409629217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,6 +26,48 @@\n    \r\n     this.authService.login();\r\n     \r\n   }\r\n-  \r\n+  handleLoginSuccess(): void {\r\n+    const userId = this.authService.getUserId(); // Méthode à implémenter dans AuthService\r\n+    const userIsAdmin = this.authService.isAdmin(); // Méthode à implémenter dans AuthService\r\n+    const idCompany = localStorage.getItem('idAgence'); // Ou une autre source pour l'ID de la compagnie\r\n+\r\n+    if (!userId) {\r\n+      console.error('User ID not found after login.');\r\n+      // Gérer l'erreur, peut-être rediriger vers la page de connexion avec un message\r\n+      this.router.navigate(['/login']);\r\n+      return;\r\n+    }\r\n+\r\n+    if (userIsAdmin) {\r\n+      this.router.navigate(['/dashboard']);\r\n+    } else {\r\n+      if (!idCompany) {\r\n+        console.error('Company ID (idAgence) not found.');\r\n+        // Fallback: rediriger vers /projects ou une page d'erreur\r\n+        this.router.navigate(['/projects']);\r\n+        return;\r\n+      }\r\n+\r\n+      this.projectService.getAllProjects(idCompany).subscribe({\r\n+        next: (projects: any[]) => {\r\n+          // Filtrer les projets actifs (non supprimés)\r\n+          const activeProjects = projects.filter(p => !p.deleted);\r\n+          const isProjectAdmin = activeProjects.some(project => project.idAdmin === userId);\r\n+\r\n+          if (isProjectAdmin) {\r\n+            this.router.navigate(['/dashboard']);\r\n+          } else {\r\n+            this.router.navigate(['/projects']);\r\n+          }\r\n+        },\r\n+        error: (err) => {\r\n+          console.error('Error fetching projects for redirection logic:', err);\r\n+          // En cas d'erreur, rediriger vers /projects comme fallback\r\n+          this.router.navigate(['/projects']);\r\n+        }\r\n+      });\r\n+    }\r\n+  }\r\n+\r\n }\r\n"
+                },
+                {
+                    "date": 1749409640368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     this.authService.login();\r\n     \r\n   }\r\n   handleLoginSuccess(): void {\r\n-    const userId = this.authService.getUserId(); // Méthode à implémenter dans AuthService\r\n+    const userId = localStorage.; // Méthode à implémenter dans AuthService\r\n     const userIsAdmin = this.authService.isAdmin(); // Méthode à implémenter dans AuthService\r\n     const idCompany = localStorage.getItem('idAgence'); // Ou une autre source pour l'ID de la compagnie\r\n \r\n     if (!userId) {\r\n"
+                },
+                {
+                    "date": 1749409657079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     this.authService.login();\r\n     \r\n   }\r\n   handleLoginSuccess(): void {\r\n-    const userId = localStorage.; // Méthode à implémenter dans AuthService\r\n+    const userId = localStorage.getItem('user_id'); // Méthode à implémenter dans AuthService\r\n     const userIsAdmin = this.authService.isAdmin(); // Méthode à implémenter dans AuthService\r\n     const idCompany = localStorage.getItem('idAgence'); // Ou une autre source pour l'ID de la compagnie\r\n \r\n     if (!userId) {\r\n"
+                },
+                {
+                    "date": 1749409691518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,18 +27,13 @@\n     this.authService.login();\r\n     \r\n   }\r\n   handleLoginSuccess(): void {\r\n-    const userId = localStorage.getItem('user_id'); // Méthode à implémenter dans AuthService\r\n+    const userId = localStorage.getItem('user_id');\r\n     const userIsAdmin = this.authService.isAdmin(); // Méthode à implémenter dans AuthService\r\n     const idCompany = localStorage.getItem('idAgence'); // Ou une autre source pour l'ID de la compagnie\r\n \r\n-    if (!userId) {\r\n-      console.error('User ID not found after login.');\r\n-      // Gérer l'erreur, peut-être rediriger vers la page de connexion avec un message\r\n-      this.router.navigate(['/login']);\r\n-      return;\r\n-    }\r\n+    \r\n \r\n     if (userIsAdmin) {\r\n       this.router.navigate(['/dashboard']);\r\n     } else {\r\n"
+                },
+                {
+                    "date": 1749409769130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n+    this.\r\n     \r\n   }\r\n   handleLoginSuccess(): void {\r\n     const userId = localStorage.getItem('user_id');\r\n"
+                },
+                {
+                    "date": 1749410078371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,21 +1,16 @@\n import { Component, OnInit } from '@angular/core';\r\n import { Router } from '@angular/router';\r\n import { AuthService } from '../services/auth.service';\r\n-import { ProjectService } from '../services/ProjectService';\r\n \r\n @Component({\r\n   selector: 'app-login',\r\n   template: '<div>Redirection vers le portail d\\'authentification...</div>',\r\n   standalone: false\r\n \r\n })\r\n export class LoginComponent  {\r\n-  constructor(\r\n-    private authService: AuthService,\r\n-    private projectService: ProjectService,\r\n-    private router: Router\r\n-  ) {\r\n+  constructor(private authService: AuthService , private router:Router) {\r\n     \r\n     this.authService.login();\r\n   }\r\n \r\n@@ -24,46 +19,7 @@\n \r\n   onLogin() {\r\n    \r\n     this.authService.login();\r\n-    this.\r\n     \r\n   }\r\n-  handleLoginSuccess(): void {\r\n-    const userId = localStorage.getItem('user_id');\r\n-    const userIsAdmin = this.authService.isAdmin(); // Méthode à implémenter dans AuthService\r\n-    const idCompany = localStorage.getItem('idAgence'); // Ou une autre source pour l'ID de la compagnie\r\n-\r\n-    \r\n-\r\n-    if (userIsAdmin) {\r\n-      this.router.navigate(['/dashboard']);\r\n-    } else {\r\n-      if (!idCompany) {\r\n-        console.error('Company ID (idAgence) not found.');\r\n-        // Fallback: rediriger vers /projects ou une page d'erreur\r\n-        this.router.navigate(['/projects']);\r\n-        return;\r\n-      }\r\n-\r\n-      this.projectService.getAllProjects(idCompany).subscribe({\r\n-        next: (projects: any[]) => {\r\n-          // Filtrer les projets actifs (non supprimés)\r\n-          const activeProjects = projects.filter(p => !p.deleted);\r\n-          const isProjectAdmin = activeProjects.some(project => project.idAdmin === userId);\r\n-\r\n-          if (isProjectAdmin) {\r\n-            this.router.navigate(['/dashboard']);\r\n-          } else {\r\n-            this.router.navigate(['/projects']);\r\n-          }\r\n-        },\r\n-        error: (err) => {\r\n-          console.error('Error fetching projects for redirection logic:', err);\r\n-          // En cas d'erreur, rediriger vers /projects comme fallback\r\n-          this.router.navigate(['/projects']);\r\n-        }\r\n-      });\r\n-    }\r\n-  }\r\n-\r\n }\r\n"
+                },
+                {
+                    "date": 1749412925016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n })\r\n export class LoginComponent  {\r\n   constructor(private authService: AuthService , private router:Router) {\r\n     \r\n-    this.authService.login();\r\n+    \r\n   }\r\n \r\n   \r\n   \r\n"
+                },
+                {
+                    "date": 1749412931500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n })\r\n export class LoginComponent  {\r\n   constructor(private authService: AuthService , private router:Router) {\r\n     \r\n-    \r\n+    this.authService.login();\r\n   }\r\n \r\n   \r\n   \r\n"
                 }
             ],
             "date": 1742130408469,

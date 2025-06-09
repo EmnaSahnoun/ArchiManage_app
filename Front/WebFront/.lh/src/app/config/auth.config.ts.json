@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1744967725075,
@@ -116,6 +116,14 @@
                 {
                     "date": 1745327468755,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  redirectUri: window.location.origin  ,\r\n+  redirectUri: window.location.origin  + '/super-admin/agences',\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1749412343763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  redirectUri: window.location.origin  + '/super-admin/agences',\r\n+  redirectUri: window.location.origin+,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
+                },
+                {
+                    "date": 1749412396366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \r\n export const authConfig: AuthConfig = {\r\n   issuer: 'https://esmm.systeo.tn/realms/systeodigital',\r\n   clientId: 'app-pfeFront',\r\n-  redirectUri: window.location.origin+,\r\n+  redirectUri: window.location.origin,\r\n   responseType: 'code',\r\n   strictDiscoveryDocumentValidation: true,\r\n   scope: 'openid profile roles email',\r\n   requireHttps: true,\r\n"
                 }
             ],
             "date": 1744967725075,

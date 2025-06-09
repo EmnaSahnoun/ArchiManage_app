@@ -18,7 +18,7 @@ $header-height-estimate: 64px; // Ajustez si vous avez une barre de navigation f
 
 .email-detail-page {
   padding: $padding-large;
-  margin: $padding-base;
+  margin:  16px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
   background-color: #fff; // S'assurer que le contenu a un fond blanc
@@ -27,11 +27,11 @@ $header-height-estimate: 64px; // Ajustez si vous avez une barre de navigation f
 .email-detail-header {
   display: flex;
   align-items: center;
-  padding-bottom: $padding-base;
-  margin-bottom: $padding-base; // Espace avant le premier divider
+  padding-bottom:  16px;
+  margin-bottom:  16px; // Espace avant le premier divider
 
   .back-button {
-    margin-right: $padding-base;
+    margin-right:  16px;
     color: $text-muted-color;
     &:hover {
       color: $primary-color;
@@ -47,7 +47,7 @@ $header-height-estimate: 64px; // Ajustez si vous avez une barre de navigation f
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; // Empêche le retour à la ligne du sujet
-    padding-right: $padding-base; // Espace pour éviter que le texte ne colle aux actions
+    padding-right:  16px; // Espace pour éviter que le texte ne colle aux actions
   }
 
   .email-actions {
@@ -72,11 +72,11 @@ $header-height-estimate: 64px; // Ajustez si vous avez une barre de navigation f
 }
 
 mat-divider {
-  margin-bottom: $padding-base; // Espace après chaque divider
+  margin-bottom:  16px; // Espace après chaque divider
 }
 
 .email-meta-container {
-  padding: $padding-base / 2 0;
+  padding:  16px / 2 0;
   font-size: 0.95em;
   color: $text-color;
 
@@ -101,7 +101,7 @@ mat-divider {
 }
 
 .email-body-container {
-  padding: $padding-base 0;
+  padding:  16px 0;
   line-height: 1.7;
   color: $text-color;
   font-size: 1em; // Taille de base pour le corps
@@ -128,7 +128,7 @@ mat-divider {
     }
     blockquote {
       border-left: 4px solid $border-color;
-      padding-left: $padding-base;
+      padding-left:  16px;
       margin-left: 0;
       margin-right: 0;
       margin-top: 1em;
@@ -146,15 +146,15 @@ mat-divider {
 }
 
 .email-attachments-container {
-  padding-top: $padding-base;
-  margin-top: $padding-base;
+  padding-top:  16px;
+  margin-top:  16px;
 
   h3 {
     font-size: 1.2em;
     color: $secondary-color;
-    margin-bottom: $padding-base;
+    margin-bottom:  16px;
     border-bottom: 1px solid $border-color;
-    padding-bottom: $padding-base / 2;
+    padding-bottom:  16px / 2;
   }
 
   .attachments-list {
@@ -208,13 +208,13 @@ mat-divider {
   padding: $padding-large * 2 $padding-large;
   text-align: center;
   min-height: 300px;
-  margin: $padding-base;
+  margin:  16px;
 
   mat-icon {
     font-size: 50px;
     width: 50px;
     height: 50px;
-    margin-bottom: $padding-base;
+    margin-bottom:  16px;
   }
 
   p {
@@ -238,9 +238,9 @@ mat-divider {
     color: darken($error-color, 10%);
   }
   button {
-    margin-top: $padding-base;
+    margin-top:  16px;
     &:not(:last-child) {
-        margin-right: $padding-base / 2;
+        margin-right:  16px / 2;
     }
   }
 }
@@ -254,8 +254,8 @@ mat-divider {
 // Ajustements responsives
 @media (max-width: 768px) {
   .email-detail-page {
-    margin: $padding-base / 2;
-    padding: $padding-base;
+    margin:  16px / 2;
+    padding:  16px;
   }
   .email-detail-header {
     flex-direction: column;
@@ -263,14 +263,14 @@ mat-divider {
 
     .email-subject {
       font-size: 1.4em;
-      margin-top: $padding-base / 2;
-      margin-bottom: $padding-base;
+      margin-top:  16px / 2;
+      margin-bottom:  16px;
       white-space: normal; // Permet au sujet de s'enrouler sur plusieurs lignes
     }
     .email-actions {
       width: 100%;
       justify-content: flex-start; // Aligner les actions à gauche sur petits écrans
-      margin-top: $padding-base / 2;
+      margin-top:  16px / 2;
     }
   }
 }

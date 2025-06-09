@@ -1,0 +1,258 @@
+$primary-color: #41B3A3;       // Couleur teal/vert pour les boutons principaux
+$accent-color: #E27D60;        // Couleur coral/orange pour les titres
+$warn-color: #F44336;          // Rouge pour les erreurs
+$success-color: #4CAF50;       // Vert pour le succès
+$cancel-color: #6c757d;        // Gris pour annulation
+$pending-color: #f9a825;       // Jaune/Orange pour "en attente"
+
+$text-color-primary: #333;     // Texte principal
+$text-color-secondary: #666;   // Texte secondaire
+$text-color-light: #fff;       // Texte sur fonds sombres/colorés
+$text-color-muted: #999;       // Texte atténué
+
+$background-color: #f8f9fa;    // Fond général de la page
+$container-background: #fff;   // Fond des conteneurs/cartes
+$input-background: #f5f5f5;    // Fond des champs de saisie
+$border-color: #e0e0e0;       // Couleur de bordure légère
+$border-color-focus: #41B3A3;  // Couleur de bordure au focus
+$border-radius: 12px;         // Rayon de bordure arrondi
+$border-radius-small: 8px;    // Rayon de bordure plus petit
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // Ombre légère
+
+// Espacement réduit
+$spacing-unit: 6px;           // Réduit de 8px à 6px
+$space-xs: $spacing-unit;      // 6px
+$space-sm: $spacing-unit * 2;  // 12px
+$space-md: $spacing-unit * 2.5;  // 15px (réduit)
+$space-lg: $spacing-unit * 3;  // 18px (réduit)
+$space-xl: $spacing-unit * 4;  // 24px (réduit)
+
+// Typographie
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 20px;
+$font-size-xxl: 28px;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $background-color;
+  padding: $space-xl $space-md;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form {
+  background-color: $container-background;
+  border-radius: $border-radius;
+  box-shadow: $card-shadow;
+  padding: $space-xl;
+  height: 100%;
+
+  .form-header {
+    margin-bottom: $space-md;
+    text-align: center;
+
+    .form-icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+      color: $primary-color;
+      margin-bottom: $space-sm;
+    }
+
+    .form-title {
+      font-size: $font-size-xl;
+      color: $text-color-primary;
+      font-weight: $font-weight-medium;
+      margin: 0;
+    }
+
+    .form-subtitle {
+      color: $text-color-secondary;
+      margin: $space-xs 0 0;
+      font-size: $font-size-base;
+    }
+  }
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm; // Réduit l'espace entre les champs
+  }
+}
+
+.form-section {
+  margin-bottom: 0; // Supprime le margin-bottom
+
+  label {
+    display: block;
+    color: $text-color-secondary;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-xs;
+    font-size: $font-size-base;
+  }
+
+  .input-with-icon {
+    position: relative;
+    
+    .input-icon {
+     margin-right: $space-xs;
+      position: absolute;
+      left: $space-sm;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $text-color-muted;
+      z-index: 1;
+    }
+
+    input {
+        margin-left: $space-xs;
+      width: 100%;
+      padding: $space-sm $space-md $space-sm ($space-lg + $space-sm);
+      border: 1px solid $border-color;
+      border-radius: $border-radius-small;
+      background-color: $input-background;
+      font-size: $font-size-base;
+      color: $text-color-primary;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: $border-color-focus;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+      }
+
+      &::placeholder {
+        color: $text-color-muted;
+      }
+
+      &[readonly] {
+        background-color: #f0f0f0;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .error-message {
+    color: $warn-color;
+    font-size: 12px;
+    margin-top: $space-xs;
+  }
+
+  .form-hint {
+    color: $text-color-muted;
+    font-size: 12px;
+    margin-top: $space-xs;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center; // Centre les boutons
+  gap: $space-md; // Ajoute un espace entre les boutons s'il y en a plusieurs
+  margin-top: $space-lg;
+
+  button {
+    padding: $space-sm $space-lg;
+    min-height: 44px;
+    font-weight: $font-weight-medium;
+    border-radius: $border-radius-small;
+    font-size: $font-size-base;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    transition: all 0.2s ease;
+    min-width: 140px; // Largeur minimale pour uniformité
+
+    &.button-primary {
+      background-color: $primary-color;
+      color: $text-color-light;
+      box-shadow: 0 2px 4px rgba($primary-color, 0.3);
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        box-shadow: 0 4px 8px rgba($primary-color, 0.4);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        color: #666;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+    }
+
+    // Style pour le bouton secondaire (si ajouté)
+    &.button-secondary {
+      background-color: $cancel-color;
+      color: $text-color-light;
+      box-shadow: 0 2px 4px rgba($cancel-color, 0.3);
+
+      &:hover {
+        background-color: darken($cancel-color, 10%);
+        box-shadow: 0 4px 8px rgba($cancel-color, 0.4);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        color: #666;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+    }
+
+    mat-icon {
+      font-size: 20px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .profile-page {
+    padding: $space-md;
+  }
+
+  .profile-form {
+    padding: $space-lg;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+    gap: $space-sm;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

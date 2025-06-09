@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectFormComponent } from '../shared/project-form/project-form.component';
 import { ProjectService } from '../services/ProjectService';
 import { ProjectMembersComponent } from '../shared/project-members/project-members.component'; // Import ProjectMembersComponent
+import { CommercialService } from '../services/commercial.service';
 
 
 @Component({
@@ -25,9 +26,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   currentAgence: any;
   isLoadingUsers: boolean = false;
   isLoadingProjects: boolean = false;
-  isUser: boolean = false;
   isAdmin: boolean = false;
-  // --- Variables pour les statistiques ---
+monthlyTaskData: number[] = Array(12).fill(0);  
 
   inProgressProjectCount: number = 0;
   completedProjectCount: number = 0;
@@ -45,9 +45,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   projects: any[] = [ /* ... */ ];
   users: any[] = []; // Use the User interface
-
+  tasks: any[] = [];
   public chart: Chart | undefined;
-
+  nbClient:number=0;
   // --- State for Inline Editing ---
   editingUserId: string | null = null;
   editedUserData: any = {}; // Use 'any' or a specific edit interface
@@ -55,14 +55,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isDeletingUser: string | null = null;
    routerSubscription: Subscription | null = null; // To store router event subscription
    activeModalRef: NgbModalRef | null = null; // To keep track of the opened modal
-
+totalCA:number=0;
   constructor( private agenceService: AgenceService, 
     private modalService: NgbModal,
     private userService: UserService,
     private authService: AuthService,
     private router: Router, // Inject Router
     private route: ActivatedRoute,
-    private projectService:ProjectService
+    private projectService:ProjectService,
+    private commercialService:CommercialService
 
   ) { }
 
@@ -73,7 +74,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.role();
     this.loadAgence();
     this.getProjects()
-   
+   this.countClient();
+   this.getCA();
     console.log('userss',this.users);
     this.subscribeToRouterEvents(); // Start listening to router changes
   }
@@ -131,9 +133,6 @@ role(){
  if (this.authService.isAdmin()){
   this.isAdmin=true
  }
- else { 
-  this.isUser=true
- }
 }
 getProjects(){
   const idCompany=localStorage.getItem("idAgence");
@@ -144,50 +143,17 @@ getProjects(){
         this.projects = projects.filter(p => !p.deleted);
         
 
-        if(this.isUser){
-          const idUser=localStorage.getItem("user_id");  
-                  
-          projects.filter(p => p.deleted !== true);
-          console.log("les projets apres le 1er filtrage",projects);
-          projects.forEach(projet => {
-            this.projectService.getProjectAccessByIdProject(projet.id).subscribe({
-              next: (projectAccesses) => {
-                console.log("Accès pour le projet", projet.id, ":", projectAccesses);
-                projectAccesses.forEach(projectAccess => {
-                  console.log("projectAccess.idUser ===idUser",projectAccess.idUser ===idUser)
-                  console.log("projectAccess.invitationStatus===",projectAccess.invitationStatus==="ACCEPTED")
-                  if (projectAccess.idUser ===idUser && projectAccess.invitationStatus==="ACCEPTED" ){
-                    this.projects.push(projet);                      
-                  }
-                });
-                console.log("les projets de user",this.projects)
-           
-              },
-              error: (err) => {
-                console.error("Erreur récupération accès projet", projet.id, ":", err);
-              }
-            });
-          });
-          this.projects.forEach(projet => {
-            this.checkProjectStatus(projet)
-          });
-          this.countProjectStatuses(this.projects)
-          this.countTasks(this.projects)
-          console.log("les projets de user",this.projects)
-        } 
-        else if(this.isAdmin){
+        if(this.isAdmin){
           this.projects = projects.filter(p => p.deleted !== true);
           this.projects.forEach(projet => {
             this.checkProjectStatus(projet)
           });
           this.countProjectStatuses(this.projects)
           this.countTasks(this.projects)
+          
           console.log('les projets de admin',this.projects)
         }   
-        else{
-          this.projects = projects.filter(p => p.deleted !== true);
-   
-        }        
+                
          // Appliquer le filtre une fois les projets chargés
         console.log("les projets",this.projects);
         // Pour chaque projet, récupérer les détails des phases
@@ -256,29 +222,36 @@ async checkPhaseStatus(phase: any): Promise<string> {
     return 'ERROR';
   }
 }
-countProjectStatuses(projects:any): void {
+countProjectStatuses(projects: any[]): void {
   // Réinitialiser les compteurs
   this.notStartedProjectCount = 0;
   this.inProgressProjectCount = 0;
   this.completedProjectCount = 0;
   this.errorProjectCount = 0;
-  console.log("le status",projects)
-  // Parcourir les projets et incrémenter les compteurs
-  projects.forEach((project:any) => {
-    console.log("le type de variable",project.status)
-    console.log("project.status===",project.status=='"IN_PROGRESS"')
-    if (project.status==='"IN_PROGRESS"'){
 
-      this.inProgressProjectCount++
-      
-    }else if(project.status==='NOT_STARTED'){
-      this.notStartedProjectCount++
-    }else if(project.status==='COMPLETED'){ 
-      this.completedProjectCount++
-    }else if(project.status==='ERROR'){
-      this.errorProjectCount++
+  // Parcourir les projets et incrémenter les compteurs
+  projects.forEach((project: any) => {
+    // Normaliser le statut en enlevant les guillemets supplémentaires si nécessaire
+    const status = typeof project.status === 'string' 
+      ? project.status.replace(/"/g, '') 
+      : project.status;
+
+    switch (status) {
+      case 'NOT_STARTED':
+        this.notStartedProjectCount++;
+        break;
+      case 'IN_PROGRESS':
+        this.inProgressProjectCount++;
+        break;
+      case 'COMPLETED':
+        this.completedProjectCount++;
+        break;
+      case 'ERROR':
+        this.errorProjectCount++;
+        break;
+      default:
+        console.warn('Statut de projet inconnu:', project.status);
     }
-    
   });
 
   console.log('Comptes des statuts de projets:', {
@@ -288,37 +261,47 @@ countProjectStatuses(projects:any): void {
     error: this.errorProjectCount
   });
 }
-countTasks(projects:any): void {
-  projects.forEach((project:any) => {
+
+
+
+countTasks(projects: any): void {
+  this.totalTasks = 0;
+  this.monthlyTaskData = Array(12).fill(0); // Réinitialiser les 12 mois
+  
+  projects.forEach((project: any) => {
     this.projectService.getphaseByIdProject(project.id).subscribe({
       next: (phases) => {
-        phases.forEach((phase:any) => {
+        phases.forEach((phase: any) => {
           this.projectService.getTaskByPhase(phase.id).subscribe({
             next: (tasks) => {
+            
               this.totalTasks += tasks.length;
+             
+              tasks.forEach((task: any) => {
+                const taskDate = new Date(task.startDate); 
+                const month = taskDate.getMonth(); // 0 (Janvier) à 11 (Décembre)
+                
+                if (month >= 0 && month < 12) { // Vérification pour les 12 mois
+                  this.monthlyTaskData[month]++;
+                }
+                
+              });
               
+              this.createChart(); // Mettre à jour le graphique
             },
-            error: (err) => {
-              console.error('Erreur lors de la récupération des projets:', err);
-              this.projects = []; // Vider en cas d'erreur
-              
-            }
+            error: (err) => console.error('Erreur:', err),
           });
-        })
-        
+        });
       },
-      error: (err) => {
-        console.error('Erreur lors de la récupération des projets:', err);
-        this.projects = []; // Vider en cas d'erreur
-        
-      }
+      error: (err) => console.error('Erreur:', err),
     });
-  })
-
+  });
 }
   ngAfterViewInit(): void {
     this.createChart();
     this.checkUrlAndOpenModal(this.router.url);
+     this.getProjects();
+   
   }
   ngOnDestroy(): void {
     this.routerSubscription?.unsubscribe();
@@ -349,114 +332,39 @@ countTasks(projects:any): void {
       }
     }
   }
-  // This method is now triggered by the BUTTON CLICK
-  triggerAddUser(): void {
-    // Only navigate if agency data is ready
-    if (this.currentAgence && this.currentAgence[0]?.name) {
-      // Navigate to the child route. The router listener will handle opening the modal.
-      this.router.navigate(['users/new'], { relativeTo: this.route });
-    } else {
-      console.error('Cannot add user: Agency data not loaded.');
-      alert("Impossible d'ajouter un utilisateur : les informations de l'agence ne sont pas disponibles.");
-    }
-  }
-
-  // This method is now triggered by the ROUTER LISTENER when URL matches
-  openUserFormModal(): void {
-    if (!this.currentAgence || !this.currentAgence[0]?.name) {
-        console.error('Cannot open modal: Agency data missing.');
-        // Optionally navigate back if data is missing
-        this.router.navigate(['.'], { relativeTo: this.route });
-        return;
-    }
-    const agencyName = this.currentAgence[0].name;
-    console.log('Opening modal for agency:', agencyName);
-
-    this.activeModalRef = this.modalService.open(UserFormComponent, {
-      centered: true,
-      backdrop: 'static', // Prevent closing on backdrop click (optional, forces explicit close)
-      keyboard: false // Prevent closing with Esc key (optional)
-    });
-
-    // Pass the agency name
-    this.activeModalRef.componentInstance.agencyName = agencyName;
-
-    // Handle modal close/dismiss
-    this.activeModalRef.result.then(
-      (result) => {
-        console.log('Modal closed with result:', result);
-        this.activeModalRef = null; // Clear reference
-        if (result?.success) {
-          this.loadUsers(); // Refresh list on success
-        }
-        // Navigate back to the parent route on close
-        this.router.navigate(['.'], { relativeTo: this.route });
-      },
-      (reason) => {
-        console.log('Modal dismissed with reason:', reason);
-        this.activeModalRef = null; // Clear reference
-        // Navigate back to the parent route on dismiss (unless dismissal was due to navigation)
-        if (reason !== 'URL Navigation' && reason !== 'Component Destroyed') {
-            this.router.navigate(['.'], { relativeTo: this.route });
-        }
-      }
-    );
-  }
-    createChart(): void {
-      // Correction : Utiliser l'ID 'taskChartDashboard' qui correspond à l'HTML
-      const ctx = document.getElementById('taskChartDashboard') as HTMLCanvasElement;
-      if (ctx) {
-        // Détruire l'ancien graphique s'il existe pour éviter les doublons
-        if (this.chart) {
-          this.chart.destroy();
-        }
   
-        this.chart = new Chart(ctx, {
-          type: 'bar', // Type de graphique (bar, line, pie, etc.)
-          data: {
-            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'], // Labels pour l'axe X
-            datasets: [{
-              label: 'Tâches complétées', // Légende du dataset
-              data: [50, 60, 75, 90, 110, 130], // Données pour chaque label
-              backgroundColor: 'rgba(74, 144, 226, 0.6)', // Couleur de fond des barres (utilise --primary-color avec transparence)
-              borderColor: 'rgba(74, 144, 226, 1)', // Couleur de bordure des barres
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true, // Le graphique s'adapte à la taille du conteneur
-            maintainAspectRatio: false, // Permet de contrôler la hauteur via CSS si nécessaire
-            scales: {
-              y: {
-                beginAtZero: true, // L'axe Y commence à 0
-                title: {
-                  display: true,
-                  text: 'Nombre de tâches' // Titre de l'axe Y
-                }
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Mois' // Titre de l'axe X
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                display: true, // Afficher la légende
-                position: 'top', // Position de la légende
-              },
-              tooltip: {
-                enabled: true // Activer les infobulles au survol
-              }
-            }
-          }
-        });
-      } else {
-        // Le message d'erreur sera maintenant correct si l'élément n'est toujours pas trouvé
-        console.error("L'élément Canvas avec l'ID 'taskChartDashboard' n'a pas été trouvé.");
-      }
-    }
+  createChart(): void {
+  const ctx = document.getElementById('taskChartDashboard') as HTMLCanvasElement;
+  if (!ctx) return;
+
+  if (this.chart) this.chart.destroy();
+
+  this.chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'], // 12 mois
+      datasets: [{
+        label: 'Tâches par mois',
+        data: this.monthlyTaskData, // Données dynamiques (12 valeurs)
+        backgroundColor: '#41B3A3',
+        borderColor: '#205a52',
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Nombre de tâches' } },
+        x: { title: { display: true, text: 'Mois' } },
+      },
+      plugins: {
+        legend: { display: true, position: 'top' },
+        tooltip: { enabled: true },
+      },
+    },
+  });
+}
 
   addProject(): void {
       const modalRef = this.modalService.open(ProjectFormComponent, {
@@ -487,23 +395,100 @@ countTasks(projects:any): void {
       );
     }
 
-  viewProject(project: any): void {
-    console.log('Action: Voir le projet', project);
-    // Logique pour afficher les détails du projet (modal, navigation)
+  
+  
+  loadAgence(): void {
+    const userProfile = JSON.parse(localStorage.getItem('user_profile') || '{}');
+    if (userProfile?.preferred_username) {
+      
+      this.agenceService.getUserByUsername(userProfile.preferred_username).pipe(
+        mergeMap(user => this.agenceService.getAgenceByUser(user.id))
+      ).subscribe({
+        next: (agence) => {
+          
+          this.currentAgence = agence;
+         
+          this.loadUsers();
+         console.log("les utilisateurs",this.users)
+        },
+        error: (err) => console.error('Error loading agency:', err)
+      });
+    }
   }
 
-  editProject(project: any): void {
-    console.log('Action: Modifier le projet', project);
-    // Logique pour ouvrir le formulaire d'édition du projet
+countClient(): number {
+  const idCompany=localStorage.getItem("idAgence");
+  if (idCompany){
+    this.commercialService.getClients(idCompany).subscribe({
+      next: (clients) => {
+        
+        console.log("les clients",clients);
+        this.nbClient=clients.length;
+        return this.nbClient;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des clients:', err);
+        
+      },
+  });}
+  return this.nbClient;
+}
+getCA(): void {
+  const idCompany = localStorage.getItem("idAgence");
+  if (idCompany) {
+    this.commercialService.getInvoicesByidCompany(idCompany).subscribe({
+      next: (invoices) => {
+        console.log("les factures", invoices);
+        this.totalCA = invoices.reduce((sum, invoice) => sum + invoice.totalAmount, 0);
+        console.log("Total CA:", this.totalCA);
+        // Vous pouvez maintenant utiliser totalCA comme nécessaire
+      },
+      error: (err) => {
+        console.error("Erreur lors de la récupération des factures", err);
+      }
+    });
   }
+}
+  
+  loadUsers(): void {
+    if (!this.currentAgence[0]?.name) {
+        return;
+    }
 
-  deleteProject(project: any): void {
-    console.warn('Action: Supprimer le projet', project);
-    // Logique pour confirmer et supprimer le projet (appel API)
-    // Pensez à mettre à jour this.projects après suppression
-  }
-
-  addNewUser(): void {
+    const agencyName = this.currentAgence[0].name;    
+    this.isLoadingUsers = true;
+    const ROLE_HIERARCHY = ['SUPER-ADMIN', 'ADMIN', 'USER'];
+    this.agenceService.getMembersByGroupName(agencyName).pipe(
+       
+        catchError(err => {
+            
+            return of([]);
+        }),
+        mergeMap(users => {
+            return users.length ? from(users) : of([]);
+        }),
+        mergeMap(user => {            
+            return this.processUserRoles(user, ROLE_HIERARCHY);
+        }, 5), // Limite de concurrence
+        toArray(),
+        finalize(() => {
+            console.log('Chargement terminé - arrêt du spinner');
+            this.isLoadingUsers = false;
+        })
+    ).subscribe({
+        next: (usersWithRoles) => {
+            this.users = usersWithRoles;
+            this.userDataSource.data=this.users;
+            console.log("list users",this.users)
+        },
+        error: (err) => {
+            console.error('Erreur globale dans le flux:', err);
+            
+        }
+    });
+   
+}
+addNewUser(): void {
     if (this.currentAgence && this.currentAgence[0]?.name) {
       const agencyName = this.currentAgence[0].name;
       console.log('Opening modal for agency:', agencyName);
@@ -642,62 +627,6 @@ countTasks(projects:any): void {
           console.log('Suppression annulée');
       });
   }
-  loadAgence(): void {
-    const userProfile = JSON.parse(localStorage.getItem('user_profile') || '{}');
-    if (userProfile?.preferred_username) {
-      
-      this.agenceService.getUserByUsername(userProfile.preferred_username).pipe(
-        mergeMap(user => this.agenceService.getAgenceByUser(user.id))
-      ).subscribe({
-        next: (agence) => {
-          
-          this.currentAgence = agence;
-         
-          this.loadUsers();
-         console.log("les utilisateurs",this.users)
-        },
-        error: (err) => console.error('Error loading agency:', err)
-      });
-    }
-  }
-  loadUsers(): void {
-    if (!this.currentAgence[0]?.name) {
-        return;
-    }
-
-    const agencyName = this.currentAgence[0].name;    
-    this.isLoadingUsers = true;
-    const ROLE_HIERARCHY = ['SUPER-ADMIN', 'ADMIN', 'USER'];
-    this.agenceService.getMembersByGroupName(agencyName).pipe(
-       
-        catchError(err => {
-            
-            return of([]);
-        }),
-        mergeMap(users => {
-            return users.length ? from(users) : of([]);
-        }),
-        mergeMap(user => {            
-            return this.processUserRoles(user, ROLE_HIERARCHY);
-        }, 5), // Limite de concurrence
-        toArray(),
-        finalize(() => {
-            console.log('Chargement terminé - arrêt du spinner');
-            this.isLoadingUsers = false;
-        })
-    ).subscribe({
-        next: (usersWithRoles) => {
-            this.users = usersWithRoles;
-            this.userDataSource.data=this.users;
-            console.log("list users",this.users)
-        },
-        error: (err) => {
-            console.error('Erreur globale dans le flux:', err);
-            
-        }
-    });
-   
-}
   private processUserRoles(user: any, roleHierarchy: string[]) {
     return this.userService.getUserRoles(user.id).pipe(
       map(roles => ({
@@ -715,6 +644,59 @@ countTasks(projects:any): void {
   private getHighestRole(roles: any[], hierarchy: string[]): string {
     const roleNames = roles.map(r => r.name.toUpperCase());
     return hierarchy.find(role => roleNames.includes(role)) || 'USER';
+  }
+  // This method is now triggered by the BUTTON CLICK
+  triggerAddUser(): void {
+    // Only navigate if agency data is ready
+    if (this.currentAgence && this.currentAgence[0]?.name) {
+      // Navigate to the child route. The router listener will handle opening the modal.
+      this.router.navigate(['users/new'], { relativeTo: this.route });
+    } else {
+      console.error('Cannot add user: Agency data not loaded.');
+      alert("Impossible d'ajouter un utilisateur : les informations de l'agence ne sont pas disponibles.");
+    }
+  }
+
+  // This method is now triggered by the ROUTER LISTENER when URL matches
+  openUserFormModal(): void {
+    if (!this.currentAgence || !this.currentAgence[0]?.name) {
+        console.error('Cannot open modal: Agency data missing.');
+        // Optionally navigate back if data is missing
+        this.router.navigate(['.'], { relativeTo: this.route });
+        return;
+    }
+    const agencyName = this.currentAgence[0].name;
+    console.log('Opening modal for agency:', agencyName);
+
+    this.activeModalRef = this.modalService.open(UserFormComponent, {
+      centered: true,
+      backdrop: 'static', // Prevent closing on backdrop click (optional, forces explicit close)
+      keyboard: false // Prevent closing with Esc key (optional)
+    });
+
+    // Pass the agency name
+    this.activeModalRef.componentInstance.agencyName = agencyName;
+
+    // Handle modal close/dismiss
+    this.activeModalRef.result.then(
+      (result) => {
+        console.log('Modal closed with result:', result);
+        this.activeModalRef = null; // Clear reference
+        if (result?.success) {
+          this.loadUsers(); // Refresh list on success
+        }
+        // Navigate back to the parent route on close
+        this.router.navigate(['.'], { relativeTo: this.route });
+      },
+      (reason) => {
+        console.log('Modal dismissed with reason:', reason);
+        this.activeModalRef = null; // Clear reference
+        // Navigate back to the parent route on dismiss (unless dismissal was due to navigation)
+        if (reason !== 'URL Navigation' && reason !== 'Component Destroyed') {
+            this.router.navigate(['.'], { relativeTo: this.route });
+        }
+      }
+    );
   }
 }
 

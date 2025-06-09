@@ -1,0 +1,22 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1749506101166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749506112327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n {\n   \"name\": \"emailservice\",\n   \"version\": \"1.0.0\",\n   \"description\": \"\",\n-  \"main\": \"index.js\",\n+  \"main\": \"app.js\",\n   \"scripts\": {\n-    \n+    \"start\": \"node app.js\",\n     \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n   },\n   \"keywords\": [],\n   \"author\": \"\",\n"
+                }
+            ],
+            "date": 1749506101166,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"emailservice\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"amqplib\": \"^0.10.8\",\n    \"axios\": \"^1.9.0\",\n    \"body-parser\": \"^2.2.0\",\n    \"cors\": \"^2.8.5\",\n    \"dotenv\": \"^16.5.0\",\n    \"eureka-js-client\": \"^4.5.0\",\n    \"express\": \"^5.1.0\",\n    \"googleapis\": \"^105.0.0\",\n    \"helmet\": \"^8.1.0\",\n    \"morgan\": \"^1.10.0\",\n    \"multer\": \"^2.0.0\",\n    \"nodemailer\": \"^7.0.3\",\n    \"winston\": \"^3.17.0\"\n  },\n  \"devDependencies\": {\n    \"nodemon\": \"^3.1.10\"\n  }\n}\n"
+        }
+    ]
+}

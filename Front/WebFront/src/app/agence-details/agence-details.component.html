@@ -1,0 +1,102 @@
+<div class="agence-details-page">
+    <app-header [title]="'Détails de lAgence'"></app-header>
+
+
+  <!-- Main Content avec le nouveau design -->
+  <div class="content-container" *ngIf="!isLoading && currentAgence">
+    <form [formGroup]="agenceForm" (ngSubmit)="onSubmit()" class="agency-form">
+      
+      <!-- Nom Field avec le nouveau style -->
+      <div class="form-section form-field-reference">
+        <label for="name">Nom de l'agence</label>
+        <input 
+          id="name"
+          type="text" 
+          formControlName="name" 
+          required
+          placeholder="Entrez le nom de l'agence">
+        <div *ngIf="agenceForm.get('name')?.hasError('required')" class="error-message">
+          Ce champ est obligatoire
+        </div>
+      </div>
+
+
+      <!-- Adresse Field avec le nouveau style -->
+      <div class="form-section form-field-reference">
+        <label for="address">Adresse</label>
+        <textarea 
+          id="address"
+          formControlName="address"
+          placeholder="Entrez l'adresse complète"
+          rows="3"></textarea>
+      </div>
+
+      <div class="form-row">
+        <!-- Email Field -->
+        <div class="form-section form-col form-field-reference">
+          <label for="email">Email</label>
+          <input 
+            id="email"
+            type="email" 
+            formControlName="email"
+            placeholder="exemple@email.com">
+          <div *ngIf="agenceForm.get('email')?.hasError('email')" class="error-message">
+            Adresse email invalide
+          </div>
+        </div>
+
+        <!-- Téléphone Field -->
+        <div class="form-section form-col form-field-reference">
+          <label for="phone">Téléphone</label>
+          <input 
+            id="phone"
+            type="tel" 
+            formControlName="phone"
+            placeholder="+216 123 456">
+        </div>
+      </div>
+
+      <!-- Submit Buttons avec le nouveau style -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="button-reference button-cancel"
+          >
+          Annuler
+        </button>
+        <button 
+          type="submit" 
+          class="button-reference button-primary"
+          [disabled]="agenceForm.invalid || isSaving">
+          <span>{{ isSaving ? 'Enregistrement...' : 'Enregistrer' }}</span>
+          <mat-spinner *ngIf="isSaving" diameter="16"></mat-spinner>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-content">
+      <mat-spinner diameter="50" color="accent"></mat-spinner>
+      <h2>Chargement en cours</h2>
+      <p>Nous préparons les détails de votre agence...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !currentAgence" class="error-state">
+    <div class="error-content">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h2>Informations non disponibles</h2>
+      <p>Nous n'avons pas pu charger les informations de l'agence.</p>
+      <button 
+        class="button-reference button-primary retry-button"
+        (click)="loadAgenceDetails()">
+        <mat-icon>refresh</mat-icon>
+        Réessayer
+      </button>
+    </div>
+  </div>
+</div>
+

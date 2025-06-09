@@ -82,7 +82,53 @@ export class UserService
     );
   }
 
-  // Méthode privée pour obtenir les headers avec le token d'admin
+  
+  //supprimer user
+  deleteUser(userId: string): Observable<any> {
+    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;
+    const headers = this.getAdminHeaders();
+    return this.http.delete(url, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUserById(id: string): Observable<any> {
+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;
+  const headers = this.getAdminHeaders();
+
+  return this.http.get<any>(url, { headers }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+updateUser(userId: string, userData: any): Observable<any> {
+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;
+  const headers = this.getAdminHeaders();
+
+  return this.http.put(url, userData, { headers }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+resetUserPassword(userId: string, newPassword: string, temporary: boolean = true): Observable<any> {
+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/reset-password`;
+  const headers = this.getAdminHeaders();
+
+  const payload = {
+    type: "password",
+    value: newPassword,
+    temporary: temporary
+  };
+
+  return this.http.put(url, payload, { headers }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+
+
+
+// Méthode privée pour obtenir les headers avec le token d'admin
   private getAdminHeaders(): HttpHeaders {
     const token = this.authService.getAccessToken();
     if (!token) {
@@ -102,13 +148,4 @@ export class UserService
     return throwError(() => new Error('Something went wrong; please try again later.'));
   }
 
-  //supprimer user
-  deleteUser(userId: string): Observable<any> {
-    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;
-    const headers = this.getAdminHeaders();
-    return this.http.delete(url, { headers }).pipe(
-      catchError(this.handleError)
-    );
-  }
-  
 }

@@ -111,6 +111,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre standard pour les cartes
   &.pending .stat-icon-container { background-color: $pending-color; }
   &.in-progress .stat-icon-container { background-color: $primary-color; }
   &.completed .stat-icon-container { background-color: $success-color; } // Utiliser success pour 'completed'
+  &.revenue .stat-icon-container { background-color: $accent-color; } // Ajout pour la carte Chiffre d'Affaires
 
   .mat-card-title {
     font-size: 24px;

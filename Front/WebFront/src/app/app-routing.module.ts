@@ -16,6 +16,8 @@ import { GoogleAuthGuard } from './guard/google-auth.guard';
 import { GoogleCallbackComponent } from './google-callback/google-callback.component';
 import { LoadingComponent } from './loading/loading.component';
 import { EmailDetailComponent } from './email-detail/email-detail.component';
+import { AgenceDetailsComponent } from './agence-details/agence-details.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,12 +35,20 @@ const routes: Routes = [
     ]
   
   },
+  
   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},
   { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},
   { 
     path: 'project/:id', 
     component: ProjectDetailsComponent,
     canActivate:[AuthGuard]
+  },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }, // Protégez la route si nécessaire
+
+  {
+    path: 'agenceDetails', // Correspond au routerLink dans votre sidebar
+    component: AgenceDetailsComponent,
+     canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins
   },
   { 
     path: 'project/:id/phase/:phaseId', 

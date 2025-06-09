@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 118,
+            "activePatchIndex": 125,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -480,6 +480,34 @@
                 {
                     "date": 1748712384688,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n import { EmailsComponent } from './emails/emails.component';\r\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n import { LoadingComponent } from './loading/loading.component';\r\n+import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -66,9 +67,9 @@\n   {\r\n     path: 'emails',\r\n     component: EmailsComponent\r\n   },\r\n-   { path: 'emails/view/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n+   { path: 'emails/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n \r\n   \r\n  \r\n  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n"
+                },
+                {
+                    "date": 1749408011571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,12 @@\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n   },\r\n+  {\r\n+    path: 'agence-details/:idAgence', // ':idAgence' est un paramètre de route\r\n+    component: AgenceDetailsComponent // Le composant qui affiche le formulaire de détails/modification\r\n+  },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n"
+                },
+                {
+                    "date": 1749408025283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   \r\n   },\r\n   {\r\n     path: 'agence-details/:idAgence', // ':idAgence' est un paramètre de route\r\n-    component: AgenceDetailsComponent // Le composant qui affiche le formulaire de détails/modification\r\n+    component: AgenceDetailsComponent \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n"
+                },
+                {
+                    "date": 1749408060755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n   \r\n   },\r\n   {\r\n     path: 'agence-details/:idAgence', // ':idAgence' est un paramètre de route\r\n-    component: AgenceDetailsComponent \r\n+    component: Agence \r\n   },\r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n"
+                },
+                {
+                    "date": 1749408110001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,12 +32,9 @@\n       // Add other child routes if needed (e.g., 'users/:id/edit')\r\n     ]\r\n   \r\n   },\r\n-  {\r\n-    path: 'agence-details/:idAgence', // ':idAgence' est un paramètre de route\r\n-    component: Agence \r\n-  },\r\n+  \r\n   { path: 'projects', component: ProjectsComponent , canActivate:[AuthGuard]},\r\n   { path: 'invitations', component: InvitationsComponent , canActivate:[AuthGuard]},\r\n   { \r\n     path: 'project/:id', \r\n"
+                },
+                {
+                    "date": 1749418310530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,8 +40,13 @@\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n   },\r\n+  {\r\n+    path: 'agenceDetails', // Correspond au routerLink dans votre sidebar\r\n+    component: AgenceDetailsComponent,\r\n+    // canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n+  },\r\n   { \r\n     path: 'project/:id/phase/:phaseId', \r\n     component: TasksComponent \r\n     , canActivate:[AuthGuard]\r\n"
+                },
+                {
+                    "date": 1749418316401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n import { GoogleAuthGuard } from './guard/google-auth.guard';\r\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n import { LoadingComponent } from './loading/loading.component';\r\n import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n+import { AgenceDetailsComponent } from './agence-details/agence-details.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -43,9 +44,9 @@\n   },\r\n   {\r\n     path: 'agenceDetails', // Correspond au routerLink dans votre sidebar\r\n     component: AgenceDetailsComponent,\r\n-    // canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n+     canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n   },\r\n   { \r\n     path: 'project/:id/phase/:phaseId', \r\n     component: TasksComponent \r\n"
+                },
+                {
+                    "date": 1749459911233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,9 @@\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n   },\r\n+  \r\n   {\r\n     path: 'agenceDetails', // Correspond au routerLink dans votre sidebar\r\n     component: AgenceDetailsComponent,\r\n      canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n"
                 }
             ],
             "date": 1741609914429,

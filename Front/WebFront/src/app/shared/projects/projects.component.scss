@@ -363,7 +363,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
         &.status-badge {
           padding: 3px 8px;
-          border-radius: $border-radius / 2;
+          border-radius: 8 / 2;
           font-size: 0.8em;
           font-weight: 500;
           color: $text-color-light;

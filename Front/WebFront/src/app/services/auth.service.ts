@@ -42,11 +42,16 @@ private googleAccessToken = new BehaviorSubject<string | null>(null);
       redirectBasedOnRole(): void {      
         if (this.isSuperAdmin()) {
           console.log('Redirection vers le dashboard SUPER-ADMIN');
-          this.router.navigate(['/super-admin/dashboard']); 
-        } else if (this.isUser() || this.isAdmin()) {
+          this.router.navigate(['/super-admin/agences']); 
+        } else if ( this.isAdmin()) {
           console.log('Redirection vers le dashboard ');
           this.router.navigate(['/dashboard']); 
-        } else {
+        } else if (this.isUser()) {
+          console.log('Redirection vers le dashboard ');
+          this.router.navigate(['/projects']); 
+        }
+        
+        else {
           console.warn('Utilisateur authentifié sans rôle reconnu (SUPER-ADMIN, ADMIN, USER). Redirection vers dashboard par défaut.');
           this.router.navigate(['/dashboard']); 
         }

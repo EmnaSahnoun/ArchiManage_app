@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 42,
             "patches": [
                 {
                     "date": 1744990690983,
@@ -144,6 +144,38 @@
                 {
                     "date": 1746122364726,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   providedIn: 'root'\r\n })\r\n export class UserService\r\n  {\r\n-  private keycloakUrl = '/keycloak';\r\n+  private keycloakUrl = '/api';\r\n   private realm = 'systeodigital';\r\n   \r\n   constructor(private http: HttpClient,private authService: AuthService) {}\r\n \r\n"
+                },
+                {
+                    "date": 1749462321502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,5 +110,6 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n   \r\n+  \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749462337155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,7 +109,14 @@\n     return this.http.delete(url, { headers }).pipe(\r\n       catchError(this.handleError)\r\n     );\r\n   }\r\n-  \r\n-  \r\n+\r\n+  getUserById(id: string): Observable<any> {\r\n+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;\r\n+  const headers = this.getApiHeaders();\r\n+\r\n+  return this.http.get<any>(url, { headers }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n+}\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749462353188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,27 @@\n       catchError(this.handleError)\r\n     );\r\n   }\r\n \r\n-  // Méthode privée pour obtenir les headers avec le token d'admin\r\n+  \r\n+  //supprimer user\r\n+  deleteUser(userId: string): Observable<any> {\r\n+    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;\r\n+    const headers = this.getAdminHeaders();\r\n+    return this.http.delete(url, { headers }).pipe(\r\n+      catchError(this.handleError)\r\n+    );\r\n+  }\r\n+\r\n+  getUserById(id: string): Observable<any> {\r\n+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;\r\n+  const headers = this.getApiHeaders();\r\n+\r\n+  return this.http.get<any>(url, { headers }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n+}\r\n+// Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n       throw new Error('No access token available');\r\n@@ -101,22 +119,5 @@\n     console.error('An error occurred:', error);\r\n     return throwError(() => new Error('Something went wrong; please try again later.'));\r\n   }\r\n \r\n-  //supprimer user\r\n-  deleteUser(userId: string): Observable<any> {\r\n-    const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;\r\n-    const headers = this.getAdminHeaders();\r\n-    return this.http.delete(url, { headers }).pipe(\r\n-      catchError(this.handleError)\r\n-    );\r\n-  }\r\n-\r\n-  getUserById(id: string): Observable<any> {\r\n-  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;\r\n-  const headers = this.getApiHeaders();\r\n-\r\n-  return this.http.get<any>(url, { headers }).pipe(\r\n-    catchError(this.handleError)\r\n-  );\r\n-}\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749462359618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n   }\r\n \r\n   getUserById(id: string): Observable<any> {\r\n   const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${id}`;\r\n-  const headers = this.getApiHeaders();\r\n+  const headers = this.getAdminHeaders();\r\n \r\n   return this.http.get<any>(url, { headers }).pipe(\r\n     catchError(this.handleError)\r\n   );\r\n"
+                },
+                {
+                    "date": 1749464155390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,8 +99,10 @@\n   return this.http.get<any>(url, { headers }).pipe(\r\n     catchError(this.handleError)\r\n   );\r\n }\r\n+\r\n+\r\n // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1749464165894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,17 @@\n     catchError(this.handleError)\r\n   );\r\n }\r\n \r\n+updateUser(userId: string, userData: any): Observable<any> {\r\n+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}`;\r\n+  const headers = this.getAdminHeaders();\r\n \r\n+  return this.http.put(url, userData, { headers }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n+}\r\n+\r\n // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1749464614250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,8 +109,42 @@\n     catchError(this.handleError)\r\n   );\r\n }\r\n \r\n+resetUserPassword(userId: string, newPassword: string, temporary: boolean = true): Observable<any> {\r\n+  const url = `${this.keycloakUrl}/admin/realms/${this.realm}/users/${userId}/reset-password`;\r\n+  const headers = this.getAdminHeaders();\r\n+\r\n+  const payload = {\r\n+    type: \"password\",\r\n+    value: newPassword,\r\n+    temporary: temporary\r\n+  };\r\n+\r\n+  return this.http.put(url, payload, { headers }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n+}\r\n+\r\n+// Mettre à jour le mot de passe de l'utilisateur actuel (nécessite l'ancien mot de passe)\r\n+updateCurrentUserPassword(currentPassword: string, newPassword: string): Observable<any> {\r\n+  const url = `${this.keycloakUrl}/realms/${this.realm}/protocol/openid-connect/token`;\r\n+  const headers = new HttpHeaders({\r\n+    'Content-Type': 'application/x-www-form-urlencoded'\r\n+  });\r\n+\r\n+  const body = new URLSearchParams();\r\n+  body.set('grant_type', 'password');\r\n+  body.set('client_id', 'app-pfeFront'); // Remplacez par votre client ID\r\n+  body.set('username', this.authService.getUsername()); // Vous aurez besoin d'une méthode pour obtenir le username\r\n+  body.set('password', currentPassword);\r\n+  body.set('new_password', newPassword);\r\n+\r\n+  return this.http.post(url, body.toString(), { headers }).pipe(\r\n+    catchError(this.handleError)\r\n+  );\r\n+}\r\n+\r\n // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n     const token = this.authService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1749464634562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -124,25 +124,9 @@\n     catchError(this.handleError)\r\n   );\r\n }\r\n \r\n-// Mettre à jour le mot de passe de l'utilisateur actuel (nécessite l'ancien mot de passe)\r\n-updateCurrentUserPassword(currentPassword: string, newPassword: string): Observable<any> {\r\n-  const url = `${this.keycloakUrl}/realms/${this.realm}/protocol/openid-connect/token`;\r\n-  const headers = new HttpHeaders({\r\n-    'Content-Type': 'application/x-www-form-urlencoded'\r\n-  });\r\n \r\n-  const body = new URLSearchParams();\r\n-  body.set('grant_type', 'password');\r\n-  body.set('client_id', 'app-pfeFront'); // Remplacez par votre client ID\r\n-  body.set('username', this.authService.getUsername()); // Vous aurez besoin d'une méthode pour obtenir le username\r\n-  body.set('password', currentPassword);\r\n-  body.set('new_password', newPassword);\r\n-\r\n-  return this.http.post(url, body.toString(), { headers }).pipe(\r\n-    catchError(this.handleError)\r\n-  );\r\n }\r\n \r\n // Méthode privée pour obtenir les headers avec le token d'admin\r\n   private getAdminHeaders(): HttpHeaders {\r\n"
                 }
             ],
             "date": 1744990690983,
