@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         jdk 'jdk-17'
-        
+        nodejs 'node-18'
     }
     
     environment {
@@ -15,13 +15,7 @@ pipeline {
                 git url: 'https://github.com/EmnaSahnoun/ArchiManage_app.git', branch: 'main'
             }
         }
-        stage('Setup Node.js') {
-            steps {
-                // Installation manuelle de Node.js
-                sh 'curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -'
-                sh 'sudo apt-get install -y nodejs'
-            }
-        }
+        
         stage('Build and Package') {
             parallel {
                 // Services Java
