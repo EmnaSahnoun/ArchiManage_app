@@ -93,8 +93,7 @@ pipeline {
                 stage('Build Email Service') {
                     steps {
                         dir('Back/MicroserviceEureka/emailService') {
-                            sh 'npm install'
-                            sh 'npm run build'
+                            sh 'npm install'                            
                         }
                     }
                 }
@@ -103,9 +102,9 @@ pipeline {
                 stage('Build Angular Frontend') {
                     steps {
                         dir('Front/WebFront') {
-                            sh 'npm config set legacy-peer-deps true'
-                            sh 'npm install'
-                            sh 'npm run build -- --prod'
+                             sh 'npm config set legacy-peer-deps true'
+                             sh 'npm install'
+                             sh 'npm run build -- --configuration=production'
                         }
                     }
                 }
