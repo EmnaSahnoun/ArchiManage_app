@@ -10,6 +10,7 @@ import { Phase } from '../../models/phase.model';
 import { ProjectMembersComponent } from '../project-members/project-members.component'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { AgenceService } from '../../services/agenceService';
 export interface Project {
   id: string; // Or number, depending on your backend
   name: string;
@@ -45,7 +46,9 @@ export class ProjectsComponent implements OnInit{
   isUser:boolean=false;
   isAdmin:boolean=false;
   isSuperAdmin:boolean=false;
-
+  idAdmin?: string; // Important: Ensure this matches your project data structure
+  idCompany?: string; // Important: Ensure this matches your project data structure
+  deleted?: boolean;
   completed:number=0;
   nbTasks:number=0;
   constructor(
@@ -55,6 +58,7 @@ export class ProjectsComponent implements OnInit{
     public dialog: MatDialog ,
     private snackBar: MatSnackBar,
 private authService:AuthService,
+private agenceService:AgenceService
     
 
   ) { 
@@ -63,6 +67,7 @@ private authService:AuthService,
   }
 
   ngOnInit(): void {
+    this.getGroup();
     this.isUser=this.authService.isUser();
   this.isSuperAdmin=this.authService.isSuperAdmin();
   this.isAdmin=this.authService.isAdmin();
@@ -83,6 +88,30 @@ private authService:AuthService,
       );
     }
    }
+   getGroup(){
+    const idUser = localStorage.getItem("user_id");
+    if (idUser){
+      this.agenceService.getAgenceByUser(idUser).subscribe({
+        next: (agence) => {
+                   
+          this.agenceService.getAgenceByName(agence[0].name).subscribe({
+            next: (a) => {
+              
+              console.log("les agences",a)
+             localStorage.setItem('idAgence', a.id);
+             localStorage.setItem('AgencyName', a.name);
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+            }
+          });
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération de l\'utilisateur:', err);
+        }
+      });
+    }
+  }
    getProjects(){
     const idCompany=localStorage.getItem("idAgence");
     if (idCompany){

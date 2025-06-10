@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {  Subscription } from 'rxjs';
 import { NotificationService } from '../services/notificationService';
 import { Router } from '@angular/router'; // Import Router
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -18,23 +19,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userId !:string; 
   private subscriptions = new Subscription();
   activeToasts: any[] = [];
+  isSuperAdmin:boolean=false;
   private toastCounter = 0; //
    constructor(
     private notificationService: NotificationService,
-    private router: Router // Inject Router
+    private router: Router ,
+    private authService:AuthService
   ) {}
   ngOnInit(): void {
     const id=localStorage.getItem("user_id");
     if (id){
       this.userId=id;
     }
+    this.isSuperAdmin=this.authService.isSuperAdmin();
   this.loadUserProfile();
     this.loadNotificationHistory();
     this.setupRealTimeNotifications();
     this.loadUnreadCount();
   }
   loadUserProfile():void{
-const userProfileString = localStorage.getItem("user_profile");
+    const userProfileString = localStorage.getItem("user_profile");
 
     if (userProfileString) {
       

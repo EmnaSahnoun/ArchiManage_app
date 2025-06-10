@@ -16,10 +16,10 @@
     <mat-card class="stat-card pending">
       <mat-card-header>
         <div mat-card-avatar class="stat-icon-container">
-          <mat-icon>schedule</mat-icon>
+          <mat-icon>folder</mat-icon>
         </div>
-        <mat-card-title>{{ notStartedProjectCount }}</mat-card-title>
-        <mat-card-subtitle>Projets en Attente</mat-card-subtitle>
+        <mat-card-title>{{ projects.length }}</mat-card-title>
+        <mat-card-subtitle>Projets </mat-card-subtitle>
       </mat-card-header>
     </mat-card>
 
@@ -27,10 +27,23 @@
     <mat-card class="stat-card in-progress">
       <mat-card-header>
         <div mat-card-avatar class="stat-icon-container">
-          <mat-icon>construction</mat-icon>
+          <mat-icon>group</mat-icon> 
         </div>
-        <mat-card-title>{{ inProgressProjectCount }}</mat-card-title>
-        <mat-card-subtitle>Projets en Cours</mat-card-subtitle>
+        <mat-card-title>{{ users.length }}</mat-card-title>
+        <mat-card-subtitle>Membres </mat-card-subtitle>
+      </mat-card-header>
+      </mat-card>
+
+    <!-- Carte Chiffre d'Affaires -->
+    <mat-card class="stat-card revenue">
+      <mat-card-header>
+        <div mat-card-avatar class="stat-icon-container">
+          <mat-icon>monetization_on</mat-icon> <!-- Changé pour 'monetization_on' pour Chiffre d'Affaires -->
+        </div>
+        <mat-card-title>{{ totalCA | currency:'TND':'symbol':'1.2-2':'fr' }}</mat-card-title> 
+        <!-- Assurez-vous d'avoir une variable 'chiffreAffaire' dans votre composant TypeScript -->
+        <!-- Le pipe 'currency' formatera le nombre en devise. Adaptez 'EUR' et 'fr' si besoin. -->
+        <mat-card-subtitle>Chiffre d'Affaires</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
 
@@ -38,10 +51,10 @@
     <mat-card class="stat-card completed">
       <mat-card-header>
         <div mat-card-avatar class="stat-icon-container">
-          <mat-icon>check_circle</mat-icon>
+          <mat-icon>people</mat-icon> <!-- Changé pour 'people' pour Clients -->
         </div>
-        <mat-card-title>{{ completedProjectCount }}</mat-card-title>
-        <mat-card-subtitle>Projets Terminés</mat-card-subtitle>
+        <mat-card-title>{{ nbClient }}</mat-card-title>
+        <mat-card-subtitle>Clients</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
   </div>
@@ -57,23 +70,7 @@
         <div class="chart-container">
           <canvas id="taskChartDashboard"></canvas>
         </div>
-        <div class="activity-stats">
-          <div class="stat-item">
-            <mat-icon>event_available</mat-icon>
-            <span class="stat-value">{{ totalTasks }}</span>
-            <span class="stat-label">Tâches Totales</span>
-          </div>
-          <div class="stat-item">
-            <mat-icon>group</mat-icon>
-            <span class="stat-value">{{ users.length }}</span>
-            <span class="stat-label">Membres Assignés</span>
-          </div>
-          <div class="stat-item">
-            <mat-icon>leaderboard</mat-icon>
-            <span class="stat-value">{{ this.projects.length }}</span>
-            <span class="stat-label">Projets Actifs</span>
-          </div>
-        </div>
+        
       </div>
     </mat-card-content>
   </mat-card>

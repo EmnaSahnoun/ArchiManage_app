@@ -1,0 +1,470 @@
+// Variables de couleurs basées sur le design de référence
+$primary-color: #5CBDB2;       // Couleur teal/vert pour les boutons principaux
+$accent-color: #E27D60;        // Couleur coral/orange pour les titres
+$warn-color: #F44336;          // Rouge pour les erreurs
+$success-color: #4CAF50;       // Vert pour le succès
+$cancel-color: #9E9E9E;        // Gris pour annulation
+$pending-color: #f9a825;       // Jaune/Orange pour "en attente"
+
+$text-color-primary: #333;     // Texte principal
+$text-color-secondary: #666;   // Texte secondaire
+$text-color-light: #fff;       // Texte sur fonds sombres/colorés
+$text-color-muted: #999;       // Texte atténué
+
+$background-color: #f8f9fa;    // Fond général de la page
+$container-background: #fff;   // Fond des conteneurs/cartes
+$input-background: #f5f5f5;    // Fond des champs de saisie
+$border-color: #e0e0e0;       // Couleur de bordure légère
+$border-color-focus: #5CBDB2;  // Couleur de bordure au focus
+$border-radius: 12px;         // Rayon de bordure arrondi
+$border-radius-small: 8px;    // Rayon de bordure plus petit
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // Ombre légère
+
+// Espacement
+$spacing-unit: 8px;
+$space-xs: $spacing-unit;      // 8px
+$space-sm: $spacing-unit * 2;  // 16px
+$space-md: $spacing-unit * 3;  // 24px
+$space-lg: $spacing-unit * 4;  // 32px
+$space-xl: $spacing-unit * 6;  // 48px
+
+// Typographie
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 20px;
+$font-size-xxl: 28px;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+.agence-details-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $background-color;
+  padding: $space-xl $space-md;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: $spacing-unit;
+  
+  .header-content {
+    .page-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $font-size-xxl;
+      color: $accent-color;
+      font-weight: $font-weight-medium;
+      margin-bottom: $space-xs;
+      
+      .title-icon {
+        margin-right: $space-xs;
+        color: $accent-color;
+      }
+    }
+    
+    .agency-name {
+      font-size: $font-size-xl;
+      color: $text-color-primary;
+      font-weight: $font-weight-normal;
+      margin-bottom: $space-xs;
+    }
+  }
+  
+  .header-actions {
+    margin-top: $space-xs;
+    
+    .action-button {
+      border-radius: $border-radius-small;
+      padding: $space-xs $space-md;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: $font-weight-medium;
+      border: 1px solid $border-color;
+      background-color: $container-background;
+      color: $text-color-primary;
+      
+      mat-icon {
+        margin-right: $space-xs;
+      }
+      
+      &:hover {
+        background-color: #f8f9fa;
+        border-color: $primary-color;
+      }
+    }
+  }
+}
+
+.content-container {
+  width: 100%;
+  
+  padding: $space-xl;
+  background-color: $container-background;
+  border-radius: $border-radius;
+  box-shadow: $card-shadow;
+}
+
+.agency-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.form-row {
+  display: flex;
+  gap: $space-md;
+  
+  .form-col {
+    flex: 1;
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  
+  mat-form-field {
+    width: 100%;
+    
+    &.mat-form-field-appearance-outline {
+      .mat-form-field-outline {
+        border-radius: $border-radius-small;
+        border-color: $border-color;
+      }
+      
+      &.mat-focused .mat-form-field-outline-thick {
+        border-color: $border-color-focus;
+        border-width: 2px;
+      }
+      
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+    }
+    
+    .mat-input-element, textarea.mat-input-element {
+      color: $text-color-primary;
+      background-color: $input-background;
+      border-radius: $border-radius-small;
+      padding: $space-sm;
+      border: 1px solid $border-color;
+      font-size: $font-size-base;
+      
+      &:focus {
+        border-color: $border-color-focus;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(92, 189, 178, 0.1);
+      }
+      
+      &::placeholder {
+        color: $text-color-muted;
+      }
+    }
+    
+    mat-label {
+      color: $text-color-secondary;
+      font-weight: $font-weight-medium;
+      margin-bottom: $space-xs;
+      display: block;
+      font-size: $font-size-base;
+    }
+    
+    mat-icon[matPrefix] {
+      color: $text-color-secondary;
+      margin-right: $space-xs;
+      position: absolute;
+      left: $space-sm;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    
+    // Ajustement pour les champs avec icônes
+    &:has(mat-icon[matPrefix]) {
+      .mat-input-element, textarea.mat-input-element {
+        padding-left: calc(#{$space-lg} + 24px);
+      }
+    }
+  }
+  
+  // Style spécifique pour les labels en dehors des mat-form-field
+  > label {
+    color: $text-color-secondary;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-xs;
+    display: block;
+    font-size: $font-size-base;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-sm;
+  margin-top: $space-xl;
+  padding-top: $space-lg;
+  
+  button {
+    padding: $space-sm $space-lg;
+    min-height: 44px;
+    font-weight: $font-weight-medium;
+    border-radius: $border-radius-small;
+    font-size: $font-size-base;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      margin-right: 0;
+    }
+    
+    &[mat-stroked-button] {
+      background-color: transparent;
+      color: $cancel-color;
+      border: 1px solid $cancel-color;
+      
+      &:hover {
+        background-color: rgba($cancel-color, 0.1);
+      }
+    }
+    
+    &[mat-raised-button] {
+      background-color: $primary-color;
+      color: $text-color-light;
+      box-shadow: 0 2px 4px rgba($primary-color, 0.3);
+      
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        box-shadow: 0 4px 8px rgba($primary-color, 0.4);
+      }
+      
+      &:disabled {
+        background-color: #ccc;
+        color: #666;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .submit-button {
+    mat-spinner {
+      margin-left: $space-xs;
+    }
+  }
+}
+
+// Loading State
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  
+  .loading-content {
+    text-align: center;
+    max-width: 500px;
+    
+    h2 {
+      font-size: $font-size-xl;
+      color: $text-color-primary;
+      margin: $space-md 0 $space-sm;
+      font-weight: $font-weight-medium;
+    }
+    
+    p {
+      color: $text-color-secondary;
+      font-size: $font-size-lg;
+      margin-bottom: $space-xs;
+    }
+    
+    mat-spinner {
+      margin: 0 auto $space-md;
+    }
+  }
+}
+
+// Error State
+.error-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  
+  .error-content {
+    text-align: center;
+    max-width: 550px;
+    padding: $space-xl;
+    background-color: $container-background;
+    border-radius: $border-radius;
+    box-shadow: $card-shadow;
+    
+    .error-icon {
+      font-size: 60px;
+      width: 60px;
+      height: 60px;
+      color: $warn-color;
+      margin-bottom: $space-xs;
+    }
+    
+    h2 {
+      font-size: $font-size-xl;
+      color: $warn-color;
+      margin-bottom: $space-xs;
+      font-weight: $font-weight-medium;
+    }
+    
+    p {
+      color: $text-color-secondary;
+      font-size: $font-size-lg;
+      margin-bottom: $space-lg;
+    }
+    
+    .retry-button {
+      border-radius: $border-radius-small;
+      display: flex;
+      align-items: center;
+      gap: $space-xs;
+      margin: 0 auto;
+      padding: $space-sm $space-lg;
+      min-height: 44px;
+      font-weight: $font-weight-medium;
+      background-color: $primary-color;
+      color: $text-color-light;
+      border: none;
+      cursor: pointer;
+      
+      mat-icon {
+        margin-right: 0;
+      }
+      
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .agence-details-page {
+    padding: $space-md;
+  }
+  
+  .page-header {
+    .header-actions {
+      width: 100%;
+      
+      .action-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+  
+  .content-container {
+    padding: $space-md;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: $space-md;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// Styles supplémentaires pour reproduire exactement le design de référence
+.page-title-reference {
+  font-size: $font-size-xxl;
+  color: $accent-color;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  margin-bottom: $space-xs;
+}
+
+// Style pour les champs de formulaire selon le design de référence
+.form-field-reference {
+  margin-bottom: $space-xs;
+  
+  label {
+    display: block;
+    color: $text-color-secondary;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-xs;
+    font-size: $font-size-base;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: $space-sm $space-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-small;
+    background-color: $input-background;
+    font-size: $font-size-base;
+    color: $text-color-primary;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $border-color-focus;
+      box-shadow: 0 0 0 2px rgba(92, 189, 178, 0.1);
+    }
+    
+    &::placeholder {
+      color: $text-color-muted;
+    }
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+// Style pour les boutons selon le design de référence
+.button-reference {
+  padding: $space-sm $space-lg;
+  border-radius: $border-radius-small;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-base;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-height: 44px;
+  
+  &.button-cancel {
+    background-color: transparent;
+    color: $cancel-color;
+    border: 1px solid $cancel-color;
+    
+    &:hover {
+      background-color: rgba($cancel-color, 0.1);
+    }
+  }
+  
+  &.button-primary {
+    background-color: $primary-color;
+    color: $text-color-light;
+    
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+

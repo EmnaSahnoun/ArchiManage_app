@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 59,
+            "activePatchIndex": 60,
             "patches": [
                 {
                     "date": 1746114379973,
@@ -244,6 +244,10 @@
                 {
                     "date": 1747853052753,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -348,9 +348,9 @@\n         display: flex;\r\n         align-items: center;\r\n         color: $text-color-primary;\r\n         font-weight: 600;\r\n-        font-size: 1.9em;\r\n+        font-size: 1.3em;\r\n         mat-icon {\r\n           font-size: 18px; // Taille des icônes dans les lignes d'info\r\n           margin-right: 8px;\r\n           color: $primary-color; // Couleur des icônes\r\n"
+                },
+                {
+                    "date": 1749405068756,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -362,9 +362,9 @@\n         text-align: right;\r\n \r\n         &.status-badge {\r\n           padding: 3px 8px;\r\n-          border-radius: $border-radius / 2;\r\n+          border-radius: 8 / 2;\r\n           font-size: 0.8em;\r\n           font-weight: 500;\r\n           color: $text-color-light;\r\n           // Styles spécifiques par statut (à adapter selon vos statuts)\r\n"
                 }
             ],
             "date": 1746114379973,

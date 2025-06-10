@@ -2,9 +2,8 @@
     <h1>{{ title }}</h1>
     <div class="user-info">
         <span class="user-name">{{username}}</span>
-         <i class="bi bi-chat-dots icon" title="Chat"></i> 
-        
-        <div class="notification-icon" (click)="toggleNotifications()">
+     
+        <div class="notification-icon" (click)="toggleNotifications()" *ngIf="!isSuperAdmin">
              <i class="bi bi-bell icon" title="Notifications"></i> <!-- Added title for accessibility -->
           
             <span *ngIf="unreadCount > 0" class="badge">{{unreadCount}}</span>

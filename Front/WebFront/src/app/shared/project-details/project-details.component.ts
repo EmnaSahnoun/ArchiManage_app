@@ -80,7 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
   isSuperAdmin:boolean=false;
   completed:number=0;
   nbTasks:number=0;
-
+  isAdminproject:boolean=false;
   constructor(private route: ActivatedRoute, 
     private dialog: MatDialog, 
     private router:Router,
@@ -107,13 +107,19 @@ export class ProjectDetailsComponent implements OnInit {
     this.getPhases();
   }
   getProjetById(){
-    if (this.projectId){
+    const iduser=localStorage.getItem("user_id");
+    
+    if (this.projectId&&iduser){
       this.projectService.getProjectById(this.projectId).subscribe({
-        next: (p) => {
+        next: (p:any) => {
           this.projet = p;
-          
+          if(p?.idAdmin===iduser){
+            this.isAdminproject=true;
+          }
           this.getProgress(this.projet);
           console.log("le projet",this.projet);
+          
+          
           // Pour chaque projet, récupérer les détails des phases
         
           

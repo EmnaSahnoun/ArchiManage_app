@@ -26,7 +26,13 @@ export class CommercialService {
             catchError(this.handleError)
         );    
   }
-
+getInvoicesByidCompany(idCompany:any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments/company/${idCompany}`, { 
+            headers: this.getApiHeaders()
+        }).pipe(
+            catchError(this.handleError)
+        );    
+  }
   getInvoiceById(id: string): Observable<Invoice> {
     return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments/${id}`, { 
             headers: this.getApiHeaders()

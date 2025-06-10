@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 24,
             "patches": [
                 {
                     "date": 1741611133553,
@@ -68,6 +68,42 @@
                 {
                     "date": 1745175726897,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n                 \"input\": \"public\"\r\n               }\r\n             ],\r\n             \"styles\": [\r\n+              \"node_modules/ngx-toastr/toastr.css\",\r\n               \"src/styles.scss\",\r\n               \"node_modules/bootstrap-icons/font/bootstrap-icons.css\",\r\n               \"node_modules/bootstrap/dist/css/bootstrap.min.css\"\r\n               \r\n"
+                },
+                {
+                    "date": 1749512883832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n             \"production\": {\r\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n-                  \"maximumWarning\": \"500kB\",\r\n+                  \"maximumWarning\": \"2mb\",\r\n                   \"maximumError\": \"1MB\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n"
+                },
+                {
+                    "date": 1749512892277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"2mb\",\r\n-                  \"maximumError\": \"1MB\"\r\n+                  \"maximumError\": \"5mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n                   \"maximumWarning\": \"2kB\",\r\n"
+                },
+                {
+                    "date": 1749512903256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,10 +57,10 @@\n                   \"maximumError\": \"5mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n-                  \"maximumWarning\": \"2kB\",\r\n-                  \"maximumError\": \"4kB\"\r\n+                  \"maximumWarning\": \"6kB\",\r\n+                  \"maximumError\": \"10kB\"\r\n                 }\r\n               ],\r\n               \"outputHashing\": \"all\"\r\n             },\r\n"
+                },
+                {
+                    "date": 1749512966454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n       \"architect\": {\r\n         \"build\": {\r\n           \"builder\": \"@angular-devkit/build-angular:application\",\r\n           \"options\": {\r\n+            \r\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n"
+                },
+                {
+                    "date": 1749513779819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,14 @@\n       \"architect\": {\r\n         \"build\": {\r\n           \"builder\": \"@angular-devkit/build-angular:application\",\r\n           \"options\": {\r\n-            \r\n+            \"allowedCommonJsDependencies\": [\r\n+        \"html2canvas\",\r\n+        \"canvg\",\r\n+        \"rgbcolor\",\r\n+        \"raf\"\r\n+      ],\r\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n@@ -53,9 +58,9 @@\n             \"production\": {\r\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n-                  \"maximumWarning\": \"2mb\",\r\n+                  \"maximumWarning\": \"3mb\",\r\n                   \"maximumError\": \"5mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n"
+                },
+                {
+                    "date": 1749513889274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"3mb\",\r\n-                  \"maximumError\": \"5mb\"\r\n+                  \"maximumError\": \"mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n                   \"maximumWarning\": \"6kB\",\r\n"
+                },
+                {
+                    "date": 1749513902274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,13 +59,13 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"3mb\",\r\n-                  \"maximumError\": \"mb\"\r\n+                  \"maximumError\": \"3mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n-                  \"maximumWarning\": \"6kB\",\r\n+                  \"maximumWarning\": \"10kB\",\r\n                   \"maximumError\": \"10kB\"\r\n                 }\r\n               ],\r\n               \"outputHashing\": \"all\"\r\n"
+                },
+                {
+                    "date": 1749513981828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,14 +59,14 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"3mb\",\r\n-                  \"maximumError\": \"3mb\"\r\n+                  \"maximumError\": \"5mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n                   \"maximumWarning\": \"10kB\",\r\n-                  \"maximumError\": \"10kB\"\r\n+                  \"maximumError\": \"30kB\"\r\n                 }\r\n               ],\r\n               \"outputHashing\": \"all\"\r\n             },\r\n"
+                },
+                {
+                    "date": 1749514011236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,12 @@\n             \"allowedCommonJsDependencies\": [\r\n         \"html2canvas\",\r\n         \"canvg\",\r\n         \"rgbcolor\",\r\n-        \"raf\"\r\n+        \"raf\",\r\n+  \"core-js/modules/es.promise.js\",\r\n+  \"core-js/modules/es.string.match.js\",\r\n+  \"core-js/modules/es.string.replace.js\",\r\n       ],\r\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n"
                 }
             ],
             "date": 1741611133553,
