@@ -7,6 +7,7 @@ pipeline {
     
     environment {
         DOCKER_REGISTRY = 'emnasahnoun'
+        COMPOSE_PROJECT_NAME = 'systeodigital'
     }
     
     stages {
