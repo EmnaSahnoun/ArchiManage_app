@@ -88,7 +88,7 @@ services:
     container_name: email-service
     hostname: e8.systeo.tn
     ports:
-      - "8079:8079"
+      - "8069:8069"
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
