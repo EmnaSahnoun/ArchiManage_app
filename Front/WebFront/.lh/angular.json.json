@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1741611133553,
@@ -84,6 +84,18 @@
                 {
                     "date": 1749512966454,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n       \"architect\": {\r\n         \"build\": {\r\n           \"builder\": \"@angular-devkit/build-angular:application\",\r\n           \"options\": {\r\n+            \r\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n"
+                },
+                {
+                    "date": 1749513779819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,14 @@\n       \"architect\": {\r\n         \"build\": {\r\n           \"builder\": \"@angular-devkit/build-angular:application\",\r\n           \"options\": {\r\n-            \r\n+            \"allowedCommonJsDependencies\": [\r\n+        \"html2canvas\",\r\n+        \"canvg\",\r\n+        \"rgbcolor\",\r\n+        \"raf\"\r\n+      ],\r\n             \"outputPath\": \"dist/web-front\",\r\n             \"index\": \"src/index.html\",\r\n             \"browser\": \"src/main.ts\",\r\n             \"polyfills\": [\r\n@@ -53,9 +58,9 @@\n             \"production\": {\r\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n-                  \"maximumWarning\": \"2mb\",\r\n+                  \"maximumWarning\": \"3mb\",\r\n                   \"maximumError\": \"5mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n"
+                },
+                {
+                    "date": 1749513889274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"3mb\",\r\n-                  \"maximumError\": \"5mb\"\r\n+                  \"maximumError\": \"mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n                   \"maximumWarning\": \"6kB\",\r\n"
+                },
+                {
+                    "date": 1749513902274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,13 +59,13 @@\n               \"budgets\": [\r\n                 {\r\n                   \"type\": \"initial\",\r\n                   \"maximumWarning\": \"3mb\",\r\n-                  \"maximumError\": \"mb\"\r\n+                  \"maximumError\": \"3mb\"\r\n                 },\r\n                 {\r\n                   \"type\": \"anyComponentStyle\",\r\n-                  \"maximumWarning\": \"6kB\",\r\n+                  \"maximumWarning\": \"10kB\",\r\n                   \"maximumError\": \"10kB\"\r\n                 }\r\n               ],\r\n               \"outputHashing\": \"all\"\r\n"
                 }
             ],
             "date": 1741611133553,
