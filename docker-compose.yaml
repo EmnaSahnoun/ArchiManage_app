@@ -26,7 +26,20 @@ services:
       - eureka-server
     networks:
       - systeo-network
-
+  company-service:
+    image: emnasahnoun/company-service
+    container_name: company-service
+    hostname: e2.systeo.tn
+    ports:
+      - "8073:8073"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - systeo-network
+      
   project-service:
     image: emnasahnoun/project-service
     container_name: project-service
