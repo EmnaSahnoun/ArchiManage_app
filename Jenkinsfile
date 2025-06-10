@@ -39,7 +39,15 @@ pipeline {
                         }
                     }
                 }
-                
+                stage('Build Company Service') {
+                    steps {
+                        withMaven(maven: 'maven-3.6.3') {
+                            dir('Back/MicroserviceEureka/ProjetCompain') {
+                                sh 'mvn clean package -DskipTests'
+                            }
+                        }
+                    }
+                }
                 stage('Build Project Service') {
                     steps {
                         withMaven(maven: 'maven-3.6.3') {
@@ -130,7 +138,13 @@ pipeline {
                         }
                     }
                 }
-                
+                stage('Build CompanyService Image') {
+                    steps {
+                        dir('Back/MicroserviceEureka/ProjetCompain') {
+                            sh "docker build -t ${env.DOCKER_REGISTRY}/company-service ."
+                        }
+                    }
+                }
                 stage('Build ProjectService Image') {
                     steps {
                         dir('Back/MicroserviceEureka/ProjectService') {
@@ -203,6 +217,7 @@ pipeline {
                     sh "docker push ${env.DOCKER_REGISTRY}/eureka-server"
                     sh "docker push ${env.DOCKER_REGISTRY}/gateway-service"
                     sh "docker push ${env.DOCKER_REGISTRY}/project-service"
+                    sh "docker push ${env.DOCKER_REGISTRY}/company-service"
                     sh "docker push ${env.DOCKER_REGISTRY}/activity-service"
                     sh "docker push ${env.DOCKER_REGISTRY}/document-service"
                     sh "docker push ${env.DOCKER_REGISTRY}/notification-service"
