@@ -216,15 +216,18 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                # Force cleanup
-                docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
-                
-                # Remove any dangling containers
-                docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
-                
-                # Bring up fresh containers
-                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-            '''
+        # Force cleanup
+        docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
+        
+        # Remove any dangling containers
+        docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
+        
+        # Wait for ports to be released
+        sleep 15
+        
+        # Bring up fresh containers
+        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
+        '''
             }
         }
         
