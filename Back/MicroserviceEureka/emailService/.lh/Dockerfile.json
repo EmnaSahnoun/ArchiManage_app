@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1749506178726,
@@ -12,6 +12,10 @@
                 {
                     "date": 1749508135074,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,27 @@\n+# Utiliser une image Node.js légère\r\n FROM node:18-alpine\r\n \r\n+# Définir le répertoire de travail dans le conteneur\r\n WORKDIR /app\r\n \r\n-# Copy package files and install dependencies\r\n-COPY package.json package-lock.json* ./\r\n+# Copier uniquement les fichiers nécessaires à l'installation des dépendances\r\n+COPY package*.json ./\r\n+\r\n+# Installer les dépendances de production\r\n RUN npm install --production\r\n \r\n-# Copy the rest of the application code\r\n+# Copier le reste des fichiers du projet\r\n COPY . .\r\n \r\n-# Expose the port the app runs on\r\n-EXPOSE 3000\r\n+# Copier éventuellement le fichier .env (s'il est nécessaire dans l'image)\r\n+# ATTENTION : Évitez de copier .env si vous utilisez des secrets/CI/CD\r\n+# COPY .env .env\r\n \r\n-# Set Node.js environment to production\r\n+# Définir les variables d'environnement dans le conteneur\r\n ENV NODE_ENV=production\r\n \r\n+# Exposer le port sur lequel l'application écoute (correspond à votre .env : PORT=8079)\r\n+EXPOSE 8079\r\n+\r\n # Start the application\r\n CMD [\"npm\", \"start\"]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749593461232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,8 @@\n # Définir les variables d'environnement dans le conteneur\r\n ENV NODE_ENV=production\r\n \r\n # Exposer le port sur lequel l'application écoute (correspond à votre .env : PORT=8079)\r\n-EXPOSE 8079\r\n+EXPOSE 8069\r\n \r\n # Start the application\r\n CMD [\"npm\", \"start\"]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1749506178726,

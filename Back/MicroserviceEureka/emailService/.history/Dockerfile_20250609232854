@@ -21,7 +21,7 @@ COPY . .
 ENV NODE_ENV=production
 
 # Exposer le port sur lequel l'application écoute (correspond à votre .env : PORT=8079)
-EXPOSE 8069
+EXPOSE 8079
 
 # Start the application
 CMD ["npm", "start"]
