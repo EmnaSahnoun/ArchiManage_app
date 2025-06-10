@@ -214,14 +214,19 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                 sh '''
-            # Force remove any existing containers and networks
-            docker-compose down --remove-orphans --rmi local || true
-            docker rm -f eureka-server gateway-service project-service activity-service document-service notification-service email-service angular-frontend || true
-            docker network rm systeodigital_systeo-network || true
+                sh '''
+            # Force cleanup
+            docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
             
-            # Then bring up fresh containers
-            docker-compose up -d
+            # Kill processes using required ports
+            sudo lsof -i :8079 | awk 'NR!=1 {print $2}' | xargs -r sudo kill -9 || true
+            sudo lsof -i :4200 | awk 'NR!=1 {print $2}' | xargs -r sudo kill -9 || true
+            
+            # Remove any dangling containers
+            docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
+            
+            # Bring up fresh containers
+            docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
         '''
             }
         }
