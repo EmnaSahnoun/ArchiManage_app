@@ -214,7 +214,15 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                 sh 'docker-compose down && docker-compose up -d'
+                 sh '''
+            # Force remove any existing containers and networks
+            docker-compose down --remove-orphans --rmi local || true
+            docker rm -f eureka-server gateway-service project-service activity-service document-service notification-service email-service angular-frontend || true
+            docker network rm systeodigital_systeo-network || true
+            
+            # Then bring up fresh containers
+            docker-compose up -d
+        '''
             }
         }
         
