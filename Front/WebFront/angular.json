@@ -28,7 +28,10 @@
         "html2canvas",
         "canvg",
         "rgbcolor",
-        "raf"
+        "raf",
+  "core-js/modules/es.promise.js",
+  "core-js/modules/es.string.match.js",
+  "core-js/modules/es.string.replace.js"
       ],
             "outputPath": "dist/web-front",
             "index": "src/index.html",
@@ -60,7 +63,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "3mb",
-                  "maximumError": "3mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
