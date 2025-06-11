@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:6.0.12
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: emna
+      MONGO_INITDB_ROOT_PASSWORD: emna
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - systeo-network
+
   eureka-server:
     image: emnasahnoun/eureka-server
     container_name: eureka-server
@@ -35,8 +49,10 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/company?authSource=admin
     depends_on:
       - eureka-server
+      - mongodb
     networks:
       - systeo-network
       
@@ -49,8 +65,26 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/project?authSource=admin
     depends_on:
       - eureka-server
+      - mongodb
+    networks:
+      - systeo-network
+
+  commercial-service:
+    image: emnasahnoun/commercial-service
+    container_name: commercial-service
+    hostname: e7.systeo.tn
+    ports:
+      - "8078:8078"
+    
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/commercial_documents?authSource=admin
+    depends_on:
+      - eureka-server
+      - mongodb
     networks:
       - systeo-network
 
@@ -77,8 +111,10 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/mediafile?authSource=admin
     depends_on:
       - eureka-server
+      - mongodb
     networks:
       - systeo-network
 
@@ -93,6 +129,7 @@ services:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
+
     networks:
       - systeo-network
 
@@ -121,7 +158,9 @@ services:
     networks:
       - systeo-network
 
+volumes:
+  mongodb_data:
+
 networks:
   systeo-network:
     driver: bridge
-    
