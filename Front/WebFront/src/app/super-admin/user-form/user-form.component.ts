@@ -38,7 +38,10 @@ export class UserFormComponent implements OnInit {
   loadRoles(): void {
     this.userService.getRoles().subscribe({
       next: (roles) => {
-        this.roles = roles.map((r: any) => r.name);
+        this.roles = roles.map((r: any) => r.name)
+        .filter(role => role === 'ADMIN' || role === 'USER');
+              console.log('Rôles filtrés :', this.roles); // Vérification
+
       },
       error: (err) => console.error('Failed to load roles', err)
     });

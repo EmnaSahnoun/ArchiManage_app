@@ -89,6 +89,10 @@ private googleAccessToken = new BehaviorSubject<string | null>(null);
        localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('user_profile');
+         localStorage.removeItem('google_access_token');
+         localStorage.removeItem('google_refresh_token');
+         localStorage.removeItem('google_return_url');
+         localStorage.removeItem('google_token_expiry');
       }
 
       getAccessToken(): string | null {
