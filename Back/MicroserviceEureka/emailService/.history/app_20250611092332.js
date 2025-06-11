@@ -11,7 +11,7 @@ const app = express();
 // 1. Configuration CORS améliorée
 const corsOptions = {
   origin: ['http://localhost:4200', 'https://e8.systeo.tn',"https://archimanage.systeo.tn","https://archimanage.systeo.tn:4200","https://e1.systeo.tn"],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
   optionsSuccessStatus: 204

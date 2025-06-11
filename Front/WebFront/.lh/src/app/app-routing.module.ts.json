@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 125,
+            "activePatchIndex": 126,
             "patches": [
                 {
                     "date": 1741609914429,
@@ -508,6 +508,10 @@
                 {
                     "date": 1749459911233,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,9 @@\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n   },\r\n+  \r\n   {\r\n     path: 'agenceDetails', // Correspond au routerLink dans votre sidebar\r\n     component: AgenceDetailsComponent,\r\n      canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n"
+                },
+                {
+                    "date": 1749639014220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n import { GoogleCallbackComponent } from './google-callback/google-callback.component';\r\n import { LoadingComponent } from './loading/loading.component';\r\n import { EmailDetailComponent } from './email-detail/email-detail.component';\r\n import { AgenceDetailsComponent } from './agence-details/agence-details.component';\r\n+import { ProfileComponent } from './profile/profile.component';\r\n \r\n const routes: Routes = [\r\n   { path: 'login', component: LoginComponent },\r\n   \r\n@@ -41,9 +42,10 @@\n     path: 'project/:id', \r\n     component: ProjectDetailsComponent,\r\n     canActivate:[AuthGuard]\r\n   },\r\n-  \r\n+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }, // Protégez la route si nécessaire\r\n+\r\n   {\r\n     path: 'agenceDetails', // Correspond au routerLink dans votre sidebar\r\n     component: AgenceDetailsComponent,\r\n      canActivate: [AuthGuard] // Décommentez si vous avez un AuthGuard pour les admins\r\n@@ -79,9 +81,9 @@\n    { path: 'emails/:id', component: EmailDetailComponent }, // Nouvelle route pour les détails\r\n \r\n   \r\n  \r\n- // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n+ { path: '', redirectTo: '/dashboard', pathMatch: 'full' },\r\n   //{ path: '**', redirectTo: '/dashboard' } \r\n   \r\n ];\r\n \r\n"
                 }
             ],
             "date": 1741609914429,
