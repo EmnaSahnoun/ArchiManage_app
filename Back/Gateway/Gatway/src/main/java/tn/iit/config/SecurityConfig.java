@@ -65,7 +65,9 @@ public class SecurityConfig {
         //configuration.setAllowedOrigins(Arrays.asList("*"));
 configuration.setAllowedOriginPatterns(Arrays.asList(
         "https://e1.systeo.tn",
-        "http://localhost:4200"
+        "http://localhost:4200",
+        "https://archimanage.systeo.tn",
+        "https://archimanage.systeo.tn:4200"
     ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With"));
