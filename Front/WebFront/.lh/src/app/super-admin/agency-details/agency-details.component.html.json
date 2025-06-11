@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 68,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1744030048029,
@@ -280,6 +280,10 @@
                 {
                     "date": 1745624504303,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n                 <div *ngIf=\"editingUserId === user.id\" class=\"form-check form-switch d-flex justify-content-center align-items-center h-100\">\r\n                   <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\"\r\n                          id=\"userStatusSwitch-{{user.id}}\"\r\n                          [(ngModel)]=\"editedUserData.enabled\"\r\n-                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver l\\'utilisateur' : 'Activer l\\'utilisateur'\">\r\n+                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver le membre' : 'Activer l\\'utilisateur'\">\r\n                  \r\n                 </div>\r\n               </td>\r\n \r\n"
+                },
+                {
+                    "date": 1749665063626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n             <td colspan=\"5\" class=\"loading-state\">Chargement des membres...</td>\r\n           </tr>\r\n \r\n           <!-- User Rows -->\r\n-          <ng-container *ngIf=\"users.length > 0\">\r\n+         <ng-container *ngIf=\"users.length > 0 && users[0].role !== 'Erreur Rôle'\">\r\n             <!-- No Users Found Row -->\r\n             <tr *ngIf=\"!isLoadingUsers && users.length === 0\">\r\n               <td colspan=\"5\" class=\"no-users\">Aucun membre trouvé pour cette agence.</td>\r\n             </tr>\r\n@@ -95,9 +95,9 @@\n                 <div *ngIf=\"editingUserId === user.id\" class=\"form-check form-switch d-flex justify-content-center align-items-center h-100\">\r\n                   <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\"\r\n                          id=\"userStatusSwitch-{{user.id}}\"\r\n                          [(ngModel)]=\"editedUserData.enabled\"\r\n-                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver le membre' : 'Activer l\\'utilisateur'\">\r\n+                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver le membre' : 'Activer le membre'\">\r\n                  \r\n                 </div>\r\n               </td>\r\n \r\n"
                 }
             ],
             "date": 1744030048029,

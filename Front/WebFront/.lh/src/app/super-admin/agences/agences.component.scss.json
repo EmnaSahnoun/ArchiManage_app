@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1744021072454,
@@ -80,6 +80,10 @@
                 {
                     "date": 1745620743315,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,10 @@\n $table-row-hover: rgba(0, 0, 0, 0.04); // Effet hover subtil (comme mat-table)\r\n $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre légère (comme mat-card)\r\n $border-radius: 8px; // Rayon de bordure (comme mat-card)\r\n \r\n+\r\n+\r\n // Couleurs spécifiques pour les boutons d'action (conservées)\r\n $edit-color: #4CAF50;   // Vert\r\n $delete-color: #F44336; // Rouge\r\n \r\n@@ -276,5 +278,5 @@\n   color: $text-color-secondary;\r\n   font-style: italic;\r\n }\r\n .loading-indicator mat-spinner { margin: 0 auto 16px auto; }\r\n-.error-message { color: $delete-color; font-style: normal; }\n\\ No newline at end of file\n+.error-message { color: $delete-color; font-style: normal; }\r\n"
+                },
+                {
+                    "date": 1749665988105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,20 +13,33 @@\n $table-row-hover: rgba(0, 0, 0, 0.04); // Effet hover subtil (comme mat-table)\r\n $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre légère (comme mat-card)\r\n $border-radius: 8px; // Rayon de bordure (comme mat-card)\r\n \r\n-\r\n-\r\n // Couleurs spécifiques pour les boutons d'action (conservées)\r\n $edit-color: #4CAF50;   // Vert\r\n $delete-color: #F44336; // Rouge\r\n+@use '@angular/material' as mat;\r\n \r\n+// Définir des variables pour la cohérence (ou s'assurer qu'elles sont globales)\r\n+:host { // Appliquer les variables au composant hôte\r\n+  --primary-color: #4a90e2; // Un bleu moderne\r\n+  --accent-color: #50e3c2; // Un turquoise/vert comme accent\r\n+  --warning-color: #f5a623; // Orange pour utilisateurs/avertissements\r\n+  --text-color-primary: #333;\r\n+  --text-color-secondary: #666;\r\n+  --background-color: #f7f9fc; // Fond très clair, presque blanc\r\n+  --card-background: #ffffff;\r\n+  --border-color: #e0e0e0;\r\n+  --border-radius: 8px;\r\n+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // Ombre douce\r\n+  --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);\r\n+}\r\n // --- Styles Généraux ---\r\n .agence-container {\r\n   padding: 24px; // Augmenter le padding général\r\n   font-family: 'Poppins', sans-serif;\r\n   background: $background-color; // Utiliser le fond du dashboard\r\n-  min-height: calc(100vh - 64px); // Ajuster si hauteur header différente\r\n+  min-height: calc(120vh - 64px); // Ajuster si hauteur header différente\r\n   color: $text-color-primary;\r\n }\r\n \r\n // --- Conteneur Principal ---\r\n"
                 }
             ],
             "date": 1744021072454,

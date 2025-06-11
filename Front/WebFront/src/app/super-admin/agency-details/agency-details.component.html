@@ -57,7 +57,7 @@
           </tr>
 
           <!-- User Rows -->
-          <ng-container *ngIf="users.length > 0">
+         <ng-container *ngIf="users.length > 0 && users[0].role !== 'Erreur Rôle'">
             <!-- No Users Found Row -->
             <tr *ngIf="!isLoadingUsers && users.length === 0">
               <td colspan="5" class="no-users">Aucun membre trouvé pour cette agence.</td>

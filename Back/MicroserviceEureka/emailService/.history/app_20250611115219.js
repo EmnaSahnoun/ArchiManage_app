@@ -25,7 +25,7 @@ app.use(express.json());
 const authRoutes = require("./src/routes/authRoutes");
 const emailRoutes = require("./src/routes/emailRoutes");
 const draftRoutes = require("./src/routes/draftRoutes");
-const PORT = process.env.PORT || 8069;
+const PORT = process.env.PORT || 8079;
 const client = new Eureka({
   instance: {
     app: 'emailService',

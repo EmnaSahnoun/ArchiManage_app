@@ -38,7 +38,7 @@ $delete-color: #F44336; // Rouge
   padding: 24px; // Augmenter le padding général
   font-family: 'Poppins', sans-serif;
   background: $background-color; // Utiliser le fond du dashboard
-  min-height: calc(100vh - 64px); // Ajuster si hauteur header différente
+  min-height: calc(120vh - 64px); // Ajuster si hauteur header différente
   color: $text-color-primary;
 }
 
