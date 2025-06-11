@@ -25,12 +25,11 @@
   </div>
 <div class="email-form-container" [class.open]="isFormOpen">
     <app-email-form 
-      *ngIf="isFormOpen" 
-      [draftEmail]="selectedEmail"
-      (closeForm)="closeEmailForm()"
-      (emailSent)="onEmailSent($event)"
-      >
-    </app-email-form>
+  *ngIf="isFormOpen" 
+  [draftEmail]="selectedEmail"
+  (closeForm)="closeEmailForm()"
+  (emailSent)="onEmailSent($event)">
+</app-email-form>
   </div>
 
   <div *ngIf="isLoading" class="loading-spinner">

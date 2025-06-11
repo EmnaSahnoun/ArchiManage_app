@@ -10,7 +10,7 @@ router.get('/:emailId', emailController.getEmail);
 router.get('/inbox/list', emailController.getInbox);
 router.get('/sent/list', emailController.getSent);
 router.delete('/:emailId', emailController.deleteEmail);
-router.patch('/:emailId/read', emailController.markAsRead);
+router.post('/:emailId/read', emailController.markAsRead);
 router.post('/system', emailController.sendSystemEmail);
 
 

@@ -115,7 +115,10 @@ if (!googleToken) {
       this.gmailService.sendEmail(googleToken,this.currentUserEmail, this.emailForm.value.to, this.emailForm.value.subject, this.emailForm.value.content, this.attachments).subscribe({
         next: (response) => {
           console.log('Email sent successfully', response);
-          this.emailSent.emit(response);
+          this.emailSent.emit({
+          emailData: response,
+          shouldReload: true // Indicateur pour déclencher le rechargement
+        });
           this.onClose();
         },
         error: (error) => {

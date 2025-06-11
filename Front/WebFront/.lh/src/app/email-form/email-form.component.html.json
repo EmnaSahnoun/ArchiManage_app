@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/app/email-form/email-form.component.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1749637101085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749637264581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n <div class=\"email-form-container\">\r\n-  <app-header [title]=\"isEditMode ? (isDraft ? 'Modifier le brouillon' : 'Voir/Modifier l\\'email') : 'Nouveau message'\"></app-header>\r\n \r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n"
+                },
+                {
+                    "date": 1749637269758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"email-form-container\">\r\n-\r\n+h1\r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n       <!-- Destinataire -->\r\n"
+                },
+                {
+                    "date": 1749637275769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"email-form-container\">\r\n-h1\r\n+  <h1>Nouveau message</h1>\r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n       <!-- Destinataire -->\r\n"
+                },
+                {
+                    "date": 1749637286402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,17 +73,10 @@\n           class=\"button-reference button-cancel\"\r\n           (click)=\"onClose()\">\r\n           Annuler\r\n         </button>\r\n+        \r\n         <button \r\n-          type=\"button\" \r\n-          class=\"button-reference button-secondary\"\r\n-          (click)=\"onSaveDraft()\" \r\n-          *ngIf=\"!isEditMode || isDraft\" \r\n-          [disabled]=\"emailForm.invalid\">\r\n-          Sauvegarder le brouillon\r\n-        </button>\r\n-        <button \r\n           type=\"submit\" \r\n           class=\"button-reference button-primary\"\r\n           [disabled]=\"emailForm.invalid\">\r\n           Envoyer\r\n"
+                },
+                {
+                    "date": 1749637634380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"email-form-container\">\r\n-  <h1>Nouveau message</h1>\r\n+  <h3>Nouveau message</h1>\r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n       <!-- Destinataire -->\r\n"
+                },
+                {
+                    "date": 1749637640075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"email-form-container\">\r\n-  <h3>Nouveau message</h1>\r\n+  <h3>Nouveau email</h3>\r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n       <!-- Destinataire -->\r\n"
+                },
+                {
+                    "date": 1749637668229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n <div class=\"email-form-container\">\r\n-  <h3>Nouveau email</h3>\r\n+  <h3>Nouveau message</h3>\r\n   <!-- Main Content -->\r\n   <div class=\"content-container\">\r\n     <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n       <!-- Destinataire -->\r\n"
+                }
+            ],
+            "date": 1749637101085,
+            "name": "Commit-0",
+            "content": "<div class=\"email-form-container\">\r\n  <app-header [title]=\"isEditMode ? (isDraft ? 'Modifier le brouillon' : 'Voir/Modifier l\\'email') : 'Nouveau message'\"></app-header>\r\n\r\n  <!-- Main Content -->\r\n  <div class=\"content-container\">\r\n    <form [formGroup]=\"emailForm\" (ngSubmit)=\"onSend()\" class=\"email-form\">\r\n      <!-- Destinataire -->\r\n      <div class=\"form-section form-field-reference\">\r\n        <label for=\"to\">À</label>\r\n        <input \r\n          id=\"to\"\r\n          type=\"email\" \r\n          formControlName=\"to\" \r\n          placeholder=\"exemple@domaine.com\"\r\n          required>\r\n        <div *ngIf=\"emailForm.controls['to'].hasError('required')\" class=\"error-message\">\r\n          Le champ \"À\" est obligatoire\r\n        </div>\r\n        <div *ngIf=\"emailForm.controls['to'].hasError('email')\" class=\"error-message\">\r\n          Veuillez entrer une adresse email valide\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Sujet -->\r\n      <div class=\"form-section form-field-reference\">\r\n        <label for=\"subject\">Sujet</label>\r\n        <input \r\n          id=\"subject\"\r\n          type=\"text\" \r\n          formControlName=\"subject\" \r\n          placeholder=\"Sujet du message\"\r\n          required>\r\n        <div *ngIf=\"emailForm.controls['subject'].hasError('required')\" class=\"error-message\">\r\n          Le champ \"Sujet\" est obligatoire\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Message -->\r\n      <div class=\"form-section form-field-reference\">\r\n        <label for=\"content\">Message</label>\r\n        <textarea \r\n          id=\"content\"\r\n          formControlName=\"content\" \r\n          placeholder=\"Contenu du message\"\r\n          rows=\"8\"\r\n          required></textarea>\r\n        <div *ngIf=\"emailForm.controls['content'].hasError('required')\" class=\"error-message\">\r\n          Le champ \"Message\" est obligatoire\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Pièces jointes -->\r\n      <div class=\"form-section\">\r\n        <div class=\"file-upload-section\">\r\n          <input type=\"file\" id=\"file-upload\" multiple (change)=\"onFileSelected($event)\" style=\"display: none\">\r\n          <label for=\"file-upload\" class=\"button-reference button-secondary\">\r\n            <mat-icon>attach_file</mat-icon> Ajouter des pièces jointes\r\n          </label>\r\n          <div *ngIf=\"attachments.length > 0\" class=\"attachments-list\">\r\n            <div *ngFor=\"let file of attachments\" class=\"attachment-item\">\r\n              <span>{{ file.name }}</span>\r\n              <button mat-icon-button (click)=\"removeAttachment(file)\" class=\"remove-attachment\">\r\n                <mat-icon>close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Actions -->\r\n      <div class=\"form-actions\">\r\n        <button \r\n          type=\"button\" \r\n          class=\"button-reference button-cancel\"\r\n          (click)=\"onClose()\">\r\n          Annuler\r\n        </button>\r\n        <button \r\n          type=\"button\" \r\n          class=\"button-reference button-secondary\"\r\n          (click)=\"onSaveDraft()\" \r\n          *ngIf=\"!isEditMode || isDraft\" \r\n          [disabled]=\"emailForm.invalid\">\r\n          Sauvegarder le brouillon\r\n        </button>\r\n        <button \r\n          type=\"submit\" \r\n          class=\"button-reference button-primary\"\r\n          [disabled]=\"emailForm.invalid\">\r\n          Envoyer\r\n        </button>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>"
+        }
+    ]
+}

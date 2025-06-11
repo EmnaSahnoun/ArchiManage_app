@@ -7,7 +7,7 @@ import { GmailService } from '../services/gmailService';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailDetailComponent } from '../email-detail/email-detail.component';
 import { EmailFormComponent } from '../email-form/email-form.component';
-type ActiveEmailTab = 'received' | 'sent' | 'draft';
+type ActiveEmailTab = 'received' | 'sent' ;
 @Component({
   selector: 'app-emails',
   templateUrl: './emails.component.html',
@@ -16,7 +16,6 @@ type ActiveEmailTab = 'received' | 'sent' | 'draft';
 export class EmailsComponent implements OnInit,OnDestroy    {
  receivedEmails: any[] = [];
   sentEmails: any[] = [];
-  draftEmails: any[] = [];
   activeTab: ActiveEmailTab = 'received';
   isLoading = false;
   error: string | null = null;
@@ -70,7 +69,6 @@ private setCurrentUserEmail(): boolean {
     forkJoin([
       this.loadReceivedEmails(),
       this.loadSentEmails(),
-      this.loadDrafts()
     ]).pipe(
       takeUntil(this.destroy$),
       finalize(() => this.isLoading = false)
@@ -149,30 +147,7 @@ private setCurrentUserEmail(): boolean {
     );
   }
 
-  private loadDrafts(): Observable<void> {
-    const token = this.googleAuthService.getAccessToken();
-    if (!token) return of(void 0);
 
-    return this.gmailService.getDrafts(token, this.currentUserEmail).pipe(
-      takeUntil(this.destroy$),
-      tap(response => {
-       
-        console.log("la reponse",response)
-        if (response && response.success && Array.isArray(response.data)) {
-          this.draftEmails = response.data;
-          console.log('Brouillons chargés:', this.draftEmails.length, this.draftEmails);
-        } else {
-          console.warn('Structure de réponse inattendue:', response);
-          this.draftEmails = [];
-        }
-      }),
-      map(() => void 0),
-      catchError(err => {
-        console.error('Erreur chargement brouillons:', err);
-        return of(void 0);
-      })
-    );
-  }
 
   
 extractEmailAddress(fullString: string): string {
@@ -204,30 +179,28 @@ extractEmailAddress(fullString: string): string {
   }
 
   selectEmail(email: any, tab: ActiveEmailTab): void {
-     this.selectedEmailId = email.id;
-    if (tab === 'received' && !email.isRead) {
-      
-      this.markAsRead(email.id);
-    }
-    if (tab === 'draft') {
-      this.selectedEmail = email; // Set the full draft object for the form
-      this.isFormOpen = true;    // Open the email form to edit this draft
-    } 
-    else {
-      // For 'received' or 'sent' tabs, navigate to the detail view
-      this.isFormOpen = false;       // Ensure the email form is closed if it was open
-      this.selectedEmail = null;   // Clear any draft that might have been selected for editing
-      
-      // Navigate to EmailDetailComponent
-      this.router.navigate(['/emails', email.id], { // Ensure '/emails/:id' is your route for email detail
-        state: {
-          emailData: email,
-          userEmail: this.currentUserEmail, // Make sure currentUserEmail is populated
-          activeTabContext: tab
-        }
-      });
-    }
+  this.selectedEmailId = email.id;
+  
+  if (tab === 'received' && !email.isRead) {
+    this.markAsRead(email.id, () => {
+      this.navigateToEmailDetail(email, tab);
+    });
+  } else {
+    this.navigateToEmailDetail(email, tab);
   }
+}
+private navigateToEmailDetail(email: any, tab: ActiveEmailTab): void {
+  this.isFormOpen = false;
+  this.selectedEmail = null;
+  
+  this.router.navigate(['/emails', email.id], {
+    state: {
+      emailData: email,
+      userEmail: this.currentUserEmail,
+      activeTabContext: tab
+    }
+  });
+}
  openEmailForm(): void {
     this.selectedEmail = null; // Préparer les données pour le formulaire
     this.isFormOpen = true;
@@ -239,35 +212,49 @@ extractEmailAddress(fullString: string): string {
   }
   onEmailSent(email: any): void {
     console.log("Email sent:", email);
-    // Mettre à jour la liste des emails envoyés si nécessaire
-    this.loadSentEmails();
+    this.isLoading = true;
+    
+    forkJoin([
+      this.loadReceivedEmails(),
+      this.loadSentEmails()
+    ]).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.isLoading = false)
+    ).subscribe({
+      next: () => {
+        console.log("Emails rechargés avec succès après envoi");
+        // Basculer vers l'onglet "Envoyés"
+        this.activeTab = 'sent';
+      },
+      error: (err) => {
+        console.error('Erreur lors du rechargement des emails:', err);
+        this.error = err.message || 'Erreur lors du rechargement des emails';
+      }
+    });
+  
     this.closeEmailForm();
   }
 
-  onDraftSaved(email: any): void {
-    console.log("Draft saved:", email);
-    // Mettre à jour la liste des brouillons si nécessaire
-    this.loadDrafts();
-    this.closeEmailForm();
-  }
 
-  private markAsRead(emailId: string): void {
-    const token = this.googleAuthService.getAccessToken();
-    if (!token) return;
+ private markAsRead(emailId: string, callback?: () => void): void {
+  const token = this.googleAuthService.getAccessToken();
+  if (!token) return;
 
-   this.gmailService.markAsRead(token, emailId, this.currentUserEmail)
+  this.gmailService.markAsRead(token, emailId, this.currentUserEmail)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
-
       next: () => {
         const email = this.receivedEmails.find(e => e.id === emailId);
         if (email) {
           email.isRead = true;
         }
+        if (callback) {
+          callback();
+        }
       },
       error: (err) => console.error('Erreur marquage comme lu:', err)
     });
-  }
+}
 
   onDeleteEmail(emailId: string, tab: ActiveEmailTab): void {
     const token = this.googleAuthService.getAccessToken();
@@ -292,9 +279,7 @@ extractEmailAddress(fullString: string): string {
           this.receivedEmails = this.receivedEmails.filter(e => e.id !== emailId);
         } else if (tab === 'sent') {
           this.sentEmails = this.sentEmails.filter(e => e.id !== emailId);
-        } else if (tab === 'draft') {
-          this.draftEmails = this.draftEmails.filter(e => e.id !== emailId);
-        }
+        } 
       },
      error: (err) => {
         console.error('Erreur suppression:', err);

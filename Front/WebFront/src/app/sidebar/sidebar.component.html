@@ -15,11 +15,11 @@
       </li>
       <!-- Détails de l'Agence (Admin) -->
       <li mat-list-item routerLink="/agenceDetails" *ngIf="isAdmin" routerLinkActive="active"><a (click)="changeTitle('Mon Agence')">
-        <i class="bi bi-building-gear"></i> Agence</a>
+        <i class="bi bi-building-gear"></i> Mon Agence</a>
       </li>
       <!-- Projets -->
       <li mat-list-item routerLink="/projects" routerLinkActive="active" *ngIf="isUser || isAdmin"><a (click)="changeTitle('Projets')">
-        <i class="bi bi-briefcase"></i> Projects</a>
+        <i class="bi bi-briefcase"></i> Projets</a>
       </li>
       <!-- Clients -->
       <li mat-list-item routerLink="/clients" routerLinkActive="active" *ngIf="isUser || isAdmin"><a (click)="changeTitle('Clients')">
@@ -40,11 +40,11 @@
       </li>
       <!-- Profil Utilisateur -->
       <li mat-list-item routerLink="/profile" *ngIf="isAdmin || isUser" routerLinkActive="active"><a (click)="changeTitle('Mon Profil')">
-        <i class="bi bi-person-circle"></i> Profil</a>
+        <i class="bi bi-person-circle"></i> Mon Profil</a>
       
       </li>
       <li mat-list-item  routerLinkActive="active" (click)="logout()">
-        <i class="bi bi-box-arrow-right"></i> Sign out
+        <i class="bi bi-box-arrow-right"></i> Déconnexion
       </li>
       
     </ul>
