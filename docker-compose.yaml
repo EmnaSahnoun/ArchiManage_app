@@ -15,7 +15,8 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - systeo-network
+      systeo-network:
+        driver: bridge
   
   mongodb:
   image: mongo:6.0.12
