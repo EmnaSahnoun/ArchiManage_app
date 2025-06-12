@@ -262,19 +262,23 @@ pipeline {
 }
         stage('Deploy MongoDB First') {
     steps {
-        dir('Back/MicroserviceEureka') { // Assurez-vous que c'est le bon répertoire
+        dir('Back/MicroserviceEureka') { // Assurez-vous que c'est le bon chemin
             sh '''
-            # Nettoyage préalable
+            # Nettoyage
             docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
             
-            # Démarrer uniquement MongoDB d'abord
-            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d mongodb
+            # Démarrer MongoDB
+            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d --build mongodb
             
-            # Attendre que MongoDB soit prêt
-            timeout 120 bash -c 'until docker exec ${COMPOSE_PROJECT_NAME}-mongodb-1 mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; do 
-                sleep 5
-                echo "En attente de MongoDB..."
-            done'
+            # Attendre que MongoDB soit prêt (version robuste)
+            for i in {1..30}; do
+              if docker exec ${COMPOSE_PROJECT_NAME}-mongodb-1 mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; then
+                echo "MongoDB est prêt"
+                break
+              fi
+              sleep 5
+              echo "Attente de MongoDB (tentative $i/30)..."
+            done
             '''
         }
     }
@@ -282,15 +286,16 @@ pipeline {
 
 stage('Deploy All Services') {
     steps {
-        dir('Back/MicroserviceEureka') {
+        
             sh '''
-            # Démarrer tous les autres services
+            # Démarrer les autres services
             docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
             
-            # Vérification globale
+            # Vérification
+            sleep 10
             docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} ps
             '''
-        }
+       
     }
 }
         
