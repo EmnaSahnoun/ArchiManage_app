@@ -92,7 +92,6 @@ services:
       - rabbitmq
     networks:
       - systeo-network
-      - rabbitmq
 
   commercial-service:
     image: emnasahnoun/commercial-service
