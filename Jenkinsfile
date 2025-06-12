@@ -239,23 +239,22 @@ pipeline {
     }
 }
         stage('Verify MongoDB') {
-  steps {
+    steps {
         script {
             try {
-                // Attendre jusqu'à 2 minutes que MongoDB réponde
-                timeout(time: 2, unit: 'MINUTES') {
+                timeout(time: 5, unit: 'MINUTES') {
                     waitUntil {
                         def status = sh(
-                            script: 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin',
+                            script: 'docker exec ${COMPOSE_PROJECT_NAME}-mongodb-1 mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin',
                             returnStatus: true
                         )
                         return status == 0
                     }
                 }
             } catch (err) {
-                error "MongoDB n'est pas accessible après 2 minutes d'attente"
-                // Optionnel : afficher les logs pour diagnostic
-                sh 'docker logs mongodb'
+                error "MongoDB n'est pas accessible après 5 minutes d'attente"
+                sh 'docker logs ${COMPOSE_PROJECT_NAME}-mongodb-1'
+                currentBuild.result = 'FAILURE'
             }
         }
     }
