@@ -14,8 +14,6 @@ services:
       - "15672:15672" # Port de l'interface web
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - systeo-network
   mongodb:
     image: mongo:6.0.12
     container_name: mongodb
