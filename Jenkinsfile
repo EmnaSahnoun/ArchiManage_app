@@ -275,11 +275,15 @@ pipeline {
             }
         }
         
+        post {
+    always {
         stage('Cleanup') {
             steps {
                 sh 'docker system prune -f'
             }
         }
+    }
+}
     }
     
     
