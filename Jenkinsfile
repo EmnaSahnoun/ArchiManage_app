@@ -260,20 +260,39 @@ pipeline {
         }
     }
 }
-        stage('Deploy') {
-            steps {
-               sh '''
-        # Force cleanup
-        docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
-        
-        # Remove any dangling containers
-        docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
-        
-        # Bring up fresh containers
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-        '''
-            }
+        stage('Deploy MongoDB First') {
+    steps {
+        dir('Back/MicroserviceEureka') { // Assurez-vous que c'est le bon répertoire
+            sh '''
+            # Nettoyage préalable
+            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
+            
+            # Démarrer uniquement MongoDB d'abord
+            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d mongodb
+            
+            # Attendre que MongoDB soit prêt
+            timeout 120 bash -c 'until docker exec ${COMPOSE_PROJECT_NAME}-mongodb-1 mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; do 
+                sleep 5
+                echo "En attente de MongoDB..."
+            done'
+            '''
         }
+    }
+}
+
+stage('Deploy All Services') {
+    steps {
+        dir('Back/MicroserviceEureka') {
+            sh '''
+            # Démarrer tous les autres services
+            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
+            
+            # Vérification globale
+            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} ps
+            '''
+        }
+    }
+}
         
         stage('Cleanup') {
             steps {
