@@ -15,28 +15,21 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      systeo-network:
-        driver: bridge
-  
+      - systeo-network
   mongodb:
-  image: mongo:6.0.12
-  container_name: mongodb
-  restart: always
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: emna
-    MONGO_INITDB_ROOT_PASSWORD: emna
-    MONGO_INITDB_DATABASE: admin
-  volumes:
-    - mongodb_data:/data/db
-  ports:
-    - "27017:27017"
-  networks:
-    - systeo-network
-  healthcheck:
-    test: ["CMD", "mongosh", "--eval", "db.runCommand({ping:1})", "-u", "emna", "-p", "emna", "--authenticationDatabase", "admin"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
+    image: mongo:6.0.12
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: emna
+      MONGO_INITDB_ROOT_PASSWORD: emna
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - systeo-network
 
   eureka-server:
     image: emnasahnoun/eureka-server
@@ -75,8 +68,7 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/company?authSource=admin
     depends_on:
       - eureka-server
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - systeo-network
       
@@ -96,8 +88,7 @@ services:
       - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
-      mongodb:
-        condition: service_healthy
+      - mongodb
       - rabbitmq
     networks:
       - systeo-network
@@ -115,8 +106,7 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/commercial_documents?authSource=admin
     depends_on:
       - eureka-server
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - systeo-network
 
@@ -155,8 +145,7 @@ services:
       - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
-      mongodb:
-        condition: service_healthy
+      - mongodb
       - rabbitmq
     networks:
       - systeo-network
