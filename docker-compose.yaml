@@ -30,6 +30,11 @@ services:
       - "27017:27017"
     networks:
       - systeo-network
+    healthcheck:
+    test: ["CMD", "mongosh", "--eval", "db.runCommand({ping:1})", "-u", "emna", "-p", "emna", "--authenticationDatabase", "admin"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
 
   eureka-server:
     image: emnasahnoun/eureka-server
@@ -68,7 +73,8 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/company?authSource=admin
     depends_on:
       - eureka-server
-      - mongodb
+      mongodb:
+        condition: service_healthy
     networks:
       - systeo-network
       
@@ -88,7 +94,8 @@ services:
       - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
-      - mongodb
+      mongodb:
+        condition: service_healthy
       - rabbitmq
     networks:
       - systeo-network
@@ -106,7 +113,8 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/commercial_documents?authSource=admin
     depends_on:
       - eureka-server
-      - mongodb
+      mongodb:
+        condition: service_healthy
     networks:
       - systeo-network
 
@@ -145,7 +153,8 @@ services:
       - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
-      - mongodb
+      mongodb:
+        condition: service_healthy
       - rabbitmq
     networks:
       - systeo-network
