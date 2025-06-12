@@ -227,16 +227,38 @@ pipeline {
                 }
             }
         }
+        stage('Start MongoDB') {
+    steps {
+        sh '''
+        # Démarrer MongoDB si ce n'est pas déjà fait
+        docker start mongodb || docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb
+        
+        # Attendre que MongoDB soit prêt
+        timeout 60 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; do sleep 2; echo "En attente de MongoDB..."; done'
+        '''
+    }
+}
         stage('Verify MongoDB') {
   steps {
-    script {
-      try {
-        sh 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin'
-      } catch (err) {
-        error "MongoDB n'est pas prêt ou accessible"
-      }
+        script {
+            try {
+                // Attendre jusqu'à 2 minutes que MongoDB réponde
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitUntil {
+                        def status = sh(
+                            script: 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin',
+                            returnStatus: true
+                        )
+                        return status == 0
+                    }
+                }
+            } catch (err) {
+                error "MongoDB n'est pas accessible après 2 minutes d'attente"
+                // Optionnel : afficher les logs pour diagnostic
+                sh 'docker logs mongodb'
+            }
+        }
     }
-  }
 }
         stage('Deploy') {
             steps {
