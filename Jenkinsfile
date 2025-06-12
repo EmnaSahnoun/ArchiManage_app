@@ -282,6 +282,11 @@ stage('Deploy MongoDB First') {
         '''
     }
 }
+stage('Check Running Containers') {
+    steps {
+        sh 'docker ps -a'
+    }
+}        
 stage('Deploy All Services') {
     steps {
         
