@@ -231,19 +231,19 @@ pipeline {
     steps {
         sh '''
         # Démarrer MongoDB si ce n'est pas déjà fait
-        docker start mongodb || docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d mongodb
+        docker start mongodb || docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb
         
         # Attendre que MongoDB soit prêt
         timeout 60 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; do sleep 2; echo "En attente de MongoDB..."; done'
         '''
     }
 }
-
-stage('Verify MongoDB') {
-    steps {
+        stage('Verify MongoDB') {
+  steps {
         script {
             try {
-                timeout(time: 5, unit: 'MINUTES') {
+                // Attendre jusqu'à 2 minutes que MongoDB réponde
+                timeout(time: 2, unit: 'MINUTES') {
                     waitUntil {
                         def status = sh(
                             script: 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin',
@@ -253,54 +253,27 @@ stage('Verify MongoDB') {
                     }
                 }
             } catch (err) {
-                error "MongoDB n'est pas accessible après 5 minutes d'attente"
+                error "MongoDB n'est pas accessible après 2 minutes d'attente"
+                // Optionnel : afficher les logs pour diagnostic
                 sh 'docker logs mongodb'
-                currentBuild.result = 'FAILURE'
             }
         }
     }
 }
-
-stage('Deploy MongoDB First') {
-    steps {
-        sh '''
-        # Nettoyage
-        docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
+        stage('Deploy') {
+            steps {
+               sh '''
+        # Force cleanup
+        docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
         
-        # Démarrer MongoDB
-        docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d --build mongodb
+        # Remove any dangling containers
+        docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
         
-        # Attendre que MongoDB soit prêt
-        for i in {1..30}; do
-          if docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; then
-            echo "MongoDB est prêt"
-            break
-          fi
-          sleep 5
-          echo "Attente de MongoDB (tentative $i/30)..."
-        done
+        # Bring up fresh containers
+        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
         '''
-    }
-}
-stage('Check Running Containers') {
-    steps {
-        sh 'docker ps -a'
-    }
-}        
-stage('Deploy All Services') {
-    steps {
-        
-            sh '''
-            # Démarrer les autres services
-            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-            
-            # Vérification
-            sleep 10
-            docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} ps
-            '''
-       
-    }
-}
+            }
+        }
         
         stage('Cleanup') {
             steps {
