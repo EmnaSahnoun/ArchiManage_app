@@ -262,7 +262,7 @@ pipeline {
 }
         stage('Deploy MongoDB First') {
     steps {
-        dir('Back/MicroserviceEureka') { // Assurez-vous que c'est le bon chemin
+        
             sh '''
             # Nettoyage
             docker-compose -f docker-compose.yml -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
@@ -280,7 +280,7 @@ pipeline {
               echo "Attente de MongoDB (tentative $i/30)..."
             done
             '''
-        }
+        
     }
 }
 
