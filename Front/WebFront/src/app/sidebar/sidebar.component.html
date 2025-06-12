@@ -22,7 +22,7 @@
         <i class="bi bi-briefcase"></i> Projets</a>
       </li>
       <!-- Clients -->
-      <li mat-list-item routerLink="/clients" routerLinkActive="active" *ngIf="isUser || isAdmin"><a (click)="changeTitle('Clients')">
+      <li mat-list-item routerLink="/clients" routerLinkActive="active" *ngIf=" isAdmin"><a (click)="changeTitle('Clients')">
         <i class="bi bi-person-lines-fill"></i> Clients</a>
       </li>
       <!-- Invitations -->

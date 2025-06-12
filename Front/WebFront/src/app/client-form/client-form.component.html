@@ -5,7 +5,7 @@
       <!-- Nom du Client -->
       <div class="form-field">
         <label for="clientName">Nom du Client <span class="required-asterisk">*</span></label>
-        <input type="text" id="clientName" formControlName="name" placeholder="Ex: Jean Dupont"
+        <input type="text" id="clientName" formControlName="name" placeholder="Nom du Client"
                [ngClass]="{ 'input-error': name?.invalid && (name?.dirty || name?.touched) }">
         <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">
           <div *ngIf="name?.hasError('required')">Le nom du client est requis.</div>
@@ -17,7 +17,7 @@
       <!-- Email -->
       <div class="form-field">
         <label for="clientEmail">Email <span class="required-asterisk">*</span></label>
-       <input type="email" id="clientEmail" formControlName="email" placeholder="Ex: jean.dupont@example.com"
+       <input type="email" id="clientEmail" formControlName="email" placeholder="email du client"
                [ngClass]="{ 'input-error': email?.invalid && (email?.dirty || email?.touched) }">
         <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
           <div *ngIf="email?.hasError('required')">L'email est requis.</div>
@@ -28,7 +28,7 @@
       <!-- Téléphone -->
       <div class="form-field">
         <label for="clientPhone">Téléphone <span class="required-asterisk">*</span></label>
-        <input type="tel" id="clientPhone" formControlName="phone" placeholder="Ex: 0612345678"
+        <input type="tel" id="clientPhone" formControlName="phone" placeholder="23344755"
                [ngClass]="{ 'input-error': phone?.invalid && (phone?.dirty || phone?.touched) }">
         <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)" class="error-message">
           <div *ngIf="phone?.hasError('required')">Le numéro de téléphone est requis.</div>
@@ -42,7 +42,7 @@
       <!-- Adresse -->
       <div class="form-field form-field-full-width">
         <label for="clientAddress">Adresse <span class="required-asterisk">*</span></label>
-       <textarea id="clientAddress" formControlName="address" rows="3" placeholder="123 Rue de l'Exemple, Ville"
+       <textarea id="clientAddress" formControlName="address" rows="3" placeholder="Sfax"
                   [ngClass]="{ 'input-error': address?.invalid && (address?.dirty || address?.touched) }"></textarea>
         <div *ngIf="address?.invalid && (address?.dirty || address?.touched)" class="error-message">
           <div *ngIf="address?.hasError('required')">L'adresse est requise.</div>

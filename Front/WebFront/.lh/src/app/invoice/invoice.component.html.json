@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 91,
+            "activePatchIndex": 92,
             "patches": [
                 {
                     "date": 1747865132872,
@@ -372,6 +372,10 @@
                 {
                     "date": 1747952379551,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     </div>\r\n \r\n     <div class=\"right\">\r\n       <h4>Client</h4>\r\n-      <label for=\"clientSelect\">Choisir un client:</label>\r\n+      <label for=\"clientSelect\" class>Choisir un client:</label>\r\n       <select id=\"clientSelect\" name=\"selectedClient\" [(ngModel)]=\"invoice.selectedClientId\" (ngModelChange)=\"onClientSelected()\">\r\n         <option [ngValue]=\"null\" disabled>-- Sélectionnez un client --</option>\r\n         <option *ngFor=\"let client of clients\" [ngValue]=\"client.id\">{{ client.name }}</option>\r\n       </select>\r\n"
+                },
+                {
+                    "date": 1749682550578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n <!-- facture.component.html -->\r\n <div class=\"invoice-container\" #invoicePdfContent>\r\n   <div class=\"invoice-header\">\r\n-    <div class=\"logo-box\">\r\n+    <!-- <div class=\"logo-box\">\r\n       <div class=\"logo-placeholder\">+ Ajoutez votre logo</div>\r\n-    </div>\r\n+    </div> -->\r\n     <h2 >{{ getDocumentTitle() }}</h2>\r\n     <div class=\"invoice-title\">\r\n       \r\n       <div class=\"invoice-meta\">\r\n@@ -42,9 +42,9 @@\n     </div>\r\n \r\n     <div class=\"right\">\r\n       <h4>Client</h4>\r\n-      <label for=\"clientSelect\" class>Choisir un client:</label>\r\n+      <label for=\"clientSelect\" class=\"client-label\">Choisir un client:</label>\r\n       <select id=\"clientSelect\" name=\"selectedClient\" [(ngModel)]=\"invoice.selectedClientId\" (ngModelChange)=\"onClientSelected()\">\r\n         <option [ngValue]=\"null\" disabled>-- Sélectionnez un client --</option>\r\n         <option *ngFor=\"let client of clients\" [ngValue]=\"client.id\">{{ client.name }}</option>\r\n       </select>\r\n"
                 }
             ],
             "date": 1747865132872,

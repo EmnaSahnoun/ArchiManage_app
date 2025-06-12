@@ -1,6 +1,21 @@
 version: '3.8'
 
 services:
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - "5672:5672"  # Port AMQP pour les clients
+      - "15672:15672" # Port de l'interface web
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - systeo-network
   mongodb:
     image: mongo:6.0.12
     container_name: mongodb
@@ -8,6 +23,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: emna
       MONGO_INITDB_ROOT_PASSWORD: emna
+      MONGO_INITDB_DATABASE: admin
     volumes:
       - mongodb_data:/data/db
     ports:
@@ -66,11 +82,17 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/project?authSource=admin
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
       - mongodb
+      - rabbitmq
     networks:
       - systeo-network
+      - rabbitmq
 
   commercial-service:
     image: emnasahnoun/commercial-service
@@ -97,8 +119,13 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
+      - rabbitmq
     networks:
       - systeo-network
 
@@ -112,9 +139,14 @@ services:
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/mediafile?authSource=admin
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
       - mongodb
+      - rabbitmq
     networks:
       - systeo-network
 
@@ -127,8 +159,13 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
+      - rabbitmq
 
     networks:
       - systeo-network
@@ -142,8 +179,13 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=admin
     depends_on:
       - eureka-server
+      - rabbitmq
     networks:
       - systeo-network
    
@@ -160,6 +202,7 @@ services:
 
 volumes:
   mongodb_data:
+  rabbitmq_data:
 
 networks:
   systeo-network:

@@ -123,9 +123,14 @@ private agenceService:AgenceService
             this.checkProjectStatus(project);
           }); 
           
+          if(this.isSuperAdmin){
           
+            projects.filter(p => p.deleted !== false);
+            console.log("les projets apres le 1er filtrage",projects);
+            
+          } 
           
-          if(this.isUser){
+          else  if(this.isUser){
             
             const idUser=localStorage.getItem("user_id");
             //this.projects=this.projects.filter(p => p.idAdmin === idUser);

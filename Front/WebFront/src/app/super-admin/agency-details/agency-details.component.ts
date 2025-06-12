@@ -25,7 +25,7 @@ export class AgencyDetailsComponent implements OnInit {
   isLoadingUsers = false; // Flag for loading state
   isSavingUser = false; // Flag for saving state
   isDeletingUser: string | null = null; // Track which user is being deleted
-
+  super=false;
   constructor(
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,

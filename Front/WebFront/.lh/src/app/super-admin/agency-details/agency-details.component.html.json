@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 69,
+            "activePatchIndex": 73,
             "patches": [
                 {
                     "date": 1744030048029,
@@ -284,6 +284,22 @@
                 {
                     "date": 1749665063626,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n             <td colspan=\"5\" class=\"loading-state\">Chargement des membres...</td>\r\n           </tr>\r\n \r\n           <!-- User Rows -->\r\n-          <ng-container *ngIf=\"users.length > 0\">\r\n+         <ng-container *ngIf=\"users.length > 0 && users[0].role !== 'Erreur Rôle'\">\r\n             <!-- No Users Found Row -->\r\n             <tr *ngIf=\"!isLoadingUsers && users.length === 0\">\r\n               <td colspan=\"5\" class=\"no-users\">Aucun membre trouvé pour cette agence.</td>\r\n             </tr>\r\n@@ -95,9 +95,9 @@\n                 <div *ngIf=\"editingUserId === user.id\" class=\"form-check form-switch d-flex justify-content-center align-items-center h-100\">\r\n                   <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\"\r\n                          id=\"userStatusSwitch-{{user.id}}\"\r\n                          [(ngModel)]=\"editedUserData.enabled\"\r\n-                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver le membre' : 'Activer l\\'utilisateur'\">\r\n+                         [attr.aria-label]=\"editedUserData.enabled ? 'Désactiver le membre' : 'Activer le membre'\">\r\n                  \r\n                 </div>\r\n               </td>\r\n \r\n"
+                },
+                {
+                    "date": 1749669332101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n             <td colspan=\"5\" class=\"loading-state\">Chargement des membres...</td>\r\n           </tr>\r\n \r\n           <!-- User Rows -->\r\n-         <ng-container *ngIf=\"users.length > 0 && users[0].role !== 'Erreur Rôle'\">\r\n+         <ng-container *ngIf=\"users.length > 0 && users[0].rolprojee !== 'Erreur Rôle'\">\r\n             <!-- No Users Found Row -->\r\n             <tr *ngIf=\"!isLoadingUsers && users.length === 0\">\r\n               <td colspan=\"5\" class=\"no-users\">Aucun membre trouvé pour cette agence.</td>\r\n             </tr>\r\n"
+                },
+                {
+                    "date": 1749669344428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   </button>\r\n   <div class=\"agency-info\">\r\n     <div class=\"header-section\">\r\n       <h2>{{ agency.name }}</h2>\r\n-      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\">\r\n+      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\" ng>\r\n         <i class=\"bi bi-folder\"></i> Voir Projets\r\n       </button>\r\n     </div>\r\n     <div class=\"info-grid\">\r\n@@ -56,9 +56,9 @@\n             <td colspan=\"5\" class=\"loading-state\">Chargement des membres...</td>\r\n           </tr>\r\n \r\n           <!-- User Rows -->\r\n-         <ng-container *ngIf=\"users.length > 0 && users[0].rolprojee !== 'Erreur Rôle'\">\r\n+         <ng-container *ngIf=\"users.length > 0 && users[0].role !== 'Erreur Rôle'\">\r\n             <!-- No Users Found Row -->\r\n             <tr *ngIf=\"!isLoadingUsers && users.length === 0\">\r\n               <td colspan=\"5\" class=\"no-users\">Aucun membre trouvé pour cette agence.</td>\r\n             </tr>\r\n"
+                },
+                {
+                    "date": 1749669397587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   </button>\r\n   <div class=\"agency-info\">\r\n     <div class=\"header-section\">\r\n       <h2>{{ agency.name }}</h2>\r\n-      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\" ng>\r\n+      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\" *ngIf=\"super\">\r\n         <i class=\"bi bi-folder\"></i> Voir Projets\r\n       </button>\r\n     </div>\r\n     <div class=\"info-grid\">\r\n"
+                },
+                {
+                    "date": 1749672948106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n   </button>\r\n   <div class=\"agency-info\">\r\n     <div class=\"header-section\">\r\n       <h2>{{ agency.name }}</h2>\r\n-      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\" *ngIf=\"super\">\r\n+      <button mat-button class=\"projects-btn\" (click)=\"viewProjects()\">\r\n         <i class=\"bi bi-folder\"></i> Voir Projets\r\n       </button>\r\n     </div>\r\n     <div class=\"info-grid\">\r\n"
                 }
             ],
             "date": 1744030048029,

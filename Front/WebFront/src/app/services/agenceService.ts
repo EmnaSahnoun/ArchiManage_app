@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AgenceService {
     private apiUrl = '/agence';
+    //private apiUrl = 'http://localhost:9091/projectcompany';
     private realm = 'systeodigital';
     private keycloakUrl = '/api';   
     
