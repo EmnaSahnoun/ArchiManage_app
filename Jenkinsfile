@@ -227,7 +227,17 @@ pipeline {
                 }
             }
         }
-        
+        stage('Verify MongoDB') {
+  steps {
+    script {
+      try {
+        sh 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin'
+      } catch (err) {
+        error "MongoDB n'est pas prêt ou accessible"
+      }
+    }
+  }
+}
         stage('Deploy') {
             steps {
                sh '''
