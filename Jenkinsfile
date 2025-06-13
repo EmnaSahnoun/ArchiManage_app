@@ -259,16 +259,20 @@ pipeline {
 }
          stage('Démarrage Infrastructure') {
     steps {
-        sh '''
-        # Démarrer MongoDB et RabbitMQ avec vérification
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
-        
-        # Attendre que MongoDB soit prêt
-        timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
-        
-        # Attendre que RabbitMQ soit prêt
-        timeout 180 bash -c 'until docker exec rabbitmq rabbitmqctl await_startup; do sleep 5; echo "En attente de RabbitMQ..."; done'
-        '''
+        script {
+            try {
+                sh '''
+                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
+                
+                # Attendre que les services soient prêts
+                timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
+                timeout 180 bash -c 'until curl -f http://localhost:15672; do sleep 5; echo "En attente de RabbitMQ..."; done'
+                '''
+            } catch (Exception e) {
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} logs'
+                error("Échec du démarrage de l'infrastructure")
+            }
+        }
     }
 }
         
