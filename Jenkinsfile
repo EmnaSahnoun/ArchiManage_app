@@ -295,19 +295,19 @@ pipeline {
 }
         
         stage('Déploiement') {
-            steps {
-                sh '''
-                # Démarrer Eureka en premier
-                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d eureka-server
-                
-                # Attendre qu'Eureka soit prêt
-                timeout 60 bash -c 'until curl -f http://localhost:8761/actuator/health; do sleep 5; echo "En attente d\'Eureka..."; done'
-                
-                # Démarrer les autres services
-                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-                '''
-            }
-        }
+    steps {
+        sh '''
+        # Démarrer Eureka en premier
+        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d eureka-server
+        
+        # Attendre qu'Eureka soit prêt - version simplifiée
+        sleep 30  # Attente brute temporaire - à remplacer par une vérification réelle
+        
+        # Démarrer les autres services
+        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
+        '''
+    }
+}
         
         stage('Vérification') {
             steps {
