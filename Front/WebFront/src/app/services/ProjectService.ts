@@ -11,7 +11,6 @@ export class ProjectService {
     private apiUrl = '/agence';
     private projetUrl="/projet"
     constructor(private http: HttpClient, private authService: AuthService, private userService:UserService) { }
-
     getAllProjects(idCompany:string): Observable<any[]> {
         
         return this.http.get<any[]>(`${this.projetUrl}/project/company/${idCompany}`, { 
