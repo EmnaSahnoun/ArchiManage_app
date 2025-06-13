@@ -245,15 +245,15 @@ pipeline {
                 }
             }
         }
-         stage('Nettoyage Pré-déploiement') {
+       stage('Nettoyage Pré-déploiement') {
     steps {
         sh '''
-        # Arrêter et supprimer tous les conteneurs
+        # Arrêter proprement les containers existants
         docker-compose -p ${COMPOSE_PROJECT_NAME} down || true
         
-        # Vérifier et tuer les processus utilisant les ports critiques
-        sudo lsof -i :5672 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
-        sudo lsof -i :27017 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
+        # Tuer les processus utilisant les ports critiques
+        sudo pkill -f "5672" || true
+        sudo pkill -f "27017" || true
         '''
     }
 }
