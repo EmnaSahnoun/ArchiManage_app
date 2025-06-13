@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git url: 'https://github.com/EmnaSahnoun/ArchiManage_app.git', branch: 'main'
+                sh 'docker-compose down || true'
             }
         }
         
@@ -227,64 +228,59 @@ pipeline {
                 }
             }
         }
-        stage('Start MongoDB') {
-    steps {
-        sh '''
-        # Démarrer MongoDB si ce n'est pas déjà fait
-        docker start mongodb || docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb
-        
-        # Attendre que MongoDB soit prêt
-        timeout 60 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin; do sleep 2; echo "En attente de MongoDB..."; done'
-        '''
-    }
-}
-        stage('Verify MongoDB') {
-  steps {
-        script {
-            try {
-                // Attendre jusqu'à 2 minutes que MongoDB réponde
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitUntil {
-                        def status = sh(
-                            script: 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin',
-                            returnStatus: true
-                        )
-                        return status == 0
-                    }
-                }
-            } catch (err) {
-                error "MongoDB n'est pas accessible après 2 minutes d'attente"
-                // Optionnel : afficher les logs pour diagnostic
-                sh 'docker logs mongodb'
-            }
-        }
-    }
-}
-        stage('Deploy') {
+         stage('Démarrage Infrastructure') {
             steps {
-               sh '''
-        # Force cleanup
-        docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
-        
-        # Remove any dangling containers
-        docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
-        
-        # Bring up fresh containers
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-        '''
+                sh '''
+                # Démarrer d'abord MongoDB et RabbitMQ
+                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
+                
+                # Attendre que MongoDB soit prêt
+                timeout 120 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
+                
+                # Attendre que RabbitMQ soit prêt
+                timeout 60 bash -c 'until docker exec rabbitmq rabbitmqctl await_startup; do sleep 5; echo "En attente de RabbitMQ..."; done'
+                '''
             }
         }
         
-        post {
-    always {
-        stage('Cleanup') {
+        stage('Déploiement') {
             steps {
-                sh 'docker system prune -f'
+                sh '''
+                # Démarrer Eureka en premier
+                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d eureka-server
+                
+                # Attendre qu'Eureka soit prêt
+                timeout 60 bash -c 'until curl -f http://localhost:8761/actuator/health; do sleep 5; echo "En attente d\'Eureka..."; done'
+                
+                # Démarrer les autres services
+                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
+                '''
             }
         }
-    }
-}
+        
+        stage('Vérification') {
+            steps {
+                sh '''
+                # Vérifier que tous les services sont enregistrés dans Eureka
+                curl -f http://localhost:8761/eureka/apps
+                
+                # Vérifier la santé des services principaux
+                curl -f http://localhost:9091/actuator/health
+                '''
+            }
+        }
     }
     
-    
-}
+    post {
+        failure {
+            // En cas d'échec, faire un rollback
+            sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} down'
+            // Notification d'échec
+        }
+        always {
+            // Nettoyage
+            sh 'docker system prune -f'
+        }
+    }
+}    
+
