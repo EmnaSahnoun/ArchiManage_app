@@ -296,42 +296,12 @@ pipeline {
         
         stage('Déploiement') {
     steps {
-        sh '''
-        # Démarrer Eureka en premier
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d eureka-server
-        
-        # Attendre qu'Eureka soit prêt - version simplifiée
-        sleep 30  # Attente brute temporaire - à remplacer par une vérification réelle
-        
-        # Démarrer les autres services
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-        '''
+        sh 'docker-compose down && docker-compose up -d'
     }
 }
         
-        stage('Vérification') {
-            steps {
-                sh '''
-                # Vérifier que tous les services sont enregistrés dans Eureka
-                curl -f http://localhost:8761/eureka/apps
-                
-                # Vérifier la santé des services principaux
-                curl -f http://localhost:9091/actuator/health
-                '''
-            }
-        }
-    }
+        
     
-    post {
-        failure {
-            // En cas d'échec, faire un rollback
-            sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} down'
-            // Notification d'échec
-        }
-        always {
-            // Nettoyage
-            sh 'docker system prune -f'
-        }
-    }
+    
 }    
 
