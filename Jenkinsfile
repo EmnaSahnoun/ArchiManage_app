@@ -248,12 +248,16 @@ pipeline {
        stage('Nettoyage Pré-déploiement') {
     steps {
         sh '''
-        # Arrêter proprement les containers existants
+        # Arrêter et supprimer tous les containers et réseaux
         docker-compose -p ${COMPOSE_PROJECT_NAME} down || true
         
         # Tuer les processus utilisant les ports critiques
-        sudo pkill -f "5672" || true
-        sudo pkill -f "27017" || true
+        sudo lsof -ti :27017 | xargs -r sudo kill -9 || true
+        sudo lsof -ti :5672 | xargs -r sudo kill -9 || true
+        
+        # Supprimer les containers zombies
+        docker rm -f $(docker ps -aq) || true
+        docker network prune -f
         '''
     }
 }
