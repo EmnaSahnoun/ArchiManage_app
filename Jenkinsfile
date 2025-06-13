@@ -265,12 +265,26 @@ pipeline {
     steps {
         script {
             try {
-                sh '''
-                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
+                // D'abord MongoDB seul
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb'
                 
-                # Attendre que les services soient prêts
-                timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
-                timeout 180 bash -c 'until curl -f http://localhost:15672; do sleep 5; echo "En attente de RabbitMQ..."; done'
+                // Attendre que MongoDB soit prêt
+                sh '''
+                timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do 
+                    sleep 5; 
+                    echo "En attente de MongoDB..."; 
+                done'
+                '''
+                
+                // Puis RabbitMQ
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up -d rabbitmq'
+                
+                // Attendre RabbitMQ
+                sh '''
+                timeout 180 bash -c 'until curl -f http://localhost:15672; do 
+                    sleep 5; 
+                    echo "En attente de RabbitMQ..."; 
+                done'
                 '''
             } catch (Exception e) {
                 sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} logs'
