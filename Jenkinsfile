@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git url: 'https://github.com/EmnaSahnoun/ArchiManage_app.git', branch: 'main'
+                sh 'docker-compose down || true'
             }
         }
         
@@ -204,7 +205,24 @@ pipeline {
                 }
             }
         }
-        
+        stage('Verify Builds') {
+    steps {
+        script {
+            def images = [
+                "${env.DOCKER_REGISTRY}/email-service",
+                "${env.DOCKER_REGISTRY}/angular-frontend"
+            ]
+            
+            images.each { image ->
+                try {
+                    sh "docker inspect ${image}"
+                } catch (Exception e) {
+                    error("Image ${image} n'a pas été construite correctement")
+                }
+            }
+        }
+    }
+}
         stage('Push Docker Images') {
             steps {
                 withCredentials([usernamePassword(
@@ -227,38 +245,64 @@ pipeline {
                 }
             }
         }
-        stage('Verify MongoDB') {
-  steps {
-    script {
-      try {
-        sh 'docker exec mongodb mongosh --eval "db.runCommand({ping: 1})" -u emna -p emna --authenticationDatabase admin'
-      } catch (err) {
-        error "MongoDB n'est pas prêt ou accessible"
-      }
+       stage('Nettoyage Pré-déploiement') {
+    steps {
+        sh '''
+        # Arrêter et supprimer tous les containers et réseaux
+        docker-compose -p ${COMPOSE_PROJECT_NAME} down || true
+        
+        # Tuer les processus utilisant les ports critiques
+        sudo lsof -ti :27017 | xargs -r sudo kill -9 || true
+        sudo lsof -ti :5672 | xargs -r sudo kill -9 || true
+        
+        # Supprimer les containers zombies
+        docker rm -f $(docker ps -aq) || true
+        docker network prune -f
+        '''
     }
-  }
 }
+         stage('Démarrage Infrastructure') {
+    steps {
+        script {
+            try {
+                // D'abord MongoDB seul
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb'
+                
+                // Attendre que MongoDB soit prêt
+                sh '''
+                timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do 
+                    sleep 5; 
+                    echo "En attente de MongoDB..."; 
+                done'
+                '''
+                
+                // Puis RabbitMQ
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up -d rabbitmq'
+                
+                // Attendre RabbitMQ
+                sh '''
+                timeout 180 bash -c 'until curl -f http://localhost:15672; do 
+                    sleep 5; 
+                    echo "En attente de RabbitMQ..."; 
+                done'
+                '''
+            } catch (Exception e) {
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} logs'
+                error("Échec du démarrage de l'infrastructure")
+            }
+        }
+    }
+}
+        
         stage('Deploy') {
             steps {
-               sh '''
-        # Force cleanup
-        docker-compose -p ${COMPOSE_PROJECT_NAME} down --remove-orphans --volumes || true
-        
-        # Remove any dangling containers
-        docker ps -aq --filter "name=${COMPOSE_PROJECT_NAME}_" | xargs -r docker rm -f || true
-        
-        # Bring up fresh containers
-        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d --build --force-recreate
-        '''
+                sh 'docker-compose down && docker-compose up -d'
             }
         }
         
-        stage('Cleanup') {
-            steps {
-                sh 'docker system prune -f'
-            }
-        }
-    }
+        
     
     
+}    
+
 }
