@@ -205,7 +205,24 @@ pipeline {
                 }
             }
         }
-        
+        stage('Verify Builds') {
+    steps {
+        script {
+            def images = [
+                "${env.DOCKER_REGISTRY}/email-service",
+                "${env.DOCKER_REGISTRY}/angular-frontend"
+            ]
+            
+            images.each { image ->
+                try {
+                    sh "docker inspect ${image}"
+                } catch (Exception e) {
+                    error("Image ${image} n'a pas été construite correctement")
+                }
+            }
+        }
+    }
+}
         stage('Push Docker Images') {
             steps {
                 withCredentials([usernamePassword(
@@ -228,20 +245,32 @@ pipeline {
                 }
             }
         }
+         stage('Nettoyage Pré-déploiement') {
+    steps {
+        sh '''
+        # Arrêter et supprimer tous les conteneurs
+        docker-compose -p ${COMPOSE_PROJECT_NAME} down || true
+        
+        # Vérifier et tuer les processus utilisant les ports critiques
+        sudo lsof -i :5672 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
+        sudo lsof -i :27017 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
+        '''
+    }
+}
          stage('Démarrage Infrastructure') {
-            steps {
-                sh '''
-                # Démarrer d'abord MongoDB et RabbitMQ
-                docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
-                
-                # Attendre que MongoDB soit prêt
-                timeout 120 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
-                
-                # Attendre que RabbitMQ soit prêt
-                timeout 60 bash -c 'until docker exec rabbitmq rabbitmqctl await_startup; do sleep 5; echo "En attente de RabbitMQ..."; done'
-                '''
-            }
-        }
+    steps {
+        sh '''
+        # Démarrer MongoDB et RabbitMQ avec vérification
+        docker-compose -p ${COMPOSE_PROJECT_NAME} up -d mongodb rabbitmq
+        
+        # Attendre que MongoDB soit prêt
+        timeout 180 bash -c 'until docker exec mongodb mongosh --eval "db.runCommand({ping:1})" -u emna -p emna --authenticationDatabase admin; do sleep 5; echo "En attente de MongoDB..."; done'
+        
+        # Attendre que RabbitMQ soit prêt
+        timeout 180 bash -c 'until docker exec rabbitmq rabbitmqctl await_startup; do sleep 5; echo "En attente de RabbitMQ..."; done'
+        '''
+    }
+}
         
         stage('Déploiement') {
             steps {
