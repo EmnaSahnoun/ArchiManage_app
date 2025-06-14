@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "commercial_documents")
+@Document(collection = "commercialdocuments")
 public class CommercialDocument {
     @Id
     private String id;
