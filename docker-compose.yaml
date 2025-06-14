@@ -104,7 +104,7 @@ services:
     
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/commercial_documents?authSource=admin
+      - SPRING_DATA_MONGODB_URI=mongodb://emna:emna@mongodb:27017/commercialdocuments?authSource=admin
     depends_on:
       - eureka-server
       - mongodb
