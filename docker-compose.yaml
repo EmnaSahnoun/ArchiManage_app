@@ -97,6 +97,7 @@ services:
   commercial-service:
     image: emnasahnoun/commercial-service
     container_name: commercial-service
+    restart: unless-stopped
     hostname: e7.systeo.tn
     ports:
       - "8078:8078"
@@ -174,6 +175,7 @@ services:
     image: emnasahnoun/email-service
     container_name: email-service
     hostname: e8.systeo.tn
+    restart: unless-stopped
     ports:
       - "8069:8069"
     
@@ -192,6 +194,7 @@ services:
   angular-frontend:
     image: emnasahnoun/angular-frontend
     container_name: angular-frontend
+    restart: unless-stopped
     ports:
       - "4200:4200"
     
