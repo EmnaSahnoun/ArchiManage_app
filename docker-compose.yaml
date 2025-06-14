@@ -97,6 +97,7 @@ services:
   commercial-service:
     image: emnasahnoun/commercial-service
     container_name: commercial-service
+    restart: unless-stopped
     hostname: e7.systeo.tn
     ports:
       - "8078:8078"
