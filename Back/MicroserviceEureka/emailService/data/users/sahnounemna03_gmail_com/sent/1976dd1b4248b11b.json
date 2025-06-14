@@ -1,0 +1,80 @@
+{
+  "id": "1976dd1b4248b11b",
+  "threadId": "1976dd1b4248b11b",
+  "labelIds": [
+    "SENT"
+  ],
+  "snippet": "Ceci est un email envoyé par le système",
+  "internalDate": "2025-06-14T09:42:29.000Z",
+  "headers": {
+    "received": "from 272700212454 named unknown by gmailapi.google.com with HTTPREST; Sat, 14 Jun 2025 02:42:29 -0700",
+    "from": "sahnounemna03@gmail.com",
+    "to": "sahnounemna22@gmail.com",
+    "subject": "Email systÃ¨me",
+    "content-type": "multipart/mixed; boundary=\"mixed_boundary\"",
+    "date": "Sat, 14 Jun 2025 02:42:29 -0700",
+    "message-id": "<CAL6=Qw52vg==y8pNYYGcSwob6VAw0X1p6bVhkzcWFnAo_+phHg@mail.gmail.com>"
+  },
+  "parts": [
+    {
+      "mimeType": "text/plain",
+      "filename": null,
+      "size": 42,
+      "isAttachment": false,
+      "content": {
+        "type": "Buffer",
+        "data": [
+          67,
+          101,
+          99,
+          105,
+          32,
+          101,
+          115,
+          116,
+          32,
+          117,
+          110,
+          32,
+          101,
+          109,
+          97,
+          105,
+          108,
+          32,
+          101,
+          110,
+          118,
+          111,
+          121,
+          195,
+          169,
+          32,
+          112,
+          97,
+          114,
+          32,
+          108,
+          101,
+          32,
+          115,
+          121,
+          115,
+          116,
+          195,
+          168,
+          109,
+          101,
+          10
+        ]
+      },
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "content-transfer-encoding": "quoted-printable"
+      },
+      "text": "Ceci est un email envoyé par le système\n"
+    }
+  ],
+  "attachments": [],
+  "isRead": true
+}
