@@ -171,30 +171,25 @@ services:
     networks:
       - systeo-network
 
-  email-service:
-    image: emnasahnoun/email-service
-    container_name: email-service
-    hostname: e8.systeo.tn
-    restart: unless-stopped
-    ports:
-      - "8069:8069"
-    
-    environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - SPRING_RABBITMQ_PORT=5672
-      - SPRING_RABBITMQ_USERNAME=admin
-      - SPRING_RABBITMQ_PASSWORD=admin
-    depends_on:
-      - rabbitmq
-      - eureka-server
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://rabbitmq:15672"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - systeo-network
+email-service:
+  image: emnasahnoun/email-service
+  container_name: email-service
+  hostname: email-service
+  restart: unless-stopped
+  environment:
+    - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    - RABBITMQ_HOST=rabbitmq
+    - RABBITMQ_PORT=5672
+    - RABBITMQ_USER=admin
+    - RABBITMQ_PASS=admin
+    - HOST_IP=email-service
+  ports:
+    - "8069:8069"
+  depends_on:
+    - eureka-server
+    - rabbitmq
+  networks:
+    - systeo-network
    
   angular-frontend:
     image: emnasahnoun/angular-frontend
