@@ -30,7 +30,7 @@ const client = new Eureka({
   instance: {
     app: 'email-service', // Doit correspondre au nom dans docker-compose
   instanceId: `email-service:${PORT}`,
-  hostName: 'e8.systeo.tn', // Nom du service Docker
+  hostName: 'email-service', // Nom du service Docker
   ipAddr: process.env.HOST_IP || 'email-service',
     port: {
       '$': PORT,
