@@ -36,7 +36,7 @@ const client = new Eureka({
       '$': PORT,
       '@enabled': 'true',
     },
-    vipAddress: 'email-service',
+    vipAddress: 'emailService',
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
