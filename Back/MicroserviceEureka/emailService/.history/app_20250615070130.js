@@ -50,7 +50,7 @@ const client = new Eureka({
   },
   eureka: {
     host: 'eureka-server',
-    port: 8761,
+    port: 443,
     servicePath: '/eureka/apps/',
     ssl: true,
   },

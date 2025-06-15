@@ -49,8 +49,8 @@ const client = new Eureka({
     }
   },
   eureka: {
-    host: 'eureka-server',
-    port: 8761,
+    host: 'eureka.systeo.tn',
+    port: 443,
     servicePath: '/eureka/apps/',
     ssl: true,
   },
