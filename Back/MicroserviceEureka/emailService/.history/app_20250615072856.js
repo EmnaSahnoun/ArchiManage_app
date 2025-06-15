@@ -28,15 +28,15 @@ const draftRoutes = require("./src/routes/draftRoutes");
 const PORT = process.env.PORT || 8069;
 const client = new Eureka({
   instance: {
-    app: 'emailService',
-    instanceId: `e8.systeo.tn:emailService:${PORT}`, // Ajoutez ceci
-    hostName: 'e8.systeo.tn',
-    ipAddr: '161.97.88.195',
+    app: 'email-service', // Doit correspondre au nom dans docker-compose
+  instanceId: `email-service:${PORT}`,
+  hostName: 'e8.systeo.tn', // Nom du service Docker
+  ipAddr: process.env.HOST_IP || 'email-service',
     port: {
       '$': PORT,
       '@enabled': 'true',
     },
-    vipAddress: 'emailService',
+    vipAddress: 'email-service',
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -49,8 +49,8 @@ const client = new Eureka({
     }
   },
   eureka: {
-    host: 'eureka.systeo.tn',
-    port: 443,
+    host: 'eureka-server',
+    port: 8761,
     servicePath: '/eureka/apps/',
     ssl: true,
   },
