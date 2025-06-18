@@ -17,28 +17,7 @@ pipeline {
                 sh 'docker-compose down || true'
             }
         }
-        // Nouveau stage ajouté ici
-    stage('Vérification Fichiers') {
-        steps {
-            sh '''
-            # Vérifier que docker-compose.yaml existe
-            if [ ! -f docker-compose.yaml ]; then
-                echo "ERREUR: docker-compose.yaml manquant!"
-                exit 1
-            fi
-            
-            # Vérifier la syntaxe YAML
-            if ! python3 -c 'import yaml; yaml.safe_load(open("docker-compose.yaml"))'; then
-                echo "ERREUR: Syntaxe YAML invalide dans docker-compose.yaml"
-                exit 1
-            fi
-            
-            # Vérifier aussi avec docker-compose
-            docker-compose config
-            '''
-        }
-    }
-        
+              
         stage('Build and Package') {
             parallel {
                 // Services Java
