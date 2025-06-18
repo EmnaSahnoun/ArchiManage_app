@@ -178,7 +178,6 @@ email-service:
     restart: unless-stopped
     ports:
       - "8069:8069"
-    
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - SPRING_RABBITMQ_HOST=rabbitmq
