@@ -28,10 +28,10 @@ const draftRoutes = require("./src/routes/draftRoutes");
 const PORT = process.env.PORT || 8069;
 const client = new Eureka({
   instance: {
-    app: 'EMAILSERVICE', // Make sure this matches exactly what you expect in Eureka
-    instanceId: `e8.systeo.tn:emailService:${PORT}`,
+    app: 'emailService',
+    instanceId: `e8.systeo.tn:emailService:${PORT}`, // Ajoutez ceci
     hostName: 'e8.systeo.tn',
-    ipAddr: process.env.HOST_IP || '161.97.88.195', // Use environment variable
+    ipAddr: '161.97.88.195',
     port: {
       '$': PORT,
       '@enabled': 'true',
@@ -41,23 +41,18 @@ const client = new Eureka({
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
     },
+    // Ajoutez ces métadonnées si nécessaire
     metadata: {
       'management.port': PORT,
-    },
-    // Add these important parameters:
-    leaseRenewalIntervalInSeconds: 10,
-    leaseExpirationDurationInSeconds: 30,
-    statusPageUrl: `http://e8.systeo.tn:${PORT}/info`,
-    healthCheckUrl: `http://e8.systeo.tn:${PORT}/health`,
-    homePageUrl: `http://e8.systeo.tn:${PORT}/`
+      'securePort': 443,
+      'securePortEnabled': 'true'
+    }
   },
   eureka: {
-    host: 'eureka-server', // Use the container name instead of domain
-    port: 8761, // Use the internal port (not 443)
+    host: 'eureka.systeo.tn',
+    port: 443,
     servicePath: '/eureka/apps/',
-    ssl: false, // Disable SSL for now to simplify debugging
-    maxRetries: 10,
-    requestRetryDelay: 2000,
+    ssl: true,
   },
 });
 
