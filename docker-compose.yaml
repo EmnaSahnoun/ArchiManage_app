@@ -184,6 +184,7 @@ services:
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=admin
       - SPRING_RABBITMQ_PASSWORD=admin
+      - HOST_IP=email-service
     depends_on:
       - eureka-server
       - rabbitmq
