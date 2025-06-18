@@ -255,8 +255,8 @@ pipeline {
         sudo lsof -ti :27017 | xargs -r sudo kill -9 || true
         sudo lsof -ti :5672 | xargs -r sudo kill -9 || true
         
-        # Supprimer les containers zombies
-        docker rm -f $(docker ps -aq) || true
+        # Supprimer les containers zombies (seulement s'il y en a)
+        docker ps -aq | xargs -r docker rm -f || true
         docker network prune -f
         '''
     }
