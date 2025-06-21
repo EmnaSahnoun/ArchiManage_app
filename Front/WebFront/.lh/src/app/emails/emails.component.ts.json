@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 177,
+            "activePatchIndex": 179,
             "patches": [
                 {
                     "date": 1748563144880,
@@ -716,6 +716,14 @@
                 {
                     "date": 1749638713134,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -181,9 +181,10 @@\n   selectEmail(email: any, tab: ActiveEmailTab): void {\r\n   this.selectedEmailId = email.id;\r\n   \r\n   if (tab === 'received' && !email.isRead) {\r\n-    this.markAsRead(email.id, () => {      this.navigateToEmailDetail(email, tab);\r\n+    this.markAsRead(email.id, () => {\r\n+      this.navigateToEmailDetail(email, tab);\r\n     });\r\n   } else {\r\n     this.navigateToEmailDetail(email, tab);\r\n   }\r\n@@ -234,25 +235,27 @@\n     this.closeEmailForm();\r\n   }\r\n \r\n \r\n-  markAsRead(emailId: string): void {\r\n-    const token = this.googleAuthService.getAccessToken();\r\n-    if (!token) return;\r\n+ private markAsRead(emailId: string, callback?: () => void): void {\r\n+  const token = this.googleAuthService.getAccessToken();\r\n+  if (!token) return;\r\n \r\n-   this.gmailService.markAsRead(token, emailId, this.currentUserEmail)\r\n+  this.gmailService.markAsRead(token, emailId, this.currentUserEmail)\r\n     .pipe(takeUntil(this.destroy$))\r\n     .subscribe({\r\n-\r\n       next: () => {\r\n         const email = this.receivedEmails.find(e => e.id === emailId);\r\n         if (email) {\r\n           email.isRead = true;\r\n         }\r\n+        if (callback) {\r\n+          callback();\r\n+        }\r\n       },\r\n       error: (err) => console.error('Erreur marquage comme lu:', err)\r\n     });\r\n-  }\r\n+}\r\n \r\n   onDeleteEmail(emailId: string, tab: ActiveEmailTab): void {\r\n     const token = this.googleAuthService.getAccessToken();\r\n     if (!token) {\r\n"
+                },
+                {
+                    "date": 1750515028600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n \r\n   private loadSentEmails(): Observable<void> {\r\n     const token = this.googleAuthService.getAccessToken();\r\n     if (!token) return of(void 0);\r\n-\r\n+    \r\n     return this.gmailService.getSentEmails(token, this.currentUserEmail).pipe(\r\n       takeUntil(this.destroy$),\r\n       tap(response => {\r\n         console.log(\"emails dans sent\",response)\r\n"
+                },
+                {
+                    "date": 1750515034966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n \r\n   private loadSentEmails(): Observable<void> {\r\n     const token = this.googleAuthService.getAccessToken();\r\n     if (!token) return of(void 0);\r\n-    \r\n+    this.sentEmails=\r\n     return this.gmailService.getSentEmails(token, this.currentUserEmail).pipe(\r\n       takeUntil(this.destroy$),\r\n       tap(response => {\r\n         console.log(\"emails dans sent\",response)\r\n"
                 }
             ],
             "date": 1748563144880,

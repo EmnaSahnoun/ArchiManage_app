@@ -1,6 +1,7 @@
 package com.example.CommercialService.services;
 
 import com.example.CommercialService.clients.CompanyServiceClient;
+import com.example.CommercialService.consumer.ClientConsumer;
 import com.example.CommercialService.dto.request.CommercialDocumentLineRequest;
 import com.example.CommercialService.dto.request.CommercialDocumentRequest;
 import com.example.CommercialService.dto.response.CommercialDocumentLineResponse;
@@ -19,6 +20,8 @@ import com.example.CommercialService.repositories.CommercialDocumentLineReposito
 import com.example.CommercialService.repositories.CommercialDocumentRepository;
 import com.example.CommercialService.repositories.CompanyRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,7 @@ public class CommercialDocumentService implements ICommercialDocument {
     private final CommercialDocumentLineRepository commercialDocumentLineRepository;
     private final CommercialDocumentRepository commercialDocumentRepository;
     private final ClientRepository clientRepository;
+    private static final Logger logger = LoggerFactory.getLogger(CommercialDocumentService.class);
 
     @Override
     public CommercialDocumentResponse createDocument(CommercialDocumentRequest request) {
@@ -76,12 +80,14 @@ public class CommercialDocumentService implements ICommercialDocument {
         }
         document.setCompany(company);
 
-        Optional<Client> existingClient = clientRepository.findById(request.getClientId());
-        Client client ;
-        if (existingClient.isPresent()) {
-            // 2a. Si elle existe, on la récupère
-            client = existingClient.get();
-            document.setClient(client);
+        if (request.getClientId() != null) {
+            Optional<Client> existingClient = clientRepository.findById(request.getClientId());
+            if (existingClient.isPresent()) {
+                document.setClient(existingClient.get());
+            } else {
+                // Log ou gestion d'erreur si le client n'existe pas
+                logger.warn("Client with ID {} not found", request.getClientId());
+            }
         }
 
         // Convertir les lignes

@@ -76,7 +76,7 @@ getEmail(accessToken: string, emailId: string, userId: string, includeAttachment
   );  }
 
   // Obtenir les emails envoyés
-  getSentEmails(accessToken: string, userId: string, maxResults = 20): Observable<any> {
+  getSentEmails(accessToken: string, userId: string, maxResults = 50): Observable<any> {
     const params = new HttpParams()
       .set('accessToken', accessToken)
       .set('userId', userId)

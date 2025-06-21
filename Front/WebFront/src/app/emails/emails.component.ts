@@ -123,7 +123,7 @@ private setCurrentUserEmail(): boolean {
   private loadSentEmails(): Observable<void> {
     const token = this.googleAuthService.getAccessToken();
     if (!token) return of(void 0);
-
+    this.sentEmails=[];
     return this.gmailService.getSentEmails(token, this.currentUserEmail).pipe(
       takeUntil(this.destroy$),
       tap(response => {
