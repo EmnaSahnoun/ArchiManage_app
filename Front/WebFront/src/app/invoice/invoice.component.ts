@@ -233,6 +233,11 @@ updateExistingInvoice(id:any, payload: any) {
 createNewInvoice() {
   const payload = this.prepareInvoicePayload();
   
+  if (!payload) {
+    console.error('Payload invalide - création annulée');
+    return;
+  }
+  
   this.commercialService.createInvoice(payload).subscribe({
     next: (response) => {
       console.log("Facture créée avec succès:", response);

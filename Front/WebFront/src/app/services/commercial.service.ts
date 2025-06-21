@@ -30,26 +30,27 @@ getInvoicesByidCompany(idCompany:any): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/commercialdocuments/company/${idCompany}`, { 
             headers: this.getApiHeaders()
         }).pipe(
+          
             catchError(this.handleError)
         );    
   }
-  getInvoiceById(id: string): Observable<Invoice> {
-    return this.http.get<Invoice>(`${this.apiUrl}/commercialdocuments/${id}`, { 
+  getInvoiceById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/commercialdocuments/${id}`, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
   }
 
-  createInvoice(invoicePayload: any): Observable<Invoice> {
+  createInvoice(invoicePayload: any): Observable<any> {
    
-    return this.http.post<Invoice>(`${this.apiUrl}/commercialdocuments`, invoicePayload, { 
+    return this.http.post<any>(`${this.apiUrl}/commercialdocuments`, invoicePayload, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
   }
 
-  updateInvoice(id: any, invoicePayload: any): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.apiUrl}/commercialdocuments/${id}`, invoicePayload, { 
+  updateInvoice(id: any, invoicePayload: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/commercialdocuments/${id}`, invoicePayload, { 
             headers: this.getApiHeaders()
         }).pipe(
             catchError(this.handleError));
