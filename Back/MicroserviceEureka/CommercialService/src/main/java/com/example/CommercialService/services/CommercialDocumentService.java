@@ -47,6 +47,13 @@ public class CommercialDocumentService implements ICommercialDocument {
     public CommercialDocumentResponse createDocument(CommercialDocumentRequest request) {
         // Récupérer les infos de la company depuis le MS company
 
+
+        // Vérification du client
+        Optional<Client> existingClient = clientRepository.findById(request.getClientId());
+        if (!existingClient.isPresent()) {
+            throw new RuntimeException("Client not found with id: " + request.getClientId());
+        }
+        Client client = existingClient.get();
         // Convertir la request en entity
         CommercialDocument document = new CommercialDocument();
         document.setDocumentType(request.getDocumentType());
@@ -79,16 +86,7 @@ public class CommercialDocumentService implements ICommercialDocument {
             company = companyRepository.save(company);
         }
         document.setCompany(company);
-
-        if (request.getClientId() != null) {
-            Optional<Client> existingClient = clientRepository.findById(request.getClientId());
-            if (existingClient.isPresent()) {
-                document.setClient(existingClient.get());
-            } else {
-                // Log ou gestion d'erreur si le client n'existe pas
-                logger.warn("Client with ID {} not found", request.getClientId());
-            }
-        }
+        document.setClient(client);
 
         // Convertir les lignes
         List<CommercialDocumentLine> lines = request.getLines().stream()

@@ -40,14 +40,22 @@ getInvoicesByidCompany(idCompany:any): Observable<any[]> {
         }).pipe(
             catchError(this.handleError));
   }
-
-  createInvoice(invoicePayload: any): Observable<any> {
-   
-    return this.http.post<any>(`${this.apiUrl}/commercialdocuments`, invoicePayload, { 
-            headers: this.getApiHeaders()
-        }).pipe(
-            catchError(this.handleError));
-  }
+createInvoice(invoicePayload: any): Observable<any> {
+  return this.http.post<any>(
+    `${this.apiUrl}/commercialdocuments`, 
+    invoicePayload, 
+    { headers: this.getApiHeaders() }
+  ).pipe(
+    catchError(error => {
+      console.error('Detailed error:', error);
+      if (error.error) {
+        // Si le backend retourne un message d'erreur détaillé
+        return throwError(() => error.error.message || 'Erreur inconnue');
+      }
+      return throwError(() => 'Erreur de connexion au serveur');
+    })
+  );
+}
 
   updateInvoice(id: any, invoicePayload: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/commercialdocuments/${id}`, invoicePayload, { 
