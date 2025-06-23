@@ -108,6 +108,7 @@ services:
     depends_on:
       - eureka-server
       - mongodb
+      - rabbitmq
     networks:
       - systeo-network
 
