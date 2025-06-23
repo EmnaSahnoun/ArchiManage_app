@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200"},
+@CrossOrigin(origins = {"https://e1.systeo.tn", "http://localhost:4200","https://archimanage.marqenti.tn"},
         allowedHeaders = "*",
         allowCredentials = "true")
 @RestController

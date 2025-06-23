@@ -26,7 +26,7 @@ import tn.iit.services.CompanyService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@CrossOrigin(origins = {"http://localhost:9091","https://e1.systeo.tn", "http://localhost:4200","https://archimanage.systeo.tn","https://archimanage.systeo.tn:4200"},
+@CrossOrigin(origins = {"http://localhost:9091","https://e1.systeo.tn", "http://localhost:4200","https://archimanage.systeo.tn","https://archimanage.systeo.tn:4200","https://archimanage.marqenti.tn"},
            allowedHeaders = "*",
            allowCredentials = "true")
 @RestController
